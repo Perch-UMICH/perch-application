@@ -2,6 +2,7 @@ Perch React Applcation
 ======================
 
 The tentative perch application that will be backed on react and using dockerization for development purposes. `docker-compose` is used to spin up services together and handle the way that they communicate and interact.
+
 ----------------------
 
 ### Docker
@@ -15,6 +16,7 @@ The tentative perch application that will be backed on react and using dockeriza
 [Docker](https://www.docker.com/) is an immensely powerful tool meant for creating small, lightweight containers that store individual aspects of your project. This, in a way, forces you to keep your workspace clean as you code since every major portion of your app is isolated from every other major portion.
 
 Click [here](https://docs.docker.com/engine/installation) to get started installing the docker engine and daemon. Community edition should suffice.
+
 ----------------------
 
 ### docker-compose
@@ -22,10 +24,12 @@ Click [here](https://docs.docker.com/engine/installation) to get started install
 `docker-compose` is an extension of Docker that allows you to essentially specify a type of "schema" with all of the services (containers) that you need to spin up, how they will communicate with each other and other users, and allows you to separate dev/prod versions of your build.
 
 Click [here](https://docs.docker.com/compose/install) to install `docker-compose` for your machine.
+
 ----------------------
 
 ### Example file structure
 
+```
 .
 +-- docker\_compose.yml (yaml file for specifying services)
 +-- docker\_compose.dev.yml (yaml file for dev services)
@@ -37,6 +41,7 @@ Click [here](https://docs.docker.com/compose/install) to install `docker-compose
 |   +-- login.php
 +-- service3 (e.g. database)
 |   +-- postgres.conf
+```
 
 ### Getting Started with Perch App
 
