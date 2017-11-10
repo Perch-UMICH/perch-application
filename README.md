@@ -36,11 +36,14 @@ Click [here](https://docs.docker.com/compose/install) to install `docker-compose
 +-- service1 (e.g. frontend)
 |   +-- index.html
 |   +-- index.js
+|   +-- Dockerfile
 +-- service2 (e.g. backend)
 |   +-- index.php
 |   +-- login.php
+|   +-- Dockerfile
 +-- service3 (e.g. database)
 |   +-- postgres.conf
+|   +-- Dockerfile
 ```
 
 ### Getting Started with Perch App
