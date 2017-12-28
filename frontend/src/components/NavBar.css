@@ -1,0 +1,66 @@
+.nav-logo {
+	height: 80px;
+	margin-top: 5px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+	
+nav {
+    height: 90px;
+    line-height: 90px;
+    background-color: #0277bd;
+}
+
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+    height: 90px;
+    line-height: 90px;
+}
+
+nav .button-collapse i {
+    height: 90px;
+    line-height: 90px;
+}
+
+nav .brand-logo { 
+    font-size: 1.6rem; 
+}
+
+@media only screen and (min-width: 601px){
+    nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+        height: 90px;
+        line-height: 90px;
+    }
+}
+
+.nav-item {
+	letter-spacing: 3px;
+}
+
+.contact-nav {
+	background-color: rgb(41, 182, 246);
+}
+
+.contact-nav:hover {
+	background-color: white;
+	color: rgb(41, 182, 246);
+}
+
+#sidenav-overlay {
+	z-index: 996;
+}
+
+.nav-option {
+    font-size: 50px;
+}
+
+.nav-logo-text {
+    letter-spacing: 2px;
+}
+
+#hamburger {
+    font-size: 60px;
+    color: white;
+    margin-right: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
