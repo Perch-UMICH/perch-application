@@ -3,6 +3,7 @@ import SquareLogo from './SquareLogo';
 import MoveTo from 'moveto';
 import LoginButtons from './LoginButtons';
 import './AboveTheFold.css';
+
 class AboveTheFold extends Component {
 
 	componentDidMount() {
@@ -34,7 +35,7 @@ class AboveTheFold extends Component {
 				    <img className="logo" src="assets/PERCH_MASCOT.svg" data-tilt />
 				    <SquareLogo />
 				    <p className="letter-spacer flow-text white-text">We make research more accessible for everyone</p>
-				    <a href="#form" id="join-btn" className="waves-effect btn-flat btn-large js-trigger" data-mt-duration="300">join our email list</a>
+				    <LoginButtons  />		    
 			    </div>
 			  </div>
 		);
@@ -42,3 +43,5 @@ class AboveTheFold extends Component {
 }
 
 export default AboveTheFold;
+
+//<a href="#form" id="join-btn" className="waves-effect btn-flat btn-large js-trigger" data-mt-duration="300">join perch</a>

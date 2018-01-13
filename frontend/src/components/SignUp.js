@@ -3,38 +3,38 @@ import './SignUp.css';
 class SignUp extends Component {
 	render() {
 		return (
-				<div id="form" className="center-align valign-wrapper">
-				    <div className="input-form container grey lighten-5 z-depth-3" >
+				<div id="form" className="center-align container">
+				    <div className="input-form grey lighten-5 z-depth-3" >
 				      <div className="container">
 				        <div className="form-header center-align grey-text text-darken-3">Join Perch</div>
 				        <div className="row">
 				          <form className="col s12">
 				            <div className="row min-margin">
 				              <div className="input-field col s6">
-				                <input id="first_name" type="text" className="validate" required />
+				                <input id="first_name" type="text" className="validate grey-text text-darken-2" required />
 				                <label htmlFor="first">First Name</label>
 				              </div>
 				              <div className="input-field col s6">
-				                <input id="last_name" type="text" className="validate" required />
+				                <input id="last_name" type="text" className="validate grey-text text-darken-2" required />
 				                <label htmlFor="last_name">Last Name</label>
 				              </div>
 				            </div>
 				            <div className="row min-margin">
 				              <div className="input-field col s12">
-				                <input id="email" type="email" className="validate" required />
+				                <input id="email" type="email" className="validate grey-text text-darken-2" required />
 				                <label htmlFor="email">UMich Email</label>
 				              </div>
 				            </div>
 
 				            <div className="row min-margin">
 				              <div className="input-field col s12">
-				                <input id="password" type="password" className="validate" required />
+				                <input id="password" type="password" className="validate grey-text text-darken-2" required />
 				                <label htmlFor="password">Password</label>
 				              </div>
 				            </div>
 				            <div className="row min-margin">
 				              <div className="input-field col s12">
-				                <input id="password_retype" type="password" className="validate" required />
+				                <input id="password_retype" type="password" className="validate grey-text text-darken-2" required />
 				                <label htmlFor="password_retype">Re-type Password</label>
 				              </div>
 				            </div>
@@ -46,6 +46,7 @@ class SignUp extends Component {
 				              <button className="btn waves-effect waves-light submit-btn" type="submit" name="action">De-awkwardize
 				                <i className="material-icons right">send</i>
 				              </button>
+				              <br /><br />
 				            </div>
 				          </form>
 				        </div>

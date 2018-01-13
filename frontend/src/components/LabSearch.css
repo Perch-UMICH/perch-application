@@ -1,0 +1,38 @@
+.labSearch {
+	padding: 20px;
+	background-color: #ddd;
+}
+
+.labSearch .row {
+	margin: 0;
+}
+
+.lab-search-input {
+	border-radius: 40px !important;
+	background-color: white !important;
+	color: grey !important;
+	padding-left: 10px !important;
+	margin: 5px 10px !important;
+	height: 30px !important;
+}
+
+#lab-name:focus + label,  #lab-topic:focus + label {
+  color: #29b6f6;
+}
+
+#lab-name:focus, #lab-topic:focus {
+  border-bottom: 1px solid #29b6f6;
+  box-shadow: 0 1px 0 0 #29b6f6;
+}
+
+.lab-search-label {
+	font-size: 16px;
+	letter-spacing: 2px;
+	margin-top: 5px;
+	color: #696969;
+	/*color: white;*/
+}
+
+.lab-search-btn {
+	margin-top: 5px;
+}

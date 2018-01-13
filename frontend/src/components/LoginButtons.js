@@ -1,34 +1,42 @@
 import React, {Component} from 'react';
 import './LoginButtons.css';
 class LoginButtons extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	inputCSS = {
+		borderRadius: '40px',
+		backgroundColor: 'white',
+		color: 'grey',
+		paddingLeft: '10px',
+		margin: ' 0px 10px',
+		height: '30px'
+	}
+
 	render() {
-		return (
-			  	<div className="shadow container row white">
-				    <form className="col s12">
-				      <div className="row">
-				        <div className="input-field col s5">
-				          <i className="material-icons prefix blue-text">account_circle</i>
-				          <input id='username_login' type="email" className="validate login-buttons" required />
-				          <label htmlFor="username_login">Username</label>
-				        </div>
-				        <div className="input-field col s5">
-				          <i className="material-icons prefix blue-text">security</i>
-				          <input id="password_login" type="password" className="validate login-buttons" required />
-				          <label htmlFor="password_login">Password</label>
-				        </div>
-				        <div className='col s2 valign-wrapper'>
-				        	<button className="btn waves-effect waves-light submit-btn"
-				        			type="submit" 
-				        			name="action"
-				        			style={{marginTop: '22px'}}
-				        		>Login
-				        	</button>
-				        </div>
-				      </div>
-				    </form>
-  				</div>
+		return(
+			<form className='container'>
+				<div className='row'>
+					<div className='input-field col s12 m5'>
+						<input id='username_login' type="email" placeholder='username' className='validate shadow' style={this.inputCSS} required />
+					</div>
+					<div className='input-field col s12 m5'>
+						<input id='password_login' type="password" placeholder='password' className='validate shadow' style={this.inputCSS} required />
+					</div>
+					<div className='col s12 m2  center-align'>
+			        	<button className="btn waves-effect waves-light submit-btn"
+			        			type="submit" 
+			        			name="action"
+			        			style={{marginTop: '10px', marginLeft: '15px', backgroundColor: 'rgb(41, 182, 246)'}}
+			        		>Login
+			        	</button>
+		        	</div>
+				</div>
+			</form>
 		);
 	}
+
 }
 
 export default LoginButtons;

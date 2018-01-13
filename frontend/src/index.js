@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import Typed from 'typed.js';
-
-import './components/index.css';
 import './materialize.css'
 import './style2.css'
 

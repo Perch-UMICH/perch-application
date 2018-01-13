@@ -5,7 +5,7 @@ import './InterestedForm.css';
 class InterestedForm extends Component {
 	render() {
 		return (
-			  <div id="interested-form" className="sub-team-header-2-full center-align valign-wrapper">
+			  <div id="interested-form" className="sub-team-header-2-full center-align ">
 			      <div className="input-form container grey lighten-5 z-depth-3" >
 			      <div className="container">
 			        <div className="form-header center-align grey-text text-darken-3">Interested?</div>

@@ -1,0 +1,14 @@
+.lab-list-item {
+	padding: 10px 20px;
+	margin: 20px;
+	height: 75px;
+	background-color: white;
+	color: grey;
+}
+
+.lab-list-item-img {
+	height: 50px;
+	width: 50px;
+	border: 1px solid green;
+	float: left;
+}

@@ -132,7 +132,7 @@ class Timeline extends Component {
 				  			description='Professor John Wolfe, Arthur F. Thurnau Professor of Chemistry, joins the team as a primary advisor' 
 				  			linkLabel='JOHN WOLFE' 
 				  			linkRef='http://www.umich.edu/~wolfelab/wolfe.html'
-				  			fadeIn='L'
+				  			fadeIn='R'
 				  		/> 
 				         
 				 	</div>

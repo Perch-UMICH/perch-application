@@ -1,0 +1,15 @@
+.lab-list {
+	background-color: #ddd;
+	/*width: 30% !important;*/
+	margin-top: 20px;
+	/*margin: 1.5% !important;*/
+	padding: 0px !important;
+}
+
+.lab-list-header {
+	padding: 20px;
+	text-align: left;
+	background-color: rgb(41, 182, 246);
+	letter-spacing: 1px;
+	min-height: 90px;
+}

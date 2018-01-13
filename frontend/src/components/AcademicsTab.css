@@ -1,0 +1,15 @@
+.academics-tab {
+	color: grey;
+	letter-spacing: 1px;
+	margin-top: 15px;
+}
+
+.academic-label {
+	color: #0277bd;
+	font-weight: bold;
+}
+
+.academic-info {
+	color: grey;
+	font-weight: normal;
+}

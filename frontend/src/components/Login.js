@@ -5,8 +5,8 @@ class Login extends Component {
 	render() {
 		return (
 			<div className='shift-down'>
-				<LoginButtons />
-				<SignUp />	
+				{/*<LoginButtons />*/}
+				<SignUp />
 			</div>
 		);
 	}
