@@ -1,0 +1,19 @@
+.bubble {
+	float: left;
+	border-radius: 20px;
+	padding: 5px 10px;
+	margin: 2.5px 2.5px;
+	background-color: rgb(41, 182, 246);
+	color: white;
+	letter-spacing: 1px;
+	font-size: 12px;
+}
+
+.bubble-icon {
+	font-size: 12px;
+	padding-right: 4px;
+	margin-left: -5px;
+	line-height: 20px;
+	color: #eeeeee;
+	cursor: pointer;
+}

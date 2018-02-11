@@ -1,0 +1,39 @@
+.make-an-account {
+
+}
+
+.interest-container {
+	display: flex;
+	flex-direction: row;
+	color: white;
+	background-color: #0277bd;
+	min-height: 60vh;
+}
+
+.interest-header {
+	font-size: 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	background-color: rgb(41, 182, 246);
+	flex: none;
+}
+
+.interest-section {
+	border: 1px solid white;
+	padding: 0px !important;
+}
+
+.interest-body {
+	text-align: left;
+	padding: 10px;
+	float: left;
+}
+
+.interest-search {
+	background-color: white !important;
+	color: grey !important;
+	padding-left: 10px !important;
+	height: 40px;
+	margin-bottom: 0px !important;
+	width: 80% !important;
+}

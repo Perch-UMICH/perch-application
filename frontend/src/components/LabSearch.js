@@ -12,8 +12,8 @@ class LabSearch extends Component {
 			<div className='form labSearch shadow'>
 				<div className='row'>
 					<div className='col s12 m12 l2 left-align lab-search-label'>LAB SEARCH</div>
-					<div className='col s12 m4 l4'><input id='lab-topic' className='lab-search-input' type='text' placeholder='topic' /></div>
-					<div className='col s12 m4 l4'><input id='lab-name' className='lab-search-input' type='text' placeholder='name' /></div>
+					<div className='col s12 m4 l4'><input id='lab-topic' className='lab-search-input' type='text' placeholder='interest keywords' /></div>
+					<div className='col s12 m4 l4'><input id='lab-name' className='lab-search-input' type='text' placeholder='skill keywords' /></div>
 					<div className='col s12 m3 l2'>
 						<button className="btn waves-effect waves-light submit-btn lab-search-btn"
 			        			type="submit" 

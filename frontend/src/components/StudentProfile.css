@@ -42,3 +42,9 @@
 	letter-spacing: 1px;
 	font-size: 12px;
 }
+
+/**/
+
+.flex { 
+	display: flex;
+}

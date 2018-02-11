@@ -24,35 +24,28 @@ class StudentProfile extends Component {
 	}
 	render() {
 		return (
-
 			<div className='shift-down container'>
-				<div className='row'>
-					<div className='col s12' >
-						<div className='center-align'>
-								<img src='img/benji.jpg' style={{border: '1px solid white', height: '200px', width: '200px'}}/>
-								<div  style={{fontSize: '40px', color: 'white', letterSpacing: '2px'}}>Benji Bear</div>
-								<hr style={{width: '250px'}}/>
-								<br />
-						</div>
-						<div className='row'>
-							<div className='col s12 profile-tab shadow'><BioTab /></div>
-						</div>
-						<div className='row'>
-							<div className='col s6 profile-tab shadow'><InterestsTab /></div>
-							<div className='col s6 profile-tab shadow'><SkillsTab /></div>
-						</div>
-						<div className='row'>
-							<div className='col s6 profile-tab shadow'><AcademicsTab /></div>
-							<div className='col s6 profile-tab shadow'><PastResearchTab /></div>
-						</div>
-
+				<div className='left-align row flex'>
+					<div className='col s3'>
+						<img src='img/benji.jpg' style={{border: '1px solid white', height: '200px', width: '200px'}}/>
 					</div>
-					{/*<div className='col s12 m3 l2'>
-						<div className='col s12 profile-tab shadow'><AcademicsTab /></div>
-						<div className='col s12 profile-tab shadow'><PastResearchTab /></div>
-					</div>*/}
+					<div className='col s6' style={{backgroundColor: '#ddd'}}>
+						<BioTab />
+					</div>
+					<div className='col s3' style={{backgroundColor: '#ddd'}}>
+						<AcademicsTab />
+					</div>
+					{/*<div  style={{fontSize: '40px', color: 'white', letterSpacing: '2px'}}>Benji Bear</div>*/}
+				</div>
+				<div className='row flex'>
+					<div className='col s6 profile-tab shadow'><InterestsTab /></div>
+					<div className='col s6 profile-tab shadow'><SkillsTab /></div>
+				</div>
+				<div className='row flex'>
+					<div className='col s12 profile-tab shadow'><PastResearchTab /></div>
 				</div>
 			</div>
+			
 		);
 	}
 }

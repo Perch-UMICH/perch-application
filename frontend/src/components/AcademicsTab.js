@@ -9,7 +9,7 @@ class AcademicsTab extends Component {
 	render() {
 		return (
 			<div>
-				<div className='tab-header'>ACADEMICS</div>
+				<div className='tab-header' style={{height: '30px'}}></div>
 				<div className='academics-tab'>
 					<div>
 						<span className='academic-label'>GPA: </span>

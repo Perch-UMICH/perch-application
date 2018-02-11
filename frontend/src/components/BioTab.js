@@ -10,7 +10,6 @@ class BioTab extends Component {
 		return (
 			<div>
 				<div className='tab-header'>BIO</div>
-
 				<div className='bio-tab'>
 					I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning.
 				</div>

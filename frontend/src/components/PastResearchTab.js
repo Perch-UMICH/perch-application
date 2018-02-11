@@ -11,7 +11,7 @@ class PastResearchTab extends Component {
 			<div>
 				<div className='tab-header'>PAST RESEARCH</div>
 
-				<div className='past-research-tab'>
+				<div className='past-research-tab center-align'>
 					<ul>
 						<li>Dr. Patil's Neurosurgery Lab</li>
 						<li>Dr. R's Pharmaceutics Lab</li>

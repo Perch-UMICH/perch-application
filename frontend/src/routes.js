@@ -8,6 +8,7 @@ import About from './components/About';
 import Login from './components/Login';
 import StudentProfile from './components/StudentProfile';
 import LabMatch from './components/LabMatch';
+import MakeAnAccount from './components/MakeAnAccount';
 import './components/general.css';
 
 class Router extends Component {
@@ -26,6 +27,7 @@ class Router extends Component {
 							<Route path='/login' component={ Login } />
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
+							<Route path='/make-an-account' component={ MakeAnAccount }/>
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
