@@ -13,6 +13,8 @@ import LabWebsite from './components/LabWebsite';
 import UploadImage from './components/UploadImage';
 import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
+import ProfPage from './components/ProfPage';
+import Test from './components/Test';
 import './components/general.css';
 
 class Router extends Component {
@@ -20,7 +22,7 @@ class Router extends Component {
 		return(
 			<BrowserRouter>
 				<div>
-					<NavBar loggedIn='false' />
+					<NavBar loggedIn='true' />
 					<div>
 						<Switch>
 							<Route path='/home' component={ Home } />
@@ -35,6 +37,8 @@ class Router extends Component {
 							<Route path='/upload-image' component={ UploadImage }/>
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
+							<Route path='/prof-page' component={ ProfPage }/>
+							<Route path='/test' component={ Test }/>
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>

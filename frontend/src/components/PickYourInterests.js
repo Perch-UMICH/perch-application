@@ -9,13 +9,16 @@ class PickYourInterests extends Component {
 		this.state = {
 			catalog: [
 				"oncology",
+				"orange",
+				"orangutan",
+				"apples and orange",
 				"virology",
 				"basketweaving",
 				"history",
 				"chemistry",
 				"physics",
 				"astro-physics",
-				],
+			],
 
 			interests: [
 				"security",
@@ -23,8 +26,23 @@ class PickYourInterests extends Component {
 				"machine learning",
 				"software development",
 				"biomedical devices",
-			]
+			],
+
+			filtered_catalog: []
 		};
+	}
+
+	componentWillMount() {
+    	this.setState({filtered_catalog: this.state.catalog})
+  	}
+
+	filterList(event) {
+		var updatedList = this.state.catalog;
+    	updatedList = updatedList.filter(function(item){
+      	return item.toLowerCase().search(
+        	event.target.value.toLowerCase()) !== -1;
+    	});
+    	this.setState({filtered_catalog: updatedList});
 	}
 
 	handleClickAdd(interest) {
@@ -68,9 +86,9 @@ class PickYourInterests extends Component {
 			<div className='pick-your-interests shift-down container center-align'>
 				<div className='row interest-container'>
 					<div className='interest-section col s6 left-align'>
-						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} />
+						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} onChange={this.filterList.bind(this)} />
 						<div className='interest-body'>
-							{this.state.catalog.map((interest) => {
+							{this.state.filtered_catalog.map((interest) => {
 								return (<span onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
 							})}
 						</div>

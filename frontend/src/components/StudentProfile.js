@@ -26,23 +26,23 @@ class StudentProfile extends Component {
 		return (
 			<div className='shift-down container'>
 				<div className='left-align row flex'>
-					<div className='col s3'>
+					<div className='' style={{width: '25%'}}>
 						<img src='img/benji.jpg' style={{border: '1px solid white', height: '200px', width: '200px'}}/>
 					</div>
-					<div className='col s6' style={{backgroundColor: '#ddd'}}>
-						<BioTab />
+					<div className='shadow' style={{backgroundColor: '#ddd', width: '50%'}}>
+						<BioTab header='bio' msg="I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning."/>
 					</div>
-					<div className='col s3' style={{backgroundColor: '#ddd'}}>
+					<div className='shadow' style={{backgroundColor: '#ddd', width: '25%'}}>
 						<AcademicsTab />
 					</div>
 					{/*<div  style={{fontSize: '40px', color: 'white', letterSpacing: '2px'}}>Benji Bear</div>*/}
 				</div>
 				<div className='row flex'>
-					<div className='col s6 profile-tab shadow'><InterestsTab /></div>
-					<div className='col s6 profile-tab shadow'><SkillsTab /></div>
+					<div className='profile-tab shadow' style={{width: '50%'}}><InterestsTab /></div>
+					<div className='profile-tab shadow' style={{width: '50%'}}><SkillsTab /></div>
 				</div>
 				<div className='row flex'>
-					<div className='col s12 profile-tab shadow'><PastResearchTab /></div>
+					<div className='profile-tab shadow' style={{width: '100%'}}><PastResearchTab /></div>
 				</div>
 			</div>
 			
