@@ -10,14 +10,14 @@ class Bubble extends Component {
 	render() {
 
 		if (this.props.type == 'adder') {
-			this.interior = <i class="material-icons bubble-icon">add</i>
+			this.interior = <i className="material-icons bubble-icon">add</i>
 		}
 		else {
-			this.interior = <i class="material-icons bubble-icon">clear</i>
+			this.interior = <i className="material-icons bubble-icon">clear</i>
 		}
 
 		return(
-			<div className='bubble' onClick={()=>{alert('bye')}} >
+			<div className='bubble' >
 				{this.interior}
 				{this.props.txt}
 			</div>

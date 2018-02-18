@@ -14,12 +14,11 @@ import NotableClasses from './components/NotableClasses';
 import './components/general.css';
 
 class Router extends Component {
-
 	render() {
 		return(
 			<BrowserRouter>
 				<div>
-					<NavBar loggedIn='false' />
+					<NavBar loggedIn='true' />
 					<div>
 						<Switch>
 							<Route path='/home' component={ Home } />
