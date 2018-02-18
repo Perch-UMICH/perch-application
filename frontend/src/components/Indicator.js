@@ -7,13 +7,17 @@ class Indicator extends Component {
 	}
 
 	render() {
-		if (this.props.type == 'on')
+		if (this.props.type == 'on') {
 			this.type = 'indicator-on';
-		else 
+			this.pre = 'yes ';
+		}
+		else {
+			this.pre = 'no '
 			this.type = 'indicator-off';
+		}
 		return(
-			<div className={`indicator ${this.type}`}>
-				{this.props.msg}
+			<div className={`indicator center-align ${this.type}`}>
+				{this.pre + this.props.msg}
 			</div>
 		);
 	}
