@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { parse } from 'query-string';
 import SquareButton from './SquareButton'
 import Bubble from './Bubble'
 import './PickYourInterests.css'
@@ -49,12 +50,25 @@ class PickYourInterests extends Component {
 	}
 
 	render() {
+		var header_txt, placeholder_txt, dest = "";
+		var user_type = parse(this.props.location.search).user_type;
+
+		if (user_type === "faculty") {
+			header_txt = "Your Lab Labels";
+			dest = 'lab-website';
+			placeholder_txt = "descriptors for your lab work";
+		} 
+		else if (user_type === "student") {
+			header_txt = "Your Interests";
+			placeholder_txt = "field of interest";
+			dest = 'past-research';
+		}
+
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
 				<div className='row interest-container'>
-
 					<div className='interest-section col s6 left-align'>
-						<input id='lab-name' className='interest-search' type='text' placeholder='field of interest' />
+						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} />
 						<div className='interest-body'>
 							{this.state.catalog.map((interest) => {
 								return (<span onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
@@ -64,7 +78,7 @@ class PickYourInterests extends Component {
 
 					<div className='interest-section col s6'>
 						<div className='interest-header'>
-							Your Interests
+							{header_txt}
 						</div>
 						<div className='interest-body'>
 							{this.state.interests.map((interest) => {
@@ -73,7 +87,7 @@ class PickYourInterests extends Component {
 						</div>
 					</div>
 				</div>
-				<SquareButton destination='past-research' label='next'/>
+				<SquareButton destination={dest} label='next'/>
 			</div>
 		);
 	}

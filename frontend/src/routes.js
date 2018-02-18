@@ -9,6 +9,8 @@ import Login from './components/Login';
 import StudentProfile from './components/StudentProfile';
 import LabMatch from './components/LabMatch';
 import PickYourInterests from './components/PickYourInterests';
+import LabWebsite from './components/LabWebsite';
+import UploadImage from './components/UploadImage';
 import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
 import './components/general.css';
@@ -29,6 +31,8 @@ class Router extends Component {
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
 							<Route path='/pick-your-interests' component={ PickYourInterests }/>
+							<Route path='/lab-website' component={ LabWebsite }/>
+							<Route path='/upload-image' component={ UploadImage }/>
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/' component={ Home } />
