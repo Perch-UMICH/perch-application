@@ -29,6 +29,7 @@ class PickYourInterests extends Component {
 
 			filtered_catalog: []
 		};
+		this.filterList = this.filterList.bind(this);
 	}
 
 	componentWillMount() {
@@ -48,31 +49,42 @@ class PickYourInterests extends Component {
 		this.setState((prevState) => {
 			var temp_add = prevState.interests;
 			var temp_delete = prevState.catalog;
+			var temp_filter = prevState.filtered_catalog;
 			temp_add.push(interest);
 			temp_delete.splice(temp_delete.indexOf(interest), 1);
+			temp_filter.splice(temp_filter.indexOf(interest), 1);
 
-			return {catalog: temp_delete, interests: temp_add};
+			return {catalog: temp_delete, interests: temp_add, filtered_catalog: temp_filter};
 		});
 	}
 
-	handleClickDelete(interest) {
+	handleClickDelete(interest, temporary) {
 		this.setState((prevState) => {
 			var temp_delete = prevState.interests;
 			var temp_add = prevState.catalog;
+			var temp_filter = prevState.filtered_catalog;
 			temp_add.push(interest);
 			temp_delete.splice(temp_delete.indexOf(interest), 1);
 
-			return {catalog: temp_add, interests: temp_delete};
+			if (interest.includes(temporary.toString())) {
+				temp_filter.push(interest);
+			}
+
+			return {catalog: temp_add, interests: temp_delete, filtered_catalog: temp_filter};
 		});
 	}
 
 	render() {
+		let temporary = "";
+		if (document.getElementById('lab-name')) {
+			temporary = document.getElementById('lab-name').value;
+		}
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
 				<div className='row interest-container'>
 
 					<div className='interest-section col s6 left-align'>
-						<input id='lab-name' className='interest-search' type='text' placeholder='field of interest' onChange={this.filterList.bind(this)} />
+						<input id='lab-name' className='interest-search' type='text' placeholder='field of interest' onChange={this.filterList} />
 						<div className='interest-body'>
 							{this.state.filtered_catalog.map((interest) => {
 								return (<span onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
@@ -86,7 +98,7 @@ class PickYourInterests extends Component {
 						</div>
 						<div className='interest-body'>
 							{this.state.interests.map((interest) => {
-								return (<span onClick={this.handleClickDelete.bind(this, interest)}> <Bubble txt={interest} type='deleter' /> </span>)
+								return (<span onClick={this.handleClickDelete.bind(this, interest, temporary)}> <Bubble txt={interest} type='deleter' /> </span>)
 							})}
 						</div>
 					</div>
