@@ -9,9 +9,9 @@ class BioTab extends Component {
 	render() {
 		return (
 			<div>
-				<div className='tab-header'>BIO</div>
+				<div className='tab-header'>{this.props.header.toUpperCase()}</div>
 				<div className='bio-tab'>
-					I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning.
+					{this.props.msg}
 				</div>
 			</div>
 		);
