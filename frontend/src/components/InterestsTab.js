@@ -9,7 +9,9 @@ class InterestsTab extends Component {
 	render() {
 		return (
 			<div>
-				<div className='tab-header'>INTERESTS</div>
+				<div className='tab-header'>
+					INTERESTS <a href='/pick-your-interests'><i className="material-icons interest-editor">add</i></a>
+				</div>
 				<div className='interests-tab'>
 					<div className='floater-item'>Computer Security</div>
 					<div className='floater-item'>Machine Learning</div>

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton'
 import Bubble from './Bubble'
-import './MakeAnAccount.css'
-class MakeAnAccount extends Component {
+import './PickYourInterests.css'
+class PickYourInterests extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -50,7 +50,7 @@ class MakeAnAccount extends Component {
 
 	render() {
 		return(
-			<div className='make-an-account shift-down container center-align'>
+			<div className='pick-your-interests shift-down container center-align'>
 				<div className='row interest-container'>
 
 					<div className='interest-section col s6 left-align'>
@@ -79,4 +79,4 @@ class MakeAnAccount extends Component {
 	}
 }
 
-export default MakeAnAccount;
+export default PickYourInterests;

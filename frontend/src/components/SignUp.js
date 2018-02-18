@@ -8,7 +8,7 @@ class SignUp extends Component {
 				      <div className="container">
 				        <div className="form-header center-align grey-text text-darken-3">Join Perch</div>
 				        <div className="row">
-				          <form className="col s12" action='/make-an-account'>
+				          <form className="col s12" action='/pick-your-interests'>
 				            <div className="row min-margin">
 				              <div className="input-field col s6">
 				                <input id="first_name" type="text" className="validate grey-text text-darken-2" required />

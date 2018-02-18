@@ -8,7 +8,7 @@ import About from './components/About';
 import Login from './components/Login';
 import StudentProfile from './components/StudentProfile';
 import LabMatch from './components/LabMatch';
-import MakeAnAccount from './components/MakeAnAccount';
+import PickYourInterests from './components/PickYourInterests';
 import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
 import './components/general.css';
@@ -18,7 +18,7 @@ class Router extends Component {
 		return(
 			<BrowserRouter>
 				<div>
-					<NavBar loggedIn='true' />
+					<NavBar loggedIn='false' />
 					<div>
 						<Switch>
 							<Route path='/home' component={ Home } />
@@ -28,7 +28,7 @@ class Router extends Component {
 							<Route path='/login' component={ Login } />
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
-							<Route path='/make-an-account' component={ MakeAnAccount }/>
+							<Route path='/pick-your-interests' component={ PickYourInterests }/>
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/' component={ Home } />
