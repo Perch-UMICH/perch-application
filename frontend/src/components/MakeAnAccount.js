@@ -40,7 +40,6 @@ class MakeAnAccount extends Component {
 		return(
 			<div className='make-an-account shift-down container center-align'>
 				<div className='row interest-container'>
-
 					<div className='interest-section col s6 left-align'>
 						<input id='lab-name' className='interest-search' type='text' placeholder='field of interest' />
 						<div className='interest-body'>
@@ -63,7 +62,7 @@ class MakeAnAccount extends Component {
 						</div>
 					</div>
 				</div>
-				<SquareButton destination='#' label='next'/>
+				<SquareButton destination='/past-research' label='next'/>
 			</div>
 		);
 	}

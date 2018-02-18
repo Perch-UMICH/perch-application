@@ -8,7 +8,7 @@ class SignUp extends Component {
 				      <div className="container">
 				        <div className="form-header center-align grey-text text-darken-3">Join Perch</div>
 				        <div className="row">
-				          <form className="col s12">
+				          <form className="col s12" action='/make-an-account'>
 				            <div className="row min-margin">
 				              <div className="input-field col s6">
 				                <input id="first_name" type="text" className="validate grey-text text-darken-2" required />
@@ -43,7 +43,7 @@ class SignUp extends Component {
 				              <input className="radio" name="user-type" type="radio" id="student" required />
 				              <label htmlFor="student">Student</label>
 				            <div className="submit-container row min-margin center-align">
-				              <button className="btn waves-effect waves-light submit-btn" type="submit" name="action">De-awkwardize
+				              <button className="btn waves-effect waves-light submit-btn"  type="submit" name="action">De-awkwardize
 				                <i className="material-icons right">send</i>
 				              </button>
 				              <br /><br />
