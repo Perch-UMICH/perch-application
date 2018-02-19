@@ -38,9 +38,9 @@ class SignUp extends Component {
 				                <label htmlFor="password_retype">Re-type Password</label>
 				              </div>
 				            </div>
-				              <input className="radio" name="user-type" type="radio" id="faculty" required />
+				              <input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required />
 				              <label htmlFor="faculty">Faculty</label>
-				              <input className="radio" name="user-type" type="radio" id="student" required />
+				              <input className="radio" name="user_type" type="radio" id="student" value="student" required />
 				              <label htmlFor="student">Student</label>
 				            <div className="submit-container row min-margin center-align">
 				              <button className="btn waves-effect waves-light submit-btn"  type="submit" name="action">De-awkwardize

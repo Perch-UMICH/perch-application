@@ -1,0 +1,35 @@
+.lab-website {
+	height: 100vh;
+}
+
+.lab-website-form {
+	background-color: #0277bd;
+	padding: 20px;
+}
+
+.lab-website-input {
+	height: 150px;
+	background-color: #eee;
+	box-shadow: 1px 1px 5px;
+	color: #eee;
+	padding: 10px;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.lab-website-input:hover {
+	color: #eee;
+}
+
+.lab-website-header {
+	font-size: 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	background-color: rgb(41, 182, 246);
+	color: white;
+	margin-bottom: 20px;
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-top: -20px;
+}
