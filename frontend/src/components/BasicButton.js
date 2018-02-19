@@ -8,7 +8,7 @@ class BasicButton extends Component {
 
 	render() {
 		return (
-			<button className="btn waves-effect waves-light basic-btn"  type="submit" name="action">{this.props.msg}</button>
+			<a href='#'><button className="btn waves-effect waves-light basic-btn" name="action">{this.props.msg}</button></a>
 		);
 	}
 }
