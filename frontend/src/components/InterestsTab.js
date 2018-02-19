@@ -4,6 +4,16 @@ import './InterestsTab.css';
 class InterestsTab extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			interests: [
+				"Computer Security",
+				"Machine Learning",
+				"Software Development",
+				"Medicine",
+				"Pen Testing",
+				"Web Development",
+			]
+		}
 	}
 
 	render() {
@@ -13,12 +23,7 @@ class InterestsTab extends Component {
 					INTERESTS <a href='/pick-your-interests'><i className="material-icons interest-editor">add</i></a>
 				</div>
 				<div className='interests-tab'>
-					<div className='floater-item'>Computer Security</div>
-					<div className='floater-item'>Machine Learning</div>
-					<div className='floater-item'>Software Development</div>
-					<div className='floater-item'>Medicine</div>
-					<div className='floater-item'>Pen Testing</div>
-					<div className='floater-item'>Web Development</div>
+					{this.state.interests.map((interest) => <div className='floater-item'>{interest}</div>)}
 				</div>
 			</div>
 		);
