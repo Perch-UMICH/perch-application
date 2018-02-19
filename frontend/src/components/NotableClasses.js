@@ -9,11 +9,26 @@ class NotableClasses extends Component {
 
 	render() {
 		return (
-			<div className='past-research shift-down'>
-				<div className='container center-align past-research-form shadow'>
-					<div className='past-research-header'>List Notable Classes</div>
+			<div className='notable-classes shift-down'>
+				<div className='container center-align notable-classes-form shadow'>
+					<div className='notable-classes-header'>Academics</div>
 					<form className='container'>
-						<textarea className='past-research-input' placeholder="EECS 281"></textarea>
+						<div className='row'>
+							<div className='col s4'>
+								<div className='notable-classes-label left-align'>GPA</div>
+								<input classsName='' type='number' placeholder='4.0'/>
+							</div>
+							<div className='col s4'>
+								<div className='notable-classes-label left-align'>Major</div>
+								<input classsName='' type='text' placeholder='your major'/>
+							</div>
+							<div className='col s4'>
+								<div className='notable-classes-label left-align'>Year</div>
+								<input classsName='' type='text' placeholder='year'/>
+							</div>
+						</div>
+						<div className='notable-classes-label left-align'>List your notable classes</div>
+						<textarea className='notable-classes-input' placeholder="EECS 281"></textarea>
 						<SquareButton destination='student-profile' label='next'/>
 					</form>
 				</div>

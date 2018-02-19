@@ -28,8 +28,10 @@ class PickYourInterests extends Component {
 				"biomedical devices",
 			],
 
-			filtered_catalog: []
+			filtered_catalog: [],
+			in_filter: false
 		};
+		this.filterList = this.filterList.bind(this);
 	}
 
 	componentWillMount() {
@@ -42,28 +44,47 @@ class PickYourInterests extends Component {
       	return item.toLowerCase().search(
         	event.target.value.toLowerCase()) !== -1;
     	});
-    	this.setState({filtered_catalog: updatedList});
+    	this.setState({filtered_catalog: updatedList, in_filter: true});
 	}
 
-	handleClickAdd(interest) {
+	handleClickAdd(interest, temporary) {
 		this.setState((prevState) => {
 			var temp_add = prevState.interests;
 			var temp_delete = prevState.catalog;
+			var temp_filter = prevState.filtered_catalog;
 			temp_add.push(interest);
 			temp_delete.splice(temp_delete.indexOf(interest), 1);
 
-			return {catalog: temp_delete, interests: temp_add};
+			if (temporary != "default") {
+				temp_filter.splice(temp_filter.indexOf(interest), 1);
+			}
+			else if (this.state.in_filter) {
+				temp_filter.splice(temp_filter.indexOf(interest), 1);
+			}
+
+			return {catalog: temp_delete, interests: temp_add, filtered_catalog: temp_filter};
 		});
 	}
 
-	handleClickDelete(interest) {
+	handleClickDelete(interest, temporary) {
 		this.setState((prevState) => {
 			var temp_delete = prevState.interests;
 			var temp_add = prevState.catalog;
+			var temp_filter = prevState.filtered_catalog;
 			temp_add.push(interest);
 			temp_delete.splice(temp_delete.indexOf(interest), 1);
 
-			return {catalog: temp_add, interests: temp_delete};
+			let check = prevState.in_filter;
+			if (interest.includes(temporary.toString())) {
+				if (temporary != "default") {
+					temp_filter.push(interest);
+				}
+			}
+			else if (check && (temporary == "default")) {
+				temp_filter.push(interest);
+			}
+
+			return {catalog: temp_add, interests: temp_delete, filtered_catalog: temp_filter};
 		});
 	}
 
@@ -82,14 +103,21 @@ class PickYourInterests extends Component {
 			dest = 'past-research';
 		}
 
+		let temporary = "default";
+		if (document.getElementById('lab-name')) {
+			let len = document.getElementById('lab-name').value.length;
+			if (len != 0) {
+				temporary = document.getElementById('lab-name').value;
+			}
+		}
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
 				<div className='row interest-container'>
 					<div className='interest-section col s6 left-align'>
-						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} onChange={this.filterList.bind(this)} />
+						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} onChange={this.filterList} />
 						<div className='interest-body'>
 							{this.state.filtered_catalog.map((interest) => {
-								return (<span onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
+								return (<span onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
 							})}
 						</div>
 					</div>
@@ -100,7 +128,7 @@ class PickYourInterests extends Component {
 						</div>
 						<div className='interest-body'>
 							{this.state.interests.map((interest) => {
-								return (<span onClick={this.handleClickDelete.bind(this, interest)}> <Bubble txt={interest} type='deleter' /> </span>)
+								return (<span onClick={this.handleClickDelete.bind(this, interest, temporary)}> <Bubble txt={interest} type='deleter' /> </span>)
 							})}
 						</div>
 					</div>
