@@ -79,7 +79,7 @@ class PickYourInterests extends Component {
 					temp_filter.push(interest);
 				}
 			}
-			else if (check) {
+			else if (check && (temporary == "default")) {
 				temp_filter.push(interest);
 			}
 
