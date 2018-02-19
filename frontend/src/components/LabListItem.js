@@ -13,9 +13,7 @@ class LabListItem extends Component {
 				<img src={this.props.img} className='lab-list-item-img'/>
 				<div className='lab-list-tag-container'>
 					<div className='lab-list-name'>{this.props.labName}</div>
-					<div className='floater-item'>chemistry</div>
-					<div className='floater-item'>materials</div>
-					<div className='floater-item'>physics</div>
+					{this.props.tags.map((tag) => <div className='floater-item'>{tag}</div>)}
 				</div>
 				
 				<div className="lab-list-btn-container"><BasicButton msg='apply'/></div>
