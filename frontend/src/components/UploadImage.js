@@ -22,7 +22,7 @@ class UploadImage extends Component {
 							  <input className="file-path validate" type="text" placeholder="Upload one or more files" />
 							</div>
 						</form>
-						<SquareButton destination='student-profile' label='next'/>
+						<SquareButton destination='prof-page' label='next'/>
 					</div>
 				</div>
 			</div>
