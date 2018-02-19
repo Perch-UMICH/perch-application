@@ -8,13 +8,17 @@ class LabList extends Component {
 
 	render() {
 		return (
-		<div className='col s12 m6 l4'>
+		<div className='col s12'>
 			<div className='col s12 lab-list shadow' >
 				<div className='lab-list-header white-text'>{this.props.header}</div>
-				<LabListItem img='#' preview="This is a sample prev. Will fix long inputs."/>
-				<LabListItem img='#' preview="This is a sample prev. Will fix long inputs."/>
-				<LabListItem img='#' preview="This is a sample prev. Will fix long inputs."/>
-				<LabListItem img='#' preview="This is a sample prev. Will fix long inputs."/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
+				<LabListItem img='#' labName="Benji's Neurosurgery Lab"/>
 			</div>
 		</div>
 		);

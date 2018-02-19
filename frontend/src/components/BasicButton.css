@@ -1,0 +1,9 @@
+.basic-btn {
+	background-color: #0277bd;
+	box-shadow: none;
+}
+
+.basic-btn:hover {
+	background-color: #4fc3f7 ;
+	box-shadow: none;
+}

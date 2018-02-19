@@ -15,3 +15,13 @@
 .min-margin {
 	margin-bottom: 5px;
 }
+
+.submit-btn {
+	background-color: #0277bd;
+	box-shadow: none;
+}
+
+.submit-btn:hover {
+	background-color: #4fc3f7 ;
+	box-shadow: none;
+}
