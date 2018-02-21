@@ -1,0 +1,59 @@
+.lab-specifications {
+	height: 100vh;
+}
+
+.lab-specifications-form {
+	background-color: #0277bd;
+	padding: 20px;
+}
+
+.lab-specifications-checklist {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.lab-specifications-text {
+	color: #eee;
+}
+
+.lab-specifications-input {
+	height: 150px;
+	background-color: #eee;
+	box-shadow: 1px 1px 5px;
+	color: #eee;
+	padding: 10px;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.lab-specifications-input:hover {
+	color: #eee;
+}
+
+.columned-list {
+    -moz-column-count: 2;
+    -moz-column-gap: 30px;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 30px;
+    column-count: 2;
+    column-gap: 30px;
+    text-align: left;
+}
+
+.lab-specifications-header {
+	font-size: 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	background-color: rgb(41, 182, 246);
+	color: white;
+	margin-bottom: 20px;
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-top: -20px;
+}
+
+.checkbox-white[type="checkbox"].filled-in:checked + label:after{
+     border: 2px solid #29B6F6;
+     background-color: #29B6F6;
+}

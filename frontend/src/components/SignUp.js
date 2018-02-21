@@ -1,6 +1,22 @@
 import React, {Component} from 'react';
 import './SignUp.css';
 class SignUp extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			route: '/pick-your-interests?user_type=student'
+		};
+	}
+
+	handleUserTypeCheck(event) {
+		if (event.target.value === 'faculty') {
+			this.setState({route: '/lab-name'});
+		}
+		else {
+			this.setState({route: '/pick-your-interests?user_type=student'});
+		}
+	}
+
 	render() {
 		return (
 				<div id="form" className="center-align container">
@@ -8,7 +24,7 @@ class SignUp extends Component {
 				      <div className="container">
 				        <div className="form-header center-align grey-text text-darken-3">Join Perch</div>
 				        <div className="row">
-				          <form className="col s12" action='/pick-your-interests'>
+				          <form className="col s12" action={this.state.route}>
 				            <div className="row min-margin">
 				              <div className="input-field col s6">
 				                <input id="first_name" type="text" className="validate grey-text text-darken-2" required />
@@ -38,9 +54,9 @@ class SignUp extends Component {
 				                <label htmlFor="password_retype">Re-type Password</label>
 				              </div>
 				            </div>
-				              <input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required />
+				              <input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
 				              <label htmlFor="faculty">Faculty</label>
-				              <input className="radio" name="user_type" type="radio" id="student" value="student" required />
+				              <input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
 				              <label htmlFor="student">Student</label>
 				            <div className="submit-container row min-margin center-align">
 				              <button className="btn waves-effect waves-light submit-btn"  type="submit" name="action">De-awkwardize
