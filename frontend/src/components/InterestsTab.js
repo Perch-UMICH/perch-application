@@ -23,7 +23,7 @@ class InterestsTab extends Component {
 					INTERESTS <a href='/pick-your-interests'><i className="material-icons interest-editor">add</i></a>
 				</div>
 				<div className='interests-tab'>
-					{this.state.interests.map((interest) => <div className='floater-item'>{interest}</div>)}
+					{this.state.interests.map((interest) => <div key={interest} className='floater-item'>{interest}</div>)}
 				</div>
 			</div>
 		);

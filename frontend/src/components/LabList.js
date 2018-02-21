@@ -56,7 +56,7 @@ class LabList extends Component {
 		<div className='col s12'>
 			<div className='col s12 lab-list shadow' >
 				<div className='lab-list-header white-text'>{this.props.header}</div>
-				{this.state.labs.map((lab) => <LabListItem img={lab.img} labName={lab.name} tags={lab.tags} profile_link={lab.profile_link}/>)}
+				{this.state.labs.map((lab) => <LabListItem key={lab.name} img={lab.img} labName={lab.name} tags={lab.tags} profile_link={lab.profile_link}/>)}
 			</div>
 		</div>
 		);
