@@ -9,3 +9,11 @@
 .dark-blue-bg {
 	background-color: #0277bd;
 }
+
+.null-link-style {
+	color: inherit;
+}
+
+.null-link-style:hover {
+	color: inherit;
+}

@@ -9,9 +9,10 @@ class ProfPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			lab_name: "The Infant Cognition Project",
 			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
 			no: ['paid', 'seniors', 'freshman'],
-			lab_summary: "We are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. We are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. We are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. e are a lab that does cool shit. " 
+			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people." 
 		}
 	}
 
@@ -20,13 +21,13 @@ class ProfPage extends Component {
 		return(
 			<div className='shift-down container'>
 				<div className='row dark-blue-bg'>
-					<img src='img/benji.jpg' style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
-					<div className='prof-page-name'>Benji Bear's Neurosurgery Lab</div>
+					<img src='https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg' style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
+					<div className='prof-page-name'>{this.state.lab_name}</div>
 					<div className='indicator-container'>
-						{this.state.yes.map((msg) => <Indicator msg={msg} type='on'/>)}
+						{this.state.yes.map((msg) => <Indicator key={msg} msg={msg} type='on'/>)}
 					</div>
 					<div className='indicator-container'>
-						{this.state.no.map((msg) => <Indicator msg={msg} type='off'/>)}
+						{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
 					</div>
 				</div>
 				<div className='row flex ddd-bg'>

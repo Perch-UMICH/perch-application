@@ -156,7 +156,7 @@ class PickYourInterests extends Component {
 						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} onChange={this.filterList} />
 						<div className='interest-body'>
 							{this.state.filtered_catalog.map((interest) => {
-								return (<span onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
+								return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
 							})}
 						</div>
 					</div>
@@ -167,7 +167,7 @@ class PickYourInterests extends Component {
 						</div>
 						<div className='interest-body'>
 							{this.state.interests.map((interest) => {
-								return (<span onClick={this.handleClickDelete.bind(this, interest, temporary)}> <Bubble txt={interest} type='deleter' /> </span>)
+								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, temporary)}> <Bubble txt={interest} type='deleter' /> </span>)
 							})}
 						</div>
 					</div>

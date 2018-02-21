@@ -7,7 +7,7 @@ class LabList extends Component {
 		this.state = {
 			labs: [
 				{
-					name: "Benji's Neurosurgery Lab",
+					name: "The Infant Cognition Project",
 					img: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
 					tags: [
 						'neurosurgery',
@@ -56,7 +56,7 @@ class LabList extends Component {
 		<div className='col s12'>
 			<div className='col s12 lab-list shadow' >
 				<div className='lab-list-header white-text'>{this.props.header}</div>
-				{this.state.labs.map((lab) => <LabListItem img={lab.img} labName={lab.name} tags={lab.tags} profile_link={lab.profile_link}/>)}
+				{this.state.labs.map((lab) => <LabListItem key={lab.name} img={lab.img} labName={lab.name} tags={lab.tags} profile_link={lab.profile_link}/>)}
 			</div>
 		</div>
 		);

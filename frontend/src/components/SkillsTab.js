@@ -25,7 +25,7 @@ class SkillsTab extends Component {
 			<div>
 				<div className='tab-header'>SKILLS</div>
 				<div className='skills-tab'>
-					{this.state.skills.map((skill) => <div className='floater-item'>{skill}</div>)}
+					{this.state.skills.map((skill) => <div key={skill} className='floater-item'>{skill}</div>)}
 				</div>
 			</div>
 		);
