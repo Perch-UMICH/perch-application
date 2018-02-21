@@ -283,19 +283,6 @@ blockquote {
 	margin-top: 15px;
 }
 
-.submit-btn {
-	background-color: #0277bd;
-	/*border: 2px solid #0277bd;*/
-	box-shadow: none;
-}
-
-.submit-btn:hover {
-	background-color: #4fc3f7 ;
-	/*border: 2px solid #0277bd;*/
-	/*color: #0277bd;*/
-	box-shadow: none;
-}
-
 .advisor-img {
 	padding-left: 10%;
 	padding-right: 10%;
