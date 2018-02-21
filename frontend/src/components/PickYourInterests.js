@@ -118,38 +118,42 @@ class PickYourInterests extends Component {
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
 
-		switch(url_arr[1]) {
-			case "lab-skills":
-				header_txt = "Necessary Lab Skills";
-				dest = 'lab-specifications';
-				placeholder_txt = "Skills used to work in your lab";
-				break;
-			case "pick-your-interests":
-				switch(user_type) {
-					case "faculty":
-						header_txt = "Your Lab Labels";
-						placeholder_txt = "descriptors for your lab work";
-						dest = 'lab-skills';
-						break;
-					case "student":
-						header_txt = "Your Interests";
-						placeholder_txt = "field of interest";
-						dest = 'past-research';
-				}
-				break;
-			case "update-interests":
-				btn_label = "back";
-				switch(user_type) {
-					case "faculty":
-						header_txt = "Your Lab Labels";
-						placeholder_txt = "descriptors for your lab work";
-						dest = 'prof-page';
-						break;
-					case "student":
-						header_txt = "Your Interests";
-						placeholder_txt = "field of interest";
-						dest = 'student-profile';
-				}
+		if (url_arr[1] === 'lab-skills') {
+			header_txt = "Necessary Lab Skills";
+			dest = 'lab-specifications';
+			placeholder_txt = "Skills used to work in your lab";
+		}
+		else {
+			if (user_type === "faculty") {
+				header_txt = "Your Lab Labels";
+				placeholder_txt = "descriptors for your lab work";
+			}
+			else (user_type === "student") {
+				header_txt = "Your Interests";
+				placeholder_txt = "field of interest";
+			}
+
+			switch(url_arr[1]) {
+				case "pick-your-interests":
+					switch(user_type) {
+						case "faculty":
+							dest = 'lab-skills';
+							break;
+						case "student":
+							dest = 'past-research';
+					}
+					break;
+				case "update-interests":
+					btn_label = "back";
+					switch(user_type) {
+						case "faculty":
+							dest = 'prof-page';
+							break;
+						case "student":
+							dest = 'student-profile';
+					}
+			}
+	
 		}
 
 		let temporary = "default";
