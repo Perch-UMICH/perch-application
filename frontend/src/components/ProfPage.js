@@ -21,7 +21,7 @@ class ProfPage extends Component {
 		return(
 			<div className='shift-down container'>
 				<div className='row dark-blue-bg'>
-					<img src='img/benji.jpg' style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
+					<img src='https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg' style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
 					<div className='prof-page-name'>{this.state.lab_name}</div>
 					<div className='indicator-container'>
 						{this.state.yes.map((msg) => <Indicator key={msg} msg={msg} type='on'/>)}
