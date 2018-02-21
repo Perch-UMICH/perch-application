@@ -10,7 +10,7 @@ class InterestsTab extends Component {
 		return (
 			<div>
 				<div className='tab-header'>
-					INTERESTS <a href='/pick-your-interests'><i className="material-icons interest-editor">add</i></a>
+					{this.props.tabTitle} <a href='/pick-your-interests'><i className="material-icons interest-editor">add</i></a>
 				</div>
 				<div className='interests-tab'>
 					<div className='floater-item'>Computer Security</div>

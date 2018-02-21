@@ -33,7 +33,7 @@ class ProfPage extends Component {
 					<BioTab header='what we do' msg={this.state.lab_summary}/>
 				</div>
 				<div className='row flex'>
-					<div className='profile-tab shadow'><InterestsTab /></div>
+					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" /></div>
 					<div className='profile-tab shadow'><SkillsTab /></div>
 				</div>
 				{/*<div className='left-align row flex'>

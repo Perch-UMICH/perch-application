@@ -38,7 +38,7 @@ class StudentProfile extends Component {
 					{/*<div  style={{fontSize: '40px', color: 'white', letterSpacing: '2px'}}>Benji Bear</div>*/}
 				</div>
 				<div className='row flex'>
-					<div className='profile-tab shadow' style={{width: '50%'}}><InterestsTab /></div>
+					<div className='profile-tab shadow' style={{width: '50%'}}><InterestsTab tabTitle="INTERESTS" /></div>
 					<div className='profile-tab shadow' style={{width: '50%'}}><SkillsTab /></div>
 				</div>
 				<div className='row flex'>
