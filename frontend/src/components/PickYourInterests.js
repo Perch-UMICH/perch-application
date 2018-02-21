@@ -63,6 +63,7 @@ class PickYourInterests extends Component {
   	}
 
 	filterList(event) {
+
 		var updatedList = this.state.catalog;
     	updatedList = updatedList.filter(function(item){
       	return item.toLowerCase().search(
@@ -167,7 +168,7 @@ class PickYourInterests extends Component {
 			<div className='pick-your-interests shift-down container center-align'>
 				<div className='row interest-container'>
 					<div className='interest-section col s6 left-align'>
-						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} onChange={this.filterList} />
+						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} onChange={this.filterList.bind(this)} />
 						<div className='interest-body'>
 							{this.state.filtered_catalog.map((interest) => {
 								return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
