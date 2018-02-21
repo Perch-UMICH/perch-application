@@ -128,7 +128,7 @@ class PickYourInterests extends Component {
 				header_txt = "Your Lab Labels";
 				placeholder_txt = "descriptors for your lab work";
 			}
-			else (user_type === "student") {
+			else if (user_type === "student") {
 				header_txt = "Your Interests";
 				placeholder_txt = "field of interest";
 			}
