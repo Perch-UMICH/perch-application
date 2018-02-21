@@ -1,13 +1,40 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
-import SquareButton from './SquareButton'
-import Bubble from './Bubble'
-import './PickYourInterests.css'
+import SquareButton from './SquareButton';
+import Bubble from './Bubble';
+import './PickYourInterests.css';
+
 class PickYourInterests extends Component {
 	constructor(props) {
 		super(props);
+		var url_arr = this.props.location.pathname.split('/');
 		this.state = {
-			catalog: [
+			catalog: [],
+			interests: [],
+			filtered_catalog: [],
+			in_filter: false
+		};
+
+		if (url_arr[1] === 'lab-skills') {
+			var skills_catalog =  [
+				"plating",
+				"chromotography",
+				"MatLab",
+				"R",
+				"C++",
+				"Pen Testing",
+			];
+			var skills = [
+				"pun making",
+				"spectography",
+				"total phosphorus digestion",
+				"PCR",
+			];
+			this.state.catalog = skills_catalog;
+			this.state.interests = skills;
+		}
+		else {
+			var interests_catalog = [
 				"oncology",
 				"orange",
 				"orangutan",
@@ -18,24 +45,21 @@ class PickYourInterests extends Component {
 				"chemistry",
 				"physics",
 				"astro-physics",
-			],
-
-			interests: [
+			];
+			var interests = [
 				"security",
 				"fintech",
 				"machine learning",
 				"software development",
 				"biomedical devices",
-			],
-
-			filtered_catalog: [],
-			in_filter: false
-		};
-		this.filterList = this.filterList.bind(this);
+			];
+			this.state.catalog = interests_catalog;
+			this.state.interests = interests;
+		}
 	}
 
 	componentWillMount() {
-    	this.setState({filtered_catalog: this.state.catalog})
+    	this.setState({filtered_catalog: this.state.catalog});
   	}
 
 	filterList(event) {
@@ -90,17 +114,46 @@ class PickYourInterests extends Component {
 
 	render() {
 		var header_txt, placeholder_txt, dest = "";
+		var btn_label = 'next';
 		var user_type = parse(this.props.location.search).user_type;
+		var url_arr = this.props.location.pathname.split('/');
 
-		if (user_type === "faculty") {
-			header_txt = "Your Lab Labels";
-			dest = 'lab-website';
-			placeholder_txt = "descriptors for your lab work";
-		} 
-		else if (user_type === "student") {
-			header_txt = "Your Interests";
-			placeholder_txt = "field of interest";
-			dest = 'past-research';
+		if (url_arr[1] === 'lab-skills') {
+			header_txt = "Necessary Lab Skills";
+			dest = 'lab-specifications';
+			placeholder_txt = "Skills used to work in your lab";
+		}
+		else {
+			if (user_type === "faculty") {
+				header_txt = "Your Lab Labels";
+				placeholder_txt = "descriptors for your lab work";
+			}
+			else (user_type === "student") {
+				header_txt = "Your Interests";
+				placeholder_txt = "field of interest";
+			}
+
+			switch(url_arr[1]) {
+				case "pick-your-interests":
+					switch(user_type) {
+						case "faculty":
+							dest = 'lab-skills';
+							break;
+						case "student":
+							dest = 'past-research';
+					}
+					break;
+				case "update-interests":
+					btn_label = "back";
+					switch(user_type) {
+						case "faculty":
+							dest = 'prof-page';
+							break;
+						case "student":
+							dest = 'student-profile';
+					}
+			}
+	
 		}
 
 		let temporary = "default";
@@ -133,7 +186,7 @@ class PickYourInterests extends Component {
 						</div>
 					</div>
 				</div>
-				<SquareButton destination={dest} label='next'/>
+				<SquareButton destination={dest} label={btn_label}/>
 			</div>
 		);
 	}

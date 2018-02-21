@@ -11,6 +11,8 @@ import LabMatch from './components/LabMatch';
 import PickYourInterests from './components/PickYourInterests';
 import LabWebsite from './components/LabWebsite';
 import UploadImage from './components/UploadImage';
+import LabTextInfo from './components/LabTextInfo';
+import LabSpecifications from './components/LabSpecifications';
 import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
 import ProfPage from './components/ProfPage';
@@ -33,8 +35,13 @@ class Router extends Component {
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
 							<Route path='/pick-your-interests' component={ PickYourInterests }/>
+							<Route path='/update-interests' component={ PickYourInterests }/>
+							<Route path='/lab-skills' component={ PickYourInterests }/>
 							<Route path='/lab-website' component={ LabWebsite }/>
 							<Route path='/upload-image' component={ UploadImage }/>
+							<Route path='/lab-name' component= { LabTextInfo }/>
+							<Route path='/lab-description' component= { LabTextInfo }/>
+							<Route path='/lab-specifications' component= { LabSpecifications }/>
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/prof-page' component={ ProfPage }/>

@@ -12,8 +12,8 @@ class LabWebsite extends Component {
 			<div className='lab-website shift-down'>
 				<div className='container center-align lab-website-form shadow'>
 					<div className='lab-website-header'>Your Current Lab Website</div>
-					<form className='container'>
-						<input className='lab-website-input' placeholder="lab website URL"></input>
+					<form className='container input-field'>
+						<input className='lab-website-input' type="text" placeholder="lab website URL"></input>
 						<SquareButton destination='upload-image' label='next'/>
 					</form>
 				</div>

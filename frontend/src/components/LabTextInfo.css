@@ -1,17 +1,16 @@
-.lab-website {
+.lab-text-info {
 	height: 100vh;
 }
 
-.lab-website-form {
+.lab-text-info-form {
 	background-color: #0277bd;
 	padding: 20px;
 }
 
-.lab-website-input {
+.lab-text-info-input {
 	height: 150px;
 	background-color: #eee;
 	box-shadow: 1px 1px 5px;
-	border-bottom: 1px solid #eee;
 	color: #eee;
 	padding: 10px;
 	letter-spacing: 2px;
@@ -19,13 +18,11 @@
 	display: block;
 }
 
-.lab-website-input:focus {
+.lab-text-info-input:hover {
 	color: #eee;
-	border-bottom: 1px solid #eee;
-	box-shadow: 0 1px 0 0 #eee;
 }
 
-.lab-website-header {
+.lab-text-info-header {
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;

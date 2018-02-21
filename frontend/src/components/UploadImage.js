@@ -16,10 +16,10 @@ class UploadImage extends Component {
 						<form className='file-field input-field'>
 							<div className="btn upload-image-btn">
 							  <span>File</span>
-							  <input type="file" multiple />
+							  <input type="file" />
 							</div>
 							<div className="file-path-wrapper">
-							  <input className="file-path validate" type="text" placeholder="Upload one or more files" />
+							  <input className="file-path validate" type="text" placeholder="Upload file" />
 							</div>
 						</form>
 						<SquareButton destination='prof-page' label='next'/>
