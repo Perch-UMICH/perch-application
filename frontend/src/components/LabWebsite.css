@@ -11,6 +11,7 @@
 	height: 150px;
 	background-color: #eee;
 	box-shadow: 1px 1px 5px;
+	border-bottom: 1px solid #eee;
 	color: #eee;
 	padding: 10px;
 	letter-spacing: 2px;
@@ -18,8 +19,28 @@
 	display: block;
 }
 
-.lab-website-input:hover {
+.input-field input[type=text]:focus + label,
+.input-field input[type=text]:hover + label,
+.input-field input[type=text]:active + label {
 	color: #eee;
+	border-bottom: 1px solid #eee;
+	box-shadow: 0 1px 0 0 #eee;
+}
+
+.input-field input[type=text]:focus,
+.input-field input[type=text]:hover,
+.input-field input[type=text]:active {
+	border-bottom: 1px solid #eee;
+	box-shadow: 0 1px 0 0 #eee;
+	color: #eee;
+}
+
+.lab-website-input:hover,
+.lab-website-input:active,
+.lab-website-input:focus {
+	color: #eee;
+	border-bottom: 1px solid #eee;
+	box-shadow: 0 1px 0 0 #eee;
 }
 
 .lab-website-header {

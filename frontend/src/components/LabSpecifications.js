@@ -39,7 +39,7 @@ class LabSpecifications extends Component {
 					"text": "Placeholder"
 				},
 				{
-					"id": "7",
+					"id": "8",
 					"text": "Placeholder"
 				},
 			]
