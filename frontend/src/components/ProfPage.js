@@ -35,7 +35,7 @@ class ProfPage extends Component {
 				</div>
 				<div className='row flex'>
 					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" /></div>
-					<div className='profile-tab shadow'><SkillsTab /></div>
+					<div className='profile-tab shadow'><SkillsTab user_type="faculty" /></div>
 				</div>
 				{/*<div className='left-align row flex'>
 					<div className='col s3'>
