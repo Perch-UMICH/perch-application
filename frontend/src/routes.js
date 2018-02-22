@@ -37,6 +37,7 @@ class Router extends Component {
 							<Route path='/pick-your-interests' component={ PickYourInterests }/>
 							<Route path='/update-interests' component={ PickYourInterests }/>
 							<Route path='/lab-skills' component={ PickYourInterests }/>
+							<Route path='/update-skills' component={ PickYourInterests }/>
 							<Route path='/lab-website' component={ LabWebsite }/>
 							<Route path='/upload-image' component={ UploadImage }/>
 							<Route path='/lab-name' component= { LabTextInfo }/>

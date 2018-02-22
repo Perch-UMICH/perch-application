@@ -15,7 +15,7 @@ class PickYourInterests extends Component {
 			in_filter: false
 		};
 
-		if (url_arr[1] === 'lab-skills') {
+		if (url_arr[1] === 'lab-skills' || url_arr[1] === 'update-skills' ) {
 			var skills_catalog =  [
 				"plating",
 				"chromotography",
@@ -119,42 +119,38 @@ class PickYourInterests extends Component {
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
 
-		if (url_arr[1] === 'lab-skills') {
-			header_txt = "Necessary Lab Skills";
-			dest = 'lab-specifications';
-			placeholder_txt = "Skills used to work in your lab";
-		}
-		else {
+		if (url_arr[1] === 'pick-your-interests' || url_arr[1] === "update-interests") {
 			if (user_type === "faculty") {
 				header_txt = "Your Lab Labels";
 				placeholder_txt = "descriptors for your lab work";
-			}
-			else if (user_type === "student") {
+				dest = 'lab-skills?user_type=faculty';
+			} 
+			else {
 				header_txt = "Your Interests";
 				placeholder_txt = "field of interest";
+				dest = 'lab-skills?user_type=student';
 			}
-
-			switch(url_arr[1]) {
-				case "pick-your-interests":
-					switch(user_type) {
-						case "faculty":
-							dest = 'lab-skills';
-							break;
-						case "student":
-							dest = 'past-research';
-					}
-					break;
-				case "update-interests":
-					btn_label = "back";
-					switch(user_type) {
-						case "faculty":
-							dest = 'prof-page';
-							break;
-						case "student":
-							dest = 'student-profile';
-					}
+		} 
+		else if (url_arr[1] === 'lab-skills' || url_arr[1] === "update-skills") {
+			if (user_type === "faculty") {
+				header_txt = "Necessary Lab Skills";
+				placeholder_txt = "Skills used to work in your lab";
+				dest = 'lab-specifications';
+			} 
+			else {
+				header_txt = "Your Lab Skills";
+				placeholder_txt = "Skills you are competent in";
+				dest = 'past-research';
 			}
-	
+		}
+		if (url_arr[1] === "update-interests" || url_arr[1] === "update-skills") {
+			btn_label = "back";
+			if (user_type === "faculty") {
+				dest = 'prof-page';
+			}
+			else if (user_type === "student") {
+				dest = 'student-profile';
+			}
 		}
 
 		let temporary = "default";
