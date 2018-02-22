@@ -17,3 +17,18 @@
 .null-link-style:hover {
 	color: inherit;
 }
+
+.gen-input {
+	color: #eee !important;
+	letter-spacing: 1px;
+}
+
+.gen-input:focus + label, .gen-input:focus + label  {
+  color: #0277bd;
+}
+
+.gen-input:focus {
+  border-bottom: 1px solid #29b6f6 !important;
+  box-shadow: 0 1px 0 0 #29b6f6;
+  color: #eee;
+}

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton'
+import $ from 'jquery'
 import './NotableClasses.css';
 
 class NotableClasses extends Component {
@@ -14,17 +15,26 @@ class NotableClasses extends Component {
 					<div className='notable-classes-header'>Academics</div>
 					<form className='container'>
 						<div className='row'>
-							<div className='col s4'>
+							<div className='input-field col s4'>
 								<div className='notable-classes-label left-align'>GPA</div>
-								<input classsName='' type='number' placeholder='4.0'/>
+								<input className='gen-input' type='number' placeholder='4.0'/>
 							</div>
-							<div className='col s4'>
+							<div className='input-field col s4'>
 								<div className='notable-classes-label left-align'>Major</div>
-								<input classsName='' type='text' placeholder='your major'/>
+								<input className='gen-input' type='text' placeholder='your major'/>
 							</div>
-							<div className='col s4'>
+							<div className='input-field col s4'>
 								<div className='notable-classes-label left-align'>Year</div>
-								<input classsName='' type='text' placeholder='year'/>
+								{/*<input className='gen-input' type='text' placeholder='year'/>*/}
+								<select className='year-selector'>
+							      <option className='year-selector-item' value="" disabled selected>Choose your year</option>
+							      <option className='year-selector-item' value="1">freshman</option>
+							      <option className='year-selector-item' value="2">sophomore</option>
+							      <option className='year-selector-item' value="3">junior</option>
+							      <option className='year-selector-item' value="4">senior</option>
+							      <option className='year-selector-item' value="5">senior+</option>
+							    </select>
+							   
 							</div>
 						</div>
 						<div className='notable-classes-label left-align'>List your notable classes</div>
