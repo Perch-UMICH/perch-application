@@ -55,7 +55,7 @@ class NavBar extends Component {
 			      </ul>
 
 			        <ul className="left">
-			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="assets/LOGO.svg" /></a>
+			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/LOGO.svg" /></a>
 			        </ul>
 
 			        <ul className="center hide-on-med-and-up">

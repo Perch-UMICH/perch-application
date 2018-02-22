@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import BioTab from './BioTab'
-import Indicator from './Indicator'
-import InterestsTab from './InterestsTab'
-import SkillsTab from './SkillsTab'
-import './ProfPage.css'
+import BioTab from './BioTab';
+import Indicator from './Indicator';
+import InterestsTab from './InterestsTab';
+import SkillsTab from './SkillsTab';
+import SquareButton from './SquareButton';
+import './ProfPage.css';
 
 class ProfPage extends Component {
 	constructor(props) {
@@ -12,11 +13,13 @@ class ProfPage extends Component {
 			lab_name: "The Infant Cognition Project",
 			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
 			no: ['paid', 'seniors', 'freshman'],
-			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people." 
-		}
+			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.",
+			slug: 'the-infant-cognition-project'
+		};
 	}
 
 	render() {
+		var dest = '/apply/' + this.state.slug;
 
 		return(
 			<div className='shift-down container'>
@@ -29,6 +32,9 @@ class ProfPage extends Component {
 					<div className='indicator-container'>
 						{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
 					</div>
+				</div>
+				<div className='row'>
+					<SquareButton destination={dest} label="APPLY" />
 				</div>
 				<div className='row flex ddd-bg'>
 					<BioTab header='what we do' msg={this.state.lab_summary}/>

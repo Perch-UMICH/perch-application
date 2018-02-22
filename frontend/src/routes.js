@@ -16,6 +16,7 @@ import LabSpecifications from './components/LabSpecifications';
 import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
 import ProfPage from './components/ProfPage';
+import Apply from './components/Apply';
 import Test from './components/Test';
 import './components/general.css';
 
@@ -46,6 +47,7 @@ class Router extends Component {
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/prof-page' component={ ProfPage }/>
+							<Route path='/apply/:labSlug' component={ Apply } />
 							<Route path='/test' component={ Test }/>
 							<Route path='/' component={ Home } />
 						</Switch>
