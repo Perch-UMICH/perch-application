@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton'
+import shave from 'shave'
 import './LabListItem.css';
 
 class LabListItem extends Component {
@@ -7,6 +8,8 @@ class LabListItem extends Component {
 		super(props);
 	}
 
+
+	
 	render() {
 		return (
 			<div className='lab-list-item shadow'>
