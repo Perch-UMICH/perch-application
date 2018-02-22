@@ -28,6 +28,19 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+    <div>
+      <!-- Element Showed -->
+        <a id="feature" class="waves-effect waves-light btn btn-floating" onClick=" $('.tap-target').tapTarget('open');"><i id='tap-target-icon' class="material-icons">menu</i></a>
+
+        <!-- Tap Target Structure -->
+        <div class="tap-target" data-activates="feature">
+          <div class="tap-target-content">
+            <h5>Have Feedback?</h5>
+            <a class='null-link-style' href='feedback' target="_blank" style="z-index: 999"><p>Feeback Submission Form Here!</p></a>
+          </div>
+        </div> 
+    </div>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -54,6 +67,7 @@
       $('.logo').tilt({
      // axis: 'x'
       });  
-    });</script>
+    });
+        </script>
   </body>
 </html>

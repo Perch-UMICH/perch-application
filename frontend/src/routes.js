@@ -16,7 +16,9 @@ import LabSpecifications from './components/LabSpecifications';
 import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
 import ProfPage from './components/ProfPage';
+import Feedback from './components/Feedback';
 import Test from './components/Test';
+import './components/TapTarget.css';
 import './components/general.css';
 
 class Router extends Component {
@@ -46,10 +48,12 @@ class Router extends Component {
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/prof-page' component={ ProfPage }/>
+							<Route path='/feedback' component={ Feedback }/>
 							<Route path='/test' component={ Test }/>
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
+				{/*<TapTarget />*/}
 				</div>
 			</BrowserRouter>
 		);
