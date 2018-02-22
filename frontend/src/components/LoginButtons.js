@@ -17,7 +17,7 @@ class LoginButtons extends Component {
 	render() {
 		return(
 			<form className='container'>
-				<div className='row'>
+				<form className='row' action='prof-page'>
 					<div className='input-field col s12 m5'>
 						<input id='username_login' type="email" placeholder='username' className='validate shadow' style={this.inputCSS} required />
 					</div>
@@ -32,7 +32,7 @@ class LoginButtons extends Component {
 			        		>Login
 			        	</button>
 		        	</div>
-				</div>
+				</form>
 			</form>
 		);
 	}
