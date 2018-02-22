@@ -11,7 +11,7 @@
 	height: 150px;
 	background-color: #eee;
 	box-shadow: 1px 1px 5px;
-	color: #eee;
+	color: #29b6f6;
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
@@ -19,7 +19,12 @@
 }
 
 .lab-text-info-input:hover {
+	color: #0277bd;;
+}
+
+#lab-name-input {
 	color: #eee;
+	letter-spacing: 1px;
 }
 
 .lab-text-info-header {
@@ -32,4 +37,13 @@
 	margin-left: -20px;
 	margin-right: -20px;
 	margin-top: -20px;
+}
+
+.lab-text-info-input:focus + label, #lab-name-input:focus + label  {
+  color: #0277bd;
+}
+
+#lab-name-input:focus {
+  border-bottom: 1px solid #29b6f6 !important;
+  box-shadow: 0 1px 0 0 #29b6f6;
 }

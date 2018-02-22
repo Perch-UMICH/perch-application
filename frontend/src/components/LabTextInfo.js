@@ -27,7 +27,7 @@ class LabTextInfo extends Component {
 					<div className='lab-text-info-header'>{header_text}</div>
 					<form className='container'>
 						{url_arr[1] === 'lab-name' &&
-					        <input className='lab-text-info-input' placeholder='lab name'></input>
+					        <input id='lab-name-input' className='flow-text' placeholder='lab name'></input>
 					    }
 					    {url_arr[1] === 'lab-description' &&
 					       	<textArea className='lab-text-info-input' placeholder='lab description'></textArea>
