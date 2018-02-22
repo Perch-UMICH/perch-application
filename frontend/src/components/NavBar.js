@@ -67,12 +67,7 @@ class NavBar extends Component {
 			        </ul>
 
 			        <ul className="side-nav light-blue lighten-4" id="mobile-demo">
-			         
-			          <li><a className="nav-item" href="./views/about.html">ABOUT US</a></li>
-			          <li><a className="nav-item" href="./views/team.html">TEAM</a></li>
-			          <li><a className="nav-item" href="./views/timeline.html">TIMELINE</a></li>
-			          <li><a className="nav-item" href="./views/get-involved.html">LOGIN</a></li>
-			          <li><a className="nav-item" href="./views/contact.html">CONTACT US</a></li>
+			         	{navItems}
 			        </ul>
 			      </div>
 			      <div className='right'>
