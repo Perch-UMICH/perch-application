@@ -9,20 +9,22 @@ class AcademicsTab extends Component {
 	render() {
 		return (
 			<div>
-				<div className='tab-header' style={{height: '30px'}}></div>
-				<div className='academics-tab'>
+				<div className='tab-header academic-tab-header'>school</div>
+				<div className='academics-tab left-align'>
 					<div>
 						<span className='academic-label'>GPA: </span>
-						<span className='academic-info'>3.90</span>
+						<span className='academic-info'>{this.props.GPA}</span>
 					</div>
 					<div>
 						<span className='academic-label'>Year: </span>
-						<span className='academic-info'>Junior</span>
+						<span className='academic-info'>{this.props.year}</span>
+					</div>
+					<div>
+						<span className='academic-label'>Major: </span>
+						<span className='academic-info'>{this.props.major}</span>
 					</div>
 					<ul className='academic-label'>Notable Classes: 
-						<li className='academic-info'>EECS 281</li>
-						<li className='academic-info'>EECS 370</li>
-						<li className='academic-info'>EECS 388</li>
+						{this.props.classes.map((c) => <li className='academic-info'>{c}</li>)}
 					</ul>
 				</div>
 			</div>

@@ -4,8 +4,8 @@ import PositionsTab from './PositionsTab';
 import Indicator from './Indicator';
 import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
-import SquareButton from './SquareButton';
-import './ProfPage.css';
+import HugeButton from './HugeButton'
+import './ProfPage.css'
 
 class ProfPage extends Component {
 	constructor(props) {
@@ -15,6 +15,21 @@ class ProfPage extends Component {
 			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
 			no: ['paid', 'seniors', 'freshman'],
 			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.",
+			labels: [
+				"Pediatry",
+				"Children",
+				"Medicine",
+				"Psychology",
+				"Cognition",
+				"Bio-Informatics",
+			], 
+			skills: [
+				"Pediatry",
+				"Children",
+				"Medicine",
+				"Psychology",
+				"Statistical Informatics",
+			], 
 			slug: 'the-infant-cognition-project',
 			positions: [ 
 				{
@@ -66,27 +81,10 @@ class ProfPage extends Component {
 					<BioTab header='what we do' msg={this.state.lab_summary}/>
 				</div>
 				<div className='row flex'>
-					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" /></div>
-					<div className='profile-tab shadow'><SkillsTab user_type="faculty" /></div>
+					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
+					<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
 				</div>
-				{/*<div className='left-align row flex'>
-					<div className='col s3'>
-						<img src='img/benji.jpg' style={{border: '1px solid white', height: '200px', width: '200px'}}/>
-					</div>
-					<div className='col s6' style={{backgroundColor: '#ddd'}}>
-						<BioTab />
-					</div>
-					<div className='col s3' style={{backgroundColor: '#ddd'}}>
-						<AcademicsTab />
-					</div>
-				</div>
-				<div className='row flex'>
-					<div className='col s6 profile-tab shadow'><InterestsTab /></div>
-					<div className='col s6 profile-tab shadow'><SkillsTab /></div>
-				</div>
-				<div className='row flex'>
-					<div className='col s12 profile-tab shadow'><PastResearchTab /></div>
-				</div>*/}
+				<div className='row'><HugeButton msg='apply' /></div>
 			</div>
 		);
 	}
