@@ -1,0 +1,23 @@
+#feature {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	background-color: rgb(41, 182, 246);
+	/*height: 50px;
+	width: 50px;*/
+	opacity: 0.8;
+}
+
+.tap-target {
+	background-color: rgb(41, 182, 246);
+	color: white;
+	letter-spacing: 2px;
+}
+
+#tap-target-icon {
+	/*font-size: 40px;*/
+}
+
+i#tap-target-icon.material-icons {
+	background-color: rgb(41, 182, 246);
+}
