@@ -20,7 +20,6 @@ class ProfPage extends Component {
 
 	render() {
 		var dest = '/apply/' + this.state.slug;
-
 		return(
 			<div className='shift-down container'>
 				<div className='row dark-blue-bg'>
@@ -35,6 +34,8 @@ class ProfPage extends Component {
 				</div>
 				<div className='row'>
 					<SquareButton destination={dest} label="APPLY" />
+					<SquareButton destination='/create-position' label="CREATE APPLICATION" />
+					<SquareButton destination='/view-applicants' label="VIEW APPLICANTS" />
 				</div>
 				<div className='row flex ddd-bg'>
 					<BioTab header='what we do' msg={this.state.lab_summary}/>

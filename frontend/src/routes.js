@@ -17,6 +17,8 @@ import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
 import ProfPage from './components/ProfPage';
 import Apply from './components/Apply';
+import CreatePosition from './components/CreatePosition';
+import ViewApplicants from './components/ViewApplicants';
 import Test from './components/Test';
 import './components/general.css';
 
@@ -47,7 +49,10 @@ class Router extends Component {
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/prof-page' component={ ProfPage }/>
+							<Route path='/prof-page/:labSlug' component={ ProfPage }/>
 							<Route path='/apply/:labSlug' component={ Apply } />
+							<Route path='/create-position' component={ CreatePosition } />
+							<Route path='/view-applicants' component={ ViewApplicants } />
 							<Route path='/test' component={ Test }/>
 							<Route path='/' component={ Home } />
 						</Switch>

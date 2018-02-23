@@ -1,0 +1,31 @@
+.modal {
+	position: fixed;
+	top: 30%;
+	z-index: 1000;
+}
+
+#modalBackdrop {
+	display: none;
+	position: fixed;
+	width: 120%;
+	height: 120%;
+	top: 0;
+	left: 0;
+	background-color: black;
+	z-index: 999;
+	opacity: 0.2;
+}
+
+#submitModal {
+	display: none;
+}
+
+.modal-content {
+	text-align: left;
+}
+
+.modal-btn {
+	border: 2px solid #eee;
+	background-color: #0277BD;
+	color: #eee;
+}

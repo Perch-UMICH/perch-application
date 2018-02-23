@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
 import ModalButton from './ModalButton';
-import './Apply.css';
 
-class Apply extends Component {
+class ViewApplicants extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -46,4 +45,4 @@ class Apply extends Component {
 	}
 }
 
-export default Apply;
+export default ViewApplicants;
