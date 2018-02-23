@@ -5,6 +5,7 @@ import InterestsTab from './InterestsTab';
 import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
+import $ from 'jquery'
 import './StudentProfile.css';
 class StudentProfile extends Component {
 	constructor(props) {
@@ -43,17 +44,35 @@ class StudentProfile extends Component {
 			],
 		}
 	}
+
+	componentDidMount() {
+		$( document ).ready(function() {
+    		var s_img = document.getElementById('student-img');
+			var height = window.getComputedStyle(s_img, null).height;
+			var a_tab = document.getElementById('academics-tab');
+			var s_name = document.getElementById('student-name');
+			a_tab.style.height = height;
+			s_name.style.height = height;
+		});
+		
+	}
+
 	render() {
 		return (
-			<div className='shift-down'>
-				<div className='row center-align'>
-					<img src='img/benji.jpg' style={{height: '200px', width: '200px', marginRight: '5px'}}/>
-					
-					<div className='shadow' style={{backgroundColor: '#ddd', width: '200px', display: 'inline-block'}}>
+			<div className='container shift-down'>
+				<div className='row left-align'>
+					<img id='student-img' className='col s6 m4' src='img/meha.jpg' />
+					<div id='academics-tab' className='col s6 m3' style={{backgroundColor: '#ddd', display: 'inline-block' }}>
 						<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/>
 					</div>	
+					<div id='student-name' className='hide-on-small-only col s12 m5 valign-wrapper student-name'>
+						<div className='container center-align flow-text'>Benji Bear</div>
+					</div>
+					<div className='hide-on-med-and-up col s12 valign-wrapper' style={{padding: '0px'}}>
+						<div className='container center-align flow-text student-name-mobile'>Benji Bear</div>
+					</div>
 				</div>
-				<div className='container'>
+				<div className=''>
 					<div className='row' style={{backgroundColor: '#ddd'}} >
 						<BioTab header='bio' msg={this.state.bio}/>
 					</div>	

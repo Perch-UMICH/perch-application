@@ -9,7 +9,7 @@ class AcademicsTab extends Component {
 	render() {
 		return (
 			<div>
-				<div className='tab-header academic-tab-header'>school</div>
+				{/*<div className='tab-header row academic-tab-header'>school</div>*/}
 				<div className='academics-tab left-align'>
 					<div>
 						<span className='academic-label'>GPA: </span>

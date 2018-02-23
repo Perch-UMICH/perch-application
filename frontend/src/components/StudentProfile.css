@@ -27,7 +27,7 @@
 	color: white;
 	text-align: center;
 	letter-spacing: 4px;
-	font-size: 20px;
+	font-size: 20px; 
 }
 
 .floater-item {
@@ -45,4 +45,30 @@
 
 .flex { 
 	display: flex;
+}
+
+#academics-tab {
+	overflow: scroll;
+}
+
+#student-img {
+	padding: 0px;
+	/*padding-left: 0px;*/
+}
+
+.student-name {
+	background-color: rgb(41, 182, 246);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: white;
+}
+
+.student-name-mobile {
+	background-color: rgb(41, 182, 246);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: white;
+	padding: 20px;
+	margin: 0;
+	width: 100%;
 }
