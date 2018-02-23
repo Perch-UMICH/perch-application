@@ -13,7 +13,22 @@ class ProfPage extends Component {
 			lab_name: "The Infant Cognition Project",
 			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
 			no: ['paid', 'seniors', 'freshman'],
-			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people." 
+			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.",
+			labels: [
+				"Pediatry",
+				"Children",
+				"Medicine",
+				"Psychology",
+				"Cognition",
+				"Bio-Informatics",
+			], 
+			skills: [
+				"Pediatry",
+				"Children",
+				"Medicine",
+				"Psychology",
+				"Statistical Informatics",
+			], 
 		}
 	}
 
@@ -35,8 +50,8 @@ class ProfPage extends Component {
 					<BioTab header='what we do' msg={this.state.lab_summary}/>
 				</div>
 				<div className='row flex'>
-					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" /></div>
-					<div className='profile-tab shadow'><SkillsTab user_type="faculty" /></div>
+					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
+					<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
 				</div>
 				<div className='row'><HugeButton msg='apply' /></div>
 			</div>
