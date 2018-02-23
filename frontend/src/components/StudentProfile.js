@@ -61,6 +61,9 @@ class StudentProfile extends Component {
 		return (
 			<div className='container shift-down'>
 				<div className='row left-align'>
+					<div className='hide-on-med-and-up col s12 valign-wrapper' style={{padding: '0px'}}>
+						<div className='container center-align flow-text student-name-mobile'>Benji Bear</div>
+					</div>
 					<img id='student-img' className='col s6 m4' src='img/meha.jpg' />
 					<div id='academics-tab' className='col s6 m3' style={{backgroundColor: '#ddd', display: 'inline-block' }}>
 						<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/>
@@ -68,9 +71,7 @@ class StudentProfile extends Component {
 					<div id='student-name' className='hide-on-small-only col s12 m5 valign-wrapper student-name'>
 						<div className='container center-align flow-text'>Benji Bear</div>
 					</div>
-					<div className='hide-on-med-and-up col s12 valign-wrapper' style={{padding: '0px'}}>
-						<div className='container center-align flow-text student-name-mobile'>Benji Bear</div>
-					</div>
+					
 				</div>
 				<div className=''>
 					<div className='row' style={{backgroundColor: '#ddd'}} >

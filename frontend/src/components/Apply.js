@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import SquareButton from './SquareButton';
 import ModalButton from './ModalButton';
 import AppQuestionTab from './AppQuestionTab';
+import $ from 'jquery'
 import './Apply.css';
 
 class Apply extends Component {
