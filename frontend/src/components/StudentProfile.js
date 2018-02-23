@@ -46,7 +46,7 @@ class StudentProfile extends Component {
 	}
 
 	componentDidMount() {
-		$( document ).ready(function() {
+		$( document ).ready(()=> {
     		var s_img = document.getElementById('student-img');
 			var height = window.getComputedStyle(s_img, null).height;
 			var a_tab = document.getElementById('academics-tab');
