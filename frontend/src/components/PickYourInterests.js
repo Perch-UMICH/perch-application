@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
 import SquareButton from './SquareButton';
+import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
 import './PickYourInterests.css';
 
@@ -10,9 +11,7 @@ class PickYourInterests extends Component {
 		var url_arr = this.props.location.pathname.split('/');
 		this.state = {
 			catalog: [],
-			interests: [],
-			filtered_catalog: [],
-			in_filter: false
+			interests: []
 		};
 
 		if (url_arr[1] === 'lab-skills' || url_arr[1] === 'update-skills' ) {
@@ -58,61 +57,6 @@ class PickYourInterests extends Component {
 		}
 	}
 
-	componentWillMount() {
-    	this.setState({filtered_catalog: this.state.catalog});
-  	}
-
-	filterList(event) {
-
-		var updatedList = this.state.catalog;
-    	updatedList = updatedList.filter(function(item){
-      	return item.toLowerCase().search(
-        	event.target.value.toLowerCase()) !== -1;
-    	});
-    	this.setState({filtered_catalog: updatedList, in_filter: true});
-	}
-
-	handleClickAdd(interest, temporary) {
-		this.setState((prevState) => {
-			var temp_add = prevState.interests;
-			var temp_delete = prevState.catalog;
-			var temp_filter = prevState.filtered_catalog;
-			temp_add.push(interest);
-			temp_delete.splice(temp_delete.indexOf(interest), 1);
-
-			if (temporary != "default") {
-				temp_filter.splice(temp_filter.indexOf(interest), 1);
-			}
-			else if (this.state.in_filter) {
-				temp_filter.splice(temp_filter.indexOf(interest), 1);
-			}
-
-			return {catalog: temp_delete, interests: temp_add, filtered_catalog: temp_filter};
-		});
-	}
-
-	handleClickDelete(interest, temporary) {
-		this.setState((prevState) => {
-			var temp_delete = prevState.interests;
-			var temp_add = prevState.catalog;
-			var temp_filter = prevState.filtered_catalog;
-			temp_add.push(interest);
-			temp_delete.splice(temp_delete.indexOf(interest), 1);
-
-			let check = prevState.in_filter;
-			if (interest.includes(temporary.toString())) {
-				if (temporary != "default") {
-					temp_filter.push(interest);
-				}
-			}
-			else if (check && (temporary == "default")) {
-				temp_filter.push(interest);
-			}
-
-			return {catalog: temp_add, interests: temp_delete, filtered_catalog: temp_filter};
-		});
-	}
-
 	render() {
 		var header_txt, placeholder_txt, dest = "";
 		var btn_label = 'next';
@@ -153,36 +97,16 @@ class PickYourInterests extends Component {
 			}
 		}
 
-		let temporary = "default";
-		if (document.getElementById('lab-name')) {
-			let len = document.getElementById('lab-name').value.length;
-			if (len != 0) {
-				temporary = document.getElementById('lab-name').value;
-			}
-		}
+		var display_info = {
+			placeholder_txt: placeholder_txt,
+			header_txt: header_txt,
+			catalog: this.state.catalog,
+			interests: this.state.interests
+		};
+
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
-				<div className='row interest-container'>
-					<div className='interest-section col s6 left-align'>
-						<input id='lab-name' className='interest-search' type='text' placeholder={placeholder_txt} onChange={this.filterList.bind(this)} />
-						<div className='interest-body'>
-							{this.state.filtered_catalog.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
-							})}
-						</div>
-					</div>
-
-					<div className='interest-section col s6'>
-						<div className='interest-header'>
-							{header_txt}
-						</div>
-						<div className='interest-body'>
-							{this.state.interests.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, temporary)}> <Bubble txt={interest} type='deleter' /> </span>)
-							})}
-						</div>
-					</div>
-				</div>
+				<BubbleChoice display_info={display_info} />
 				<SquareButton destination={dest} label={btn_label}/>
 			</div>
 		);

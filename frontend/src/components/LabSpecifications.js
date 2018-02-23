@@ -11,35 +11,35 @@ class LabSpecifications extends Component {
 		this.state = {
 			specs: [
 				{
-					"id": "1",
+					"id": "s_1",
 					"text": "Spots open?"
 				},
 				{
-					"id": "2",
+					"id": "s_2",
 					"text": "Paying lab assistants?"
 				},
 				{
-					"id": "3",
+					"id": "s_3",
 					"text": "Accepting undergraduate students?"
 				},
 				{
-					"id": "4",
+					"id": "s_4",
 					"text": "May assistants use for credit?"
 				},
 				{
-					"id": "5",
+					"id": "s_5",
 					"text": "Nobel prize prerequisite?"
 				},
 				{
-					"id": "6",
+					"id": "s_6",
 					"text": "Payment available in bitcoin?"
 				},
 				{
-					"id": "7",
+					"id": "s_7",
 					"text": "Placeholder"
 				},
 				{
-					"id": "8",
+					"id": "s_8",
 					"text": "Placeholder"
 				},
 			]

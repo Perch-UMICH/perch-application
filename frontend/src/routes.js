@@ -16,6 +16,9 @@ import LabSpecifications from './components/LabSpecifications';
 import PastResearch from './components/PastResearch';
 import NotableClasses from './components/NotableClasses';
 import ProfPage from './components/ProfPage';
+import Apply from './components/Apply';
+import CreatePosition from './components/CreatePosition';
+import ViewApplicants from './components/ViewApplicants';
 import Feedback from './components/Feedback';
 import Test from './components/Test';
 import './components/TapTarget.css';
@@ -35,6 +38,7 @@ class Router extends Component {
 							<Route path='/timeline' component={ Timeline } />
 							<Route path='/login' component={ Login } />
 							<Route path='/student-profile' component={ StudentProfile } />
+							<Route path='/student-profile/:studentSlug' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
 							<Route path='/pick-your-interests' component={ PickYourInterests }/>
 							<Route path='/update-interests' component={ PickYourInterests }/>
@@ -48,6 +52,10 @@ class Router extends Component {
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/prof-page' component={ ProfPage }/>
+							<Route path='/prof-page/:labSlug' component={ ProfPage }/>
+							<Route path='/apply/:labSlug' component={ Apply } />
+							<Route path='/create-position' component={ CreatePosition } />
+							<Route path='/view-applicants' component={ ViewApplicants } />
 							<Route path='/feedback' component={ Feedback }/>
 							<Route path='/test' component={ Test }/>
 							<Route path='/' component={ Home } />

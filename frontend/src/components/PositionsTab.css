@@ -1,0 +1,21 @@
+.positions-tab {
+	position: relative;
+	color: grey;
+	letter-spacing: 1px;
+	margin: 25px 15px;
+}
+
+.positions-tab-header {
+	position: relative;
+	width: 100%;
+	background-color: #8bc34a;
+}
+
+.tab-fit {
+	position: relative;
+	width: 100%;
+}
+
+#showOnFaculty {
+	display: none;
+}
