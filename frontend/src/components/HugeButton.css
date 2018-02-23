@@ -1,0 +1,13 @@
+.huge-btn {
+	background-color: rgb(41, 182, 246);
+	/*border: 6px solid #0277bd;*/
+	width: 100%;
+	margin-bottom: 20px;
+	height: 80px;
+	padding: 0px;
+}
+
+.huge-btn:hover {
+	background-color: #4fc3f7 ;
+	box-shadow: none;
+}

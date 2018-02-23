@@ -3,6 +3,7 @@ import BioTab from './BioTab'
 import Indicator from './Indicator'
 import InterestsTab from './InterestsTab'
 import SkillsTab from './SkillsTab'
+import HugeButton from './HugeButton'
 import './ProfPage.css'
 
 class ProfPage extends Component {
@@ -37,24 +38,7 @@ class ProfPage extends Component {
 					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" /></div>
 					<div className='profile-tab shadow'><SkillsTab user_type="faculty" /></div>
 				</div>
-				{/*<div className='left-align row flex'>
-					<div className='col s3'>
-						<img src='img/benji.jpg' style={{border: '1px solid white', height: '200px', width: '200px'}}/>
-					</div>
-					<div className='col s6' style={{backgroundColor: '#ddd'}}>
-						<BioTab />
-					</div>
-					<div className='col s3' style={{backgroundColor: '#ddd'}}>
-						<AcademicsTab />
-					</div>
-				</div>
-				<div className='row flex'>
-					<div className='col s6 profile-tab shadow'><InterestsTab /></div>
-					<div className='col s6 profile-tab shadow'><SkillsTab /></div>
-				</div>
-				<div className='row flex'>
-					<div className='col s12 profile-tab shadow'><PastResearchTab /></div>
-				</div>*/}
+				<div className='row'><HugeButton msg='apply' /></div>
 			</div>
 		);
 	}

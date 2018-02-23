@@ -1,7 +1,9 @@
 .interests-tab {
-	height: 120px;
+	/*height: 120px;*/
 	margin-top: 15px;
 	padding-left: 10px;
+	padding-bottom: 10px;
+	float: left
 }
 
 .interest-editor {
