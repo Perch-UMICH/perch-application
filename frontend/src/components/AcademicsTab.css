@@ -2,6 +2,11 @@
 	color: grey;
 	letter-spacing: 1px;
 	margin-top: 15px;
+	padding-left: 20px;
+	padding-right: 20px;
+	width: 200px;
+	height: 155px;
+	overflow: scroll;
 }
 
 .academic-label {
@@ -12,4 +17,9 @@
 .academic-info {
 	color: grey;
 	font-weight: normal;
+}
+
+.academic-tab-header {
+	text-transform: uppercase;
+	height: 30px;
 }
