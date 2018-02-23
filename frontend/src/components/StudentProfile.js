@@ -64,11 +64,11 @@ class StudentProfile extends Component {
 					<div className='hide-on-med-and-up col s12 valign-wrapper' style={{padding: '0px'}}>
 						<div className='container center-align flow-text student-name-mobile'>Benji Bear</div>
 					</div>
-					<img id='student-img' className='col s6 m3' src='img/meha.jpg' />
-					<div id='academics-tab' className='col s6 m3' style={{backgroundColor: '#ddd', display: 'inline-block' }}>
+					<img id='student-img' className='col s6 m4 l3' src='img/meha.jpg' />
+					<div id='academics-tab' className='col s6 m3 l3' style={{backgroundColor: '#ddd', display: 'inline-block' }}>
 						<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/>
 					</div>	
-					<div id='student-name' className='hide-on-small-only col s12 m6 valign-wrapper student-name'>
+					<div id='student-name' className='hide-on-small-only col s12 m5 l6 valign-wrapper student-name'>
 						<div className='container center-align flow-text'>Benji Bear</div>
 					</div>
 					
