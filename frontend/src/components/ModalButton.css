@@ -4,6 +4,10 @@
 	z-index: 1000;
 }
 
+.modal.display-modal {
+	top: 15%;
+}
+
 #modalBackdrop {
 	display: none;
 	position: fixed;
@@ -14,6 +18,11 @@
 	background-color: black;
 	z-index: 999;
 	opacity: 0.2;
+}
+
+#createModal {
+	display: none;
+	top: 15%;
 }
 
 #submitModal {
@@ -28,4 +37,14 @@
 	border: 2px solid #eee;
 	background-color: #0277BD;
 	color: #eee;
+}
+
+#studentListButton {
+	margin-top: 4px;
+}
+
+.fe-test {
+	display: inline-block;
+	color: #eee;
+	padding-right: 10px;
 }

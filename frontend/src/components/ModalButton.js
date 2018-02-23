@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 import SquareButton from './SquareButton';
-import SubmissionModal from './SubmissionModal';
+import AppSubmissionModal from './AppSubmissionModal';
+import AppCreationModal from './AppCreationModal';
 import './ModalButton.css';
 
 class ModalButton extends Component {
@@ -11,14 +12,16 @@ class ModalButton extends Component {
 	}
     onClick(event) {
         $('#submitModal').fadeIn("slow");
+        $('#createModal').fadeIn("slow");
         $('#modalBackdrop').fadeIn("slow");
     }
     render() {
         return (
             <div>
             	<div id="modalBackdrop"></div>
-            	<p onClick={this.onClick}><SquareButton label='submit'/></p>
-            	<SubmissionModal />
+            	<p onClick={this.onClick}><SquareButton label={this.props.label} /></p>
+                {this.props.type === "create_app" ? <AppCreationModal info={this.props.info}/> : null }
+            	{this.props.type === "submit_app" ? <AppSubmissionModal /> : null }
             </div>
         );
     }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class SubmissionModal extends Component {
+class AppSubmissionModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -29,4 +29,4 @@ class SubmissionModal extends Component {
 	}
 }
 
-export default SubmissionModal;
+export default AppSubmissionModal;

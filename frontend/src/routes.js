@@ -38,6 +38,7 @@ class Router extends Component {
 							<Route path='/timeline' component={ Timeline } />
 							<Route path='/login' component={ Login } />
 							<Route path='/student-profile' component={ StudentProfile } />
+							<Route path='/student-profile/:studentSlug' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
 							<Route path='/pick-your-interests' component={ PickYourInterests }/>
 							<Route path='/update-interests' component={ PickYourInterests }/>

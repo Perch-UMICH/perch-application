@@ -1,24 +1,56 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
-import ModalButton from './ModalButton';
+import StudentListItem from './StudentListItem';
+import './LabList.css';
 
 class ViewApplicants extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lab_name: "The Infant Cognition Project",
-			application_questions: [
+			applicants: [
 				{
-					"id": "q_1",
-					"text": "Why are you interested in working for our lab?"
+					name: "Joe Schmo",
+					slug: "joe-schmo",
+					img: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
+					tags: [
+						'MatLab',
+						'React.js',
+						'A+ Humor',
+					],
+					profile_link: '/student-profile/joe-schmo'
 				},
 				{
-					"id": "q_2",
-					"text": "How do your skills/experiences align with our lab work?"
+					name: "Cool Student 87",
+					slug: "cool-student-87",
+					img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_L8P0FKjusRLjt6GL_tsSWV4PfVp97L9dUw3PfbNEufTGlWtPCg',
+					tags: [
+						'pencil-sharpening',
+						'spectography',
+						'kind eyes',
+					],
+					profile_link: '/student-profile/cool-student-87'
 				},
 				{
-					"id": "q_3",
-					"text": "How much wood would a wood chuck chuck if a wood chuck *couldn't* chuck wood?"
+					name: "Susan Salmon",
+					slug: "susan-salmon",
+					img: 'http://csforum2013.com/wp-content/uploads/2013/04/kristina-headshot-square-624x609.png',
+					tags: [
+						'plating',
+						'planking',
+						'planting',
+					],
+					profile_link: '/student-profile/susan-salmon'
+				},
+				{
+					name: "Mary Modal",
+					slug: "mary-modal",
+					img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY',
+					tags: [
+						'something',
+						'physics',
+						'astronomy',
+					],
+					profile_link: '/student-profile/mary-modal'
 				},
 			]
 		};
@@ -26,18 +58,13 @@ class ViewApplicants extends Component {
 
 	render() {
 		return (
-			<div className='apply shift-down'>
-				<div className='container center-align apply-form shadow'>
-					<div className='apply-header'>Apply to {this.state.lab_name}</div>
-					<div className="container">
-						<form className='file-field'>
-						    {this.state.application_questions.map((question) => {
-								return (
-									<p><label className="apply-question-label" htmlFor={question.id}>{question.text}</label>
-									<textArea id={question.id} type="text" id="apply-question-input" className="materialize-textarea" required /></p>);
-							})}
-						</form>
-						<ModalButton /> 
+			<div className='shift-down container center-align'>
+				<div className='row'>
+					<div className='col s12'>
+						<div className='col s12 lab-list shadow' >
+							<div className='lab-list-header white-text'>Applicants to Your Lab</div>
+							{this.state.applicants.map((app) => <StudentListItem key={app.name} img={app.img} name={app.name} tags={app.tags} dest={app.profile_link} slug={app.slug}/>)}
+						</div>
 					</div>
 				</div>
 			</div>

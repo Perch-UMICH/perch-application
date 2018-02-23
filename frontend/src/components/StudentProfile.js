@@ -27,7 +27,7 @@ class StudentProfile extends Component {
 			<div className='shift-down container'>
 				<div className='left-align row flex'>
 					<div className='' style={{width: '25%'}}>
-						<img src='img/benji.jpg' style={{border: '1px solid white', height: '200px', width: '200px'}}/>
+						<img src='/img/benji.jpg' style={{border: '1px solid white', height: '200px', width: '200px'}}/>
 					</div>
 					<div className='shadow' style={{backgroundColor: '#ddd', width: '50%'}}>
 						<BioTab header='bio' msg="I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning."/>
