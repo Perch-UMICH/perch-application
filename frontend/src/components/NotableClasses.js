@@ -39,7 +39,7 @@ class NotableClasses extends Component {
 	render() {
 		var url_arr = this.props.location.pathname.split('/');
 		var btn_msg = 'next';
-		var dest = 'notable-classes';
+		var dest = '/student-bio';
 		var header = 'Academics';
 		if (url_arr[1] === "update-notable-classes") {
 			btn_msg = 'back';

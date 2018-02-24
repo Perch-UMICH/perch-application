@@ -36,7 +36,7 @@ class StudentBio extends Component {
 				<div className='container center-align past-research-form shadow'>
 					<div className='past-research-header'>
 						{ update ? <div className='update-info'>Update </div> : null } 
-						 Bio
+						Personal Bio
 					</div>
 					<form className='container'>
 						<textarea className='past-research-input' id="textArea" 
