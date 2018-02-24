@@ -4,8 +4,8 @@
 	border: 1px solid white;
 }
 
-.student-bio {
-	width: 50%;
+.student-bio-form {
+	width: 85%;
 }
 
 .profile-pic {
@@ -45,6 +45,26 @@
 
 .flex { 
 	display: flex;
+}
+
+#imageEdit {
+	float: none;
+	margin-right: 10px;
+	margin-left: 6px;
+}
+
+#editImageText {
+	color: #eee;
+	background-color: none;
+}
+
+#editImageText:hover {
+	background-color: none;
+}
+
+.update-info {
+	display: inline-block;
+	padding-right: 10px;
 }
 
 #academics-tab {

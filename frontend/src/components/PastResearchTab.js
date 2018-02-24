@@ -9,7 +9,10 @@ class PastResearchTab extends Component {
 	render() {
 		return (
 			<div>
-				<div className='tab-header'>PAST RESEARCH</div>
+				<div className='tab-header'>
+					PAST RESEARCH
+					<a href='/update-past-research'><i className="material-icons interest-editor edit-icon">create</i></a>
+				</div>
 				<div className='past-research-tab center-align'>
 					<ul>
 						<li>Dr. Patil's Neurosurgery Lab</li>
