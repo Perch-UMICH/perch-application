@@ -1,6 +1,62 @@
-.feedback {
-	height: 100vh;
+.big-feedback {
+	height: 75vh;
 	color: white;
 	font-size: 60px;
 	text-transform: uppercase;
+}
+
+.feedback-preface {
+	color: #eee;
+	padding-bottom: 20px;
+	line-height: 130%;
+}
+
+.feedback {
+	height: 100vh;
+}
+
+.feedback-form {
+	background-color: #0277bd;
+	padding: 20px;
+}
+
+.feedback-input {
+	height: 150px;
+	background-color: #eee;
+	box-shadow: 1px 1px 5px;
+	border-bottom: 1px solid #eee;
+	color: #eee;
+	padding: 10px;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.feedback-textarea-input {
+	height: 150px;
+	background-color: #eee;
+	box-shadow: 1px 1px 5px;
+	color: #29b6f6;
+	padding: 10px;
+	letter-spacing: 2px;
+	margin-bottom: 20px;
+	display: block;
+}
+
+.feedback-input:focus {
+	color: #eee;
+	border-bottom: 1px solid #eee;
+	box-shadow: 0 1px 0 0 #eee;
+}
+
+.feedback-header {
+	font-size: 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	background-color: rgb(41, 182, 246);
+	color: white;
+	margin-bottom: 20px;
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-top: -20px;
 }
