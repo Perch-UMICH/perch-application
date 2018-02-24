@@ -60,6 +60,7 @@ class ProfPage extends Component {
 				<div className='row dark-blue-bg'>
 					<img src='https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg' style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
 					<div className='prof-page-name'>{this.state.lab_name}</div>
+					<a href='/update-lab-specifications'><i className="material-icons interest-editor" id="specEdit">create</i></a>
 					<div className='indicator-container'>
 						{this.state.yes.map((msg) => <Indicator key={msg} msg={msg} type='on'/>)}
 					</div>
@@ -78,7 +79,7 @@ class ProfPage extends Component {
 					<PositionsTab header='open positions' positions={this.state.positions} user_type={this.state.user_type} apply_dest={apply_dest} />
 				</div>
 				<div className='row flex ddd-bg'>
-					<BioTab header='what we do' msg={this.state.lab_summary}/>
+					<BioTab header='what we do' user_type='faculty' msg={this.state.lab_summary}/>
 				</div>
 				<div className='row flex'>
 					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>

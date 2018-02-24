@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import SquareButton from './SquareButton';
 import './LabSpecifications.css';
 
-
 class LabSpecifications extends Component {
 	constructor(props) {
 		super(props);
@@ -47,10 +46,19 @@ class LabSpecifications extends Component {
 	}
 
 	render() {
+		var header = "Lab Specifications";
+		var dest = "/lab-website";
+		var btn_msg = "next";
+		var url_arr = this.props.location.pathname.split('/');
+		if (url_arr[1] === 'update-lab-specifications') {
+			header = "Update Lab Specifications";
+			dest = "/prof-page";
+			btn_msg = "back";
+		}
 		return (
 			<div className='lab-specifications shift-down'>
 				<div className='container center-align lab-specifications-form shadow'>
-					<div className='lab-specifications-header'>Lab Specifications</div>
+					<div className='lab-specifications-header'>{header}</div>
 					<form className='lab-specifications-checklist'>
 						<ul className = "columned-list">
 					    {this.state.specs.map((spec) => {
@@ -60,7 +68,7 @@ class LabSpecifications extends Component {
 						})}
 						</ul>
 					</form>
-					<SquareButton destination='lab-website' label='next'/>
+					<SquareButton destination={dest} label={btn_msg}/>
 				</div>
 			</div>
 		);

@@ -71,11 +71,18 @@ class StudentProfile extends Component {
 					<div id='student-name' className='hide-on-small-only col s12 m5 l6 valign-wrapper student-name'>
 						<div className='container center-align flow-text'>Benji Bear</div>
 					</div>
-					
+				</div>
+				<div class="row"> 
+					<a href='/update-image?user_type=student' id="editImageText" className="null-link-style" >
+						Edit Profile Image <i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
+					</a>
+					<a href='/update-notable-classes' id="editImageText" className="null-link-style" >
+						Edit Academic Info <i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
+					</a>
 				</div>
 				<div className=''>
 					<div className='row' style={{backgroundColor: '#ddd'}} >
-						<BioTab header='bio' msg={this.state.bio}/>
+						<BioTab header='bio' user_type='student' msg={this.state.bio}/>
 					</div>	
 
 					<div className='row flex'>

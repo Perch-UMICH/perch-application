@@ -14,6 +14,7 @@ import UploadImage from './components/UploadImage';
 import LabTextInfo from './components/LabTextInfo';
 import LabSpecifications from './components/LabSpecifications';
 import PastResearch from './components/PastResearch';
+import StudentBio from './components/StudentBio';
 import NotableClasses from './components/NotableClasses';
 import ProfPage from './components/ProfPage';
 import Apply from './components/Apply';
@@ -46,11 +47,19 @@ class Router extends Component {
 							<Route path='/update-skills' component={ PickYourInterests }/>
 							<Route path='/lab-website' component={ LabWebsite }/>
 							<Route path='/upload-image' component={ UploadImage }/>
+							<Route path='/update-image' component={ UploadImage }/>
 							<Route path='/lab-name' component= { LabTextInfo }/>
 							<Route path='/lab-description' component= { LabTextInfo }/>
+							<Route path='/update-lab-description' component= { LabTextInfo }/>
 							<Route path='/lab-specifications' component= { LabSpecifications }/>
+							<Route path='/update-lab-specifications' component= { LabSpecifications }/>
 							<Route path='/past-research' component={ PastResearch }/>
+							<Route path='/update-past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
+							<Route path='/student-bio' component={ StudentBio }/>
+							<Route path='/update-student-bio' component={ StudentBio }/>
+							<Route path='/notable-classes' component={ NotableClasses }/>
+							<Route path='/update-notable-classes' component={ NotableClasses }/>
 							<Route path='/prof-page' component={ ProfPage }/>
 							<Route path='/prof-page/:labSlug' component={ ProfPage }/>
 							<Route path='/apply/:labSlug' component={ Apply } />
