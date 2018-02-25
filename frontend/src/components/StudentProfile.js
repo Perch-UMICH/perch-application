@@ -57,6 +57,7 @@ class StudentProfile extends Component {
 			overlay.style.height = height;
 			overlay.style.width = height;
 
+			this.setState();
 		});
 		
 	}
