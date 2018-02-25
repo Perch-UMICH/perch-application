@@ -10,8 +10,7 @@
 .past-research-input {
 	height: 150px;
 	background-color: #eee;
-	box-shadow: 1px 1px 5px;
-	color: #0277bd;
+	color: #333;
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
@@ -19,8 +18,7 @@
 }
 
 .past-research-input:hover {
-	box-shadow: 1px 1px 5px;
-	color: #0277bd;
+	color: #333;
 }
 
 .past-research-header {

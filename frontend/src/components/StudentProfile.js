@@ -12,6 +12,7 @@ class StudentProfile extends Component {
 		super(props);
 
 		this.state = {
+			name: 'Meha Patel',
 			major: 'Computer Science',
 			year: 'Junior',
 			bio: "I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning.",
@@ -47,12 +48,15 @@ class StudentProfile extends Component {
 
 	componentDidMount() {
 		$( document ).ready(()=> {
-    		var s_img = document.getElementById('student-img');
+			var s_img = document.getElementById('student-img');
 			var height = window.getComputedStyle(s_img, null).height;
-			var a_tab = document.getElementById('academics-tab');
+    		var overlay = document.getElementById('overlay');
 			var s_name = document.getElementById('student-name');
-			a_tab.style.height = height;
+			
 			s_name.style.height = height;
+			overlay.style.height = height;
+			overlay.style.width = height;
+
 		});
 		
 	}
@@ -61,24 +65,24 @@ class StudentProfile extends Component {
 		return (
 			<div className='container shift-down'>
 				<div className='row left-align'>
-					<div className='hide-on-med-and-up col s12 valign-wrapper' style={{padding: '0px'}}>
-						<div className='container center-align flow-text student-name-mobile'>Benji Bear</div>
-					</div>
-					<img id='student-img' className='col s6 m4 l3' src='img/meha.jpg' />
-					<div id='academics-tab' className='col s6 m3 l3' style={{backgroundColor: '#ddd', display: 'inline-block' }}>
+					<div className='tab-container' style={{position: 'relative'}}>
+						<img id='student-img' className='col s6 m4 l3' src='img/meha.jpg' />
+
+						<div id='overlay' className='student-img-overlay'>
+		                    <div className='student-img-overlay-text'>
+		                        <a href='/update-image?user_type=student' id="editImageText" className="null-link-style" >
+									<i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
+								</a>
+		                    </div>
+		                </div>
+	                </div>
+
+					{/*<div id='academics-tab' className='col s6 m3 l3' style={{backgroundColor: '#ddd', display: 'inline-block' }}>
 						<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/>
-					</div>	
-					<div id='student-name' className='hide-on-small-only col s12 m5 l6 valign-wrapper student-name'>
-						<div className='container center-align flow-text'>Benji Bear</div>
+					</div>	*/}
+					<div id='student-name' className='col s6 m8 l9 valign-wrapper student-name'>
+						<div className='container center-align flow-text'>{this.state.name}</div>
 					</div>
-				</div>
-				<div class="row"> 
-					<a href='/update-image?user_type=student' id="editImageText" className="null-link-style" >
-						Edit Profile Image <i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
-					</a>
-					<a href='/update-notable-classes' id="editImageText" className="null-link-style" >
-						Edit Academic Info <i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
-					</a>
 				</div>
 				<div className=''>
 					<div className='row' style={{backgroundColor: '#ddd'}} >
@@ -90,7 +94,8 @@ class StudentProfile extends Component {
 						<div className='profile-tab shadow' style={{width: '50%'}}><SkillsTab user_type="student" skills={this.state.skills}/></div>
 					</div>
 					<div className='row flex'>
-						<div className='profile-tab shadow' style={{width: '100%'}}><PastResearchTab /></div>
+						<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/></div>
+						<div className='profile-tab shadow' style={{width: '50%'}}><PastResearchTab /></div>
 					</div>
 				</div>
 			</div>

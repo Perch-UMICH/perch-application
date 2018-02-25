@@ -8,7 +8,7 @@ class SkillsTab extends Component {
 	render() {
 		var route = '/update-skills?user_type=' + this.props.user_type;
 		return (
-			<div>
+			<div className='tab-container'>
 				<div className='tab-header'>
 					SKILLS <a href={route} ><i className="material-icons interest-editor">add</i></a>
 				</div>

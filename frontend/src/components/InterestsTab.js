@@ -9,7 +9,7 @@ class InterestsTab extends Component {
 	render() {
 		var route = '/update-interests?user_type=' + this.props.user_type;
 		return (
-			<div>
+			<div className='tab-container'>
 				<div className='tab-header'>
 					{this.props.tabTitle} <a href={route} ><i className="material-icons interest-editor">add</i></a>
 				</div>

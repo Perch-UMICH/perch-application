@@ -1,9 +1,22 @@
 .basic-btn {
 	background-color: #0277bd;
 	box-shadow: none;
+	letter-spacing: 1px;
 }
 
 .basic-btn:hover {
+	background-color: #4fc3f7 ;
+	box-shadow: none;
+}
+
+.basic-btn-light {
+	background-color: rgb(41, 182, 246);
+	box-shadow: none;
+	letter-spacing: 1px;
+	color: white;
+}
+
+.basic-btn-light:hover {
 	background-color: #4fc3f7 ;
 	box-shadow: none;
 }

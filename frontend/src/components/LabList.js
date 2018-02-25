@@ -14,7 +14,8 @@ class LabList extends Component {
 						'materials',
 						'physics',
 					],
-					profile_link: 'prof-page'
+					profile_link: 'prof-page',
+					spots: 2,
 				},
 				{
 					name: "Joe's Oncology Lab",
@@ -24,7 +25,8 @@ class LabList extends Component {
 						'cancer',
 						'medicine',
 					],
-					profile_link: 'prof-page'
+					profile_link: 'prof-page',
+					spots: 4,
 				},
 				{
 					name: "Susan's Pediatric Lab",
@@ -34,7 +36,8 @@ class LabList extends Component {
 						'children',
 						'medicine',
 					],
-					profile_link: 'prof-page'
+					profile_link: 'prof-page',
+					spots: 3,
 				},
 				{
 					name: "Mary's Astrophysics Lab",
@@ -44,7 +47,8 @@ class LabList extends Component {
 						'physics',
 						'astronomy',
 					],
-					profile_link: 'prof-page'
+					profile_link: 'prof-page',
+					spots: 2,
 				},
 				
 			]
@@ -56,7 +60,7 @@ class LabList extends Component {
 		<div className='col s12'>
 			<div className='col s12 lab-list shadow' >
 				<div className='lab-list-header white-text'>{this.props.header}</div>
-				{this.state.labs.map((lab) => <LabListItem key={lab.name} img={lab.img} labName={lab.name} tags={lab.tags} profile_link={lab.profile_link} btn_msg="apply"/>)}
+				{this.state.labs.map((lab) => <LabListItem key={lab.name} img={lab.img} labName={lab.name} tags={lab.tags} profile_link={lab.profile_link} spots={lab.spots} />)}
 			</div>
 		</div>
 		);

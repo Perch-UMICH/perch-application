@@ -16,7 +16,7 @@ class ListModalButton extends Component {
     render() {
         return (
             <div>
-            	<p onClick={this.onClick}><BasicButton msg="view application" /></p>
+            	<p onClick={this.onClick}><BasicButton msg="view minion" /></p>
                 <AppDisplayModal info={this.props.info}/>
             </div>
         );

@@ -30,6 +30,11 @@
 	font-size: 20px; 
 }
 
+.tab-header:hover .interest-editor {
+	opacity: 1 !important;
+	transition: .2s ease;
+}
+
 .floater-item {
 	float: left;
 	border-radius: 20px;
@@ -48,9 +53,10 @@
 }
 
 #imageEdit {
-	float: none;
-	margin-right: 10px;
-	margin-left: 6px;
+	background-color: #0277bd;
+	padding: 7px;
+	margin-right: -4px;
+	margin-top: -10px;
 }
 
 #editImageText {
@@ -91,4 +97,24 @@
 	padding: 20px;
 	margin: 0;
 	width: 100%;
+}
+
+.student-img-overlay-text {
+	position: absolute;
+	right: 0px;
+	top: 24px;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.student-img-overlay {
+	position: absolute;
+	content:"";
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	opacity:1.0;
 }

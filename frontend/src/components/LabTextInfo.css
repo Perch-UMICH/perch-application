@@ -8,18 +8,24 @@
 }
 
 .lab-text-info-input {
-	height: 150px;
+	height: 150px !important;
 	background-color: #eee;
-	box-shadow: 1px 1px 5px;
-	color: #29b6f6;
+	color: #666;
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
 	display: block;
+	border: none;
 }
 
 .lab-text-info-input:hover {
-	color: #0277bd;;
+	color: #666;
+	border: none;
+}
+
+.lab-text-info-input:focus {
+	border: none;
+	box-shadow: none;
 }
 
 #lab-name-input {

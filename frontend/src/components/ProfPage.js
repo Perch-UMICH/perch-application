@@ -39,6 +39,16 @@ class ProfPage extends Component {
 						"day reconstruction method",
 						"patience with children",
 					],
+					num_applicants: 4,
+				},
+				{
+					name: "Coffee Runner",
+					skills: [
+						"speed",
+						"patience",
+						"handling of hot substances",
+					],
+					num_applicants: 2,
 				},
 			]
 		};
@@ -85,7 +95,7 @@ class ProfPage extends Component {
 					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
 					<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
 				</div>
-				<div className='row'><HugeButton msg='apply' /></div>
+				{/*<div className='row'><HugeButton msg='apply' /></div>*/}
 			</div>
 		);
 	}

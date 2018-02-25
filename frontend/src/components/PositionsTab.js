@@ -13,7 +13,6 @@ class PositionsTab extends Component {
 		var numApplicants = 4;
 		var selected = false;
 		if (this.props.user_type === 'faculty') {
-			btn_msg = 'view applicants (' + numApplicants + ')';
 			dest = '/view-applicants';
 			selected = true;
 			$('#showOnFaculty').show();
@@ -25,13 +24,13 @@ class PositionsTab extends Component {
 			$('#showOnFaculty').hide();
 		}
 		return (
-			<div className="tab-fit">
+			<div className="tab-fit tab-container">
 				<div className='tab-header positions-tab-header'>{this.props.header.toUpperCase()}<a href='/create-position' id="showOnFaculty"><i className="material-icons interest-editor">add</i></a></div>
 				<div className='positions-tab'>
 					{ (this.props.positions.length === 0) ? <div className="center-align">You haven't created any positions! Click the '+' in the top right of this box to post an application</div> : null}
 				    {this.props.positions.map((position) => {
 						return (
-							<PositionListItem key={position.name} positionName={position.name} tags={position.skills} dest={dest} btn_msg={btn_msg} selected={selected}/>);
+							<PositionListItem key={position.name} positionName={position.name} tags={position.skills} dest={dest} btn_msg={btn_msg || `view applicants (${position.num_applicants})`} selected={selected}/>);
 					})}
 				</div>
 			</div>

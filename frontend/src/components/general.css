@@ -32,3 +32,17 @@
   box-shadow: 0 1px 0 0 #29b6f6;
   color: #eee;
 }
+
+.interest-editor {
+	opacity: 0;
+	transition: ease .2s;
+}
+
+.tab-container:hover .interest-editor {
+	opacity: 1;
+	transition: ease .2s;
+}
+
+.opacity-1 {
+	opacity: 1 !important;
+}

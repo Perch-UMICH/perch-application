@@ -20,6 +20,7 @@ class AppSubmissionModal extends Component {
 				    	   We'll notify you if they think it's a match.</p>
 				   	</div>
 				   	<div className="modal-footer">
+				   		
 				     	<a href={lab_dest} className="modal-action modal-close waves-effect waves-green btn-flat modal-btn">Return to Lab Page</a>
 				     	<a href="/student-profile" className="modal-action modal-close waves-effect waves-green btn-flat modal-btn">Return to Profile</a>
 				  	</div>

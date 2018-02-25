@@ -8,8 +8,12 @@ class AcademicsTab extends Component {
 
 	render() {
 		return (
-			<div>
-				{/*<div className='tab-header row academic-tab-header'>school</div>*/}
+			<div className='tab-container'>
+				<div className='tab-header tab academic-tab-header'>school
+					<a href='/update-notable-classes' id="editImageText" className="null-link-style" >
+						<i className="material-icons interest-editor edit-icon" style={{float: 'right'}} >create</i>
+					</a>
+				</div> 
 				<div className='academics-tab left-align'>
 					<div>
 						<span className='academic-label'>GPA: </span>

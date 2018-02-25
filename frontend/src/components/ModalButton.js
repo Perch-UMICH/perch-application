@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
 import SquareButton from './SquareButton';
+import BasicButton from './BasicButton';
 import AppSubmissionModal from './AppSubmissionModal';
 import AppCreationModal from './AppCreationModal';
 import './ModalButton.css';
@@ -19,7 +20,8 @@ class ModalButton extends Component {
         return (
             <div>
             	<div id="modalBackdrop"></div>
-            	<p onClick={this.onClick}><SquareButton label={this.props.label} /></p>
+                {/*<p onClick={this.onClick}><SquareButton label={this.props.label} /></p>*/}
+            	<p onClick={this.onClick}><BasicButton color='light' msg={this.props.label} /></p>
                 {this.props.type === "create_app" ? <AppCreationModal info={this.props.info}/> : null }
             	{this.props.type === "submit_app" ? <AppSubmissionModal /> : null }
             </div>

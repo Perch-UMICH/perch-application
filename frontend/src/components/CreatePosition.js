@@ -137,24 +137,26 @@ class CreatePosition extends Component {
 					<div className='apply-header'>Create Position Application</div>
 					<div className="container">
 						<form className='file-field'>
-						<input className='apply-input' id="textInput" value={this.state.positionName} type="text" placeholder="Position Title" onChange={event => this.updatePositionName(event)}></input>
-						<h2 className="apply-question-label">Position Description</h2>
-						<textArea className='lab-text-info-input' id="textArea" type="text" placeholder="short description of position responsibilities" onChange={event => this.updatePositionDesc(event)}></textArea>
-						<h2 className="apply-question-label">Skills Required { this.state.positionName ? "for " + this.state.positionName + "-ing": null } </h2>
-						<BubbleChoice display_info={this.state.display_info} callbackSkills={this.updateSkills}/>
-						<h2 className="apply-question-label">Short Answer Questions</h2>
-						    {this.state.questions.map((question) => {
-								return (
-									<div className="row expand">
-										<div className="col s11">
-											<input id={question.id} type="text" id="apply-question-input" className="materialize-textarea" value={question.text} onChange={event => this.alterQuestion(event, question.id)} required/>
-										</div>
-										<div className="col s1">
-											<a id={question.id} className="remove-question" onClick={() => this.removeQuestion(question.id)}><i className="material-icons interest-editor">clear</i></a>
-										</div>
-									</div>);
-							})}
-						<a onClick={this.addQuestion.bind(this)} id="addQuestion"><i className="material-icons interest-editor icon-pad">add</i>add question</a><br/>
+							<input className='apply-input' id="textInput" value={this.state.positionName} type="text" placeholder="Position Title" onChange={event => this.updatePositionName(event)}></input>
+							<h2 className="apply-question-label">Position Description</h2>
+							<textArea className='lab-text-info-input' id="textArea" type="text" placeholder="short description of position responsibilities" onChange={event => this.updatePositionDesc(event)}></textArea>
+							<h2 className="apply-question-label">Skills Required { this.state.positionName ? "for " + this.state.positionName + "-ing": null } </h2>
+							<BubbleChoice display_info={this.state.display_info} callbackSkills={this.updateSkills}/>
+							<h2 className="apply-question-label">Short Answer Questions</h2>
+							    {this.state.questions.map((question) => {
+									return (
+										<div className="row">
+											<div className="col s11">
+												{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
+												<textarea id={question.id} type="text" className='lab-text-info-input' id="apply-question-input" value={question.text} onChange={event => this.alterQuestion(event, question.id)} required></textarea>
+												
+											</div>
+											<div className="col s1">
+												<a id={question.id} className="remove-question" onClick={() => this.removeQuestion(question.id)}><i className="material-icons interest-editor opacity-1">clear</i></a>
+											</div>
+										</div>);
+								})}
+							<a style={{float: 'left'}} onClick={this.addQuestion.bind(this)} id="addQuestion"><SquareButton label='add question'/></a><br/><br/>
 						</form>
 						<br/>
 						<ModalButton type="create_app" label="create application" info={this.state.modal_info}/>
