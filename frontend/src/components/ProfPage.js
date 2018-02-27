@@ -14,6 +14,7 @@ class ProfPage extends Component {
 			lab_name: "The Infant Cognition Project",
 			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
 			no: ['paid', 'seniors', 'freshman'],
+			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
 			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.",
 			labels: [
 				"Pediatry",
@@ -68,7 +69,7 @@ class ProfPage extends Component {
 		return(
 			<div className='shift-down container'>
 				<div className='row dark-blue-bg'>
-					<img src='https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg' style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
+					<img src={this.state.img_src} style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
 					<div className='prof-page-name'>{this.state.lab_name}</div>
 					<a href='/update-lab-specifications'><i className="material-icons interest-editor" id="specEdit">create</i></a>
 					<div className='indicator-container'>

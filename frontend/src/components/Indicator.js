@@ -12,7 +12,7 @@ class Indicator extends Component {
 			this.pre = 'yes ';
 		}
 		else {
-			this.pre = 'no '
+			this.pre = 'no ';
 			this.type = 'indicator-off';
 		}
 		return(
