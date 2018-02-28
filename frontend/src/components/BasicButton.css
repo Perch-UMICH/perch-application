@@ -1,3 +1,9 @@
+#BasicBtnWrap {
+	display: inline-block;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
 .basic-btn {
 	background-color: #0277bd;
 	box-shadow: none;

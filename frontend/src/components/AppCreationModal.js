@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import BasicButton from './BasicButton'
 import $ from 'jquery';
 
 class AppCreationModal extends Component {
@@ -37,8 +38,8 @@ class AppCreationModal extends Component {
 			    		{ (this.props.info.questions.length === 0) ? <div><i>No short answer questions provided</i></div> : null }
 				   	</div>
 				   	<div class="modal-footer">
-				     	<a onClick={this.onClick} class="modal-action modal-close waves-effect waves-blue btn-flat modal-btn">Edit</a>
-				     	<a href={lab_dest} class="modal-action modal-close waves-effect waves-blue btn-flat modal-btn">Post Application</a>
+				   		<BasicButton superClick={this.onClick} msg='Edit' />
+				   		<BasicButton dest={lab_dest} msg='Post Application' />
 				  	</div>
 			 	</div>
 			</div>

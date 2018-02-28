@@ -21,7 +21,6 @@ import Apply from './components/Apply';
 import CreatePosition from './components/CreatePosition';
 import ViewApplicants from './components/ViewApplicants';
 import Feedback from './components/Feedback';
-import Test from './components/Test';
 import './components/TapTarget.css';
 import './components/general.css';
 
@@ -66,7 +65,6 @@ class Router extends Component {
 							<Route path='/create-position' component={ CreatePosition } />
 							<Route path='/view-applicants' component={ ViewApplicants } />
 							<Route path='/feedback' component={ Feedback }/>
-							<Route path='/test' component={ Test }/>
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>

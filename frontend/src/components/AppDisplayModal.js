@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import BasicButton from './BasicButton'
+import BasicButton from './BasicButton';
 import $ from 'jquery';
 
 class AppDisplayModal extends Component {
@@ -27,6 +27,7 @@ class AppDisplayModal extends Component {
 		};
 		this.onClick = this.onClick.bind(this);
 	}
+
 	onClick(event) {
 	    $("#displayModal" + this.state.student_slug).fadeOut("slow");
 	    $('#modalBackdrop').fadeOut("slow");
@@ -47,7 +48,7 @@ class AppDisplayModal extends Component {
 				   	</div>
 				   	<div class="modal-footer">
 				   		{/*<BasicButton onClick={this.onClick} msg='close' />*/}{/*@Emi: changed basic button so you can pass an on click function, but this functio relies on this.state*/}
-				     	<a onClick={this.onClick} class="modal-action modal-close waves-effect waves-blue btn-flat modal-btn">Close</a>
+				     	<BasicButton superClick={this.onClick} msg='close' />
 				     	<BasicButton dest={this.state.profile_link} msg='view profile' />
 				  	</div>
 			 	</div>

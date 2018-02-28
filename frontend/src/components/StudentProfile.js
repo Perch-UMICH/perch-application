@@ -17,6 +17,7 @@ class StudentProfile extends Component {
 			year: 'Junior',
 			bio: "I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning.",
 			GPA: '3.90',
+			img_src: '/img/meha.jpg',
 			skills: [
 				"plating",
 				"chromatography",
@@ -67,7 +68,7 @@ class StudentProfile extends Component {
 			<div className='container shift-down'>
 				<div className='row left-align'>
 					<div className='tab-container' style={{position: 'relative'}}>
-						<img id='student-img' className='col s6 m4 l3' src='img/meha.jpg' />
+						<img id='student-img' className='col s6 m4 l3' src={this.state.img_src} />
 
 						<div id='overlay' className='student-img-overlay'>
 		                    <div className='student-img-overlay-text'>
