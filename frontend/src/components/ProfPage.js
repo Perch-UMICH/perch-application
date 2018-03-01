@@ -5,6 +5,7 @@ import Indicator from './Indicator';
 import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import HugeButton from './HugeButton'
+import ContactTab from './ContactTab'
 import './ProfPage.css'
 
 class ProfPage extends Component {
@@ -51,6 +52,11 @@ class ProfPage extends Component {
 					],
 					num_applicants: 2,
 				},
+			],
+			contact_info: [
+				{label: 'phone', value: '815-262-6642'},
+				{label: 'email', value: 'bearb@umich.edu'},
+				{label: 'location', value: 'Central Campus'},
 			]
 		};
 	}
@@ -79,24 +85,27 @@ class ProfPage extends Component {
 						{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
 					</div>
 				</div>
-				<div className="row center-align">  {/* JUST FOR FRONT-END TESTING, TO BE DEPRECATED */}
-					<p className="fe-test">View As:</p>
-					<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
-					<label htmlFor="faculty">Faculty</label>
-					<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
-					<label htmlFor="student">Student</label>
-				</div>
+				{1>0 && <div className="row center-align">  {/* JUST FOR FRONT-END TESTING, TO BE DEPRECATED */}
+									<p className="fe-test">View As:</p>
+									<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
+									<label htmlFor="faculty">Faculty</label>
+									<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
+									<label htmlFor="student">Student</label>
+								</div>}
 				<div className='row flex ddd-bg'>
 					<PositionsTab header='open positions' positions={this.state.positions} user_type={this.state.user_type} apply_dest={apply_dest} />
 				</div>
 				<div className='row flex ddd-bg'>
 					<BioTab header='what we do' user_type='faculty' msg={this.state.lab_summary}/>
+					<div className='hide-on-small-only' style={{width: '30%'}}><ContactTab header='contact' contact_info={this.state.contact_info} /></div>
 				</div>
 				<div className='row flex'>
 					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
 					<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
 				</div>
-				{/*<div className='row'><HugeButton msg='apply' /></div>*/}
+				<div className='row ddd-bg hide-on-med-and-up'>
+					<div className='profile-tab'><ContactTab header='contact info' contact_info={this.state.contact_info} /></div>
+				</div>
 			</div>
 		);
 	}

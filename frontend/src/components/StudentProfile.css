@@ -35,6 +35,10 @@
 	transition: .2s ease;
 }
 
+.tab-container {
+	width: 100%;
+}
+
 .floater-item {
 	float: left;
 	border-radius: 20px;
@@ -87,6 +91,7 @@
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	color: white;
+	position: relative;
 }
 
 .student-name-mobile {
@@ -117,4 +122,18 @@
 	width:100%;
 	height:100%;
 	opacity:1.0;
+}
+
+.student-current-lab {
+	position: absolute;
+	right: 8px;
+	top: 5px;
+	letter-spacing: 2px;
+	color: #ddd;
+	transition: .2s ease-in;
+}
+
+.student-current-lab:hover {
+	color: white;
+	transition: .2s ease-in;
 }

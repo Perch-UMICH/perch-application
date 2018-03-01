@@ -46,3 +46,11 @@
 .opacity-1 {
 	opacity: 1 !important;
 }
+
+.light-blue-background {
+	background-color: rgb(41, 182, 246)
+}
+
+.white-text-now {
+	color: white !important;
+}

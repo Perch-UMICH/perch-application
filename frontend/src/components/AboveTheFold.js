@@ -32,7 +32,7 @@ class AboveTheFold extends Component {
 		return(
 			  <div className="tab3 valign-wrapper">
 			    <div className="container center-align">
-				    <img className="logo" src="assets/PERCH_MASCOT.svg" data-tilt />
+				    <img className="logo" src="assets/new-logo.png" data-tilt />
 				    <SquareLogo />
 				    <p className="letter-spacer flow-text white-text">We make research more accessible for everyone</p>
 				    <LoginButtons  />		    
