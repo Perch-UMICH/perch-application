@@ -31,10 +31,10 @@ class AboveTheFold extends Component {
 	render() {
 		return(
 			  <div className="tab3 valign-wrapper">
-			    <div className="container center-align">
-				    <img className="logo" src="assets/new-logo.png" data-tilt />
+			    <div className="container center-align shadow" style={{backgroundColor: '#eee'}}>
+				    <img className="logo" src="assets/new-logo-clear.png" data-tilt />
 				    <SquareLogo />
-				    <p className="letter-spacer flow-text white-text">We make research more accessible for everyone</p>
+				    <p className="letter-spacer flow-text" style={{color: '#0277bd'}}>We make research more accessible for everyone</p>
 				    <LoginButtons  />		    
 			    </div>
 			  </div>

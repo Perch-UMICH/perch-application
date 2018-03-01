@@ -1,0 +1,46 @@
+.awkward {
+	color: rgb(41, 182, 246);
+	background-color: white;
+	padding: 5px;
+	margin: 0px;
+	/*font-size: 1.4em;*/
+	/*border-bottom: 1px solid white;*/
+}
+
+.awkward-top {
+	border-top: 2px solid white;
+	border-left: 2px solid white;
+	border-right: 2px solid white;
+	padding: 5px;
+	color: white;
+	margin-bottom: -2px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.awkward-bottom {
+	border: 2px solid white;
+	padding: 5px;
+	color: rgb(41, 182, 246);
+	background-color: white;
+	padding-left: 83px;
+	padding-right: 83px;
+
+}
+
+.awkward-mobile {
+	font-size: 30px;
+	border: 2px solid #0277bd;
+}
+.awkward-desktop {
+	font-size: 30px;
+	border: 2px solid #0277bd;
+	max-width: 350px;
+	background-color: white;
+	color: #0277bd;
+}
+
+#research-mobile {
+	color: white;
+	background-color: #0277bd;
+}

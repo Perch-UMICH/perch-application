@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './SquareLogo.css'
 import Typed from 'typed.js';
 
 class SquareLogo extends Component {
@@ -27,8 +28,8 @@ class SquareLogo extends Component {
 	render() {
 		return(
 			<div className="center-align">
-				<div className="awkward-desktop container hide-on-small-only white-text">De-Awkwardizing<div id="research-mobile" className="white"><span className="element"></span></div></div>
-      			<div className="awkward-mobile container hide-on-med-and-up white-text">De-Awkwardizing<div id="research-mobile" className="white"><span className="element-mobile"></span></div></div>
+				<div className="awkward-desktop container hide-on-small-only">De-Awkwardizing<div id="research-mobile"><span className="element"></span></div></div>
+      			<div className="awkward-mobile container hide-on-med-and-up white-text">De-Awkwardizing<div id="research-mobile"><span className="element-mobile"></span></div></div>
 			</div>
 		);
 	} 

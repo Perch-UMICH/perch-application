@@ -127,13 +127,12 @@ nav .brand-logo {
 	padding-right: 10px;
 }*/
 
-.awkward {
+/*.awkward {
 	color: rgb(41, 182, 246);
 	background-color: white;
 	padding: 5px;
 	margin: 0px;
-	/*font-size: 1.4em;*/
-	/*border-bottom: 1px solid white;*/
+
 }
 
 .awkward-top {
@@ -155,7 +154,7 @@ nav .brand-logo {
 	padding-left: 83px;
 	padding-right: 83px;
 
-}
+}*/
 
 .catchphrase {
 	letter-spacing: 3px;
@@ -264,12 +263,11 @@ blockquote {
 	padding: 5px 10px;
 	opacity: .9;
 }
-#research-mobile {
-	/*margin-top: 52px;*/
+/*#research-mobile {
 	color: rgb(41, 182, 246);
-}
+}*/
 
-.awkward-mobile {
+/*.awkward-mobile {
 	font-size: 30px;
 	border: 2px solid white;
 }
@@ -277,7 +275,7 @@ blockquote {
 	font-size: 30px;
 	border: 2px solid white;
 	max-width: 350px;
-}
+}*/
 
 .submit-container {
 	margin-top: 15px;
