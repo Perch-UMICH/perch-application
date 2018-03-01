@@ -16,6 +16,10 @@ class LabSearch extends Component {
 				"R",
 				"C++",
 				"Pen Testing",
+				"pun making",
+				"spectography",
+				"total phosphorus digestion",
+				"PCR",
 			],
 			skills: [
 				"pun making",
@@ -34,6 +38,11 @@ class LabSearch extends Component {
 				"chemistry",
 				"physics",
 				"astro-physics",
+				"security",
+				"fintech",
+				"machine learning",
+				"software development",
+				"biomedical devices",
 			],
 			interests: [
 				"security",
@@ -44,6 +53,7 @@ class LabSearch extends Component {
 			],
 			catalog: [],
 			filtered_catalog: [],
+			search_list: [],
 			in_filter: false,
 			skill_search: false,
 			interest_search: false
@@ -51,12 +61,7 @@ class LabSearch extends Component {
 	}
 
 	componentWillMount() {
-		if (this.state.skill_search) {
-			this.setState({filtered_catalog: this.state.skills_catalog, catalog: this.state.skills_catalog});
-		}
-		else {
-			this.setState({filtered_catalog: this.state.interests_catalog, catalog: this.state.interests_catalog});
-		}
+		this.setState({filtered_catalog: this.state.skills_catalog, catalog: this.state.skills_catalog, search_list: this.state.skills});
   	}
 
 	filterList(event) {
@@ -68,69 +73,39 @@ class LabSearch extends Component {
     	this.setState({filtered_catalog: updatedList, in_filter: true});
 	}
 
-	handleClickAdd(interest, temporary) {
+	handleClickAdd(interest) {
 		this.setState((prevState) => {
-			var temp_add = prevState.interests;
-			var temp_delete = prevState.catalog;
-			var temp_filter = prevState.filtered_catalog;
-			temp_add.push(interest);
-			temp_delete.splice(temp_delete.indexOf(interest), 1);
-
-			if (temporary != "default") {
-				temp_filter.splice(temp_filter.indexOf(interest), 1);
+			if (prevState.search_list.indexOf(interest) == -1) {
+				var temp_add = prevState.search_list;
+				temp_add.push(interest);
+				return {search_list: temp_add};
 			}
-			else if (this.state.in_filter) {
-				temp_filter.splice(temp_filter.indexOf(interest), 1);
-			}
-
-			return {catalog: temp_delete, interests: temp_add, filtered_catalog: temp_filter};
 		});
 	}
 
-	handleClickDelete(interest, temporary) {
+	handleClickDelete(interest) {
 		this.setState((prevState) => {
-			var temp_delete = prevState.interests;
-			var temp_add = prevState.catalog;
-			var temp_filter = prevState.filtered_catalog;
-			temp_add.push(interest);
+			var temp_delete = prevState.search_list;
 			temp_delete.splice(temp_delete.indexOf(interest), 1);
 
-			let check = prevState.in_filter;
-			if (interest.includes(temporary.toString())) {
-				if (temporary != "default") {
-					temp_filter.push(interest);
-				}
-			}
-			else if (check && (temporary == "default")) {
-				temp_filter.push(interest);
-			}
-
-			return {catalog: temp_add, interests: temp_delete, filtered_catalog: temp_filter};
+			return {search_list: temp_delete};
 		});
 	}
 
 	handleSearchType(event) {
 		if (event.target.value === 'skills') {
 			this.setState((prevState) => {
-				return {skill_search: true, interest_search: false, filtered_catalog: this.state.skills_catalog, catalog: this.state.skills_catalog};
+				return {filtered_catalog: this.state.skills_catalog, catalog: this.state.skills_catalog, search_list: this.state.skills};
 			});
 		}
 		else {
 			this.setState((prevState) => {
-				return {skill_search: false, interest_search: true, filtered_catalog: this.state.interests_catalog, catalog: this.state.interests_catalog};
+				return {filtered_catalog: this.state.interests_catalog, catalog: this.state.interests_catalog, search_list: this.state.interests};
 			});
 		}
 	}
 
 	render() {
-		let temporary = "default";
-		if (document.getElementById('lab-name')) {
-			let len = document.getElementById('lab-name').value.length;
-			if (len != 0) {
-				temporary = document.getElementById('lab-name').value;
-			}
-		}
-
 		return (
 			<div>
 				<div className='form labSearch shadow'>
@@ -158,15 +133,15 @@ class LabSearch extends Component {
 					<div className='interest-section col s6 left-align'>
 						<div className='interest-body'>
 							{this.state.filtered_catalog.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
+								return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
 							})}
 						</div>
 					</div>
 
 					<div className='interest-section col s6'>
 						<div className='interest-body'>
-							{this.state.interests.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, temporary)}> <Bubble txt={interest} type='deleter' /> </span>)
+							{this.state.search_list.map((interest) => {
+								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest)}> <Bubble txt={interest} type='deleter' /> </span>)
 							})}
 						</div>
 					</div>
