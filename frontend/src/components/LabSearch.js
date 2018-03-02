@@ -21,7 +21,7 @@ class LabSearch extends Component {
 				"total phosphorus digestion",
 				"PCR",
 			],
-			skills: [
+			your_skills: [
 				"pun making",
 				"spectography",
 				"total phosphorus digestion",
@@ -44,24 +44,26 @@ class LabSearch extends Component {
 				"software development",
 				"biomedical devices",
 			],
-			interests: [
+			your_interests: [
 				"security",
 				"fintech",
 				"machine learning",
 				"software development",
 				"biomedical devices",
 			],
+			skills: [],
+			interests: [],
 			catalog: [],
 			filtered_catalog: [],
-			search_list: [],
 			in_filter: false,
-			skill_search: false,
-			interest_search: false
+			search_skills: true,
+			search_interests: false
 		}
 	}
 
 	componentWillMount() {
-		this.setState({filtered_catalog: this.state.skills_catalog, catalog: this.state.skills_catalog, search_list: this.state.skills});
+		this.setState({filtered_catalog: this.state.skills_catalog, 
+						catalog: this.state.skills_catalog});
   	}
 
 	filterList(event) {
@@ -75,32 +77,86 @@ class LabSearch extends Component {
 
 	handleClickAdd(interest) {
 		this.setState((prevState) => {
-			if (prevState.search_list.indexOf(interest) == -1) {
-				var temp_add = prevState.search_list;
-				temp_add.push(interest);
-				return {search_list: temp_add};
+			if (this.state.search_skills) {
+				if (prevState.skills.length == 0) {
+					let temp_add = [interest];
+					return {skills: temp_add};
+				}
+				else if (prevState.skills.indexOf(interest) == -1) {
+					let temp_add = prevState.skills;
+					temp_add.push(interest);
+					return {skills: temp_add};
+				}
+			}
+			else {
+				if (prevState.interests.length == 0) {
+					let temp_add = [interest];
+					return {interests: temp_add};
+				}
+				else if (prevState.interests.indexOf(interest) == -1) {
+					let temp_add = prevState.interests;
+					temp_add.push(interest);
+					return {interests: temp_add};
+				}
 			}
 		});
 	}
 
-	handleClickDelete(interest) {
+	handleClickDelete(interest, type) {
 		this.setState((prevState) => {
-			var temp_delete = prevState.search_list;
-			temp_delete.splice(temp_delete.indexOf(interest), 1);
-
-			return {search_list: temp_delete};
+			if (type === 'skill') {
+				var temp_delete = prevState.skills;
+				temp_delete.splice(temp_delete.indexOf(interest), 1);
+				return {skills: temp_delete};
+			}
+			else {
+				var temp_delete = prevState.interests;
+				temp_delete.splice(temp_delete.indexOf(interest), 1);
+				return {interests: temp_delete};
+			}
 		});
 	}
 
 	handleSearchType(event) {
 		if (event.target.value === 'skills') {
 			this.setState((prevState) => {
-				return {filtered_catalog: this.state.skills_catalog, catalog: this.state.skills_catalog, search_list: this.state.skills};
+				return {filtered_catalog: this.state.skills_catalog, 
+						catalog: this.state.skills_catalog, 
+						search_skills: true,
+						search_interests: false};
 			});
 		}
 		else {
 			this.setState((prevState) => {
-				return {filtered_catalog: this.state.interests_catalog, catalog: this.state.interests_catalog, search_list: this.state.interests};
+				return {filtered_catalog: this.state.interests_catalog, 
+						catalog: this.state.interests_catalog, 
+						search_skills: false,
+						search_interests: true};
+			});
+		}
+	}
+
+	handleImport(import_type) {
+		if (import_type === 'skills') {
+			this.setState((prevState, import_type) => {
+				let temp_add = prevState.skills;
+				prevState.your_skills.map((skill) => {
+					if (prevState.skills.indexOf(skill) === -1) {
+						temp_add.push(skill);
+					}
+				});
+				return {skills: temp_add};
+			});
+		}
+		else {
+			this.setState((prevState, import_type) => {
+				let temp_add = prevState.interests;
+				prevState.your_interests.map((interest) => {
+					if (prevState.interests.indexOf(interest) === -1) {
+						temp_add.push(interest);
+					}
+				});
+				return {interests: temp_add};
 			});
 		}
 	}
@@ -122,6 +178,8 @@ class LabSearch extends Component {
 				        </div>
 					</div>
 				</div>
+
+				{/* These two radio butons are used to switch between searching for skills/interests */}
 				<div className="row center-align">
 					<p className="fe-test">Search By:</p>
 					<input className="radio" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
@@ -129,6 +187,28 @@ class LabSearch extends Component {
 					<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
 					<label htmlFor="interests">Interests</label>
 				</div>
+
+				{/* These two buttons import the skills/interests of a user into the search */}
+				<div className="row center-align">
+					<button className="btn waves-effect waves-light submit-btn lab-search-btn"
+		        			type="submit" 
+		        			name="action"
+		        			onClick={this.handleImport.bind(this, 'skills')}
+		        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#0277bd', letterSpacing: '2px'}}
+		        		>Add Your Skills
+		        	</button>
+		        	<button className="btn waves-effect waves-light submit-btn lab-search-btn"
+		        			type="submit" 
+		        			name="action"
+		        			onClick={this.handleImport.bind(this, 'interests')}
+		        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#0277bd', letterSpacing: '2px'}}
+		        		>Add Your Interests
+		        	</button>
+				</div>
+
+				{/* This container holds the list of skills/interests you can choose from,
+					as well as the skills/interests that have been chosen already. This container should
+					only show up when a user has their cursor clicked on the search */}
 				<div className='row interest-container'>
 					<div className='interest-section col s6 left-align'>
 						<div className='interest-body'>
@@ -137,11 +217,21 @@ class LabSearch extends Component {
 							})}
 						</div>
 					</div>
-
 					<div className='interest-section col s6'>
 						<div className='interest-body'>
-							{this.state.search_list.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest)}> <Bubble txt={interest} type='deleter' /> </span>)
+							<p> SKILLS </p>
+							{this.state.skills.map((interest) => {
+								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill')} > <Bubble txt={interest} type='deleter' /> </span>)
+							})}
+							<br></br>
+							<br></br>
+							<br></br>
+							<br></br>
+							<br></br>
+							<br></br>
+							<p> INTERESTS </p>
+							{this.state.interests.map((interest) => {
+								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest')} > <Bubble txt={interest} type='deleter' /> </span>)
 							})}
 						</div>
 					</div>
