@@ -34,3 +34,42 @@
 .lab-search-btn {
 	margin-top: 5px;
 }
+
+.lab-search-modifiers {
+	border: 1px solid white;
+	border-bottom: none;
+	border-top: none;
+	margin-bottom: 0;
+	padding: 10px;
+	background-color: #0277bd;
+	position: relative;
+}
+
+.close-modifiers {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	padding: 5px;
+	color: white;
+	background-color: rgb(41, 182, 246);
+}
+
+#interests, #skills {
+	color: white !important;
+}
+
+.import-btn {
+	background-color: rgb(41, 182, 246);
+	font-size: 80%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#lab-search-box {
+	padding: 11px;
+	padding-top: 0px;
+}
+
+.import-container {
+	/*padding-right: 30px !important;*/
+}

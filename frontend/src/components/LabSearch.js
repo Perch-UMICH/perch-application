@@ -74,6 +74,10 @@ class LabSearch extends Component {
   			lab.in_search = false;
   		});
   		this.setState({all_labs: temp_labs});
+
+  		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
+
+
   	}
 
 	filterList(event) {
@@ -248,78 +252,89 @@ class LabSearch extends Component {
 		}
 	}
 
+	closeModifiers() {
+		document.getElementById('lab-search-box').classList.add('hide');
+	}
+
 	render() {
 		return (
 			<div>
 				<div className='form labSearch shadow'>
 					<div className='row'>
 						<div className='col s12 m12 l2 left-align lab-search-label grey-text text-darken-1'>LAB SEARCH</div>
-						<div className='col s12 m7 '><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
-						<div className='col s12 m3 l3'>
-							<button className="btn waves-effect waves-light submit-btn lab-search-btn"
-				        			type="submit" 
-				        			name="action"
-				        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#0277bd', letterSpacing: '2px'}}
-				        		>Search
-				        	</button>
-				        </div>
+						<div className='col s12 m9 '><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
 					</div>
 				</div>
 
-				{/* These two radio butons are used to switch between searching for skills/interests */}
-				<div className="row center-align">
-					<p className="fe-test">Search By:</p>
-					<input className="radio" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
-					<label htmlFor="skills">Skills</label>
-					<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
-					<label htmlFor="interests">Interests</label>
-				</div>
+				<div id='lab-search-box' className='hide'>
+					{/* These two radio butons are used to switch between searching for skills/interests */}
+					{/*<div className="row center-align">
+											<p className="fe-test">Search By:</p>
+											<input className="radio" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
+											<label htmlFor="skills">Skills</label>
+											<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
+											<label htmlFor="interests">Interests</label>
+										</div>*/}
 
-				{/* These two buttons import the skills/interests of a user into the search */}
-				<div className="row center-align">
-					<button className="btn waves-effect waves-light submit-btn lab-search-btn"
-		        			type="submit" 
-		        			name="action"
-		        			onClick={this.handleImport.bind(this, 'skills')}
-		        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#0277bd', letterSpacing: '2px'}}
-		        		>Add Your Skills
-		        	</button>
-		        	<button className="btn waves-effect waves-light submit-btn lab-search-btn"
-		        			type="submit" 
-		        			name="action"
-		        			onClick={this.handleImport.bind(this, 'interests')}
-		        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#0277bd', letterSpacing: '2px'}}
-		        		>Add Your Interests
-		        	</button>
-				</div>
+					{/* These two buttons import the skills/interests of a user into the search */}
+				
+					{/* This container holds the list of skills/interests you can choose from,
+						as well as the skills/interests that have been chosen already. This container should
+						only show up when a user has their cursor clicked on the search */}
+					<div className='row lab-search-modifiers'>
+						<i className='material-icons close-modifiers' onClick={this.closeModifiers.bind(this)}>close</i>
 
-				{/* This container holds the list of skills/interests you can choose from,
-					as well as the skills/interests that have been chosen already. This container should
-					only show up when a user has their cursor clicked on the search */}
-				<div className='row interest-container'>
-					<div className='interest-section col s6 left-align'>
-						<div className='interest-body'>
-							{this.state.filtered_catalog.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
-							})}
+						<div className='col s6 left-align'>
+							<p className="fe-test">SEARCH BY</p>
+							<input className="radio" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
+							<label htmlFor="skills">Skills</label>
+							<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
+							<label htmlFor="interests">Interests</label>
+						</div>
+
+						<div className='col s6 import-container'>
+							<p className="fe-test">IMPORT</p>
+							<button className="btn waves-effect waves-light submit-btn import-btn"
+			        			type="submit" 
+			        			name="action"
+			        			onClick={this.handleImport.bind(this, 'skills')}
+			        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
+			        		>Skills
+			        		</button>
+			        		<button className="btn waves-effect waves-light submit-btn import-btn"
+			        			type="submit" 
+			        			name="action"
+			        			onClick={this.handleImport.bind(this, 'interests')}
+			        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
+			        		>Interests
+			        		</button>
 						</div>
 					</div>
-					<div className='interest-section col s6'>
-						<div className='interest-body'>
-							<p> SKILLS </p>
-							{this.state.skills.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill')} > <Bubble txt={interest} type='deleter' /> </span>)
-							})}
-							<br></br>
-							<br></br>
-							<br></br>
-							<br></br>
-							<br></br>
-							<br></br>
-							<p> INTERESTS </p>
-							{this.state.interests.map((interest) => {
-								return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest')} > <Bubble txt={interest} type='deleter' /> </span>)
-							})}
+					<div className='row interest-container'>
+						<div className='interest-section col s6 left-align'>
+							<div className='interest-body'>
+								{this.state.filtered_catalog.map((interest) => {
+									return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
+								})}
+							</div>
+						</div>
+						<div className='interest-section col s6'>
+							<div className='interest-body'>
+								<p> SKILLS </p>
+								{this.state.skills.map((interest) => {
+									return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill')} > <Bubble txt={interest} type='deleter' /> </span>)
+								})}
+								<br></br>
+								<br></br>
+								<br></br>
+								<br></br>
+								<br></br>
+								<br></br>
+								<p> INTERESTS </p>
+								{this.state.interests.map((interest) => {
+									return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest')} > <Bubble txt={interest} type='deleter' /> </span>)
+								})}
+							</div>
 						</div>
 					</div>
 				</div>
