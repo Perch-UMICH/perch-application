@@ -37,9 +37,10 @@ class LabSearch extends Component {
 				"history",
 				"chemistry",
 				"physics",
-				"astro-physics",
+				"astrophysics",
 				"security",
 				"fintech",
+				"medicine",
 				"machine learning",
 				"software development",
 				"biomedical devices",
@@ -47,27 +48,41 @@ class LabSearch extends Component {
 			your_interests: [
 				"security",
 				"fintech",
+				"medicine",
 				"machine learning",
 				"software development",
 				"biomedical devices",
 			],
 			skills: [],
 			interests: [],
-			catalog: [],
 			filtered_catalog: [],
 			in_filter: false,
 			search_skills: true,
-			search_interests: false
+			search_interests: false,
+			all_labs: this.props.labs,
+			filtered_labs: []
 		}
 	}
 
 	componentWillMount() {
-		this.setState({filtered_catalog: this.state.skills_catalog, 
-						catalog: this.state.skills_catalog});
+		this.setState({filtered_catalog: this.state.skills_catalog});
+  	}
+
+  	componentDidMount() {
+  		let temp_labs = this.state.all_labs;
+  		temp_labs.map((lab) => {
+  			lab.in_search = false;
+  		});
+  		this.setState({all_labs: temp_labs});
   	}
 
 	filterList(event) {
-		var updatedList = this.state.catalog;
+		if (this.state.search_skills) {
+			var updatedList = this.state.skills_catalog;
+		}
+		else {
+			var updatedList = this.state.interests_catalog;
+		}
     	updatedList = updatedList.filter(function(item){
       	return item.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").search(
         	event.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
@@ -76,6 +91,15 @@ class LabSearch extends Component {
 	}
 
 	handleClickAdd(interest) {
+		this.state.all_labs.map((lab) => {
+			if (lab.tags.indexOf(interest) !== -1) {
+				if (!lab.in_search) {
+					let temp_lab = lab;
+					temp_lab.in_search = true;
+					this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
+				}
+			}
+		});
 		this.setState((prevState) => {
 			if (this.state.search_skills) {
 				if (prevState.skills.length == 0) {
@@ -103,6 +127,20 @@ class LabSearch extends Component {
 	}
 
 	handleClickDelete(interest, type) {
+		this.state.all_labs.map((lab) => {
+			if (lab.tags.indexOf(interest) !== -1) {
+				if (lab.in_search) {
+					let temp_lab = lab;
+					temp_lab.in_search = false;
+
+					let temp_filtered_labs = this.state.filtered_labs;
+					let indx = this.state.filtered_labs.indexOf(lab);
+					temp_filtered_labs.splice(indx, 1);
+
+					this.setState((prevState) => {filtered_labs: temp_filtered_labs});
+				}
+			}
+		});
 		this.setState((prevState) => {
 			if (type === 'skill') {
 				var temp_delete = prevState.skills;
@@ -118,26 +156,64 @@ class LabSearch extends Component {
 	}
 
 	handleSearchType(event) {
+		let temporary = "default";
+		if (document.getElementById('lab-topic')) {
+			let len = document.getElementById('lab-topic').value.length;
+			if (len != 0) {
+				temporary = document.getElementById('lab-topic').value;
+			}
+		}
 		if (event.target.value === 'skills') {
 			this.setState((prevState) => {
-				return {filtered_catalog: this.state.skills_catalog, 
-						catalog: this.state.skills_catalog, 
+				var updatedList = this.state.skills_catalog;
+				if (temporary !== "default") {
+			    	updatedList = updatedList.filter(function(item){
+			      	return item.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").search(
+			        	temporary.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
+			    	});
+				}
+				else {
+					updatedList = this.state.skills_catalog;
+				}
+				return {filtered_catalog: updatedList, 
 						search_skills: true,
-						search_interests: false};
+						search_interests: false,
+						in_filter: true};
 			});
 		}
 		else {
 			this.setState((prevState) => {
-				return {filtered_catalog: this.state.interests_catalog, 
-						catalog: this.state.interests_catalog, 
+				var updatedList = this.state.interests_catalog;
+				if (temporary !== "default") {
+			    	updatedList = updatedList.filter(function(item){
+			      	return item.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").search(
+			        	temporary.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
+			    	});
+				}
+				else {
+					updatedList = this.state.interests_catalog;
+				}
+				return {filtered_catalog: updatedList, 
 						search_skills: false,
-						search_interests: true};
+						search_interests: true,
+						in_filter: true};
 			});
 		}
 	}
 
 	handleImport(import_type) {
 		if (import_type === 'skills') {
+			this.state.your_skills.map((skill) => {
+				this.state.all_labs.map((lab) => {
+					if (lab.tags.indexOf(skill) !== -1) {
+						if (!lab.in_search) {
+							let temp_lab = lab;
+							temp_lab.in_search = true;
+							this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
+						}
+					}
+				});
+			});
 			this.setState((prevState, import_type) => {
 				let temp_add = prevState.skills;
 				prevState.your_skills.map((skill) => {
@@ -149,6 +225,17 @@ class LabSearch extends Component {
 			});
 		}
 		else {
+			this.state.your_interests.map((interest) => {
+				this.state.all_labs.map((lab) => {
+					if (lab.tags.indexOf(interest) !== -1) {
+						if (!lab.in_search) {
+							let temp_lab = lab;
+							temp_lab.in_search = true;
+							this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
+						}
+					}
+				});
+			});
 			this.setState((prevState, import_type) => {
 				let temp_add = prevState.interests;
 				prevState.your_interests.map((interest) => {
@@ -167,7 +254,7 @@ class LabSearch extends Component {
 				<div className='form labSearch shadow'>
 					<div className='row'>
 						<div className='col s12 m12 l2 left-align lab-search-label grey-text text-darken-1'>LAB SEARCH</div>
-						<div className='col s12 m7 '><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' /></div>
+						<div className='col s12 m7 '><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
 						<div className='col s12 m3 l3'>
 							<button className="btn waves-effect waves-light submit-btn lab-search-btn"
 				        			type="submit" 
@@ -237,7 +324,7 @@ class LabSearch extends Component {
 					</div>
 				</div>
 				<div className='row'>
-					<LabList header="Lab Match" labs={this.props.labs} />	
+					<LabList header="Lab Match" labs={this.state.filtered_labs} />	
 				</div>
 			</div>
 		);
