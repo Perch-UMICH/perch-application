@@ -54,3 +54,7 @@
 .white-text-now {
 	color: white !important;
 }
+
+body {
+	font-family: helvetica !important;
+}

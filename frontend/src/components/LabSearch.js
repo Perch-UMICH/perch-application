@@ -261,8 +261,8 @@ class LabSearch extends Component {
 			<div id='lab-search'>
 				<div className='form labSearch shadow'>
 					<div className='row'>
-						<div className='col s12 m12 l2 left-align lab-search-label grey-text text-darken-1'>LAB SEARCH</div>
-						<div className='col s12 m9 '><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
+						{/*<div className='col s12 m12 l2 left-align lab-search-label grey-text text-darken-1'>LAB SEARCH</div>*/}
+						<div className='col s12'><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
 					</div>
 				</div>
 
@@ -301,14 +301,14 @@ class LabSearch extends Component {
 					</div>
 
 					<div className='row search-interest-container'>
-						<div className='interest-section col s6 left-align'>
+						<div className='interest-section search-interest-section-left col s6 left-align'>
 							<div className='interest-body'>
 								{this.state.filtered_catalog.map((interest) => {
 									return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest)} > <Bubble txt={interest} type='adder' /> </span>)
 								})}
 							</div>
 						</div>
-						<div className='interest-section col s6'>
+						<div className='interest-section search-interest-section-right col s6'>
 							<div className='interest-body'>
 								<div className='selected-container'>
 									<p> SKILLS </p>

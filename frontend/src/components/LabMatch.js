@@ -92,7 +92,7 @@ class LabMatch extends Component {
 						'software development',
 					],
 					profile_link: 'prof-page',
-					spots: 2,
+					spots: 1,
 				},
 				
 			]

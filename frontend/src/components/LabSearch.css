@@ -1,5 +1,7 @@
 .labSearch {
 	padding: 20px;
+	padding-left: 0;
+	padding-right: 0;
 	background-color: #ddd;
 }
 
@@ -11,9 +13,10 @@
 	border-radius: 40px !important;
 	background-color: white !important;
 	color: grey !important;
-	padding-left: 10px !important;
+	padding-left: 20px !important;
 	margin: 5px 10px !important;
-	height: 30px !important;
+	height: 40px !important;
+	width: 95% !important;
 }
 
 #lab-name:focus + label,  #lab-topic:focus + label {
@@ -36,7 +39,7 @@
 }
 
 .lab-search-modifiers {
-	border: 1px solid white;
+	border: 1px solid #ddd;
 	border-bottom: none;
 	border-top: none;
 	margin-bottom: 0;
@@ -80,6 +83,20 @@
 	color: white;
 	background-color: #0277bd;
 	min-height: 30vh;
+}
+
+.search-interest-section-left {
+	border-color: #ddd !important;
+	/*border-top: none !important;*/
+	border-right: none !important;
+	/*border-left: none !important;*/
+}
+
+.search-interest-section-right {
+	border-color: #ddd !important;
+	/*border-top: none !important;*/
+	/*border-right: none !important;*/
+	/*border-left: none !important;*/
 }
 
 .selected-container {

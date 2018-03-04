@@ -2,3 +2,56 @@
 	letter-spacing: 1px;
 }
 
+.atf-header {
+	font-size: 45px;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.atf-header-big {
+	font-size: 65px;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.atf-text {
+	letter-spacing: 2px;
+	margin-top: 20px;
+	font-size: 16px;
+	line-height: 150%;
+	/*margin-left: 40px;*/
+}
+
+.atf {
+	color: grey;
+	margin-bottom: 0;
+	/*text-transform: uppercase;*/
+	
+}
+
+#atf-changer {
+	color: rgb(41, 182, 246);
+}
+
+#atf-perch {
+	color: #0277bd;
+}
+
+.new-signup-container {
+	/*border: 1px solid red;*/
+	padding: 20px;
+}
+
+.new-signup-header {
+	font-size: 25px;
+	margin-bottom: 30px;
+	letter-spacing: 1px;
+}
+
+.atf-height {
+	height: 70vh;
+}
+
+.new-signup-radio {
+	margin-right: 20px;
+}
