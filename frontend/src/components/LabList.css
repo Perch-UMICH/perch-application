@@ -25,3 +25,11 @@
 	top: 25px;
 	margin-left: 20px;
 }
+
+#lab-list-filler {
+	line-height: 100px;
+	color: #aaa;
+	font-size: 20px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
