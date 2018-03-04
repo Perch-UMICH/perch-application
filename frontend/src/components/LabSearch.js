@@ -76,7 +76,7 @@ class LabSearch extends Component {
   		this.setState({all_labs: temp_labs});
 
   		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
-
+  		document.getElementById('lab-search').addEventListener("mouseleave", () => document.getElementById('lab-search-box').classList.add('hide'));
 
   	}
 
@@ -258,7 +258,7 @@ class LabSearch extends Component {
 
 	render() {
 		return (
-			<div>
+			<div id='lab-search'>
 				<div className='form labSearch shadow'>
 					<div className='row'>
 						<div className='col s12 m12 l2 left-align lab-search-label grey-text text-darken-1'>LAB SEARCH</div>
@@ -268,22 +268,12 @@ class LabSearch extends Component {
 
 				<div id='lab-search-box' className='hide'>
 					{/* These two radio butons are used to switch between searching for skills/interests */}
-					{/*<div className="row center-align">
-											<p className="fe-test">Search By:</p>
-											<input className="radio" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
-											<label htmlFor="skills">Skills</label>
-											<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
-											<label htmlFor="interests">Interests</label>
-										</div>*/}
 
-					{/* These two buttons import the skills/interests of a user into the search */}
-				
 					{/* This container holds the list of skills/interests you can choose from,
 						as well as the skills/interests that have been chosen already. This container should
 						only show up when a user has their cursor clicked on the search */}
 					<div className='row lab-search-modifiers'>
 						<i className='material-icons close-modifiers' onClick={this.closeModifiers.bind(this)}>close</i>
-
 						<div className='col s6 left-align'>
 							<p className="fe-test">SEARCH BY</p>
 							<input className="radio" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
@@ -291,7 +281,6 @@ class LabSearch extends Component {
 							<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
 							<label htmlFor="interests">Interests</label>
 						</div>
-
 						<div className='col s6 import-container'>
 							<p className="fe-test">IMPORT</p>
 							<button className="btn waves-effect waves-light submit-btn import-btn"
@@ -310,7 +299,8 @@ class LabSearch extends Component {
 			        		</button>
 						</div>
 					</div>
-					<div className='row interest-container'>
+
+					<div className='row search-interest-container'>
 						<div className='interest-section col s6 left-align'>
 							<div className='interest-body'>
 								{this.state.filtered_catalog.map((interest) => {
@@ -320,23 +310,27 @@ class LabSearch extends Component {
 						</div>
 						<div className='interest-section col s6'>
 							<div className='interest-body'>
-								<p> SKILLS </p>
-								{this.state.skills.map((interest) => {
-									return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill')} > <Bubble txt={interest} type='deleter' /> </span>)
-								})}
+								<div className='selected-container'>
+									<p> SKILLS </p>
+									{this.state.skills.map((interest) => {
+										return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill')} > <Bubble txt={interest} type='deleter' /> </span>)
+									})}
+								</div>
+
 								<br></br>
+								<br></br><br></br>
 								<br></br>
-								<br></br>
-								<br></br>
-								<br></br>
-								<br></br>
-								<p> INTERESTS </p>
-								{this.state.interests.map((interest) => {
-									return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest')} > <Bubble txt={interest} type='deleter' /> </span>)
-								})}
+								
+								<div className='selected-container'>
+									<p style={{display: 'block'}}> INTERESTS </p>
+									{this.state.interests.map((interest) => {
+										return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest')} > <Bubble txt={interest} type='deleter' /> </span>)
+									})}
+								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
 				<div className='row'>
 					<LabList header="Lab Match" labs={this.state.filtered_labs} />	
