@@ -4,6 +4,7 @@
 	margin-top: 20px;
 	/*margin: 1.5% !important;*/
 	padding: 0px !important;
+	min-height: 200px !important;
 }
 
 .lab-list-header {
@@ -15,4 +16,12 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	text-align: center;
+	position: relative;
+}
+
+.lab-list-icon {
+	font-size: 35px;
+	position: absolute;
+	top: 25px;
+	margin-left: 20px;
 }
