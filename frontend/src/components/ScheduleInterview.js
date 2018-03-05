@@ -91,11 +91,16 @@ class ScheduleInterview extends Component {
 
 	render() {
 		var url_arr = this.props.location.pathname.split('/');
-		var temp_arr = url_arr[2].split('-');
 		var student_name = '';
-		for (var i = 0; i < temp_arr.length; i++) {
-			var upperCase = temp_arr[i].charAt(0).toUpperCase() + temp_arr[i].slice(1) + ' ';
-			student_name = student_name.concat(upperCase);
+		if (!url_arr[2]) {
+			student_name = '[No Student Given]';
+		} 
+		else {
+			var temp_arr = url_arr[2].split('-');
+			for (var i = 0; i < temp_arr.length; i++) {
+				var upperCase = temp_arr[i].charAt(0).toUpperCase() + temp_arr[i].slice(1) + ' ';
+				student_name = student_name.concat(upperCase);
+			}
 		}
 		var dest = '/prof-page';
 		var btn_msg = 'send';

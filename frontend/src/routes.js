@@ -67,6 +67,7 @@ class Router extends Component {
 							<Route path='/apply/:labSlug' component={ Apply } />
 							<Route path='/create-position' component={ CreatePosition } />
 							<Route path='/view-applicants' component={ ViewApplicants } />
+							<Route path='/schedule-interview' component={ ScheduleInterview } />
 							<Route path='/schedule-interview/:studentSlug' component={ ScheduleInterview } />
 							<Route path='/feedback' component={ Feedback }/>
 							<Route path='/' component={ Home } />
