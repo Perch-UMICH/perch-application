@@ -16,7 +16,7 @@ class StudentProfile extends Component {
 			name: 'Meha Patel',
 			major: 'Computer Science',
 			year: 'Junior',
-			bio: "I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning.",
+			bio: "I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning. ",
 			GPA: '3.90',
 			img_src: '/img/meha.jpg',
 			curr_lab: 'The Infant Cognition Project',

@@ -7,7 +7,7 @@ class Login extends Component {
 		return (
 			<div className='login-container valign-wrapper'>
 				<form className='container login shadow' action='student-profile'>
-					<div className='new-signup-header center-align'>Log In</div>
+					<div className='new-signup-header center-align'>LOG IN</div>
 					<div className="input-field">
 		                <input id="email" type="email" required />
 		                <label htmlFor="email">Email</label>

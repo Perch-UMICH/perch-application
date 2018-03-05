@@ -16,7 +16,7 @@ class ProfPage extends Component {
 			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
 			no: ['paid', 'seniors', 'freshman'],
 			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
-			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.",
+			lab_summary: "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.",
 			labels: [
 				"Pediatry",
 				"Children",
@@ -85,7 +85,7 @@ class ProfPage extends Component {
 						{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
 					</div>
 				</div>
-				{1>0 && <div className="row center-align">  {/* JUST FOR FRONT-END TESTING, TO BE DEPRECATED */}
+				{0>0 && <div className="row center-align">  {/* JUST FOR FRONT-END TESTING, TO BE DEPRECATED */}
 									<p className="fe-test">View As:</p>
 									<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
 									<label htmlFor="faculty">Faculty</label>
