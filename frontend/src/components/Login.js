@@ -17,7 +17,7 @@ class Login extends Component {
 		                <label htmlFor="password">Password</label>
 		            </div>
 		            <br />
-		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', height: '50px'}} name="action"><i className='materialize-icons'>key</i></button>
+		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', height: '50px'}} name="action"><i className='material-icons'>lock_open</i></button>
 				</form>
 			</div>
 		);
