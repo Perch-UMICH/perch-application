@@ -17,8 +17,7 @@ class LabListItem extends Component {
 					<span className='hide-on-small-only'>{this.props.tags.map((tag) => <div key={tag} className='floater-item'>{tag}</div>)}</span>
 				</div>
 				
-				{/*<div className="lab-list-btn-container"><BasicButton dest={this.props.dest} msg={this.props.btn_msg}/></div>*/}
-				{<div className="lab-list-btn-container"><BasicButton dest={this.props.profile_link} msg={`${this.props.spots} spot(s)`}/></div>}
+				{this.props.spots > 1 ? <div className="lab-list-btn-container"><BasicButton dest={this.props.profile_link} msg={`${this.props.spots} spots`}/></div> : <div className="lab-list-btn-container"><BasicButton dest={this.props.profile_link} msg={`${this.props.spots} spot `}/></div>}
 			</div>
 		);
 	}

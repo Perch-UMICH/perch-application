@@ -14,7 +14,7 @@ class Endorsements extends Component {
 
 	render() {
 		return (
-			<div className='tab-container'>
+			<div className='tab-container shadow'>
 				<div className='tab-header'>
 					<div className='endorsement-header'>Faculty Endorsements</div>
 					{/*<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>*/}

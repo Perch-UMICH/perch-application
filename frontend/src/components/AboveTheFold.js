@@ -1,42 +1,61 @@
 import React, {Component} from 'react';
-import SquareLogo from './SquareLogo';
 import MoveTo from 'moveto';
-import LoginButtons from './LoginButtons';
+import Typed from 'typed.js';
+import BasicButton from './BasicButton';
+import SignUp from './SignUp';
 import './AboveTheFold.css';
 
 class AboveTheFold extends Component {
 
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		route: '/pick-your-interests?user_type=student'
+	// 	};
+	// }
+
 	componentDidMount() {
-		document.addEventListener('DOMContentLoaded', function(){
-	      const easeFunctions = {
-	        easeInQuad: function (t, b, c, d) {
-	          t /= d;
-	          return c * t * t + b;
-	        },
-	        easeOutQuad: function (t, b, c, d) {
-	          t /= d;
-	          return -c * t* (t - 2) + b;
-	        }
-	      }
-	      const moveTo = new MoveTo({
-	        ease: 'easeInQuad'
-	      }, easeFunctions);
-	      const triggers = document.getElementsByClassName('js-trigger');
-	      for (var i = 0; i < triggers.length; i++) {
-	        moveTo.registerTrigger(triggers[i]);
-	      }
-	    });
+		var options = {
+		  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
+		  typeSpeed: 75
+		}
+
+		var typed = new Typed("#atf-changer", options);
 	}
+
+	// handleUserTypeCheck(event) {
+	// 	if (event.target.value === 'faculty') {
+	// 		this.setState({route: '/lab-name'});
+	// 	}
+	// 	else {
+	// 		this.setState({route: '/pick-your-interests?user_type=student'});
+	// 	}
+	// }
 
 	render() {
 		return(
-			  <div className="tab3 valign-wrapper">
-			    <div className="container center-align shadow" style={{backgroundColor: '#eee'}}>
-				    <img className="logo" src="assets/new-logo-clear.png" data-tilt />
-				    <SquareLogo />
-				    <p className="letter-spacer flow-text" style={{color: '#0277bd'}}>We make research more accessible for everyone</p>
-				    <LoginButtons  />		    
-			    </div>
+			  <div className="atf row">
+			  		<div className='col s12 m7 atf-height valign-wrapper'>
+			  			<div className='container center-align'>
+				  			<div className='atf-header-big left-align'><span id='atf-perch'>PERCH</span></div>
+				  			<div className='atf-header left-align'>deawkwardizing <br/><span id='atf-changer'></span></div>
+				  			<div className='atf-text left-align'>PERCH's centralized matching system helps you find the best lab or lab assistant, while PERCH Certifications streamlines basic skills training</div>
+			  			</div>
+			  		</div>
+
+			  		<div className='hide-on-med-and-up center-align' style={{marginBottom: '20px'}}>
+			  			<BasicButton dest='sign-up' msg='sign up'/><BasicButton dest='login' msg='log in'/>
+			  		</div>
+
+			  		<div className='col s12 m5 atf-height valign-wrapper hide-on-small-only'>
+			  			<SignUp />
+			  		</div>
+			    {/*<div className="container center-align shadow" style={{backgroundColor: '#eee'}}>
+			    				    <img className="logo" src="assets/new-logo-clear.png" data-tilt />
+			    				    <SquareLogo />
+			    				    <p className="letter-spacer flow-text" style={{color: '#0277bd'}}>We make research more accessible for everyone</p>
+			    				    <LoginButtons  />		    
+			    			    </div>*/}
 			  </div>
 		);
 	}

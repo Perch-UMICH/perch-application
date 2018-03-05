@@ -1,5 +1,7 @@
 .labSearch {
 	padding: 20px;
+	padding-left: 0;
+	padding-right: 0;
 	background-color: #ddd;
 }
 
@@ -11,9 +13,10 @@
 	border-radius: 40px !important;
 	background-color: white !important;
 	color: grey !important;
-	padding-left: 10px !important;
+	padding-left: 20px !important;
 	margin: 5px 10px !important;
-	height: 30px !important;
+	height: 40px !important;
+	width: 95% !important;
 }
 
 #lab-name:focus + label,  #lab-topic:focus + label {
@@ -33,4 +36,73 @@
 
 .lab-search-btn {
 	margin-top: 5px;
+}
+
+.lab-search-modifiers {
+	border: 1px solid #ddd;
+	border-bottom: none;
+	border-top: none;
+	margin-bottom: 0;
+	padding: 10px;
+	background-color: #0277bd;
+	position: relative;
+}
+
+.close-modifiers {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	padding: 5px;
+	color: white;
+	background-color: rgb(41, 182, 246);
+}
+
+#interests, #skills {
+	color: white !important;
+}
+
+.import-btn {
+	background-color: rgb(41, 182, 246);
+	font-size: 80%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#lab-search-box {
+	padding: 11px;
+	padding-top: 0px;
+}
+
+.import-container {
+	/*padding-right: 30px !important;*/
+}
+
+.search-interest-container {
+	display: flex;
+	flex-direction: row;
+	color: white;
+	background-color: #0277bd;
+	min-height: 30vh;
+}
+
+.search-interest-section-left {
+	border-color: #ddd !important;
+	/*border-top: none !important;*/
+	border-right: none !important;
+	/*border-left: none !important;*/
+}
+
+.search-interest-section-right {
+	border-color: #ddd !important;
+	/*border-top: none !important;*/
+	/*border-right: none !important;*/
+	/*border-left: none !important;*/
+}
+
+.selected-container {
+	float: left;
+}
+
+.lab-search-radio-label {
+	color: #ddd;
 }

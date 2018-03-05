@@ -19,56 +19,36 @@ class SignUp extends Component {
 
 	render() {
 		return (
-				<div id="form" className="center-align container">
-				    <div className="input-form grey lighten-5 z-depth-3" >
-				      <div className="container">
-				        <div className="form-header center-align grey-text text-darken-3">Join Perch</div>
-				        <div className="row">
-				          <form className="col s12" action={this.state.route}>
-				            <div className="row min-margin">
-				              <div className="input-field col s6">
-				                <input id="first_name" type="text" className="validate grey-text text-darken-2" required />
-				                <label htmlFor="first">First Name</label>
-				              </div>
-				              <div className="input-field col s6">
-				                <input id="last_name" type="text" className="validate grey-text text-darken-2" required />
-				                <label htmlFor="last_name">Last Name</label>
-				              </div>
-				            </div>
-				            <div className="row min-margin">
-				              <div className="input-field col s12">
-				                <input id="email" type="email" className="validate grey-text text-darken-2" required />
-				                <label htmlFor="email">UMich Email</label>
-				              </div>
-				            </div>
-
-				            <div className="row min-margin">
-				              <div className="input-field col s12">
-				                <input id="password" type="password" className="validate grey-text text-darken-2" required />
-				                <label htmlFor="password">Password</label>
-				              </div>
-				            </div>
-				            <div className="row min-margin">
-				              <div className="input-field col s12">
-				                <input id="password_retype" type="password" className="validate grey-text text-darken-2" required />
-				                <label htmlFor="password_retype">Re-type Password</label>
-				              </div>
-				            </div>
-				              <input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
-				              <label htmlFor="faculty">Faculty</label>
-				              <input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
-				              <label htmlFor="student">Student</label>
-				            <div className="submit-container row min-margin center-align">
-				              <button className="btn waves-effect waves-light submit-btn"  type="submit" name="action">De-awkwardize
-				                <i className="material-icons right">send</i>
-				              </button>
-				              <br /><br />
-				            </div>
-				          </form>
-				        </div>
-				        </div>
-				      </div>
-				  </div>
+				<form className='container left-align new-signup-container' action={this.state.route}>
+	  				<div className='new-signup-header'>Sign Up for Free</div>
+	  				<a href='login' ><div className='new-signup-sub-header'>or Login if you have an account</div></a>
+	  				{/*<div className='row'>
+	  					<div className="input-field col s6">
+		                	<input id="first_name" type="text" required />
+		                	<label htmlFor="first_name">First name</label>
+		            	</div>
+		            	<div className="input-field col s6">
+			                <input id="last_name" type="text" required />
+			                <label htmlFor="last_name">Last name</label>
+			            </div>
+	  				</div>*/}  
+	  				<div className="input-field">
+		                <input id="email" type="email" required />
+		                <label htmlFor="email">Email</label>
+		            </div>
+		            <div className="input-field">
+		                <input id="password" type="password" required />
+		                <label htmlFor="password">Password</label>
+		            </div>
+		            <div className='center-align'>
+		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
+		              	<label className='new-signup-radio' htmlFor="faculty">Faculty</label>
+		              	<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
+		              	<label className='new-signup-radio' htmlFor="student">Student</label>
+		            </div>
+		            <br />
+		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} name="action">deawkwardize</button>
+	  			</form>
 		);
 	}
 }

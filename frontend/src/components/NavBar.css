@@ -1,6 +1,6 @@
 .nav-logo {
-	height: 60px;
-	margin-top: 5px;
+	height: 80px;
+	margin-top: -5px;
 	margin-right: 10px;
 	margin-left: 10px;
 }
@@ -67,4 +67,9 @@ nav .brand-logo {
 
 .no-hover:hover {
     background: inherit;
+}
+
+.mobile-logo {
+    position: absolute;
+    left: 25%;
 }

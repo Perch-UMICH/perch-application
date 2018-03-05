@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import AboveTheFold from './AboveTheFold.js';
 import WhoAreYou from './WhoAreYou.js';
-import InterestedForm from './InterestedForm.js';
-import SignUp from './SignUp.js';
 import './Home.css'
 class Home extends Component {
 	
@@ -11,9 +9,7 @@ class Home extends Component {
 			<div>
 				<AboveTheFold />
 				<WhoAreYou />
-				<div className="sub-team-header-2-full valign-wrapper">
-					<SignUp />
-				</div>
+				<img src='/assets/PERCH_MASCOT.svg' className='logo hide-on-med-and-down' style={{position: 'fixed', zIndex: '999', height: '250px', bottom: '-75px', left: '-40px'}}/>
 			</div>
 		);
 	}

@@ -51,6 +51,49 @@ class LabMatch extends Component {
 					profile_link: 'prof-page',
 					spots: 2,
 				},
+				{
+					name: "Bo's Lab",
+					img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY',
+					tags: [
+						'security',
+						'fintech',
+					],
+					profile_link: 'prof-page',
+					spots: 2,
+				},
+				{
+					name: "Mo's Lab",
+					img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY',
+					tags: [
+						'machine learning',
+						'physics',
+						'software development',
+					],
+					profile_link: 'prof-page',
+					spots: 2,
+				},
+				{
+					name: "Josephine's Astrophysics Lab",
+					img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY',
+					tags: [
+						'virology',
+						'medicine',
+						'chemistry',
+					],
+					profile_link: 'prof-page',
+					spots: 2,
+				},
+				{
+					name: "Steve's Lab",
+					img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY',
+					tags: [
+						'biomedical devices',
+						'medicine',
+						'software development',
+					],
+					profile_link: 'prof-page',
+					spots: 1,
+				},
 				
 			]
 		}

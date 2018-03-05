@@ -14,7 +14,7 @@ class BioTab extends Component {
 
 	render() {
 		return (
-			<div className='tab-container'>
+			<div className='tab-container shadow'>
 				<div className='tab-header'>
 					{this.props.header.toUpperCase()}
 					<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
