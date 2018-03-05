@@ -38,7 +38,7 @@ class ProfPage extends Component {
 					name: "Lab Assistant",
 					skills: [
 						"linguistic inquiry",
-						"day reconstruction method",
+						"drm",
 						"patience with children",
 					],
 					num_applicants: 4,

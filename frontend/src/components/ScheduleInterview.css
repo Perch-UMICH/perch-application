@@ -1,0 +1,97 @@
+.schedule-interview {
+	height: 100vh;
+}
+
+.schedule-interview-form {
+	background-color: #0277bd;
+	padding: 20px;
+}
+
+.schedule-interview-input {
+	height: 150px;
+	background-color: #eee;
+	box-shadow: 1px 1px 5px;
+	color: #eee;
+	padding: 10px;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.schedule-interview-btn, 
+.schedule-interview-btn:hover {
+	background-color: #03a9f4;
+}
+
+.schedule-interview-input:hover {
+	color: #eee;
+}
+
+.schedule-interview-desc {
+	font-weight: 300;
+	font-size: 16px;
+}
+
+.schedule-interview-header {
+	font-size: 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	background-color: rgb(41, 182, 246);
+	color: white;
+	margin-bottom: 20px;
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-top: -20px;
+}
+
+.remove-card {
+	float: right;
+	color: black;
+	opacity: 0;
+	transition: ease .2s;
+}
+
+.day-disp {
+	margin-bottom: -10px;
+}
+
+.year-disp {
+	margin-top: -4px;
+	padding-bottom: 4px;
+}
+
+.time-disp {
+	margin-left: -10px;
+	margin-right: -10px;
+	margin-bottom: -6px;
+}
+
+.card-image {
+	white-space: nowrap; 
+	overflow: hidden;
+	text-overflow: ellipsis; 
+	padding: 4px;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+
+.error-text {
+	font-weight: 350;
+	color: #FFEA7B;
+}
+
+#address-input {
+	width: 50%;
+	color: #eee;
+	letter-spacing: 1px;
+}
+
+#address-input:focus {
+	border-bottom: 1px solid #29b6f6 !important;
+	box-shadow: 0 1px 0 0 #29b6f6;
+}
+
+.card:hover .remove-card {
+	opacity: 1 !important;
+	transition: .2s ease;
+}
