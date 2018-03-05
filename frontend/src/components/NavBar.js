@@ -9,22 +9,6 @@ class NavBar extends Component {
 		this.state.loggedIn = this.props.loggedIn;
 	}
 
-	// componentDidMount() {
-	// 	//console.log($(".button-collapse"));
-	// 	// $(".button-collapse").sideNav({
-	//  //  	edge: 'right',
-	//  //  	draggable: true
- //  // 		});
-	// }
-
-	// componentDidUpdate() {
-	// 	console.log($(".button-collapse"));
-	// 	$(".button-collapse").sideNav({
-	//   	edge: 'right',
-	//   	draggable: true
- //  		});
-	// }
-
 	render() {
 
 		if (this.props.loggedIn === 'true') {
@@ -54,17 +38,22 @@ class NavBar extends Component {
 		
 			      </ul>
 
-			        <ul className="left">
-			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/LOGO.svg" /></a>
+			        <ul className="left hide-on-small-only">
+			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/branch_logo.png" /></a>
 			        </ul>
 
-			        <ul className="center hide-on-med-and-up">
-			          <a className='no-hover' href="/home"><span className="nav-option nav-logo-text grey-text text-lighten-3" style={{fontSize: '30px'}}>PERCH</span></a>
+			        <ul className="mobile-logo hide-on-med-and-up">
+			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/branch_logo.png" /></a>
 			        </ul>
 
-			        <ul className="left">
-			          <a className='no-hover' href="/home"><span className="nav-option nav-logo-text hide-on-small-only grey-text text-lighten-3" >PERCH</span></a>
-			        </ul>
+
+			  {/*      <ul className="center hide-on-med-and-up">
+			  			          <a className='no-hover' href="/home"><span className="nav-option nav-logo-text grey-text text-lighten-3" style={{fontSize: '30px'}}></span></a>
+			  			        </ul>
+			  
+			  			        <ul className="left">
+			  			          <a className='no-hover' href="/home"><span className="nav-option nav-logo-text hide-on-small-only grey-text text-lighten-3" ></span></a>
+			  			        </ul>*/}
 
 			        <ul className="side-nav light-blue lighten-4" id="mobile-demo">
 			         	{navItems}

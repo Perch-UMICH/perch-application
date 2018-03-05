@@ -25,3 +25,27 @@
 	background-color: #4fc3f7 ;
 	box-shadow: none;
 }
+
+.new-signup-container {
+	/*border: 1px solid red;*/
+	padding: 20px;
+}
+
+.new-signup-header {
+	font-size: 25px;
+	margin-bottom: 0px;
+	letter-spacing: 1px;
+	color: rgb(41, 182, 246);
+}
+
+.new-signup-sub-header {
+	font-size: 14px;
+	margin-bottom: 0px;
+	letter-spacing: 1px;
+	/*text-transform: lowercase;*/
+	color: #bbb;
+}
+
+.new-signup-radio {
+	margin-right: 20px;
+}

@@ -2,16 +2,17 @@ import React, {Component} from 'react';
 import MoveTo from 'moveto';
 import Typed from 'typed.js';
 import BasicButton from './BasicButton';
+import SignUp from './SignUp';
 import './AboveTheFold.css';
 
 class AboveTheFold extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			route: '/pick-your-interests?user_type=student'
-		};
-	}
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		route: '/pick-your-interests?user_type=student'
+	// 	};
+	// }
 
 	componentDidMount() {
 		var options = {
@@ -22,19 +23,19 @@ class AboveTheFold extends Component {
 		var typed = new Typed("#atf-changer", options);
 	}
 
-	handleUserTypeCheck(event) {
-		if (event.target.value === 'faculty') {
-			this.setState({route: '/lab-name'});
-		}
-		else {
-			this.setState({route: '/pick-your-interests?user_type=student'});
-		}
-	}
+	// handleUserTypeCheck(event) {
+	// 	if (event.target.value === 'faculty') {
+	// 		this.setState({route: '/lab-name'});
+	// 	}
+	// 	else {
+	// 		this.setState({route: '/pick-your-interests?user_type=student'});
+	// 	}
+	// }
 
 	render() {
 		return(
 			  <div className="atf row">
-			  		<div className='col s7 atf-height valign-wrapper' style={{ backgroundColor: 'white'}}>
+			  		<div className='col s12 m7 atf-height valign-wrapper'>
 			  			<div className='container center-align'>
 				  			<div className='atf-header-big left-align'><span id='atf-perch'>PERCH</span></div>
 				  			<div className='atf-header left-align'>deawkwardizing <br/><span id='atf-changer'></span></div>
@@ -42,27 +43,12 @@ class AboveTheFold extends Component {
 			  			</div>
 			  		</div>
 
-			  		<div className='col s5 atf-height valign-wrapper' style={{ backgroundColor: 'white'}}>
-			  			<form className='container left-align new-signup-container' action={this.state.route}>
-			  				<div className='new-signup-header'>Sign Up for Free</div>
-			  				<div className="input-field">
-				                <input id="email" type="email" required />
-				                <label htmlFor="email">Email</label>
-				            </div>
-				            <div className="input-field">
-				                <input id="password" type="password" required />
-				                <label htmlFor="password">Password</label>
-				            </div>
-				            <div className='center-align'>
-				            	{/*Fix onChange for handling*/}
-				            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
-				              	<label className='new-signup-radio' htmlFor="faculty">Faculty</label>
-				              	<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
-				              	<label className='new-signup-radio' htmlFor="student">Student</label>
-				            </div>
-				            <br />
-				            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} name="action">deawkwardize</button>
-			  			</form>
+			  		<div className='hide-on-med-and-up center-align' style={{marginBottom: '20px'}}>
+			  			<BasicButton dest='sign-up' msg='sign up'/><BasicButton dest='login' msg='log in'/>
+			  		</div>
+
+			  		<div className='col s12 m5 atf-height valign-wrapper hide-on-small-only'>
+			  			<SignUp />
 			  		</div>
 			    {/*<div className="container center-align shadow" style={{backgroundColor: '#eee'}}>
 			    				    <img className="logo" src="assets/new-logo-clear.png" data-tilt />

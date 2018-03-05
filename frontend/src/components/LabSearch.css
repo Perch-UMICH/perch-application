@@ -102,3 +102,7 @@
 .selected-container {
 	float: left;
 }
+
+.lab-search-radio-label {
+	color: #ddd;
+}

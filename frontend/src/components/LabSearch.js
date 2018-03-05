@@ -276,10 +276,10 @@ class LabSearch extends Component {
 						<i className='material-icons close-modifiers' onClick={this.closeModifiers.bind(this)}>close</i>
 						<div className='col s6 left-align'>
 							<p className="fe-test">SEARCH BY</p>
-							<input className="radio" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
-							<label htmlFor="skills">Skills</label>
-							<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
-							<label htmlFor="interests">Interests</label>
+							<input className="" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
+							<label className='lab-search-radio-label' htmlFor="skills">Skills</label>
+							<input className="" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
+							<label className='lab-search-radio-label' htmlFor="interests">Interests</label>
 						</div>
 						<div className='col s6 import-container'>
 							<p className="fe-test">IMPORT</p>

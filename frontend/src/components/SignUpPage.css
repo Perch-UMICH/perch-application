@@ -1,0 +1,23 @@
+.sign-up-page {
+	/*background-color: white;*/
+	max-width: 700px;
+	background-image: url(../assets/background-white.png);
+}
+
+.sign-up-page-container {
+	height: 80vh;
+}
+
+@media only screen and (max-width: 600px){
+	.sign-up-page {
+		margin-left: 0;
+		margin-right: 0;
+		width: 100%;
+		height: 100%;
+		padding-top: 90px;
+	}
+
+	.sign-up-page-container {
+		height: 95vh;
+	}
+}

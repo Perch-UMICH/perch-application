@@ -2,14 +2,43 @@
 	letter-spacing: 1px;
 }
 
+@media only screen and (max-width: 600px){
+	.atf-header {
+		font-size: 25px;
+	}
+
+	.atf-header-big {
+		font-size: 55px;
+	}
+
+	.atf-height {
+		/*height: 60vh;*/
+		margin-top: 25px;
+		margin-bottom: 25px;
+	}
+}
+
+@media only screen and (min-width: 601px){
+	.atf-header {
+		font-size: 40px;
+	}
+
+	.atf-header-big {
+		font-size: 65px;
+	}
+
+	.atf-height {
+		height: 70vh;
+	}
+}
+
+
 .atf-header {
-	font-size: 40px;
 	font-weight: bold;
 	letter-spacing: 2px;
 }
 
 .atf-header-big {
-	font-size: 65px;
 	font-weight: bold;
 	letter-spacing: 2px;
 }
@@ -25,8 +54,9 @@
 .atf {
 	color: grey;
 	margin-bottom: 0;
-	/*text-transform: uppercase;*/
-	
+	/*background-color: white;*/
+	background-image: url(../assets/background-white.png);
+	background-size: cover;	
 }
 
 #atf-changer {
@@ -37,21 +67,3 @@
 	color: #0277bd;
 }
 
-.new-signup-container {
-	/*border: 1px solid red;*/
-	padding: 20px;
-}
-
-.new-signup-header {
-	font-size: 25px;
-	margin-bottom: 30px;
-	letter-spacing: 1px;
-}
-
-.atf-height {
-	height: 70vh;
-}
-
-.new-signup-radio {
-	margin-right: 20px;
-}
