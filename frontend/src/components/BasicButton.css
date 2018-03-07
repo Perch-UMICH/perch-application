@@ -15,6 +15,10 @@
 	box-shadow: none;
 }
 
+.basic-btn:focus {
+	background-color: #0277bd;
+}
+
 .basic-btn-light {
 	background-color: rgb(41, 182, 246);
 	box-shadow: none;
@@ -25,4 +29,8 @@
 .basic-btn-light:hover {
 	background-color: #4fc3f7 ;
 	box-shadow: none;
+}
+
+.basic-btn-light:focus {
+	background-color: rgb(41, 182, 246);
 }

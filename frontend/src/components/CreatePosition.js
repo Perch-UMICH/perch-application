@@ -107,7 +107,7 @@ class CreatePosition extends Component {
 			  questions: temp_questions,
 			}),
 		});
-	  }
+	}
 
 	removeQuestion(question_id) {
 		this.setState((prevState) => {

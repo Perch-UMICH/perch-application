@@ -35,6 +35,7 @@ class AppDisplayModal extends Component {
 
 	render() {
 		var modalId = "displayModal" + this.state.student_slug;
+		var interviewDest = '/schedule-interview/' + this.state.student_slug;
 		return(
 			<div>
 				<div id={modalId} class="modal modal-fixed-footer display-modal">
@@ -50,6 +51,7 @@ class AppDisplayModal extends Component {
 				   		{/*<BasicButton onClick={this.onClick} msg='close' />*/}{/*@Emi: changed basic button so you can pass an on click function, but this functio relies on this.state*/}
 				     	<BasicButton superClick={this.onClick} msg='close' />
 				     	<BasicButton dest={this.state.profile_link} msg='view profile' />
+				     	<BasicButton dest={interviewDest} msg='schedule interview' />
 				  	</div>
 			 	</div>
 			</div>
