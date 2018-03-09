@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
+import {cyan500} from 'material-ui/styles/colors';
 import SquareButton from './SquareButton';
 import BasicButton from './BasicButton';
 import DatePicker from 'material-ui/DatePicker';
@@ -9,10 +10,18 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import $ from 'jquery';
 import './ScheduleInterview.css';
 
+const muiTheme = getMuiTheme({
+    fontFamily: 'Impact',
+    datePicker: {
+		selectColor: '#FF0000',
+	},
+});
+
 class ScheduleInterview extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			labID: 'infantCogProj12628',
 			dateTime: null,
 			slots: [],
 			date: '',
@@ -49,7 +58,7 @@ class ScheduleInterview extends Component {
 		this.setState({ formFilled: true });
 		var date_arr = new Date($('#datePick').val()).toUTCString().split(" ");  
 		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-		var newSlotId = "s_" + this.state.s_index;
+		var newSlotId = "s_" + this.state.s_index + '_' + this.state.labID;
 		var newSlot = {
 			"id": newSlotId,
 			"day": date_arr[0],
@@ -115,7 +124,7 @@ class ScheduleInterview extends Component {
 					<p className="white-text schedule-interview-desc"> Create interview slots (available times and locations) for {student_name} to choose from:</p>
 					<input id='address-input' className='flow-text' placeholder='interview location (e.g. 3400 EECS, Mujo)'></input>
 					<div className="container">
-						<MuiThemeProvider>
+						<MuiThemeProvider theme={muiTheme}>
 							<DatePicker 
 								id = 'datePick'
 								onChange={this.handleDate} 

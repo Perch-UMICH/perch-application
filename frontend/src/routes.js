@@ -22,6 +22,7 @@ import Apply from './components/Apply';
 import CreatePosition from './components/CreatePosition';
 import ViewApplicants from './components/ViewApplicants';
 import ScheduleInterview from './components/ScheduleInterview';
+import PickInterview from './components/PickInterview';
 import Feedback from './components/Feedback';
 import './components/TapTarget.css';
 import './components/general.css';
@@ -69,6 +70,7 @@ class Router extends Component {
 							<Route path='/view-applicants' component={ ViewApplicants } />
 							<Route path='/schedule-interview' component={ ScheduleInterview } />
 							<Route path='/schedule-interview/:studentSlug' component={ ScheduleInterview } />
+							<Route path='/pick-interview' component={ PickInterview } />
 							<Route path='/feedback' component={ Feedback }/>
 							<Route path='/' component={ Home } />
 						</Switch>
