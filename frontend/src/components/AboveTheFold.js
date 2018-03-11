@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import MoveTo from 'moveto';
 import Typed from 'typed.js';
 import BasicButton from './BasicButton';
 import SignUp from './SignUp';
@@ -19,8 +18,6 @@ class AboveTheFold extends Component {
 		  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
 		  typeSpeed: 75
 		}
-
-		var typed = new Typed("#atf-changer", options);
 	}
 
 	// handleUserTypeCheck(event) {
