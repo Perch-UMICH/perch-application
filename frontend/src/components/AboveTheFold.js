@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Typed from 'typed.js';
 import BasicButton from './BasicButton';
 import SignUp from './SignUp';
 import './AboveTheFold.css';
@@ -13,12 +12,12 @@ class AboveTheFold extends Component {
 	// 	};
 	// }
 
-	componentDidMount() {
-		var options = {
-		  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
-		  typeSpeed: 75
-		}
-	}
+	// componentDidMount() {
+	// 	var options = {
+	// 	  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
+	// 	  typeSpeed: 75
+	// 	}
+	// }
 
 	// handleUserTypeCheck(event) {
 	// 	if (event.target.value === 'faculty') {

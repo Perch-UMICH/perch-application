@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-//import { parse } from 'query-string';
-//import SquareButton from './SquareButton';
 import Bubble from './Bubble';
 import './PickYourInterests.css';
 

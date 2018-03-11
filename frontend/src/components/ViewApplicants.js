@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SquareButton from './SquareButton';
+//import SquareButton from './SquareButton';
 import StudentListItem from './StudentListItem';
 import './LabList.css';
 
