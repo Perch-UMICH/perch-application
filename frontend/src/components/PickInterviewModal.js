@@ -18,7 +18,7 @@ class PickInterviewModal extends Component {
 	}
 
 	render() {
-		var lab_dest = '/prof-page/' + this.state.slug;
+		//var lab_dest = '/prof-page/' + this.state.slug;
 		return(
 			<div>
 				<div id="pickModal" className="modal">
