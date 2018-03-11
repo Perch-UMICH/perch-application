@@ -22,7 +22,7 @@ export function isLoggedIn() {
 }
 
 export function registerUser(name, email, password, password_confirmation) {
-    axios.post('api/register', {
+    axios.post(BASE_URL + 'api/register', {
         name,
         email,
         password,
@@ -57,7 +57,7 @@ export function loginUser(email, password) {
     console.log('logging in ' + email);
     console.log(password);
 
-    axios.post('api/login', {
+    axios.post(BASE_URL + 'api/login', {
         email, password
     })
         .then(response => {
@@ -81,7 +81,7 @@ export function loginUser(email, password) {
 function setUserDetails(token) {
     console.log(token);
     // Save user details to local storage
-    axios.post('api/details',
+    axios.post(BASE_URL + 'api/details',
         {
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -110,7 +110,7 @@ export function logoutCurrentUser() {
     localStorage.removeItem('user_name');
     localStorage.removeItem('user_id');
 
-    axios.post('api/logout',
+    axios.post(BASE_URL + 'api/logout',
         {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('user_token'),
@@ -133,7 +133,7 @@ export function logoutCurrentUser() {
 
 export function getAllUsers() {
     console.log('Getting users');
-    return axios.get('api/users')
+    return axios.get(BASE_URL + 'api/users')
         .then(response => {
             return response.data
         })

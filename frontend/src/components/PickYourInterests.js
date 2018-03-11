@@ -59,40 +59,31 @@ class PickYourInterests extends Component {
 
 	render() {
 		var header_txt, placeholder_txt, dest = "";
-		var btn_label = 'next';
+		var btn_label = 'back';
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
 
-		if (url_arr[1] === 'pick-your-interests' || url_arr[1] === "update-interests") {
+		if (url_arr[1] === "update-interests") {
 			if (user_type === "faculty") {
 				header_txt = "Your Lab Labels";
 				placeholder_txt = "descriptors for your lab work";
-				dest = 'lab-skills?user_type=faculty';
+				dest = 'prof-page';
 			} 
 			else {
 				header_txt = "Your Interests";
 				placeholder_txt = "field of interest";
-				dest = 'lab-skills?user_type=student';
+				dest = 'student-profile';
 			}
 		} 
-		else if (url_arr[1] === 'lab-skills' || url_arr[1] === "update-skills") {
+		else if (url_arr[1] === "update-skills") {
 			if (user_type === "faculty") {
 				header_txt = "Necessary Lab Skills";
 				placeholder_txt = "Skills used to work in your lab";
-				dest = 'lab-specifications';
+				dest = 'prof-page';
 			} 
 			else {
 				header_txt = "Your Lab Skills";
 				placeholder_txt = "Skills you are competent in";
-				dest = 'past-research';
-			}
-		}
-		if (url_arr[1] === "update-interests" || url_arr[1] === "update-skills") {
-			btn_label = "back";
-			if (user_type === "faculty") {
-				dest = 'prof-page';
-			}
-			else if (user_type === "student") {
 				dest = 'student-profile';
 			}
 		}
