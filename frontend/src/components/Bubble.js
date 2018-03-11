@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import './Bubble.css'
 
 class Bubble extends Component {
-	constructor(props) {
-		super(props);
+	// constructor(props) {
+	// 	super(props);
 
-	}
+	// }
 
 	render() {
 
-		if (this.props.type == 'adder') {
+		if (this.props.type === 'adder') {
 			this.interior = <i className="material-icons bubble-icon">add</i>
 		}
 		else {
