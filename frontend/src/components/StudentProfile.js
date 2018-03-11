@@ -6,17 +6,17 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
+import {getStudent} from '../helper.js'
 import $ from 'jquery'
 import './StudentProfile.css';
 class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
-			name: 'Meha Patel',
-			major: 'Computer Science',
-			year: 'Junior',
-			bio: "I'm a junior at the University of Michigan studying Computer Science with interests in Computer Security, Software Development, and Machine Learning. ",
+			name: '',
+			major: '',
+			year: '',
+			bio: "",
 			GPA: '3.90',
 			img_src: '/img/meha.jpg',
 			curr_lab: 'The Infant Cognition Project',
@@ -60,18 +60,20 @@ class StudentProfile extends Component {
 	}
 
 	componentDidMount() {
-		$( document ).ready(()=> {
-			var s_img = document.getElementById('student-img');
-			var height = window.getComputedStyle(s_img, null).height;
-    		var overlay = document.getElementById('overlay');
-			var s_name = document.getElementById('student-name');
-			
-			s_name.style.height = height;
-			overlay.style.height = height;
-			overlay.style.width = height;
+		getStudent(1).then((resp) => {
+            this.setState(
+            	{
+            		name: `${resp.first_name} ${resp.last_name}`,
+            		GPA: resp.gpa,
+            		major: resp.major,
+            		year: resp.year,
+            		bio: resp.bio,
 
-			this.setState();
-		});
+            	}
+            );
+
+            console.log(resp);
+        });
 	}
 
 	render() {

@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import MoveTo from 'moveto';
-import Typed from 'typed.js';
 import BasicButton from './BasicButton';
 import SignUp from './SignUp';
 import './AboveTheFold.css';
@@ -14,14 +12,12 @@ class AboveTheFold extends Component {
 	// 	};
 	// }
 
-	componentDidMount() {
-		var options = {
-		  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
-		  typeSpeed: 75
-		}
-
-		var typed = new Typed("#atf-changer", options);
-	}
+	// componentDidMount() {
+	// 	var options = {
+	// 	  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
+	// 	  typeSpeed: 75
+	// 	}
+	// }
 
 	// handleUserTypeCheck(event) {
 	// 	if (event.target.value === 'faculty') {

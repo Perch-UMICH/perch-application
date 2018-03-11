@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import SquareButton from './SquareButton';
 import './Feedback.css';
 
 class Feedback extends Component {

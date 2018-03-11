@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import { parse } from 'query-string';
-import SquareButton from './SquareButton';
 import Bubble from './Bubble';
 import './PickYourInterests.css';
 
@@ -36,7 +34,7 @@ class BubbleChoice extends Component {
 			temp_add.push(interest);
 			temp_delete.splice(temp_delete.indexOf(interest), 1);
 
-			if (temporary != "default") {
+			if (temporary !== "default") {
 				temp_filter.splice(temp_filter.indexOf(interest), 1);
 			}
 			else if (this.state.in_filter) {
@@ -60,11 +58,11 @@ class BubbleChoice extends Component {
 
 			let check = prevState.in_filter;
 			if (interest.includes(temporary.toString())) {
-				if (temporary != "default") {
+				if (temporary !== "default") {
 					temp_filter.push(interest);
 				}
 			}
-			else if (check && (temporary == "default")) {
+			else if (check && (temporary === "default")) {
 				temp_filter.push(interest);
 			}
 
@@ -79,7 +77,7 @@ class BubbleChoice extends Component {
 		let temporary = "default";
 		if (document.getElementById('lab-name')) {
 			let len = document.getElementById('lab-name').value.length;
-			if (len != 0) {
+			if (len !== 0) {
 				temporary = document.getElementById('lab-name').value;
 			}
 		}

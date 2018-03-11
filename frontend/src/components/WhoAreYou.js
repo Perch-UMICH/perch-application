@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
 class WhoAreYou extends Component {
 
 	componentDidMount() {
@@ -44,7 +43,7 @@ class WhoAreYou extends Component {
 			      <div className="header center-align">Who are you?</div>
 			      <br /><br /><br />
 			      <div id="student-btn" className="col s12 m6"><a href="javascript:void(0)" className="user-type-btn waves-effect btn-flat btn-large">Student</a></div>
-			      <div id="prof-btn" className="col s12 m6"><a href="javascript:void(0)" className="user-type-btn waves-effect btn-flat btn-large">Professor</a></div>
+			      //<div id="prof-btn" className="col s12 m6"><a href="javascript:void(0)" className="user-type-btn waves-effect btn-flat btn-large">Professor</a></div>
 			    </div>
 			  </div>
 
