@@ -6,13 +6,14 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
+import {getStudent} from '../helper.js'
 import $ from 'jquery'
 import './StudentProfile.css';
 class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
+			s: {},
 			name: 'Meha Patel',
 			major: 'Computer Science',
 			year: 'Junior',
@@ -73,7 +74,14 @@ class StudentProfile extends Component {
 			this.setState();
 		});
 
-		
+		getStudent(1).then((resp) => {
+            this.setState(
+            	{
+            		s: resp,
+            	}
+            );
+            console.log(this.state.s);
+        });
 		
 	}
 
@@ -94,7 +102,7 @@ class StudentProfile extends Component {
 	                </div>
 
 					<div id='student-name' className='col s6 m8 l9 valign-wrapper student-name'>
-						<div className='container center-align flow-text'>{this.state.name}</div>
+						<div className='container center-align flow-text'>{`${this.state.s.first_name} ${this.state.s.last_name}`}</div>
 						<a href='/prof-page'><div className='student-current-lab'>{this.state.curr_lab}</div></a>
 					</div>
 				</div>
