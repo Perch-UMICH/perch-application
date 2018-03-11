@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import { parse } from 'query-string';
-import {cyan500} from 'material-ui/styles/colors';
 import SquareButton from './SquareButton';
 import BasicButton from './BasicButton';
 import DatePicker from 'material-ui/DatePicker';
@@ -57,7 +55,6 @@ class ScheduleInterview extends Component {
 		}
 		this.setState({ formFilled: true });
 		var date_arr = new Date($('#datePick').val()).toUTCString().split(" ");  
-		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 		var newSlotId = "s_" + this.state.s_index + '_' + this.state.labID;
 		var newSlot = {
 			"id": newSlotId,
@@ -112,8 +109,6 @@ class ScheduleInterview extends Component {
 			}
 		}
 		var dest = '/prof-page';
-		var btn_msg = 'send';
-		var update = false;
 
 		return (
 			<div className='schedule-interview shift-down'>
