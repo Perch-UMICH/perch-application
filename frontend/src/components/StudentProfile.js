@@ -13,7 +13,6 @@ class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			s: {},
 			name: 'Meha Patel',
 			major: 'Computer Science',
 			year: 'Junior',
@@ -77,10 +76,16 @@ class StudentProfile extends Component {
 		getStudent(1).then((resp) => {
             this.setState(
             	{
-            		s: resp,
+            		name: `${resp.first_name} ${resp.last_name}`,
+            		GPA: resp.gpa,
+            		major: resp.major,
+            		year: resp.year,
+            		bio: resp.bio,
+
             	}
             );
-            console.log(this.state.s);
+
+            console.log(resp);
         });
 		
 	}
@@ -102,7 +107,7 @@ class StudentProfile extends Component {
 	                </div>
 
 					<div id='student-name' className='col s6 m8 l9 valign-wrapper student-name'>
-						<div className='container center-align flow-text'>{`${this.state.s.first_name} ${this.state.s.last_name}`}</div>
+						<div className='container center-align flow-text'>{this.state.name}</div>
 						<a href='/prof-page'><div className='student-current-lab'>{this.state.curr_lab}</div></a>
 					</div>
 				</div>

@@ -116,7 +116,7 @@ class LabSearch extends Component {
                 let temp_filter = prevState.filtered_catalog;
                 temp_delete.splice(temp_delete.indexOf(interest), 1);
 
-                if (temporary != "default") {
+                if (temporary !== "default") {
                     temp_filter.splice(temp_filter.indexOf(interest), 1);
                 }
                 else if (this.state.in_filter) {
@@ -132,7 +132,7 @@ class LabSearch extends Component {
                 let temp_filter = prevState.filtered_catalog;
                 temp_delete.splice(temp_delete.indexOf(interest), 1);
 
-                if (temporary != "default") {
+                if (temporary !== "default") {
                     temp_filter.splice(temp_filter.indexOf(interest), 1);
                 }
                 else if (this.state.in_filter) {
@@ -174,7 +174,7 @@ class LabSearch extends Component {
 
                 let check = prevState.in_filter;
                 if (interest.includes(temporary.toString())) {
-                    if (temporary != "default") {
+                    if (temporary !== "default") {
                         temp_filter.push(interest);
                     }
                 }
@@ -198,7 +198,7 @@ class LabSearch extends Component {
 
                 let check = prevState.in_filter;
                 if (interest.includes(temporary.toString())) {
-                    if (temporary != "default") {
+                    if (temporary !== "default") {
                         temp_filter.push(interest);
                     }
                 }
@@ -220,7 +220,7 @@ class LabSearch extends Component {
 		let temporary = "default";
 		if (document.getElementById('lab-topic')) {
 			let len = document.getElementById('lab-topic').value.length;
-			if (len != 0) {
+			if (len !== 0) {
 				temporary = document.getElementById('lab-topic').value;
 			}
 		}
@@ -287,10 +287,10 @@ class LabSearch extends Component {
                     if (temp_delete.indexOf(skill) !== -1) {
                         temp_delete.splice(temp_delete.indexOf(skill), 1);
                     }
-                    if ((temporary != "default") && (temp_filter.indexOf(skill) != -1)) {
+                    if ((temporary !== "default") && (temp_filter.indexOf(skill) !== -1)) {
                         temp_filter.splice(temp_filter.indexOf(skill), 1);
                     }
-                    else if (this.state.in_filter && (temp_filter.indexOf(skill) != -1)) {
+                    else if (this.state.in_filter && (temp_filter.indexOf(skill) !== -1)) {
                         temp_filter.splice(temp_filter.indexOf(skill), 1);
                     }
 
@@ -322,10 +322,10 @@ class LabSearch extends Component {
                     if (temp_delete.indexOf(interest) !== -1) {
                         temp_delete.splice(temp_delete.indexOf(interest), 1);
                     }
-                    if ((temporary != "default") && (temp_filter.indexOf(interest) != -1)) {
+                    if ((temporary !== "default") && (temp_filter.indexOf(interest) !== -1)) {
                         temp_filter.splice(temp_filter.indexOf(interest), 1);
                     }
-                    else if (this.state.in_filter && (temp_filter.indexOf(interest) != -1)) {
+                    else if (this.state.in_filter && (temp_filter.indexOf(interest) !== -1)) {
                         temp_filter.splice(temp_filter.indexOf(interest), 1);
                     }
 
@@ -346,7 +346,7 @@ class LabSearch extends Component {
 		let temporary = "default";
         if (document.getElementById('lab-topic')) {
             let len = document.getElementById('lab-topic').value.length;
-            if (len != 0) {
+            if (len !== 0) {
                 temporary = document.getElementById('lab-topic').value;
             }
         }
