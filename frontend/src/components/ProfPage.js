@@ -6,13 +6,14 @@ import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import HugeButton from './HugeButton'
 import ContactTab from './ContactTab'
+import {getLab} from '../helper.js'
 import './ProfPage.css'
 
 class ProfPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lab_name: "The Infant Cognition Project",
+			lab_name: "",
 			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
 			no: ['paid', 'seniors', 'freshman'],
 			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
@@ -59,6 +60,23 @@ class ProfPage extends Component {
 				{label: 'location', value: 'Central Campus'},
 			]
 		};
+	}
+
+	componentDidMount() {
+		getLab(1).then((resp) => {
+            this.setState(
+            	{
+            		lab_name: resp.name,
+            		contact_info: [
+            			{label: 'location', value: resp.location}
+            		],
+            		lab_summary: resp.description,
+
+            	}
+            );
+
+            console.log(resp);
+        });
 	}
 
 	handleUserTypeCheck(event) { // JUST FOR TESTING FRONT-END, TO BE DEPRECATED
