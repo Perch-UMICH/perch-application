@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { parse } from 'query-string';
-import {cyan500} from 'material-ui/styles/colors';
+//import { parse } from 'query-string';
+//import {cyan500} from 'material-ui/styles/colors';
 import SquareButton from './SquareButton';
-import BasicButton from './BasicButton';
-import DatePicker from 'material-ui/DatePicker';
-import TimePicker from 'material-ui/TimePicker';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+//import BasicButton from './BasicButton';
+//import DatePicker from 'material-ui/DatePicker';
+//import TimePicker from 'material-ui/TimePicker';
+//import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+//import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import PickInterviewModal from './PickInterviewModal';
 import $ from 'jquery';
 
@@ -138,9 +138,9 @@ class ScheduleInterview extends Component {
 	}
 
 	render() {
-		var dest = '/prof-page';
-		var btn_msg = 'send';
-		var update = false;
+		// var dest = '/prof-page';
+		// var btn_msg = 'send';
+		// var update = false;
 
 		return (
 			<div className='schedule-interview shift-down'>
