@@ -72,6 +72,8 @@ class StudentProfile extends Component {
 
 			this.setState();
 		});
+
+		
 		
 	}
 

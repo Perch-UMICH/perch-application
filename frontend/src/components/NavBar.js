@@ -15,7 +15,7 @@ class NavBar extends Component {
 			var navItems = <div>
 				<li><a className="nav-item" href="/student-profile">PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
-			    <li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>
+			    {/*<li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>*/}
 			</div>
 		}
 		else {

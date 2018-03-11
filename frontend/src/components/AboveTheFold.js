@@ -35,11 +35,11 @@ class AboveTheFold extends Component {
 	render() {
 		return(
 			  <div className="atf row">
-			  		<div className='col s12 m7 atf-height valign-wrapper'>
+			  		<div className='col s12 m7 atf-height valign-wrapper' style={{backgroundColor: '#0277bd'}}>
 			  			<div className='container center-align'>
-				  			<div className='atf-header-big left-align'><span id='atf-perch'>PERCH</span></div>
+				  			<div className='atf-header-big left-align'><span id='atf-perch'></span></div>
 				  			<div className='atf-header left-align'>deawkwardizing <br/><span id='atf-changer'></span></div>
-				  			<div className='atf-text left-align'>PERCH's centralized matching system helps you find the best lab or lab assistant, while PERCH Certifications streamlines basic skills training</div>
+				  			<div className='atf-text left-align'>Perch's centralized matching system helps you find the best lab or lab assistant, while Perch Certifications streamlines basic skills training</div>
 			  			</div>
 			  		</div>
 

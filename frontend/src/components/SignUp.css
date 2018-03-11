@@ -28,6 +28,7 @@
 
 .new-signup-container {
 	/*border: 1px solid red;*/
+	color: grey;
 	padding: 20px;
 }
 
@@ -36,7 +37,7 @@
 	margin-bottom: 0px;
 	letter-spacing: 1px;
 	color: rgb(41, 182, 246);
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 
 .new-signup-sub-header {

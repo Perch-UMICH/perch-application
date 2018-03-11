@@ -68,7 +68,7 @@ class NotableClasses extends Component {
 							<div className='input-field col s4'>
 								<div className='notable-classes-label left-align'>Year</div>
 								<select className='year-selector' value={this.state.year} onChange={event => this.updateYear(event)}>
-							      <option className='year-selector-item' value="" disabled selected>Choose your year</option>
+							      <option className='year-selector-item' value="" disabled>Choose your year</option>
 							      <option className='year-selector-item' value="Freshman">freshman</option>
 							      <option className='year-selector-item' value="Sophomore">sophomore</option>
 							      <option className='year-selector-item' value="Junior">junior</option>

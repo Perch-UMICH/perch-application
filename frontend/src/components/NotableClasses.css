@@ -47,10 +47,14 @@
 }
 
 .year-selector-item {
-	color: rgb(41, 182, 246);
+	color: rgb(41, 182, 246) !important;
 	letter-spacing: 1px;
 }
 
 .caret {
 	color: white !important;
+}
+
+.dropdown-content {
+	color: rgb(41, 182, 246) !important;
 }
