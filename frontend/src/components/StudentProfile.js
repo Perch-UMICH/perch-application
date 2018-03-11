@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent} from '../helper.js'
+import {getStudent, isLoggedIn} from '../helper.js'
 import $ from 'jquery'
 import './StudentProfile.css';
 class StudentProfile extends Component {
@@ -55,7 +55,7 @@ class StudentProfile extends Component {
 					name: 'Dr. Mary Poppins',
 					url: 'prof-page'
 				},
-			]
+			],
 		}
 	}
 
@@ -81,11 +81,9 @@ class StudentProfile extends Component {
             		major: resp.major,
             		year: resp.year,
             		bio: resp.bio,
-
             	}
             );
-
-            console.log(resp);
+            console.log(this.state);
         });
 		
 	}
@@ -100,7 +98,9 @@ class StudentProfile extends Component {
 						<div id='overlay' className='student-img-overlay'>
 		                    <div className='student-img-overlay-text'>
 		                        <a href='/update-image?user_type=student' id="editImageText" className="null-link-style" >
-									<i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
+									{isLoggedIn() && 
+										<i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
+									}
 								</a>
 		                    </div>
 		                </div>
