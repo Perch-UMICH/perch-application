@@ -109,12 +109,12 @@ class LabMatch extends Component {
             	{labs: resp.result}
             );
 
-            this.state.labs.map((lab) => {
-            	getLabTags(lab.id).then((resp) => {
-            		console.log(resp);
-            	})
-            });
-            // console.log(this.state.labs);
+            // this.state.labs.map((lab) => {
+            // 	getLabTags(lab.data.id).then((resp) => {
+            // 		console.log(resp);
+            // 	})
+            // });
+            console.log(resp);
         });
 		
 	}

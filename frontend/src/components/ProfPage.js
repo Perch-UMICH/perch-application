@@ -66,11 +66,13 @@ class ProfPage extends Component {
 		getLab(1).then((resp) => {
             this.setState(
             	{
-            		lab_name: resp.name,
+            		lab_name: resp.data.name,
             		contact_info: [
-            			{label: 'location', value: resp.location}
+            			{label: 'location', value: resp.data.location}
             		],
-            		lab_summary: resp.description,
+            		lab_summary: resp.data.description,
+            		labels: resp.tags,
+            		skills: resp.skills,
 
             	}
             );

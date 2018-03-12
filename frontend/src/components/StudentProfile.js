@@ -76,14 +76,17 @@ class StudentProfile extends Component {
 		getStudent(1).then((resp) => {
             this.setState(
             	{
-            		name: `${resp.first_name} ${resp.last_name}`,
-            		GPA: resp.gpa,
-            		major: resp.major,
-            		year: resp.year,
-            		bio: resp.bio,
+            		name: `${resp.data.first_name} ${resp.data.last_name}`,
+            		GPA: resp.data.gpa,
+            		major: resp.data.major,
+            		year: resp.data.year,
+            		bio: resp.data.bio,
+            		interests: resp.tags,
+            		skills: resp.skills,
+
             	}
             );
-            console.log(this.state);
+            console.log(resp);
         });
 		
 	}
