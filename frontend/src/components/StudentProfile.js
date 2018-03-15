@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent} from '../helper.js'
+import {getStudent, isLoggedIn} from '../helper.js'
 import $ from 'jquery'
 import './StudentProfile.css';
 class StudentProfile extends Component {
@@ -55,38 +55,76 @@ class StudentProfile extends Component {
 					name: 'Dr. Mary Poppins',
 					url: 'prof-page'
 				},
-			]
+			],
 		}
 	}
 
 	componentDidMount() {
+<<<<<<< HEAD
+=======
+		// $( document ).ready(()=> {
+		// 	var s_img = document.getElementById('student-img');
+		// 	var height = window.getComputedStyle(s_img, null).height;
+  //   		var overlay = document.getElementById('overlay');
+		// 	var s_name = document.getElementById('student-name');
+			
+		// 	s_name.style.height = height;
+		// 	overlay.style.height = height;
+		// 	overlay.style.width = height;
+
+		// 	this.setState();
+		// });
+
+>>>>>>> 3b75845388a2f100a420272cce1ee5c0dca3d242
 		getStudent(1).then((resp) => {
             this.setState(
             	{
-            		name: `${resp.first_name} ${resp.last_name}`,
-            		GPA: resp.gpa,
-            		major: resp.major,
-            		year: resp.year,
-            		bio: resp.bio,
+            		name: `${resp.data.first_name} ${resp.data.last_name}`,
+            		GPA: resp.data.gpa,
+            		major: resp.data.major,
+            		year: resp.data.year,
+            		bio: resp.data.bio,
+            		interests: resp.tags,
+            		skills: resp.skills,
+            		email: resp.data.email,
 
             	}
             );
-
             console.log(resp);
         });
 	}
 
 	render() {
 		return (
+
 			<div className='container shift-down'>
-				<div className='row left-align'>
+				<div>
+					<div className='shadow' style={{height: '230px', width: '750px', margin: '20px auto', marginBottom: '0', backgroundColor: 'white', position: 'relative'}}>
+						<img src={this.state.img_src} style={{width: '230px'}} />
+						<div style={{position: 'absolute', top: '30px', left: '250px', color: 'grey', letterSpacing: '1px'}}>
+							<div className='flow-text'>I'm <b>{this.state.name}</b></div>
+							<div>Interested in Fluid Dynamics</div>
+							<hr />
+							<div>GPA: {this.state.GPA}</div>
+							<div>Major: {this.state.major}</div>
+							<div>Year: {this.state.year}</div>
+							<div>Email: {this.state.email}</div>
+						</div>
+					</div>
+					<div className='center-align' style={{height: '50px', backgroundColor: 'rgb(41, 182, 246)', width: '750px', margin: 'auto auto', marginBottom: '20px', lineHeight: '50px'}}>
+						logo1 logo2
+					</div>
+				</div>
+				{/*<div className='row left-align'>
 					<div className='tab-container' style={{position: 'relative'}}>
 						<img id='student-img' className='col s6 m4 l3' src={this.state.img_src} />
 
 						<div id='overlay' className='student-img-overlay'>
 		                    <div className='student-img-overlay-text'>
 		                        <a href='/update-image?user_type=student' id="editImageText" className="null-link-style" >
-									<i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
+									{isLoggedIn() && 
+										<i className="material-icons interest-editor edit-icon" id="imageEdit">create</i>
+									}
 								</a>
 		                    </div>
 		                </div>
@@ -96,7 +134,7 @@ class StudentProfile extends Component {
 						<div className='container center-align flow-text'>{this.state.name}</div>
 						<a href='/prof-page'><div className='student-current-lab'>{this.state.curr_lab}</div></a>
 					</div>
-				</div>
+				</div>*/}
 				<div className=''>
 
 					{this.state.endorsements.length > 0 &&

@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
 import {registerUser} from '../helper.js';
-import {getStudent} from '../helper.js';
 import {createStudent} from '../helper.js';
+import {createFaculty} from '../helper.js';
 import $ from 'jquery';
-import BasicButton from './BasicButton';
 import './SignUp.css';
 
 class SignUp extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			route: '/student-profile',
 			user_type: 'student',
 		};
 		this.handleUserTypeCheck = this.handleUserTypeCheck.bind(this);
@@ -20,35 +18,36 @@ class SignUp extends Component {
 	handleUserTypeCheck(event) {
 		if (event.target.value === 'faculty') {
 			this.setState({
-				route: '/prof-page',
 				user_type: 'faculty',
 			});
 		}
 		else {
 			this.setState({
-				route: '/student-profile',
 				user_type: 'student',
 			});
 		}
 	}
 
 	signUp(event) {
-		if ($('#email').val() && $('#password').val()) {
-			registerUser("_", $('#email').val(), $('#password').val(), $('#password').val()).then((resp) => {
-				if (this.state.user_type === 'student') {
-					var user_id = 1; // SET TO USER_ID FROM RESP
-					createStudent(user_id, $('#first_name').val(), $('#last_name').val(), null, null, null, $('#email').val());
-				}
-			});
-		} else {
-			console.log("didn't do the thing");
-		}
+		//registerUser("_", $('#email').val(), $('#password').val(), $('#password').val()).then((resp) => {
+			var user_id = 177; // SET TO USER_ID FROM RESP
+			if (this.state.user_type === 'student') {
+				createStudent(user_id, $('#first_name').val(), $('#last_name').val(), "cool", "cool", "cool", $('#email').val()).then(resp => {
+					console.log(resp);
+					//window.location = '/student-profile';
+				});
+			} else {
+				createFaculty(user_id, $('#first_name').val(), $('#last_name').val(), "cool", "cool", $('#email').val()).then(resp => {
+					window.location = '/prof-page';
+				});
+			}
+		//});
 	}
 
 	render() {
 		return (
-			<div>
-				<form className='container left-align new-signup-container'>
+			<div className='container left-align new-signup-container'>
+				<form>
 	  				<div className='new-signup-header'>Sign Up for Free</div>
 	  				<a href='login' ><div className='new-signup-sub-header'>or Login if you have an account</div></a>
 	  				<div className='row'>
@@ -75,9 +74,9 @@ class SignUp extends Component {
 		              	<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck} required />
 		              	<label className='new-signup-radio' htmlFor="student">Student</label>
 		            </div>
-		            {/* <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} onClick={this.good}>deawkwardize</button> */}
 	  			</form>
-	  			<BasicButton msg='deawkwardize' superClick={this.signUp}/>
+	  			<br/>
+	  			<button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} onClick={this.signUp}>deawkwardize</button>
 	  		</div>
 		);
 	}

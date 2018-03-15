@@ -4,7 +4,6 @@ import TimelineItem from './TimelineItem.js';
 import './Timeline.css';
 import $ from 'jquery'
 import ScrollReveal from 'scrollreveal';
-import sr from 'scrollreveal';
 
 class Timeline extends Component {
 
