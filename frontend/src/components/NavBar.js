@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './NavBar.css'
-import $ from 'jquery';
 
 class NavBar extends Component {
 	constructor(props) {
