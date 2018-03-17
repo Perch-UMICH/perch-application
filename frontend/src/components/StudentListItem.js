@@ -19,7 +19,7 @@ class StudentListItem extends Component {
 	render() {
 		return (
 			<div className='student-list-item shadow'>
-				<a href={this.props.dest}><img src={this.props.img} className='student-list-item-img'/></a>
+				<a href={this.props.dest}><img src={this.props.img} className='student-list-item-img' alt=''/></a>
 				<div className='student-list-tag-container'>
 					<a className='null-link-style' href={this.props.profile_link}><div className='student-list-name hide-on-small-only'>{this.props.name}</div></a>
 					<span className='hide-on-small-only'>{this.props.tags.map((tag) => <div key={tag} className='floater-item'>{tag}</div>)}</span>

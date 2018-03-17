@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton'
-import $ from 'jquery'
 import './NotableClasses.css';
 
 class NotableClasses extends Component {

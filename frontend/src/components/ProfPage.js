@@ -4,7 +4,6 @@ import PositionsTab from './PositionsTab';
 import Indicator from './Indicator';
 import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
-import HugeButton from './HugeButton'
 import ContactTab from './ContactTab'
 import {getLab} from '../helper.js'
 import './ProfPage.css'
@@ -95,7 +94,7 @@ class ProfPage extends Component {
 		return(
 			<div className='shift-down container'>
 				<div className='row dark-blue-bg'>
-					<img src={this.state.img_src} style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}} alt={this.state.lab_name}/>
+					<img src={this.state.img_src} style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}} alt=''/>
 					<div className='prof-page-name'>{this.state.lab_name}</div>
 					<a href='/update-lab-specifications'><i className="material-icons interest-editor" id="specEdit">create</i></a>
 					<div className='indicator-container'>
