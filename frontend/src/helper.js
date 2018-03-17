@@ -2,8 +2,6 @@
  * Created by aksha on 2/28/2018.
  */
 
-import React from "react";
-import { Redirect } from "react-router-dom";
 import axios from 'axios';
 
 

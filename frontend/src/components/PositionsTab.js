@@ -10,7 +10,6 @@ class PositionsTab extends Component {
 
 	render() {
 		var btn_msg, dest = '';
-		var numApplicants = 4;
 		var selected = false;
 		if (this.props.user_type === 'faculty') {
 			dest = '/view-applicants';
