@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {registerUser, createStudent, getCurrentUserId} from '../helper.js';
+import {registerUser, createStudent, getCurrentUserId, loginUser} from '../helper.js';
+import {getAllUsers, deleteUser} from '../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -7,6 +8,15 @@ class SignUp extends Component {
 		this.state = {
 			route: '/pick-your-interests?user_type=student'
 		};
+
+		getAllUsers().then((resp) => {
+			// for (let i = 6; i < resp.result.length; i++) {
+			// 	deleteUser(i);
+			// }
+			console.log(resp.result)
+
+		})
+		
 	}
 
 	handleUserTypeCheck(event) {
@@ -18,28 +28,38 @@ class SignUp extends Component {
 		}
 	}
 
-	createStudent() {
-		let student = document.getElementById('student').checked;
-		let id = getCurrentUserId();
-		let first_name = document.getElementById('first_name').value;
-		let last_name = document.getElementById('last_name').value;
-		alert('creating')
-		if (student) {
-			createStudent(id, first_name, last_name)
-		}
-		else {
-			alert('not student')
-		}
-	}
-
+	// Called when form submits
 	registerHandler(event) {
 		event.preventDefault();
 		let email = document.getElementById('email').value;
 		let password = document.getElementById('password').value;
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
-		alert('registering')
-		registerUser(`${first_name} ${last_name}`, email, password, password).then(this.createStudent); //.then((resp) => window.location.href = this.state.route);
+
+		registerUser(`${first_name} ${last_name}`, email, password, password).then(this.handleLoginAndCreation.bind(this)); //.then((resp) => window.location.href = this.state.route);
+	}
+
+	// logs user in then calls create student function
+	handleLoginAndCreation() {
+		let email = document.getElementById('email').value
+		let password = document.getElementById('password').value
+
+		loginUser(email, password).then(this.createStudent.bind(this));
+	}
+
+	// relies on register and login to create a user and put id info in local storage to then create a student
+	createStudent() {
+		let student = document.getElementById('student').checked;
+		let id = getCurrentUserId();
+		let first_name = document.getElementById('first_name').value;
+		let last_name = document.getElementById('last_name').value;
+		
+		if (student) {
+			createStudent(id, first_name, last_name, null, null, null, null, null, null, null)
+		}
+		else {
+			alert('not student')
+		}
 	}
 
 	render() {

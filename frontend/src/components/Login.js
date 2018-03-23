@@ -18,7 +18,6 @@ class Login extends Component {
 				alertify.error("Incorrect Username and Password");
 			}
 		});
-
 	}
 
 
