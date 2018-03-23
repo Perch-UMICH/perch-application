@@ -1,5 +1,5 @@
 body {
-	background-color: rgba(0, 0, 0, 0);
-	background-image: url(../assets/background.png);
+	background-color: #eee;
+	/*background-image: url(../assets/background-white.png);*/
   	background-size: 100% auto;
 }

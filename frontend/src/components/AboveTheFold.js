@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
 import SignUp from './SignUp';
+import Typed from 'typed.js';
 import './AboveTheFold.css';
+
 
 class AboveTheFold extends Component {
 
@@ -12,12 +14,13 @@ class AboveTheFold extends Component {
 	// 	};
 	// }
 
-	// componentDidMount() {
-	// 	var options = {
-	// 	  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
-	// 	  typeSpeed: 75
-	// 	}
-	// }
+	componentDidMount() {
+		var options = {
+		  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
+		  typeSpeed: 75
+		}
+		var typed = new Typed("#atf-changer", options);
+	}
 
 	// handleUserTypeCheck(event) {
 	// 	if (event.target.value === 'faculty') {
@@ -46,17 +49,9 @@ class AboveTheFold extends Component {
 			  		<div className='col s12 m5 atf-height valign-wrapper hide-on-small-only'>
 			  			<SignUp />
 			  		</div>
-			    {/*<div className="container center-align shadow" style={{backgroundColor: '#eee'}}>
-			    				    <img className="logo" src="assets/new-logo-clear.png" data-tilt />
-			    				    <SquareLogo />
-			    				    <p className="letter-spacer flow-text" style={{color: '#0277bd'}}>We make research more accessible for everyone</p>
-			    				    <LoginButtons  />		    
-			    			    </div>*/}
 			  </div>
 		);
 	}
 }
 
 export default AboveTheFold;
-
-//<a href="#form" id="join-btn" className="waves-effect btn-flat btn-large js-trigger" data-mt-duration="300">join perch</a>

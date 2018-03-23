@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import LabSearch from './LabSearch';
 import LabList from './LabList';
-import {getAllLabs, getLabTags} from '../helper.js'
+import {getAllLabs, getLabTags, isLoggedIn} from '../helper.js'
+import ErrorPage from './ErrorPage'
 
 class LabMatch extends Component {
 	constructor(props) {
@@ -119,11 +120,16 @@ class LabMatch extends Component {
 		
 	}
 	render() {
-		return (
-			<div className='shift-down container center-align'>
-				<LabSearch labs={this.state.labs} />
-			</div>
-		);
+		if (isLoggedIn()) {
+			return (
+				<div className='shift-down container center-align'>
+					<LabSearch labs={this.state.labs} />
+				</div>
+			);
+		}
+		else {
+			return <ErrorPage />
+		}
 	}
 }
 

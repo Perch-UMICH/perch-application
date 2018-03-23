@@ -7,8 +7,12 @@ import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
 import {getStudent, isLoggedIn} from '../helper.js'
+import ErrorPage from './ErrorPage'
 import $ from 'jquery'
 import './StudentProfile.css';
+
+var FontAwesome = require('react-fontawesome');
+
 class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
@@ -74,6 +78,7 @@ class StudentProfile extends Component {
 		// });
 
 		getStudent(1).then((resp) => {
+			console.log(resp);
             this.setState(
             	{
             		name: `${resp.data.first_name} ${resp.data.last_name}`,
@@ -84,33 +89,35 @@ class StudentProfile extends Component {
             		interests: resp.tags,
             		skills: resp.skills,
             		email: resp.data.email,
-
             	}
             );
-            console.log(resp);
+            
         });
 		
 	}
 
 	render() {
-		return (
-
+		if (isLoggedIn()) {
+	 	return (
 			<div className='container shift-down'>
 				<div>
-					<div className='shadow' style={{height: '230px', width: '750px', margin: '20px auto', marginBottom: '0', backgroundColor: 'white', position: 'relative'}}>
+					<div className='' style={{height: '230px', width: '900px', margin: '20px auto', marginBottom: '0', backgroundColor: 'white', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
 						<img src={this.state.img_src} style={{width: '230px'}} />
-						<div style={{position: 'absolute', top: '30px', left: '250px', color: 'grey', letterSpacing: '1px'}}>
+						<div style={{position: 'absolute', top: '30px', left: '250px', color: 'grey', letterSpacing: '0px'}}>
 							<div className='flow-text'>I'm <b>{this.state.name}</b></div>
 							<div>Interested in Fluid Dynamics</div>
 							<hr />
 							<div>GPA: {this.state.GPA}</div>
-							<div>Major: {this.state.major}</div>
-							<div>Year: {this.state.year}</div>
-							<div>Email: {this.state.email}</div>
+							<div>{this.state.major} major</div>
+							<div>{this.state.year}</div>
+							<div>{this.state.email}</div>
 						</div>
 					</div>
-					<div className='center-align' style={{height: '50px', backgroundColor: 'rgb(41, 182, 246)', width: '750px', margin: 'auto auto', marginBottom: '20px', lineHeight: '50px'}}>
-						logo1 logo2
+					<div className='center-align' style={{height: '50px', backgroundColor: 'rgb(41, 182, 246)', width: '900px', margin: 'auto auto', marginBottom: '20px', lineHeight: '50px', border: '1px solid #ddd', borderTop: 'none'}}>
+						
+						<i class="far fa-address-book"></i>
+						<i class="material-icons">add</i>
+						<FontAwesome name='rocket' />
 					</div>
 				</div>
 				{/*<div className='row left-align'>
@@ -133,7 +140,7 @@ class StudentProfile extends Component {
 						<a href='/prof-page'><div className='student-current-lab'>{this.state.curr_lab}</div></a>
 					</div>
 				</div>*/}
-				<div className=''>
+				{/*<div className=''>
 
 					{this.state.endorsements.length > 0 &&
 						<div>
@@ -168,10 +175,14 @@ class StudentProfile extends Component {
 						<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/></div>
 						<div className='profile-tab shadow' style={{width: '50%'}}><PastResearchTab /></div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			
 		);
+	 }
+	 else {
+	 	return <ErrorPage />
+	 }
 	}
 }
 
