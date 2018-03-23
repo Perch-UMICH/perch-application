@@ -8,7 +8,8 @@ class ErrorPage extends Component {
 		return (
 			<div className='error-page-container valign-wrapper'>
 				<div className='container center-align'>
-					<b>Not Logged In</b>
+					{<img src='/assets/PERCH_MASCOT.svg' className='logo hide-on-med-and-down' style={{height: '250px'}} alt=""/>}
+					<div className='error-message'><b>Not Logged In. Please <a href='/login'>login</a></b></div>
 				</div>
 			</div>
 		);
