@@ -60,8 +60,6 @@ class StudentProfile extends Component {
 	}
 
 	componentDidMount() {
-<<<<<<< HEAD
-=======
 		// $( document ).ready(()=> {
 		// 	var s_img = document.getElementById('student-img');
 		// 	var height = window.getComputedStyle(s_img, null).height;
@@ -74,8 +72,6 @@ class StudentProfile extends Component {
 
 		// 	this.setState();
 		// });
-
->>>>>>> 3b75845388a2f100a420272cce1ee5c0dca3d242
 		getStudent(1).then((resp) => {
             this.setState(
             	{

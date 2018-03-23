@@ -33,8 +33,7 @@ class SignUp extends Component {
 			var user_id = 177; // SET TO USER_ID FROM RESP
 			if (this.state.user_type === 'student') {
 				createStudent(user_id, $('#first_name').val(), $('#last_name').val(), "cool", "cool", "cool", $('#email').val()).then(resp => {
-					console.log(resp);
-					//window.location = '/student-profile';
+					window.location = '/student-profile';
 				});
 			} else {
 				createFaculty(user_id, $('#first_name').val(), $('#last_name').val(), "cool", "cool", $('#email').val()).then(resp => {

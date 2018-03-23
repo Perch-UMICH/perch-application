@@ -73,7 +73,6 @@ class ProfPage extends Component {
             		lab_summary: resp.data.description,
             		labels: resp.tags,
             		skills: resp.skills,
-
             	}
             );
 

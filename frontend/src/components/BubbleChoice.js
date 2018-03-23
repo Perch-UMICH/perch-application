@@ -1,16 +1,85 @@
 import React, {Component} from 'react';
 import Bubble from './Bubble';
+import {getStudent, getLab, getAllTags, getAllSkills} from '../helper.js';
+import $ from 'jquery';
 import './PickYourInterests.css';
 
 class BubbleChoice extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			catalog: this.props.display_info.catalog,
-			interests: this.props.display_info.interests,
+			catalog: [],
+			choices: [],
 			filtered_catalog: [],
 			in_filter: false
 		};
+	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			if (this.props.display_info.req_type === 'tags') {
+				getAllTags().then(resp => {
+					console.log("all tags??");
+					console.log(resp);
+					console.log(resp.result);
+					this.setState({ catalog: resp.result });
+				}).then(resp => {
+					this.setUserChoices();
+				});
+			} else {
+				getAllSkills().then(resp => {
+					console.log("all skills??");
+					console.log(resp);
+					console.log(resp.result);
+					this.setState({ catalog: resp.result });
+				}).then(resp => {
+					this.setUserChoices();
+				});
+			}
+		}, 200);
+	}
+
+	setUserChoices() {
+		var temp_choices = [];
+		if (this.props.display_info.user_type === 'student') {
+			getStudent(this.props.display_info.user_id).then((resp) => {
+				console.log(resp);
+				if (this.props.display_info.req_type === 'tags') {
+					temp_choices = resp.tags;
+				} else {
+					temp_choices = resp.skills;
+				}
+				var temp_catalog = this.state.catalog;
+				temp_catalog = temp_catalog.filter( function( elt ) {
+				  return !temp_choices.includes( elt );
+				});
+			    this.setState({ 
+			    	choices: temp_choices,
+			    	catalog: temp_catalog,
+			    });
+			});
+		}
+		else if (this.props.display_info.user_type === 'faculty') {
+			getLab(this.props.display_info.user_id).then((resp) => {
+				console.log(resp);
+				if (this.props.display_info.req_type === 'tags') {
+					temp_choices = resp.tags;
+				} else {
+					temp_choices = resp.skills;
+				}
+				var temp_catalog = this.state.catalog;
+				temp_catalog = temp_catalog.filter( function( elt ) {
+				  return !temp_choices.includes( elt );
+				});
+			    this.setState({ 
+			    	choices: temp_choices,
+			    	catalog: temp_catalog,
+			    });
+			});
+		}
+		if (this.props.callbackSkills) {
+			this.props.callbackSkills(temp_choices);
+		}
 	}
 
 	componentWillMount() {
@@ -18,10 +87,12 @@ class BubbleChoice extends Component {
   	}
 
 	filterList(event) {
+		console.log("Blahhhh");
+		console.log(event.target.value);
 		var updatedList = this.state.catalog;
-    	updatedList = updatedList.filter(function(item){
-      	return item.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").search(
-        	event.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
+    	updatedList = updatedList.filter(function(item) {
+	      	return item.name.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").search(
+	        	event.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
     	});
     	this.setState({filtered_catalog: updatedList, in_filter: true});
 	}
@@ -41,10 +112,10 @@ class BubbleChoice extends Component {
 				temp_filter.splice(temp_filter.indexOf(interest), 1);
 			}
 
-			return {catalog: temp_delete, interests: temp_add, filtered_catalog: temp_filter};
+			return {catalog: temp_delete, choices: temp_add, filtered_catalog: temp_filter};
 		});
 		if (this.props.callbackSkills) {
-			this.props.callbackSkills(this.state.interests);
+			this.props.callbackSkills(this.state.choices);
 		}
 	}
 
@@ -66,10 +137,10 @@ class BubbleChoice extends Component {
 				temp_filter.push(interest);
 			}
 
-			return {catalog: temp_add, interests: temp_delete, filtered_catalog: temp_filter};
+			return {catalog: temp_add, choices: temp_delete, filtered_catalog: temp_filter};
 		});
 		if (this.props.callbackSkills) {
-			this.props.callbackSkills(this.state.interests);
+			this.props.callbackSkills(this.state.choices);
 		}
 	}
 
@@ -87,8 +158,8 @@ class BubbleChoice extends Component {
 				<div className='interest-section col s6 left-align'>
 					<input id='lab-name' className='interest-search' type='text' placeholder={this.props.display_info.placeholder_txt} onChange={this.filterList.bind(this)} />
 					<div className='interest-body'>
-						{this.state.filtered_catalog.map((interest) => {
-							return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
+						{this.state.catalog.map((bubble) => {
+							return (<span key={bubble.name} onClick={this.handleClickAdd.bind(this, bubble, temporary)} > <Bubble txt={bubble.name} type='adder' /> </span>)
 						})}
 					</div>
 				</div>
@@ -98,8 +169,8 @@ class BubbleChoice extends Component {
 						{this.props.display_info.header_txt}
 					</div>
 					<div className='interest-body'>
-						{this.state.interests.map((interest) => {
-							return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, temporary)}> <Bubble txt={interest} type='deleter' /> </span>)
+						{this.state.choices.map((bubble) => {
+							return (<span key={bubble.name} onClick={this.handleClickDelete.bind(this, bubble, temporary)}> <Bubble txt={bubble.name} type='deleter' /> </span>)
 						})}
 					</div>
 				</div>
