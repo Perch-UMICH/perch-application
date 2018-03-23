@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent, isLoggedIn, getCurrentUserId} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import $ from 'jquery'
 import './StudentProfile.css';
@@ -76,23 +76,25 @@ class StudentProfile extends Component {
 
 		// 	this.setState();
 		// });
-		let id = getCurrentUserId()
-		getStudent(id).then((resp) => {
-			console.log(resp);
-            this.setState(
-            	{
-            		name: `${resp.data.first_name} ${resp.data.last_name}`,
-            		GPA: resp.data.gpa,
-            		major: resp.data.major,
-            		year: resp.data.year,
-            		bio: resp.data.bio,
-            		interests: resp.tags,
-            		skills: resp.skills,
-            		email: resp.data.email,
-            	}
-            );
-            
-        });
+		if (isLoggedIn()) {
+			let id = getCurrentUserId()
+				getStudent(id).then((resp) => {
+					console.log(resp);
+		            this.setState(
+		            	{
+		            		name: `${resp.data.first_name} ${resp.data.last_name}`,
+		            		GPA: resp.data.gpa,
+		            		major: resp.data.major,
+		            		year: resp.data.year,
+		            		bio: resp.data.bio,
+		            		interests: resp.tags,
+		            		skills: resp.skills,
+		            		email: resp.data.email,
+		            	}
+		            );
+		            
+		        });
+		}
 		
 	}
 
