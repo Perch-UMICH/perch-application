@@ -3,11 +3,11 @@
   border-color: #03a9f4;
 }
 
-#first_name:focus + label, #last_name:focus + label, #email:focus + label, #password:focus + label, #password_retype:focus + label {
+#first_name:focus + label, #last_name:focus + label, #email:focus + label, #password:focus + label, #password_retype:focus + label, #name:focus + label {
   color: #29b6f6;
 }
 
-#first_name:focus, #last_name:focus, #email:focus, #password:focus, #password_retype:focus{
+#first_name:focus, #last_name:focus, #email:focus, #password:focus, #password_retype:focus, #name:focus{
   border-bottom: 1px solid #29b6f6;
   box-shadow: 0 1px 0 0 #29b6f6;
 }

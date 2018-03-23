@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {registerUser} from '../helper.js';
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -17,9 +18,19 @@ class SignUp extends Component {
 		}
 	}
 
+	registerHandler() {
+		let email = document.getElementById('email').value;
+		let password = document.getElementById('password').value;
+		let name = document.getElementById('name').value;
+		// alert(email)
+		// alert(password)
+		// alert(name)
+		registerUser(name, email, password, password).then((resp) => window.location.href = this.state.route);
+	}
+
 	render() {
 		return (
-				<form className='container left-align new-signup-container' action={this.state.route}>
+				<div className='container left-align new-signup-container' >
 	  				<div className='new-signup-header'>Sign Up for Free</div>
 	  				<a href='login' ><div className='new-signup-sub-header'>or <span className='link-color'>login</span> if you have an account</div></a>
 	  				{/*<div className='row'>
@@ -31,7 +42,11 @@ class SignUp extends Component {
 			                <input id="last_name" type="text" required />
 			                <label htmlFor="last_name">Last name</label>
 			            </div>
-	  				</div>*/}  
+	  				</div>*/}
+	  				<div className="input-field">
+		                <input id="name" type="text" required />
+		                <label htmlFor="name">Name</label>
+		            </div>  
 	  				<div className="input-field">
 		                <input id="email" type="email" required />
 		                <label htmlFor="email">Email</label>
@@ -47,8 +62,8 @@ class SignUp extends Component {
 		              	<label className='new-signup-radio' htmlFor="student">Student</label>
 		            </div>
 		            <br />
-		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} name="action">deawkwardize</button>
-	  			</form>
+		            <button className="btn waves-effect waves-blue waves-light basic-btn" onClick={this.registerHandler} style={{width: '100%', textTransform: 'lowercase', height: '50px'}} name="action">deawkwardize</button>
+	  			</div>
 		);
 	}
 }
