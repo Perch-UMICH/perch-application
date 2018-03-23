@@ -75,7 +75,6 @@ class Router extends Component {
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
-				{/*<TapTarget />*/}
 				</div>
 			</BrowserRouter>
 		);

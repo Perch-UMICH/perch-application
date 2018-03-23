@@ -40,7 +40,7 @@ class AppDisplayModal extends Component {
 			<div>
 				<div id={modalId} class="modal modal-fixed-footer display-modal">
 			 		<div class="modal-content">
-				    	<h4>{this.state.student_name + "\'s Application"}</h4>
+				    	<h4>{this.state.student_name + "'s Application"}</h4>
 		    	        {this.state.questions.map((q) => {
 		    	    		return (
 		    	    			<p><b>{q.question}</b>

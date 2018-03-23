@@ -7,7 +7,7 @@ class Indicator extends Component {
 	}
 
 	render() {
-		if (this.props.type == 'on') {
+		if (this.props.type === 'on') {
 			this.type = 'indicator-on';
 			this.pre = 'yes ';
 		}

@@ -48,8 +48,8 @@ class SignUp extends Component {
 			<div className='container left-align new-signup-container'>
 				<form>
 	  				<div className='new-signup-header'>Sign Up for Free</div>
-	  				<a href='login' ><div className='new-signup-sub-header'>or Login if you have an account</div></a>
-	  				<div className='row'>
+	  				<a href='login' ><div className='new-signup-sub-header'>or <span className='link-color'>login</span> if you have an account</div></a>
+	  				{/*<div className='row'>
 	  					<div className="input-field col s6">
 		                	<input id="first_name" type="text" required />
 		                	<label htmlFor="first_name">First name</label>

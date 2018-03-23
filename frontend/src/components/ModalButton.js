@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import $ from 'jquery';
-import SquareButton from './SquareButton';
 import BasicButton from './BasicButton';
 import AppSubmissionModal from './AppSubmissionModal';
 import AppCreationModal from './AppCreationModal';

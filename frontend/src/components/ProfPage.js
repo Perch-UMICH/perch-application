@@ -4,9 +4,9 @@ import PositionsTab from './PositionsTab';
 import Indicator from './Indicator';
 import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
-import HugeButton from './HugeButton'
 import ContactTab from './ContactTab'
-import {getLab} from '../helper.js'
+import {getLab, isLoggedIn} from '../helper.js'
+import ErrorPage from './ErrorPage'
 import './ProfPage.css'
 
 class ProfPage extends Component {
@@ -91,42 +91,47 @@ class ProfPage extends Component {
 
 	render() {
 		var apply_dest = '/apply/' + this.state.slug;
-		return(
-			<div className='shift-down container'>
-				<div className='row dark-blue-bg'>
-					<img src={this.state.img_src} style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}}/>
-					<div className='prof-page-name'>{this.state.lab_name}</div>
-					<a href='/update-lab-specifications'><i className="material-icons interest-editor" id="specEdit">create</i></a>
-					<div className='indicator-container'>
-						{this.state.yes.map((msg) => <Indicator key={msg} msg={msg} type='on'/>)}
+		if (isLoggedIn()) {
+			return(
+				<div className='shift-down container'>
+					<div className='row dark-blue-bg'>
+						<img src={this.state.img_src} style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}} alt=''/>
+						<div className='prof-page-name'>{this.state.lab_name}</div>
+						<a href='/update-lab-specifications'><i className="material-icons interest-editor" id="specEdit">create</i></a>
+						<div className='indicator-container'>
+							{this.state.yes.map((msg) => <Indicator key={msg} msg={msg} type='on'/>)}
+						</div>
+						<div className='indicator-container'>
+							{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
+						</div>
 					</div>
-					<div className='indicator-container'>
-						{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
+					{1>0 && <div className="row center-align">  {/* JUST FOR FRONT-END TESTING, TO BE DEPRECATED */}
+										<p className="fe-test">View As:</p>
+										<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
+										<label htmlFor="faculty">Faculty</label>
+										<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
+										<label htmlFor="student">Student</label>
+									</div>}
+					<div className='row flex ddd-bg'>
+						<PositionsTab header='open positions' positions={this.state.positions} user_type={this.state.user_type} apply_dest={apply_dest} />
+					</div>
+					<div className='row flex ddd-bg'>
+						<BioTab header='what we do' user_type='faculty' msg={this.state.lab_summary}/>
+						<div className='hide-on-small-only' style={{width: '30%'}}><ContactTab header='contact' contact_info={this.state.contact_info} /></div>
+					</div>
+					<div className='row flex'>
+						<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
+						<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
+					</div>
+					<div className='row ddd-bg hide-on-med-and-up'>
+						<div className='profile-tab'><ContactTab header='contact info' contact_info={this.state.contact_info} /></div>
 					</div>
 				</div>
-				{1>0 && <div className="row center-align">  {/* JUST FOR FRONT-END TESTING, TO BE DEPRECATED */}
-									<p className="fe-test">View As:</p>
-									<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
-									<label htmlFor="faculty">Faculty</label>
-									<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
-									<label htmlFor="student">Student</label>
-								</div>}
-				<div className='row flex ddd-bg'>
-					<PositionsTab header='open positions' positions={this.state.positions} user_type={this.state.user_type} apply_dest={apply_dest} />
-				</div>
-				<div className='row flex ddd-bg'>
-					<BioTab header='what we do' user_type='faculty' msg={this.state.lab_summary}/>
-					<div className='hide-on-small-only' style={{width: '30%'}}><ContactTab header='contact' contact_info={this.state.contact_info} /></div>
-				</div>
-				<div className='row flex'>
-					<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
-					<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
-				</div>
-				<div className='row ddd-bg hide-on-med-and-up'>
-					<div className='profile-tab'><ContactTab header='contact info' contact_info={this.state.contact_info} /></div>
-				</div>
-			</div>
-		);
+			);
+		}
+		else {
+			return <ErrorPage />
+		}
 	}
 }
 

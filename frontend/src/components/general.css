@@ -56,5 +56,13 @@
 }
 
 body {
-	font-family: montserrat !important;
+	font-family: montserrat;
+}
+
+.link-color {
+	color: rgb(41, 182, 246);
+}
+
+.shadow {
+	box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2);
 }

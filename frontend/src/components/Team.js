@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './Team.css';
 import Card from './Card.js';
-import NavBar from './NavBar.js';
 import TeamPhoto from './TeamPhoto.js';
 import Greeting from './Greeting.js';
-import SquareLogo from './SquareLogo.js';
 
 const members = [
   {

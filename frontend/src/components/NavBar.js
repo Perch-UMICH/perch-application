@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
+import {isLoggedIn, logoutCurrentUser} from '../helper.js'
 import './NavBar.css'
-import $ from 'jquery';
 
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
-		this.state.loggedIn = this.props.loggedIn;
 	}
 
 	render() {
 
-		if (this.props.loggedIn === 'true') {
+		if (isLoggedIn()) {
 			var navItems = <div>
 				<li><a className="nav-item" href="/student-profile">PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
+			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
 			    {/*<li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>*/}
 			</div>
 		}
@@ -23,30 +23,27 @@ class NavBar extends Component {
 				<li><a className="nav-item" href="/about">ABOUT US</a></li>
 			    <li><a className="nav-item" href="/team">TEAM</a></li>
 			    <li><a className="nav-item" href="/timeline">TIMELINE</a></li>
-			    <li><a className="nav-item contact-nav" href="/login">JOIN PERCH</a></li>
+			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}
 
 		return(
 			<div className="navbar-fixed">
 			    <nav>
-			      <div className="nav-wrapper">
+			      <div className="nav-wrapper nav-wrapper">
 			        <a href="#" data-activates="mobile-demo" className="right button-collapse hide-on-large-only"><i id="hamburger" className="material-icons">menu</i></a>
 			      <ul id="nav-mobile" className="right hide-on-med-and-down">
 			  
 			        {navItems}
 		
 			      </ul>
-
 			        <ul className="left hide-on-small-only">
-			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/branch_logo.png" /></a>
+			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/Updated_Logo.png" /><div className='logo-text'>PERCH</div></a>
 			        </ul>
 
 			        <ul className="mobile-logo hide-on-med-and-up">
 			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/branch_logo.png" /></a>
 			        </ul>
-
-
 			  {/*      <ul className="center hide-on-med-and-up">
 			  			          <a className='no-hover' href="/home"><span className="nav-option nav-logo-text grey-text text-lighten-3" style={{fontSize: '30px'}}></span></a>
 			  			        </ul>
