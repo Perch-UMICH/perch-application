@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
+import {isLoggedIn, logoutCurrentUser} from '../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
-		this.state.loggedIn = this.props.loggedIn;
 	}
 
 	render() {
 
-		if (this.props.loggedIn === 'true') {
+		if (isLoggedIn()) {
 			var navItems = <div>
 				<li><a className="nav-item" href="/student-profile">PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
+			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
 			    {/*<li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>*/}
 			</div>
 		}
@@ -22,7 +23,7 @@ class NavBar extends Component {
 				<li><a className="nav-item" href="/about">ABOUT US</a></li>
 			    <li><a className="nav-item" href="/team">TEAM</a></li>
 			    <li><a className="nav-item" href="/timeline">TIMELINE</a></li>
-			    <li><a className="nav-item contact-nav" href="/login">JOIN PERCH</a></li>
+			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}
 
