@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent, isLoggedIn} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import $ from 'jquery'
 import './StudentProfile.css';
@@ -76,8 +76,8 @@ class StudentProfile extends Component {
 
 		// 	this.setState();
 		// });
-
-		getStudent(1).then((resp) => {
+		let id = getCurrentUserId()
+		getStudent(id).then((resp) => {
 			console.log(resp);
             this.setState(
             	{
