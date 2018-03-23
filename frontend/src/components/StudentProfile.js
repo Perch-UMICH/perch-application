@@ -76,24 +76,25 @@ class StudentProfile extends Component {
 
 		// 	this.setState();
 		// });
+
 		if (isLoggedIn()) {
-			let id = getCurrentUserId()
-				getStudent(id).then((resp) => {
-					console.log(resp);
-		            this.setState(
-		            	{
-		            		name: `${resp.data.first_name} ${resp.data.last_name}`,
-		            		GPA: resp.data.gpa,
-		            		major: resp.data.major,
-		            		year: resp.data.year,
-		            		bio: resp.data.bio,
-		            		interests: resp.tags,
-		            		skills: resp.skills,
-		            		email: resp.data.email,
-		            	}
-		            );
-		            
-		        });
+			let id = window.location.pathname.split( '/' )[2];
+			getStudent(id).then((resp) => {
+				console.log(resp);
+	            this.setState(
+	            	{
+	            		name: `${resp.data.first_name} ${resp.data.last_name}`,
+	            		GPA: resp.data.gpa,
+	            		major: resp.data.major,
+	            		year: resp.data.year,
+	            		bio: resp.data.bio,
+	            		interests: resp.tags,
+	            		skills: resp.skills,
+	            		email: resp.data.email,
+	            	}
+	            );
+	            
+	        });
 		}
 		
 	}
