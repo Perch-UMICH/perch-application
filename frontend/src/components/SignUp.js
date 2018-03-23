@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {registerUser} from '../helper.js';
+import {registerUser, createStudent, getCurrentUserId} from '../helper.js';
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -18,19 +18,33 @@ class SignUp extends Component {
 		}
 	}
 
-	registerHandler() {
+	createStudent() {
+		let student = document.getElementById('student').checked;
+		let id = getCurrentUserId();
+		let first_name = document.getElementById('first_name').value;
+		let last_name = document.getElementById('last_name').value;
+		alert('creating')
+		if (student) {
+			createStudent(id, first_name, last_name)
+		}
+		else {
+			alert('not student')
+		}
+	}
+
+	registerHandler(event) {
+		event.preventDefault();
 		let email = document.getElementById('email').value;
 		let password = document.getElementById('password').value;
-		let name = document.getElementById('name').value;
-		// alert(email)
-		// alert(password)
-		// alert(name)
-		registerUser(name, email, password, password).then((resp) => window.location.href = this.state.route);
+		let first_name = document.getElementById('first_name').value;
+		let last_name = document.getElementById('last_name').value;
+		alert('registering')
+		registerUser(`${first_name} ${last_name}`, email, password, password).then(this.createStudent); //.then((resp) => window.location.href = this.state.route);
 	}
 
 	render() {
 		return (
-				<div className='container left-align new-signup-container' >
+				<form className='container left-align new-signup-container' onSubmit={this.registerHandler.bind(this)}>
 	  				<div className='new-signup-header'>Sign Up for Free</div>
 	  				<a href='login' ><div className='new-signup-sub-header'>or <span className='link-color'>login</span> if you have an account</div></a>
 	  				{/*<div className='row'>
@@ -44,9 +58,13 @@ class SignUp extends Component {
 			            </div>
 	  				</div>*/}
 	  				<div className="input-field">
-		                <input id="name" type="text" required />
-		                <label htmlFor="name">Name</label>
-		            </div>  
+		                <input id="first_name" type="text" required />
+		                <label htmlFor="first_name">Name</label>
+		            </div>
+		            <div className="input-field">
+		                <input id="last_name" type="text" required />
+		                <label htmlFor="last_name">Name</label>
+		            </div>   
 	  				<div className="input-field">
 		                <input id="email" type="email" required />
 		                <label htmlFor="email">Email</label>
@@ -62,8 +80,8 @@ class SignUp extends Component {
 		              	<label className='new-signup-radio' htmlFor="student">Student</label>
 		            </div>
 		            <br />
-		            <button className="btn waves-effect waves-blue waves-light basic-btn" onClick={this.registerHandler} style={{width: '100%', textTransform: 'lowercase', height: '50px'}} name="action">deawkwardize</button>
-	  			</div>
+		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} >deawkwardize</button>
+	  			</form>
 		);
 	}
 }
