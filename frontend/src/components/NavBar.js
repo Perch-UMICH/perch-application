@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser} from '../helper.js'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId} from '../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -12,7 +12,7 @@ class NavBar extends Component {
 
 		if (isLoggedIn()) {
 			var navItems = <div>
-				<li><a className="nav-item" href="/student-profile">PROFILE</a></li>
+				<li><a className="nav-item" href={`/student-profile/${getCurrentUserId()}`}>PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
 			    {/*<li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>*/}

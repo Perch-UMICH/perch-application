@@ -32,7 +32,7 @@ class Router extends Component {
 		return(
 			<BrowserRouter>
 				<div>
-					<NavBar loggedIn='true' />
+					<NavBar />
 					<div>
 						<Switch>
 							<Route path='/home' component={ Home } />

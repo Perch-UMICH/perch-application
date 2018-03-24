@@ -8,7 +8,7 @@ import axios from 'axios';
 // import { cookie } from 'react-cookie'
 import FormData from 'form-data'
 
-
+axios.defaults.headers.common = {};
 axios.defaults.baseURL = 'http://perch-api.us-east-1.elasticbeanstalk.com';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -166,18 +166,17 @@ export function getAllUsers() {
         })
 }
 
-export function getCurrentUserEmail() {
-    return localStorage.getItem('user_email');
+export function deleteUser(user_id) {
+    console.log('Deleting user');
+    return axios.delete('api/users/' + user_id)
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
 }
-
-export function getCurrentUserId() {
-    return localStorage.getItem('user_id');
-}
-
-export function getCurrentUsername() {
-    return localStorage.getItem('user_name');
-}
-
 // Students
 // Student profile
 // Required:
@@ -227,7 +226,7 @@ export function getStudent(student_id) {
 
 export function createStudent(user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id) {
     console.log('Creating student');
-    return axios.post('api/students/', [user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id])
+    return axios.post('api/students/', {user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id})
         .then(response => {
             console.log(response.data.message);
             return response.data.result;
@@ -786,4 +785,23 @@ export function uploadPic(type, id, data) {
             console.log(error);
             return [];
         })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function getCurrentUserId() {
+    return localStorage.getItem('user_id');
 }
