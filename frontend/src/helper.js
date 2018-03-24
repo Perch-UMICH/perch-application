@@ -156,7 +156,7 @@ export function logoutCurrentUser() {
 
 export function getAllUsers() {
     console.log('Getting users');
-    return axios.get(BASE_URL + 'api/users')
+    return axios.get('api/users')
         .then(response => {
             return response.data
         })

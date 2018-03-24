@@ -3,7 +3,7 @@ import { parse } from 'query-string';
 import SquareButton from './SquareButton';
 import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
-import {getStudent, getLab, addSkillToLab, addTagToLab, addSkillToStudent, addTagToStudent} from '../helper.js';
+import {getStudent, getLab, addSkillsToLab, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags} from '../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -25,43 +25,6 @@ class PickYourInterests extends Component {
 		};
 		this.updateBubbleChoice = this.updateBubbleChoice.bind(this);
 		this.saveAndContinue = this.saveAndContinue.bind(this);
-
-		// TO CHECK - can we get a default list for these catalogs? Another function call.
-		if (url_arr[1] === 'lab-skills' || url_arr[1] === 'update-skills' ) { 
-			var skills_catalog =  [
-				"plating",
-				"chromotography",
-				"MatLab",
-				"R",
-				"C++",
-				"Pen Testing",
-				"pun making",
-				"spectography",
-				"total phosphorus digestion",
-				"PCR",
-			];
-			this.state.display_info.catalog = skills_catalog;
-		}
-		else {
-			var interests_catalog = [
-				"oncology",
-				"orange",
-				"orangutan",
-				"apples and orange",
-				"virology",
-				"basketweaving",
-				"history",
-				"chemistry",
-				"physics",
-				"astro-physics",
-				"security",
-				"fintech",
-				"machine learning",
-				"software development",
-				"biomedical devices",
-			];
-			this.state.display_info.catalog = interests_catalog;
-		}
 	}
 
 	componentDidMount() {
@@ -123,32 +86,29 @@ class PickYourInterests extends Component {
 	saveAndContinue(event) {
 		console.log("tag/skill array to add:");
 		console.log(this.state.bubble_array);
-		for (var i = 0; i < this.state.bubble_array.length; ++i) {
-			var choiceToAdd = {
-				id: 9,
-				name: this.state.bubble_array[i],
-				description: '',
-			};
-			if (this.state.user_type === 'faculty') {
-				if (this.state.req_type === 'skills') {
-					addSkillToLab(this.state.user_id, choiceToAdd).then(resp => {
-						console.log(resp);
-					});
-				} else {
-					addTagToLab(this.state.user_id, choiceToAdd).then(resp => {
-						console.log(resp);
-					});
-				}
+		var item_ids = this.state.bubble_array.map((item) => {
+			return item.id;
+		});
+		console.log(item_ids);
+		if (this.state.user_type === 'faculty') {
+			if (this.state.req_type === 'skills') {
+				addSkillsToLab(this.state.user_id, item_ids).then(resp => {
+					console.log(resp);
+				});
 			} else {
-				if (this.state.req_type === 'skills') {
-					addSkillToStudent(this.state.user_id, choiceToAdd).then(resp => {
-						console.log(resp);
-					});
-				} else {
-					addTagToStudent(this.state.user_id, choiceToAdd).then(resp => {
-						console.log(resp);
-					});
-				}
+				addTagsToLab(this.state.user_id, item_ids).then(resp => {
+					console.log(resp);
+				});
+			}
+		} else {
+			if (this.state.req_type === 'skills') {
+				addSkillsToStudent(this.state.user_id, item_ids).then(resp => {
+					console.log(resp);
+				});
+			} else {
+				addTagsToStudent(this.state.user_id, item_ids).then(resp => {
+					console.log(resp);
+				});
 			}
 		}
 		//window.location = this.state.dest;
@@ -161,6 +121,9 @@ class PickYourInterests extends Component {
 	render() {
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
+				{this.state.bubble_array.map((bubble) => {
+					return (<div> {bubble.name} </div>)
+				})}
 				<BubbleChoice ref='bubble_choice' display_info={this.state.display_info} callbackSkills={this.updateBubbleChoice}/>
 				<SquareButton superClick={this.saveAndContinue} label='save'/>
 			</div>
