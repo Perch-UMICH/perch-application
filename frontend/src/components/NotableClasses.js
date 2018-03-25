@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import SquareButton from './SquareButton'
+import SquareButton from './SquareButton';
+import $ from 'jquery';
+import {updateStudent} from '../helper.js';
+import {getStudent} from '../helper.js';
 import './NotableClasses.css';
 
 class NotableClasses extends Component {
@@ -10,13 +13,25 @@ class NotableClasses extends Component {
 			gpa: '',
 			year: '',
 			major: '',
+			student_id: 1,
 		};
 		if (this.props.location.pathname.split('/')[1] === 'update-notable-classes') {
 			this.state.classes = "EECS 281\nEECS 370\nEECS 380";
-			this.state.gpa = 3.9;
-			this.state.year = "Junior";
-			this.state.major = "Computer Science";
 		}
+		this.saveAndContinue = this.saveAndContinue.bind(this);
+	}
+
+	componentDidMount() {
+		getStudent(this.state.student_id).then((resp) => {
+            this.setState(
+            	{
+            		GPA: resp.data.gpa,
+            		major: resp.data.major,
+            		year: resp.data.year,
+            	}
+            );
+            console.log(resp);
+        });
 	}
 
 	updateClasses(event) {
@@ -35,13 +50,20 @@ class NotableClasses extends Component {
 		this.setState({ major: event.target.value });
 	}
 
+	saveAndContinue(event) {
+		updateStudent(this.state.student_id, null, null, this.state.major, this.state.year, this.state.gpa, null).then(resp => {
+			console.log(resp);
+			//window.location = '/student-profile';
+		});
+	}
+
 	render() {
 		var url_arr = this.props.location.pathname.split('/');
 		var btn_msg = 'next';
 		var dest = '/student-bio';
 		var header = 'Academics';
 		if (url_arr[1] === "update-notable-classes") {
-			btn_msg = 'back';
+			btn_msg = 'save';
 			dest = '/student-profile';
 			header = 'Update Academics';
 		}
@@ -68,11 +90,11 @@ class NotableClasses extends Component {
 								<div className='notable-classes-label left-align'>Year</div>
 								<select className='year-selector' value={this.state.year} onChange={event => this.updateYear(event)}>
 							      <option className='year-selector-item' value="" disabled>Choose your year</option>
-							      <option className='year-selector-item' value="Freshman">freshman</option>
-							      <option className='year-selector-item' value="Sophomore">sophomore</option>
-							      <option className='year-selector-item' value="Junior">junior</option>
-							      <option className='year-selector-item' value="Senior">senior</option>
-							      <option className='year-selector-item' value="Senior+">senior+</option>
+							      <option className='year-selector-item' value="Freshman">Freshman</option>
+							      <option className='year-selector-item' value="Sophomore">Sophomore</option>
+							      <option className='year-selector-item' value="Junior">Junior</option>
+							      <option className='year-selector-item' value="Senior">Senior</option>
+							      <option className='year-selector-item' value="Senior+">Senior+</option>
 							    </select>
 							   
 							</div>
@@ -83,7 +105,7 @@ class NotableClasses extends Component {
 							placeholder="EECS 281"
 							onChange={event => this.updateClasses(event)}>
 						</textarea>
-						<SquareButton destination={dest} label={btn_msg}/>
+						<SquareButton superClick={this.saveAndContinue} label={btn_msg}/>
 					</form>
 				</div>
 			</div>
