@@ -22,7 +22,7 @@ class BubbleChoice extends Component {
 					console.log("TAGS?");
 					console.log(resp);
 					if (resp.result) {
-						this.setState({ catalog: resp.result, filtered_catalog: resp.result });
+						this.setState({ catalog: resp.result, filtered_catalog: resp.result.slice() });
 					}
 				}).then(resp => {
 					this.setUserChoices();
@@ -32,7 +32,7 @@ class BubbleChoice extends Component {
 					console.log("skills?");
 					console.log(resp);
 					if (resp.result) {
-						this.setState({ catalog: resp.result, filtered_catalog: resp.result });
+						this.setState({ catalog: resp.result, filtered_catalog: resp.result.slice() });
 					}
 				}).then(resp => {
 					this.setUserChoices();
@@ -58,6 +58,7 @@ class BubbleChoice extends Component {
 				    this.setState({ 
 				    	choices: temp_choices,
 				    	catalog: temp_catalog,
+				    	filtered_catalog: temp_catalog.slice(),
 				    }, () => {
 				    	if (this.props.callbackSkills) {
 				    		this.props.callbackSkills(temp_choices);
@@ -81,6 +82,7 @@ class BubbleChoice extends Component {
 				    this.setState({ 
 				    	choices: temp_choices,
 				    	catalog: temp_catalog,
+				    	filtered_catalog: temp_catalog.slice(),
 				    }, () => {
 				    	if (this.props.callbackSkills) {
 				    		this.props.callbackSkills(temp_choices);
@@ -97,7 +99,7 @@ class BubbleChoice extends Component {
 	      	return item.name.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").search(
 	        	event.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
     	});
-    	this.setState({filtered_catalog: updatedList, search_term: event.target.value});
+    	this.setState({filtered_catalog: updatedList.slice(), search_term: event.target.value});
     	if (event.target.value) {
     		this.setState({in_filter: true });
     	} else {

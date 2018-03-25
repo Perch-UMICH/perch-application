@@ -121,9 +121,10 @@ class PickYourInterests extends Component {
 	render() {
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
+				{/*
 				{this.state.bubble_array.map((bubble) => {
-					return (<div> {bubble.name} </div>)
-				})}
+					return (<div key={bubble.id}> {bubble.name} </div>)
+				})}*/}
 				<BubbleChoice ref='bubble_choice' display_info={this.state.display_info} callbackSkills={this.updateBubbleChoice}/>
 				<SquareButton superClick={this.saveAndContinue} label='save'/>
 			</div>

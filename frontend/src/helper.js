@@ -15,7 +15,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // Authentication
 // NOTE: Login/register funcs aren't fully working yet, so you may get response errors if you call them
 export function isLoggedIn() {
-    if(localStorage.getItem('token') == null) {
+    if (localStorage.getItem('token') == null) {
         console.log('Not logged in');
         return false;
     }
