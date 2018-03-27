@@ -27,7 +27,7 @@ class AppCreationModal extends Component {
 				    	<h5>Skills Required:</h5>
 			    	    {this.props.info.skills.map((skill) => {
 			    			return (
-			    				<p>{skill}</p>);
+			    				<p>{skill.name}</p>);
 			    		})}
 			    		{ (this.props.info.skills.length === 0) ? <div><i>No specific skills selected</i></div> : null }
 				    	<h5>Short Answer Questions:</h5>
