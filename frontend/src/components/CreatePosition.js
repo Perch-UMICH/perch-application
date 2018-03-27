@@ -123,11 +123,9 @@ class CreatePosition extends Component {
 	}
 
 	updateSkills(skills) {
-	     this.setState({
-	         modal_info: Object.assign({}, this.state.modal_info, {
-	           skills: skills,
-	         }),
-	     });
+		var new_modal_info = this.state.modal_info;
+		new_modal_info.skills = skills;
+		this.setState({ modal_info: new_modal_info });
 	}
 
 	render() {

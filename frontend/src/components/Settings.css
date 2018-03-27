@@ -1,0 +1,18 @@
+.user-information {
+	text-align: left;
+	background-color: #eee;
+	padding: 10px;
+	border-radius: 6px;
+	width: 100%;
+}
+
+.setting-col {
+	color: #fff;
+	position: relative;
+}
+
+.setting-icon {
+	position: relative;
+	margin-top: 10px;
+	margin-left: 44%;
+}

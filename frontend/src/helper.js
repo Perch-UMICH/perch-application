@@ -788,20 +788,6 @@ export function uploadPic(type, id, data) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function getCurrentUserId() {
     return localStorage.getItem('user_id');
 }

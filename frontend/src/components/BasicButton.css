@@ -34,3 +34,7 @@
 .basic-btn-light:focus {
 	background-color: rgb(41, 182, 246);
 }
+
+.inline-icon: {
+	display: inline-block;
+}
