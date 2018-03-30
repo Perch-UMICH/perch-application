@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import './SkillsTab.css';
-import {isLoggedIn} from '../helper.js'
+import {getCurrentUserId} from '../helper.js'
 class SkillsTab extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			id: window.location.pathname.split( '/' )[2],
+		}
 	}
 
 	render() {
@@ -12,7 +15,7 @@ class SkillsTab extends Component {
 			<div className='tab-container'>
 				<div className='tab-header'>
 					SKILLS 
-					{isLoggedIn() && 
+					{ getCurrentUserId() == this.state.id && 
 						<a href={route} ><i className="material-icons interest-editor">add</i></a>
 					}
 				</div>

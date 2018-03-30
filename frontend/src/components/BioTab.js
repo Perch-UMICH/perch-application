@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isLoggedIn} from '../helper.js'
+import {isLoggedIn, getCurrentUserId} from '../helper.js'
 import './BioTab.css';
 
 class BioTab extends Component {
@@ -7,6 +7,7 @@ class BioTab extends Component {
 		super(props);
 		this.state = {
 			dest: (this.props.user_type === 'faculty') ? '/update-lab-description' : '/update-student-bio',
+			id: window.location.pathname.split( '/' )[2],
 		};
 	}
 
@@ -15,7 +16,7 @@ class BioTab extends Component {
 			<div className='tab-container shadow'>
 				<div className='tab-header'>
 					{this.props.header.toUpperCase()}
-					{isLoggedIn() &&
+					{getCurrentUserId() == this.state.id && 
 						<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
 					}
 				</div>
