@@ -14,6 +14,7 @@ class NavBar extends Component {
 			var navItems = <div>
 				<li><a className="nav-item" href={`/student-profile/${getCurrentUserId()}`}>PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
+			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
 			    {/*<li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>*/}
 			</div>

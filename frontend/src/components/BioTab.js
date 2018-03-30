@@ -6,11 +6,8 @@ class BioTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dest: '/update-student-bio'
+			dest: (this.props.user_type === 'faculty') ? '/update-lab-description' : '/update-student-bio',
 		};
-		if (this.props.user_type === 'faculty') {
-			this.state.dest = '/update-lab-description';
-		}
 	}
 
 	render() {
