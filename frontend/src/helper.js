@@ -189,6 +189,30 @@ export function deleteUser(user_id) {
         })
 }
 
+export function getStudentFromUser(user_id) {
+    console.log('Getting student');
+    return axios.get('api/users/' + user_id + '/student')
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function getFacultyFromUser(user_id) {
+    console.log('Getting faculty');
+    return axios.get('api/users/' + user_id + '/faculty')
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
 
 // Students
 // Student profile
