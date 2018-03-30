@@ -9,7 +9,7 @@ class Login extends Component {
 		event.preventDefault();
 		let email = document.getElementById('email').value
 		let password = document.getElementById('password').value
-
+	
 		loginUser(email, password).then((resp)=>{
 			if (resp) {
 				window.location.href = `/student-profile/${getCurrentUserId()}`

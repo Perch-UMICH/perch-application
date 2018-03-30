@@ -143,7 +143,7 @@ class StudentProfile extends Component {
 						<a href='/prof-page'><div className='student-current-lab'>{this.state.curr_lab}</div></a>
 					</div>
 				</div>*/}
-				{/*<div className=''>
+				{<div className=''>
 
 					{this.state.endorsements.length > 0 &&
 						<div>
@@ -178,7 +178,7 @@ class StudentProfile extends Component {
 						<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/></div>
 						<div className='profile-tab shadow' style={{width: '50%'}}><PastResearchTab /></div>
 					</div>
-				</div> */}
+				</div>}
 			</div>
 			
 		);

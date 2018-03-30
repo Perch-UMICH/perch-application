@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
 import AboveTheFold from './AboveTheFold.js';
 import './Home.css'
+import {getAllTags, getAllSkills, getAllLabs} from '../helper.js'
+
+
 class Home extends Component {
-	
+	constructor(props) {
+		super(props)
+		getAllLabs().then((resp) => console.log(resp))
+	}
 	render() {
 		return(
 			<div>
