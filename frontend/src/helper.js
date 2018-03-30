@@ -13,9 +13,8 @@ axios.defaults.baseURL = 'http://perch-api.us-east-1.elasticbeanstalk.com';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // Authentication
-// NOTE: Login/register funcs aren't fully working yet, so you may get response errors if you call them
 export function isLoggedIn() {
-    if (localStorage.getItem('token') == null) {
+    if(localStorage.getItem('token') == null) {
         console.log('Not logged in');
         return false;
     }
@@ -91,31 +90,6 @@ export function loginUser(email, password) {
         });
 }
 
-// function setUserDetails(token) {
-//     console.log(token);
-//     // Save user details to local storage
-//     axios.post('api/details',
-//         {
-//             headers: {
-//                 'Authorization': 'Bearer ' + token
-//             }
-//         }
-//     )
-//         .then(response => {
-//             localStorage.setItem('user_name', response.data.result.name);
-//             localStorage.setItem('user_id', response.data.result.id);
-//             localStorage.setItem('user_email', response.data.result.email);
-//             console.log(response.data.message);
-//         })
-//         .catch(error => {
-//             console.error(error);
-//             console.error('Could not get user details');
-//             return false;
-//         });
-//
-//     return true;
-// }
-
 export function logoutCurrentUser() {
   // Clear all user cookies
   //   cookie.remove('perch_api_key');
@@ -144,6 +118,31 @@ export function logoutCurrentUser() {
         });
 }
 
+export function sendPasswordResetEmail(email) {
+    return axios.post('password/email', {email})
+        .then(response=> {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error=> {
+            console.error(error);
+            return false;
+        });
+}
+
+export function resetPassword(email, password, password_confirmation) {
+    return axios.post('password/request', {email, password, password_confirmation})
+        .then(response=> {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error=> {
+            console.error(error);
+            return false;
+        });
+}
+
+
 // USERS
 // Base user on website
 // Required:
@@ -166,6 +165,18 @@ export function getAllUsers() {
         })
 }
 
+export function getUser(user_id) {
+    console.log('Getting user');
+    return axios.get('api/users/' + user_id)
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
 export function deleteUser(user_id) {
     console.log('Deleting user');
     return axios.delete('api/users/' + user_id)
@@ -177,6 +188,8 @@ export function deleteUser(user_id) {
             return [];
         })
 }
+
+
 // Students
 // Student profile
 // Required:
@@ -226,7 +239,7 @@ export function getStudent(student_id) {
 
 export function createStudent(user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id) {
     console.log('Creating student');
-    return axios.post('api/students/', {user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id})
+    return axios.post('api/students', {user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id})
         .then(response => {
             console.log(response.data.message);
             return response.data.result;
@@ -691,12 +704,106 @@ export function addTagsToLab(lab_id, tag_ids) {
 }
 
 export function removeTagsFromLab(lab_id, tag_ids) {
-    console.log('Removings tag from lab');
+    console.log('Removing tag from lab');
 
     let payload = {
         tag_ids: tag_ids
     };
     return axios.delete('api/labs/' + lab_id + '/tags', payload)
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+
+export function getLabPreferences(lab_id) {
+    console.log('Getting lab preferences');
+    return axios.get('api/labs/' + lab_id + '/preferences')
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function addPreferencesToLab(lab_id, preference_ids) {
+    console.log('Adding preferences to lab');
+
+    let payload = {
+        tag_ids: preference_ids
+    };
+    return axios.post('api/labs/' + lab_id + '/preferences', payload)
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function removePreferencesFromLab(lab_id, preference_ids) {
+    console.log('Removing preferences from lab');
+
+    let payload = {
+        tag_ids: preference_ids
+    };
+    return axios.delete('api/labs/' + lab_id + '/preferences', payload)
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+
+export function getLabPositions(lab_id) {
+    console.log('Getting lab positions');
+    return axios.get('api/labs/' + lab_id + '/positions')
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function createPosition(lab_id, title, description, time_commitment, open_slots, filled_slots, open) {
+    console.log('Creating lab positions');
+
+    return axios.post('api/labs/' + lab_id + '/positions', [title, description, time_commitment, open_slots, filled_slots, open])
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function deletePosition(lab_id, position_ids) {
+    console.log('Deleting lab positions');
+
+    let payload = {
+        position_ids: position_ids
+    };
+
+    return axios.post('api/labs/' + lab_id + '/positions', payload)
         .then(response => {
             console.log(response.data.message);
             return response.data.result;
@@ -769,13 +876,27 @@ export function getTag(tag_id) {
         })
 }
 
+// Positions
+// Open projects/positions in a lab
+// Required:
+//  title - (string)
+//  description -(text)
+// Optional:
+//  time_commitment - (string) short description of time commitment (e.g. 10-12 hours/week)
+//  open_slots - (int) total open slots for applicants
+//  filled_slots - (int) # of open slots that have been filled
+//  open - (bool) whether positions is current accepting applicants
+
+// TODO
+
 // data should be of type FormData
 // see: https://stackoverflow.com/questions/39663961/how-do-you-send-images-to-node-js-with-axios
-// type - should be either "student", "faculity", or "lab"
+// type - should be either "student", "faculty", or "lab"
 // id - based on type, should be the id of that object
 export function uploadPic(type, id, data) {
-    data.append('type', type);
-    data.append('id', id);
+    data.set('type', type);
+    data.set('id', id);
+    console.log(data);
     return axios.post('api/pics', data)
         .then(response => {
             console.log(response.data.message);
@@ -787,6 +908,27 @@ export function uploadPic(type, id, data) {
         })
 }
 
+
+// Returns all data necessary for student lab search
+// student_id - id of the student who's searching
+export function getSearchData(student_id) {
+    console.log('Retrieving search data');
+    return axios.post('api/search', {student_id})
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+
+
+
+
+/////
 
 export function getCurrentUserId() {
     return localStorage.getItem('user_id');

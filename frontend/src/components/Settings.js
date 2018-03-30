@@ -2,10 +2,10 @@
 
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser} from '../helper.js'
 import './Settings.css';
 
-class LabTextInfo extends Component {
+class Settings extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -17,13 +17,13 @@ class LabTextInfo extends Component {
 
 	componentDidMount() {
 		if (isLoggedIn()) {
-			getCurrentUserId().then((resp) => {
+			getUser(getCurrentUserId()).then((resp) => {
 				console.log(resp);
 				this.setState(
 					{
-						name: "Someone",
-						email: "Someone@something.com",
-						user_type: "Faculty",
+						name: resp.result.name,
+						email: resp.result.email,
+						user_type: resp.result.is_student ? "Student" : "Facutly",
 					}
 				);
 			});
@@ -62,4 +62,4 @@ class LabTextInfo extends Component {
 	}
 }
 
-export default LabTextInfo;
+export default Settings;
