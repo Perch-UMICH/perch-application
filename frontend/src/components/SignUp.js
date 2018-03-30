@@ -67,7 +67,7 @@ class SignUp extends Component {
 				<form className='container left-align new-signup-container' onSubmit={this.registerHandler.bind(this)}>
 	  				<div className='new-signup-header'>Sign Up for Free</div>
 	  				<a href='login' ><div className='new-signup-sub-header'>or <span className='link-color'>login</span> if you have an account</div></a>
-	  				{/*<div className='row'>
+	  				<div className='row'>
 	  					<div className="input-field col s6">
 		                	<input id="first_name" type="text" required />
 		                	<label htmlFor="first_name">First name</label>
@@ -76,7 +76,8 @@ class SignUp extends Component {
 			                <input id="last_name" type="text" required />
 			                <label htmlFor="last_name">Last name</label>
 			            </div>
-	  				</div>*/}
+	  				</div>
+	  				{/*
 	  				<div className="input-field">
 		                <input id="first_name" type="text" required />
 		                <label htmlFor="first_name">Name</label>
@@ -84,7 +85,7 @@ class SignUp extends Component {
 		            <div className="input-field">
 		                <input id="last_name" type="text" required />
 		                <label htmlFor="last_name">Name</label>
-		            </div>   
+		            </div>   */}
 	  				<div className="input-field">
 		                <input id="email" type="email" required />
 		                <label htmlFor="email">Email</label>

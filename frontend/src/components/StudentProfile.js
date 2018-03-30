@@ -100,7 +100,7 @@ class StudentProfile extends Component {
 	}
 
 	render() {
-		if (isLoggedIn()) {
+		if (true) {
 	 	return (
 			<div className='container shift-down'>
 				<div>

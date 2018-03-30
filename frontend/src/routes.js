@@ -4,6 +4,7 @@ import Team from './components/Team';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import SignUpPage from './components/SignUpPage';
+import ConfirmEmail from './components/ConfirmEmail';
 import Timeline from './components/Timeline';
 import About from './components/About';
 import Login from './components/Login';
@@ -23,6 +24,7 @@ import CreatePosition from './components/CreatePosition';
 import ViewApplicants from './components/ViewApplicants';
 import ScheduleInterview from './components/ScheduleInterview';
 import PickInterview from './components/PickInterview';
+import Settings from './components/Settings';
 import Feedback from './components/Feedback';
 import './components/TapTarget.css';
 import './components/general.css';
@@ -41,6 +43,7 @@ class Router extends Component {
 							<Route path='/timeline' component={ Timeline } />
 							<Route path='/login' component={ Login } />
 							<Route path='/sign-up' component={ SignUpPage } />
+							<Route path='/confirm-email' component={ ConfirmEmail } />
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/student-profile/:studentSlug' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
@@ -71,6 +74,7 @@ class Router extends Component {
 							<Route path='/schedule-interview' component={ ScheduleInterview } />
 							<Route path='/schedule-interview/:studentSlug' component={ ScheduleInterview } />
 							<Route path='/pick-interview' component={ PickInterview } />
+							<Route path='/settings' component={ Settings } />
 							<Route path='/feedback' component={ Feedback }/>
 							<Route path='/' component={ Home } />
 						</Switch>

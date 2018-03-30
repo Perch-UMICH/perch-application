@@ -13,9 +13,9 @@ class InterestsTab extends Component {
 			<div className='tab-container'>
 				<div className='tab-header'>
 					{this.props.tabTitle} 
-					{ isLoggedIn() &&
+					{/*{ isLoggedIn() &&*/}
 						<a href={route} ><i className="material-icons interest-editor">add</i></a>
-					}
+					{}
 				</div>
 				<div className='interests-tab'>
 					{this.props.interests.map((interest) => <div key={interest.id} className='floater-item'>{interest.name}</div>)}
