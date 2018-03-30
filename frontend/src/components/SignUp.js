@@ -44,7 +44,7 @@ class SignUp extends Component {
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
 
-		registerUser(`${first_name} ${last_name}`, email, password, password).then(this.handleLoginAndCreation.bind(this)); //.then((resp) => window.location.href = this.state.route);
+		registerUser(`${first_name} ${last_name}`, email, password, password).then(this.handleLoginAndCreation.bind(this)).then((resp) => window.location.href = this.state.route);
 	}
 
 	// logs user in then calls create student function

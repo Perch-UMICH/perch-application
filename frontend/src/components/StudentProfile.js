@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import $ from 'jquery'
 import './StudentProfile.css';
@@ -79,18 +79,18 @@ class StudentProfile extends Component {
 
 		if (isLoggedIn()) {
 			let id = window.location.pathname.split( '/' )[2];
-			getStudent(id).then((resp) => {
+			getStudentFromUser(id).then((resp) => {
 				console.log(resp);
 	            this.setState(
 	            	{
-	            		name: `${resp.data.first_name} ${resp.data.last_name}`,
-	            		GPA: resp.data.gpa,
-	            		major: resp.data.major,
-	            		year: resp.data.year,
-	            		bio: resp.data.bio,
+	            		name: `${resp.result.first_name} ${resp.result.last_name}`,
+	            		GPA: resp.result.gpa,
+	            		major: resp.result.major,
+	            		year: resp.result.year,
+	            		bio: resp.result.bio,
 	            		interests: resp.tags,
 	            		skills: resp.skills,
-	            		email: resp.data.email,
+	            		email: resp.result.email,
 	            	}
 	            );
 	            
@@ -169,7 +169,7 @@ class StudentProfile extends Component {
 							<BioTab header='bio' user_type='student' msg={this.state.bio}/>
 						</div>	
 					}
-
+					
 					<div className='row flex'>
 						<div className='profile-tab shadow' style={{width: '50%'}}><InterestsTab tabTitle="INTERESTS" user_type="student" interests={this.state.interests} /></div>
 						<div className='profile-tab shadow' style={{width: '50%'}}><SkillsTab user_type="student" skills={this.state.skills}/></div>

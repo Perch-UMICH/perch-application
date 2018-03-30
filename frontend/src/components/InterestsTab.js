@@ -21,7 +21,7 @@ class InterestsTab extends Component {
 					}
 				</div>
 				<div className='interests-tab'>
-					{this.props.interests.map((interest) => <div key={interest.id} className='floater-item'>{interest.name}</div>)}
+					{this.props.interests && this.props.interests.map((interest) => <div key={interest.id} className='floater-item'>{interest.name}</div>)}
 				</div>
 			</div>
 		);

@@ -20,7 +20,7 @@ class SkillsTab extends Component {
 					}
 				</div>
 				<div className='skills-tab'>
-					{this.props.skills.map((skill) => <div key={skill.id} className='floater-item'>{skill.name}</div>)}
+					{this.props.skills && this.props.skills.map((skill) => <div key={skill.id} className='floater-item'>{skill.name}</div>)}
 				</div>
 			</div>
 		);
