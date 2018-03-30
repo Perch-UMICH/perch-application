@@ -3,7 +3,7 @@ import { parse } from 'query-string';
 import SquareButton from './SquareButton';
 import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
-import {getStudent, getLab, addSkillsToLab, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags} from '../helper.js';
+import {getStudent, getLab, addSkillsToLab, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -21,8 +21,10 @@ class PickYourInterests extends Component {
 				interests: [],
 				user_id: 1,
 			},
+			user_id: getCurrentUserId(),
 			bubble_array: [],
 		};
+		
 		this.updateBubbleChoice = this.updateBubbleChoice.bind(this);
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
@@ -32,6 +34,7 @@ class PickYourInterests extends Component {
 		var btn_label = 'back';
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
+		getStudentFromUser(this.state.user_id).then( r => this.setState({s_id: r.result.id}))
 
 		if (url_arr[1] === "update-interests") {
 			if (user_type === "faculty") {
@@ -92,21 +95,21 @@ class PickYourInterests extends Component {
 		console.log(item_ids);
 		if (this.state.user_type === 'faculty') {
 			if (this.state.req_type === 'skills') {
-				addSkillsToLab(this.state.user_id, item_ids).then(resp => {
+				addSkillsToLab(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
 				});
 			} else {
-				addTagsToLab(this.state.user_id, item_ids).then(resp => {
+				addTagsToLab(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
 				});
 			}
 		} else {
 			if (this.state.req_type === 'skills') {
-				addSkillsToStudent(this.state.user_id, item_ids).then(resp => {
+				addSkillsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
 				});
 			} else {
-				addTagsToStudent(this.state.user_id, item_ids).then(resp => {
+				addTagsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
 				});
 			}
