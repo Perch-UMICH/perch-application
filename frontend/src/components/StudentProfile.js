@@ -103,7 +103,7 @@ class StudentProfile extends Component {
 		if (true) {
 	 	return (
 			<div className='container shift-down'>
-				<div>
+				{<div>
 					<div className='' style={{height: '230px', width: '900px', margin: '20px auto', marginBottom: '0', backgroundColor: 'white', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
 						<img src={this.state.img_src} style={{width: '230px'}} />
 						<div style={{position: 'absolute', top: '30px', left: '250px', color: 'grey', letterSpacing: '0px'}}>
@@ -122,7 +122,7 @@ class StudentProfile extends Component {
 						<i class="material-icons">add</i>
 						<FontAwesome name='rocket' />
 					</div>
-				</div>
+				</div>}
 				{/*<div className='row left-align'>
 					<div className='tab-container' style={{position: 'relative'}}>
 						<img id='student-img' className='col s6 m4 l3' src={this.state.img_src} />

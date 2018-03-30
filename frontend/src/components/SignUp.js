@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {registerUser, createStudent, getCurrentUserId, loginUser} from '../helper.js';
-import {getAllUsers, deleteUser} from '../helper.js'
+import {getAllUsers, deleteUser, getAllStudents} from '../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -10,6 +10,14 @@ class SignUp extends Component {
 		};
 
 		getAllUsers().then((resp) => {
+			// for (let i = 6; i < resp.result.length; i++) {
+			// 	deleteUser(i);
+			// }
+			console.log(resp.result)
+
+		})
+
+		getAllStudents().then((resp) => {
 			// for (let i = 6; i < resp.result.length; i++) {
 			// 	deleteUser(i);
 			// }
