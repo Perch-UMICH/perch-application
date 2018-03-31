@@ -15,17 +15,17 @@ class StudentBio extends Component {
 	}
 
 	componentDidMount() {
-		getStudent(this.state.student_id).then((resp) => {
-			if (resp.data.bio) {
-				this.setState(
-					{
-						bio: resp.data.bio,
-					}
-				);
-			}
-            console.log(resp);
-        });
-        getStudentFromUser(getCurrentUserId()).then( r => this.setState({student_id: r.result.id, bio: r.result.bio}))
+		getStudentFromUser(getCurrentUserId()).then( r => this.setState({student_id: r.result.id, bio: r.result.bio}))
+		// getStudent(this.state.student_id).then((resp) => {
+		// 	if (resp.data.bio) {
+		// 		this.setState(
+		// 			{
+		// 				bio: resp.data.bio,
+		// 			}
+		// 		);
+		// 	}
+  //           console.log(resp);
+  //       });
 	}
 
 	saveAndContinue(event) {
