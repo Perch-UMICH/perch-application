@@ -25,17 +25,11 @@ class StudentBio extends Component {
 			}
             console.log(resp);
         });
-        getStudentFromUser(getCurrentUserId()).then( r => this.setState({student_id: r.result.id}))
-        // getStudentFromUser(getCurrentUserId()).then( r => console.log(r.result.id))
+        getStudentFromUser(getCurrentUserId()).then( r => this.setState({student_id: r.result.id, bio: r.result.bio}))
 	}
 
 	saveAndContinue(event) {
-		//updateStudent(this.state.student_id, null, null, this.state.major, this.state.year, this.state.gpa, null).then(resp => {
-		//  NEED TO UPDATE STUDENT WITH BIO BUT NOT PART OF CURRENT FUNCTION
-		//	console.log(resp);
-			
-			updateStudent(this.state.student_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=>window.location = `/student-profile/${getCurrentUserId()}`)
-		//});
+		updateStudent(this.state.student_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=>window.location = `/student-profile/${getCurrentUserId()}`)
 	}
 
 	updateBioText(event) {
