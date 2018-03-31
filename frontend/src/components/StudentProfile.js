@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import $ from 'jquery'
 import './StudentProfile.css';
@@ -69,6 +69,7 @@ class StudentProfile extends Component {
 		// alert(this.state.s_id)
 		// getStudentTags(this.state.s_id).then(r => console.log(r))
 		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
+		getStudentSkills(this.state.s_id).then(r => this.setState({skills: r}))
 	}
 
 	componentDidMount() {
@@ -85,7 +86,7 @@ class StudentProfile extends Component {
 		// 	this.setState();
 		// });
 
-		getStudentFromUser(getCurrentUserId()).then( r => this.setState({s_id: r.result.id}))
+		getStudentFromUser(window.location.pathname.split( '/' )[2]).then( r => this.setState({s_id: r.result.id}))
 
 		if (isLoggedIn()) {
 			let id = window.location.pathname.split( '/' )[2];
