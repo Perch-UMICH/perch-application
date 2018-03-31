@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
-import {getStudent} from '../helper.js';
+import {getStudent, getStudentFromUser, getCurrentUserId, updateStudent} from '../helper.js';
 import './PastResearch.css';
 
 class StudentBio extends Component {
@@ -25,13 +25,17 @@ class StudentBio extends Component {
 			}
             console.log(resp);
         });
+        getStudentFromUser(getCurrentUserId()).then( r => this.setState({student_id: r.result.id}))
+        // getStudentFromUser(getCurrentUserId()).then( r => console.log(r.result.id))
 	}
 
 	saveAndContinue(event) {
 		//updateStudent(this.state.student_id, null, null, this.state.major, this.state.year, this.state.gpa, null).then(resp => {
 		//  NEED TO UPDATE STUDENT WITH BIO BUT NOT PART OF CURRENT FUNCTION
 		//	console.log(resp);
-			window.location = '/student-profile';
+			
+			updateStudent(this.state.student_id, null, null, null, null, null, null, this.bio, null, null)
+			// window.location = `/student-profile/${getCurrentUserId()}`;
 		//});
 	}
 
