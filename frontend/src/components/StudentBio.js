@@ -34,8 +34,7 @@ class StudentBio extends Component {
 		//  NEED TO UPDATE STUDENT WITH BIO BUT NOT PART OF CURRENT FUNCTION
 		//	console.log(resp);
 			
-			updateStudent(this.state.student_id, null, null, null, null, null, null, this.bio, null, null)
-			// window.location = `/student-profile/${getCurrentUserId()}`;
+			updateStudent(this.state.student_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=>window.location = `/student-profile/${getCurrentUserId()}`)
 		//});
 	}
 
