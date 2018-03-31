@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import $ from 'jquery'
 import './StudentProfile.css';
@@ -63,6 +63,14 @@ class StudentProfile extends Component {
 		}
 	}
 
+	retrieveTags() {
+		// getStudentTags.then(r => this.setState({interests: r.result.tags}))
+		
+		// alert(this.state.s_id)
+		// getStudentTags(this.state.s_id).then(r => console.log(r))
+		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
+	}
+
 	componentDidMount() {
 		// $( document ).ready(()=> {
 		// 	var s_img = document.getElementById('student-img');
@@ -77,6 +85,8 @@ class StudentProfile extends Component {
 		// 	this.setState();
 		// });
 
+		getStudentFromUser(getCurrentUserId()).then( r => this.setState({s_id: r.result.id}))
+
 		if (isLoggedIn()) {
 			let id = window.location.pathname.split( '/' )[2];
 			getStudentFromUser(id).then((resp) => {
@@ -88,13 +98,12 @@ class StudentProfile extends Component {
 	            		major: resp.result.major,
 	            		year: resp.result.year,
 	            		bio: resp.result.bio,
-	            		interests: resp.tags,
 	            		skills: resp.skills,
 	            		email: resp.result.email,
 	            	}
 	            );
 	            
-	        });
+	        }).then(this.retrieveTags.bind(this));
 		}
 		
 	}

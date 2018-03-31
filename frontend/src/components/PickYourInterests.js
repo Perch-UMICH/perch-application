@@ -3,7 +3,7 @@ import { parse } from 'query-string';
 import SquareButton from './SquareButton';
 import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
-import {getStudent, getLab, addSkillsToLab, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
+import {getStudent, getStudentTags, getLab, addSkillsToLab, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -29,12 +29,18 @@ class PickYourInterests extends Component {
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
 
+	getInterests() {
+		// not good rn
+		getStudentTags(this.state.s_id).then(r => this.setState({display_info: {interests: r}}))
+	}
+
 	componentDidMount() {
 		var header_txt, placeholder_txt, dest = "";
 		var btn_label = 'back';
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
-		getStudentFromUser(this.state.user_id).then( r => this.setState({s_id: r.result.id}))
+
+		getStudentFromUser(this.state.user_id).then( r => this.setState({s_id: r.result.id}))//.then(this.getInterests.bind(this))
 
 		if (url_arr[1] === "update-interests") {
 			if (user_type === "faculty") {
@@ -111,6 +117,7 @@ class PickYourInterests extends Component {
 			} else {
 				addTagsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
+					// getStudentTags(this.state.s_id).then(r=>console.log(r))
 				});
 			}
 		}
