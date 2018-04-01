@@ -3,82 +3,90 @@ import './LabSearch.css';
 import Bubble from './Bubble';
 import LabList from './LabList';
 import './PickYourInterests.css';
+import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags} from '../helper.js'
 
 
 class LabSearch extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			skills_catalog: [
-				"plating",
-				"chromotography",
-				"MatLab",
-				"R",
-				"C++",
-				"Pen Testing",
-				"pun making",
-				"spectography",
-				"total phosphorus digestion",
-				"PCR",
-			],
-			your_skills: [
-				"pun making",
-				"spectography",
-				"total phosphorus digestion",
-				"PCR",
-			],
-			interests_catalog: [
-				"oncology",
-				"orange",
-				"orangutan",
-				"apples and orange",
-				"virology",
-				"basketweaving",
-				"history",
-				"chemistry",
-				"physics",
-				"astrophysics",
-				"security",
-				"fintech",
-				"medicine",
-				"machine learning",
-				"software development",
-				"biomedical devices",
-			],
-			your_interests: [
-				"security",
-				"fintech",
-				"medicine",
-				"machine learning",
-				"software development",
-				"biomedical devices",
-			],
+			skills_catalog: [],
+			your_skills: [],
+			interests_catalog: [],
+			your_interests: [],
 			skills: [],
 			interests: [],
 			filtered_catalog: [],
 			in_filter: false,
 			search_skills: true,
 			search_interests: false,
-			all_labs: this.props.labs,
-			filtered_labs: []
+			all_labs: [],
+			filtered_labs: [],
+			s_id: ''
 		}
 	}
 
 	componentWillMount() {
-		this.setState({filtered_catalog: this.state.skills_catalog});
+		getAllSkills().then((resp) => {
+			var temp_arr = [];
+			resp.result.map((skill) => {
+				temp_arr.push(skill.name);
+			})
+			this.setState({skills_catalog: temp_arr, filtered_catalog: temp_arr});
+		});
+
+		getAllTags().then((resp) => {
+			var temp_arr = [];
+			resp.result.map((tag) => {
+				temp_arr.push(tag.name);
+			})
+			this.setState({interests_catalog: temp_arr});
+		});
+
+		getStudentFromUser(getCurrentUserId()).then( r => {
+        	this.setState({s_id: r.result.id});
+        	getStudentSkills(this.state.s_id).then((resp) => {
+        		var temp_arr = [];
+        		resp.map((skill) => {
+        			temp_arr.push(skill.name);
+        		});
+        		this.setState({your_skills: temp_arr});
+        	});
+        });
+
+        getStudentFromUser(getCurrentUserId()).then( r => {
+        	this.setState({s_id: r.result.id});
+        	getStudentTags(this.state.s_id).then((resp) => {
+        		var temp_arr = [];
+        		resp.map((tag) => {
+        			temp_arr.push(tag.name);
+        		});
+        		this.setState({your_interests: temp_arr});
+        	});
+        });
   	}
 
   	componentDidMount() {
-  		let temp_labs = this.state.all_labs;
-  		temp_labs.map((lab) => {
-  			lab.in_search = false;
-  			lab.tags_in = 0;
-  		});
-  		this.setState({all_labs: temp_labs});
+  		getAllLabs().then((resp) => {
+            var temp_arr = [];
+			for (var key in resp.result) {
+				temp_arr.push(resp.result[key]);
+			}        
+			this.setState({all_labs: temp_arr});
 
-  		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
-  		document.getElementById('lab-search').addEventListener("mouseleave", () => document.getElementById('lab-search-box').classList.add('hide'));
+	  		let temp_labs = this.state.all_labs;
+	  		temp_labs.map((lab) => {
+	  			lab.in_search = false;
+	  			lab.tags_in = 0;
+	  			lab.name = lab.data.name;
+	  			
+	  		});
+	  		this.setState({all_labs: temp_labs});
+	  		console.log(this.state.all_labs);
 
+	  		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
+	  		document.getElementById('lab-search').addEventListener("mouseleave", () => document.getElementById('lab-search-box').classList.add('hide'));
+        });
   	}
 
 	filterList(event) {
@@ -97,19 +105,44 @@ class LabSearch extends Component {
 
 	handleClickAdd(interest, temporary) {
 		this.state.all_labs.map((lab) => {
-            if (lab.tags.indexOf(interest) !== -1) {
-                if (!lab.in_search) {
-                    let temp_lab = lab;
-                    temp_lab.in_search = true;
-                    temp_lab.tags_in++;
-                    this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
-                }
-                else {
-                    let temp_lab = lab;
-                    temp_lab.tags_in++;
-                }
-            }
+			if (this.state.search_skills) {
+				var skill_arr = [];
+				lab.skills.map((tag) => {
+					skill_arr.push(tag.name);
+				});
+				if (skill_arr.indexOf(interest) !== -1) {
+	                if (!lab.in_search) {
+	                    let temp_lab = lab;
+	                    temp_lab.in_search = true;
+	                    temp_lab.tags_in++;
+	                    this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
+	                }
+	                else {
+	                    let temp_lab = lab;
+	                    temp_lab.tags_in++;
+	                }
+	            }
+			}
+			else {
+				var tag_arr = [];
+				lab.tags.map((tag) => {
+					tag_arr.push(tag.name);
+				});
+				if (tag_arr.indexOf(interest) !== -1) {
+	                if (!lab.in_search) {
+	                    let temp_lab = lab;
+	                    temp_lab.in_search = true;
+	                    temp_lab.tags_in++;
+	                    this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
+	                }
+	                else {
+	                    let temp_lab = lab;
+	                    temp_lab.tags_in++;
+	                }
+	            }
+			}
         });
+        console.log(this.state.filtered_labs);
         this.setState((prevState) => {
             if (this.state.search_skills) {
                 let temp_delete = prevState.skills_catalog;
@@ -147,22 +180,50 @@ class LabSearch extends Component {
 
 	handleClickDelete(interest, type, temporary) {
 		this.state.all_labs.map((lab) => {
-            if (lab.tags.indexOf(interest) !== -1) {
-                if (lab.in_search && (lab.tags_in === 1)) {
-                    let temp_lab = lab;
-                    temp_lab.in_search = false;
-                    temp_lab.tags_in--;
+			if (this.state.search_skills) {
+				var skill_arr = [];
+				lab.skills.map((tag) => {
+					skill_arr.push(tag.name);
+				});
+				if (skill_arr.indexOf(interest) !== -1) {
+	                if (lab.in_search && (lab.tags_in === 1)) {
+	                    let temp_lab = lab;
+	                    temp_lab.in_search = false;
+	                    temp_lab.tags_in--;
 
-                    let temp_filtered_labs = this.state.filtered_labs;
-                    let indx = this.state.filtered_labs.indexOf(lab);
-                    temp_filtered_labs.splice(indx, 1);
+	                    let temp_filtered_labs = this.state.filtered_labs;
+	                    let indx = this.state.filtered_labs.indexOf(lab);
+	                    temp_filtered_labs.splice(indx, 1);
 
-                    this.setState((prevState) => {filtered_labs: temp_filtered_labs});
-                }
-                else {
-                    lab.tags_in--;
-                }
-            }
+	                    this.setState((prevState) => {filtered_labs: temp_filtered_labs});
+	                }
+	                else {
+	                    lab.tags_in--;
+	                }
+	            }
+			}
+			else {
+				var tag_arr = [];
+				lab.tags.map((tag) => {
+					tag_arr.push(tag.name);
+				});
+				if (tag_arr.indexOf(interest) !== -1) {
+	                if (lab.in_search && (lab.tags_in === 1)) {
+	                    let temp_lab = lab;
+	                    temp_lab.in_search = false;
+	                    temp_lab.tags_in--;
+
+	                    let temp_filtered_labs = this.state.filtered_labs;
+	                    let indx = this.state.filtered_labs.indexOf(lab);
+	                    temp_filtered_labs.splice(indx, 1);
+
+	                    this.setState((prevState) => {filtered_labs: temp_filtered_labs});
+	                }
+	                else {
+	                    lab.tags_in--;
+	                }
+	            }
+			}
         });
         this.setState((prevState) => {
             if (type === 'skill') {

@@ -104,26 +104,11 @@ class LabMatch extends Component {
 		// }
 	}
 
-	componentDidMount() {
-		 getAllLabs().then((resp) => {
-            this.setState(
-            	{labs: resp.result}
-            );
-
-            // this.state.labs.map((lab) => {
-            // 	getLabTags(lab.data.id).then((resp) => {
-            // 		console.log(resp);
-            // 	})
-            // });
-            console.log(resp);
-        });
-		
-	}
 	render() {
 		if (isLoggedIn()) {
 			return (
 				<div className='shift-down container center-align'>
-					<LabSearch labs={this.state.labs} />
+					<LabSearch />
 				</div>
 			);
 		}

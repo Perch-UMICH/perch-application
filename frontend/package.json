@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "alertify": "^0.3.0",
     "alertify.js": "^1.0.12",
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
@@ -12,6 +13,7 @@
     "react": "^16.1.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.1.0",
+    "react-fontawesome": "^1.6.1",
     "react-router": "^2.8.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
