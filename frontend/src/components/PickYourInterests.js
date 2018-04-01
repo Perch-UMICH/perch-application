@@ -3,7 +3,7 @@ import { parse } from 'query-string';
 import SquareButton from './SquareButton';
 import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
-import {getStudent, getStudentTags, getStudentSkills, getLab, addSkillsToLab, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
+import {getStudent, getStudentTags, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -115,13 +115,13 @@ class PickYourInterests extends Component {
 		} else {
 			if (this.state.display_info.req_type === 'skills') {
 				// alert('skillz')
-				addSkillsToStudent(this.state.s_id, item_ids).then(resp => {
+				syncSkillsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
 				});
 			} else {
 				// alert('interestz')
 				alert(this.state.display_info.req_type)
-				addTagsToStudent(this.state.s_id, item_ids).then(resp => {
+				syncTagsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
 					// getStudentTags(this.state.s_id).then(r=>console.log(r))
 				});
