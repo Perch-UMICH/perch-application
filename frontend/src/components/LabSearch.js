@@ -79,7 +79,25 @@ class LabSearch extends Component {
 	  			lab.in_search = false;
 	  			lab.tags_in = 0;
 	  			lab.name = lab.data.name;
-	  			
+	  			lab.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY';
+
+	  			var tag_temp_arr = [];
+				lab.tags.map((tag) => {
+					tag_temp_arr.push(tag.name);
+				});
+				var skill_temp_arr = [];
+				lab.skills.map((skill) => {
+					skill_temp_arr.push(skill.name);
+				});
+				
+				var temp_all_arr = tag_temp_arr;
+				skill_temp_arr.map((skill) => {
+					temp_all_arr.push(skill);
+				});
+
+				lab.tag_arr = tag_temp_arr;
+				lab.skill_arr = skill_temp_arr;
+				lab.all_tags = temp_all_arr;
 	  		});
 	  		this.setState({all_labs: temp_labs});
 	  		console.log(this.state.all_labs);
@@ -105,44 +123,19 @@ class LabSearch extends Component {
 
 	handleClickAdd(interest, temporary) {
 		this.state.all_labs.map((lab) => {
-			if (this.state.search_skills) {
-				var skill_arr = [];
-				lab.skills.map((tag) => {
-					skill_arr.push(tag.name);
-				});
-				if (skill_arr.indexOf(interest) !== -1) {
-	                if (!lab.in_search) {
-	                    let temp_lab = lab;
-	                    temp_lab.in_search = true;
-	                    temp_lab.tags_in++;
-	                    this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
-	                }
-	                else {
-	                    let temp_lab = lab;
-	                    temp_lab.tags_in++;
-	                }
-	            }
-			}
-			else {
-				var tag_arr = [];
-				lab.tags.map((tag) => {
-					tag_arr.push(tag.name);
-				});
-				if (tag_arr.indexOf(interest) !== -1) {
-	                if (!lab.in_search) {
-	                    let temp_lab = lab;
-	                    temp_lab.in_search = true;
-	                    temp_lab.tags_in++;
-	                    this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
-	                }
-	                else {
-	                    let temp_lab = lab;
-	                    temp_lab.tags_in++;
-	                }
-	            }
-			}
+            if (lab.all_tags.indexOf(interest) !== -1) {
+                if (!lab.in_search) {
+                    let temp_lab = lab;
+                    temp_lab.in_search = true;
+                    temp_lab.tags_in++;
+                    this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
+                }
+                else {
+                    let temp_lab = lab;
+                    temp_lab.tags_in++;
+                }
+            }
         });
-        console.log(this.state.filtered_labs);
         this.setState((prevState) => {
             if (this.state.search_skills) {
                 let temp_delete = prevState.skills_catalog;
@@ -180,50 +173,22 @@ class LabSearch extends Component {
 
 	handleClickDelete(interest, type, temporary) {
 		this.state.all_labs.map((lab) => {
-			if (this.state.search_skills) {
-				var skill_arr = [];
-				lab.skills.map((tag) => {
-					skill_arr.push(tag.name);
-				});
-				if (skill_arr.indexOf(interest) !== -1) {
-	                if (lab.in_search && (lab.tags_in === 1)) {
-	                    let temp_lab = lab;
-	                    temp_lab.in_search = false;
-	                    temp_lab.tags_in--;
+            if (lab.all_tags.indexOf(interest) !== -1) {
+                if (lab.in_search && (lab.tags_in === 1)) {
+                    let temp_lab = lab;
+                    temp_lab.in_search = false;
+                    temp_lab.tags_in--;
 
-	                    let temp_filtered_labs = this.state.filtered_labs;
-	                    let indx = this.state.filtered_labs.indexOf(lab);
-	                    temp_filtered_labs.splice(indx, 1);
+                    let temp_filtered_labs = this.state.filtered_labs;
+                    let indx = this.state.filtered_labs.indexOf(lab);
+                    temp_filtered_labs.splice(indx, 1);
 
-	                    this.setState((prevState) => {filtered_labs: temp_filtered_labs});
-	                }
-	                else {
-	                    lab.tags_in--;
-	                }
-	            }
-			}
-			else {
-				var tag_arr = [];
-				lab.tags.map((tag) => {
-					tag_arr.push(tag.name);
-				});
-				if (tag_arr.indexOf(interest) !== -1) {
-	                if (lab.in_search && (lab.tags_in === 1)) {
-	                    let temp_lab = lab;
-	                    temp_lab.in_search = false;
-	                    temp_lab.tags_in--;
-
-	                    let temp_filtered_labs = this.state.filtered_labs;
-	                    let indx = this.state.filtered_labs.indexOf(lab);
-	                    temp_filtered_labs.splice(indx, 1);
-
-	                    this.setState((prevState) => {filtered_labs: temp_filtered_labs});
-	                }
-	                else {
-	                    lab.tags_in--;
-	                }
-	            }
-			}
+                    this.setState((prevState) => {filtered_labs: temp_filtered_labs});
+                }
+                else {
+                    lab.tags_in--;
+                }
+            }
         });
         this.setState((prevState) => {
             if (type === 'skill') {
