@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import SquareButton from './SquareButton';
 import $ from 'jquery';
 import {updateStudent} from '../helper.js';
-import {getStudent} from '../helper.js';
+import {getStudent, getCurrentStudentId, getCurrentUserId} from '../helper.js';
 import './NotableClasses.css';
 
 class NotableClasses extends Component {
@@ -13,11 +13,11 @@ class NotableClasses extends Component {
 			gpa: '',
 			year: '',
 			major: '',
-			student_id: 1,
+			student_id: getCurrentStudentId(),
 		};
-		if (this.props.location.pathname.split('/')[1] === 'update-notable-classes') {
-			this.state.classes = "EECS 281\nEECS 370\nEECS 380";
-		}
+		// if (this.props.location.pathname.split('/')[1] === 'update-notable-classes') {
+		// 	this.state.classes = "EECS 281\nEECS 370\nEECS 380";
+		// }
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
 
@@ -28,6 +28,7 @@ class NotableClasses extends Component {
             		GPA: resp.data.gpa,
             		major: resp.data.major,
             		year: resp.data.year,
+            		classes: resp.data.classes,
             	}
             );
             console.log(resp);
@@ -50,11 +51,14 @@ class NotableClasses extends Component {
 		this.setState({ major: event.target.value });
 	}
 
+	returnToProfile() {
+		window.location = `/student-profile/${getCurrentUserId()}`;
+	}
+
 	saveAndContinue(event) {
-		updateStudent(this.state.student_id, null, null, this.state.major, this.state.year, this.state.gpa, null).then(resp => {
+		updateStudent(this.state.student_id, null, null, this.state.major, this.state.year, this.state.gpa, null, null, null, this.state.classes).then(resp => {
 			console.log(resp);
-			//window.location = '/student-profile';
-		});
+		}).then(this.returnToProfile);
 	}
 
 	render() {

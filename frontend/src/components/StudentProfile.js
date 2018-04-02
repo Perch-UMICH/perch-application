@@ -81,6 +81,7 @@ class StudentProfile extends Component {
 	            		year: resp.result.year,
 	            		bio: resp.result.bio,
 	            		email: resp.result.email,
+	            		classes: resp.result.classes,
 	            	}
 	            );
 	            
