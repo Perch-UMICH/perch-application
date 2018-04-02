@@ -3,20 +3,22 @@ import React, {Component} from 'react';
 import BasicButton from './BasicButton';
 import ResetEmailModal from './ResetEmailModal';
 import ResetPasswordModal from './ResetPasswordModal';
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateStudent, getStudentFromUser} from '../helper.js'
 import './Settings.css';
 import $ from 'jquery';
+import alertify from 'alertify.js';
 
 class Settings extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: "Someone",
-			email: "Someone@something.com",
-			user_type: "Faculty",
+			name: "",
+			email: "",
+			user_type: "",
 		};
 		this.openEmailModal = this.openEmailModal.bind(this);
 		this.openPasswordModal = this.openPasswordModal.bind(this);
+		this.resetEmail = this.resetEmail.bind(this);
 	}
 
 	componentDidMount() {
@@ -31,7 +33,19 @@ class Settings extends Component {
 					}
 				);
 			});
+
+			getStudentFromUser(getCurrentUserId()).then( r => {
+				this.setState({student_id: r.result.id})
+			});
 		}
+	}
+
+	resetEmail(email) {
+		updateStudent(this.state.student_id, null, null, null, null, null, email, null, null, null).then(resp => {
+			alertify.success("Email Successfully Reset");
+			console.log(resp);
+			this.setState({ email: email });
+		});
 	}
 
 	openEmailModal() { // superClick
@@ -47,7 +61,7 @@ class Settings extends Component {
 	render() {
 		return (
 			<div>
-				<ResetEmailModal />
+				<ResetEmailModal callbackEmail={this.resetEmail} />
 				<ResetPasswordModal />
 				<div id="modalBackdrop"></div>
 				<div className='lab-text-info shift-down'>

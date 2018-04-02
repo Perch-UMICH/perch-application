@@ -58,3 +58,12 @@
 	color: #eee;
 	padding-right: 10px;
 }
+
+.above-input {
+	padding-bottom: 12px;
+}
+
+.narrow {
+	width: 60%;
+	margin: auto;
+}

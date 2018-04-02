@@ -9,17 +9,21 @@ class StudentBio extends Component {
 		this.state = {
 			placeholder: "Short description of background, experience, and interests",
 			bio: '',
-			student_id: getCurrentStudentId(),
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
 
 	componentDidMount() {
-		getStudentFromUser(this.state.student_id).then( r => this.setState({bio: r.result.bio}))
+		getStudentFromUser(getCurrentUserId()).then( r => {
+			console.log(r);
+			this.setState({bio: r.result.bio, student_id: r.result.id})
+		});
 	}
 
 	saveAndContinue(event) {
-		updateStudent(this.state.student_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=>window.location = `/student-profile/${getCurrentUserId()}`)
+		updateStudent(this.state.student_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=> {
+			window.location = `/student-profile/${getCurrentUserId()}`
+		});
 	}
 
 	updateBioText(event) {
