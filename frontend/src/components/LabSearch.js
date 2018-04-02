@@ -103,7 +103,7 @@ class LabSearch extends Component {
 	  		console.log(this.state.all_labs);
 
 	  		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
-	  		document.getElementById('lab-search').addEventListener("mouseleave", () => document.getElementById('lab-search-box').classList.add('hide'));
+	  		// document.getElementById('lab-search').addEventListener("mouseleave", () => document.getElementById('lab-search-box').classList.add('hide'));
         });
   	}
 

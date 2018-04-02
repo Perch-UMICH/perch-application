@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import LabListItem from './LabListItem';
 import './LabList.css';
 class LabList extends Component {
+	constructor(props) {
+		super(props);
+	}
 
 	componentDidUpdate() {
 		let list = document.getElementById('lab-list-container');

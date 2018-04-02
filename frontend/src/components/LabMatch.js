@@ -107,7 +107,7 @@ class LabMatch extends Component {
 	render() {
 		if (isLoggedIn()) {
 			return (
-				<div className='shift-down container center-align'>
+				<div className='shift-down container center-align' style={{width: '900px'}}>
 					<LabSearch />
 				</div>
 			);
