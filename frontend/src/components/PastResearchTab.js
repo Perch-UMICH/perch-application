@@ -13,17 +13,17 @@ class PastResearchTab extends Component {
 	render() {
 		return (
 			<div className='tab-container' style={{position: 'relative', height: '70%'}}>
-				<div className='tab-header'>
+				<div className='mobile-header'>
 					PAST RESEARCH
 					{ getCurrentUserId() == this.state.id && 
 						<a href='/update-past-research'><i className="material-icons interest-editor edit-icon">create</i></a>
 					}
 				</div>
-				<div className='valign-wrapper' style={{position: 'relative', height: '100%'}}>
-					<div className='past-research-tab container center-align'>
-						<pre>
+				<div style={{position: 'relative', height: '100%'}}>
+					<div className='past-research-tab left-align'>
+						
 						{this.props.past_research}
-						</pre>
+						
 					</div>
 				</div>
 			</div>
