@@ -41,10 +41,11 @@ class StudentProfile extends Component {
 	generalHandler() {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
+				console.log(resp)
 	            this.setState(
 	            	{
 	            		name: `${resp.result.first_name} ${resp.result.last_name}`,
-	            		GPA: resp.result.gpa,
+	            		gpa: resp.result.gpa,
 	            		major: resp.result.major,
 	            		year: resp.result.year,
 	            		bio: resp.result.bio,
