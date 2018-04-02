@@ -13,6 +13,7 @@ class PastResearch extends Component {
 		// if (this.props.location.pathname.split('/')[1] === 'update-past-research') {
 		// 	this.state.research = "Dr. Patil's Neurosurgery Lab\nDr. R's Pharmaceutics Lab\n";
 		// }
+		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
 
 	updateResearch(event) {
@@ -27,7 +28,9 @@ class PastResearch extends Component {
 	}
 
 	saveAndContinue(event) {
-		updateStudent(this.state.student_id, null, null, null, null, null, null, null, null, this.state.research)//.then(()=>window.location = `/student-profile/${getCurrentUserId()}`)
+		updateStudent(this.state.student_id, null, null, null, null, null, null, null, this.state.research, null, null).then(resp => {
+			window.location = `/student-profile/${getCurrentUserId()}`
+		});
 	}
 
 	render() {
@@ -50,7 +53,7 @@ class PastResearch extends Component {
 							placeholder={this.state.placeholder} 
 							onChange={event => this.updateResearch(event)}>
 						</textarea>
-						<SquareButton onClick={this.saveAndContinue} label={btn_msg}/>
+						<SquareButton superClick={this.saveAndContinue} label={btn_msg}/>
 					</form>
 				</div>
 			</div>

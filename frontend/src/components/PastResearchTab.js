@@ -21,10 +21,9 @@ class PastResearchTab extends Component {
 				</div>
 				<div className='valign-wrapper' style={{position: 'relative', height: '100%'}}>
 					<div className='past-research-tab container center-align'>
-						<ul>
-							<li>Dr. Patil's Neurosurgery Lab</li>
-							<li>Dr. R's Pharmaceutics Lab</li>
-						</ul>
+						<pre>
+						{this.props.past_research}
+						</pre>
 					</div>
 				</div>
 			</div>

@@ -274,10 +274,10 @@ export function createStudent(user_id, first_name, last_name, major, year, gpa, 
         })
 }
 
-export function updateStudent(student_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id) {
+export function updateStudent(student_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id) {
     console.log('Updating student');
     let _method = 'PUT';
-    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id})
+    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id})
         .then(response => {
             console.log(response.data.message);
             return response.data.result;

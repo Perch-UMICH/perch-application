@@ -20,6 +20,16 @@
 	opacity: 0.2;
 }
 
+#resetPassword {
+	top: 15%;
+	height: 450px;
+}
+
+#resetEmail {
+	top: 25%;
+	height: 270px;
+}
+
 #createModal {
 	display: none;
 	top: 15%;

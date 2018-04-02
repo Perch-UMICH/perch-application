@@ -8,6 +8,7 @@ class AcademicsTab extends Component {
 		this.state = {
 			id: window.location.pathname.split( '/' )[2],
 		}
+
 	}
 
 	render() {
@@ -15,7 +16,7 @@ class AcademicsTab extends Component {
 			<div className='tab-container'>
 				<div className='tab-header tab academic-tab-header'>school
 					<a href='/update-notable-classes' id="editImageText" className="null-link-style" >
-					{ getCurrentUserId() == this.state.id && 
+					{ getCurrentUserId() === this.state.id && 
 						<i className="material-icons interest-editor edit-icon" style={{float: 'right'}} >create</i>
 					}
 					</a>
@@ -23,7 +24,7 @@ class AcademicsTab extends Component {
 				<div className='academics-tab left-align'>
 					<div>
 						<span className='academic-label'>GPA: </span>
-						<span className='academic-info'>{this.props.GPA}</span>
+						<span className='academic-info'>{this.props.gpa}</span>
 					</div>
 					<div>
 						<span className='academic-label'>Year: </span>
@@ -33,9 +34,11 @@ class AcademicsTab extends Component {
 						<span className='academic-label'>Major: </span>
 						<span className='academic-info'>{this.props.major}</span>
 					</div>
-					<ul className='academic-label'>Notable Classes: 
-						{this.props.classes.map((c) => <li className='academic-info'>{c}</li>)}
-					</ul>
+					<div className='classes-wrapper'>
+						<span className='academic-label'>Notable Classes: </span>
+						<span className='academic-info'><br/>
+						<pre>{this.props.classes}</pre></span>
+					</div>
 				</div>
 			</div>
 		);
