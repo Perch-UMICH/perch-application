@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Login.css';
 import {isLoggedIn, loginUser, getCurrentUserId} from '../helper.js';
-import alertify from 'alertify.js'
+import alertify from 'alertify.js';
 
 class Login extends Component {
 

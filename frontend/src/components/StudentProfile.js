@@ -36,7 +36,7 @@ class StudentProfile extends Component {
 		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
 		getStudentSkills(this.state.s_id).then(r => this.setState({skills: r}))
 	}
-	
+
 	// Handles data for page
 	generalHandler() {
 			let id = this.retrieveSlug();
@@ -60,7 +60,7 @@ class StudentProfile extends Component {
 
 	// Retrives slug from url
 	retrieveSlug() {
-		return window.location.pathname.split( '/' )[2]
+		return window.location.pathname.split( '/' )[2];
 	}
 
 	// Set's student ID into state for future use

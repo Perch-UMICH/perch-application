@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
 import $ from 'jquery';
+import {getStudent, getStudentFromUser, getCurrentStudentId, getCurrentUserId} from '../helper.js';
 
 class ResetEmailModal extends Component {
 	constructor(props) {
@@ -18,7 +19,9 @@ class ResetEmailModal extends Component {
 
 	resetEmail(event) {
 		this.onClick();
-		// reset email?
+		if (this.props.callbackEmail) {
+			this.props.callbackEmail($('#email').val());
+		}
 	}
 
 	render() {
@@ -28,8 +31,8 @@ class ResetEmailModal extends Component {
 				<div id="resetEmail" class="modal modal-fixed-footer display-modal">
 			 		<div class="modal-content">
 			 			<h4> Reset Email </h4>
-			 			<p> Enter the email you would like to update to below, then click save. </p>
-		  				<div className="input-field">
+			 			<p className="above-input"> Enter the email you would like to update to below, then click save. </p>
+		  				<div className="input-field narrow">
 			                <input id="email" type="email" required />
 			                <label htmlFor="email">New Email</label>
 			            </div>

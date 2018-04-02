@@ -5,7 +5,7 @@ import Indicator from './Indicator';
 import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import ContactTab from './ContactTab'
-import {getLab, isLoggedIn} from '../helper.js'
+import {getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import './ProfPage.css'
 
@@ -58,12 +58,24 @@ class ProfPage extends Component {
 				{label: 'phone', value: '815-262-6642'},
 				{label: 'email', value: 'bearb@umich.edu'},
 				{label: 'location', value: 'Central Campus'},
-			]
+			],
+			user_id: getCurrentUserId(),
 		};
 	}
 
 	componentDidMount() {
-		getLab(1).then((resp) => {
+		// check if student or faculty for viewing positions
+		getUser(this.state.user_id).then(resp => {
+			console.log("Merp");
+			console.log(resp);
+			if (resp.result.is_student) {
+				this.setState({user_type: "student"});
+			} else {
+				this.setState({user_type: "faculty"});
+			}
+		});
+		//getFacultyFromUser(this.state.user_id)
+		getLab(window.location.pathname.split('/')[2]).then((resp) => {
             this.setState(
             	{
             		lab_name: resp.data.name,
@@ -75,18 +87,9 @@ class ProfPage extends Component {
             		skills: resp.skills,
             	}
             );
-
+            console.log("BLAH");
             console.log(resp);
         });
-	}
-
-	handleUserTypeCheck(event) { // JUST FOR TESTING FRONT-END, TO BE DEPRECATED
-		if (event.target.value === 'faculty') {
-			this.setState({user_type: 'faculty'});
-		}
-		else {
-			this.setState({user_type: 'student'});
-		}
 	}
 
 	render() {
@@ -105,13 +108,6 @@ class ProfPage extends Component {
 							{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
 						</div>
 					</div>
-					{1>0 && <div className="row center-align">  {/* JUST FOR FRONT-END TESTING, TO BE DEPRECATED */}
-										<p className="fe-test">View As:</p>
-										<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
-										<label htmlFor="faculty">Faculty</label>
-										<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
-										<label htmlFor="student">Student</label>
-									</div>}
 					<div className='row flex ddd-bg'>
 						<PositionsTab header='open positions' positions={this.state.positions} user_type={this.state.user_type} apply_dest={apply_dest} />
 					</div>
@@ -120,8 +116,8 @@ class ProfPage extends Component {
 						<div className='hide-on-small-only' style={{width: '30%'}}><ContactTab header='contact' contact_info={this.state.contact_info} /></div>
 					</div>
 					<div className='row flex'>
-						<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
-						<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
+						<div className='profile-tab shadow' style={{width: '50%'}}><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
+						<div className='profile-tab shadow' style={{width: '50%'}}><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
 					</div>
 					<div className='row ddd-bg hide-on-med-and-up'>
 						<div className='profile-tab'><ContactTab header='contact info' contact_info={this.state.contact_info} /></div>

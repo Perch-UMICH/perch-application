@@ -7,7 +7,7 @@ class BioTab extends Component {
 		super(props);
 		this.state = {
 			dest: (this.props.user_type === 'faculty') ? '/update-lab-description' : '/update-student-bio',
-			id: window.location.pathname.split( '/' )[2],
+			id: window.location.pathname.split('/')[2],
 		};
 	}
 
@@ -16,7 +16,7 @@ class BioTab extends Component {
 			<div className='tab-container shadow'>
 				<div className='tab-header'>
 					{this.props.header.toUpperCase()}
-					{getCurrentUserId() == this.state.id && 
+					{getCurrentUserId() === this.state.id && 
 						<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
 					}
 				</div>
