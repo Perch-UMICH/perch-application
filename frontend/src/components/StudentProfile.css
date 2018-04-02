@@ -172,4 +172,10 @@
 	padding: 20px;
 	letter-spacing: 2px;
 	border-bottom: 1px solid #eee;
+	transition: .2s ease;
+}
+
+.student-profile-linker:hover {
+	background-color: #0277BD;
+	transition: .2s ease;
 }
