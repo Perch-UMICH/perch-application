@@ -454,7 +454,7 @@ class LabSearch extends Component {
 
 				</div>
 				<div className='row'>
-					{/*<LabList labs={this.state.filtered_labs} />	*/}
+					<LabList labs={this.state.filtered_labs} />	
 				</div>
 			</div>
 		);
