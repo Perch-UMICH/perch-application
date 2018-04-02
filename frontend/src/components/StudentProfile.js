@@ -88,18 +88,21 @@ class StudentProfile extends Component {
 	 				<div className='ad'>AD</div>
 	 			</div>
 				<div className='container shift-down' style={{width: '800px'}}>
-						<div className='left-align' style={{height: '230px', width: '800px', marginBottom: '0', backgroundColor: '#ddd', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
+						<div id='student-main-card' className='left-align' style={{height: '230px', width: '800px', marginBottom: '0', backgroundColor: '#ddd', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
 							<img src={this.state.img_src} style={{width: '230px'}} />
+							{
+								<a href='/update-student-bio'><i className="material-icons interest-editor">create</i></a>
+							}
 							<div style={{position: 'absolute', top: '30px', left: '250px', color: 'grey', letterSpacing: '0px'}}>
-								<div className='flow-text' >I'm <b>{this.state.name}</b></div>
-
-								{/*<div style={{paddingTop: '20px'}}>{this.state.bio}</div>*/}
-								<div>Interested in Fluid Dynamics</div>
+								<div className='flow-text' style={{borderBottom: '1px solid #bbb', display: 'inline-block', paddingBottom: '10px'}}>I'm <b>{this.state.name}</b></div>
+								
+								<div style={{paddingTop: '20px'}}>{this.state.bio}</div>
+								{/*<div>Interested in Fluid Dynamics</div>
 								<hr />
 								<div>GPA: {this.state.gpa}</div>
 								<div>{this.state.major} Major</div>
 								<div>{this.state.year}</div>
-								<div>{this.state.email}</div>
+								<div>{this.state.email}</div>*/}
 							</div>
 						</div>
 						<div className='center-align' style={{height: '50px', color: 'white', backgroundColor: 'rgb(41, 182, 246)', width: '800px', marginBottom: '20px', lineHeight: '50px', border: '1px solid #ddd', borderTop: 'none'}}>
@@ -111,7 +114,7 @@ class StudentProfile extends Component {
 
 					{<div className=''>
 
-						{
+						{/*
 							<div>
 								<div className='' style={{backgroundColor: '#ddd', width: '800px', marginBottom: '20px'}} > 
 									<div style={{display: 'flex'}}>
@@ -121,7 +124,7 @@ class StudentProfile extends Component {
 								</div>
 
 							</div>
-						}
+						*/}
 
 						
 						

@@ -45,6 +45,14 @@
 	transition: .2s ease;
 }
 
+#student-main-card:hover .interest-editor{
+	opacity: 1 !important;
+	transition: .2s ease;
+	color: rgb(41, 182, 246);
+}
+
+
+
 .tab-container {
 	width: 100%;
 }
