@@ -31,64 +31,50 @@ class StudentProfile extends Component {
 		}
 	}
 
+	// Handles retrieving skilsl and tags
 	retrieveTags() {
-		// getStudentTags.then(r => this.setState({interests: r.result.tags}))
-		
-		// alert(this.state.s_id)
-		// getStudentTags(this.state.s_id).then(r => console.log(r))
 		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
 		getStudentSkills(this.state.s_id).then(r => this.setState({skills: r}))
 	}
+	
+	// Handles data for page
+	generalHandler() {
+			let id = this.retrieveSlug();
+			getStudentFromUser(id).then((resp) => {
+	            this.setState(
+	            	{
+	            		name: `${resp.result.first_name} ${resp.result.last_name}`,
+	            		GPA: resp.result.gpa,
+	            		major: resp.result.major,
+	            		year: resp.result.year,
+	            		bio: resp.result.bio,
+	            		email: resp.result.email,
+	            		classes: resp.result.classes,
+	            		past_research: resp.result.past_research,
+	            	}
+	            );
+	            
+	        }).then(this.retrieveTags.bind(this));
+	}
 
+	// Retrives slug from url
+	retrieveSlug() {
+		return window.location.pathname.split( '/' )[2]
+	}
+
+	// Set's student ID into state for future use
+	setStudentId(r) {
+		this.setState({s_id: r.result.id})
+		return this;
+	}
+
+	// Beginning point for data handling 
 	componentDidMount() {
-		console.log("CURRENT STATE");
-		console.log(this.state);
-		// $( document ).ready(()=> {
-		// 	var s_img = document.getElementById('student-img');
-		// 	var height = window.getComputedStyle(s_img, null).height;
-  //   		var overlay = document.getElementById('overlay');
-		// 	var s_name = document.getElementById('student-name');
-			
-		// 	s_name.style.height = height;
-		// 	overlay.style.height = height;
-		// 	overlay.style.width = height;
-
-		// 	this.setState();
-		// });
-		getUser(window.location.pathname.split( '/' )[2]).then(resp => {
-			if (false) { // if not a student
-				window.location = '/';
-			} else {
-				getStudentFromUser(window.location.pathname.split( '/' )[2]).then( r => {
-					this.setState({s_id: r.result.id})
-				});
-				if (isLoggedIn()) {
-					let id = window.location.pathname.split( '/' )[2];
-					getStudentFromUser(id).then((resp) => {
-						console.log("GET STUDENT RESP");
-						console.log(resp);
-			            this.setState(
-			            	{
-			            		name: `${resp.result.first_name} ${resp.result.last_name}`,
-			            		gpa: resp.result.gpa,
-			            		major: resp.result.major,
-			            		year: resp.result.year,
-			            		bio: resp.result.bio,
-			            		skills: resp.skills,
-			            		email: resp.result.email,
-			            		classes: resp.result.classes,
-			            		past_research: resp.result.past_research,
-			            	}
-			            );
-			            
-			        }).then(this.retrieveTags.bind(this));
-				}
-			}
-		});		
+		getStudentFromUser(this.retrieveSlug()).then(this.setStudentId.bind(this)).then(this.generalHandler.bind(this))
 	}
 
 	render() {
-		if (true) {
+		if (isLoggedIn()) {
 	 	return (
 			<div className='container shift-down'>
 				{<div>

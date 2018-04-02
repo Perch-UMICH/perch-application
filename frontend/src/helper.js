@@ -78,8 +78,17 @@ export function loginUser(email, password) {
         .then(response => {
             // cookie.set('perch_api_key', response.data.result.token, {path: "/"});
             // cookie.set('perch_user_id', response.data.result.id, {path: "/"});
-            localStorage.setItem('token', response.data.result[1].token);
+            localStorage.setItem('token', response.data.result[2].token);
             localStorage.setItem('user_id', response.data.result[0].id);
+            if (response.data.result[0].is_student) {
+                // Save student id
+                localStorage.setItem('student_id', response.data.result[1].id);
+                localStorage.setItem('faculty_id', null);
+            }
+            else if (response.data.result[0].is_faculty) {
+                localStorage.setItem('student_id', null);
+                localStorage.setItem('faculty_id', response.data.result[1].id);
+            }
             console.log('Successfully logged in');
             return response.data
         })
@@ -261,7 +270,7 @@ export function getStudent(student_id) {
         })
 }
 
-export function createStudent(user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id) {
+export function createStudent(user_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id) {
     console.log('Creating student');
     return axios.post('api/students', {user_id, first_name, last_name, major, year, gpa, email, bio, past_research, faculty_endorsement_id})
         .then(response => {
@@ -1032,4 +1041,8 @@ export function getSearchData(student_id) {
 
 export function getCurrentUserId() {
     return localStorage.getItem('user_id');
+}
+
+export function getCurrentStudentId() {
+    return localStorage.getItem('student_id');
 }

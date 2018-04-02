@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
 import $ from 'jquery';
-import {updateStudent, getStudent, getCurrentUserId, getStudentFromUser} from '../helper.js';
+import {updateStudent, getStudent, getCurrentUserId, getCurrentStudentId, getStudentFromUser} from '../helper.js';
 import './NotableClasses.css';
 
 class NotableClasses extends Component {
@@ -12,12 +12,12 @@ class NotableClasses extends Component {
 			gpa: '',
 			year: '',
 			major: '',
+			student_id: getCurrentStudentId(),
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
 
 	componentDidMount() {
-		console.log(this.state);
 		var id = getCurrentUserId();
 		getStudentFromUser(id).then( r => {
 			this.setState({student_id: r.result.id, user_id: id});
@@ -34,7 +34,6 @@ class NotableClasses extends Component {
 	            console.log(resp);
 	        });
 		});
-		document.body.addEventListener('click', this.yearHandler);
 	}
 
 	updateClasses(event) {
@@ -55,6 +54,10 @@ class NotableClasses extends Component {
 		this.setState({ major: event.target.value });
 	}
 
+	returnToProfile() {
+		window.location = `/student-profile/${getCurrentUserId()}`;
+	}
+
 	saveAndContinue(event) {
 		console.log("SELECTED: state:");
 		console.log(this.state);
@@ -64,10 +67,8 @@ class NotableClasses extends Component {
 			year = temp_year;
 		}
 		updateStudent(this.state.student_id, null, null, this.state.major, year, this.state.gpa, null, null, null, this.state.classes, null).then(resp => {
-			console.log("resp:");
 			console.log(resp);
-			window.location = '/student-profile/' + this.state.user_id;
-		});
+		}).then(this.returnToProfile);
 	}
 
 	render() {

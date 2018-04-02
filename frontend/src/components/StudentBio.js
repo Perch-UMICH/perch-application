@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
-import {getStudent, getStudentFromUser, getCurrentUserId, updateStudent} from '../helper.js';
+import {getStudent, getStudentFromUser, getCurrentStudentId, getCurrentUserId, updateStudent} from '../helper.js';
 import './PastResearch.css';
 
 class StudentBio extends Component {
@@ -9,23 +9,13 @@ class StudentBio extends Component {
 		this.state = {
 			placeholder: "Short description of background, experience, and interests",
 			bio: '',
-			student_id: 1,
+			student_id: getCurrentStudentId(),
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
 
 	componentDidMount() {
-		getStudentFromUser(getCurrentUserId()).then( r => this.setState({student_id: r.result.id, bio: r.result.bio}))
-		// getStudent(this.state.student_id).then((resp) => {
-		// 	if (resp.data.bio) {
-		// 		this.setState(
-		// 			{
-		// 				bio: resp.data.bio,
-		// 			}
-		// 		);
-		// 	}
-  //           console.log(resp);
-  //       });
+		getStudentFromUser(this.state.student_id).then( r => this.setState({bio: r.result.bio}))
 	}
 
 	saveAndContinue(event) {
