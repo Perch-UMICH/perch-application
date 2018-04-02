@@ -6,7 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import $ from 'jquery'
 import './StudentProfile.css';
@@ -17,39 +17,7 @@ class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: '',
-			major: '',
-			year: '',
-			bio: "",
-			GPA: '3.90',
 			img_src: '/img/meha.jpg',
-			curr_lab: 'The Infant Cognition Project',
-			skills: [
-				"plating",
-				"chromatography",
-				"R",
-				"C++",
-				"MatLab",
-				"Javascript",
-				"React.js",
-				"Node.js",
-				"Meteor.js",
-				"Kali Linux",
-				"Pen Testing",
-			],
-			interests: [
-				"Computer Security",
-				"Machine Learning",
-				"Software Development",
-				"Medicine",
-				"Pen Testing",
-				"Web Development",
-			],
-			classes: [
-				"EECS 281",
-				"EECS 370",
-				"EECS 380",
-			],
 			endorsements: [
 				{
 					name: 'Dr. Ed Einstein',
@@ -68,7 +36,7 @@ class StudentProfile extends Component {
 		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
 		getStudentSkills(this.state.s_id).then(r => this.setState({skills: r}))
 	}
-
+	
 	// Handles data for page
 	generalHandler() {
 			let id = this.retrieveSlug();
@@ -82,6 +50,7 @@ class StudentProfile extends Component {
 	            		bio: resp.result.bio,
 	            		email: resp.result.email,
 	            		classes: resp.result.classes,
+	            		past_research: resp.result.past_research,
 	            	}
 	            );
 	            
@@ -115,8 +84,8 @@ class StudentProfile extends Component {
 							<div className='flow-text'>I'm <b>{this.state.name}</b></div>
 							<div>Interested in Fluid Dynamics</div>
 							<hr />
-							<div>GPA: {this.state.GPA}</div>
-							<div>{this.state.major} major</div>
+							<div>GPA: {this.state.gpa}</div>
+							<div>{this.state.major} Major</div>
 							<div>{this.state.year}</div>
 							<div>{this.state.email}</div>
 						</div>
@@ -180,8 +149,8 @@ class StudentProfile extends Component {
 						<div className='profile-tab shadow' style={{width: '50%'}}><SkillsTab user_type="student" skills={this.state.skills}/></div>
 					</div>
 					<div className='row flex'>
-						<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} GPA={this.state.GPA}/></div>
-						<div className='profile-tab shadow' style={{width: '50%'}}><PastResearchTab /></div>
+						<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/></div>
+						<div className='profile-tab shadow' style={{width: '50%'}}><PastResearchTab past_research={this.state.past_research}/></div>
 					</div>
 				</div>}
 			</div>

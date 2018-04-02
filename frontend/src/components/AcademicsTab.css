@@ -24,3 +24,8 @@
 	text-transform: uppercase;
 	height: 30px;
 }
+
+.classes-wrapper {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
