@@ -63,16 +63,16 @@ class StudentProfile extends Component {
 		}
 	}
 
+	// Handles retrieving skilsl and tags
 	retrieveTags() {
 		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
 		getStudentSkills(this.state.s_id).then(r => this.setState({skills: r}))
 	}
 
+	// Handles data for page
 	generalHandler() {
-		if (isLoggedIn()) {
-			let id = window.location.pathname.split( '/' )[2];
+			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
-				console.log(resp);
 	            this.setState(
 	            	{
 	            		name: `${resp.result.first_name} ${resp.result.last_name}`,
@@ -80,25 +80,31 @@ class StudentProfile extends Component {
 	            		major: resp.result.major,
 	            		year: resp.result.year,
 	            		bio: resp.result.bio,
-	            		// skills: resp.skills,
 	            		email: resp.result.email,
 	            	}
 	            );
 	            
 	        }).then(this.retrieveTags.bind(this));
-		}
 	}
 
+	// Retrives slug from url
+	retrieveSlug() {
+		return window.location.pathname.split( '/' )[2]
+	}
+
+	// Set's student ID into state for future use
+	setStudentId(r) {
+		this.setState({s_id: r.result.id})
+		return this;
+	}
+
+	// Beginning point for data handling 
 	componentDidMount() {
-
-		getStudentFromUser(window.location.pathname.split( '/' )[2]).then( r => this.setState({s_id: r.result.id})).then(this.generalHandler.bind(this))
-
-		
-		
+		getStudentFromUser(this.retrieveSlug()).then(this.setStudentId.bind(this)).then(this.generalHandler.bind(this))
 	}
 
 	render() {
-		if (true) {
+		if (isLoggedIn()) {
 	 	return (
 			<div className='container shift-down'>
 				{<div>
