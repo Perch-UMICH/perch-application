@@ -5,6 +5,8 @@ class BasicButton extends Component {
 	constructor(props) {
 		super(props);
 		this.onClick = this.onClick.bind(this);
+		if (this.props.target)
+			this.target = '_blank'
 	}
 
 	onClick(event) {
@@ -17,13 +19,13 @@ class BasicButton extends Component {
 		return (
 			<div id="BasicBtnWrap">
 				{this.props.color === 'light' ? 
-					<a onClick={this.onClick} href={this.props.dest}>
+					<a onClick={this.onClick} href={this.props.dest} target={this.target}>
 						<button className="btn waves-effect waves-blue waves-light basic-btn-light" name="action">
 							{this.props.msg}
 						</button>
 					</a> 
 					: 
-					<a onClick={this.onClick} href={this.props.dest}>
+					<a onClick={this.onClick} href={this.props.dest} target={this.target}>
 						<button className="btn waves-effect waves-blue waves-light basic-btn" name="action">
 							{this.props.msg}
 						</button>
