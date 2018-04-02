@@ -14,7 +14,7 @@ class AcademicsTab extends Component {
 	render() {
 		return (
 			<div className='tab-container'>
-				<div className='tab-header tab academic-tab-header'>school
+				<div className='mobile-header tab academic-tab-header'>school
 					<a href='/update-notable-classes' id="editImageText" className="null-link-style" >
 					{ getCurrentUserId() === this.state.id && 
 						<i className="material-icons interest-editor edit-icon" style={{float: 'right'}} >create</i>
@@ -36,8 +36,8 @@ class AcademicsTab extends Component {
 					</div>
 					<div className='classes-wrapper'>
 						<span className='academic-label'>Notable Classes: </span>
-						<span className='academic-info'><br/>
-						<pre>{this.props.classes}</pre></span>
+						<span className='academic-info'>
+						<pre style={{marginTop: '5px'}}>{this.props.classes}</pre></span>
 					</div>
 				</div>
 			</div>
