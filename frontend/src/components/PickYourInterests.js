@@ -3,7 +3,7 @@ import { parse } from 'query-string';
 import SquareButton from './SquareButton';
 import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
-import {getStudent, getStudentTags, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
+import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -23,6 +23,7 @@ class PickYourInterests extends Component {
 			},
 			user_id: getCurrentUserId(),
 			bubble_array: [],
+			s_id: getCurrentStudentId(),
 		};
 		
 		this.updateBubbleChoice = this.updateBubbleChoice.bind(this);
@@ -43,8 +44,7 @@ class PickYourInterests extends Component {
 		var btn_label = 'back';
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
-		getStudentFromUser(this.state.user_id).then( r => this.setState({s_id: r.result.id}))//.then(this.getInterests.bind(this))
-
+		
 		if (url_arr[1] === "update-interests") {
 			if (user_type === "faculty") {
 	            this.setState({ 
@@ -59,7 +59,7 @@ class PickYourInterests extends Component {
 			} 
 			else {
 			    this.setState({ 
-					dest: 'student-profile',
+					dest: `student-profile/${getCurrentUserId()}`,
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Your Interests",
 		      			placeholder_txt: "field of interest",
@@ -83,7 +83,7 @@ class PickYourInterests extends Component {
 			} 
 			else {
                 this.setState({ 
-					dest: 'student-profile',
+					dest: `student-profile/${getCurrentUserId()}`,
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Your Lab Skills",
 						placeholder_txt: "Skills you are competent in",
@@ -93,6 +93,10 @@ class PickYourInterests extends Component {
                 });
 			}
 		}
+	}
+
+	returnToProfile() {
+		window.location = this.state.dest;
 	}
 
 	saveAndContinue(event) {
@@ -106,10 +110,12 @@ class PickYourInterests extends Component {
 			if (this.state.display_info.req_type === 'skills') {
 				addSkillsToLab(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
+					this.returnToProfile()
 				});
 			} else {
 				addTagsToLab(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
+					this.returnToProfile()
 				});
 			}
 		} else {
@@ -117,17 +123,18 @@ class PickYourInterests extends Component {
 				// alert('skillz')
 				syncSkillsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
+					this.returnToProfile()
 				});
 			} else {
 				// alert('interestz')
-				alert(this.state.display_info.req_type)
+				// alert(this.state.display_info.req_type)
 				syncTagsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
+					this.returnToProfile()
 					// getStudentTags(this.state.s_id).then(r=>console.log(r))
 				});
 			}
 		}
-		//window.location = this.state.dest;
 	}
 
 	updateBubbleChoice(choices) {

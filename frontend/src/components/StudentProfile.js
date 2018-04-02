@@ -64,30 +64,11 @@ class StudentProfile extends Component {
 	}
 
 	retrieveTags() {
-		// getStudentTags.then(r => this.setState({interests: r.result.tags}))
-		
-		// alert(this.state.s_id)
-		// getStudentTags(this.state.s_id).then(r => console.log(r))
 		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
 		getStudentSkills(this.state.s_id).then(r => this.setState({skills: r}))
 	}
 
-	componentDidMount() {
-		// $( document ).ready(()=> {
-		// 	var s_img = document.getElementById('student-img');
-		// 	var height = window.getComputedStyle(s_img, null).height;
-  //   		var overlay = document.getElementById('overlay');
-		// 	var s_name = document.getElementById('student-name');
-			
-		// 	s_name.style.height = height;
-		// 	overlay.style.height = height;
-		// 	overlay.style.width = height;
-
-		// 	this.setState();
-		// });
-
-		getStudentFromUser(window.location.pathname.split( '/' )[2]).then( r => this.setState({s_id: r.result.id}))
-
+	generalHandler() {
 		if (isLoggedIn()) {
 			let id = window.location.pathname.split( '/' )[2];
 			getStudentFromUser(id).then((resp) => {
@@ -99,13 +80,20 @@ class StudentProfile extends Component {
 	            		major: resp.result.major,
 	            		year: resp.result.year,
 	            		bio: resp.result.bio,
-	            		skills: resp.skills,
+	            		// skills: resp.skills,
 	            		email: resp.result.email,
 	            	}
 	            );
 	            
 	        }).then(this.retrieveTags.bind(this));
 		}
+	}
+
+	componentDidMount() {
+
+		getStudentFromUser(window.location.pathname.split( '/' )[2]).then( r => this.setState({s_id: r.result.id})).then(this.generalHandler.bind(this))
+
+		
 		
 	}
 
