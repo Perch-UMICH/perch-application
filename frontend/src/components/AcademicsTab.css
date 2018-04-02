@@ -22,5 +22,9 @@
 
 .academic-tab-header {
 	text-transform: uppercase;
-	height: 30px;
+	/*height: 30px;*/
+}
+
+.classes-wrapper {
+	margin-top: 5px;
 }

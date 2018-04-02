@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 
 class SquareButton extends Component {
 	constructor(props) {
-		super(props);
-			this.onClick = this.onClick.bind(this);
-		}
+	super(props);
+		this.onClick = this.onClick.bind(this);
+	}
 
-		onClick(event) {
-			if (this.props.superClick) {
-				this.props.superClick();
-			}
+	onClick(event) {
+		if (this.props.superClick) {
+			this.props.superClick();
 		}
+	}
 
 	render() {
 		return(

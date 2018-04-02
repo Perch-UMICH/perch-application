@@ -14,6 +14,7 @@ class LabList extends Component {
 			filler.innerHTML = '';
 		}
 	}
+
 	render() {
 		return (
 		<div className='col s12'>
