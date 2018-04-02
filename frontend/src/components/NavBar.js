@@ -39,7 +39,12 @@ class NavBar extends Component {
 		
 			      </ul>
 			        <ul className="left hide-on-small-only">
-			          <a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/Updated_Logo.png" /><div className='logo-text'>PERCH</div></a>
+			        {!isLoggedIn() &&
+			          	<a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/Updated_Logo.png" /><div className='logo-text'>PERCH</div></a>
+			        }
+			        {isLoggedIn() &&
+			          	<a className='no-hover' href={`/student-profile/${getCurrentUserId()}`}><img className="nav-logo" alt="logo" src="/assets/Updated_Logo.png" /><div className='logo-text'>PERCH</div></a>
+			        }
 			        </ul>
 
 			        <ul className="mobile-logo hide-on-med-and-up">
