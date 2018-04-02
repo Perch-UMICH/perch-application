@@ -77,18 +77,18 @@ class StudentProfile extends Component {
 	render() {
 		if (isLoggedIn()) {
 	 	return (
-	 		<div className='center-align' style={{minWidth: '1300px', position: 'relative', overflowY: 'hidden'}}>
-	 			<div className='shadow shift-down' style={{position: 'absolute', left: '15px', backgroundColor: '#ddd', minHeight: '1000px', width: '220px',}}>
+	 		<div style={{width: '1200px', position: 'relative', margin: 'auto auto'}}>
+	 			<div className='shadow' style={{position: 'absolute', left: '15px', backgroundColor: '#ddd', width: '220px',}}>
 	 				<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/>
 	 				<PastResearchTab past_research={this.state.past_research}/>
 	 			</div>
-	 			<div className='shadow shift-down' style={{position: 'absolute', right: '15px', backgroundColor: '#ddd', minHeight: '1000px', width: '220px',}}>
+	 			<div className='shadow center-align' style={{position: 'absolute', right: '15px', backgroundColor: '#ddd', width: '220px',}}>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
-	 				<div className='ad'>AD</div>
+	 				
 	 			</div>
-				<div className='container shift-down' style={{width: '800px'}}>
-						<div id='student-main-card' className='left-align' style={{height: '230px', width: '800px', marginBottom: '0', backgroundColor: '#ddd', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
+				<div className='container shift-down' style={{width: '700px'}}>
+						<div id='student-main-card' className='left-align' style={{height: '230px', width: '700px', marginBottom: '0', backgroundColor: '#ddd', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
 							<img src={this.state.img_src} style={{width: '230px'}} />
 							{
 								<a href='/update-student-bio'><i className="material-icons interest-editor">create</i></a>
@@ -105,7 +105,7 @@ class StudentProfile extends Component {
 								<div>{this.state.email}</div>*/}
 							</div>
 						</div>
-						<div className='center-align' style={{height: '50px', color: 'white', backgroundColor: 'rgb(41, 182, 246)', width: '800px', marginBottom: '20px', lineHeight: '50px', border: '1px solid #ddd', borderTop: 'none'}}>
+						<div className='center-align' style={{height: '50px', color: 'white', backgroundColor: 'rgb(41, 182, 246)', width: '700px', marginBottom: '20px', lineHeight: '50px', border: '1px solid #ddd', borderTop: 'none'}}>
 							<span>LinkedIn</span>
 							<span style={{marginLeft: '40px'}}>Resume</span>
 							<span style={{marginLeft: '40px'}}>Website</span>
@@ -116,7 +116,7 @@ class StudentProfile extends Component {
 
 						{/*
 							<div>
-								<div className='' style={{backgroundColor: '#ddd', width: '800px', marginBottom: '20px'}} > 
+								<div className='' style={{backgroundColor: '#ddd', width: '700px', marginBottom: '20px'}} > 
 									<div style={{display: 'flex'}}>
 										<div style={{display: 'flex', width: '100%'}}><BioTab header='bio' user_type='student' msg={this.state.bio}/></div>
 						
@@ -128,11 +128,11 @@ class StudentProfile extends Component {
 
 						
 						
-						<div className='flex' style={{width: '800px',  marginBottom: '20px'}}>
+						<div className='flex' style={{width: '700px',  marginBottom: '20px'}}>
 							<div className='profile-tab shadow' style={{width: '450px'}}><InterestsTab tabTitle="INTERESTS" user_type="student" interests={this.state.interests} /></div>
 							<div className='profile-tab shadow' style={{width: '450px'}}><SkillsTab user_type="student" skills={this.state.skills}/></div>
 						</div>
-						{/*<div className='flex' style={{width: '800px', marginBottom: '20px'}}>
+						{/*<div className='flex' style={{width: '700px', marginBottom: '20px'}}>
 							<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/></div>
 							<div className='profile-tab shadow' style={{width: '50%'}}><PastResearchTab past_research={this.state.past_research}/></div>
 						</div>*/}
