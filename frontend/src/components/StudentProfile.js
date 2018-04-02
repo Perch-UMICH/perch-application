@@ -81,14 +81,18 @@ class StudentProfile extends Component {
 	 			<div className='shadow' style={{position: 'absolute', left: '15px', backgroundColor: '#ddd', width: '220px',}}>
 	 				<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/>
 	 				<PastResearchTab past_research={this.state.past_research}/>
+	 				<div className='student-profile-linker'>Linkedin</div>
+	 				<div className='student-profile-linker'>Resume</div>
+	 				<div className='student-profile-linker'>Website</div>
 	 			</div>
 	 			<div className='shadow center-align' style={{position: 'absolute', right: '15px', backgroundColor: '#ddd', width: '220px',}}>
+	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
 	 				
 	 			</div>
 				<div className='container shift-down' style={{width: '700px'}}>
-						<div id='student-main-card' className='left-align' style={{height: '230px', width: '700px', marginBottom: '0', backgroundColor: '#ddd', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
+						<div id='student-main-card' className='left-align shadow' style={{height: '230px', width: '700px', marginBottom: '20px', backgroundColor: '#ddd', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
 							<img src={this.state.img_src} style={{width: '230px'}} />
 							{
 								<a href='/update-student-bio'><i className="material-icons interest-editor">create</i></a>
@@ -105,12 +109,12 @@ class StudentProfile extends Component {
 								<div>{this.state.email}</div>*/}
 							</div>
 						</div>
-						<div className='center-align' style={{height: '50px', color: 'white', backgroundColor: 'rgb(41, 182, 246)', width: '700px', marginBottom: '20px', lineHeight: '50px', border: '1px solid #ddd', borderTop: 'none'}}>
+						{/*<div className='center-align' style={{height: '50px', color: 'white', backgroundColor: 'rgb(41, 182, 246)', width: '700px', marginBottom: '20px', lineHeight: '50px', border: '1px solid #ddd', borderTop: 'none'}}>
 							<span>LinkedIn</span>
 							<span style={{marginLeft: '40px'}}>Resume</span>
 							<span style={{marginLeft: '40px'}}>Website</span>
 							<span style={{marginLeft: '40px'}}>Portfolio</span>
-						</div>
+						</div>*/}
 
 					{<div className=''>
 
