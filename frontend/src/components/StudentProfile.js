@@ -60,7 +60,7 @@ class StudentProfile extends Component {
 
 	// Retrives slug from url
 	retrieveSlug() {
-		return window.location.pathname.split( '/' )[2]
+		return window.location.pathname.split( '/' )[2];
 	}
 
 	// Set's student ID into state for future use
