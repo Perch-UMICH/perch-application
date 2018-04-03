@@ -94,7 +94,7 @@ class StudentProfile extends Component {
 				<div className='container shift-down' id='center-column'>
 						<div id='student-main-card' className='left-align shadow'>
 							<img id='student-image' src={this.state.img_src} alt='' />
-							{
+							{getCurrentUserId() === this.retrieveSlug() && 
 								<a href='/update-student-bio'><i className="material-icons interest-editor">create</i></a>
 							}
 							<div id='bio-card'>
