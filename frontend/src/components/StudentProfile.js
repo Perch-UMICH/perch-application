@@ -85,7 +85,7 @@ class StudentProfile extends Component {
 	 				<div className='student-profile-linker'>Resume</div>
 	 				<div className='student-profile-linker'>Website</div>
 	 			</div>
-	 			<div className='shadow center-align'>
+	 			<div id='right-column' className='shadow center-align'>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
@@ -131,9 +131,9 @@ class StudentProfile extends Component {
 
 						
 						
-						<div id='tag-boxes' className='flex' /*style={{width: '700px',  marginBottom: '20px'}}*/>
-							<div className='profile-tab shadow' /*style={{width: '450px'}}*/><InterestsTab tabTitle="INTERESTS" user_type="student" interests={this.state.interests} /></div>
-							<div className='profile-tab shadow' /*style={{width: '450px'}}*/><SkillsTab user_type="student" skills={this.state.skills}/></div>
+						<div id='tag-boxes' className='flex'>
+							<div className='profile-tab shadow'><InterestsTab tabTitle="INTERESTS" user_type="student" interests={this.state.interests} /></div>
+							<div className='profile-tab shadow'><SkillsTab user_type="student" skills={this.state.skills}/></div>
 						</div>
 						{/*<div className='flex' style={{width: '700px', marginBottom: '20px'}}>
 							<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/></div>

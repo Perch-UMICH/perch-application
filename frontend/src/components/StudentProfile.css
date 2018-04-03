@@ -205,7 +205,7 @@
 	width: 220px;
 }
 
-.center-align {
+#right-column {
 	position: absolute;
 	right: 15px;
 	background-color: #ddd;
