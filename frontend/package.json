@@ -5,6 +5,7 @@
   "dependencies": {
     "alertify": "^0.3.0",
     "alertify.js": "^1.0.12",
+    "alertifyjs": "^1.11.1",
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",

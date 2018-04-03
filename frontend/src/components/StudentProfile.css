@@ -45,6 +45,16 @@
 	transition: .2s ease;
 }
 
+#student-main-card {
+	height: 230px;
+	width: 700px;
+	margin-bottom: 20px;
+	background-color: #ddd;
+	position: relative;
+	border: 1px solid #ddd;
+	border-bottom: none;
+}
+
 #student-main-card:hover .interest-editor{
 	opacity: 1 !important;
 	transition: .2s ease;
@@ -178,4 +188,62 @@
 .student-profile-linker:hover {
 	background-color: #0277BD;
 	transition: .2s ease;
+}
+
+/* 2018.04.03 */
+
+.content-body {
+	width: 1200px;
+	position: relative;
+	margin: auto auto;
+}
+
+#left-column {
+	position: absolute;
+	left: 15px;
+	background-color: #ddd;
+	width: 220px;
+}
+
+.center-align {
+	position: absolute;
+	right: 15px;
+	background-color: #ddd;
+	width: 220px;
+}
+
+#center-column {
+	width: 700px;
+	align-self: center;
+}
+
+#student-image {
+	width: 230px;
+}
+
+#bio-card {
+	position: absolute;
+	top: 30px;
+	left: 250px;
+	color: #808080;
+	letter-spacing: 0px;
+}
+
+#bio-header {
+	border-bottom: 1px solid #bbb;
+	display: inline-block;
+	padding-bottom: 10px;
+}
+
+#bio {
+	padding-top: 20px;
+}
+
+#tag-boxes {
+	width: 700px;
+	margin-bottom: 20px;
+}
+
+.profile-tab {
+	width: 50%;
 }

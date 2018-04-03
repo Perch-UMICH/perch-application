@@ -77,30 +77,29 @@ class StudentProfile extends Component {
 	render() {
 		if (isLoggedIn()) {
 	 	return (
-	 		<div style={{width: '1200px', position: 'relative', margin: 'auto auto'}}>
-	 			<div className='shadow' style={{position: 'absolute', left: '15px', backgroundColor: '#ddd', width: '220px',}}>
+	 		<div className='content-body'>
+	 			<div className='shadow' id='left-column'>
 	 				<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/>
 	 				<PastResearchTab past_research={this.state.past_research}/>
 	 				<div className='student-profile-linker'>Linkedin</div>
 	 				<div className='student-profile-linker'>Resume</div>
 	 				<div className='student-profile-linker'>Website</div>
 	 			</div>
-	 			<div className='shadow center-align' style={{position: 'absolute', right: '15px', backgroundColor: '#ddd', width: '220px',}}>
+	 			<div className='shadow center-align'>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
 	 				
 	 			</div>
-				<div className='container shift-down' style={{width: '700px'}}>
-						<div id='student-main-card' className='left-align shadow' style={{height: '230px', width: '700px', marginBottom: '20px', backgroundColor: '#ddd', position: 'relative', border: '1px solid #ddd', borderBottom: 'none'}}>
-							<img src={this.state.img_src} style={{width: '230px'}} />
+				<div className='container shift-down' id='center-column'>
+						<div id='student-main-card' className='left-align shadow'>
+							<img id='student-image' src={this.state.img_src} alt='' />
 							{
 								<a href='/update-student-bio'><i className="material-icons interest-editor">create</i></a>
 							}
-							<div style={{position: 'absolute', top: '30px', left: '250px', color: 'grey', letterSpacing: '0px'}}>
-								<div className='flow-text' style={{borderBottom: '1px solid #bbb', display: 'inline-block', paddingBottom: '10px'}}>I'm <b>{this.state.name}</b></div>
-								
-								<div style={{paddingTop: '20px'}}>{this.state.bio}</div>
+							<div id='bio-card'>
+								<div id='bio-header' className='flow-text'>I'm <b>{this.state.name}</b></div>
+								<div id='bio'>{this.state.bio}</div>
 								{/*<div>Interested in Fluid Dynamics</div>
 								<hr />
 								<div>GPA: {this.state.gpa}</div>
@@ -132,9 +131,9 @@ class StudentProfile extends Component {
 
 						
 						
-						<div className='flex' style={{width: '700px',  marginBottom: '20px'}}>
-							<div className='profile-tab shadow' style={{width: '450px'}}><InterestsTab tabTitle="INTERESTS" user_type="student" interests={this.state.interests} /></div>
-							<div className='profile-tab shadow' style={{width: '450px'}}><SkillsTab user_type="student" skills={this.state.skills}/></div>
+						<div id='tag-boxes' className='flex' /*style={{width: '700px',  marginBottom: '20px'}}*/>
+							<div className='profile-tab shadow' /*style={{width: '450px'}}*/><InterestsTab tabTitle="INTERESTS" user_type="student" interests={this.state.interests} /></div>
+							<div className='profile-tab shadow' /*style={{width: '450px'}}*/><SkillsTab user_type="student" skills={this.state.skills}/></div>
 						</div>
 						{/*<div className='flex' style={{width: '700px', marginBottom: '20px'}}>
 							<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/></div>
