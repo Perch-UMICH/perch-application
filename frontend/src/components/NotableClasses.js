@@ -13,27 +13,36 @@ class NotableClasses extends Component {
 			year: '',
 			major: '',
 			student_id: getCurrentStudentId(),
+			class_arr: [
+				{
+					id: 'c_0',
+					text: '',
+				},
+			],
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
+		this.state.c_index = this.state.class_arr.length;
 	}
 
 	componentDidMount() {
 		var id = getCurrentUserId();
-		getStudentFromUser(id).then( r => {
-			this.setState({student_id: r.result.id, user_id: id});
-			getStudent(this.state.student_id).then((resp) => {
-				console.log(resp);
-	            this.setState(
-	            	{
-	            		gpa: resp.data.gpa,
-	            		major: resp.data.major,
-	            		year: resp.data.year,
-	            		classes: resp.data.classes,
-	            	}
-	            );
-	            console.log(resp);
-	        });
-		});
+		if (id) {
+			getStudentFromUser(id).then( r => {
+				this.setState({student_id: r.result.id, user_id: id});
+				getStudent(this.state.student_id).then((resp) => {
+					console.log(resp);
+		            this.setState(
+		            	{
+		            		gpa: resp.data.gpa,
+		            		major: resp.data.major,
+		            		year: resp.data.year,
+		            		classes: resp.data.classes,
+		            	}
+		            );
+		            console.log(resp);
+		        });
+			});
+		}
 	}
 
 	updateClasses(event) {
@@ -56,6 +65,41 @@ class NotableClasses extends Component {
 
 	returnToProfile() {
 		window.location = `/student-profile/${getCurrentUserId()}`;
+	}
+
+	addClass(event) {
+		var newClassID = "c_" + this.state.c_index;
+		var newClassText = '';
+		var newClass = {
+			"id": newClassID,
+			"text": newClassText
+		};
+		var newCIndex = this.state.c_index + 1;
+		var updated_classes = this.state.class_arr.concat([newClass]);
+		this.setState({ 
+			class_arr: updated_classes, 
+			c_index: newCIndex,
+		});
+	}
+
+	alterClass(event, class_id) {
+		var temp_classes = this.state.class_arr;
+		var index = temp_classes.findIndex(item => item.id === class_id);
+		temp_classes[index].text = event.target.value;
+		this.setState({ 
+			class_arr: temp_classes,
+		});
+	}
+
+	removeClass(class_id) {
+		this.setState((prevState) => {
+			var temp_classes = prevState.class_arr;
+			var removeIndex = temp_classes.map(function(item) { return item.id; }).indexOf(class_id);
+			temp_classes.splice(removeIndex, 1);
+			return { 
+				class_arr: temp_classes,
+			};
+		});
 	}
 
 	saveAndContinue(event) {
@@ -81,10 +125,6 @@ class NotableClasses extends Component {
 			dest = '/student-profile';
 			header = 'Update Academics';
 		}
-		$('#year_select').on('change', function() {
-			console.log("BLECH");
-			console.log($(this));
-		});
 
 		return (
 			<div className='notable-classes shift-down'>
@@ -117,12 +157,22 @@ class NotableClasses extends Component {
 							   
 							</div>
 						</div>
-						<div className='notable-classes-label left-align'>List your notable classes</div>
-						<textarea className='notable-classes-input' id="textArea" type="text" 
-							value= {this.state.classes}
-							placeholder="EECS 281"
-							onChange={event => this.updateClasses(event)}>
-						</textarea>
+						<div className='notable-classes-label left-align class-creation-label'>
+							List your notable classes
+							<a onClick={this.addClass.bind(this)} id="addQuestion" > <i className="material-icons">add</i></a>
+						</div>
+					    {this.state.class_arr.map((c) => {
+							return (
+								<div className="row">
+									<div className="col s11">
+										{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
+										<textarea id={c.id} type="text" placeholder="EECS 281" className='notable-classes-input' id="class-input" rows='1' value={c.text} onChange={event => this.alterClass(event, c.id)} required></textarea>
+									</div>
+									<div className="col s1">
+										<a id={c.id} className="remove-question" onClick={() => this.removeClass(c.id)}><i className="material-icons interest-editor opacity-1">clear</i></a>
+									</div>
+								</div>);
+						})} <br/>
 						<SquareButton superClick={this.saveAndContinue} label={btn_msg}/>
 					</form>
 				</div>

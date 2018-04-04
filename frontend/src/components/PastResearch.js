@@ -9,16 +9,58 @@ class PastResearch extends Component {
 		super(props);
 		this.state = {
 			research: '',
+			research_arr: [
+				{
+					id: 'r_0',
+					text: '',
+				},
+			],
 		};
 		// if (this.props.location.pathname.split('/')[1] === 'update-past-research') {
 		// 	this.state.research = "Dr. Patil's Neurosurgery Lab\nDr. R's Pharmaceutics Lab\n";
 		// }
 		this.saveAndContinue = this.saveAndContinue.bind(this);
+		this.state.r_index = this.state.research_arr.length;
 	}
 
 	updateResearch(event) {
 		this.setState({
 			research: event.target.value
+		});
+	}
+
+	addResearch(event) {
+		var newResearchID = "r_" + this.state.r_index;
+		var newResearchText = '';
+		var newResearch = {
+			"id": newResearchID,
+			"text": newResearchText,
+		};
+		var newRIndex = this.state.r_index + 1;
+		var updated_research = this.state.research_arr.concat([newResearch]);
+		this.setState({ 
+			research_arr: updated_research, 
+			r_index: newRIndex,
+		});
+	}
+
+	alterResearch(event, research_id) {
+		var temp_research = this.state.research_arr;
+		var index = temp_research.findIndex(item => item.id === research_id);
+		temp_research[index].text = event.target.value;
+		this.setState({ 
+			research_arr: temp_research,
+		});
+	}
+
+	removeResearch(research_id) {
+		this.setState((prevState) => {
+			var temp_research = prevState.research_arr;
+			var removeIndex = temp_research.map(function(item) { return item.id; }).indexOf(research_id);
+			temp_research.splice(removeIndex, 1);
+			return { 
+				research_arr: temp_research,
+			};
 		});
 	}
 
@@ -35,7 +77,7 @@ class PastResearch extends Component {
 
 	render() {
 		var url_arr = this.props.location.pathname.split('/');
-		var header = "List Any Past Research";
+		var header = "Past Research";
 		var dest = '/notable-classes';
 		var btn_msg = 'next';
 		if (url_arr[1] === 'update-past-research') {
@@ -48,11 +90,22 @@ class PastResearch extends Component {
 				<div className='container center-align past-research-form shadow'>
 					<div className='past-research-header'>{header}</div>
 					<form className='container'>
-						<textarea className='past-research-input' id="textArea" type="text" 
-							value= {this.state.research}
-							placeholder={this.state.placeholder} 
-							onChange={event => this.updateResearch(event)}>
-						</textarea>
+						<div className='notable-classes-label left-align class-creation-label'>
+							List Research Experiences
+							<a onClick={this.addResearch.bind(this)} id="addQuestion" > <i className="material-icons">add</i></a>
+						</div>
+					    {this.state.research_arr.map((r) => {
+							return (
+								<div className="row">
+									<div className="col s11">
+										{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
+										<textarea id={r.id} type="text" placeholder="Dr. Patil's Neurosurgery Lab" className='notable-classes-input' id="class-input" rows='1' value={r.text} onChange={event => this.alterResearch(event, r.id)} required></textarea>
+									</div>
+									<div className="col s1">
+										<a id={r.id} className="remove-question" onClick={() => this.removeResearch(r.id)}><i className="material-icons interest-editor opacity-1">clear</i></a>
+									</div>
+								</div>);
+						})} <br/>
 						<SquareButton superClick={this.saveAndContinue} label={btn_msg}/>
 					</form>
 				</div>
