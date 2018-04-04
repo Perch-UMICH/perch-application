@@ -30,6 +30,10 @@ import './components/TapTarget.css';
 import './components/general.css';
 
 class Router extends Component {
+	componentDidMount(){
+		document.title = "PERCH";
+	}
+
 	render() {
 		return(
 			<BrowserRouter>
