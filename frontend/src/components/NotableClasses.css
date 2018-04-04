@@ -9,12 +9,11 @@
 
 
 .notable-classes-input {
-	height: 150px;
 	background-color: #eee;
 	color: #333;
 	padding: 10px;
 	letter-spacing: 2px;
-	margin-bottom: 10px;
+	margin-bottom: -10px;
 	display: block;
 }
 
@@ -39,6 +38,10 @@
 	color: rgb(41, 182, 246);
 	text-transform: uppercase;
 	letter-spacing: 1px;
+}
+
+.class-creation-label {
+	padding-bottom: 20px;
 }
 
 .year-selector {

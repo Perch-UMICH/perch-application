@@ -75,7 +75,8 @@ class StudentProfile extends Component {
 	}
 
 	render() {
-		if (isLoggedIn()) {
+		//if (isLoggedIn()) {
+		if (true) {
 	 	return (
 	 		<div className='content-body'>
 	 			<div className='shadow' id='left-column'>
