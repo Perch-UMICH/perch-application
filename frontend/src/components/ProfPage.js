@@ -64,37 +64,38 @@ class ProfPage extends Component {
 	}
 
 	componentDidMount() {
-		// check if student or faculty for viewing positions
-		getUser(this.state.user_id).then(resp => {
-			console.log("Merp");
-			console.log(resp);
-			if (resp.result.is_student) {
-				this.setState({user_type: "student"});
-			} else {
-				this.setState({user_type: "faculty"});
-			}
-		});
-		//getFacultyFromUser(this.state.user_id)
-		getLab(window.location.pathname.split('/')[2]).then((resp) => {
-            this.setState(
-            	{
-            		lab_name: resp.data.name,
-            		contact_info: [
-            			{label: 'location', value: resp.data.location}
-            		],
-            		lab_summary: resp.data.description,
-            		labels: resp.tags,
-            		skills: resp.skills,
-            	}
-            );
-            console.log("BLAH");
-            console.log(resp);
-        });
+		if (isLoggedIn()) {
+			// check if student or faculty for viewing positions
+			getUser(this.state.user_id).then(resp => {
+				console.log("Merp");
+				console.log(resp);
+				if (resp.result.is_student) {
+					this.setState({user_type: "student"});
+				} else {
+					this.setState({user_type: "faculty"});
+				}
+			});
+			//getFacultyFromUser(this.state.user_id)
+			getLab(window.location.pathname.split('/')[2]).then((resp) => {
+	            this.setState(
+	            	{
+	            		lab_name: resp.data.name,
+	            		contact_info: [
+	            			{label: 'location', value: resp.data.location}
+	            		],
+	            		lab_summary: resp.data.description,
+	            		labels: resp.tags,
+	            		skills: resp.skills,
+	            	}
+	            );
+	        });
+		}
 	}
 
 	render() {
 		var apply_dest = '/apply/' + this.state.slug;
-		if (isLoggedIn()) {
+		if (true) {
+		//if (isLoggedIn()) {
 			return(
 				<div className='shift-down container'>
 					<div className='row dark-blue-bg'>

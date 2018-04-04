@@ -45,10 +45,10 @@ class PickYourInterests extends Component {
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
 		
-		if (url_arr[1] === "update-interests") {
+		if (url_arr[1] === "update-interests" || url_arr[1] === "pick-your-interests") {
 			if (user_type === "faculty") {
 	            this.setState({ 
-					dest: 'prof-page',
+					dest: '/prof-page',
 					display_info: Object.assign({}, this.state.display_info, {
 				      	header_txt: "Your Lab Labels",
 				  		placeholder_txt: "descriptors for your lab work",
@@ -59,7 +59,7 @@ class PickYourInterests extends Component {
 			} 
 			else {
 			    this.setState({ 
-					dest: `student-profile/${getCurrentUserId()}`,
+					dest: `/student-profile/${getCurrentUserId()}`,
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Your Interests",
 		      			placeholder_txt: "field of interest",
@@ -69,10 +69,10 @@ class PickYourInterests extends Component {
 				});
 			}
 		} 
-		else if (url_arr[1] === "update-skills") {
+		else if (url_arr[1] === "update-skills" || url_arr[1] === "lab-skills") {
 			if (user_type === "faculty") {
                 this.setState({ 
-					dest: 'prof-page',
+					dest: '/prof-page',
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Necessary Lab Skills",
 						placeholder_txt: "Skills used to work in your lab",
@@ -83,7 +83,7 @@ class PickYourInterests extends Component {
 			} 
 			else {
                 this.setState({ 
-					dest: `student-profile/${getCurrentUserId()}`,
+					dest: `/student-profile/${getCurrentUserId()}`,
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Your Lab Skills",
 						placeholder_txt: "Skills you are competent in",
@@ -93,9 +93,14 @@ class PickYourInterests extends Component {
                 });
 			}
 		}
+
+		if (url_arr[1] === "pick-your-interests") {
+			var route = '/lab-skills?user_type=' + user_type;
+			this.setState({dest: route});
+		}
 	}
 
-	returnToProfile() {
+	redirect() {
 		window.location = this.state.dest;
 	}
 
@@ -110,12 +115,12 @@ class PickYourInterests extends Component {
 			if (this.state.display_info.req_type === 'skills') {
 				addSkillsToLab(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
-					this.returnToProfile()
+					this.redirect()
 				});
 			} else {
 				addTagsToLab(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
-					this.returnToProfile()
+					this.redirect()
 				});
 			}
 		} else {
@@ -123,14 +128,14 @@ class PickYourInterests extends Component {
 				// alert('skillz')
 				syncSkillsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
-					this.returnToProfile()
+					this.redirect()
 				});
 			} else {
 				// alert('interestz')
 				// alert(this.state.display_info.req_type)
 				syncTagsToStudent(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
-					this.returnToProfile()
+					this.redirect()
 					// getStudentTags(this.state.s_id).then(r=>console.log(r))
 				});
 			}
