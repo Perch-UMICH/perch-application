@@ -43,18 +43,8 @@ class SignUp extends Component {
 		let password = document.getElementById('password').value;
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
-		let name = first_name + " " + last_name;
 
-		let stuff = {
-			name: name,
-			email: email,
-			password: password,
-		}
-
-		registerUser(name, email, password, password).then((resp) => {
-			console.log("REGISTERED? Resp:");
-			console.log(resp);
-			console.log(stuff);
+		registerUser(`${first_name} ${last_name}`, email, password, password).then((resp) => {
 			this.handleLoginAndCreation();
 		})
 	}
@@ -78,12 +68,12 @@ class SignUp extends Component {
 		alert(first_name)
 		if (student) {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => {
-				//window.location.href = this.state.route;
+				window.location.href = this.state.route;
 			});
 		}
 		else {
 			alert('not student')
-			//window.location.href = this.state.route;
+			window.location.href = this.state.route;
 		}
 	}
 
