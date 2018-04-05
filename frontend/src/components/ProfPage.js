@@ -18,7 +18,7 @@ class ProfPage extends Component {
 			yes: ['spots open', 'undergrads', 'credit'],
 			no: ['paid', 'seniors', 'freshman'],
 			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
-			lab_summary: "",
+			lab_summary: "temp",
 			labels: [
 				"Pediatry",
 				"Children",
