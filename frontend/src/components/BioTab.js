@@ -32,11 +32,13 @@ class BioTab extends Component {
 		return (
 			<div className='tab-container shadow'>
 				<div className='tab-header'>
-					{this.props.header.toUpperCase()}
-					{getCurrentUserId() === this.state.id && 
-						<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
-					}
-					<i id='bio-toggler' className="material-icons bio-toggler edit-icon" onClick={this.handleShave.bind(this)}>arrow_drop_down</i>
+				{this.props.header.toUpperCase()}
+					<div className='editors'>
+						{/*getCurrentUserId() === this.state.id && 
+							<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
+						*/}
+						<i id='bio-toggler' className="material-icons bio-toggler edit-icon" onClick={this.handleShave.bind(this)}>arrow_drop_down</i>
+					</div>
 				</div>
 				<div id='bio-tab-small' className='bio-tab-shave bio-tab'>
 					{this.props.msg}

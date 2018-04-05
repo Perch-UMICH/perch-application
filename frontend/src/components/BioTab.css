@@ -6,9 +6,16 @@
 }
 
 .edit-icon {
-	margin-left: -25px;
+	/*margin-left: -25px;*/
 }
 
 #bio-toggler {
 	float: right;
+	padding-right: 10px;
+}
+
+.editors {
+	position: absolute;
+	right: 0;
+	top: 0;
 }
