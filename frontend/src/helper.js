@@ -78,7 +78,8 @@ export function loginUser(email, password) {
         .then(response => {
             // cookie.set('perch_api_key', response.data.result.token, {path: "/"});
             // cookie.set('perch_user_id', response.data.result.id, {path: "/"});
-            localStorage.setItem('token', response.data.result[2].token);
+            console.log(response)
+            localStorage.setItem('token', response.data.result[1].token);
             localStorage.setItem('user_id', response.data.result[0].id);
             if (response.data.result[0].is_student) {
                 // Save student id

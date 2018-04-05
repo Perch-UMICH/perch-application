@@ -52,7 +52,7 @@ class SignUp extends Component {
 		let email = document.getElementById('email').value
 		let password = document.getElementById('password').value
 
-		loginUser(email, password).then(this.createStudent.bind(this)).then((resp) => window.location.href = this.state.route);
+		loginUser(email, password).then(this.createStudent.bind(this))//.then((resp) => window.location.href = this.state.route);
 	}
 
 	// relies on register and login to create a user and put id info in local storage to then create a student
@@ -61,7 +61,7 @@ class SignUp extends Component {
 		let id = getCurrentUserId();
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
-		
+		alert(first_name)
 		if (student) {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null)
 		}
