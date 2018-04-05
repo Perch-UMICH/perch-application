@@ -5,6 +5,7 @@ import Indicator from './Indicator';
 import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import ContactTab from './ContactTab'
+import AcceptRate from './AcceptRate'
 import {getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import './ProfPage.css'
@@ -14,7 +15,7 @@ class ProfPage extends Component {
 		super(props);
 		this.state = {
 			lab_name: "",
-			yes: ['spots open', 'undergrads', 'credit', 'first-timers'],
+			yes: ['spots open', 'undergrads', 'credit'],
 			no: ['paid', 'seniors', 'freshman'],
 			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
 			lab_summary: "",
@@ -100,6 +101,7 @@ class ProfPage extends Component {
 				<div className='content-body'>
 					<div className='shadow' id='left-column'>
 						<ContactTab header='contact' contact_info={this.state.contact_info} />
+						<AcceptRate rate={2} />
 					</div>
 					<div id='right-column' className='shadow center-align'>
 		 				<div className='ad'>AD</div>
