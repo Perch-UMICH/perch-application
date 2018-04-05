@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {isLoggedIn, getCurrentUserId} from '../helper.js'
+import shave from 'shave'
 import './BioTab.css';
 
 class BioTab extends Component {
@@ -9,6 +10,11 @@ class BioTab extends Component {
 			dest: (this.props.user_type === 'faculty') ? '/update-lab-description' : '/update-student-bio',
 			id: window.location.pathname.split('/')[2],
 		};
+	}
+
+	// Shaves bio if too long
+	componentDidUpdate() {
+		shave('.bio-tab', 100)
 	}
 
 	render() {

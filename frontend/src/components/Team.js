@@ -20,7 +20,7 @@ const members = [
   {
     firstName: "Akshay",
     lastName: "Rao",
-    position: "Head of Back End Dev",
+    position: "Head of Back End Development",
     bio: [
     "Meha is a Junior studying Cellular and Molecular Biology",
     "She lives by the saying: if you want to save a life become a doctor, but if you want to save lives become a scientist"
@@ -29,7 +29,7 @@ const members = [
   {
     firstName: "Benji",
     lastName: "Bear",
-    position: "Head of Front End Dev",
+    position: "Head of Front End Development",
     bio: []
   },
   {
@@ -41,37 +41,37 @@ const members = [
   {
     firstName: "Sara",
     lastName: "Alektiar",
-    position: "Head of Chem Team",
+    position: "Head of Chemistry Team",
     bio: []
   },
   {
     firstName: "Sanjay",
     lastName: "Balijepalli",
-    position: "Head of Bio Team",
+    position: "Head of Biology Team",
     bio: []
   },
   {
     firstName: "Han",
     lastName: "Wang",
-    position: "Back End Dev",
+    position: "Back End Development",
     bio: []
   },
   {
     firstName: "Sean",
     lastName: "McCarthy",
-    position: "Chem Team",
+    position: "Chemistry Team",
     bio: []
   },
   {
     firstName: "Jessica",
     lastName: "Zhang",
-    position: "Chem Team",
+    position: "Chemistry Team",
     bio: []
   },
   {
     firstName: "Alex",
     lastName: "Girgis",
-    position: "Bio Team",
+    position: "Biology Team",
     bio: []
   }
 ];
@@ -93,8 +93,8 @@ class Team extends Component {
         <TeamPhoto />
         <div className="team">
           <Greeting message="Meet the Perch Team"/>
-          <div className="container row">
-            {memberCards};
+          <div id='team-box' className="container row">
+            {memberCards}
           </div>
         </div>
       </div>

@@ -80,7 +80,7 @@ export function loginUser(email, password) {
             console.log(response);
             // cookie.set('perch_api_key', response.data.result.token, {path: "/"});
             // cookie.set('perch_user_id', response.data.result.id, {path: "/"});
-            localStorage.setItem('token', response.data.result[1].token); // Emi just changed result[2] to result[1] b/c that's where it looks like the token is??
+            localStorage.setItem('token', response.data.result[1].token);
             localStorage.setItem('user_id', response.data.result[0].id);
             if (response.data.result[0].is_student) {
                 // Save student id

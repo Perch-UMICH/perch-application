@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import './ContactTab.css';
+// import './AcceptRate.css';
 
-class ContactTab extends Component {
+class AcceptRate extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -12,19 +12,28 @@ class ContactTab extends Component {
 		}
 	}
 
+	componentDidMount() {
+		if (this.props.rate < 50) {
+			document.getElementById('rate').classList.add('bad-red')
+		}
+		else {
+			document.getElementById('rate').classList.add('good-blue')
+		}
+	}
+
 	render() {
 		return (
 			<div className='tab-container'>
 				<div className='tab-header' style={{fontSize: '16px', padding: '15px 10px'}}>
-					{this.props.header.toUpperCase()}
+					{"Accept Rate".toUpperCase()}
 					<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
 				</div>
-				<div className='contact-tab'>
-					{this.props.contact_info.map((item) => <div>{`${item.value}`}</div>)}
+				<div id='rate' className='contact-tab center-align' style={{fontWeight: 'bold'}}>
+					{`${this.props.rate} %`}
 				</div>
 			</div>
 		);
 	}
 }
 
-export default ContactTab;
+export default AcceptRate;

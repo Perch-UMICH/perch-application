@@ -12,11 +12,12 @@ class AboutTab extends Component {
 
 	render() {
 		return (
-			<div className={this.tabType}>
+			//Sets background and text color 
+			<div className={this.tabType + ' ' + this.props.textColor + '-text-about'}>
 				<br />
-			  <div className="header container center-align white-text ">
+			  <div className='header container center-align'>
 			    <div> {this.props.header} </div>
-			    <p className="white-text flow-text">{this.props.body}</p>
+			    <p className='flow-text'>{this.props.body}</p>
 			    <br />
 			  </div>
 			</div>

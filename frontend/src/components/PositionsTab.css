@@ -3,12 +3,14 @@
 	color: grey;
 	letter-spacing: 1px;
 	margin: 25px 15px;
+	padding-bottom: 5px;
 }
 
 .positions-tab-header {
 	position: relative;
 	width: 100%;
-	background-color: #8bc34a;
+	/*background-color: #8bc34a;*/
+	background-color: #0277bd;
 }
 
 .tab-fit {

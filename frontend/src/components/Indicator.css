@@ -6,14 +6,24 @@
 	background-color: #ddd;
 	color: white;
 	letter-spacing: 1px;
-	font-size: 14px;
+	font-size: 12px;
 	text-transform: lowercase;
 }
 
 .indicator-on {
-	background-color: #8bc34a;
+	/*background-color: #8bc34a;*/
+	/*background-color: #26c6da;*/
+	background-color: rgb(41, 182, 246);
 }
 
 .indicator-off {
-	background-color: #f44336;
+	background-color: #ef5350;
+}
+
+.good-blue {
+	color: rgb(41, 182, 246) !important;
+}
+
+.bad-red {
+	color: #ef5350 !important;
 }
