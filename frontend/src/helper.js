@@ -76,9 +76,11 @@ export function loginUser(email, password) {
         email, password
     })
         .then(response => {
+            console.log("response!");
+            console.log(response);
             // cookie.set('perch_api_key', response.data.result.token, {path: "/"});
             // cookie.set('perch_user_id', response.data.result.id, {path: "/"});
-            localStorage.setItem('token', response.data.result[2].token);
+            localStorage.setItem('token', response.data.result[1].token); // Emi just changed result[2] to result[1] b/c that's where it looks like the token is??
             localStorage.setItem('user_id', response.data.result[0].id);
             if (response.data.result[0].is_student) {
                 // Save student id

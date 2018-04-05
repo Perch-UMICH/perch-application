@@ -1,18 +1,30 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId} from '../helper.js'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser} from '../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			is_student: false,
+		};
+	}
+
+	componentDidMount() {
+		getUser(getCurrentUserId()).then(resp => {
+			if (resp.result) {
+				if (resp.result.is_student) {
+					this.setState({ is_student: true });
+				}
+			}
+		});
 	}
 
 	render() {
 
 		if (isLoggedIn()) {
 			var navItems = <div>
-				<li><a className="nav-item" href={`/student-profile/${getCurrentUserId()}`}>PROFILE</a></li>
+				{this.state.is_student ? <li><a className="nav-item" href={`/student-profile/${getCurrentUserId()}`}>PROFILE</a></li> : null }
 			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>

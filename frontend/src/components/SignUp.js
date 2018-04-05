@@ -43,8 +43,20 @@ class SignUp extends Component {
 		let password = document.getElementById('password').value;
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
+		let name = first_name + " " + last_name;
 
-		registerUser(`${first_name} ${last_name}`, email, password, password).then(this.handleLoginAndCreation.bind(this))//.then((resp) => window.location.href = this.state.route);
+		let stuff = {
+			name: name,
+			email: email,
+			password: password,
+		}
+
+		registerUser(name, email, password, password).then((resp) => {
+			console.log("REGISTERED? Resp:");
+			console.log(resp);
+			console.log(stuff);
+			this.handleLoginAndCreation();
+		})
 	}
 
 	// logs user in then calls create student function
@@ -52,7 +64,9 @@ class SignUp extends Component {
 		let email = document.getElementById('email').value
 		let password = document.getElementById('password').value
 
-		loginUser(email, password).then(this.createStudent.bind(this)).then((resp) => window.location.href = this.state.route);
+		loginUser(email, password).then((resp) => {
+			this.createStudent();
+		});
 	}
 
 	// relies on register and login to create a user and put id info in local storage to then create a student
@@ -63,10 +77,13 @@ class SignUp extends Component {
 		let last_name = document.getElementById('last_name').value;
 		
 		if (student) {
-			createStudent(id, first_name, last_name, null, null, null, null, null, null, null)
+			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => {
+				//window.location.href = this.state.route;
+			});
 		}
 		else {
 			alert('not student')
+			//window.location.href = this.state.route;
 		}
 	}
 
