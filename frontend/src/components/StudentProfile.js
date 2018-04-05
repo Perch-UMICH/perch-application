@@ -28,6 +28,7 @@ class StudentProfile extends Component {
 					url: 'prof-page'
 				},
 			],
+			student: false,
 		}
 	}
 
@@ -71,12 +72,18 @@ class StudentProfile extends Component {
 
 	// Beginning point for data handling 
 	componentDidMount() {
-		getStudentFromUser(this.retrieveSlug()).then(this.setStudentId.bind(this)).then(this.generalHandler.bind(this))
+		getUser(this.retrieveSlug()).then(resp => {
+			if (resp.result) {
+				if (resp.result.is_student) {
+					this.setState({ student: true });
+					getStudentFromUser(this.retrieveSlug()).then(this.setStudentId.bind(this)).then(this.generalHandler.bind(this));
+				}
+			}
+		});
 	}
 
 	render() {
-		//if (isLoggedIn()) {
-		if (true) {
+		if (isLoggedIn() && this.state.student) {
 	 	return (
 	 		<div className='content-body'>
 	 			<div className='shadow' id='left-column'>
@@ -113,8 +120,10 @@ class StudentProfile extends Component {
 			
 		);
 	 }
-	 else {
+	 else if (!isLoggedIn()){
 	 	return <ErrorPage />
+	 } else {
+	 	return <div><br/> Not a student, man - check your url </div>
 	 }
 	}
 }
