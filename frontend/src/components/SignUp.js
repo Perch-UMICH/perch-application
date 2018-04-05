@@ -44,7 +44,9 @@ class SignUp extends Component {
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
 
-		registerUser(`${first_name} ${last_name}`, email, password, password).then(this.handleLoginAndCreation.bind(this))//.then((resp) => window.location.href = this.state.route);
+		registerUser(`${first_name} ${last_name}`, email, password, password).then((resp) => {
+			this.handleLoginAndCreation();
+		})
 	}
 
 	// logs user in then calls create student function
@@ -52,7 +54,9 @@ class SignUp extends Component {
 		let email = document.getElementById('email').value
 		let password = document.getElementById('password').value
 
-		loginUser(email, password).then(this.createStudent.bind(this))//.then((resp) => window.location.href = this.state.route);
+		loginUser(email, password).then((resp) => {
+			this.createStudent();
+		});
 	}
 
 	// relies on register and login to create a user and put id info in local storage to then create a student
@@ -63,10 +67,13 @@ class SignUp extends Component {
 		let last_name = document.getElementById('last_name').value;
 		alert(first_name)
 		if (student) {
-			createStudent(id, first_name, last_name, null, null, null, null, null, null, null)
+			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => {
+				window.location.href = this.state.route;
+			});
 		}
 		else {
 			alert('not student')
+			window.location.href = this.state.route;
 		}
 	}
 
