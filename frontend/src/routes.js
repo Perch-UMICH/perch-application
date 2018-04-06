@@ -68,7 +68,6 @@ class Router extends Component {
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/student-bio' component={ StudentBio }/>
 							<Route path='/update-student-bio' component={ StudentBio }/>
-							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/update-notable-classes' component={ NotableClasses }/>
 							<Route path='/prof-page' component={ ProfPage }/>
 							<Route path='/prof-page/:labSlug' component={ ProfPage }/>

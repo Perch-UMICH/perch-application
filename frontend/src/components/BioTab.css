@@ -12,6 +12,11 @@
 #bio-toggler {
 	float: right;
 	padding-right: 10px;
+
+}
+
+#bio-toggler {
+	cursor: pointer;
 }
 
 .editors {
