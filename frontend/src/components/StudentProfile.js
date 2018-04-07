@@ -28,7 +28,7 @@ class StudentProfile extends Component {
 					url: 'prof-page'
 				},
 			],
-			student: false,
+			not_student: false,
 		}
 	}
 
@@ -77,13 +77,21 @@ class StudentProfile extends Component {
 			if (resp.result) {
 				if (resp.result.is_student) {
 					this.generalHandler();
+				} else {
+					this.setState({ not_student: true });
 				}
+			} else {
+				this.setState({ not_student: true });
 			}
 		});
 	}
 
 	render() {
-		if (isLoggedIn() && this.state.student) {
+		if (!isLoggedIn()) {
+			return <ErrorPage /> 
+		} else if (this.state.not_student) {
+			return <ErrorPage fourofour="true" />
+		} else {
 	 	return (
 	 		<div className='content-body'>
 	 			<div className='shadow' id='left-column'>
@@ -152,11 +160,6 @@ class StudentProfile extends Component {
 			</div>
 			
 		);
-	 }
-	 else if (!isLoggedIn()){
-	 	return <ErrorPage />
-	 } else {
-	 	return <ErrorPage fourofour="true" />
 	 }
 	}
 }
