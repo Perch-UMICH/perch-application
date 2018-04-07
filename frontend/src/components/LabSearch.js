@@ -3,7 +3,7 @@ import './LabSearch.css';
 import Bubble from './Bubble';
 import LabList from './LabList';
 import './PickYourInterests.css';
-import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags} from '../helper.js'
+import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser} from '../helper.js'
 
 
 class LabSearch extends Component {
@@ -43,26 +43,30 @@ class LabSearch extends Component {
 			this.setState({interests_catalog: temp_arr});
 		});
 
-		getStudentFromUser(getCurrentUserId()).then( r => {
-        	this.setState({s_id: r.result.id});
-        	getStudentSkills(this.state.s_id).then((resp) => {
-        		var temp_arr = [];
-        		resp.map((skill) => {
-        			temp_arr.push(skill.name);
-        		});
-        		this.setState({your_skills: temp_arr});
-        	});
-        });
+        getUser(getCurrentUserId()).then(resp => {
+            if (resp.result.is_student) {
+                getStudentFromUser(getCurrentUserId()).then( r => {
+                    this.setState({s_id: r.result.id});
+                    getStudentSkills(this.state.s_id).then((resp) => {
+                        var temp_arr = [];
+                        resp.map((skill) => {
+                            temp_arr.push(skill.name);
+                        });
+                        this.setState({your_skills: temp_arr});
+                    });
+                });
 
-        getStudentFromUser(getCurrentUserId()).then( r => {
-        	this.setState({s_id: r.result.id});
-        	getStudentTags(this.state.s_id).then((resp) => {
-        		var temp_arr = [];
-        		resp.map((tag) => {
-        			temp_arr.push(tag.name);
-        		});
-        		this.setState({your_interests: temp_arr});
-        	});
+                getStudentFromUser(getCurrentUserId()).then( r => {
+                    this.setState({s_id: r.result.id});
+                    getStudentTags(this.state.s_id).then((resp) => {
+                        var temp_arr = [];
+                        resp.map((tag) => {
+                            temp_arr.push(tag.name);
+                        });
+                        this.setState({your_interests: temp_arr});
+                    });
+                });
+            }
         });
   	}
 

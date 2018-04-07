@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton'
+import {createPosition} from '../helper.js';
 import $ from 'jquery';
 
 class AppCreationModal extends Component {
@@ -9,14 +10,22 @@ class AppCreationModal extends Component {
 			slug: 'the-infant-cognition-project'
 		};
 		this.onClick = this.onClick.bind(this);
+		this.postApplication = this.postApplication.bind(this);
 	}
 	onClick(event) {
+		// add time committment, open slots, is 'open' a boolean?
 	    $('#createModal').fadeOut("slow");
 	    $('#modalBackdrop').fadeOut("slow");
 	}
 
+	postApplication(event) {
+		createPosition(1, this.props.info.positionName, this.props.info.positionDesc, '5 hours', 10, 0, true).then(resp => {
+			console.log("CREATED POSITION");
+			console.log(resp);
+		});
+	}
+
 	render() {
-		var lab_dest = '/prof-page/' + this.state.slug;
 		return(
 			<div>
 				<div id="createModal" class="modal modal-fixed-footer">
@@ -39,7 +48,7 @@ class AppCreationModal extends Component {
 				   	</div>
 				   	<div class="modal-footer">
 				   		<BasicButton superClick={this.onClick} msg='Edit' />
-				   		<BasicButton dest={lab_dest} msg='Post Application' />
+				   		<BasicButton superClick={this.postApplication} msg='Post Application' />
 				  	</div>
 			 	</div>
 			</div>

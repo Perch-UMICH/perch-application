@@ -146,7 +146,7 @@ class CreatePosition extends Component {
 										<div className="row">
 											<div className="col s11">
 												{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
-												<textarea id={question.id} type="text" className='lab-text-info-input' id="apply-question-input" value={question.text} onChange={event => this.alterQuestion(event, question.id)} required></textarea>
+												<textarea id={question.id} type="text" className='question-input' id="apply-question-input" value={question.text} rows='3' onChange={event => this.alterQuestion(event, question.id)} required></textarea>
 												
 											</div>
 											<div className="col s1">
@@ -154,9 +154,8 @@ class CreatePosition extends Component {
 											</div>
 										</div>);
 								})}
-							<a style={{float: 'left'}} onClick={this.addQuestion.bind(this)} id="addQuestion"><SquareButton label='add question'/></a><br/><br/>
+							<a onClick={this.addQuestion.bind(this)} id="addQuestionCenter" > <i className="material-icons">add</i></a>
 						</form>
-						<br/>
 						<ModalButton type="create_app" label="create application" info={this.state.modal_info}/>
 					</div>
 				</div>
