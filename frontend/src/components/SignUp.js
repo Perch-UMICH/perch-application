@@ -9,21 +9,21 @@ class SignUp extends Component {
 			route: '/pick-your-interests?user_type=student'
 		};
 
-		getAllUsers().then((resp) => {
-			// for (let i = 6; i < resp.result.length; i++) {
-			// 	deleteUser(i);
-			// }
-			console.log(resp.result)
+		// getAllUsers().then((resp) => {
+		// 	// for (let i = 6; i < resp.result.length; i++) {
+		// 	// 	deleteUser(i);
+		// 	// }
+		// 	console.log(resp.result)
 
-		})
+		// })
 
-		getAllStudents().then((resp) => {
-			// for (let i = 6; i < resp.result.length; i++) {
-			// 	deleteUser(i);
-			// }
-			console.log(resp.result)
+		// getAllStudents().then((resp) => {
+		// 	// for (let i = 6; i < resp.result.length; i++) {
+		// 	// 	deleteUser(i);
+		// 	// }
+		// 	console.log(resp.result)
 
-		})
+		// })
 		
 	}
 
@@ -66,7 +66,7 @@ class SignUp extends Component {
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
 		if (student) {
-			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => localStorage.setItem("student_id", resp.id)).then(() => window.location.href = this.state.route);
+			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => sessionStorage.setItem("student_id", resp.id)).then(() => window.location.href = this.state.route);
 		}
 		else {
 			alert('not student')

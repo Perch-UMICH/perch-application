@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton'
-import {createPosition} from '../helper.js';
+import {createLabPosition} from '../helper.js';
 import $ from 'jquery';
 
 class AppCreationModal extends Component {
@@ -19,7 +19,7 @@ class AppCreationModal extends Component {
 	}
 
 	postApplication(event) {
-		createPosition(1, this.props.info.positionName, this.props.info.positionDesc, '5 hours', 10, 0, true).then(resp => {
+		createLabPosition(1, this.props.info.positionName, this.props.info.positionDesc, '5 hours', 10, 0, true).then(resp => {
 			console.log("CREATED POSITION");
 			console.log(resp);
 		});
