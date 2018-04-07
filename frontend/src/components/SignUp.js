@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {registerUser, createStudent, getCurrentUserId, loginUser} from '../helper.js';
 import {getAllUsers, deleteUser, getAllStudents, createFaculty, createLab, addLabToFaculty} from '../helper.js'
+import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../helper.js';
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -67,9 +67,10 @@ class SignUp extends Component {
 		let last_name = document.getElementById('last_name').value;
 		let email = document.getElementById('email').value;
 		alert(first_name)
+
 		if (student) {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => {
-				window.location.href = this.state.route;
+				getStudentFromUser(id).then(resp => localStorage.setItem("student_id", resp.result.id)).then(() => window.location.href = this.state.route);
 			});
 		}
 		else {
