@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
+import { deleteUser, getCurrentUserId, logoutCurrentUser } from '../helper.js';
 import $ from 'jquery';
 
 class DeleteUserModal extends Component {
@@ -8,43 +9,36 @@ class DeleteUserModal extends Component {
 		this.state = {
 		};
 		this.onClick = this.onClick.bind(this);
-		this.resetPassword = this.resetPassword.bind(this);
+		this.deleteUser = this.deleteUser.bind(this);
 	}
 
 	onClick(event) {
-	    $("#resetPassword").fadeOut("slow");
+	    $("#deleteUser").fadeOut("slow");
 	    $('#modalBackdrop').fadeOut("slow");
 	}
 
-	resetPassword(event) {
-		this.onClick();
-		// reset password?
+	deleteUser(event) {
+		var user_id = getCurrentUserId();
+		logoutCurrentUser();
+		deleteUser(user_id).then(resp => {
+			console.log("deleted");
+			console.log(resp);
+			this.onClick();
+		});
 	}
 
 	render() {
 		var interviewDest = '/schedule-interview/';
 		return(
 			<div>
-				<div id="resetPassword" className="modal modal-fixed-footer display-modal">
+				<div id="deleteUser" className="modal modal-fixed-footer display-modal">
 			 		<div className="modal-content">
-			 			<h4> Reset Password </h4>
-			 			<p className="above-input"> Enter your current password and desired new password below, then click save. </p>
-		  				<div className="input-field narrow">
-			                <input id="password" type="password" required />
-			                <label htmlFor="password">Current Password</label>
-			            </div>
-          				<div className="input-field narrow">
-        	                <input id="new_password" type="password" required />
-        	                <label htmlFor="new_password">New Password</label>
-        	            </div>
-          				<div className="input-field narrow">
-        	                <input id="new_password_conf" type="password" required />
-        	                <label htmlFor="new_password_conf">New Password Confirmation</label>
-        	            </div>
+			 			<h4> Delete Account </h4>
+			 			<p className="above-input"> Are you sure you want to delete your account? Your profile will be gone ... forever! </p>
 				   	</div>
 				   	<div className="modal-footer">
-				     	<BasicButton superClick={this.onClick} msg='close' />
-				     	<BasicButton superClick={this.resetPassword} msg='save' />
+				     	<BasicButton superClick={this.onClick} msg='I changed my mind!' />
+				     	<BasicButton superClick={this.deleteUser} msg='DELETE ME' />
 				  	</div>
 			 	</div>
 			</div>

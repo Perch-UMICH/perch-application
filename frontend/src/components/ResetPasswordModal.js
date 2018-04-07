@@ -12,7 +12,7 @@ class ResetPasswordModal extends Component {
 	}
 
 	onClick(event) {
-	    $("#deleteUserModal").fadeOut("slow");
+	    $("#resetPassword").fadeOut("slow");
 	    $('#modalBackdrop').fadeOut("slow");
 	}
 
@@ -25,7 +25,7 @@ class ResetPasswordModal extends Component {
 		var interviewDest = '/schedule-interview/';
 		return(
 			<div>
-				<div id="deleteUserModal" className="modal modal-fixed-footer display-modal">
+				<div id="resetPassword" className="modal modal-fixed-footer display-modal">
 			 		<div className="modal-content">
 			 			<h4> Reset Password </h4>
 			 			<p className="above-input"> Enter your current password and desired new password below, then click save. </p>

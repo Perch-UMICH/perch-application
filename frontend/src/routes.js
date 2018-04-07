@@ -26,6 +26,7 @@ import ScheduleInterview from './components/ScheduleInterview';
 import PickInterview from './components/PickInterview';
 import Settings from './components/Settings';
 import Feedback from './components/Feedback';
+import ForgotPassword from './components/ForgotPassword';
 import './components/TapTarget.css';
 import './components/general.css';
 
@@ -79,6 +80,8 @@ class Router extends Component {
 							<Route path='/pick-interview' component={ PickInterview } />
 							<Route path='/settings' component={ Settings } />
 							<Route path='/feedback' component={ Feedback }/>
+							<Route path='/forgot-password' component={ ForgotPassword } />
+							<Route path='/forgot-password/:token' component={ ForgotPassword } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>

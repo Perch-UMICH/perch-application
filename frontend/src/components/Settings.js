@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import BasicButton from './BasicButton';
 import ResetEmailModal from './ResetEmailModal';
 import ResetPasswordModal from './ResetPasswordModal';
+import DeleteUserModal from './DeleteUserModal';
 import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateStudent, getStudentFromUser} from '../helper.js'
 import './Settings.css';
 import $ from 'jquery';
@@ -61,7 +62,7 @@ class Settings extends Component {
 	}
 
 	openDeleteModal() { // superClick
-		$("#deleteUserModal").fadeIn("slow");
+		$("#deleteUser").fadeIn("slow");
         $("#modalBackdrop").fadeIn("slow");
 	}
 
@@ -70,6 +71,7 @@ class Settings extends Component {
 			<div>
 				<ResetEmailModal callbackEmail={this.resetEmail} />
 				<ResetPasswordModal />
+				<DeleteUserModal />
 				<div id="modalBackdrop"></div>
 				<div className='lab-text-info shift-down'>
 					<div className='container center-align lab-text-info-form shadow'>
@@ -85,7 +87,7 @@ class Settings extends Component {
 							</div>
 							<div className='container col m4 s4 l4 setting-col'>
 								<i className="material-icons setting-icon">remove circle</i>
-								<BasicButton icon='remove circle' msg='delete account'/>
+								<BasicButton icon='remove circle' superClick={this.openDeleteModal} msg='delete account'/>
 							</div>
 						</div>
 						<div className='container user-information'> 
