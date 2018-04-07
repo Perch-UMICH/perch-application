@@ -61,15 +61,14 @@ class ProfPage extends Component {
 				{label: 'location', value: 'Central Campus'},
 			],
 			user_id: getCurrentUserId(),
+			no_lab: false, 
 		};
 	}
 
 	componentDidMount() {
 		if (isLoggedIn()) {
 			// check if student or faculty for viewing positions
-			getUser(this.state.user_id).then(resp => {
-				console.log("Merp");
-				console.log(resp);
+			getUser(getCurrentUserId()).then(resp => {
 				if (resp.result.is_student) {
 					this.setState({user_type: "student"});
 				} else {
@@ -79,24 +78,28 @@ class ProfPage extends Component {
 			//getFacultyFromUser(this.state.user_id)
 			getLab(window.location.pathname.split('/')[2]).then((resp) => {
 				console.log(resp)
-	            this.setState(
-	            	{
-	            		lab_name: resp.data.name,
-	            		contact_info: [
-	            			{label: 'location', value: resp.data.location}
-	            		],
-	            		lab_summary: resp.data.description,
-	            		labels: resp.tags,
-	            		skills: resp.skills,
-	            	}
-	            );
+				if (resp.data) {
+					this.setState(
+						{
+							lab_name: resp.data.name,
+							contact_info: [
+								{label: 'location', value: resp.data.location}
+							],
+							lab_summary: resp.data.description,
+							labels: resp.tags,
+							skills: resp.skills,
+						}
+					);
+				} else {
+					this.setState({ no_lab: true });
+				}
 	        });
 		}
 	}
 
 	render() {
 		var apply_dest = '/apply/' + this.state.slug;
-		if (true) {
+		if (isLoggedIn() && !this.state.no_lab) {
 			return(
 				<div className='content-body'>
 					<div className='shadow' id='left-column'>
@@ -168,8 +171,10 @@ class ProfPage extends Component {
 			// 	</div>
 			// );
 		}
-		else {
+		else if (!isLoggedIn()) {
 			return <ErrorPage />
+		} else {
+			return <ErrorPage fourofour="true"/> 
 		}
 	}
 }

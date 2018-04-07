@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import {getAllUsers, deleteUser, getAllStudents, createFaculty, createLab, addLabToFaculty} from '../helper.js'
 import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../helper.js';
-import {getAllUsers, deleteUser, getAllStudents} from '../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -65,6 +65,9 @@ class SignUp extends Component {
 		let id = getCurrentUserId();
 		let first_name = document.getElementById('first_name').value;
 		let last_name = document.getElementById('last_name').value;
+		let email = document.getElementById('email').value;
+		alert(first_name)
+
 		if (student) {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => {
 				getStudentFromUser(id).then(resp => localStorage.setItem("student_id", resp.result.id)).then(() => window.location.href = this.state.route);
@@ -72,7 +75,19 @@ class SignUp extends Component {
 		}
 		else {
 			alert('not student')
-			window.location.href = this.state.route;
+			createFaculty(id, first_name, last_name, null, email).then(resp => {
+				console.log("CREATED FACULTY");
+				console.log(resp);
+				/*createLab(faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email).then(resp => {
+					console.log("CREATED LAB");
+					console.log(resp);
+					addLabToFaculty(faculty_id, lab_id).then(resp => {
+						console.log("ADDED LAB TO FACULTY");
+						console.log(resp);
+					});
+				});*/
+			});
+			//window.location.href = this.state.route;
 		}
 	}
 

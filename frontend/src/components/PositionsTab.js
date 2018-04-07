@@ -29,7 +29,7 @@ class PositionsTab extends Component {
 					{ (this.props.positions.length === 0) ? <div className="center-align">You haven't created any positions! Click the '+' in the top right of this box to post an application</div> : null}
 				    {this.props.positions.map((position) => {
 						return (
-							<PositionListItem key={position.name} positionName={position.name} tags={position.skills} dest={dest} btn_msg={btn_msg || `view applicants (${position.num_applicants})`} selected={selected}/>);
+							<PositionListItem key={position.name} positionName={position.name} tags={position.skills} dest={dest} btn_msg={btn_msg || `applicants (${position.num_applicants})`} selected={selected}/>);
 					})}
 				</div>
 			</div>

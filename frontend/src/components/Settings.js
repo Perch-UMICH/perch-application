@@ -32,10 +32,11 @@ class Settings extends Component {
 						user_type: resp.result.is_student ? "Student" : "Facutly",
 					}
 				);
-			});
-
-			getStudentFromUser(getCurrentUserId()).then( r => {
-				this.setState({student_id: r.result.id})
+				if (resp.result.is_student) {
+					getStudentFromUser(getCurrentUserId()).then( r => {
+						this.setState({student_id: r.result.id})
+					});
+				}
 			});
 		}
 	}
