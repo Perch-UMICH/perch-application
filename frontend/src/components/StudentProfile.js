@@ -57,7 +57,6 @@ class StudentProfile extends Component {
 	            		s_id: resp.result.id,
 	            	}
 	            );
-	            
 	        }).then(this.retrieveTags.bind(this));
 	}
 
