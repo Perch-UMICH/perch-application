@@ -6,7 +6,7 @@ import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import ContactTab from './ContactTab'
 import AcceptRate from './AcceptRate'
-import {getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser} from '../helper.js'
+import {getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getLabPositions, getLabPreferences} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import './ProfPage.css'
 
@@ -18,23 +18,8 @@ class ProfPage extends Component {
 			yes: ['spots open', 'undergrads', 'credit'],
 			no: ['paid', 'seniors', 'freshman'],
 			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
-			lab_summary: "temp",
-			labels: [
-				"Pediatry",
-				"Children",
-				"Medicine",
-				"Psychology",
-				"Cognition",
-				"Bio-Informatics",
-			], 
-			skills: [
-				"Pediatry",
-				"Children",
-				"Medicine",
-				"Psychology",
-				"Statistical Informatics",
-			], 
-			slug: 'the-infant-cognition-project',
+			labels: [], 
+			skills: [], 
 			positions: [ 
 				{
 					name: "Lab Assistant",
@@ -55,11 +40,7 @@ class ProfPage extends Component {
 					num_applicants: 2,
 				},
 			],
-			contact_info: [
-				{label: 'phone', value: '815-262-6642'},
-				{label: 'email', value: 'bearb@umich.edu'},
-				{label: 'location', value: 'Central Campus'},
-			],
+			contact_info: [],
 			user_id: getCurrentUserId(),
 			no_lab: false, 
 		};
@@ -76,9 +57,28 @@ class ProfPage extends Component {
 				}
 			});
 			//getFacultyFromUser(this.state.user_id)
-			getLab(window.location.pathname.split('/')[2]).then((resp) => {
-				console.log(resp)
+			var lab_id = window.location.pathname.split('/')[2];
+			getLab(lab_id).then((resp) => {
+				console.log(resp);
 				if (resp.data) {
+					getLabPositions(lab_id).then(resp => {
+						console.log("labbbb positions!");
+						console.log(resp);
+					});
+					getLabPreferences(lab_id).then(prefs => {
+						console.log(prefs);
+						var no_arr = [];
+						var yes_arr = [];
+						if (prefs) {
+							for (var i = 0; i < prefs.length; ++i) {
+								if (prefs[i].type === "No") {
+									no_arr.push(prefs[i]);
+								} else {
+									yes_arr.push(prefs[i]);
+								}
+							}
+						}
+					});
 					this.setState(
 						{
 							lab_name: resp.data.name,
@@ -99,7 +99,11 @@ class ProfPage extends Component {
 
 	render() {
 		var apply_dest = '/apply/' + this.state.slug;
-		if (isLoggedIn() && !this.state.no_lab) {
+		if (!isLoggedIn()) {
+			return <ErrorPage /> 
+		} else if (this.state.no_lab) {
+			return <ErrorPage fourofour="true" />
+		} else {
 			return(
 				<div className='content-body'>
 					<div className='shadow' id='left-column'>
@@ -170,11 +174,6 @@ class ProfPage extends Component {
 			// 		</div>
 			// 	</div>
 			// );
-		}
-		else if (!isLoggedIn()) {
-			return <ErrorPage />
-		} else {
-			return <ErrorPage fourofour="true"/> 
 		}
 	}
 }

@@ -18,6 +18,7 @@ class Settings extends Component {
 		};
 		this.openEmailModal = this.openEmailModal.bind(this);
 		this.openPasswordModal = this.openPasswordModal.bind(this);
+		this.openDeleteModal = this.openDeleteModal.bind(this);
 		this.resetEmail = this.resetEmail.bind(this);
 	}
 
@@ -56,6 +57,11 @@ class Settings extends Component {
 
 	openPasswordModal() { // superClick
 		$("#resetPassword").fadeIn("slow");
+        $("#modalBackdrop").fadeIn("slow");
+	}
+
+	openDeleteModal() { // superClick
+		$("#deleteUserModal").fadeIn("slow");
         $("#modalBackdrop").fadeIn("slow");
 	}
 
