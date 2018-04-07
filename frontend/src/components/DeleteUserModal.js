@@ -24,7 +24,7 @@ class DeleteUserModal extends Component {
 			console.log("deleted");
 			console.log(resp);
 			this.onClick();
-		});
+		}).then(window.location.href = '/');
 	}
 
 	render() {

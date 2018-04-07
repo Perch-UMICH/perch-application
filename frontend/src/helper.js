@@ -1011,7 +1011,7 @@ export function getAllLabPositions(lab_id) {
         })
 }
 
-export function getLabPosition(position_id) {
+export function getLabPositions(position_id) {
     console.log('Getting position');
     return axios.get('api/positions/' + position_id)
         .then(response => {
