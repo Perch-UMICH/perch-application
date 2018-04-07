@@ -68,10 +68,9 @@ class SignUp extends Component {
 		let email = document.getElementById('email').value;
 
 		if (student) {
-			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => {
-				getStudentFromUser(id).then(resp => localStorage.setItem("student_id", resp.result.id)).then(() => window.location.href = this.state.route);
-			});
-		} else {
+			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => localStorage.setItem("student_id", resp.id)).then(() => window.location.href = this.state.route);
+		}
+		else {
 			createFaculty(id, first_name, last_name, null, email).then(resp => {
 				console.log("CREATED FACULTY");
 				console.log(resp);

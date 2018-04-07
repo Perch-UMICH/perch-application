@@ -57,7 +57,6 @@ class StudentProfile extends Component {
 	            		s_id: resp.result.id,
 	            	}
 	            );
-	            
 	        }).then(this.retrieveTags.bind(this));
 	}
 
@@ -117,46 +116,14 @@ class StudentProfile extends Component {
 							<div id='bio-card'>
 								<div id='bio-header' className='flow-text'>I'm <b>{this.state.name}</b></div>
 								<div id='bio'>{this.state.bio}</div>
-								{/*<div>Interested in Fluid Dynamics</div>
-								<hr />
-								<div>GPA: {this.state.gpa}</div>
-								<div>{this.state.major} Major</div>
-								<div>{this.state.year}</div>
-								<div>{this.state.email}</div>*/}
 							</div>
 						</div>
-						{/*<div className='center-align' style={{height: '50px', color: 'white', backgroundColor: 'rgb(41, 182, 246)', width: '700px', marginBottom: '20px', lineHeight: '50px', border: '1px solid #ddd', borderTop: 'none'}}>
-							<span>LinkedIn</span>
-							<span style={{marginLeft: '40px'}}>Resume</span>
-							<span style={{marginLeft: '40px'}}>Website</span>
-							<span style={{marginLeft: '40px'}}>Portfolio</span>
-						</div>*/}
-
-					{<div className=''>
-
-						{/*
-							<div>
-								<div className='' style={{backgroundColor: '#ddd', width: '700px', marginBottom: '20px'}} > 
-									<div style={{display: 'flex'}}>
-										<div style={{display: 'flex', width: '100%'}}><BioTab header='bio' user_type='student' msg={this.state.bio}/></div>
-						
-									</div>
-								</div>
-
-							</div>
-						*/}
-
-						
-						
+					<div className=''>						
 						<div id='tag-boxes' className='flex'>
 							<div className='profile-tab shadow'><InterestsTab tabTitle="INTERESTS" user_type="student" interests={this.state.interests} /></div>
 							<div className='profile-tab shadow'><SkillsTab user_type="student" skills={this.state.skills}/></div>
 						</div>
-						{/*<div className='flex' style={{width: '700px', marginBottom: '20px'}}>
-							<div className='profile-tab shadow' style={{width: '50%'}}><AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/></div>
-							<div className='profile-tab shadow' style={{width: '50%'}}><PastResearchTab past_research={this.state.past_research}/></div>
-						</div>*/}
-					</div>}
+					</div>
 				</div>
 			</div>
 			
