@@ -54,6 +54,7 @@ class StudentProfile extends Component {
 	            		classes: resp.result.classes,
 	            		past_research: resp.result.past_research,
 	            		student: true,
+	            		s_id: resp.result.id,
 	            	}
 	            );
 	            
