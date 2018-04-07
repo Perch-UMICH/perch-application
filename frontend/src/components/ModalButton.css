@@ -39,6 +39,11 @@
 	display: none;
 }
 
+#deleteUser {
+	top: 30%;
+	height: 200px;
+}
+
 .modal-content {
 	text-align: left;
 }
