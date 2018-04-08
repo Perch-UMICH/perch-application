@@ -1181,3 +1181,15 @@ export function getSearchData(student_id) {
             return [];
         })
 }
+
+
+
+//////
+
+export function isStudent() {
+    return sessionStorage.getItem('student_id')
+}
+
+export function isLab() {
+    return sessionStorage.getItem('faculty_id')
+}
