@@ -19,7 +19,6 @@
 }
 
 .gen-input {
-	/*color: #eee !important;*/
 	color: white !important;
 	letter-spacing: 1px;
 }
@@ -31,7 +30,6 @@
 .gen-input:focus {
   border-bottom: 1px solid #29b6f6 !important;
   box-shadow: 0 1px 0 0 #29b6f6;
-  /*color: #eee;*/
   color: white !important;
 }
 

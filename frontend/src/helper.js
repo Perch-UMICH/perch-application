@@ -1187,9 +1187,13 @@ export function getSearchData(student_id) {
 //////
 
 export function isStudent() {
-    return sessionStorage.getItem('student_id')
+    return sessionStorage.getItem('student_id') != 'null'
 }
 
 export function isLab() {
-    return sessionStorage.getItem('faculty_id')
+    return sessionStorage.getItem('faculty_id') != 'null'
+}
+
+export function getCurrentLabId() {
+    return sessionStorage.getItem('faculty_id');
 }
