@@ -15,6 +15,7 @@ class PastResearch extends Component {
 					text: '',
 				},
 			],
+			url_string: this.props.location.pathname.split('/')[1],
 		};
 		// if (this.props.location.pathname.split('/')[1] === 'update-past-research') {
 		// 	this.state.research = "Dr. Patil's Neurosurgery Lab\nDr. R's Pharmaceutics Lab\n";
@@ -71,18 +72,20 @@ class PastResearch extends Component {
 
 	saveAndContinue(event) {
 		updateStudent(this.state.student_id, null, null, null, null, null, null, null, this.state.research, null, null).then(resp => {
-			window.location = `/student-profile/${getCurrentUserId()}`
+			if (this.state.url_string === "update-student-bio") {
+				window.location = `/student-profile/${getCurrentUserId()}`;
+			} else {
+				window.location = '/student-bio';
+			}
 		});
 	}
 
 	render() {
 		var url_arr = this.props.location.pathname.split('/');
 		var header = "Past Research";
-		var dest = '/notable-classes';
 		var btn_msg = 'next';
 		if (url_arr[1] === 'update-past-research') {
 			header = "Update Past Research";
-			dest = '/student-profile';
 			btn_msg = 'back';
 		}
 		return (

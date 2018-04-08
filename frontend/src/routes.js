@@ -18,6 +18,7 @@ import LabSpecifications from './components/LabSpecifications';
 import PastResearch from './components/PastResearch';
 import StudentBio from './components/StudentBio';
 import NotableClasses from './components/NotableClasses';
+import ExternalLinks from './components/ExternalLinks';
 import ProfPage from './components/ProfPage';
 import Apply from './components/Apply';
 import CreatePosition from './components/CreatePosition';
@@ -67,9 +68,11 @@ class Router extends Component {
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/update-past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
+							<Route path='/update-notable-classes' component={ NotableClasses }/>
 							<Route path='/student-bio' component={ StudentBio }/>
 							<Route path='/update-student-bio' component={ StudentBio }/>
-							<Route path='/update-notable-classes' component={ NotableClasses }/>
+							<Route path='/external-links' component={ ExternalLinks } />
+							<Route path='/update-external-links' component={ ExternalLinks } />
 							<Route path='/prof-page' component={ ProfPage }/>
 							<Route path='/prof-page/:labSlug' component={ ProfPage }/>
 							<Route path='/apply/:labSlug' component={ Apply } />

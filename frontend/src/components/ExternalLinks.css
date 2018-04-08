@@ -1,0 +1,45 @@
+.external-links {
+	height: 100vh;
+}
+
+.external-links-form {
+	background-color: #0277bd;
+	padding: 20px;
+}
+
+.external-links-input {
+	height: 150px;
+	background-color: #eee;
+	box-shadow: 1px 1px 5px;
+	color: #eee;
+	padding: 10px;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.external-links-btn, 
+.external-links-btn:hover {
+	background-color: #03a9f4;
+}
+
+.external-links-input:hover {
+	color: #eee;
+}
+
+.external-links-header {
+	font-size: 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	background-color: rgb(41, 182, 246);
+	color: white;
+	margin-bottom: 20px;
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-top: -20px;
+}
+
+.external-links-content {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}

@@ -12,7 +12,7 @@ class Login extends Component {
 	
 		loginUser(email, password).then((resp)=>{
 			if (resp) {
-				window.location.href = `/student-profile/${getCurrentUserId()}`
+				window.location.href = `/student-profile/${getCurrentUserId()}`;
 			}
 			else {
 				alertify.error("Incorrect Username and Password");

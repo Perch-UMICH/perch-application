@@ -24,6 +24,9 @@ class CreatePosition extends Component {
 					"text": "How much wood would a wood chuck chuck if a wood chuck *couldn't* chuck wood?"
 				},
 			],
+			lowerHours: 8,
+			upperHours: 10,
+			numSlots: 1,
 			q_index: 0,
 			display_info: {
 				placeholder_txt: "Search skills",
@@ -53,7 +56,10 @@ class CreatePosition extends Component {
 				positionName: '',
 				positionDesc: '',
 				questions: [],
-				skills: []
+				skills: [],
+				lowerHours: 8,
+				upperHours: 10,
+				numSlots: 1,
 			}
 		};
 		this.state.modal_info.questions = this.state.questions;
@@ -75,6 +81,33 @@ class CreatePosition extends Component {
 		this.setState({
 		    modal_info: Object.assign({}, this.state.modal_info, {
 		      positionDesc: event.target.value,
+		    }),
+		});
+	}
+
+	updateLowerHours(event) {
+		this.setState({
+			lowerHours: event.target.value,
+		    modal_info: Object.assign({}, this.state.modal_info, {
+		      lowerHours: event.target.value,
+		    }),
+		});
+	}
+
+	updateUpperHours(event) {
+		this.setState({
+			upperHours: event.target.value,
+		    modal_info: Object.assign({}, this.state.modal_info, {
+		      upperHours: event.target.value,
+		    }),
+		});
+	}
+
+	updateNumSlots(event) {
+		this.setState({
+			numSlots: event.target.value,
+		    modal_info: Object.assign({}, this.state.modal_info, {
+		      numSlots: event.target.value,
 		    }),
 		});
 	}
@@ -138,8 +171,29 @@ class CreatePosition extends Component {
 							<input className='apply-input' id="textInput" value={this.state.positionName} type="text" placeholder="Position Title" onChange={event => this.updatePositionName(event)}></input>
 							<h2 className="apply-question-label">Position Description</h2>
 							<textArea className='lab-text-info-input' id="textArea" type="text" placeholder="short description of position responsibilities" onChange={event => this.updatePositionDesc(event)}></textArea>
+							<div className='row create-position-row'>
+								<h2 className="apply-question-label col s7">Time Commitment</h2>
+								<h2 className="apply-question-label col s5">Open Slots</h2>
+							</div>
+			  				<div className='row'>
+			  					<div className="input-field col s3">
+				                	<input className='gen-input' id='lower_bound_hours' type='number' step="1" placeholder='8' value={this.state.lowerHours} onChange={event => this.updateLowerHours(event)} />
+				                	<label htmlFor="lower_bound_hours">Min Hours/Week</label>
+				            	</div>
+				            	<div className="input-field col s3">
+					                <input className='gen-input' id='upper_bound_hours' type='number' step="1" placeholder='10' value={this.state.upperHours} onChange={event => this.updateUpperHours(event)} />
+					                <label htmlFor="upper_bound_hours">Max Hours/Week</label>
+					            </div>
+	                        	<div className="input-field col s1">
+	            	            </div>
+	                        	<div className="input-field col s4">
+	            	                <input className='gen-input' id='num_open_slots' type='number' step="1" value={this.state.numSlots} onChange={event => this.updateNumSlots(event)} />
+	            	                <label htmlFor="num_open_slots"># Open Slots</label>
+	            	            </div>
+			  				</div>
+			  				{/*							
 							<h2 className="apply-question-label">Skills Required { this.state.positionName ? "for " + this.state.positionName + "-ing": null } </h2>
-							<BubbleChoice display_info={this.state.display_info} callbackSkills={this.updateSkills}/>
+							<BubbleChoice display_info={this.state.display_info} callbackSkills={this.updateSkills}/>*/}
 							<h2 className="apply-question-label">Short Answer Questions</h2>
 							    {this.state.questions.map((question) => {
 									return (

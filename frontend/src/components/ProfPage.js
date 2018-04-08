@@ -6,7 +6,7 @@ import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import ContactTab from './ContactTab'
 import AcceptRate from './AcceptRate'
-import {getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getLabPositions, getLabPreferences} from '../helper.js'
+import {getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import './ProfPage.css'
 
@@ -16,30 +16,11 @@ class ProfPage extends Component {
 		this.state = {
 			lab_name: "",
 			yes: ['spots open', 'undergrads', 'credit'],
-			no: ['paid', 'seniors', 'freshman'],
+			no: ['paid', 'seniors', 'freshmen'],
 			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
 			labels: [], 
 			skills: [], 
-			positions: [ 
-				{
-					name: "Lab Assistant",
-					skills: [
-						"linguistic inquiry",
-						"drm",
-						"patience with children",
-					],
-					num_applicants: 4,
-				},
-				{
-					name: "Coffee Runner",
-					skills: [
-						"speed",
-						"patience",
-						"handling of hot substances",
-					],
-					num_applicants: 2,
-				},
-			],
+			positions: [],
 			contact_info: [],
 			user_id: getCurrentUserId(),
 			no_lab: false, 
@@ -50,10 +31,12 @@ class ProfPage extends Component {
 		if (isLoggedIn()) {
 			// check if student or faculty for viewing positions
 			getUser(getCurrentUserId()).then(resp => {
-				if (resp.result.is_student) {
-					this.setState({user_type: "student"});
-				} else {
-					this.setState({user_type: "faculty"});
+				if (resp.result) {
+					if (resp.result.is_student) {
+						this.setState({user_type: "student"});
+					} else {
+						this.setState({user_type: "faculty"});
+					}
 				}
 			});
 			//getFacultyFromUser(this.state.user_id)
@@ -61,9 +44,9 @@ class ProfPage extends Component {
 			getLab(lab_id).then((resp) => {
 				console.log(resp);
 				if (resp.data) {
-					getLabPositions(lab_id).then(resp => {
-						console.log("labbbb positions!");
-						console.log(resp);
+					getAllLabPositions(lab_id).then(positions => {
+						console.log(positions);
+						this.setState({ positions: positions });
 					});
 					getLabPreferences(lab_id).then(prefs => {
 						console.log(prefs);
@@ -78,6 +61,7 @@ class ProfPage extends Component {
 								}
 							}
 						}
+						//this.setState({ yes: yes_arr, no: no_arr });
 					});
 					this.setState(
 						{
@@ -88,6 +72,7 @@ class ProfPage extends Component {
 							lab_summary: resp.data.description,
 							labels: resp.tags,
 							skills: resp.skills,
+							//img_src: resp.data.labpic_path, ADD BACK IN TO SHOW IMAGE ONCE ON SAME SERVER!
 						}
 					);
 				} else {
@@ -98,7 +83,7 @@ class ProfPage extends Component {
 	}
 
 	render() {
-		var apply_dest = '/apply/' + this.state.slug;
+		var apply_dest = '/apply/' + window.location.pathname.split('/')[2];
 		if (!isLoggedIn()) {
 			return <ErrorPage /> 
 		} else if (this.state.no_lab) {

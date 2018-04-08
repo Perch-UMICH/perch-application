@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
+import { resetPassword } from '../helper.js';
+import alertify from 'alertify.js';
 import $ from 'jquery';
 
 class ResetPasswordModal extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-		};
 		this.onClick = this.onClick.bind(this);
 		this.resetPassword = this.resetPassword.bind(this);
 	}
@@ -17,8 +17,11 @@ class ResetPasswordModal extends Component {
 	}
 
 	resetPassword(event) {
-		this.onClick();
-		// reset password?
+		resetPassword(this.props.email, $('#new_password').val(), $('#new_password_conf').val()).then(resp => {
+			console.log("reset password!");
+			alertify.success("Password Successfully Reset");
+			this.onClick();
+		});
 	}
 
 	render() {

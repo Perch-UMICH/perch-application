@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser} from '../helper.js'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getFacultyLabs} from '../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -14,7 +14,19 @@ class NavBar extends Component {
 		getUser(getCurrentUserId()).then(resp => {
 			if (resp.result) {
 				if (resp.result.is_student) {
-					this.setState({ is_student: true });
+					this.setState({ 
+						is_student: true, 
+						prof_dest: `/student-profile/${getCurrentUserId()}`,
+					});
+				} else if (resp.result.is_faculty) {
+					getFacultyFromUser(getCurrentUserId()).then(resp => {
+						getFacultyLabs(resp.result.id).then(labs => {
+							this.setState({ 
+								is_student: false, 
+								prof_dest: `/prof-page/${labs[0].id}`,
+							});
+						});
+					});
 				}
 			}
 		});
@@ -24,7 +36,7 @@ class NavBar extends Component {
 
 		if (isLoggedIn()) {
 			var navItems = <div>
-				{this.state.is_student ? <li><a className="nav-item" href={`/student-profile/${getCurrentUserId()}`}>PROFILE</a></li> : null }
+				<li><a className="nav-item" href={this.state.prof_dest}>PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
@@ -55,7 +67,7 @@ class NavBar extends Component {
 			          	<a className='no-hover' href="/home"><img className="nav-logo" alt="logo" src="/assets/Updated_Logo_No_Blue.png" /><div className='logo-text'>PERCH</div></a>
 			        }
 			        {isLoggedIn() &&
-			          	<a className='no-hover' href={`/student-profile/${getCurrentUserId()}`}><img className="nav-logo" alt="logo" src="/assets/Updated_Logo_No_Blue.png" /><div className='logo-text'>PERCH</div></a>
+			          	<a className='no-hover' href={this.state.prof_dest}><img className="nav-logo" alt="logo" src="/assets/Updated_Logo_No_Blue.png" /><div className='logo-text'>PERCH</div></a>
 			        }
 			        </ul>
 
