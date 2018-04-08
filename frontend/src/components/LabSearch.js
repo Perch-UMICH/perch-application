@@ -103,7 +103,7 @@ class LabSearch extends Component {
 				lab.skill_arr = skill_temp_arr;
 				lab.all_tags = temp_all_arr;
 	  		});
-	  		this.setState({all_labs: temp_labs});
+	  		this.setState({all_labs: temp_labs, filtered_labs: temp_labs});
 	  		console.log(this.state.all_labs);
 
 	  		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
@@ -126,6 +126,9 @@ class LabSearch extends Component {
 	}
 
 	handleClickAdd(interest, temporary) {
+		if (!this.state.skills.length && !this.state.interests.length) {
+			this.setState({filtered_labs: []});
+		}
 		this.state.all_labs.map((lab) => {
             if (lab.all_tags.indexOf(interest) !== -1) {
                 if (!lab.in_search) {
@@ -214,9 +217,15 @@ class LabSearch extends Component {
                 }
                 
                 if (prevState.search_interests) {
+                	if (!temp_delete.length && !this.state.interests.length) {
+			        	return {filtered_labs: prevState.all_labs, skills: temp_delete, skills_catalog: temp_add, filtered_catalog: temp_filter};
+					}
                     return {skills: temp_delete, skills_catalog: temp_add, filtered_catalog: temp_filter};
                 }
                 else {
+                	if (!temp_delete.length && !this.state.interests.length) {
+			        	return {filtered_labs: prevState.all_labs, skills: temp_delete, skills_catalog: temp_add};
+					}
                     return {skills: temp_delete, skills_catalog: temp_add};
                 }
             }
@@ -239,9 +248,15 @@ class LabSearch extends Component {
                 }
                 
                 if (prevState.search_skills) {
+                	if (!temp_delete.length && !this.state.skills.length) {
+			        	return {filtered_labs: prevState.all_labs, interests: temp_delete, interests_catalog: temp_add, filtered_catalog: temp_filter};
+					}
                     return {interests: temp_delete, interests_catalog: temp_add, filtered_catalog: temp_filter};
                 }
                 else {
+                	if (!temp_delete.length && !this.state.skills.length) {
+			        	return {filtered_labs: prevState.all_labs, interests: temp_delete, interests_catalog: temp_add};
+					}
                     return {interests: temp_delete, interests_catalog: temp_add};
                 }
             }
@@ -293,6 +308,9 @@ class LabSearch extends Component {
 	}
 
 	handleImport(import_type, temporary) {
+		if (!this.state.skills.length && !this.state.interests.length) {
+			this.setState({filtered_labs: []});
+		}
 		if (import_type === 'skills') {
             this.state.your_skills.map((skill) => {
                 this.state.all_labs.map((lab) => {
