@@ -203,7 +203,8 @@ class LabSearch extends Component {
                 temp_delete.splice(temp_delete.indexOf(interest), 1);
 
                 let check = prevState.in_filter;
-                if (interest.includes(temporary.toString())) {
+                if (interest.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").includes(
+                	temporary.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").toString())) {
                     if (temporary !== "default") {
                         temp_filter.push(interest);
                     }
@@ -227,7 +228,8 @@ class LabSearch extends Component {
                 temp_delete.splice(temp_delete.indexOf(interest), 1);
 
                 let check = prevState.in_filter;
-                if (interest.includes(temporary.toString())) {
+                if (interest.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").includes(
+                	temporary.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").toString())) {
                     if (temporary !== "default") {
                         temp_filter.push(interest);
                     }
@@ -294,7 +296,7 @@ class LabSearch extends Component {
 		if (import_type === 'skills') {
             this.state.your_skills.map((skill) => {
                 this.state.all_labs.map((lab) => {
-                    if (lab.tags.indexOf(skill) !== -1) {
+                    if (lab.skill_arr.indexOf(skill) !== -1) {
                         if (!lab.in_search) {
                             let temp_lab = lab;
                             temp_lab.in_search = true;
@@ -302,8 +304,10 @@ class LabSearch extends Component {
                             this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
                         }
                         else {
-                            lab.tags_in++;
-                            console.log(lab.tags_in);
+                        	let temp_check = this.state.skills_catalog;
+                        	if (temp_check.indexOf(skill) !== -1) {
+                        		lab.tags_in++;
+                        	}
                         }
                     }
                 });
@@ -334,11 +338,19 @@ class LabSearch extends Component {
         else {
             this.state.your_interests.map((interest) => {
                 this.state.all_labs.map((lab) => {
-                    if (lab.tags.indexOf(interest) !== -1) {
+                    if (lab.tag_arr.indexOf(interest) !== -1) {
                         if (!lab.in_search) {
                             let temp_lab = lab;
                             temp_lab.in_search = true;
+                            temp_lab.tags_in++;
                             this.setState((prevState) => {filtered_labs: prevState.filtered_labs.push(temp_lab)});
+                            console.log('hi');
+                            console.log(lab.tags_in);
+                        }
+                        else {
+                        	let temp_check = this.state.interests_catalog;
+                        	if (temp_check.indexOf(interest) !== -1) {
+                        		lab.tags_in++;                        	}
                         }
                     }
                 });
