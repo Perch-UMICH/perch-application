@@ -6,6 +6,7 @@ import BioTab from './BioTab';
 import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
+import ContactTab from './ContactTab'
 import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import $ from 'jquery'
@@ -96,6 +97,9 @@ class StudentProfile extends Component {
 	 		<div className='content-body'>
 	 			<div className='shadow' id='left-column'>
 	 				<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/>
+	 				<ContactTab header='Contact' contact_info={[
+	 					{value: this.state.email},
+	 				]}/>
 	 				<PastResearchTab past_research={this.state.past_research}/>
 	 				<div className='student-profile-linker'>Linkedin</div>
 	 				<div className='student-profile-linker'>Resume</div>

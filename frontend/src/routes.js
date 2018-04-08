@@ -28,14 +28,11 @@ import PickInterview from './components/PickInterview';
 import Settings from './components/Settings';
 import Feedback from './components/Feedback';
 import ForgotPassword from './components/ForgotPassword';
+import UpdateContact from './components/UpdateContact';
 import './components/TapTarget.css';
 import './components/general.css';
 
 class Router extends Component {
-	componentDidMount(){
-		document.title = "PERCH";
-	}
-
 	render() {
 		return(
 			<BrowserRouter>
@@ -65,6 +62,7 @@ class Router extends Component {
 							<Route path='/update-lab-description' component= { LabTextInfo }/>
 							<Route path='/lab-specifications' component= { LabSpecifications }/>
 							<Route path='/update-lab-specifications' component= { LabSpecifications }/>
+							<Route path='/update-contact' component= { UpdateContact }/>
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/update-past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>

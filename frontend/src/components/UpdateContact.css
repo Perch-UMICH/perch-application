@@ -1,0 +1,9 @@
+#contact-email:focus + label, #contact-location:focus + label {
+  color: #29b6f6;
+}
+
+#contact-email:focus, #contact-location:focus {
+  border-bottom: 1px solid #29b6f6;
+  box-shadow: 0 1px 0 0 #29b6f6;
+}
+

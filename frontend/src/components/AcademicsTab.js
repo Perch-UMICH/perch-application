@@ -8,7 +8,6 @@ class AcademicsTab extends Component {
 		this.state = {
 			id: window.location.pathname.split( '/' )[2],
 		}
-
 	}
 
 	render() {
