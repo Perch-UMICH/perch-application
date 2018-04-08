@@ -9,7 +9,7 @@ class NotableClasses extends Component {
 		super(props);
 		this.state = {
 			classes: '',
-			gpa: '',
+			gpa: '4.0',
 			year: '',
 			major: '',
 			student_id: getCurrentStudentId(),
@@ -19,6 +19,7 @@ class NotableClasses extends Component {
 					text: '',
 				},
 			],
+			url_string: this.props.location.pathname.split('/')[1],
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 		this.state.c_index = this.state.class_arr.length;
@@ -61,10 +62,6 @@ class NotableClasses extends Component {
 
 	updateMajor(event) {
 		this.setState({ major: event.target.value });
-	}
-
-	returnToProfile() {
-		window.location = `/student-profile/${getCurrentUserId()}`;
 	}
 
 	addClass(event) {
@@ -112,17 +109,21 @@ class NotableClasses extends Component {
 		}
 		updateStudent(this.state.student_id, null, null, this.state.major, year, this.state.gpa, null, null, null, this.state.classes, null).then(resp => {
 			console.log(resp);
-		}).then(this.returnToProfile);
+		}).then(resp => {
+			if (this.state.url_string === "update-notable-classes") {
+				window.location = `/student-profile/${getCurrentUserId()}`;
+			} else {
+				window.location = '/past-research';
+			}
+		});
 	}
 
 	render() {
 		var url_arr = this.props.location.pathname.split('/');
 		var btn_msg = 'next';
-		var dest = '/student-bio';
 		var header = 'Academics';
 		if (url_arr[1] === "update-notable-classes") {
 			btn_msg = 'save';
-			dest = '/student-profile';
 			header = 'Update Academics';
 		}
 

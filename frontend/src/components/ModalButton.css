@@ -72,3 +72,11 @@
 	width: 60%;
 	margin: auto;
 }
+
+.modal-small-header {
+	padding-right: 5px;
+}
+
+.description-text {
+	padding-bottom: 10px;
+}

@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
+import { getCurrentUserId } from '../helper.js';
 
 class AppSubmissionModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			lab_name: "The Infant Cognition Project",
-			slug: 'the-infant-cognition-project'
+			slug: 'the-infant-cognition-project',
+			s_dest: `/student-profile/${getCurrentUserId()}`,
 		};
 	}
 
 	render() {
-		var lab_dest = '/prof-page/' + this.state.slug;
+		var l_dest = '/prof-page/' + this.state.slug;
 		return(
 			<div>
 				<div id="submitModal" className="modal">
@@ -21,8 +23,8 @@ class AppSubmissionModal extends Component {
 				    	   We'll notify you if they think it's a match.</p>
 				   	</div>
 				   	<div className="modal-footer">
-				   		<BasicButton dest={lab_dest} msg='Return to Lab Page' />
-				   		<BasicButton dest="/student-profile" msg='Return to Profile' />
+				   		<BasicButton dest={l_dest} msg='Return to Lab Page' />
+				   		<BasicButton dest={this.state.s_dest} msg='Return to Profile' />
 				  	</div>
 			 	</div>
 			</div>

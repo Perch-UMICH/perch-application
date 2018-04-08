@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../helper.js';
-import {getAllUsers, deleteUser, getAllStudents, createFaculty} from '../helper.js'
+import {getAllUsers, deleteUser, getAllStudents, createFaculty, createLab, addLabToFaculty } from '../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -8,23 +8,6 @@ class SignUp extends Component {
 		this.state = {
 			route: '/pick-your-interests?user_type=student'
 		};
-
-		// getAllUsers().then((resp) => {
-		// 	// for (let i = 6; i < resp.result.length; i++) {
-		// 	// 	deleteUser(i);
-		// 	// }
-		// 	console.log(resp.result)
-
-		// })
-
-		// getAllStudents().then((resp) => {
-		// 	// for (let i = 6; i < resp.result.length; i++) {
-		// 	// 	deleteUser(i);
-		// 	// }
-		// 	console.log(resp.result)
-
-		// })
-		
 	}
 
 	handleUserTypeCheck(event) {
@@ -71,19 +54,14 @@ class SignUp extends Component {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => sessionStorage.setItem("student_id", resp.id)).then(() => window.location.href = this.state.route);
 		}
 		else {
-			createFaculty(id, first_name, last_name, null, email).then(resp => {
-				console.log("CREATED FACULTY");
-				console.log(resp);
-				/*createLab(faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email).then(resp => {
-					console.log("CREATED LAB");
-					console.log(resp);
-					addLabToFaculty(faculty_id, lab_id).then(resp => {
-						console.log("ADDED LAB TO FACULTY");
-						console.log(resp);
+			createFaculty(id, first_name, last_name, null, email).then(fac => {
+				console.log(fac);
+				createLab(fac.id, `${first_name} ${last_name}'s Lab`, 'Chemistry', '100 Cool Catz Dr., Lab 1003', 'uhh', null, null, null, null, null, email).then(lab => {
+					addLabToFaculty(fac.id, lab.id).then(resp => {
+						window.location.href = '/lab-name';
 					});
-				});*/
+				});
 			});
-			//window.location.href = this.state.route;
 		}
 	}
 

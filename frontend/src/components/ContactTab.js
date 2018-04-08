@@ -20,7 +20,7 @@ class ContactTab extends Component {
 					<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
 				</div>
 				<div className='contact-tab'>
-					{this.props.contact_info.map((item) => <div>{`${item.value}`}</div>)}
+					{this.props.contact_info.map((item) => <div key={item.value}>{`${item.value}`}</div>)}
 				</div>
 			</div>
 		);

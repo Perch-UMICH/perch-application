@@ -11,8 +11,10 @@ class PositionListItem extends Component {
 		return (
 			<div className='lab-list-item shadow'>
 				<div className='lab-list-tag-container'>
-					<a className='null-link-style'><div className='lab-list-name hide-on-small-only'>{this.props.positionName}</div></a>
-					<span className='hide-on-small-only'>{this.props.tags.map((tag) => <div key={tag} className='floater-item'>{tag}</div>)}</span>
+					<a className='null-link-style'><div className='lab-list-name hide-on-small-only'>{this.props.positionTitle}</div></a>
+					{/*<span className='hide-on-small-only'>{this.props.tags.map((tag) => <div key={tag} className='floater-item'>{tag}</div>)}</span>*/}
+					<div className='floater-item'>{this.props.time_comm}</div>
+					<div className='floater-item'>Open Slots: {this.props.open_slots}</div>
 				</div>
 				
 				<div className="lab-list-btn-container">

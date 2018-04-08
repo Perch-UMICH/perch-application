@@ -9,6 +9,7 @@ class StudentBio extends Component {
 		this.state = {
 			placeholder: "Short description of background, experience, and interests",
 			bio: '',
+			url_string: this.props.location.pathname.split('/')[1],
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
@@ -22,7 +23,11 @@ class StudentBio extends Component {
 
 	saveAndContinue(event) {
 		updateStudent(this.state.student_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=> {
-			window.location = `/student-profile/${getCurrentUserId()}`
+			if (this.state.url_string === "update-student-bio") {
+				window.location = `/student-profile/${getCurrentUserId()}`;
+			} else {
+				window.location = '/upload-image?user_type=student';
+			}
 		});
 	}
 
@@ -35,11 +40,9 @@ class StudentBio extends Component {
 	render() {
 		var url_arr = this.props.location.pathname.split('/');
 		var btn_msg = 'next';
-		var dest = '/upload-image?user_type=student';
 		var update = false;
 		if (url_arr[1] === "update-student-bio") {
 			btn_msg = 'save';
-			dest = '/student-profile';
 			update = true;
 		}
 		return (

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
-import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser } from '../helper.js';
+import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, getFacultyLabs } from '../helper.js';
 import SquareButton from './SquareButton';
 import './UploadImage.css';
+import axios from 'axios';
 import $ from 'jquery';
 
 class UploadImage extends Component {
@@ -25,7 +26,7 @@ class UploadImage extends Component {
 				if (resp.result.is_student) {
 					getStudentFromUser(user_id).then(resp => {
 						this.setState({ 
-							dest: '/student-profile', 
+							dest: `/student-profile/${getCurrentUserId()}`,
 							user_type: "student",
 							type_id: resp.result.id,
 						});
@@ -33,10 +34,12 @@ class UploadImage extends Component {
 				}
 				else if (resp.result.is_faculty) {
 					getFacultyFromUser(user_id).then(resp => {
-						this.setState({ 
-							dest: '/prof-page', 
-							user_type: "faculty",
-							type_id: resp.result.id,
+						getFacultyLabs(resp.result.id).then(labs => {
+							this.setState({ 
+								dest: `/prof-page/${labs[0].id}`, 
+								user_type: "lab",
+								type_id: labs[0].id,
+							});
 						});
 					});
 				}
@@ -48,11 +51,24 @@ class UploadImage extends Component {
 	}
 
 	clickUpload(event) {
-		var img_file = $('#img_file').val();
-		uploadPic(this.state.user_type, this.state.type_id, img_file).then(resp => {
-			console.log("whaddup");
-			console.log(resp);
-		});
+		const fileInput = document.getElementById('fileToUpload').files[0];
+		const formData = new FormData();
+		formData.append( 'image', fileInput );
+		formData.append('type', this.state.user_type);
+		formData.append('id', this.state.type_id);
+		console.log(formData);
+		const config = {
+		    headers: { 'content-type': 'multipart/form-data' }
+		};
+
+		axios.post('api/pics', formData, config)
+		    .then(response => {
+		        console.log(response.data.message);
+		        console.log(response.data.result);
+		    })
+		    .catch(function (error) {
+		        console.log(error);
+		    })
 		//window.location.href = this.state.dest;
 	}
 
@@ -67,7 +83,7 @@ class UploadImage extends Component {
 						<form className='file-field input-field'>
 							<div className="btn upload-image-btn">
 							  <span>File</span>
-							  <input type="file" />
+							  <input type="file" name="fileToUpload" id="fileToUpload" />
 							</div>
 							<div className="file-path-wrapper">
 							  <input className="file-path validate" id="img_file" type="text" placeholder="Upload file" />

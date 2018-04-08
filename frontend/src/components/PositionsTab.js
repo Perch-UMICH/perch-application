@@ -28,8 +28,13 @@ class PositionsTab extends Component {
 				<div className='positions-tab'>
 					{ (this.props.positions.length === 0) ? <div className="center-align">You haven't created any positions! Click the '+' in the top right of this box to post an application</div> : null}
 				    {this.props.positions.map((position) => {
+				    	console.log("POSITION");
+				    	console.log(position);
+				    	if (dest !== "/view-applicants") {
+				    		dest = this.props.apply_dest + '/' + position.id;
+				    	}
 						return (
-							<PositionListItem key={position.name} positionName={position.name} tags={position.skills} dest={dest} btn_msg={btn_msg || `applicants (${position.num_applicants})`} selected={selected}/>);
+							<PositionListItem key={position.title} id={position.id} positionTitle={position.title} time_comm={position.time_commitment} open_slots={position.open_slots} dest={dest} btn_msg={btn_msg || `applicants (${position.num_applicants})`} selected={selected}/>);
 					})}
 				</div>
 			</div>

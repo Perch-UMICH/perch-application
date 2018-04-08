@@ -70,7 +70,7 @@ class Settings extends Component {
 		return (
 			<div>
 				<ResetEmailModal callbackEmail={this.resetEmail} />
-				<ResetPasswordModal />
+				<ResetPasswordModal email={this.state.email}/>
 				<DeleteUserModal />
 				<div id="modalBackdrop"></div>
 				<div className='lab-text-info shift-down'>

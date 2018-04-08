@@ -6,8 +6,6 @@ import {getStudent, getStudentFromUser, getCurrentStudentId, getCurrentUserId} f
 class ResetEmailModal extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-		};
 		this.onClick = this.onClick.bind(this);
 		this.resetEmail = this.resetEmail.bind(this);
 	}

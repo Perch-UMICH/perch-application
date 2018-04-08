@@ -1,19 +1,12 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
+import { getLabPositions, getLab, getPositionApplication } from '../helper.js';
 import './Apply.css';
 
 class Apply extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lab_name: "The Infant Cognition Project",
-			pos_name: "Lab Assistant",
-			pos_description: "Our lab assistants are deeply involved in conducting and analyzing the results of our expriments. The majority of our studies use a habituation-dishabituation technique. The underlying principle is simple: we become bored when we are exposed to something in the environment over and over again.",
-			skills: [
-				"linguistic inquiry",
-				"day reconstruction method",
-				"patience with children",
-			],
 			questions: [
 				{
 					"id": "q_1",
@@ -31,20 +24,48 @@ class Apply extends Component {
 		};
 	}
 
+	componentDidMount() {
+		var url_arr = window.location.pathname.split('/');
+		var lab_id = url_arr[2];
+		var position_id = url_arr[3];
+		getLab(lab_id).then(resp => {
+			if (resp.data) {
+				this.setState({ lab_name: resp.data.name })
+			}
+		});
+		getLabPositions(position_id).then(position => {
+			console.log('position!');
+			console.log(position);
+			this.setState({ 
+				pos_description: position.description,
+				pos_name: position.title,
+				time_comm: position.time_commitment,
+				open_slots: position.open_slots,
+			})
+		});
+		getPositionApplication(position_id).then(app => {
+			console.log("application");
+			console.log(app);
+		})
+	}
+
 	render() {
 		return (
 			<div className='apply shift-down'>
 				<div className='container center-align apply-form shadow'>
-					<div className='apply-header'>Apply to {this.state.lab_name}:<br/>{this.state.pos_name}</div>
-					<h2 className="app-question-tab-label">POSITION DESCRIPTION:</h2>
-					<div className="container app-question-desc">{this.state.pos_description}</div> 
-					<h2 className="app-question-tab-label">SKILLS REQUIRED:</h2>
+					<div className='apply-header'>Apply to {this.state.lab_name}:<br/>{this.state.pos_name}</div><br/>
+					<div className="container app-question-desc">{this.state.pos_description}</div>
+					<div className="container"> 
+						<div className='floater-item'>{this.state.time_comm}</div>
+						<div className='floater-item'>Open Slots: {this.state.open_slots}</div>
+					</div><br/>
+					{/*<h2 className="app-question-tab-label">SKILLS REQUIRED:</h2>
 					<div className="container">
 					    {this.state.skills.map((skill) => {
 							return (
 								<div key={skill} className='floater-item'>{skill}</div>);
 						})}
-					</div><br/>
+					</div><br/>*/}
 					<AppQuestionTab questions={this.state.questions} />
 				</div>
 			</div>
