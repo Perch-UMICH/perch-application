@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {isStudent, isLab, getStudent, getCurrentStudentId, getLab, getCurrentLabId, updateLab} from '../helper.js'
+import {isStudent, isLab, getStudent, getCurrentStudentId, getCurrentUserId, getLab, getCurrentLabId, updateLab, updateStudent, getAllStudents} from '../helper.js'
+import BasicButton from './BasicButton'
 import './UpdateContact.css';
 
 class UpdateContact extends Component {
@@ -24,9 +25,9 @@ class UpdateContact extends Component {
 	updateInfo(event) {
 		event.preventDefault()
 		if (isStudent()) 
-			console.log('hi')
+			updateStudent(getCurrentStudentId(), null, null, null, null, null, this.state.email, null, null, null, null).then(this.redirect.bind(this)) 
 		else if (isLab()) 
-			updateLab(getCurrentLabId(), null, null, this.state.location, null, null, null, null, null, this.state.phone, this.state.email)
+			updateLab(getCurrentLabId(), null, null, this.state.location, null, null, null, null, null, this.state.phone, this.state.email).then(this.redirect.bind(this))
 	}
 
 	componentDidMount() {
@@ -35,6 +36,13 @@ class UpdateContact extends Component {
 		
 		else if (isLab())
 			this.grabLabInfo();
+	}
+
+	redirect() {
+		if (isStudent())
+			window.location = `/student-profile/${getCurrentUserId()}`;
+		else if (isLab())
+			window.location = `/prof-page/${getCurrentUserId()}`;
 	}
 
 	render() {
@@ -48,7 +56,7 @@ class UpdateContact extends Component {
 						<div className='row'>
 							<div className='input-field col s12'>
 								<input id='contact-email' className='gen-input' type='email' value={this.state.email} onChange={(event) => this.setState({email: event.target.value})} autofocus="autofocus"/>
-								<label htmlFor="contact-email" >Email / Username</label>
+								<label htmlFor="contact-email" >Email ( may differ from username )</label>
 							</div>
 						</div>}
 
@@ -63,7 +71,7 @@ class UpdateContact extends Component {
 								<label htmlFor="contact-location">Lab Location</label>
 							</div>
 						</div>}
-						<button>submit</button>
+						<BasicButton msg='save' color='light' />
 					</form>
 				</div>
 			</div>

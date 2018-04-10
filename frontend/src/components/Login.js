@@ -11,6 +11,7 @@ class Login extends Component {
 		let password = document.getElementById('password').value
 	
 		loginUser(email, password).then((resp)=>{
+			console.log(resp)
 			if (resp) {
 				window.location.href = `/student-profile/${getCurrentUserId()}`;
 			}

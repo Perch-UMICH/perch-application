@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
+import {getCurrentUserId} from '../helper'
 import './ContactTab.css';
 
 class ContactTab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dest: '/update-student-bio'
+			dest: '/update-contact',
+			id: window.location.pathname.split('/')[2],
 		};
-		if (this.props.user_type === 'faculty') {
-			this.state.dest = '/update-lab-description';
-		}
+		// if (this.props.user_type === 'faculty') {
+		// 	this.state.dest = '/update-lab-description';
+		// }
 	}
 
 	render() {
@@ -17,7 +19,9 @@ class ContactTab extends Component {
 			<div className='tab-container'>
 				<div className='tab-header' style={{fontSize: '16px', padding: '15px 10px'}}>
 					{this.props.header.toUpperCase()}
-					<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
+					{ getCurrentUserId() === this.state.id && 
+						<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
+					}
 				</div>
 				<div className='contact-tab'>
 					{this.props.contact_info.map((item) => <div key={item.value}>{`${item.value}`}</div>)}

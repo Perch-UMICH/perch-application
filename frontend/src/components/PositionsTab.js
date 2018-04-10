@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PositionListItem from './PositionListItem';
+import {isLab, isStudent} from '../helper.js'
 import $ from 'jquery';
 import './PositionsTab.css';
 
@@ -26,7 +27,8 @@ class PositionsTab extends Component {
 			<div className="tab-fit tab-container shadow">
 				<div className='tab-header positions-tab-header'>{this.props.header.toUpperCase()}<a href='/create-position' id="showOnFaculty"><i className="material-icons interest-editor">add</i></a></div>
 				<div className='positions-tab'>
-					{ (this.props.positions.length === 0) ? <div className="center-align">You haven't created any positions! Click the '+' in the top right of this box to post an application</div> : null}
+					{ this.props.positions.length === 0 && isLab() && <div className="center-align">You haven't created any positions! Click the '+' in the top right of this box to post an application</div> }
+				    { this.props.positions.length === 0 && isStudent() && <div className="center-align">This lab hasn't created any positions!</div> }
 				    {this.props.positions.map((position) => {
 				    	console.log("POSITION");
 				    	console.log(position);

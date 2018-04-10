@@ -76,6 +76,7 @@ export function loginUser(email, password) {
         email, password
     })
         .then(response => {
+            console.log(response)
             // cookie.set('perch_api_key', response.data.result.token, {path: "/"});
             // cookie.set('perch_user_id', response.data.result.id, {path: "/"});
             sessionStorage.setItem('token', response.data.result[1].token);
