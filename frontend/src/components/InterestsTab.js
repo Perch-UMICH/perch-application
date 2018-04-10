@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getCurrentUserId} from '../helper.js'
+import {getCurrentUserId, permissionCheck} from '../helper.js'
 import './InterestsTab.css';
 
 class InterestsTab extends Component {
@@ -16,7 +16,7 @@ class InterestsTab extends Component {
 			<div className='tab-container'>
 				<div className='tab-header'>
 					{this.props.tabTitle} 
-					{getCurrentUserId() == this.state.id && 
+					{permissionCheck() && 
 						<a href={route} ><i className="material-icons interest-editor">add</i></a>
 					}
 				</div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isLoggedIn, getCurrentUserId} from '../helper.js'
+import {isLoggedIn, getCurrentUserId, permissionCheck} from '../helper.js'
 import shave from 'shave'
 import './BioTab.css';
 
@@ -34,9 +34,9 @@ class BioTab extends Component {
 				<div className='tab-header'>
 				{this.props.header.toUpperCase()}
 					<div className='editors'>
-						{/*getCurrentUserId() === this.state.id && 
+						{permissionCheck() && 
 							<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
-						*/}
+						}
 						<i id='bio-toggler' className="material-icons bio-toggler edit-icon" onClick={this.handleShave.bind(this)}>arrow_drop_down</i>
 					</div>
 				</div>

@@ -1198,3 +1198,11 @@ export function isLab() {
 export function getCurrentLabId() {
     return sessionStorage.getItem('faculty_id');
 }
+
+export function permissionCheck() {
+    let page_id = window.location.pathname.split('/')[2]
+    let page_type = window.location.pathname.split('/')[1]
+    let checkLab = getCurrentLabId() === page_id && page_type === 'prof-page'
+    let checkStudent = getCurrentUserId() === page_id && page_type === 'student-profile'
+    return checkLab || checkStudent;
+}

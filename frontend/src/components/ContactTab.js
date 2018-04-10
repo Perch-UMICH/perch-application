@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getCurrentUserId} from '../helper'
+import {getCurrentUserId, getCurrentLabId, getCurrentStudentId, isLab, isStudent, permissionCheck} from '../helper'
 import './ContactTab.css';
 
 class ContactTab extends Component {
@@ -7,11 +7,7 @@ class ContactTab extends Component {
 		super(props);
 		this.state = {
 			dest: '/update-contact',
-			id: window.location.pathname.split('/')[2],
 		};
-		// if (this.props.user_type === 'faculty') {
-		// 	this.state.dest = '/update-lab-description';
-		// }
 	}
 
 	render() {
@@ -19,7 +15,7 @@ class ContactTab extends Component {
 			<div className='tab-container'>
 				<div className='tab-header' style={{fontSize: '16px', padding: '15px 10px'}}>
 					{this.props.header.toUpperCase()}
-					{ getCurrentUserId() === this.state.id && 
+					{ permissionCheck() && 
 						<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
 					}
 				</div>
