@@ -1,0 +1,10 @@
+
+.ext-links {
+	position: relative;
+}
+
+.ext-links:hover a i {
+	opacity: 1;
+	transition: .2s ease;
+	cursor: pointer;
+}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../helper.js';
-import {getAllUsers, deleteUser, getAllStudents, createFaculty, createLab, addLabToFaculty } from '../helper.js'
+import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addLabToFaculty } from '../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -8,6 +8,9 @@ class SignUp extends Component {
 		this.state = {
 			route: '/pick-your-interests?user_type=student'
 		};
+		getAllUsers().then(r=>console.log(r))
+		getAllStudents().then(r=>console.log(r))
+		getStudent(2).then(r=>console.log(r))
 	}
 
 	handleUserTypeCheck(event) {
@@ -80,15 +83,6 @@ class SignUp extends Component {
 			                <label htmlFor="last_name">Last name</label>
 			            </div>
 	  				</div>
-	  				{/*
-	  				<div className="input-field">
-		                <input id="first_name" type="text" required />
-		                <label htmlFor="first_name">Name</label>
-		            </div>
-		            <div className="input-field">
-		                <input id="last_name" type="text" required />
-		                <label htmlFor="last_name">Name</label>
-		            </div>   */}
 	  				<div className="input-field">
 		                <input id="email" type="email" required />
 		                <label htmlFor="email">Email</label>

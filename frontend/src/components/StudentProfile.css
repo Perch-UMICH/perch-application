@@ -176,22 +176,6 @@
 	border-bottom: 1px solid #ccc;
 }
 
-.student-profile-linker {
-	color: white;
-	background-color: rgb(41, 182, 246);
-	text-transform: uppercase;
-	text-align: center;
-	padding: 20px;
-	letter-spacing: 2px;
-	border-bottom: 1px solid #eee;
-	transition: .2s ease;
-}
-
-.student-profile-linker:hover {
-	background-color: #0277BD;
-	transition: .2s ease;
-}
-
 /* 2018.04.03 */
 
 .content-body {

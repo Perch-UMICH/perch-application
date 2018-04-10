@@ -9,6 +9,7 @@ import Endorsements from './Endorsements'
 import ContactTab from './ContactTab'
 import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser} from '../helper.js'
 import ErrorPage from './ErrorPage'
+import ExtLinks from './ExtLinks'
 import $ from 'jquery'
 import './StudentProfile.css';
 
@@ -101,15 +102,12 @@ class StudentProfile extends Component {
 	 					{value: this.state.email},
 	 				]}/>
 	 				<PastResearchTab past_research={this.state.past_research}/>
-	 				<div className='student-profile-linker'>Linkedin</div>
-	 				<div className='student-profile-linker'>Resume</div>
-	 				<div className='student-profile-linker'>Website</div>
+	 				<ExtLinks linkedin={this.state.linkedin} resume={this.state.resume} website={this.state.website} />
 	 			</div>
 	 			<div id='right-column' className='shadow center-align'>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
-	 				<div className='ad'>AD</div>
-	 				
+	 				<div className='ad'>AD</div>	
 	 			</div>
 				<div className='container shift-down' id='center-column'>
 						<div id='student-main-card' className='left-align shadow'>

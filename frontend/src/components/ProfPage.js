@@ -67,7 +67,8 @@ class ProfPage extends Component {
 						{
 							lab_name: resp.data.name,
 							contact_info: [
-								{label: 'location', value: resp.data.location}
+								{label: 'location', value: resp.data.location},
+								{label: 'email', value: resp.data.contact_email},
 							],
 							lab_summary: resp.data.description,
 							labels: resp.tags,

@@ -36,7 +36,8 @@ class AcademicsTab extends Component {
 					<div className='classes-wrapper'>
 						<span className='academic-label'>Notable Classes: </span>
 						<span className='academic-info'>
-						<pre style={{marginTop: '5px'}}>{this.props.classes}</pre></span>
+							{/*this.props.classes.map((r)=>{r})*/}
+						</span>
 					</div>
 				</div>
 			</div>
