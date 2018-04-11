@@ -15,8 +15,8 @@ class ExtLinks extends Component {
 					}
 					</a>
 				</div> 
-				
-				<ExtLinkBox dest={'this.props.linkedin'}>Linkedin</ExtLinkBox>
+
+				<ExtLinkBox dest={this.props.linkedin}>Linkedin</ExtLinkBox>
  				<ExtLinkBox dest={this.props.resume}>Resume</ExtLinkBox>
  				<ExtLinkBox dest={this.props.website}>Website</ExtLinkBox>
 			</div>
