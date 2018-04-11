@@ -4,6 +4,12 @@ import {permissionCheck} from '../helper.js'
 import './ExtLinks.css';
 
 class ExtLinks extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			dest: '/edit-external-links',
+		};
+	}
 
 	render() {
 		return(
@@ -11,7 +17,7 @@ class ExtLinks extends Component {
 				<div className='ext-links mobile-header tab academic-tab-header'>Links
 					<a href='#' className="null-link-style" >
 					{ permissionCheck() && 
-						<i className="material-icons interest-editor edit-icon" style={{position: 'absolute', right: '0'}} >create</i>
+						<a href={this.state.dest}><i className="material-icons interest-editor edit-icon" style={{position: 'absolute', right: '0'}} >create</i></a>
 					}
 					</a>
 				</div> 

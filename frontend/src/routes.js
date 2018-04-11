@@ -19,6 +19,7 @@ import PastResearch from './components/PastResearch';
 import StudentBio from './components/StudentBio';
 import NotableClasses from './components/NotableClasses';
 import ExternalLinks from './components/ExternalLinks';
+import UpdateExternalLinks from './components/UpdateExternalLinks';
 import ProfPage from './components/ProfPage';
 import Apply from './components/Apply';
 import CreatePosition from './components/CreatePosition';
@@ -71,6 +72,7 @@ class Router extends Component {
 							<Route path='/update-student-bio' component={ StudentBio }/>
 							<Route path='/external-links' component={ ExternalLinks } />
 							<Route path='/update-external-links' component={ ExternalLinks } />
+							<Route path='/edit-external-links' component={ UpdateExternalLinks } />
 							<Route path='/prof-page' component={ ProfPage }/>
 							<Route path='/prof-page/:labSlug' component={ ProfPage }/>
 							<Route path='/apply/:labSlug' component={ Apply } />
