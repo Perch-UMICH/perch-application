@@ -42,8 +42,10 @@ class UpdateExternalLinks extends Component {
         if (isStudent()) 
             this.grabStudentInfo()
         
-        else if (isLab())
+        else if (isLab()) {
             this.grabLabInfo();
+            console.log(getCurrentUserId());
+        }
     }
 
     redirect() {
@@ -85,12 +87,8 @@ class UpdateExternalLinks extends Component {
                         {isLab() && 
                         <div className='row'>
                             <div className='input-field col s12'>
-                                <input id='contact-email' className='gen-input' type='email' value={this.state.email} onChange={(event) => this.setState({email: event.target.value})} autofocus="autofocus"/>
-                                <label htmlFor="contact-email">Email</label>
-                            </div>
-                            <div className='input-field col s12'>
-                                <input id='contact-location' className='gen-input' type='text' onChange={(event) => this.setState({location: event.target.value})} autofocus="autofocus"/>
-                                <label htmlFor="contact-location">Lab Location</label>
+                                <input id='contact-email' className='gen-input' type='email' value={this.state.website} onChange={(event) => this.setState({website: event.target.value})} autofocus="autofocus"/>
+                                <label htmlFor="contact-email">Website</label>
                             </div>
                         </div>}
                         <BasicButton msg='save' color='light'/>

@@ -6,8 +6,9 @@ import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import ContactTab from './ContactTab'
 import AcceptRate from './AcceptRate'
-import {getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences} from '../helper.js'
+import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences} from '../helper.js'
 import ErrorPage from './ErrorPage'
+import ExtLinkBox from './ExtLinkBox'
 import './ProfPage.css'
 
 class ProfPage extends Component {
@@ -23,11 +24,13 @@ class ProfPage extends Component {
 			positions: [],
 			contact_info: [],
 			user_id: getCurrentUserId(),
-			no_lab: false, 
+			no_lab: false,
+			dest: '/edit-external-links',
 		};
 	}
 
 	componentDidMount() {
+		console.log(getCurrentUserId());
 		if (isLoggedIn()) {
 			// check if student or faculty for viewing positions
 			getUser(getCurrentUserId()).then(resp => {
@@ -95,6 +98,14 @@ class ProfPage extends Component {
 					<div className='shadow' id='left-column'>
 						<ContactTab header='contact' contact_info={this.state.contact_info} />
 						<AcceptRate rate={2} />
+						<div className='ext-links mobile-header tab academic-tab-header'>Links
+							<a href='#' className="null-link-style" >
+							{ permissionCheck() && 
+								<a href={this.state.dest}><i className="material-icons interest-editor edit-icon" style={{position: 'absolute', right: '0'}} >create</i></a>
+							}
+							</a>
+						</div>
+						<ExtLinkBox dest={this.state.website}>Website</ExtLinkBox>
 					</div>
 					<div id='right-column' className='shadow center-align'>
 		 				<div className='ad'>AD</div>
