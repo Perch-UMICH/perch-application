@@ -31,7 +31,7 @@ class Settings extends Component {
 					{
 						name: resp.result.name,
 						email: resp.result.email,
-						user_type: resp.result.is_student ? "Student" : "Facutly",
+						user_type: resp.result.is_student ? "Student" : "Faculty",
 					}
 				);
 				if (resp.result.is_student) {

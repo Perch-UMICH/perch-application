@@ -1,16 +1,22 @@
 import React, {Component} from 'react';
-import {isStudent, isLab, getStudent, getCurrentStudentId, getCurrentUserId, getLab, getCurrentLabId, updateLab, updateStudent, getAllStudents} from '../helper.js'
+import {isStudent, isLab, getStudent, getCurrentStudentId, getCurrentUserId, getLab, getCurrentLabId, updateLab, updateStudent, getAllStudents, getUser} from '../helper.js'
 import BasicButton from './BasicButton'
 import './UpdateContact.css';
 
 class UpdateContact extends Component {
 	constructor(props) {
 		super(props);
-		this.state= {}
+		this.state= {
+			url_string: this.props.location.pathname.split('/')[1],
+		}
 	}
 
 	grabStudentInfo() { 
-		getStudent(getCurrentStudentId()).then(resp => this.setState({email: resp.data.email}));
+		getStudent(getCurrentStudentId()).then(resp => {
+			if (resp.data) {
+				this.setState({email: resp.data.email})
+			}
+		});
 	}
 
 	grabLabInfo() { 
@@ -39,10 +45,23 @@ class UpdateContact extends Component {
 	}
 
 	redirect() {
-		if (isStudent())
-			window.location = `/student-profile/${getCurrentUserId()}`;
-		else if (isLab())
-			window.location = `/prof-page/${getCurrentUserId()}`;
+		console.log("IS THIS BEING CALLED?");
+		if (this.state.url_string === "update-contact") {
+			if (isStudent())
+				window.location = `/student-profile/${getCurrentUserId()}`;
+			else if (isLab())
+				window.location = `/prof-page/${getCurrentUserId()}`;
+		} else {
+			getUser(getCurrentUserId()).then(resp => {
+				if (resp.result) {
+					if (resp.result.is_student) {
+						window.location = '/pick-your-interests?user_type=student';
+					} else {
+						window.location = '/lab-name';
+					}
+				}
+			});
+		}
 	}
 
 	render() {
@@ -50,8 +69,9 @@ class UpdateContact extends Component {
 			<div className="">
 				<div className='lab-text-info shift-down' style={{width: '700px', margin: '50px auto'}}>
 					<form className='container center-align lab-text-info-form shadow' onSubmit={this.updateInfo.bind(this)}>
-						<div className='lab-text-info-header'>Update Contact Info</div>
-
+						<div className='lab-text-info-header'>
+							{this.state.url_string === "update-contact" ?  <div>Update</div> : null } Contact Info
+						</div>
 						{isStudent() &&
 						<div className='row'>
 							<div className='input-field col s12'>
@@ -71,7 +91,9 @@ class UpdateContact extends Component {
 								<label htmlFor="contact-location">Lab Location</label>
 							</div>
 						</div>}
-						<BasicButton msg='save' color='light' />
+						{this.state.url_string === "update-contact" ?  
+							<BasicButton msg='save' color='light' /> : 
+							<BasicButton msg='next' color='light' /> }
 					</form>
 				</div>
 			</div>

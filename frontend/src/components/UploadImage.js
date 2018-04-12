@@ -61,6 +61,8 @@ class UploadImage extends Component {
 		    headers: { 'content-type': 'multipart/form-data' }
 		};
 
+		/*
+
 		axios.post('api/pics', formData, config)
 		    .then(response => {
 		        console.log(response.data.message);
@@ -68,8 +70,8 @@ class UploadImage extends Component {
 		    })
 		    .catch(function (error) {
 		        console.log(error);
-		    })
-		//window.location.href = this.state.dest;
+		    })*/
+		window.location.href = this.state.dest;
 	}
 
 	render() {

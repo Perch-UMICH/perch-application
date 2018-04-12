@@ -14,6 +14,7 @@ class PickYourInterests extends Component {
 			dest: '',
 			student_id: 1,
 			lab_id: 1,
+			btn_msg: 'next',
 			display_info: {
 				placeholder_txt: '',
 				header_txt: '',
@@ -41,7 +42,6 @@ class PickYourInterests extends Component {
 
 	componentDidMount() {
 		var header_txt, placeholder_txt, dest = "";
-		var btn_label = 'back';
 		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
 		
@@ -91,6 +91,7 @@ class PickYourInterests extends Component {
 		}
 
 		if (url_arr[1] === "update-interests" || url_arr[1] === "update-skills") {
+			this.setState({btn_msg: 'save'});
 			if (user_type === "faculty") {
 				this.setState({dest: '/prof-page'});
 			} else {
@@ -163,7 +164,7 @@ class PickYourInterests extends Component {
 					return (<div key={bubble.id}> {bubble.name} </div>)
 				})}*/}
 				<BubbleChoice ref='bubble_choice' display_info={this.state.display_info} callbackSkills={this.updateBubbleChoice}/>
-				<SquareButton superClick={this.saveAndContinue} label='save'/>
+				<SquareButton superClick={this.saveAndContinue} label={this.state.btn_msg}/>
 			</div>
 		);
 	}

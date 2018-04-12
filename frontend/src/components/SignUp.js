@@ -6,20 +6,11 @@ class SignUp extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			route: '/pick-your-interests?user_type=student'
+			route: '/enter-contact'
 		};
 		getAllUsers().then(r=>console.log(r))
 		getAllStudents().then(r=>console.log(r))
 		getStudent(2).then(r=>console.log(r))
-	}
-
-	handleUserTypeCheck(event) {
-		if (event.target.value === 'faculty') {
-			this.setState({route: '/lab-name'});
-		}
-		else {
-			this.setState({route: '/pick-your-interests?user_type=student'});
-		}
 	}
 
 	// Called when form submits
@@ -61,7 +52,7 @@ class SignUp extends Component {
 				console.log(fac);
 				createLab(fac.id, `${first_name} ${last_name}'s Lab`, 'Chemistry', '100 Cool Catz Dr., Lab 1003', 'uhh', null, null, null, null, null, email).then(lab => {
 					addLabToFaculty(fac.id, lab.id).then(resp => {
-						window.location.href = '/lab-name';
+						window.location.href = this.state.route;
 					});
 				});
 			});
@@ -92,9 +83,9 @@ class SignUp extends Component {
 		                <label htmlFor="password">Password</label>
 		            </div>
 		            <div className='center-align'>
-		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" onChange={this.handleUserTypeCheck.bind(this)} required />
+		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required />
 		              	<label className='new-signup-radio' htmlFor="faculty">Faculty</label>
-		              	<input className="radio" name="user_type" type="radio" id="student" value="student" onChange={this.handleUserTypeCheck.bind(this)} required />
+		              	<input className="radio" name="user_type" type="radio" id="student" value="student" required />
 		              	<label className='new-signup-radio' htmlFor="student">Student</label>
 		            </div>
 		            <br />
