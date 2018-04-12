@@ -64,6 +64,7 @@ class Router extends Component {
 							<Route path='/lab-specifications' component= { LabSpecifications }/>
 							<Route path='/update-lab-specifications' component= { LabSpecifications }/>
 							<Route path='/update-contact' component= { UpdateContact }/>
+							<Route path='/enter-contact' component= { UpdateContact }/>
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/update-past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>

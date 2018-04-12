@@ -20,11 +20,18 @@ class NavBar extends Component {
 					});
 				} else if (resp.result.is_faculty) {
 					getFacultyFromUser(getCurrentUserId()).then(resp => {
+						console.log("MERP?");
+						console.log(resp);
 						getFacultyLabs(resp.result.id).then(labs => {
-							this.setState({ 
-								is_student: false, 
-								prof_dest: `/prof-page/${labs[0].id}`,
-							});
+							console.log("LABS??");
+							console.log(labs);
+							/*
+							if (labs[0]) {
+								this.setState({ 
+									is_student: false, 
+									prof_dest: `/prof-page/${labs[0].id}`,
+								});
+							}*/
 						});
 					});
 				}
