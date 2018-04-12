@@ -72,7 +72,7 @@ class PastResearch extends Component {
 
 	saveAndContinue(event) {
 		updateStudent(this.state.student_id, null, null, null, null, null, null, null, this.state.research, null, null).then(resp => {
-			if (this.state.url_string === "update-student-bio") {
+			if (this.state.url_string === "update-past-research") {
 				window.location = `/student-profile/${getCurrentUserId()}`;
 			} else {
 				window.location = '/student-bio';
