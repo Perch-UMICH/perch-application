@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
-import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, getFacultyLabs } from '../helper.js';
+import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, /*getFacultyLabs*/ } from '../helper.js';
 import SquareButton from './SquareButton';
 import './UploadImage.css';
 import axios from 'axios';
@@ -34,13 +34,14 @@ class UploadImage extends Component {
 				}
 				else if (resp.result.is_faculty) {
 					getFacultyFromUser(user_id).then(resp => {
-						getFacultyLabs(resp.result.id).then(labs => {
-							this.setState({ 
-								dest: `/prof-page/${labs[0].id}`, 
-								user_type: "lab",
-								type_id: labs[0].id,
-							});
-						});
+						// TODO TEMPORARILY COMMENTED OUT SINCE NOT WORKING FROM API UPDATE
+						// getFacultyLabs(resp.result.id).then(labs => {
+						// 	this.setState({ 
+						// 		dest: `/prof-page/${labs[0].id}`, 
+						// 		user_type: "lab",
+						// 		type_id: labs[0].id,
+						// 	});
+						// });
 					});
 				}
 			}

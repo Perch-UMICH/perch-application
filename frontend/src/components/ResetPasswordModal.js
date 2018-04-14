@@ -17,11 +17,12 @@ class ResetPasswordModal extends Component {
 	}
 
 	resetPassword(event) {
-		resetPassword(this.props.email, $('#new_password').val(), $('#new_password_conf').val()).then(resp => {
-			console.log("reset password!");
-			alertify.success("Password Successfully Reset");
-			this.onClick();
-		});
+		// TODO TEMPORARILY BROKEN FROM API UPDATE
+		// resetPassword(this.props.email, $('#new_password').val(), $('#new_password_conf').val()).then(resp => {
+		// 	console.log("reset password!");
+		// 	alertify.success("Password Successfully Reset");
+		// 	this.onClick();
+		// });
 	}
 
 	render() {

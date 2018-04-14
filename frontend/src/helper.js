@@ -76,10 +76,9 @@ export function loginUser(email, password) {
         email, password
     })
         .then(response => {
-            console.log(response)
             // cookie.set('perch_api_key', response.data.result.token, {path: "/"});
             // cookie.set('perch_user_id', response.data.result.id, {path: "/"});
-            sessionStorage.setItem('token', response.data.result[1].token);
+            sessionStorage.setItem('token', response.data.result[2].token);
             sessionStorage.setItem('user_id', response.data.result[0].id);
             if (response.data.result[0].is_student) {
                 // Save student id
@@ -104,21 +103,23 @@ export function logoutCurrentUser() {
   // Clear all user cookies
   //   cookie.remove('perch_api_key');
   //   cookie.remove('perch_user_id');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user_id');
-
+  let oldToken = sessionStorage.getItem('token')
+  sessionStorage.removeItem('faculty_id');
+  sessionStorage.removeItem('student_id');
+  sessionStorage.removeItem('user_id');
+  sessionStorage.removeItem('token');
+            
     return axios.post('api/logout',
         {
             headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+                'Authorization': 'Bearer ' + oldToken,
             }
         }
-    )
-        .then(response => {
+    ).then(response => {
             // cookie.remove('perch_api_key');
             // cookie.remove('perch_user_id');
-
             console.log(response.data.message);
+            // sessionStorage.removeItem('token');
             return true;
         })
         .catch(error => {
@@ -128,6 +129,11 @@ export function logoutCurrentUser() {
         });
 }
 
+// Email password reset
+// First call sendPasswordResetEmail
+// User will get a link to /password/reset/{token}
+// On that page, have user input email, password, pass confirmation
+// Then class resetPasswordFromEmail with this info, along with the token in the url
 export function sendPasswordResetEmail(email) {
     return axios.post('password/email', {email})
         .then(response=> {
@@ -140,8 +146,8 @@ export function sendPasswordResetEmail(email) {
         });
 }
 
-export function resetPassword(email, password, password_confirmation) {
-    return axios.post('password/request', {email, password, password_confirmation})
+export function resetPasswordFromEmail(email, password, password_confirmation, token) {
+    return axios.post('password/reset', {email, password, password_confirmation, token})
         .then(response=> {
             console.log(response.data);
             return response.data;
@@ -158,6 +164,18 @@ export function getCurrentUserId() {
 
 export function getCurrentStudentId() {
     return sessionStorage.getItem('student_id');
+}
+
+export function isStudent() {
+    return sessionStorage.getItem('student_id') != null;
+}
+
+export function isLab() {
+    return sessionStorage.getItem('faculty_id') != null;
+}
+
+export function getCurrentLabId() {
+    return sessionStorage.getItem('faculty_id');
 }
 
 
@@ -207,6 +225,21 @@ export function deleteUser(user_id) {
         })
 }
 
+export function updateUser(user_id, name, email, password, is_student, is_faculty) {
+    console.log('Updating user');
+
+    let _method = 'PUT';
+
+    return axios.post('api/users/' + user_id, {_method, name, email, password, is_student, is_faculty})
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
 export function getStudentFromUser(user_id) {
     console.log('Getting student');
     return axios.get('api/users/' + user_id + '/student')
@@ -222,6 +255,20 @@ export function getStudentFromUser(user_id) {
 export function getFacultyFromUser(user_id) {
     console.log('Getting faculty');
     return axios.get('api/users/' + user_id + '/faculty')
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+// Get all labs that this user is a member of, along with their role id
+export function getUserLabs(user_id) {
+    console.log('Getting user labs');
+
+    return axios.get('api/users/' + user_id + '/labs')
         .then(response => {
             return response.data
         })
@@ -501,6 +548,55 @@ export function removeFavLabsFromStudent(student_id, lab_ids) {
         })
 }
 
+
+export function getStudentSchoolCourses(student_id) {
+    console.log('Getting student school courses');
+    return axios.get('api/students/' + student_id + '/courses/school')
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function addSchoolCoursesToStudent(student_id, course_ids) {
+    console.log('Adding school courses to student');
+
+    let payload = {
+        course_ids: course_ids
+    };
+    return axios.post('api/students/' + student_id + '/courses/school', payload)
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function removeSchoolCoursesFromStudent(student_id, course_ids) {
+    console.log('Removing school courses from student');
+
+    let payload = {
+        _method: 'PUT',
+        course_ids: course_ids
+    };
+    return axios.post('api/students/' + student_id + '/courses/school', payload)
+        .then(response => {
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
 // Faculties
 // Faculty profile
 // Required:
@@ -541,7 +637,7 @@ export function getFaculty(faculty_id) {
 
 export function createFaculty(user_id, first_name, last_name, title, email) {
     console.log('Creating faculty');
-    return axios.post('api/faculties', {user_id, first_name, last_name, title, email})
+    return axios.post('api/faculties', [user_id, first_name, last_name, title, email])
         .then(response => {
             console.log(response.data.message);
             return response.data.result;
@@ -579,46 +675,6 @@ export function deleteFaculty(faculty_id) {
         })
 }
 
-
-export function getFacultyLabs(faculty_id) {
-    console.log('Getting faculty labs');
-    return axios.get('api/faculties/' + faculty_id + '/labs')
-        .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
-        })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })
-}
-
-export function addLabToFaculty(faculty_id, lab_id) {
-    console.log('Adding lab to faculty');
-    return axios.post('api/faculties/' + faculty_id + '/labs', {lab_id})
-        .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
-        })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })
-}
-
-export function removeLabFromFaculty(faculty_id, lab_id) {
-    console.log('Removing lab from faculty');
-    let _method = 'PUT';
-    return axios.post('api/faculties/' + faculty_id + '/labs', {lab_id, _method})
-        .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
-        })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })
-}
 
 // Labs
 // Lab page
@@ -916,6 +972,65 @@ export function removePreferencesFromLab(lab_id, preference_ids) {
         })
 }
 
+
+// Lab members
+// Note: members are users
+// Roles:
+//  1: PI - creator of lab; only person who may delete the lab page
+//  2: Admin - admin of lab; may edit lab page, create/accept applications, add/remove members, etc.
+//  3: Member - normal lab member
+
+export function getLabMembers(lab_id) {
+    console.log('Getting lab members');
+    return axios.get('api/labs/' + lab_id + '/members')
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+// Order of role_ids should correspond with order of user_ids (same size)
+export function addMembersToLab(lab_id, user_ids, role_ids) {
+    console.log('Adding members to lab');
+
+    let payload = {
+        user_ids: user_ids,
+        role_ids: role_ids
+    };
+
+    return axios.post('api/labs/' + lab_id + '/members', payload)
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+export function removeMembersFromLab(lab_id, user_ids) {
+    console.log('Removing members from lab');
+
+    let payload = {
+        _method: 'PUT',
+        user_ids: user_ids
+    };
+
+    return axios.post('api/labs/' + lab_id + '/members', payload)
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
+
+
 // Skills
 // Laboratory skills
     // name - (string)
@@ -990,6 +1105,23 @@ export function getAllPreferences() {
         })
 }
 
+
+// School Courses
+// University courses
+    // title - (string)
+    // description - (string)
+export function getAllSchoolCourses() {
+    console.log('Getting all school courses');
+    return axios.get('api/courses/school')
+        .then(response => {
+            return response.data
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })
+}
+
 // Positions
 // Open projects/positions in a lab
     //  lab_id - (int) id of lab to associate with
@@ -1012,7 +1144,7 @@ export function getAllLabPositions(lab_id) {
         })
 }
 
-export function getLabPositions(position_id) {
+export function getLabPosition(position_id) {
     console.log('Getting position');
     return axios.get('api/positions/' + position_id)
         .then(response => {
@@ -1075,7 +1207,8 @@ export function deleteLabPosition(lab_id, position_ids) {
 
 // Applications
 // Application of questions attached to an open lab position
-    //
+    // position_id - (integer)
+    // questions - (array of strings)
 
 export function getPositionApplication(position_id) {
     console.log('Getting application');
@@ -1184,20 +1317,7 @@ export function getSearchData(student_id) {
 }
 
 
-
 //////
-
-export function isStudent() {
-    return sessionStorage.getItem('student_id') != 'null'
-}
-
-export function isLab() {
-    return sessionStorage.getItem('faculty_id') != 'null'
-}
-
-export function getCurrentLabId() {
-    return sessionStorage.getItem('faculty_id');
-}
 
 export function permissionCheck() {
     let page_id = window.location.pathname.split('/')[2]
