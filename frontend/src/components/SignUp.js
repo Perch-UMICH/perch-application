@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../helper.js';
-import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, /*addLabToFaculty*/ } from '../helper.js'
+import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ } from '../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -10,7 +10,7 @@ class SignUp extends Component {
 		};
 		getAllUsers().then(r=>console.log(r))
 		getAllStudents().then(r=>console.log(r))
-		getStudent(2).then(r=>console.log(r))
+		getAllLabs().then(r=>console.log(r))
 	}
 
 	// Called when form submits
@@ -51,6 +51,10 @@ class SignUp extends Component {
 			createFaculty(id, first_name, last_name, null, email).then(fac => {
 				console.log(fac);
 				createLab(fac.id, `${first_name} ${last_name}'s Lab`, 'Chemistry', '100 Cool Catz Dr., Lab 1003', 'uhh', null, null, null, null, null, email).then(lab => {
+					addMembersToLab(lab.id,[fac.id],['PI']).then(resp => {
+						console.log(resp)
+						// window.location.href = this.state.route;
+					});
 					// TODO TEMPORARILY NOT WORKING FROM API UPDATE
 					// addLabToFaculty(fac.id, lab.id).then(resp => {
 					// 	window.location.href = this.state.route;
