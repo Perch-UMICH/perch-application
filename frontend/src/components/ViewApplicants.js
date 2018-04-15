@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import StudentListItem from './StudentListItem';
 import './LabList.css';
+import {getLabPosition} from '../helper.js';
 
 class ViewApplicants extends Component {
 	constructor(props) {
@@ -55,13 +56,29 @@ class ViewApplicants extends Component {
 		};
 	}
 
+	componentDidMount() {
+		var url_arr = window.location.pathname.split('/');
+		var position_id = url_arr[2];
+		getLabPosition(position_id).then(position => {
+			console.log('position!');
+			console.log(position);
+			this.setState({ 
+				pos_name: position.title,
+			})
+		});
+		/*
+		getPositionApplicants(position_id).then(resp => {
+			this.setState({ applicants: resp.applicants });
+		});*/
+	}
+
 	render() {
 		return (
 			<div className='shift-down container center-align'>
 				<div className='row'>
 					<div className='col s12'>
 						<div className='col s12 lab-list shadow' >
-							<div className='lab-list-header white-text'>Applicants to Your Lab</div>
+							<div className='lab-list-header white-text'>{this.state.pos_name} Applicants</div>
 							{this.state.applicants.map((app) => <StudentListItem key={app.name} img={app.img} name={app.name} tags={app.tags} dest={app.profile_link} slug={app.slug}/>)}
 						</div>
 					</div>
