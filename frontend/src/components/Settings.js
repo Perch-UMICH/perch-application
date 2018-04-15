@@ -46,7 +46,7 @@ class Settings extends Component {
 
 
 	resetEmail(email) {
-		updateUser(getCurrentUserId(), null, this.props.email, $('#new_password').val(), isStudent(), isLab()).then(resp => {
+		updateUser(getCurrentUserId(), null, email, $('#new_password').val(), isStudent(), isLab()).then(resp => {
 			alertify.success("Email Successfully Reset");
 			console.log(resp);
 			this.setState({ email: email });

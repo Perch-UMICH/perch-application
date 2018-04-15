@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
-import {isLoggedIn, loginUser, getCurrentUserId, getUser, getFacultyLabs, getFacultyFromUser, getUserLabs} from '../helper.js';
+import {isLoggedIn, loginUser, getCurrentUserId, isStudent, isLab, getCurrentLabId} from '../helper.js';
 import alertify from 'alertify.js';
 
 class Login extends Component {
@@ -10,23 +10,13 @@ class Login extends Component {
 		let email = document.getElementById('email').value
 		let password = document.getElementById('password').value
 	
-		loginUser(email, password).then((login)=>{
-			console.log(login)
-			if (login) {
-				getUser(getCurrentUserId()).then(resp => {
-					if (resp.result) {
-						if (resp.result.is_student) {
-							window.location.href = `/student-profile/${getCurrentUserId()}`;
-						} else {
-							getUserLabs(getCurrentUserId()).then(resp => {
-								console.log(resp);
-								if (resp.result[0]) {
-									window.location.href = `/prof-page/${resp.result[0].lab.id}`;
-								}
-							})
-						}
-					}
-				});
+		loginUser(email, password).then((resp)=>{
+			console.log(resp)
+			if (resp) {
+				if (isStudent())
+					window.location.href = `/student-profile/${getCurrentUserId()}`;
+				else if (isLab())
+					window.location.href = `/prof-page/${getCurrentLabId()}`;
 			}
 			else {
 				alertify.error("Incorrect Username and Password");
@@ -41,11 +31,11 @@ class Login extends Component {
 				<form className='container login shadow' onSubmit={this.handleLogin}>
 					<div className='new-signup-header center-align'>LOG IN</div>
 					<div className="input-field">
-		                <input id="email" type="email" required />
+		                <input id="email" type="email" required autofocus="autofocus"/>
 		                <label htmlFor="email">Email</label>
 		            </div>
 		            <div className="input-field">
-		                <input id="password" type="password" required />
+		                <input id="password" type="password" required autofocus="autofocus"/>
 		                <label htmlFor="password">Password</label>
 		            </div>
 		            <br />

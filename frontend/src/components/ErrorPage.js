@@ -8,7 +8,7 @@ class ErrorPage extends Component {
 		return (
 			<div className='error-page-container valign-wrapper'>
 				<div className='container center-align'>
-					<img src='/assets/PERCH_MASCOT.svg' className='logo hide-on-med-and-down' style={{height: '250px'}} alt=""/>
+					<img src='/assets/PERCH_MASCOT.svg' className='logo' style={{height: '250px'}} alt=""/>
 					{ this.props.fourofour ? 
 						<div className='error-message'><b>Whoops, 404! <br/>Dance with Rodrigues for a while, or check your URL :)</b></div>
 						:
