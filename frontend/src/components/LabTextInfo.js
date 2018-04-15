@@ -2,6 +2,8 @@
 
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
+import {updateLab, getCurrentLabId} from '../helper.js'
+import $ from 'jquery'
 import './LabTextInfo.css';
 
 class LabTextInfo extends Component {
@@ -21,19 +23,31 @@ class LabTextInfo extends Component {
 		});
 	}
 
+	getPageType() {
+		var url_arr = this.props.location.pathname.split('/');
+		return url_arr[1];
+	}
+
+	updateBackEnd(event) {
+		event.preventDefault();
+		if (this.getPageType() === 'lab-name')
+			updateLab(getCurrentLabId(), $('#lab-name-input').val)
+		else if (this.getPageType() === 'lab-description' || this.getPageType() === 'update-lab-description')
+			 updateLab(getCurrentLabId(), null, null, null, this.state.description)
+	}
+
 	render() {
 		var dest, header_text = '';
 		var btn_msg = 'next';
-		var url_arr = this.props.location.pathname.split('/');
-		if (url_arr[1] === 'lab-name') {
+		if (this.getPageType() === 'lab-name') {
 			dest = '/lab-description';
 			header_text = 'Your Lab Name';
 		}
-		else if (url_arr[1] === 'lab-description') {
+		else if (this.getPageType() === 'lab-description') {
 			dest = '/pick-your-interests?user_type=faculty';
 			header_text = 'Lab Description';
 		}
-		else if (url_arr[1] === 'update-lab-description') {
+		else if (this.getPageType() === 'update-lab-description') {
 			dest = '/prof-page';
 			header_text = 'Update Lab Description';
 			btn_msg = 'back';
@@ -43,11 +57,11 @@ class LabTextInfo extends Component {
 			<div className='lab-text-info shift-down'>
 				<div className='container center-align lab-text-info-form shadow'>
 					<div className='lab-text-info-header'>{header_text}</div>
-					<form className='container'>
-						{url_arr[1] === 'lab-name' &&
+					<form className='container' onSubmit={this.updateBackEnd.bind(this)}>
+						{this.getPageType() === 'lab-name' &&
 					        <input id='lab-name-input' className='flow-text' placeholder='lab name'></input>
 					    }
-					    {(url_arr[1] === 'lab-description' || url_arr[1] === 'update-lab-description') &&
+					    {(this.getPageType() === 'lab-description' || this.getPageType() === 'update-lab-description') &&
 					    	<textarea className='lab-text-info-input' id="textArea" 
 					    		type="text" value={this.state.description} 
 					    		placeholder='lab description'

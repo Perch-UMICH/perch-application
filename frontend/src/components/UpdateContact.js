@@ -52,15 +52,10 @@ class UpdateContact extends Component {
 			else if (isLab())
 				window.location = `/prof-page/${getCurrentUserId()}`;
 		} else {
-			getUser(getCurrentUserId()).then(resp => {
-				if (resp.result) {
-					if (resp.result.is_student) {
-						window.location = '/pick-your-interests?user_type=student';
-					} else {
-						window.location = '/lab-name';
-					}
-				}
-			});
+			if (isStudent())
+				window.location = '/pick-your-interests?user_type=student';
+			else if (isLab())
+				window.location = '/lab-name';
 		}
 	}
 
@@ -84,7 +79,7 @@ class UpdateContact extends Component {
 						<div className='row'>
 							<div className='input-field col s12'>
 								<input id='contact-email' className='gen-input' type='email' value={this.state.email} onChange={(event) => this.setState({email: event.target.value})} autofocus="autofocus"/>
-								<label htmlFor="contact-email">Email</label>
+								<label htmlFor="contact-email">Public Email</label>
 							</div>
 							<div className='input-field col s12'>
 								<input id='contact-location' className='gen-input' type='text' onChange={(event) => this.setState({location: event.target.value})} autofocus="autofocus"/>
