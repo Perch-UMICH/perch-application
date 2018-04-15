@@ -45,8 +45,6 @@ class BubbleChoice extends Component {
 		var temp_choices = [];
 		if (this.props.display_info.user_type === 'student') {
 			getStudent(getCurrentStudentId()).then((resp) => {
-				console.log("GOT STUDENT");
-				console.log(resp);
 				if (resp) {
 					if (this.props.display_info.req_type === 'tags') {
 						temp_choices = resp.tags;
@@ -84,8 +82,6 @@ class BubbleChoice extends Component {
 		}
 		else if (this.props.display_info.user_type === 'faculty') {
 			getLab(getCurrentLabId()).then((resp) => {
-				console.log("LAB RESP");
-				console.log(resp);
 				console.log(this.props.display_info.req_type);
 				if (resp) {
 					if (this.props.display_info.req_type === 'tags') {
@@ -116,8 +112,6 @@ class BubbleChoice extends Component {
 				    	catalog: updated_catalog,
 				    	filtered_catalog: updated_catalog.slice(),
 				    }, () => {
-				    	console.log("CURRENT STATE");
-				    	console.log(this.state);
 				    	if (this.props.callbackSkills) {
 				    		this.props.callbackSkills(temp_choices);
 				    	}
