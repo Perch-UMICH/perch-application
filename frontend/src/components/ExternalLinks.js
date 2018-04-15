@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
-import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser } from '../helper.js';
+import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab } from '../helper.js';
 import SquareButton from './SquareButton';
 import './UploadImage.css';
 import $ from 'jquery';
@@ -20,28 +20,20 @@ class ExternalLinks extends Component {
 	componentDidMount() {
 		var url_arr = this.props.location.pathname.split('/');
 		var user_id = getCurrentUserId();
-		getUser(user_id).then(resp => {
-			if (resp.result) {
-				if (resp.result.is_student) {
-					getStudentFromUser(user_id).then(resp => {
-						this.setState({ 
-							dest: `/student-profile/${getCurrentUserId()}`,
-							user_type: "student",
-							type_id: resp.result.id,
-						});
-					});
-				}
-				else if (resp.result.is_faculty) {
-					getFacultyFromUser(user_id).then(resp => {
-						this.setState({ 
-							dest: '/prof-page', 
-							user_type: "faculty",
-							type_id: resp.result.id,
-						});
-					});
-				}
-			}
-		});
+		if (isStudent()) {
+			this.setState({ 
+				dest: `/student-profile/${getCurrentUserId()}`,
+				user_type: "student",
+				type_id: getCurrentUserId(),
+			});
+		}
+		else if (isLab()) {
+			this.setState({ 
+				dest: `/student-profile/${getCurrentLabId()}`, 
+				user_type: "faculty",
+				type_id: getCurrentLabId(),
+			});
+		}
 		if (url_arr[1] === "update-image") {
 			this.setState({ btn_msg: "back", update: true });
 		}

@@ -53,6 +53,7 @@ class PickYourInterests extends Component {
 				  		placeholder_txt: "descriptors for your lab work",
 				  		user_type: 'faculty',
 				  		req_type: 'tags',
+				  		user_id: getCurrentLabId(),
 					}),
 				});
 			} 
@@ -63,6 +64,7 @@ class PickYourInterests extends Component {
 		      			placeholder_txt: "field of interest",
 		      			user_type: 'student',
 		      			req_type: 'tags',
+		      			user_id: getCurrentUserId(),
 					}),
 				});
 			}
@@ -75,6 +77,7 @@ class PickYourInterests extends Component {
 						placeholder_txt: "Skills used to work in your lab",
 						user_type: 'faculty',
 						req_type: 'skills',
+						user_id: getCurrentLabId(),
 					}),
                 });
 			} 
@@ -85,6 +88,7 @@ class PickYourInterests extends Component {
 						placeholder_txt: "Skills you are competent in",
 						user_type: 'student',
 						req_type: 'skills',
+						user_id: getCurrentUserId(),
 					}),
                 });
 			}

@@ -52,7 +52,7 @@ class UpdateExternalLinks extends Component {
         if (isStudent())
             window.location = `/student-profile/${getCurrentUserId()}`;
         else if (isLab())
-            window.location = `/prof-page/${getCurrentUserId()}`;
+            window.location = `/prof-page/${getCurrentLabId()}`;
     }
 
     render() {
@@ -87,7 +87,7 @@ class UpdateExternalLinks extends Component {
                         {isLab() && 
                         <div className='row'>
                             <div className='input-field col s12'>
-                                <input id='contact-email' className='gen-input' type='email' value={this.state.website} onChange={(event) => this.setState({website: event.target.value})} autofocus="autofocus"/>
+                                <input id='contact-email' className='gen-input' type='text' value={this.state.website} onChange={(event) => this.setState({website: event.target.value})} autofocus="autofocus"/>
                                 <label htmlFor="contact-email">Website</label>
                             </div>
                         </div>}
