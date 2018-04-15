@@ -61,13 +61,17 @@ class ProfPage extends Component {
 						}
 						// this.setState({ yes: yes_arr, no: no_arr });
 					});
+					var contact_info = [];
+					if (resp.data.location) {
+						contact_info.push({label: 'location', value: resp.data.location});
+					} 
+					if (resp.data.contact_email) {
+						contact_info.push({label: 'email', value: resp.data.contact_email});
+					}
 					this.setState(
 						{
 							lab_name: resp.data.name,
-							contact_info: [
-								{label: 'location', value: resp.data.location},
-								{label: 'email', value: resp.data.contact_email},
-							],
+							contact_info: contact_info,
 							lab_summary: resp.data.description,
 							labels: resp.tags,
 							skills: resp.skills,

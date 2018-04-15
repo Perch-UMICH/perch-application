@@ -45,7 +45,7 @@ class BubbleChoice extends Component {
 		var temp_choices = [];
 		if (this.props.display_info.user_type === 'student') {
 			getStudent(this.props.display_info.user_id).then((resp) => {
-				if (resp.result) {
+				if (resp) {
 					if (this.props.display_info.req_type === 'tags') {
 						temp_choices = resp.tags;
 					} else {
@@ -69,21 +69,40 @@ class BubbleChoice extends Component {
 		}
 		else if (this.props.display_info.user_type === 'faculty') {
 			getLab(this.props.display_info.user_id).then((resp) => {
-				if (resp.result) {
+				console.log("LAB RESP");
+				console.log(resp);
+				console.log(this.props.display_info.req_type);
+				if (resp) {
 					if (this.props.display_info.req_type === 'tags') {
 						temp_choices = resp.tags;
 					} else {
 						temp_choices = resp.skills;
 					}
 					var temp_catalog = this.state.catalog;
+					/*
 					temp_catalog = temp_catalog.filter( function( elt ) {
 					  return !temp_choices.includes( elt );
-					});
+					});*/
+					var updated_catalog = [];
+					for (var i = 0; i < temp_catalog.length; ++i) {
+						var inChoices = false;
+						for (var j = 0; j < temp_choices.length; ++j) {
+							if (temp_catalog[i].id === temp_choices[j].id) {
+								inChoices = true;
+								break;
+							}
+						}
+						if (!inChoices) {
+							updated_catalog.push(temp_catalog[i]);
+						}
+					}
 				    this.setState({ 
 				    	choices: temp_choices,
-				    	catalog: temp_catalog,
-				    	filtered_catalog: temp_catalog.slice(),
+				    	catalog: updated_catalog,
+				    	filtered_catalog: updated_catalog.slice(),
 				    }, () => {
+				    	console.log("CURRENT STATE");
+				    	console.log(this.state);
 				    	if (this.props.callbackSkills) {
 				    		this.props.callbackSkills(temp_choices);
 				    	}
