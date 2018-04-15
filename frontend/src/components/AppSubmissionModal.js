@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
 import { getCurrentUserId } from '../helper.js';
+import $ from 'jquery';
 
 class AppSubmissionModal extends Component {
 	constructor(props) {
@@ -10,6 +11,18 @@ class AppSubmissionModal extends Component {
 			slug: 'the-infant-cognition-project',
 			s_dest: `/student-profile/${getCurrentUserId()}`,
 		};
+		this.submitApplication = this.submitApplication.bind(this);
+	}
+
+	onClick(event) {
+		// add time commitment, open slots, is 'open' a boolean?
+	    $('#submitModal').fadeOut("slow");
+	    $('#modalBackdrop').fadeOut("slow");
+	}
+
+	submitApplication(event) {
+		// ADD SUBMIT APPLICATION FUNCTION
+		window.location.href = `/student-profile/${getCurrentUserId()}`;
 	}
 
 	render() {
@@ -18,13 +31,15 @@ class AppSubmissionModal extends Component {
 			<div>
 				<div id="submitModal" className="modal">
 			 		<div className="modal-content">
-				    	<h4>Application Submitted!</h4>
-				    	<p>Your application has been successfully submitted to <i>{this.state.lab_name}</i>.<br/> 
+				    	<h4>Ready to Submit?</h4>
+				    	<p>To submit your application to <i>{this.state.lab_name}</i>, confirm below.<br/> 
 				    	   We'll notify you if they think it's a match.</p>
 				   	</div>
 				   	<div className="modal-footer">
-				   		<BasicButton dest={l_dest} msg='Return to Lab Page' />
-				   		<BasicButton dest={this.state.s_dest} msg='Return to Profile' />
+						<BasicButton superClick={this.onClick} msg='Edit' />
+				   		<BasicButton superClick={this.submitApplication} msg='Submit Application' />
+				   		{/*<BasicButton dest={l_dest} msg='Return to Lab Page' />
+				   		<BasicButton dest={this.state.s_dest} msg='Return to Profile' />*/}
 				  	</div>
 			 	</div>
 			</div>

@@ -12,12 +12,13 @@ class PositionsTab extends Component {
 	render() {
 		var btn_msg, dest = '';
 		var selected = false;
-		if (this.props.user_type === 'faculty') {
+		if (isLab()) {
 			dest = '/view-applicants';
 			selected = true;
+			btn_msg = 'view applicants'; // Can remove once applicant number (num_applicants) is accessible
 			$('#showOnFaculty').show();
 		}
-		else if (this.props.user_type === 'student') {
+		else if (isStudent()) {
 			btn_msg = 'apply';
 			dest = this.props.apply_dest;
 			selected=true;
@@ -32,9 +33,7 @@ class PositionsTab extends Component {
 				    {this.props.positions.map((position) => {
 				    	console.log("POSITION");
 				    	console.log(position);
-				    	if (dest !== "/view-applicants") {
-				    		dest = this.props.apply_dest + '/' + position.id;
-				    	}
+				    	dest = dest + '/' + position.id;
 						return (
 							<PositionListItem key={position.title} id={position.id} positionTitle={position.title} time_comm={position.time_commitment} open_slots={position.open_slots} dest={dest} btn_msg={btn_msg || `applicants (${position.num_applicants})`} selected={selected}/>);
 					})}

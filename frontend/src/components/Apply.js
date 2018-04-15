@@ -30,29 +30,11 @@ class Apply extends Component {
 				open_slots: position.open_slots,
 			})
 		});
-		var questions = [
-			{
-				"id": "q_1",
-				"text": "Why are you interested in working for our lab?"
-			},
-			{
-				"id": "q_2",
-				"text": "How do your skills/experiences align with our lab work?"
-			},
-			{
-				"id": "q_3",
-				"text": "How much wood would a wood chuck chuck if a wood chuck *couldn't* chuck wood?"
-			},
-		]
-		var q_arr = [];
-		for (var i = 0; i < questions.length; ++i) {
-			q_arr.push(questions[i].text);
-		}
-		createApplication(position_id, q_arr).then(resp => {
-			console.log(resp);
-			getPositionApplication(position_id).then(app => {
-				console.log("application");
-				console.log(app);
+		getPositionApplication(position_id).then(app => {
+			console.log("application");
+			console.log(app);
+			this.setState({
+				questions: app.questions,
 			});
 		});
 	}

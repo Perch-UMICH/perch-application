@@ -3,7 +3,7 @@ import { parse } from 'query-string';
 import SquareButton from './SquareButton';
 import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
-import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getStudentFromUser} from '../helper.js';
+import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab} from '../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -42,11 +42,10 @@ class PickYourInterests extends Component {
 
 	componentDidMount() {
 		var header_txt, placeholder_txt, dest = "";
-		var user_type = parse(this.props.location.search).user_type;
 		var url_arr = this.props.location.pathname.split('/');
 		
 		if (url_arr[1] === "update-interests" || url_arr[1] === "pick-your-interests") {
-			if (user_type === "faculty") {
+			if (isLab()) {
 	            this.setState({ 
 					display_info: Object.assign({}, this.state.display_info, {
 				      	header_txt: "Your Lab Labels",
@@ -56,7 +55,7 @@ class PickYourInterests extends Component {
 					}),
 				});
 			} 
-			else {
+			else if (isStudent()) {
 			    this.setState({ 
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Your Interests",
@@ -68,7 +67,7 @@ class PickYourInterests extends Component {
 			}
 		} 
 		else if (url_arr[1] === "update-skills" || url_arr[1] === "lab-skills") {
-			if (user_type === "faculty") {
+			if (isLab()) {
                 this.setState({ 
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Necessary Lab Skills",
@@ -78,7 +77,7 @@ class PickYourInterests extends Component {
 					}),
                 });
 			} 
-			else {
+			else if (isStudent()) {
                 this.setState({ 
 					display_info: Object.assign({}, this.state.display_info, {
 		      	    	header_txt: "Your Lab Skills",
@@ -92,20 +91,20 @@ class PickYourInterests extends Component {
 
 		if (url_arr[1] === "update-interests" || url_arr[1] === "update-skills") {
 			this.setState({btn_msg: 'save'});
-			if (user_type === "faculty") {
-				this.setState({dest: '/prof-page'});
-			} else {
+			if (isLab()) {
+				this.setState({dest: `/prof-page/${getCurrentLabId()}`});
+			} else if (isStudent()) {
 				this.setState({dest: `/student-profile/${getCurrentUserId()}`});
 			}
 		} else {
-			if (user_type === "faculty") {
-				this.setState({dest: '/prof-page'}); // UPDATE FOR FACULTY FLOW
-			} else {
+			if (isLab()) {
+				this.setState({dest: `/prof-page/${getCurrentLabId()}`}); // UPDATE FOR FACULTY FLOW
+			} else if (isStudent()) {
 				this.setState({dest: '/notable-classes'});
 			}
 		}
 		if (url_arr[1] === "pick-your-interests") {
-			var route = '/lab-skills?user_type=' + user_type;
+			var route = '/lab-skills';
 			this.setState({dest: route});
 		}
 	}
@@ -121,7 +120,7 @@ class PickYourInterests extends Component {
 			return item.id;
 		});
 		console.log(item_ids);
-		if (this.state.user_type === 'faculty') {
+		if (isLab()) {
 			if (this.state.display_info.req_type === 'skills') {
 				addSkillsToLab(this.state.s_id, item_ids).then(resp => {
 					console.log(resp);
@@ -133,7 +132,7 @@ class PickYourInterests extends Component {
 					this.redirect()
 				});
 			}
-		} else {
+		} else if (isStudent()) {
 			if (this.state.display_info.req_type === 'skills') {
 				// alert('skillz')
 				syncSkillsToStudent(this.state.s_id, item_ids).then(resp => {

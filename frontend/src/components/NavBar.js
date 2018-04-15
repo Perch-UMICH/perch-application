@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, /*getFacultyLabs*/} from '../helper.js'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId  /*getFacultyLabs*/} from '../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -19,21 +19,9 @@ class NavBar extends Component {
 						prof_dest: `/student-profile/${getCurrentUserId()}`,
 					});
 				} else if (resp.result.is_faculty) {
-					getFacultyFromUser(getCurrentUserId()).then(resp => {
-						console.log("MERP?");
-						console.log(resp);
-						// TODO TEMPORARILY BROKEN FROM API UPDATE
-						// getFacultyLabs(resp.result.id).then(labs => {
-						// 	console.log("LABS??");
-						// 	console.log(labs);
-							/*
-							if (labs[0]) {
-								this.setState({ 
-									is_student: false, 
-									//prof_dest: `/prof-page/${labs[0].id}`,
-								});
-							}*/
-						// });
+					this.setState({ 
+						is_student: false, 
+						prof_dest: `/prof-page/${getCurrentLabId()}`,
 					});
 				}
 			}
