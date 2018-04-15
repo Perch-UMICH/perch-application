@@ -14,9 +14,11 @@ class AppQuestionTab extends Component {
 				<div className='app-question-tab-body'>
 					<form className='file-field'>
 					    {this.props.questions.map((question) => {
+					    	var key1 = question.id + "_p";
+					    	var key2 = question.id + "_text_input";
 							return (
-								<p><label className="apply-question-tab-label" htmlFor={question.id}>{question.text}</label>
-								<textArea id={question.id} type="text" id="apply-question-input" className="materialize-textarea" required /></p>);
+								<p key={key1}><label className="apply-question-tab-label" htmlFor={question.id}>{question.question}</label>
+								<textArea key={key2} id={question.id} type="text" id="apply-question-input" className="materialize-textarea" required /></p>);
 						})}
 					</form>
 					<ModalButton type="submit_app" label="submit"/> 
