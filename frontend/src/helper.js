@@ -636,7 +636,8 @@ export function getFaculty(faculty_id) {
 
 export function createFaculty(user_id, first_name, last_name, title, email) {
     console.log('Creating faculty');
-    return axios.post('api/faculties', [user_id, first_name, last_name, title, email])
+    /// EMI CHANGED THIS: "[]" to "{}"
+    return axios.post('api/faculties', {user_id, first_name, last_name, title, email})
         .then(response => {
             console.log(response.data.message);
             return response.data.result;
