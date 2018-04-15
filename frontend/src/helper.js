@@ -157,6 +157,8 @@ export function resetPasswordFromEmail(email, password, password_confirmation, t
         });
 }
 
+// CHANGED BY BENJI (Most of these getId's)
+
 export function getCurrentUserId() {
     return sessionStorage.getItem('user_id');
 }
@@ -165,16 +167,24 @@ export function getCurrentStudentId() {
     return sessionStorage.getItem('student_id');
 }
 
+export function getCurrentLabId() {
+    return sessionStorage.getItem('lab_id');
+}
+
+export function getCurrentFacultyId() {
+    return sessionStorage.getItem('faculty_id');
+}
+
 export function isStudent() {
     return sessionStorage.getItem('student_id') != null;
 }
 
 export function isLab() {
-    return sessionStorage.getItem('faculty_id') != null;
+    return sessionStorage.getItem('lab_id') != null;
 }
 
-export function getCurrentLabId() {
-    return sessionStorage.getItem('faculty_id');
+export function isFaculty() {
+    return sessionStorage.getItem('lab_id') != null;
 }
 
 
@@ -330,6 +340,7 @@ export function createStudent(user_id, first_name, last_name, major, year, gpa, 
     console.log('Creating student');
     return axios.post('api/students', {user_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id})
         .then(response => {
+            sessionStorage.setItem('student_id', response.data.result.id) // CHANGED BY BENJI
             console.log(response.data.message);
             return response.data.result;
         })
@@ -636,9 +647,10 @@ export function getFaculty(faculty_id) {
 
 export function createFaculty(user_id, first_name, last_name, title, email) {
     console.log('Creating faculty');
-    /// EMI CHANGED THIS: "[]" to "{}"
-    return axios.post('api/faculties', {user_id, first_name, last_name, title, email})
+    return axios.post('api/faculties', {user_id, first_name, last_name, title, email}) /// EMI CHANGED THIS: "[]" to "{}"
         .then(response => {
+            console.log(response)
+            sessionStorage.setItem('faculty_id', response.data.result.id)
             console.log(response.data.message);
             return response.data.result;
         })
@@ -755,6 +767,7 @@ export function createLab(faculty_id, name, department, location, description, p
     console.log('Creating lab');
     return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
         .then(response => {
+            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
             console.log(response.data.message);
             return response.data.result;
         })
