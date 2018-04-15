@@ -32,12 +32,12 @@ class SignUp extends Component {
 		let password = document.getElementById('password').value
 
 		loginUser(email, password).then((resp) => {
-			this.createStudent();
+			this.createAccount();
 		});
 	}
 
 	// relies on register and login to create a user and put id info in local storage to then create a student
-	createStudent() {
+	createAccount() {
 		let student = document.getElementById('student').checked;
 		let id = getCurrentUserId();
 		let first_name = document.getElementById('first_name').value;

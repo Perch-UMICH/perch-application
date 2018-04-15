@@ -31,11 +31,11 @@ class Login extends Component {
 				<form className='container login shadow' onSubmit={this.handleLogin}>
 					<div className='new-signup-header center-align'>LOG IN</div>
 					<div className="input-field">
-		                <input id="email" type="email" required />
+		                <input id="email" type="email" required autofocus="autofocus"/>
 		                <label htmlFor="email">Email</label>
 		            </div>
 		            <div className="input-field">
-		                <input id="password" type="password" required />
+		                <input id="password" type="password" required autofocus="autofocus"/>
 		                <label htmlFor="password">Password</label>
 		            </div>
 		            <br />
