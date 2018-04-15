@@ -3,3 +3,12 @@
 	letter-spacing: 1px;
 	margin: 25px 15px;
 }
+
+#contact-editor {
+	opacity: 0;
+}
+
+.tab-header:hover #contact-editor {
+	opacity: 1;
+	transition: .2s ease;
+}

@@ -26,7 +26,7 @@ class PositionsTab extends Component {
 		}
 		return (
 			<div className="tab-fit tab-container shadow">
-				<div className='tab-header positions-tab-header'>{this.props.header.toUpperCase()}<a href='/create-position' id="showOnFaculty"><i className="material-icons interest-editor">add</i></a></div>
+				<div className='tab-header positions-tab-header'>{this.props.header.toUpperCase()}<a href='/create-position' id="showOnFaculty"><i id='positions-tab-editor' className="material-icons edit-icon">add</i></a></div>
 				<div className='positions-tab'>
 					{ this.props.positions.length === 0 && isLab() && <div className="center-align">You haven't created any positions! Click the '+' in the top right of this box to post an application</div> }
 				    { this.props.positions.length === 0 && isStudent() && <div className="center-align">This lab hasn't created any positions!</div> }

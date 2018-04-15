@@ -30,12 +30,12 @@ class BioTab extends Component {
 
 	render() {
 		return (
-			<div className='tab-container shadow'>
+			<div id='bio-tab-container' className='tab-container shadow'>
 				<div className='tab-header'>
 				{this.props.header.toUpperCase()}
 					<div className='editors'>
 						{permissionCheck() && 
-							<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
+							<a href={this.state.dest}><i id='bio-editor' className="material-icons edit-icon">create</i></a>
 						}
 						<i id='bio-toggler' className="material-icons bio-toggler edit-icon" onClick={this.handleShave.bind(this)}>arrow_drop_down</i>
 					</div>

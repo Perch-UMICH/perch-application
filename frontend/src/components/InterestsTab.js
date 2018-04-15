@@ -17,7 +17,7 @@ class InterestsTab extends Component {
 				<div className='tab-header'>
 					{this.props.tabTitle} 
 					{permissionCheck() && 
-						<a href={route} ><i className="material-icons interest-editor">add</i></a>
+						<a href={route} ><i id='interest-tab-editor' className="material-icons edit-icon">add</i></a>
 					}
 				</div>
 				<div className='interests-tab'>

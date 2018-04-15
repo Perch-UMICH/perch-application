@@ -16,3 +16,18 @@
 .interest-editor:hover {
 	color: white;
 }
+
+#bio-editor {
+	opacity: 0;
+    transition: ease .2s;
+}
+
+#interest-tab-editor {
+	opacity: 0;
+	transition: .2s ease;
+}
+
+.tab-header:hover #interest-tab-editor {
+	opacity: 1;
+	transition: .2s ease;
+}

@@ -21,3 +21,13 @@
 #showOnFaculty {
 	display: none;
 }
+
+#positions-tab-editor {
+	opacity: 0;
+    transition: ease .2s;
+}
+
+.tab-header:hover #positions-tab-editor {
+	opacity: 1 !important;
+	transition: .2s ease;
+}

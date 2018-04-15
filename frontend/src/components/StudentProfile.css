@@ -41,10 +41,10 @@
 	padding-bottom: 10px;
 }
 
-.tab-header:hover .interest-editor {
+/*.tab-header:hover .interest-editor {
 	opacity: 1 !important;
 	transition: .2s ease;
-}
+}*/
 
 #student-main-card {
 	height: 230px;

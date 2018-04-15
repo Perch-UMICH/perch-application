@@ -16,7 +16,7 @@ class SkillsTab extends Component {
 				<div className='tab-header'>
 					SKILLS 
 					{ permissionCheck() && 
-						<a href={route} ><i className="material-icons interest-editor">add</i></a>
+						<a href={route} ><i id='skills-tab-editor' className="material-icons edit-icon">add</i></a>
 					}
 				</div>
 				<div className='skills-tab'>

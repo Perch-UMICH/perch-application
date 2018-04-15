@@ -5,3 +5,12 @@
 	float: left;
 }
 
+#skills-tab-editor {
+	opacity: 0;
+	transition: .2s ease;
+}
+
+.tab-header:hover #skills-tab-editor {
+	opacity: 1;
+	transition: .2s ease;
+}

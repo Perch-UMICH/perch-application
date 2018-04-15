@@ -16,7 +16,7 @@ class PastResearchTab extends Component {
 				<div className='mobile-header'>
 					PAST RESEARCH
 					{ getCurrentUserId() == this.state.id && 
-						<a href='/update-past-research'><i className="material-icons interest-editor edit-icon">create</i></a>
+						<a href='/update-past-research'><i id='past-research-tab-editor' className="material-icons edit-icon">create</i></a>
 					}
 				</div>
 				<div style={{position: 'relative', height: '100%'}}>

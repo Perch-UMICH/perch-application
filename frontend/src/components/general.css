@@ -38,10 +38,10 @@
 	transition: ease .2s;
 }
 
-.tab-container:hover .interest-editor {
+/*.tab-container:hover .interest-editor {
 	opacity: 1;
 	transition: ease .2s;
-}
+}*/
 
 .opacity-1 {
 	opacity: 1 !important;

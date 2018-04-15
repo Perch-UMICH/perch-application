@@ -6,7 +6,20 @@
 }
 
 .edit-icon {
-	/*margin-left: -25px;*/
+	float: right;
+	margin-right: 5px;
+	margin-top: 2px;
+	color: white;
+}
+
+#bio-editor {
+	opacity: 0;
+    transition: ease .2s;
+}
+
+.tab-header:hover #bio-editor {
+	opacity: 1 !important;
+	transition: .2s ease;
 }
 
 #bio-toggler {

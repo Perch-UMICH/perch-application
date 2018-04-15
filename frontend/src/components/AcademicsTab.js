@@ -16,7 +16,7 @@ class AcademicsTab extends Component {
 				<div className='mobile-header tab academic-tab-header'>school
 					<a href='/update-notable-classes' id="editImageText" className="null-link-style" >
 					{ getCurrentUserId() === this.state.id && 
-						<i className="material-icons interest-editor edit-icon" style={{float: 'right'}} >create</i>
+						<i id='academics-editor' className="material-icons edit-icon" >create</i>
 					}
 					</a>
 				</div> 

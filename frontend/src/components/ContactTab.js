@@ -16,7 +16,7 @@ class ContactTab extends Component {
 				<div className='tab-header' style={{fontSize: '16px', padding: '15px 10px'}}>
 					{this.props.header.toUpperCase()}
 					{ permissionCheck() && 
-						<a href={this.state.dest}><i className="material-icons interest-editor edit-icon">create</i></a>
+						<a href={this.state.dest}><i id='contact-editor' className="material-icons edit-icon">create</i></a>
 					}
 				</div>
 				<div className='contact-tab'>

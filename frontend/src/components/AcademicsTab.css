@@ -28,3 +28,13 @@
 .classes-wrapper {
 	margin-top: 5px;
 }
+
+#academics-editor {
+	opacity: 0;
+	transition: .2s ease;
+}
+
+.academic-tab-header:hover #academics-editor {
+	opacity: 1;
+	transition: .2s ease;
+}

@@ -2,3 +2,13 @@
 	color: grey;
 	padding: 20px;
 }
+
+#past-research-tab-editor {
+	opacity: 0;
+	transition: .2s ease;
+}
+
+.mobile-header:hover #past-research-tab-editor {
+	opacity: 1;
+	transition: .2s ease;
+}
