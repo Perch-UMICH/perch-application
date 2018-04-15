@@ -6,7 +6,7 @@ import InterestsTab from './InterestsTab';
 import SkillsTab from './SkillsTab';
 import ContactTab from './ContactTab'
 import AcceptRate from './AcceptRate'
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences} from '../helper.js'
+import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences, isStudent, isLab} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import ExtLinkBox from './ExtLinkBox'
 import './ProfPage.css'
@@ -33,16 +33,11 @@ class ProfPage extends Component {
 		console.log(getCurrentUserId());
 		if (isLoggedIn()) {
 			// check if student or faculty for viewing positions
-			getUser(getCurrentUserId()).then(resp => {
-				if (resp.result) {
-					if (resp.result.is_student) {
-						this.setState({user_type: "student"});
-					} else {
-						this.setState({user_type: "faculty"});
-					}
-				}
-			});
-			//getFacultyFromUser(this.state.user_id)
+			if (isStudent())
+				this.setState({user_type: "student"});
+			else if (isLab())
+				this.setState({user_type: "faculty"});
+	
 			var lab_id = window.location.pathname.split('/')[2];
 			getLab(lab_id).then((resp) => {
 				console.log(resp);
@@ -64,7 +59,7 @@ class ProfPage extends Component {
 								}
 							}
 						}
-						//this.setState({ yes: yes_arr, no: no_arr });
+						// this.setState({ yes: yes_arr, no: no_arr });
 					});
 					this.setState(
 						{
@@ -97,7 +92,7 @@ class ProfPage extends Component {
 				<div className='content-body'>
 					<div className='shadow' id='left-column'>
 						<ContactTab header='contact' contact_info={this.state.contact_info} />
-						<AcceptRate rate={2} />
+						<AcceptRate rate={5} />
 						<div className='ext-links mobile-header tab academic-tab-header'>Links
 							<a href='#' className="null-link-style" >
 							{ permissionCheck() && 

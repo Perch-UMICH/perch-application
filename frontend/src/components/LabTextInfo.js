@@ -2,7 +2,8 @@
 
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
-import {updateLab, getCurrentLabId} from '../helper.js'
+import BasicButton from './BasicButton';
+import {updateLab, getCurrentLabId, getLab} from '../helper.js'
 import $ from 'jquery'
 import './LabTextInfo.css';
 
@@ -12,9 +13,10 @@ class LabTextInfo extends Component {
 		this.state = {
 			description: '',
 		};
-		if (this.props.location.pathname.split('/')[1] === 'update-lab-description') {
-			this.state.description = "At the Infant Cognition Project, we look closely at how infants and preschool aged children think about and understand the world around them. Specifically, we are interested in infants and young children's understanding of the social world and behavior of other people.";
-		}
+	}
+
+	componentDidMount() {
+		getLab(getCurrentLabId()).then(resp => this.setState({description: resp.data.description}))
 	}
 
 	updateDescription(event) {
@@ -28,27 +30,37 @@ class LabTextInfo extends Component {
 		return url_arr[1];
 	}
 
+	redirect() {
+		var dest = '';
+
+		if (this.getPageType() === 'lab-name') 
+			dest = '/lab-description';
+		else if (this.getPageType() === 'lab-description') 
+			dest = '/pick-your-interests?user_type=faculty';
+		else if (this.getPageType() === 'update-lab-description') 
+			dest = `/prof-page/${getCurrentLabId()}`;
+
+		window.location = dest;
+	}
+
 	updateBackEnd(event) {
 		event.preventDefault();
 		if (this.getPageType() === 'lab-name')
-			updateLab(getCurrentLabId(), $('#lab-name-input').val)
+			updateLab(getCurrentLabId(), $('#lab-name-input').val).then(this.redirect.bind(this))
 		else if (this.getPageType() === 'lab-description' || this.getPageType() === 'update-lab-description')
-			 updateLab(getCurrentLabId(), null, null, null, this.state.description)
+			 updateLab(getCurrentLabId(), null, null, null, this.state.description).then(this.redirect.bind(this))
 	}
 
 	render() {
-		var dest, header_text = '';
+		var header_text = '';
 		var btn_msg = 'next';
 		if (this.getPageType() === 'lab-name') {
-			dest = '/lab-description';
 			header_text = 'Your Lab Name';
 		}
 		else if (this.getPageType() === 'lab-description') {
-			dest = '/pick-your-interests?user_type=faculty';
 			header_text = 'Lab Description';
 		}
 		else if (this.getPageType() === 'update-lab-description') {
-			dest = '/prof-page';
 			header_text = 'Update Lab Description';
 			btn_msg = 'back';
 		}
@@ -68,7 +80,7 @@ class LabTextInfo extends Component {
 					    		onChange={event => this.updateDescription(event)}>
 					    	</textarea>
 					    }
-						<SquareButton destination={dest} label={btn_msg}/>
+						<BasicButton msg={btn_msg} color='light' />
 					</form>
 				</div>
 			</div>
