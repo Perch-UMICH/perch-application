@@ -22,7 +22,7 @@ class UpdateContact extends Component {
 	grabLabInfo() { 
 		getLab(getCurrentLabId()).then(resp => this.setState({
 			email: resp.data.contact_email,
-			phone: resp.data.contact_phone,
+			//phone: resp.data.contact_phone,
 			location: resp.data.location,
 		}));
 		getLab(getCurrentLabId()).then(resp => console.log(resp))
@@ -33,7 +33,7 @@ class UpdateContact extends Component {
 		if (isStudent()) 
 			updateStudent(getCurrentStudentId(), null, null, null, null, null, this.state.email, null, null, null, null).then(this.redirect.bind(this)) 
 		else if (isLab()) 
-			updateLab(getCurrentLabId(), null, null, this.state.location, null, null, null, null, null, this.state.phone, this.state.email).then(this.redirect.bind(this))
+			updateLab(getCurrentLabId(), null, null, this.state.location, null, null, null, null, null, null, this.state.email).then(this.redirect.bind(this))
 	}
 
 	componentDidMount() {
@@ -45,12 +45,11 @@ class UpdateContact extends Component {
 	}
 
 	redirect() {
-		console.log("IS THIS BEING CALLED?");
 		if (this.state.url_string === "update-contact") {
 			if (isStudent())
 				window.location = `/student-profile/${getCurrentUserId()}`;
 			else if (isLab())
-				window.location = `/prof-page/${getCurrentUserId()}`;
+				window.location = `/prof-page/${getCurrentLabId()}`;
 		} else {
 			if (isStudent())
 				window.location = '/pick-your-interests?user_type=student';
