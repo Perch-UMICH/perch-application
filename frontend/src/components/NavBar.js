@@ -25,13 +25,12 @@ class NavBar extends Component {
 						getFacultyLabs(resp.result.id).then(labs => {
 							console.log("LABS??");
 							console.log(labs);
-							/*
-							if (labs[0]) {
+							if (labs) {
 								this.setState({ 
 									is_student: false, 
-									prof_dest: `/prof-page/${labs[0].id}`,
+									//prof_dest: `/prof-page/${labs[0].id}`,
 								});
-							}*/
+							}
 						});
 					});
 				}

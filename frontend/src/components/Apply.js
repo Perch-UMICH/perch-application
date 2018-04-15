@@ -1,26 +1,13 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
-import { getLabPositions, getLab, getPositionApplication } from '../helper.js';
+import { getLabPositions, getLab, getPositionApplication, createApplication } from '../helper.js';
 import './Apply.css';
 
 class Apply extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			questions: [
-				{
-					"id": "q_1",
-					"text": "Why are you interested in working for our lab?"
-				},
-				{
-					"id": "q_2",
-					"text": "How do your skills/experiences align with our lab work?"
-				},
-				{
-					"id": "q_3",
-					"text": "How much wood would a wood chuck chuck if a wood chuck *couldn't* chuck wood?"
-				},
-			]
+			questions: [],
 		};
 	}
 
@@ -43,10 +30,28 @@ class Apply extends Component {
 				open_slots: position.open_slots,
 			})
 		});
-		getPositionApplication(position_id).then(app => {
-			console.log("application");
-			console.log(app);
-		})
+		var questions = [
+			{
+				"id": "q_1",
+				"text": "Why are you interested in working for our lab?"
+			},
+			{
+				"id": "q_2",
+				"text": "How do your skills/experiences align with our lab work?"
+			},
+			{
+				"id": "q_3",
+				"text": "How much wood would a wood chuck chuck if a wood chuck *couldn't* chuck wood?"
+			},
+		]
+		createApplication(position_id, questions).then(resp => {
+			console.log(resp);
+			getPositionApplication(position_id).then(app => {
+				console.log("application");
+				console.log(app);
+
+			});
+		});
 	}
 
 	render() {

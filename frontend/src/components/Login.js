@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
-import {isLoggedIn, loginUser, getCurrentUserId} from '../helper.js';
+import {isLoggedIn, loginUser, getCurrentUserId, getUser, getFacultyLabs, getFacultyFromUser} from '../helper.js';
 import alertify from 'alertify.js';
 
 class Login extends Component {
@@ -10,10 +10,24 @@ class Login extends Component {
 		let email = document.getElementById('email').value
 		let password = document.getElementById('password').value
 	
-		loginUser(email, password).then((resp)=>{
-			console.log(resp)
-			if (resp) {
-				window.location.href = `/student-profile/${getCurrentUserId()}`;
+		loginUser(email, password).then((login)=>{
+			console.log(login)
+			if (login) {
+				getUser(getCurrentUserId()).then(resp => {
+					if (resp.result) {
+						if (resp.result.is_student) {
+							window.location.href = `/student-profile/${getCurrentUserId()}`;
+						} else {
+							getFacultyFromUser(getCurrentUserId()).then(resp => {
+								getFacultyLabs(resp.result.id).then(labs => {
+									if (labs) {
+										//window.location.href = `/prof-page/${labs[0].id}`;
+									}
+								});
+							});
+						}
+					}
+				});
 			}
 			else {
 				alertify.error("Incorrect Username and Password");
