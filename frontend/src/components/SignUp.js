@@ -45,13 +45,19 @@ class SignUp extends Component {
 		let email = document.getElementById('email').value;
 
 		if (student) {
-			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => sessionStorage.setItem("student_id", resp.id)).then(() => window.location.href = this.state.route);
+			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(resp => {
+				sessionStorage.setItem("student_id", resp.id)
+			}).then(() => {
+				//window.location.href = this.state.route;
+			});
 		}
 		else {
 			createFaculty(id, first_name, last_name, null, email).then(fac => {
+				console.log("created faculty??");
 				console.log(fac);
 				createLab(fac.id, `${first_name} ${last_name}'s Lab`, 'Chemistry', '100 Cool Catz Dr., Lab 1003', 'uhh', null, null, null, null, null, email).then(lab => {
-					addMembersToLab(lab.id,[fac.id],['PI']).then(resp => {
+					addMembersToLab(lab.id,[fac.id],[1]).then(resp => {
+						console.log("ADDED MEMS TO LAB?");
 						console.log(resp)
 						// window.location.href = this.state.route;
 					});

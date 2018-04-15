@@ -30,7 +30,7 @@ class NavBar extends Component {
 							if (labs[0]) {
 								this.setState({ 
 									is_student: false, 
-									prof_dest: `/prof-page/${labs[0].id}`,
+									//prof_dest: `/prof-page/${labs[0].id}`,
 								});
 							}*/
 						// });
