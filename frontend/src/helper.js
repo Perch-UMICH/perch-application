@@ -65,8 +65,7 @@ export function loginUser(email, password) {
     // cookie.remove('perch_api_key');
     // cookie.remove('perch_user_id');
 
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user_id');
+   sessionStorage.clear()
 
     // Login
     console.log('logging in ' + email);
@@ -104,10 +103,7 @@ export function logoutCurrentUser() {
   //   cookie.remove('perch_api_key');
   //   cookie.remove('perch_user_id');
   let oldToken = sessionStorage.getItem('token')
-  sessionStorage.removeItem('faculty_id');
-  sessionStorage.removeItem('student_id');
-  sessionStorage.removeItem('user_id');
-  sessionStorage.removeItem('token');
+  sessionStorage.clear()
             
     return axios.post('api/logout',
         {
