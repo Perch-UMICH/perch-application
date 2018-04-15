@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
-import {isLoggedIn, loginUser, getCurrentUserId} from '../helper.js';
+import {isLoggedIn, loginUser, getCurrentUserId, isStudent, isLab, getCurrentLabId} from '../helper.js';
 import alertify from 'alertify.js';
 
 class Login extends Component {
@@ -13,7 +13,10 @@ class Login extends Component {
 		loginUser(email, password).then((resp)=>{
 			console.log(resp)
 			if (resp) {
-				window.location.href = `/student-profile/${getCurrentUserId()}`;
+				if (isStudent())
+					window.location.href = `/student-profile/${getCurrentUserId()}`;
+				else if (isLab())
+					window.location.href = `/prof-page/${getCurrentLabId()}`;
 			}
 			else {
 				alertify.error("Incorrect Username and Password");
