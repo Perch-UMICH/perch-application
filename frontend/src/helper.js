@@ -83,10 +83,10 @@ export function loginUser(email, password) {
             if (response.data.result[0].is_student) {
                 // Save student id
                 sessionStorage.setItem('student_id', response.data.result[1].id);
-                sessionStorage.setItem('faculty_id', null);
+                // sessionStorage.setItem('faculty_id', null);
             }
             else if (response.data.result[0].is_faculty) {
-                sessionStorage.setItem('student_id', null);
+                // sessionStorage.setItem('student_id', null);
                 sessionStorage.setItem('faculty_id', response.data.result[1].id);
             }
             console.log('Successfully logged in');
