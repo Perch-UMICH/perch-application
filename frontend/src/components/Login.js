@@ -13,10 +13,12 @@ class Login extends Component {
 		loginUser(email, password).then((resp)=>{
 			console.log(resp)
 			if (resp) {
-				if (isStudent())
+				if (isStudent()) {
 					window.location.href = `/student-profile/${getCurrentUserId()}`;
-				else if (isLab())
-					window.location.href = `/prof-page/${getCurrentLabId()}`;
+				}
+				else if (isLab()) {
+					//window.location.href = `/prof-page/${getCurrentLabId()}`; WORKING ON SETTING lab_id IN SESSION STORAGE ON LOGIN
+				}
 			}
 			else {
 				alertify.error("Incorrect Username and Password");
