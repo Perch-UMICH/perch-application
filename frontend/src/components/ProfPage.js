@@ -96,15 +96,15 @@ class ProfPage extends Component {
 				<div className='content-body'>
 					<div className='shadow' id='left-column'>
 						<ContactTab header='contact' contact_info={this.state.contact_info} />
-						<AcceptRate rate={5} />
-						<div className='ext-links mobile-header tab academic-tab-header'>Links
+						{/*<AcceptRate rate={5} />*/}
+						{/*<div className='ext-links mobile-header tab academic-tab-header'>Links
 							<a href='#' className="null-link-style" >
 							{ permissionCheck() && 
 								<a href={this.state.dest}><i className="material-icons interest-editor edit-icon" style={{position: 'absolute', right: '0'}} >create</i></a>
 							}
 							</a>
 						</div>
-						<ExtLinkBox dest={this.state.website}>Website</ExtLinkBox>
+						<ExtLinkBox dest={this.state.website}>Website</ExtLinkBox>*/}
 					</div>
 					<div id='right-column' className='shadow center-align'>
 		 				<div className='ad'>AD</div>

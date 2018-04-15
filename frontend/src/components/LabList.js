@@ -26,7 +26,7 @@ class LabList extends Component {
 				<div className='lab-list-header white-text'>Lab Match <i className='lab-list-icon material-icons'>arrow_downward</i></div>
 				<div id='lab-list-filler'></div>
 				<div id='lab-list-container'>
-					{this.props.labs.map((lab) => <LabListItem key={lab.name} img={lab.img} labName={lab.name} tags={lab.all_tags} profile_link={`/prof-page/${lab.data.id}`} spots={lab.positions.length} />)}
+					{this.props.labs.map((lab) => <LabListItem key={lab.data.id} img={lab.img} labName={lab.name} tags={lab.all_tags} profile_link={`/prof-page/${lab.data.id}`} spots={lab.positions.length} />)}
 				</div>
 			</div>
 		</div>

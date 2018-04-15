@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import SquareButton from './SquareButton';
+import {getAllPreferences, getLabPreferences, getCurrentLabId, addPreferencesToLab} from '../helper'
 import './LabSpecifications.css';
 
 class LabSpecifications extends Component {
@@ -43,6 +44,12 @@ class LabSpecifications extends Component {
 				},
 			]
 		};
+	}
+
+	componentDidMount() {
+		getAllPreferences().then(r => console.log(r))
+		getLabPreferences(getCurrentLabId()).then(r => console.log(r))
+		addPreferencesToLab(getCurrentLabId(), [1])
 	}
 
 	render() {
