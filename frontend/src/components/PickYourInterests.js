@@ -25,6 +25,7 @@ class PickYourInterests extends Component {
 			user_id: getCurrentUserId(),
 			bubble_array: [],
 			s_id: getCurrentStudentId(),
+			l_id: getCurrentLabId(),
 		};
 		
 		this.updateBubbleChoice = this.updateBubbleChoice.bind(this);
@@ -122,12 +123,12 @@ class PickYourInterests extends Component {
 		console.log(item_ids);
 		if (isLab()) {
 			if (this.state.display_info.req_type === 'skills') {
-				addSkillsToLab(this.state.s_id, item_ids).then(resp => {
+				addSkillsToLab(this.state.l_id, item_ids).then(resp => {
 					console.log(resp);
 					this.redirect()
 				});
 			} else {
-				addTagsToLab(this.state.s_id, item_ids).then(resp => {
+				addTagsToLab(this.state.l_id, item_ids).then(resp => {
 					console.log(resp);
 					this.redirect()
 				});
