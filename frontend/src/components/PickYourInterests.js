@@ -3,7 +3,7 @@ import { parse } from 'query-string';
 import SquareButton from './SquareButton';
 import BubbleChoice	from './BubbleChoice';
 import Bubble from './Bubble';
-import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab} from '../helper.js';
+import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab, syncSkillsToLab, syncTagsToLab} from '../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -123,12 +123,12 @@ class PickYourInterests extends Component {
 		console.log(item_ids);
 		if (isLab()) {
 			if (this.state.display_info.req_type === 'skills') {
-				addSkillsToLab(this.state.l_id, item_ids).then(resp => {
+				syncSkillsToLab(this.state.l_id, item_ids).then(resp => {
 					console.log(resp);
 					this.redirect()
 				});
 			} else {
-				addTagsToLab(this.state.l_id, item_ids).then(resp => {
+				syncTagsToLab(this.state.l_id, item_ids).then(resp => {
 					console.log(resp);
 					this.redirect()
 				});
