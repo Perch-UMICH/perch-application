@@ -86,7 +86,11 @@ export function loginUser(email, password) {
             }
             else if (response.data.result[0].is_faculty) {
                 // sessionStorage.setItem('student_id', null);
-                sessionStorage.setItem('faculty_id', response.data.result[1].id);
+                sessionStorage.setItem('faculty_id', response.data.result[1].id); // EMI HAS CHANGED THIS! FROM HERE TILL...
+                getUserLabs(response.data.result[0].id).then(resp => {
+                    console.log(resp);
+                    // sessionStorage.setItem('lab_id', somethin_good);
+                }); // ... HERE!
             }
             console.log('Successfully logged in');
             return response.data
