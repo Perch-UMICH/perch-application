@@ -52,7 +52,7 @@ class SignUp extends Component {
 		else {
 			createFaculty(id, first_name, last_name, null, email).then(fac => {
 				console.log("created faculty??");
-				createLab(fac.id, `${first_name} ${last_name}'s Lab`, 'Chemistry', '100 Cool Catz Dr., Lab 1003', 'uhh', null, null, null, null, null, email).then(lab => {
+				createLab(fac.id, `${first_name} ${last_name}'s Lab`, null, null, null, null, null, null, null, null, email).then(lab => {
 					addMembersToLab(lab.id,[fac.id],[1]).then(resp => {
 						console.log("ADDED MEMS TO LAB?");
 						console.log(resp)

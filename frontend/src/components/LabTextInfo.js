@@ -46,7 +46,7 @@ class LabTextInfo extends Component {
 	updateBackEnd(event) {
 		event.preventDefault();
 		if (this.getPageType() === 'lab-name')
-			updateLab(getCurrentLabId(), $('#lab-name-input').val).then(this.redirect.bind(this))
+			updateLab(getCurrentLabId(), $('#lab-name-input').val()).then(this.redirect.bind(this))
 		else if (this.getPageType() === 'lab-description' || this.getPageType() === 'update-lab-description')
 			 updateLab(getCurrentLabId(), null, null, null, this.state.description).then(this.redirect.bind(this))
 	}
