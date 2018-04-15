@@ -12,11 +12,11 @@ class LabTextInfo extends Component {
 		super(props);
 		this.state = {
 			description: '',
-		};
+		};l
 	}
 
 	componentDidMount() {
-		getLab(getCurrentLabId()).then(resp => this.setState({description: resp.data.description}))
+		getLab(getCurrentLlabId()).then(resp => this.setState({description: resp.data.description}))
 	}
 
 	updateDescription(event) {
