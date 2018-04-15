@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Bubble from './Bubble';
-import {getStudent, getLab, getAllTags, getAllSkills} from '../helper.js';
+import {getStudent, getLab, getAllTags, getAllSkills, getCurrentStudentId, getCurrentLabId} from '../helper.js';
 import $ from 'jquery';
 import './PickYourInterests.css';
 
@@ -44,7 +44,9 @@ class BubbleChoice extends Component {
 	setUserChoices() {
 		var temp_choices = [];
 		if (this.props.display_info.user_type === 'student') {
-			getStudent(this.props.display_info.user_id).then((resp) => {
+			getStudent(getCurrentStudentId()).then((resp) => {
+				console.log("GOT STUDENT");
+				console.log(resp);
 				if (resp) {
 					if (this.props.display_info.req_type === 'tags') {
 						temp_choices = resp.tags;
@@ -52,13 +54,26 @@ class BubbleChoice extends Component {
 						temp_choices = resp.skills;
 					}
 					var temp_catalog = this.state.catalog;
-					temp_catalog = temp_catalog.filter( function( elt ) {
+					/*temp_catalog = temp_catalog.filter( function( elt ) {
 					  return !temp_choices.includes( elt );
-					});
+					});*/
+					var updated_catalog = [];
+					for (var i = 0; i < temp_catalog.length; ++i) {
+						var inChoices = false;
+						for (var j = 0; j < temp_choices.length; ++j) {
+							if (temp_catalog[i].id === temp_choices[j].id) {
+								inChoices = true;
+								break;
+							}
+						}
+						if (!inChoices) {
+							updated_catalog.push(temp_catalog[i]);
+						}
+					}
 				    this.setState({ 
 				    	choices: temp_choices,
-				    	catalog: temp_catalog,
-				    	filtered_catalog: temp_catalog.slice(),
+				    	catalog: updated_catalog,
+				    	filtered_catalog: updated_catalog.slice(),
 				    }, () => {
 				    	if (this.props.callbackSkills) {
 				    		this.props.callbackSkills(temp_choices);
@@ -68,7 +83,7 @@ class BubbleChoice extends Component {
 			});
 		}
 		else if (this.props.display_info.user_type === 'faculty') {
-			getLab(this.props.display_info.user_id).then((resp) => {
+			getLab(getCurrentLabId()).then((resp) => {
 				console.log("LAB RESP");
 				console.log(resp);
 				console.log(this.props.display_info.req_type);
