@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../helper.js';
-import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addLabToFaculty } from '../helper.js'
+import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ } from '../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {
@@ -10,7 +10,7 @@ class SignUp extends Component {
 		};
 		getAllUsers().then(r=>console.log(r))
 		getAllStudents().then(r=>console.log(r))
-		getStudent(2).then(r=>console.log(r))
+		getAllLabs().then(r=>console.log(r))
 	}
 
 	// Called when form submits
@@ -51,9 +51,14 @@ class SignUp extends Component {
 			createFaculty(id, first_name, last_name, null, email).then(fac => {
 				console.log(fac);
 				createLab(fac.id, `${first_name} ${last_name}'s Lab`, 'Chemistry', '100 Cool Catz Dr., Lab 1003', 'uhh', null, null, null, null, null, email).then(lab => {
-					addLabToFaculty(fac.id, lab.id).then(resp => {
-						window.location.href = this.state.route;
+					addMembersToLab(lab.id,[fac.id],['PI']).then(resp => {
+						console.log(resp)
+						// window.location.href = this.state.route;
 					});
+					// TODO TEMPORARILY NOT WORKING FROM API UPDATE
+					// addLabToFaculty(fac.id, lab.id).then(resp => {
+					// 	window.location.href = this.state.route;
+					// });
 				});
 			});
 		}
@@ -66,26 +71,26 @@ class SignUp extends Component {
 	  				<a href='login' ><div className='new-signup-sub-header'>or <span className='link-color'>login</span> if you have an account</div></a>
 	  				<div className='row'>
 	  					<div className="input-field col s6">
-		                	<input id="first_name" type="text" required />
+		                	<input id="first_name" type="text" required autofocus="autofocus"/>
 		                	<label htmlFor="first_name">First name</label>
 		            	</div>
 		            	<div className="input-field col s6">
-			                <input id="last_name" type="text" required />
+			                <input id="last_name" type="text" required autofocus="autofocus"/>
 			                <label htmlFor="last_name">Last name</label>
 			            </div>
 	  				</div>
 	  				<div className="input-field">
-		                <input id="email" type="email" required />
+		                <input id="email" type="email" required autofocus="autofocus"/>
 		                <label htmlFor="email">Email</label>
 		            </div>
 		            <div className="input-field">
-		                <input id="password" type="password" required />
+		                <input id="password" type="password" required autofocus="autofocus"/>
 		                <label htmlFor="password">Password</label>
 		            </div>
 		            <div className='center-align'>
-		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required />
+		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required autofocus="autofocus"/>
 		              	<label className='new-signup-radio' htmlFor="faculty">Faculty</label>
-		              	<input className="radio" name="user_type" type="radio" id="student" value="student" required />
+		              	<input className="radio" name="user_type" type="radio" id="student" value="student" required autofocus="autofocus"/>
 		              	<label className='new-signup-radio' htmlFor="student">Student</label>
 		            </div>
 		            <br />

@@ -20,7 +20,7 @@ class Apply extends Component {
 				this.setState({ lab_name: resp.data.name })
 			}
 		});
-		getLabPositions(position_id).then(position => {
+		getLabPosition(position_id).then(position => {
 			console.log('position!');
 			console.log(position);
 			this.setState({ 

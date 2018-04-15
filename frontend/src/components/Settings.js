@@ -4,7 +4,7 @@ import BasicButton from './BasicButton';
 import ResetEmailModal from './ResetEmailModal';
 import ResetPasswordModal from './ResetPasswordModal';
 import DeleteUserModal from './DeleteUserModal';
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateStudent, getStudentFromUser} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateStudent, getStudentFromUser, updateUser, isStudent, isLab} from '../helper.js'
 import './Settings.css';
 import $ from 'jquery';
 import alertify from 'alertify.js';
@@ -43,12 +43,19 @@ class Settings extends Component {
 		}
 	}
 
+
+
 	resetEmail(email) {
-		updateStudent(this.state.student_id, null, null, null, null, null, email, null, null, null).then(resp => {
+		updateUser(getCurrentUserId(), null, this.props.email, $('#new_password').val(), isStudent(), isLab()).then(resp => {
 			alertify.success("Email Successfully Reset");
 			console.log(resp);
 			this.setState({ email: email });
 		});
+		// updateStudent(this.state.student_id, null, null, null, null, null, email, null, null, null).then(resp => {
+		// 	alertify.success("Email Successfully Reset");
+		// 	console.log(resp);
+		// 	this.setState({ email: email });
+		// });
 	}
 
 	openEmailModal() { // superClick
