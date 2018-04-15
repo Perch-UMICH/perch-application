@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
-import {isLoggedIn, loginUser, getCurrentUserId, getUser, getFacultyLabs, getFacultyFromUser} from '../helper.js';
+import {isLoggedIn, loginUser, getCurrentUserId, getUser, getFacultyLabs, getFacultyFromUser, getUserLabs} from '../helper.js';
 import alertify from 'alertify.js';
 
 class Login extends Component {
@@ -18,13 +18,12 @@ class Login extends Component {
 						if (resp.result.is_student) {
 							window.location.href = `/student-profile/${getCurrentUserId()}`;
 						} else {
-							getFacultyFromUser(getCurrentUserId()).then(resp => {
-								getFacultyLabs(resp.result.id).then(labs => {
-									if (labs) {
-										//window.location.href = `/prof-page/${labs[0].id}`;
-									}
-								});
-							});
+							getUserLabs(getCurrentUserId()).then(resp => {
+								console.log(resp);
+								if (resp.result[0]) {
+									window.location.href = `/prof-page/${resp.result[0].lab.id}`;
+								}
+							})
 						}
 					}
 				});

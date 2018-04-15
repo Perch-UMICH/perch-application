@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
-import { getLabPositions, getLab, getPositionApplication, createApplication } from '../helper.js';
+import { getLabPosition, getLab, getPositionApplication, createApplication } from '../helper.js';
 import './Apply.css';
 
 class Apply extends Component {
@@ -44,12 +44,15 @@ class Apply extends Component {
 				"text": "How much wood would a wood chuck chuck if a wood chuck *couldn't* chuck wood?"
 			},
 		]
-		createApplication(position_id, questions).then(resp => {
+		var q_arr = [];
+		for (var i = 0; i < questions.length; ++i) {
+			q_arr.push(questions[i].text);
+		}
+		createApplication(position_id, q_arr).then(resp => {
 			console.log(resp);
 			getPositionApplication(position_id).then(app => {
 				console.log("application");
 				console.log(app);
-
 			});
 		});
 	}
