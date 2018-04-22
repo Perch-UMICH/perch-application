@@ -8,6 +8,7 @@ import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateSt
 import './Settings.css';
 import $ from 'jquery';
 import alertify from 'alertify.js';
+import iziToast from 'izitoast';
 
 class Settings extends Component {
 	constructor(props) {
@@ -47,7 +48,14 @@ class Settings extends Component {
 
 	resetEmail(email) {
 		updateUser(getCurrentUserId(), null, email, $('#new_password').val(), isStudent(), isLab()).then(resp => {
-			alertify.success("Email Successfully Reset");
+			// alertify.success("Email Successfully Reset");
+			iziToast.show({
+				    title: 'Success',
+				    message: 'Email Reset',
+				    color: 'green',
+				    position: 'bottomLeft',
+				    progressBarColor: 'white',
+				});
 			console.log(resp);
 			this.setState({ email: email });
 		});

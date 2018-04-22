@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import BasicButton from './BasicButton';
 import { resetPassword, updateUser, getCurrentUserId, isStudent, isLab} from '../helper.js';
 import alertify from 'alertify.js';
+import iziToast from 'izitoast';
 import $ from 'jquery';
 
 class ResetPasswordModal extends Component {
@@ -20,7 +21,15 @@ class ResetPasswordModal extends Component {
 		// TODO TEMPORARILY BROKEN FROM API UPDATE
 		updateUser(getCurrentUserId(), null, null, $('#new_password').val(), isStudent(), isLab()).then(resp => {
 			console.log("reset password!");
-			alertify.success("Password Successfully Reset");
+			console.log(resp);
+			// alertify.success("Password Successfully Reset");
+			iziToast.show({
+				    title: 'success',
+				    message: 'Password Reset',
+				    color: 'green',
+				    position: 'bottomLeft',
+				    progressBarColor: 'white',
+				});
 			this.onClick();
 		});
 		// resetPassword(this.props.email, $('#new_password').val(), $('#new_password_conf').val()).then(resp => {
