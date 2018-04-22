@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isStudent, isLab, getStudent, getCurrentStudentId, getCurrentUserId, getLab, getCurrentLabId, updateLab, updateStudent, getAllStudents, getUser} from '../helper.js'
+import {isStudent, isLab, getStudent, getCurrentStudentId, getCurrentUserId, getLab, getCurrentLabId, updateLab, updateStudent, getAllStudents, getUser,  returnToProfile} from '../helper.js'
 import BasicButton from './BasicButton'
 import './UpdateContact.css';
 
@@ -46,10 +46,7 @@ class UpdateContact extends Component {
 
 	redirect() {
 		if (this.state.url_string === "update-contact") {
-			if (isStudent())
-				window.location = `/student-profile/${getCurrentUserId()}`;
-			else if (isLab())
-				window.location = `/prof-page/${getCurrentLabId()}`;
+			returnToProfile();
 		} else {
 			if (isStudent())
 				window.location = '/pick-your-interests?user_type=student';

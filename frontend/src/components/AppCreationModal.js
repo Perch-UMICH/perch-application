@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton'
-import {createLabPosition, createApplication, updateApplication, getCurrentLabId} from '../helper.js';
+import {createLabPosition, createApplication, updateApplication, getCurrentLabId, returnToProfile} from '../helper.js';
 import $ from 'jquery';
 
 class AppCreationModal extends Component {
@@ -28,7 +28,7 @@ class AppCreationModal extends Component {
 					q_arr.push(this.props.info.questions[i].text);
 				}
 				updateApplication(position.id, q_arr).then(resp => {
-					window.location.href = `/prof-page/${getCurrentLabId()}`;
+					returnToProfile()
 				});
 			});
 		});

@@ -1457,3 +1457,13 @@ export function permissionCheck() {
     let checkStudent = getCurrentUserId() === page_id && page_type === 'student-profile'
     return checkLab || checkStudent;
 }
+
+
+//// CHANGED BY BENJI
+
+export function returnToProfile() {
+    if (isStudent())
+        window.location = `/student-profile/${getCurrentUserId()}`;
+    else if (isLab())
+        window.location = `/prof-page/${getCurrentLabId()}`;
+}
