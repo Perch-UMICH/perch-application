@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from './BasicButton';
-import { getCurrentUserId } from '../helper.js';
+import { getCurrentUserId, returnToProfile } from '../helper.js';
 import $ from 'jquery';
 
 class AppSubmissionModal extends Component {
@@ -22,11 +22,11 @@ class AppSubmissionModal extends Component {
 
 	submitApplication(event) {
 		// ADD SUBMIT APPLICATION FUNCTION
-		window.location.href = `/student-profile/${getCurrentUserId()}`;
+		returnToProfile()
 	}
 
 	render() {
-		var l_dest = '/prof-page/' + this.state.slug;
+		// var l_dest = '/prof-page/' + this.state.slug;
 		return(
 			<div>
 				<div id="submitModal" className="modal">
