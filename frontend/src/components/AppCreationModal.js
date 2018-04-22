@@ -28,7 +28,7 @@ class AppCreationModal extends Component {
 					q_arr.push(this.props.info.questions[i].text);
 				}
 				updateApplication(position.id, q_arr).then(resp => {
-					window.location.href = `/prof-page/${getCurrentLabId()}`;
+					//window.location.href = `/prof-page/${getCurrentLabId()}`;
 				});
 			});
 		});

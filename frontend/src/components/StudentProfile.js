@@ -30,6 +30,7 @@ class StudentProfile extends Component {
 					url: 'prof-page'
 				},
 			],
+			classes: [],
 			not_student: false,
 		}
 	}
@@ -44,6 +45,9 @@ class StudentProfile extends Component {
 	generalHandler() {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
+				var class_arr = resp.result.classes.split('|');
+				console.log("CLASS ARR");
+				console.log(class_arr);
 				console.log(resp)
 	            this.setState(
 	            	{
@@ -53,7 +57,7 @@ class StudentProfile extends Component {
 	            		year: resp.result.year,
 	            		bio: resp.result.bio,
 	            		email: resp.result.email,
-	            		classes: resp.result.classes,
+	            		classes: class_arr,
 	            		past_research: resp.result.past_research,
 	            		student: true,
 	            		s_id: resp.result.id,
