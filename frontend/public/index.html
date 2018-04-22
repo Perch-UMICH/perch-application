@@ -56,11 +56,16 @@
         <div class="tap-target" data-activates="feature">
           <div class="tap-target-content">
             <h5>Have Feedback?</h5>
-            <a class='null-link-style' href='/feedback' target="_blank" style="z-index: 999"><p>Feedback Submission Form Here!</p></a>
+            <a id='feedback-link' class='null-link-style' href='#' target="_blank" style="z-index: 999"><p>Feedback Submission Form Here!</p></a>
           </div>
         </div> 
     </div>
-
+    <script type="text/javascript">
+      let problem_page = window.location.href;
+      let url = "/feedback?source=" + problem_page;
+      let link = document.getElementById('feedback-link');
+      link.setAttribute("href", url);
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

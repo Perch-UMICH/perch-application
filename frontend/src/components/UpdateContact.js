@@ -22,10 +22,9 @@ class UpdateContact extends Component {
 	grabLabInfo() { 
 		getLab(getCurrentLabId()).then(resp => this.setState({
 			email: resp.data.contact_email,
-			//phone: resp.data.contact_phone,
 			location: resp.data.location,
 		}));
-		getLab(getCurrentLabId()).then(resp => console.log(resp))
+		// getLab(getCurrentLabId()).then(resp => alert(resp.data.location))
 	}
 
 	updateInfo(event) {
@@ -78,7 +77,7 @@ class UpdateContact extends Component {
 								<label htmlFor="contact-email">Public Email</label>
 							</div>
 							<div className='input-field col s12'>
-								<input id='contact-location' className='gen-input' type='text' onChange={(event) => this.setState({location: event.target.value})} autofocus="autofocus"/>
+								<input id='contact-location' className='gen-input' type='text' value={this.state.location} onChange={(event) => this.setState({location: event.target.value})} autofocus="autofocus"/>
 								<label htmlFor="contact-location">Lab Location</label>
 							</div>
 						</div>}
