@@ -33,9 +33,9 @@ class PositionsTab extends Component {
 				    {this.props.positions.map((position) => {
 				    	console.log("POSITION");
 				    	console.log(position);
-				    	dest = dest + '/' + position.id;
+				    	let dest_instance = dest + '/' + position.id;
 						return (
-							<PositionListItem key={position.title} id={position.id} positionTitle={position.title} time_comm={position.time_commitment} open_slots={position.open_slots} dest={dest} btn_msg={btn_msg || `applicants (${position.num_applicants})`} selected={selected}/>);
+							<PositionListItem key={position.title} id={position.id} positionTitle={position.title} time_comm={position.time_commitment} open_slots={position.open_slots} dest={dest_instance} btn_msg={btn_msg || `applicants (${position.num_applicants})`} selected={selected}/>);
 					})}
 				</div>
 			</div>
