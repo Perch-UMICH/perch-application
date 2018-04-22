@@ -7,7 +7,7 @@ import AcademicsTab from './AcademicsTab';
 import PastResearchTab from './PastResearchTab';
 import Endorsements from './Endorsements'
 import ContactTab from './ContactTab'
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser} from '../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../helper.js'
 import ErrorPage from './ErrorPage'
 import ExtLinks from './ExtLinks'
 import $ from 'jquery'
@@ -86,6 +86,7 @@ class StudentProfile extends Component {
 				this.setState({ not_student: true });
 			}
 		});
+		// updateStudent(1, null, null, null, null, null, null, null, "experience1|experience2", "class1|class2")
 	}
 
 	render() {
