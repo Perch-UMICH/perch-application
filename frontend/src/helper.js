@@ -5,6 +5,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
+import { cookie } from 'react-cookie'
 import FormData from 'form-data'
 
 axios.defaults.headers.common = {};
@@ -86,10 +87,11 @@ export function loginUser(email, password) {
             else if (response.data.result.user.is_faculty) {
                 // sessionStorage.setItem('student_id', null);
                 sessionStorage.setItem('faculty_id', response.data.result.user.faculty.id); // EMI HAS CHANGED THIS! FROM HERE TILL...
-                getUserLabs(response.data.result.user.id).then(resp => {
-                    console.log(resp);
-                    // sessionStorage.setItem('lab_id', somethin_good);
-                }); // ... HERE!
+                sessionStorage.setItem('lab_id', response.data.result.user.labs[0].id);
+                // getUserLabs(response.data.result.user.id).then(resp => {
+                //     console.log(resp);
+                //     // sessionStorage.setItem('lab_id', somethin_good);
+                // }); // ... HERE!
             }
             console.log('Successfully logged in');
             return response.data
@@ -298,7 +300,7 @@ export function getUserLabs(user_id) {
 //  email - (string)
 //  year - (string)
 // Optional:
-// past_research - (string, comma separated) names of past research experiences (lab names)
+// experiences - (string, comma separated) names of past research experiences (lab names)
 // classes - (string, comma separated) names of relevant classes
 // bio - (text) short bio on student goals
 // major - (string) degree pursuing
@@ -337,9 +339,9 @@ export function getStudent(student_id) {
         })
 }
 
-export function createStudent(user_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id) {
+export function createStudent(user_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id) {
     console.log('Creating student');
-    return axios.post('api/students', {user_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id})
+    return axios.post('api/students', {user_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id})
         .then(response => {
             sessionStorage.setItem('student_id', response.data.result.id) // CHANGED BY BENJI
             console.log(response.data.message);
@@ -351,10 +353,10 @@ export function createStudent(user_id, first_name, last_name, major, year, gpa, 
         })
 }
 
-export function updateStudent(student_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id) {
+export function updateStudent(student_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id) {
     console.log('Updating student');
     let _method = 'PUT';
-    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, major, year, gpa, email, bio, past_research, classes, faculty_endorsement_id})
+    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id})
         .then(response => {
             console.log(response.data.message);
             return response.data.result;
