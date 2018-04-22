@@ -5,7 +5,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
-//import { cookie } from 'react-cookie'
+import { cookie } from 'react-cookie'
 import FormData from 'form-data'
 
 axios.defaults.headers.common = {};
@@ -66,7 +66,7 @@ export function loginUser(email, password) {
     // cookie.remove('perch_user_id');
 
     // Benji changed this
-    sessionStorage.clear()
+    sessionStorage.clear();
 
     // Login
     console.log('logging in ' + email);
@@ -77,16 +77,16 @@ export function loginUser(email, password) {
     })
         .then(response => {
             console.log(response)
-            sessionStorage.setItem('token', response.data.result[1].token);
-            sessionStorage.setItem('user_id', response.data.result[0].id);
-            if (response.data.result[0].is_student) {
+            sessionStorage.setItem('token', response.data.result.token);
+            sessionStorage.setItem('user_id', response.data.result.user.id);
+            if (response.data.result.user.is_student) {
                 // Save student id
-                sessionStorage.setItem('student_id', response.data.result[1].id);
+                sessionStorage.setItem('student_id', response.data.result.user.student.id);
                 // sessionStorage.setItem('faculty_id', null);
             }
-            else if (response.data.result[0].is_faculty) {
+            else if (response.data.result.user.is_faculty) {
                 // sessionStorage.setItem('student_id', null);
-                sessionStorage.setItem('faculty_id', response.data.result[1].id); // EMI HAS CHANGED THIS! FROM HERE TILL...
+                sessionStorage.setItem('faculty_id', response.data.result.user.faculty.id); // EMI HAS CHANGED THIS! FROM HERE TILL...
                 getUserLabs(response.data.result[0].id).then(resp => {
                     console.log(resp);
                     // sessionStorage.setItem('lab_id', somethin_good);
@@ -763,6 +763,7 @@ export function getLabData(lab_id, skilltag_data, preferences_data, position_dat
             return [];
         })
 }
+
 
 export function createLab(faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email) {
     console.log('Creating lab');
