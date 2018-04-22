@@ -5,7 +5,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
-import { cookie } from 'react-cookie'
 import FormData from 'form-data'
 
 axios.defaults.headers.common = {};

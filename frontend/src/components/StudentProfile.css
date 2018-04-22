@@ -185,6 +185,7 @@
 }
 
 #left-column {
+	/*position: fixed;*/
 	position: absolute;
 	left: 15px;
 	background-color: #ddd;
@@ -192,6 +193,7 @@
 }
 
 #right-column {
+	/*position: fixed;*/
 	position: absolute;
 	right: 15px;
 	background-color: #ddd;
