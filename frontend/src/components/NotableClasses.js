@@ -107,6 +107,10 @@ class NotableClasses extends Component {
 		if (temp_year) {
 			year = temp_year;
 		}
+		var classString = this.state.class_arr[0].text;;
+		for (var i = 1; i < this.state.class_arr.length; ++i) {
+			classString += '|' + this.state.class_arr[i].text;
+		}
 		updateStudent(this.state.student_id, null, null, this.state.major, year, this.state.gpa, null, null, null, this.state.classes, null).then(resp => {
 			console.log(resp);
 		}).then(resp => {
