@@ -10,15 +10,15 @@
 
 .notable-classes-input {
 	background-color: #eee;
-	color: #333;
+	color: #666;
 	padding: 10px;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 	margin-bottom: -10px;
 	display: block;
 }
 
 .notable-classes-input:hover {
-	color: #333;
+	color: #666;
 }
 
 .notable-classes-header {
