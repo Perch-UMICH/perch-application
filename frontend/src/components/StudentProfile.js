@@ -47,6 +47,7 @@ class StudentProfile extends Component {
 			getStudentFromUser(id).then((resp) => {
 				console.log(resp)
 				var class_arr = ["you can", "add classes"]
+			
 				if (resp.result.classes)
 					class_arr = resp.result.classes.split('|');
 				console.log("CLASS ARR");

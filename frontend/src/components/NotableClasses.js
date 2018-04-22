@@ -111,7 +111,7 @@ class NotableClasses extends Component {
 		for (var i = 1; i < this.state.class_arr.length; ++i) {
 			classString += '|' + this.state.class_arr[i].text;
 		}
-		updateStudent(this.state.student_id, null, null, this.state.major, year, this.state.gpa, null, null, null, this.state.classes, null).then(resp => {
+		updateStudent(this.state.student_id, null, null, this.state.major, year, this.state.gpa, null, null, null, classString, null).then(resp => {
 			console.log(resp);
 		}).then(resp => {
 			if (this.state.url_string === "update-notable-classes") {
