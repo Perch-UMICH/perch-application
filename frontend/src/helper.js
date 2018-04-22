@@ -86,10 +86,11 @@ export function loginUser(email, password) {
             else if (response.data.result.user.is_faculty) {
                 // sessionStorage.setItem('student_id', null);
                 sessionStorage.setItem('faculty_id', response.data.result.user.faculty.id); // EMI HAS CHANGED THIS! FROM HERE TILL...
-                getUserLabs(response.data.result.user.id).then(resp => {
-                    console.log(resp);
-                    // sessionStorage.setItem('lab_id', somethin_good);
-                }); // ... HERE!
+                sessionStorage.setItem('lab_id', response.data.result.user.labs[0].id); // EMI HAS CHANGED THIS! FROM HERE TILL...
+                // getUserLabs(response.data.result.user.id).then(resp => {
+                //     console.log(resp);
+                //     sessionStorage.setItem('lab_id', resp.result[0].lab.id);
+                // }); // ... HERE!
             }
             console.log('Successfully logged in');
             return response.data
@@ -185,7 +186,7 @@ export function isLab() {
 }
 
 export function isFaculty() {
-    return sessionStorage.getItem('lab_id') != null;
+    return sessionStorage.getItem('faculty_id') != null;
 }
 
 
