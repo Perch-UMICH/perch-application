@@ -37,7 +37,7 @@ class AcademicsTab extends Component {
 						<span className='academic-label'>Notable Classes: </span>
 						<span className='academic-info'>
 							{this.props.classes.map((c)=>{
-								return ( <div>{c}<br/></div>)
+								return ( <div key={c}>{c}<br/></div>)
 							})}
 							<br/>
 						</span>

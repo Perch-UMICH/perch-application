@@ -45,7 +45,10 @@ class StudentProfile extends Component {
 	generalHandler() {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
-				var class_arr = resp.result.classes.split('|');
+				var class_arr = []; 
+				if (resp.result.classes) {
+					class_arr = resp.result.classes.split('|');
+				}
 				console.log("CLASS ARR");
 				console.log(class_arr);
 				console.log(resp)
