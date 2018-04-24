@@ -13,12 +13,7 @@ class NotableClasses extends Component {
 			year: '',
 			major: '',
 			student_id: getCurrentStudentId(),
-			class_arr: [
-				{
-					id: 'c_0',
-					text: '',
-				},
-			],
+			class_arr: [],
 			url_string: this.props.location.pathname.split('/')[1],
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
@@ -31,13 +26,28 @@ class NotableClasses extends Component {
 			getStudentFromUser(id).then( r => {
 				this.setState({student_id: r.result.id, user_id: id});
 				getStudent(this.state.student_id).then((resp) => {
-					console.log(resp);
+					var class_arr = [];
+					var class_str_arr = [''];
+					if (resp.data.classes) {
+						class_str_arr = resp.data.classes.split('|');
+					}
+					var index = 1;
+					for (var i = 0; i < class_str_arr.length; ++i) {
+						var class_item = {
+							id: `c_${index}`,
+							text: class_str_arr[i],
+						}
+						class_arr.push(class_item);
+						++index;
+					}
 		            this.setState(
 		            	{
 		            		gpa: resp.data.gpa,
 		            		major: resp.data.major,
 		            		year: resp.data.year,
-		            		classes: resp.data.classes,
+		            		classes: class_str_arr,
+		            		class_arr: class_arr,
+		            		c_index: index,
 		            	}
 		            );
 		            console.log(resp);
@@ -168,7 +178,7 @@ class NotableClasses extends Component {
 						</div>
 					    {this.state.class_arr.map((c) => {
 							return (
-								<div className="row">
+								<div className="row" key={c.id}>
 									<div className="col s11">
 										{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
 										<textarea id={c.id} type="text" placeholder="EECS 281" className='notable-classes-input' id="class-input" rows='1' value={c.text} onChange={event => this.alterClass(event, c.id)} required></textarea>
