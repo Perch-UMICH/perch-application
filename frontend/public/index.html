@@ -10,6 +10,7 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link href="/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="/css/iziToast.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"> -->
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -56,11 +57,16 @@
         <div class="tap-target" data-activates="feature">
           <div class="tap-target-content">
             <h5>Have Feedback?</h5>
-            <a class='null-link-style' href='/feedback' target="_blank" style="z-index: 999"><p>Feedback Submission Form Here!</p></a>
+            <a id='feedback-link' class='null-link-style' href='#' target="_blank" style="z-index: 999"><p>Feedback Submission Form Here!</p></a>
           </div>
         </div> 
     </div>
-
+    <script type="text/javascript">
+      let problem_page = window.location.href;
+      let url = "/feedback?source=" + problem_page;
+      let link = document.getElementById('feedback-link');
+      link.setAttribute("href", url);
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -72,6 +78,7 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script type="text/javascript" src="/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/iziToast.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
     <script type="text/javascript" src="/js/moveTo.js"></script>
     <script src='./js/scrollanim.js'></script>

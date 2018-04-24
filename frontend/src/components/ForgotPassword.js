@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import alertify from 'alertify.js';
+import iziToast from 'izitoast';
 import BasicButton from './BasicButton';
 
 class ForgotPassword extends Component {
@@ -54,7 +55,16 @@ class ForgotPassword extends Component {
 		}
 
 		if (password !== confirm_password) {
-			alertify.error("Passwords Do Not Match");
+			// alertify.error("Passwords Do Not Match");
+			iziToast.show({
+				    title: 'Error',
+				    titleColor: 'white',
+				    messageColor: 'white',
+				    message: 'Passwords Do Not Match',
+				    color: 'red',
+				    position: 'bottomLeft',
+				    progressBarColor: 'white',
+				});
 		}
 		else {
 			console.log('update user information');

@@ -49,9 +49,6 @@ class StudentProfile extends Component {
 				if (resp.result.classes) {
 					class_arr = resp.result.classes.split('|');
 				}
-				console.log("CLASS ARR");
-				console.log(class_arr);
-				console.log(resp)
 	            this.setState(
 	            	{
 	            		name: `${resp.result.first_name} ${resp.result.last_name}`,

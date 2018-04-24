@@ -10,15 +10,15 @@
 .past-research-input {
 	height: 150px;
 	background-color: #eee;
-	color: #333;
+	color: #666;
 	padding: 10px;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 	margin-bottom: 10px;
 	display: block;
 }
 
 .past-research-input:hover {
-	color: #333;
+	color: #666;
 }
 
 .past-research-header {

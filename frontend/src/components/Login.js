@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './Login.css';
 import {isLoggedIn, loginUser, getCurrentUserId, isStudent, isLab, isFaculty, getCurrentLabId} from '../helper.js';
 import alertify from 'alertify.js';
+import iziToast from 'izitoast';
 
 class Login extends Component {
 
@@ -19,7 +20,16 @@ class Login extends Component {
 					window.location.href = `/prof-page/${getCurrentLabId()}`;
 			}
 			else {
-				alertify.error("Incorrect Username and Password");
+				// alertify.error("Incorrect Username and Password");
+				iziToast.show({
+				    title: 'Error',
+				    titleColor: 'white',
+				    messageColor: 'white',
+				    message: 'Incorrect Username or Password',
+				    color: 'red',
+				    position: 'bottomLeft',
+				    progressBarColor: 'white',
+				});
 			}
 		});
 	}
