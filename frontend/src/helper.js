@@ -5,14 +5,16 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
-// import { cookie } from 'react-cookie'
+import { cookie } from 'react-cookie'
 import FormData from 'form-data'
 
 axios.defaults.headers.common = {};
 axios.defaults.baseURL = 'http://perch-api.us-east-1.elasticbeanstalk.com';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-// Authentication
+
+// AUTHENTICATION //
+
 export function isLoggedIn() {
     if(sessionStorage.getItem('token') == null) {
         console.log('Not logged in');
@@ -87,10 +89,10 @@ export function loginUser(email, password) {
             else if (response.data.result.user.is_faculty) {
                 // sessionStorage.setItem('student_id', null);
                 sessionStorage.setItem('faculty_id', response.data.result.user.faculty.id); // EMI HAS CHANGED THIS! FROM HERE TILL...
-                sessionStorage.setItem('lab_id', response.data.result.user.labs[0].id); // EMI HAS CHANGED THIS! FROM HERE TILL...
+                sessionStorage.setItem('lab_id', response.data.result.user.labs[0].id);
                 // getUserLabs(response.data.result.user.id).then(resp => {
                 //     console.log(resp);
-                //     sessionStorage.setItem('lab_id', resp.result[0].lab.id);
+                //     // sessionStorage.setItem('lab_id', somethin_good);
                 // }); // ... HERE!
             }
             console.log('Successfully logged in');
@@ -187,11 +189,12 @@ export function isLab() {
 }
 
 export function isFaculty() {
-    return sessionStorage.getItem('faculty_id') != null;
+    return sessionStorage.getItem('lab_id') != null;
 }
 
+// USERS //
 
-// USERS
+// Users
 // Base user on website
 // Required:
 // name - (string) username
@@ -290,6 +293,7 @@ export function getUserLabs(user_id) {
         })
 }
 
+// STUDENTS //
 
 // Students
 // Student profile
@@ -610,6 +614,8 @@ export function removeSchoolCoursesFromStudent(student_id, course_ids) {
         })
 }
 
+// FACULTY //
+
 // Faculties
 // Faculty profile
 // Required:
@@ -690,6 +696,7 @@ export function deleteFaculty(faculty_id) {
         })
 }
 
+// LABS //
 
 // Labs
 // Lab page
@@ -1045,7 +1052,7 @@ export function removeMembersFromLab(lab_id, user_ids) {
         })
 }
 
-
+// METADATA //
 
 // Skills
 // Laboratory skills
@@ -1137,6 +1144,8 @@ export function getAllSchoolCourses() {
             return [];
         })
 }
+
+// LAB POSITIONS //
 
 // Positions
 // Open projects/positions in a lab
@@ -1395,12 +1404,13 @@ export function getLabPositionApplicants(position_id) {
         })
 }
 
+// MISC //
+
 // Feedback
 // User feedback
 //  user_id - (int)
 //  url - (string) url of the page that user is on at time of submission
 //  feedback - (text)
-
 export function submitUserFeedback(user_id, url, feedback) {
     console.log('Submitting feedback');
 
@@ -1415,25 +1425,55 @@ export function submitUserFeedback(user_id, url, feedback) {
         })
 }
 
-// data should be of type FormData
-// see: https://stackoverflow.com/questions/39663961/how-do-you-send-images-to-node-js-with-axios
+// Pictures
 // type - should be either "student", "faculty", or "lab"
 // id - based on type, should be the id of that object
-export function uploadPic(type, id, data) {
-    data.set('type', type);
-    data.set('id', id);
-    console.log(data);
-    return axios.post('api/pics', data)
+// input_element_id - (string) name of the html id of the "input" element
+export function uploadPic(type, id, input_element_id) {
+    const fileInput = document.getElementById(input_element_id.files[0]);
+    const formData = new FormData();
+    formData.append( 'image', fileInput );
+
+    formData.append('type', type);
+    formData.append('id', id);
+    console.log(formData);
+    const config = {
+        headers: { 'content-type': 'multipart/form-data' }
+    };
+
+    axios.post('api/pics', formData, config)
         .then(response => {
             console.log(response.data.message);
-            return response.data.result;
+            console.log(response.data.result);
         })
         .catch(function (error) {
             console.log(error);
-            return [];
         })
 }
 
+// Resumes
+// student_id - (int)
+// input_element_id - (string) name of the html id of the "input" element
+
+export function uploadResume(student_id, input_element_id) {
+    const fileInput = document.getElementById(input_element_id.files[0]);
+    const formData = new FormData();
+    formData.append( 'resume', fileInput );
+
+    console.log(formData);
+    const config = {
+        headers: { 'content-type': 'multipart/form-data' }
+    };
+
+    axios.post('api/students/' + student_id + '/resume', formData, config)
+        .then(response => {
+            console.log(response.data.message);
+            console.log(response.data.result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+}
 
 // Returns all data necessary for student lab search
 // student_id - id of the student who's searching
@@ -1456,14 +1496,4 @@ export function permissionCheck() {
     let checkLab = getCurrentLabId() === page_id && page_type === 'prof-page'
     let checkStudent = getCurrentUserId() === page_id && page_type === 'student-profile'
     return checkLab || checkStudent;
-}
-
-
-//// CHANGED BY BENJI
-
-export function returnToProfile() {
-    if (isStudent())
-        window.location = `/student-profile/${getCurrentUserId()}`;
-    else if (isLab())
-        window.location = `/prof-page/${getCurrentLabId()}`;
 }
