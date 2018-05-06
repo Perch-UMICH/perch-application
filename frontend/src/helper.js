@@ -8,8 +8,8 @@ import axios from 'axios';
 import FormData from 'form-data'
 
 axios.defaults.headers.common = {};
-//axios.defaults.baseURL = 'http://perch-api.us-east-1.elasticbeanstalk.com';
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'http://perch-api.us-east-1.elasticbeanstalk.com';
+//axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 if (sessionStorage.token){
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
@@ -187,7 +187,7 @@ export function isFaculty() {
 // USERS //
 
 // Users
-// Base user on website
+// Base user type on website
 // Required:
 // name - (string) username
 // email - (string) sign up email
@@ -220,8 +220,10 @@ export function getUser(user_id) {
         })
 }
 
-export function deleteUser(user_id) {
+// RESTRICTED: user_id
+export function deleteUser() {
     console.log('Deleting user');
+    let user_id = sessionStorage.getItem('user_id');
     return axios.delete('api/users/' + user_id)
         .then(response => {
             return response.data
@@ -232,10 +234,12 @@ export function deleteUser(user_id) {
         })
 }
 
-export function updateUser(user_id, name, email, password, is_student, is_faculty) {
+// RESTRICTED: user_id
+export function updateUser(name, email, password, is_student, is_faculty) {
     console.log('Updating user');
 
     let _method = 'PUT';
+    let user_id = sessionStorage.getItem('user_id');
 
     return axios.post('api/users/' + user_id, {_method, name, email, password, is_student, is_faculty})
         .then(response => {
