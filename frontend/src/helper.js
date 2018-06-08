@@ -5,7 +5,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
-import { cookie } from 'react-cookie'
+// import { cookie } from 'react-cookie'
 import FormData from 'form-data'
 
 axios.defaults.headers.common = {};
@@ -1496,4 +1496,12 @@ export function permissionCheck() {
     let checkLab = getCurrentLabId() === page_id && page_type === 'prof-page'
     let checkStudent = getCurrentUserId() === page_id && page_type === 'student-profile'
     return checkLab || checkStudent;
+}
+
+// Changed by Benji
+export function returnToProfile() {
+    if (isStudent())
+        window.location = `/student-profile/${getCurrentUserId()}`;
+    else if (isLab())
+        window.location = `/prof-page/${getCurrentLabId()}`;
 }
