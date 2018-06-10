@@ -30,6 +30,7 @@ import Settings from './components/Settings';
 import Feedback from './components/Feedback';
 import ForgotPassword from './components/ForgotPassword';
 import UpdateContact from './components/UpdateContact';
+import Footer from './components/Footer';
 import './components/TapTarget.css';
 import './components/general.css';
 
@@ -90,6 +91,7 @@ class Router extends Component {
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
+					<Footer />
 				</div>
 			</BrowserRouter>
 		);

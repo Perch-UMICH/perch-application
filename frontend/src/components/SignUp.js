@@ -46,7 +46,7 @@ class SignUp extends Component {
 
 		if (student) {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(() => {
-				window.location.href = this.state.route;
+				// window.location.href = this.state.route;
 			});
 		}
 		else {

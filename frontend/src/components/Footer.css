@@ -1,0 +1,28 @@
+.footer {
+	background-color: rgb(2, 119, 189);
+	width: 100%;
+	min-width: 1200px;
+	color: white;
+	display: flex;
+	position: relative;
+	padding: 10px 0px 15px 50px;
+}
+
+.footer-column {
+	width: 200px;
+	display: inline-block;
+	position: relative;
+	/*height: 200px;*/
+	/*float: left;*/
+	text-align: left;
+	/*margin: auto;*/
+}
+
+.footer-header {
+	text-decoration: underline;
+	padding: 10px 0px 0px 0px;
+}
+
+.footer-content {
+	font-size: 90%;
+}
