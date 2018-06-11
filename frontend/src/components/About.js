@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Timeline from './Timeline'
+import Team from './Team'
 import './About.css';
 
 class About extends Component {
@@ -39,6 +40,7 @@ class About extends Component {
 	showTeam() {
 		this.highlightAboutNav('team')
 		this.clearAboutBody();
+		ReactDOM.render(<Team />, document.getElementById('about-body'))
 	}
 
 	render() {
@@ -49,8 +51,7 @@ class About extends Component {
 					<div className='about-button' onClick={() => this.showTeam()}>Team</div>
 					<div className='about-button' onClick={() => this.showTimeline()}>Timeline</div>
 				</div>
-				<div id='about-body' className='about-body'>
-				</div>
+				<div id='about-body' className='about-body'></div>
 			</div>
 
 		);

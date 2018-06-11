@@ -90,9 +90,9 @@ class Team extends Component {
   render() {
     return (
       <div>
-        <TeamPhoto />
+        {/*<TeamPhoto />*/}
         <div className="team">
-          <Greeting message="Meet the Perch Team"/>
+          {/*<Greeting message="Meet the Perch Team"/>*/}
           <div id='team-box' className="container row">
             {memberCards}
           </div>
