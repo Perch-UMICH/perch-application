@@ -5,3 +5,31 @@
 .white-text-about {
 	color: #FFF;
 }
+
+.about {
+	/*border: 1px solid red;*/
+	height: 650px;
+	min-width: 1200px;
+	margin-top: 6px;
+	position: relative;
+	display: block;
+}
+
+.about-nav {
+	background-color: #e5e5e5;
+	height: 60px;
+}
+
+.about-button {
+	display: inline-block;
+	width: 33.3333%;
+	padding-top: 20px;
+	text-transform: uppercase;
+	height: 100%;
+	border-right: 1px solid #d5d5d5;
+}
+
+.about-active {
+	background-color: rgb(2, 119, 189) !important;
+	color: white;
+}

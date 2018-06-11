@@ -63,7 +63,7 @@ class Timeline extends Component {
 	render() {
 		return (
 			<div>
-				<CountdownTimer />
+				{/*<CountdownTimer />*/}
 				<section className="timeline">
 				    <div className="container">
 					  	<TimelineItem 
