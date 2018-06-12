@@ -31,6 +31,8 @@ import Feedback from './components/Feedback';
 import ForgotPassword from './components/ForgotPassword';
 import UpdateContact from './components/UpdateContact';
 import Footer from './components/Footer';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 import './components/TapTarget.css';
 import './components/general.css';
 
@@ -88,6 +90,8 @@ class Router extends Component {
 							<Route path='/feedback' component={ Feedback }/>
 							<Route path='/forgot-password' component={ ForgotPassword } />
 							<Route path='/forgot-password/:token' component={ ForgotPassword } />
+							<Route path='/privacy-policy' component={ PrivacyPolicy } />
+							<Route path='/terms-of-service' component={ TermsOfService } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
