@@ -1,0 +1,33 @@
+.privacy-policy-text {
+	text-align: left;
+}
+
+.privacy-text-centered {
+	text-align: center;
+}
+
+.privacy-section-title {
+	font-weight: 600;
+}
+
+.privacy-ul {
+	/*margin-left: 15px;*/
+}
+
+.privacy-li-header {
+	margin: 5px 0px;
+	font-weight: 500;
+}
+
+.privacy-li-content {
+	margin-left: 25px;
+	margin-bottom: 10px;
+}
+
+.privacy-policy-page-container {
+	margin: auto;
+	width: 90%;
+	background-color: #ffffff;
+	padding: 20px;
+	margin-bottom: 40px;
+}

@@ -39,8 +39,8 @@ class Footer extends Component {
 				{/*Legal*/}
 				<div className='footer-column'>
 					<div className='footer-header'>Legal</div>
-					<div className='footer-content'>Terms of Service</div>
-					<div className='footer-content'>Privacy Policy</div>
+					<div className='footer-content'><a href='/terms-of-service' className="white-link">Terms of Service</a></div>
+					<div className='footer-content'><a href='/privacy-policy' className="white-link">Privacy Policy</a></div>
 				</div>
 			</div>
 		);
