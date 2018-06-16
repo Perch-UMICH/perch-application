@@ -30,7 +30,7 @@ class TimelineItem extends Component {
 		          	</div>
 		          	<div className="date">{this.props.date}</div>
 		          	<p>{this.props.description}<br /></p>
-		     	  	<a className={"bnt-more time-a" + this.state.hideLink} href={this.props.linkRef}>{this.props.linkLabel}<br /><br /></a>
+		     	  	<a className={"bnt-more time-a" + this.state.hideLink} target="_blank" href={this.props.linkRef}>{this.props.linkLabel}<br /><br /></a>
 		        </div>
 		     </div> 
 		);
