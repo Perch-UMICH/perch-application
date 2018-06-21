@@ -37,9 +37,7 @@ class NavBar extends Component {
 		}
 		else {
 			var navItems = <div>
-				<li><a className="nav-item" href="/about">ABOUT US</a></li>
-			    <li><a className="nav-item" href="/team">TEAM</a></li>
-			    <li><a className="nav-item" href="/timeline">TIMELINE</a></li>
+				<li><a className="nav-item" href="/about">ABOUT</a></li>
 			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}
