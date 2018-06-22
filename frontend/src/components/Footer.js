@@ -19,10 +19,10 @@ class Footer extends Component {
 				</div>
 				{/*About*/}
 				<div className='footer-column'>
-					<div className='footer-header'>About</div>
-					<div className='footer-content'>The Perch Story</div>
-					<div className='footer-content'>Team</div>
-					<div className='footer-content'>Timeline</div>
+					<div className='footer-header'><a href='/about' className="white-link">About</a></div>
+					<div className='footer-content'><a href='/about/story' className="white-link">The Perch Story</a></div>
+					<div className='footer-content'><a href='/about/team' className="white-link">Team</a></div>
+					<div className='footer-content'><a href='/about/timeline' className="white-link">Timeline</a></div>
 				</div>
 				{/*News*/}
 				<div className='footer-column'>
