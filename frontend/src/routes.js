@@ -47,6 +47,7 @@ class Router extends Component {
 							<Route path='/home' component={ Home } />
 							<Route path='/team' component={ Team } />
 							<Route path='/about' component={ About } />
+							<Route path='/about/:tab' component={ About } />
 							<Route path='/timeline' component={ Timeline } />
 							<Route path='/login' component={ Login } />
 							<Route path='/sign-up' component={ SignUpPage } />

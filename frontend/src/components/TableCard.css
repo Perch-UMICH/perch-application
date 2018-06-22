@@ -1,0 +1,181 @@
+.table-card {
+	width: 85px;
+	height: 85px;
+	margin: 0px 2px;
+	box-shadow: 0 2px 4px rgba(0,0,0,.2);
+	position: relative;
+}
+
+.card-placehold {
+	width: 85px;
+	height: 85px;
+	margin: 0px 2px;
+}
+
+.table-card-image {
+	width: 79px;
+	position: absolute;
+	z-index: 5;
+	left: 0px;
+}
+
+.table-card-cover {
+	width: 79px;
+	height: 79px;
+	position: absolute;
+	z-index: 7;
+	left: 0px;
+	opacity: 0.1;
+}
+
+.periodic-table-container {
+	/*width: 90%;*/
+	width: 1068px;
+	margin: 0px auto;
+	position: relative;
+}
+
+.perchiodic-table-key {
+	position: absolute;
+	align-self: center;
+	left: 27%;
+	width: 420px;
+	height: 150px;
+}
+
+.key-col {
+	display: inline-block;
+	text-align: left;
+	padding-left: 20px;
+	vertical-align: center;
+	width: 50%;
+}
+
+.key-item {
+	height: 22px;
+	position: relative;
+	margin: 10px 0px;
+}
+
+.key-item-text {
+	display: inline-block;
+	position: absolute;
+	padding-left: 20px;
+}
+
+.key-title {
+	display: inline-block;
+	text-transform: uppercase;
+	font-weight: 400;
+}
+
+.key-tile {
+	height: 100%;
+	width: 22px;
+	box-shadow: 0 2px 4px rgba(0,0,0,.2);
+	display: inline-block;
+}
+
+
+.perchiodic-table-title {
+	font-size: 30px;
+	text-align: center;
+	width: 100%;
+	text-transform: uppercase;
+	opacity: 0;
+}
+
+
+.table-row {
+	margin: 0 auto;
+}
+
+.table-card-inits {
+	position: relative;
+	top: 44px;
+	left: 3px;
+	position: absolute;
+	z-index: 10;
+	font-size: 28px;
+	font-weight: 500;
+	color: inherit;
+	text-shadow: 1px 1px 6px rgba(0,0,0,.9);
+}
+
+/* TABLE CARD STYLE */
+
+.t0-tcs {
+	background-color: #FAFA1D;
+	border: 3px solid #FAFA1D;
+	color: #FAFA1D;
+}
+
+.t1-tcs {
+	background-color: #5FC9FC;
+	border: 3px solid #5FC9FC;
+	color: #5FC9FC;
+}
+
+.t2-tcs {
+	background-color: #A7F2E7;
+	border: 3px solid #A7F2E7;
+	color: #A7F2E7;
+}
+
+.t3-tcs {
+	background-color: #1A9CF6;
+	border: 3px solid #1A9CF6;
+	color: #1A9CF6;
+}
+
+.t4-tcs {
+	background-color: #A7EAF3;
+	border: 3px solid #A7EAF3;
+	color: #A7EAF3;
+}
+
+.t5-tcs {
+	background-color: white;
+	border: 3px solid white;
+	color: white;
+}
+
+.t6-tcs {
+	background-color: #53F6C5;
+	border: 3px solid #53F6C5;
+	color: #53F6C5;
+}
+
+/* TABLE CARD COVER BACKGROUNDS AND KEY TILE BACKGROUND */
+
+.t0-tccbg {
+	background-color: #FAFA1D;
+}
+
+.t1-tccbg {
+	background-color: #5FC9FC;
+}
+
+.t2-tccbg {
+	background-color: #A7F2E7;
+}
+
+.t3-tccbg {
+	background-color: #1A9CF6;
+}
+
+.t4-tccbg {
+	background-color: #A7EAF3;
+}
+
+.t5-tccbg {
+	background-color: white;
+}
+
+.t6-tccbg {
+	background-color: #53F6C5;
+}
+
+.table-card-container {
+	display: inline-block;
+}
