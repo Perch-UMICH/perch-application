@@ -16,7 +16,7 @@ class PerchStory extends Component {
 	render() {
 		return (
 			<div className="perch-story">
-			<div className='perch-story-header'>The Perch Story</div>
+			<div className='perch-story-header shadow'>The Perch Story</div>
 				{
 					story.map((item ) => {
 						if (this.left) {

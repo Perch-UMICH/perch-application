@@ -11,6 +11,9 @@
 	font-size: 50px;
 	text-transform: uppercase;
 	font-weight: 400;
+	background-color: white;
+	width: 700px;
+	margin: auto auto;
 }
 
 .perch-story-block-L, .perch-story-block-R {

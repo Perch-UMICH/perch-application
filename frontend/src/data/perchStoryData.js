@@ -4,8 +4,6 @@ let story = [
 		"On the other side, poor matches and underprepared students make labs wary of taking on more undergraduates. Students want clear expectations, topics they’re interested in, and impactful projects. Labs want committed, trained, and passionate students who can work independently on impactful projects. Perch serves these needs.",
 		"Our online platform provides a clear, centralized channel of communication between students and labs. Students can browse labs according to their skills and interests and see what labs expect before applying. New labs get exposure, and all labs can set clear expectations for applicants.",
 		"By improving communication between students and labs, we can ensure students are passionate, committed, and qualified for the labs they apply to, providing a better experience for both the students and lab faculty.",
-		"hello",
-		"bye",
 	]
 
 
