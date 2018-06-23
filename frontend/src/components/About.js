@@ -2,9 +2,13 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Timeline from './Timeline'
 import Team from './Team'
+import PerchStory from './PerchStory'
 import './About.css';
 
 class About extends Component {
+	componentDidMount() {
+		this.showStory();
+	}
 
 	getNavs() {
 		return document.getElementsByClassName('about-button');
@@ -35,6 +39,7 @@ class About extends Component {
 	showStory() {
 		this.highlightAboutNav('perch story')
 		this.clearAboutBody();
+		ReactDOM.render(<PerchStory />, document.getElementById('about-body'))
 	}
 
 	showTeam() {

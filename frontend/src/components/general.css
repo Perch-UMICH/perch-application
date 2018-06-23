@@ -57,7 +57,9 @@
 
 body {
 	font-family: montserrat;
-	background-image: url(../assets/background-white.png);
+	/*background-color: #f2fdff;*/
+	background-color: #f2fdff;
+	/*background-image: url(../assets/background-white.png);*/
 	/*background-image: url(../assets/background.png);*/
 }
 

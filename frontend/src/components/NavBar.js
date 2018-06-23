@@ -45,7 +45,7 @@ class NavBar extends Component {
 		return(
 			<div className="navbar-fixed">
 			    <nav>
-			      <div className="nav-wrapper nav-wrapper">
+			      <div className="nav-wrapper">
 			        <a href="#" data-activates="mobile-demo" className="right button-collapse hide-on-large-only"><i id="hamburger" className="material-icons">menu</i></a>
 			      <ul id="nav-mobile" className="right hide-on-med-and-down">
 			  
