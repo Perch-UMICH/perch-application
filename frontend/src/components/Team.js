@@ -11,7 +11,7 @@ getMemberData().map(member => {
   memberBySlug[member.slug] = member;
 });
 
-const subteams = [ "Mascot Division", "Biology", "Web Development", "Chemistry", 
+const subteams = [ "Mascot Division", "Biology", "Web Development", "Chemistry",
                    "Social Sciences", "Engineering", "Business" ];
 
 /* All 7 subteams denoted as t0-6 as ordered above.
@@ -19,18 +19,18 @@ const subteams = [ "Mascot Division", "Biology", "Web Development", "Chemistry",
 */
 
 // 1 member - Rodriguez!
-const t0 = ['rodriguez'] 
+const t0 = ['rodriguez']
 
 // 4 members max
 const t1 = ['jzhang', 'jzhang', 'jzhang', 'jzhang']
 
 // 4 members max
-const t2 = ['smccarthy', 'smccarthy', 'smccarthy', 'smccarthy']
+const t2 = ['smccarthy', 'smccarthy', 'hwang', 'smccarthy', 'smccarthy']
 
 // 18 members max
-const t3 = ['hwang', 'hwang', 'hwang', 'hwang', 'hwang', 'hwang',
-                  'hwang', 'hwang', 'hwang', 'hwang', 'hwang', 'hwang',
-                  'hwang', 'hwang', 'hwang', 'hwang', 'hwang', 'hwang', ]
+const t3 = ['arao', 'hwang', 'arao', 'hwang', 'arao', 'hwang',
+            'hwang', 'arao', 'hwang', 'arao', 'hwang', 'arao',
+            'arao', 'hwang', 'arao', 'hwang', 'arao', 'hwang', ]
 
  // 7 members max
 const t4 = ['sbalijepalli', 'sbalijepalli', 'sbalijepalli', 'sbalijepalli',
@@ -50,7 +50,7 @@ var teamMemIdx = {
    // rows [0  1  2  3  4  5  6  7  8  9  10 11]
 const r0 = [0, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 6];
 const r1 = [1, 2, 9, 9, 9, 9, 9, 9, 4, 5, 5, 6];
-const r2 = [1, 2, 3, 3, 3, 3, 3, 3, 4, 5, 5, 6];
+const r2 = [1, 2, 3, 2, 3, 3, 3, 3, 4, 5, 5, 6];
 const r3 = [1, 2, 3, 3, 3, 3, 3, 3, 4, 4, 5, 6];
 const r4 = [1, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 6];
 
@@ -71,7 +71,7 @@ for (var i = 0; i < 5; ++i) {
       var member = memberBySlug[teamsMap[`t${teamNum}`][curIdx]];
       teamMemIdx[`t${teamNum}`] += 1;
       cardTable[i].push(
-        <TableCard 
+        <TableCard
           key={key}
           member={member}
           team={`t${teamNum}`} />
@@ -97,14 +97,14 @@ class Team extends Component {
 
   render() {
 
-    var perchiodicTable = 
+    var perchiodicTable =
       cardTable.map((cardRow, idx1) => {
         return (
           <div className="row justify-content-around table-row">
             { cardRow.map((card, idx2) => {
               return (
-                <div 
-                  key={`${idx1}_${idx2}`} 
+                <div
+                  key={`${idx1}_${idx2}`}
                   className="col-1 table-card-container">
                   {card}
                 </div>
@@ -124,7 +124,7 @@ class Team extends Component {
           if (idx < 3) {
             return (
               <div className="key-item">
-                <div className={tileCSS}></div> 
+                <div className={tileCSS}></div>
                 <div className="key-item-text">{subteamName}</div>
               </div>
             )}
@@ -138,7 +138,7 @@ class Team extends Component {
           if (idx >= 3) {
             return (
               <div className="key-item">
-                <div className={tileCSS}></div> 
+                <div className={tileCSS}></div>
                 <div className="key-item-text">{subteamName}</div>
               </div>
             )}
@@ -167,7 +167,7 @@ class Team extends Component {
         <div className="team">
         </div>
       </div>
-      
+
     );
   }
 }
