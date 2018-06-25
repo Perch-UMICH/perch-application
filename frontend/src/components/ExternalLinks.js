@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
 import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab } from '../helper.js';
-import SquareButton from './SquareButton';
-import './UploadImage.css';
+import SquareButton from './utilities/buttons/SquareButton';
+import './user/maintenance/UploadImage.css';
 import $ from 'jquery';
 
 class ExternalLinks extends Component {
