@@ -1,3 +1,53 @@
+.search-container {
+	display: inline-grid;
+	width: 110%;
+	margin-left: -20px;
+	grid-template-columns: 20% 80%;
+}
+
+.search-main {
+	grid-column-start: 2;
+}
+
+.search-sidebar {
+	grid-column-start: 1;
+	height: 40px;
+	margin-left: -10px;
+	margin-right: 10px;
+}
+
+.search-filter-container {
+	background-color: #FFF;
+	transition: all 0.5s ease;
+	transition-delay: 0.2s;
+	border-radius: 8px;
+	border: 1px solid black;
+	max-height: 55px;
+	overflow-y: hidden;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.search-filter-container:hover,
+.search-filter-container:active,
+.search-filter-container:focus {
+	max-height: 280px;
+}
+
+.search-filter-title {
+	padding: 12px;
+}
+
+.search-filter-title-long {
+	padding: 0px 5px;
+}
+
+.search-filter-content {
+	text-align: left;
+	overflow: scroll;
+	max-height: 200px;
+}
+
 .labSearch {
 	padding: 20px;
 	padding-left: 0;

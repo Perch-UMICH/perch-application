@@ -15,19 +15,25 @@ class TableCard extends Component {
 
 	render() {
 		var mem = this.state.member;
-		var initials = mem.firstName.charAt(0).toUpperCase();
-		initials += mem.lastName !== "" ? mem.lastName.charAt(0).toLowerCase() : "";
+		var initials = "";
+		initials += (mem.firstName && mem.firstName !== "") ? mem.firstName.charAt(0).toUpperCase() : "H";
+		initials += (mem.lastName && mem.lastName !== "") ? mem.lastName.charAt(0).toLowerCase() : "i";
 
 		var tableCardCSS = "table-card ";
 		var tableCardCoverCSS = "table-card-cover ";
+		var tableHoverCardCSS = "table-hovercard ";
 		if (this.props.team) {
 			tableCardCSS += this.props.team + "-tcs";
 			tableCardCoverCSS += this.props.team + "-tccbg";
+			tableHoverCardCSS += this.props.team + "-tcs";
 		}
 
 		return(
 			<div className={tableCardCSS}>
-				<div className="table-hovercard">{mem.firstName} {mem.lastName}</div>
+				<div className={tableHoverCardCSS}>
+					<b>{mem.firstName} {mem.lastName}</b><br/>
+					{mem.position}
+				</div>
         <img
 					className="table-card-image"
 					alt="team member"

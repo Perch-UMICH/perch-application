@@ -11,48 +11,62 @@ getMemberData().map(member => {
   memberBySlug[member.slug] = member;
 });
 
-const subteams = [ "Mascot Division", "Biology", "Web Development", "Chemistry",
-                   "Social Sciences", "Engineering", "Business" ];
+const subteams = [ "Mascot Division", "Director", "Administration", "Marketing",
+                   "Back-End Web Dev", "Front-End Web Dev", "Graphics", "Business",
+                    "Psychology/Sociology", "Chemical Engineering", "Chemistry", "Biology",
+                    "Perch Blog"];
 
 /* All 7 subteams denoted as t0-6 as ordered above.
    Member slugs may be added into these slots below:
 */
 
-// 1 member - Rodriguez!
+// 1 member - Rodriguez! 1
 const t0 = ['rodriguez']
 
-// 4 members max
-const t1 = ['jzhang', 'jzhang', 'jzhang', 'jzhang']
+// 4 members max 1
+const t1 = ['anishii']
 
-// 4 members max
-const t2 = ['smccarthy', 'smccarthy', 'hwang', 'smccarthy', 'smccarthy']
+// 4 members max 1
+const t2 = ['nkataoka']
 
 // 18 members max
-const t3 = ['arao', 'hwang', 'arao', 'hwang', 'arao', 'hwang',
-            'hwang', 'arao', 'hwang', 'arao', 'hwang', 'arao',
-            'arao', 'hwang', 'arao', 'hwang', 'arao', 'hwang', ]
+const t3 = ['mpatel', 'hpark']
 
  // 7 members max
-const t4 = ['sbalijepalli', 'sbalijepalli', 'sbalijepalli', 'sbalijepalli',
-            'sbalijepalli', 'sbalijepalli', 'sbalijepalli']
+const t4 = ['arao', 'hwang']
 
 // 5 members max
-const t5 = ['salektiar', 'salektiar', 'salektiar', 'salektiar', 'salektiar']
+const t5 = ['bbear', 'rnayak', 'ejackson', 'ckaczmarek']
 
 // 5 members max
-const t6 = ['mpatel', 'mpatel', 'mpatel', 'mpatel', 'mpatel']
+const t6 = ['kjohnson']
 
-const teamsMap = {t0, t1, t2, t3, t4, t5, t6}
+const t7 = ['vdoddipatla', 'aappukutty', 'rvaishnav', 'asatyavarapu']
+
+const t8 = ['kglozier', 'kniles', 'kmartin']
+
+const t11 = ['sbalijepalli', 'agirgis', 'kmckernan', 'njasti',
+            'nbidthanapally', 'rkathawate']
+
+const t10 = ['salektia', 'jzhang', 'jmanske', 'mkuang', 'smccarthy', 'wni']
+
+const t9 = ['ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva',
+             'ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva',
+             'ikopyeva', 'ikopyeva']
+
+const t12 = ['rtarnopol']
+
+const teamsMap = {t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12}
 var teamMemIdx = {
-  t0: 0,  t1: 0,  t2: 0,  t3: 0,  t4: 0,  t5: 0,  t6: 0,
+  t0: 0,  t1: 0,  t2: 0,  t3: 0,  t4: 0,  t5: 0,  t6: 0, t7: 0,  t8: 0,  t9: 0,  t10: 0,  t11: 0,  t12: 0,
 }
 
-   // rows [0  1  2  3  4  5  6  7  8  9  10 11]
-const r0 = [0, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 6];
-const r1 = [1, 2, 9, 9, 9, 9, 9, 9, 4, 5, 5, 6];
-const r2 = [1, 2, 3, 2, 3, 3, 3, 3, 4, 5, 5, 6];
-const r3 = [1, 2, 3, 3, 3, 3, 3, 3, 4, 4, 5, 6];
-const r4 = [1, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 6];
+   // rows [0  1  2   3  4  5  6  7  8  9  10 11]
+const r0 = [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  7];
+const r1 = [1,  5, -1, -1, -1, -1, -1, -1, 11, 10, 10,  7];
+const r2 = [2,  5,  4,  9,  9,  9,  9,  8, 11, 10, 10,  7];
+const r3 = [3,  5,  4,  9,  9,  9,  9,  8, 11, 11, 10,  7];
+const r4 = [3,  5,  6,  9,  9,  9,  9,  8, 11, 11, 10, 12];
 
 const tableBones = [r0, r1, r2, r3, r4];
 
@@ -66,7 +80,7 @@ for (var i = 0; i < 5; ++i) {
     var teamNum = tableBones[i][j];
     var key = `${i}_${j}`;
 
-    if (teamNum !== 9) {
+    if (teamNum !== -1) {
       var curIdx = teamMemIdx[`t${teamNum}`];
       var member = memberBySlug[teamsMap[`t${teamNum}`][curIdx]];
       teamMemIdx[`t${teamNum}`] += 1;
@@ -115,13 +129,13 @@ class Team extends Component {
       })
 
     var keyColOne =
-      <div className="col-6 key-item">
+      <div className="key-col">
         <div className="key-item">
-          <div className="key-title">By Primary Subteam</div>
+          <div className="key-title">Perch, By Primary Gaggle</div>
         </div>
         { subteams.map((subteamName, idx) => {
           var tileCSS = `key-tile t${idx}-tccbg`;
-          if (idx < 3) {
+          if (idx < 4) {
             return (
               <div className="key-item">
                 <div className={tileCSS}></div>
@@ -132,10 +146,24 @@ class Team extends Component {
       </div>
 
     var keyColTwo =
-      <div className="col-6 key-item">
+      <div className="key-col">
         { subteams.map((subteamName, idx) => {
           var tileCSS = `key-tile t${idx}-tccbg`;
-          if (idx >= 3) {
+          if (idx >= 4 && idx < 8) {
+            return (
+              <div className="key-item">
+                <div className={tileCSS}></div>
+                <div className="key-item-text">{subteamName}</div>
+              </div>
+            )}
+        })}
+      </div>
+
+    var keyColThree =
+      <div className="key-col">
+        { subteams.map((subteamName, idx) => {
+          var tileCSS = `key-tile t${idx}-tccbg`;
+          if (idx >= 8) {
             return (
               <div className="key-item">
                 <div className={tileCSS}></div>
@@ -147,18 +175,10 @@ class Team extends Component {
 
     return (
       <div>
-        <div className="perchiodic-table-title">
-          The Perchiodic Table
-        </div>
         <div className="perchiodic-table-key">
-          <div className="row justify-content-around">
-            <div className="col-6 key-col">
-              {keyColOne}
-            </div>
-            <div className="col-6 key-col">
-              {keyColTwo}
-            </div>
-          </div>
+            {keyColOne}
+            {keyColTwo}
+            {keyColThree}
         </div>
         <div className="periodic-table-container">
           {perchiodicTable}

@@ -48,42 +48,50 @@
   background-color: white;
   transition: all .2s ease-in-out;
   transition-delay: .35s;
-  border-radius: 4px;
+  border-radius: 2px;
   color: $color-grey-1-v2;
   text-align: center;
-  padding: 3px;
-	top: -40px;
+  padding: 5px 0px;
+	vertical-align: middle;
+	top: -85px;
+	left: -50px;
   position: absolute;
   z-index: 200;
+	width: 180px;
+	height: 75px;
+	font-size: 14px;
+	box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
 
 .table-card:hover .table-hovercard {
   visibility: visible;
   z-index: 200;
   opacity: 1;
+	color: black;
+	font-size: 14px;
 }
 
 .periodic-table-container {
 	/*width: 90%;*/
 	width: 1068px;
 	margin: 0px auto;
+	margin-top: 80px;
 	position: relative;
 }
 
 .perchiodic-table-key {
 	position: absolute;
 	align-self: center;
-	left: 27%;
-	width: 420px;
+	top: 125px;
+	left: 24%;
 	height: 150px;
 }
 
 .key-col {
 	display: inline-block;
 	text-align: left;
-	padding-left: 20px;
 	vertical-align: center;
-	width: 50%;
+	min-width: 180px;
 }
 
 .key-item {
@@ -96,12 +104,17 @@
 	display: inline-block;
 	position: absolute;
 	padding-left: 20px;
+	font-size: 11px;
 }
 
 .key-title {
 	display: inline-block;
+	position: absolute;
 	text-transform: uppercase;
+	padding-bottom: 20px;
 	font-weight: 400;
+	width: 300px;
+	margin-top: -5px;
 }
 
 .key-tile {
@@ -110,16 +123,6 @@
 	box-shadow: 0 2px 4px rgba(0,0,0,.2);
 	display: inline-block;
 }
-
-
-.perchiodic-table-title {
-	font-size: 30px;
-	text-align: center;
-	width: 100%;
-	text-transform: uppercase;
-	opacity: 0;
-}
-
 
 .table-row {
 	margin: 0 auto;
@@ -140,46 +143,83 @@
 /* TABLE CARD STYLE */
 
 .t0-tcs {
-	background-color: #FAFA1D;
+	/*background-color: #FAFA1D;*/
 	border: 3px solid #FAFA1D;
 	color: #FAFA1D;
 }
 
 .t1-tcs {
-	background-color: #5FC9FC;
+	/*background-color: #5FC9FC;*/
 	border: 3px solid #5FC9FC;
 	color: #5FC9FC;
 }
 
 .t2-tcs {
-	background-color: #A7F2E7;
+	/*background-color: #A7F2E7;*/
 	border: 3px solid #A7F2E7;
 	color: #A7F2E7;
 }
 
 .t3-tcs {
-	background-color: #1A9CF6;
+	/*background-color: #1A9CF6;*/
 	border: 3px solid #1A9CF6;
 	color: #1A9CF6;
 }
 
 .t4-tcs {
-	background-color: #A7EAF3;
+	/*background-color: #A7EAF3;*/
 	border: 3px solid #A7EAF3;
 	color: #A7EAF3;
 }
 
 .t5-tcs {
-	background-color: white;
+	/*background-color: white;*/
 	border: 3px solid white;
 	color: white;
 }
 
 .t6-tcs {
-	background-color: #53F6C5;
+	/*background-color: #53F6C5;*/
 	border: 3px solid #53F6C5;
 	color: #53F6C5;
 }
+
+.t7-tcs {
+	/*background-color: #5FC9FC;*/
+	border: 3px solid #5FC9FC;
+	color: #5FC9FC;
+}
+
+.t8-tcs {
+	/*background-color: #E36337;*/
+	border: 3px solid #E36337;
+	color: #E36337;
+}
+
+.t9-tcs {
+	/*background-color: #E79D4B;*/
+	border: 3px solid #E79D4B;
+	color: #E79D4B;
+}
+
+.t10-tcs {
+	/*background-color: #82D38D;*/
+	border: 3px solid #82D38D;
+	color: #82D38D;
+}
+
+.t11-tcs {
+	/*background-color: #DB9CB2;*/
+	border: 3px solid #DB9CB2;
+	color: #DB9CB2;
+}
+
+.t12-tcs {
+	/*background-color: #AA9CDB;*/
+	border: 3px solid #AA9CDB;
+	color: #AA9CDB;
+}
+
 
 /* TABLE CARD COVER BACKGROUNDS AND KEY TILE BACKGROUND */
 
@@ -209,6 +249,30 @@
 
 .t6-tccbg {
 	background-color: #53F6C5;
+}
+
+.t7-tccbg {
+	background-color: #5FC9FC;
+}
+
+.t8-tccbg {
+	background-color: #E36337;
+}
+
+.t9-tccbg {
+	background-color: #E79D4B;
+}
+
+.t10-tccbg {
+	background-color: #82D38D;
+}
+
+.t11-tccbg {
+	background-color: #DB9CB2;
+}
+
+.t12-tccbg {
+	background-color: #AA9CDB;
 }
 
 .table-card-container {
