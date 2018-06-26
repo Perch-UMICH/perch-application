@@ -9,24 +9,26 @@ import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser
 
 
 class LabSearch extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		skills_catalog: [],
-	// 		your_skills: [],
-	// 		interests_catalog: [],
-	// 		your_interests: [],
-	// 		skills: [],
-	// 		interests: [],
-	// 		filtered_catalog: [],
-	// 		in_filter: false,
-	// 		search_skills: true,
-	// 		search_interests: false,
-	// 		all_labs: [],
-	// 		filtered_labs: [],
-	// 		s_id: ''
-	// 	}
-	// }
+	constructor(props) {
+		super(props);
+		this.state = {
+			skills_catalog: [],
+			your_skills: [],
+			interests_catalog: [],
+			your_interests: [],
+			skills: [],
+			interests: [],
+			filtered_catalog: [],
+			in_filter: false,
+			search_skills: true,
+			search_interests: false,
+			all_labs: [],
+			filtered_labs: [],
+			s_id: '',
+
+            search: '',
+		}
+	}
 
 	// componentWillMount() {
 	// 	getAllSkills().then((resp) => {
@@ -404,6 +406,10 @@ class LabSearch extends Component {
 		document.getElementById('lab-search-box').classList.add('hide');
 	}
 
+    updateSearch(event) {
+        this.setState({search: event.target.value})
+    }
+
 	render() {
                             
 		return (
@@ -414,12 +420,13 @@ class LabSearch extends Component {
                    </div>
                </div>
                <div className='lab-srch-body'>
-                   <input id='lab-srch-input' placeholder='Search'/>
+                   <input id='lab-srch-input' type='text' placeholder='Search' onChange={event => this.updateSearch(event)}/>
+                   <div id='lab-srch-result-summary'>Projects 1-50 (157 total) page 1 of 40 for <b>{this.state.search}</b></div>
                    <div id='lab-srch-results'>
-                        <LabSearchItem />
-                        <LabSearchItem />
-                        <LabSearchItem />
-                        <LabSearchItem />
+                        <LabSearchItem name='Meha Patel' dept='English' rsrch='12th century grammar analysis' img='/img/meha.jpg' description='We love words. Especially old, hard to understand words.'/>
+                        <LabSearchItem name='Sara Alektar' dept='Physics' rsrch='nuclear coffee decay' img='/img/sara.jpg' description="We make coffee, smell cofee, drink coffee, freeze coffee, sublimate coffee, distill cofee, and watch cofee. You should join!"/>
+                        <LabSearchItem name='Sanjay B.' dept='Chemistry' rsrch='chromatography race betting' img='/img/sanjay.jpg' description='If the school asks, this does not exist.'/>
+                        <LabSearchItem name='Nolan Kataoka' dept='Dance' rsrch='expressive feet dance' img='/img/nolan.jpg' description='We strongly feel feet are the window to the soul'/>
                    </div>
                </div>
 			</div>

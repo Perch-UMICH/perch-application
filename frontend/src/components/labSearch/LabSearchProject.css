@@ -1,0 +1,40 @@
+.lab-srch-project {
+	height: 130px;
+	background-color: white;
+	width: 100%;
+	margin-bottom: 15px;
+	position: relative;
+	border-radius: 0 20px 0 40px;
+}
+
+.lab-srch-project:after {
+	content: 'PROJECT';
+	position: absolute;
+	left: -125px;
+	top: 45%;
+	color: grey;
+}
+
+.lab-srch-project-title {
+	font-size: 18px;
+	position: absolute;
+	top: 10px;
+	left: 30px;
+}
+
+.lab-srch-project-tag {
+	background-color: purple;
+	border-radius: 10px;
+	color:	white;
+	font-size: 12px;
+	padding: 5px 10px;
+	margin-left: 20px;
+}
+
+.lab-srch-project-description {
+	position: absolute;
+	left: 10px;
+	top: 30px;
+	font-size: 12px;
+	width: 400px;
+}

@@ -1,6 +1,7 @@
 :root {
 	--lightish-blue: #f2fdff;
 	--bright-blue: #0277bd;
+	--active-blue: rgb(41, 182, 246);
 }
 
 .shift-down {
@@ -62,10 +63,7 @@
 
 body {
 	font-family: montserrat;
-	/*background-color: #f2fdff;*/
 	background-color: #f2fdff;
-	/*background-image: url(../assets/background-white.png);*/
-	/*background-image: url(../assets/background.png);*/
 }
 
 .link-color {
@@ -73,9 +71,22 @@ body {
 }
 
 .shadow {
-	box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
 .inline {
 	display: inline-block;
+}
+
+input[type='text']:focus {
+  color: var(--active-blue);
+}
+
+input[type='text'] {
+	color: #757575;
+}
+
+input[type='text']:focus {
+  border-bottom: 1px solid var(--active-blue) !important;
+  box-shadow: 0 1px 0 0 var(--active-blue) !important;
 }
