@@ -5,6 +5,17 @@
 	margin-bottom: 15px;
 	position: relative;
 	border-radius: 0 20px 0 40px;
+	transition: .2s ease;
+}
+
+.lab-srch-project:hover {
+	box-shadow: var(--grey-shadow);
+	transition: .2s ease;
+}
+
+.lab-srch-project:hover:after {
+	color: var(--active-blue);
+	transition: .2s ease;
 }
 
 .lab-srch-project:after {
@@ -13,6 +24,7 @@
 	left: -125px;
 	top: 45%;
 	color: grey;
+	transition: .2s ease;
 }
 
 .lab-srch-project-title {
@@ -37,4 +49,32 @@
 	top: 30px;
 	font-size: 12px;
 	width: 400px;
+}
+
+.lab-srch-project-apply {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 75px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: var(--bright-blue);
+	color: white;
+	cursor: pointer;
+	border-radius: 20px 0 0 20px;
+	transition: 0.2s ease;
+}
+
+.lab-srch-project-apply:hover {
+	background-color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
+.lab-srch-project-openings {
+	color: black;
+	position: absolute;
+	top: 40px;
+	right: 2px;
+	font-size: 12px;
 }

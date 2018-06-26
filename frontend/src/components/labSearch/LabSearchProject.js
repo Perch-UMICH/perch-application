@@ -11,6 +11,8 @@ class LabSearchProject extends Component {
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                     <div className='lab-srch-project-description'>{this.props.description}</div>
                 </div>
+                <div className='lab-srch-project-apply'>Apply</div>
+                <div className='lab-srch-project-openings'>spots: 1</div>
             </div>
              
 		);
