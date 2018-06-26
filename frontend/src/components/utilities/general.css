@@ -1,3 +1,8 @@
+:root {
+	--lightish-blue: #f2fdff;
+	--bright-blue: #0277bd;
+}
+
 .shift-down {
 	margin-top: 40px;
 }

@@ -1,115 +1,117 @@
 import React, {Component} from 'react';
-import './LabSearch.css';
-import Bubble from '../utilities/Bubble';
-import LabList from './LabList';
+// import './LabSearch.css';
+import './LabSearch2.css';
+// import Bubble from '../utilities/Bubble';
+// import LabList from './LabList';
+import LabSearchItem from './LabSearchItem';
 import '../user/individual/PickYourInterests.css';
 import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser} from '../../helper.js'
 
 
 class LabSearch extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			skills_catalog: [],
-			your_skills: [],
-			interests_catalog: [],
-			your_interests: [],
-			skills: [],
-			interests: [],
-			filtered_catalog: [],
-			in_filter: false,
-			search_skills: true,
-			search_interests: false,
-			all_labs: [],
-			filtered_labs: [],
-			s_id: ''
-		}
-	}
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		skills_catalog: [],
+	// 		your_skills: [],
+	// 		interests_catalog: [],
+	// 		your_interests: [],
+	// 		skills: [],
+	// 		interests: [],
+	// 		filtered_catalog: [],
+	// 		in_filter: false,
+	// 		search_skills: true,
+	// 		search_interests: false,
+	// 		all_labs: [],
+	// 		filtered_labs: [],
+	// 		s_id: ''
+	// 	}
+	// }
 
-	componentWillMount() {
-		getAllSkills().then((resp) => {
-			var temp_arr = [];
-			resp.result.map((skill) => {
-				temp_arr.push(skill.name);
-			})
-			this.setState({skills_catalog: temp_arr, filtered_catalog: temp_arr});
-		});
+	// componentWillMount() {
+	// 	getAllSkills().then((resp) => {
+	// 		var temp_arr = [];
+	// 		resp.result.map((skill) => {
+	// 			temp_arr.push(skill.name);
+	// 		})
+	// 		this.setState({skills_catalog: temp_arr, filtered_catalog: temp_arr});
+	// 	});
 
-		getAllTags().then((resp) => {
-			var temp_arr = [];
-			resp.result.map((tag) => {
-				temp_arr.push(tag.name);
-			})
-			this.setState({interests_catalog: temp_arr});
-		});
+	// 	getAllTags().then((resp) => {
+	// 		var temp_arr = [];
+	// 		resp.result.map((tag) => {
+	// 			temp_arr.push(tag.name);
+	// 		})
+	// 		this.setState({interests_catalog: temp_arr});
+	// 	});
 
-        getUser(getCurrentUserId()).then(resp => {
-            if (resp.result.is_student) {
-                getStudentFromUser(getCurrentUserId()).then( r => {
-                    this.setState({s_id: r.result.id});
-                    getStudentSkills(this.state.s_id).then((resp) => {
-                        var temp_arr = [];
-                        resp.map((skill) => {
-                            temp_arr.push(skill.name);
-                        });
-                        this.setState({your_skills: temp_arr});
-                    });
-                });
+ //        getUser(getCurrentUserId()).then(resp => {
+ //            if (resp.result.is_student) {
+ //                getStudentFromUser(getCurrentUserId()).then( r => {
+ //                    this.setState({s_id: r.result.id});
+ //                    getStudentSkills(this.state.s_id).then((resp) => {
+ //                        var temp_arr = [];
+ //                        resp.map((skill) => {
+ //                            temp_arr.push(skill.name);
+ //                        });
+ //                        this.setState({your_skills: temp_arr});
+ //                    });
+ //                });
 
-                getStudentFromUser(getCurrentUserId()).then( r => {
-                    this.setState({s_id: r.result.id});
-                    getStudentTags(this.state.s_id).then((resp) => {
-                        var temp_arr = [];
-                        resp.map((tag) => {
-                            temp_arr.push(tag.name);
-                        });
-                        this.setState({your_interests: temp_arr});
-                    });
-                });
-            }
-        });
-  	}
+ //                getStudentFromUser(getCurrentUserId()).then( r => {
+ //                    this.setState({s_id: r.result.id});
+ //                    getStudentTags(this.state.s_id).then((resp) => {
+ //                        var temp_arr = [];
+ //                        resp.map((tag) => {
+ //                            temp_arr.push(tag.name);
+ //                        });
+ //                        this.setState({your_interests: temp_arr});
+ //                    });
+ //                });
+ //            }
+ //        });
+ //  	}
 
-  	componentDidMount() {
-  		getAllLabs().then((resp) => {
-            var temp_arr = [];
-			for (var key in resp.result) {
-				temp_arr.push(resp.result[key]);
-			}        
-			this.setState({all_labs: temp_arr});
+ //  	componentDidMount() {
+ //  		getAllLabs().then((resp) => {
+ //            var temp_arr = [];
+	// 		for (var key in resp.result) {
+	// 			temp_arr.push(resp.result[key]);
+	// 		}        
+	// 		this.setState({all_labs: temp_arr});
 
-	  		let temp_labs = this.state.all_labs;
-	  		temp_labs.map((lab) => {
-	  			lab.in_search = false;
-	  			lab.tags_in = 0;
-	  			lab.name = lab.data.name;
-	  			lab.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY';
+	//   		let temp_labs = this.state.all_labs;
+	//   		temp_labs.map((lab) => {
+	//   			lab.in_search = false;
+	//   			lab.tags_in = 0;
+	//   			lab.name = lab.data.name;
+	//   			lab.img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlIs7sEURBC_LR2LM9_Fapi8onFUZt5WPUo9OIS040TGww7QY';
 
-	  			var tag_temp_arr = [];
-				lab.tags.map((tag) => {
-					tag_temp_arr.push(tag.name);
-				});
-				var skill_temp_arr = [];
-				lab.skills.map((skill) => {
-					skill_temp_arr.push(skill.name);
-				});
+	//   			var tag_temp_arr = [];
+	// 			lab.tags.map((tag) => {
+	// 				tag_temp_arr.push(tag.name);
+	// 			});
+	// 			var skill_temp_arr = [];
+	// 			lab.skills.map((skill) => {
+	// 				skill_temp_arr.push(skill.name);
+	// 			});
 				
-				var temp_all_arr = tag_temp_arr;
-				skill_temp_arr.map((skill) => {
-					temp_all_arr.push(skill);
-				});
+	// 			var temp_all_arr = tag_temp_arr;
+	// 			skill_temp_arr.map((skill) => {
+	// 				temp_all_arr.push(skill);
+	// 			});
 
-				lab.tag_arr = tag_temp_arr;
-				lab.skill_arr = skill_temp_arr;
-				lab.all_tags = temp_all_arr;
-	  		});
-	  		this.setState({all_labs: temp_labs, filtered_labs: temp_labs});
-	  		console.log(this.state.all_labs);
+	// 			lab.tag_arr = tag_temp_arr;
+	// 			lab.skill_arr = skill_temp_arr;
+	// 			lab.all_tags = temp_all_arr;
+	//   		});
+	//   		this.setState({all_labs: temp_labs, filtered_labs: temp_labs});
+	//   		console.log(this.state.all_labs);
 
-	  		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
-	  		// document.getElementById('lab-search').addEventListener("mouseleave", () => document.getElementById('lab-search-box').classList.add('hide'));
-        });
-  	}
+	//   		document.getElementById('lab-topic').addEventListener('click', () => document.getElementById('lab-search-box').classList.remove('hide'))
+	//   		// document.getElementById('lab-search').addEventListener("mouseleave", () => document.getElementById('lab-search-box').classList.add('hide'));
+ //        });
+ //  	}
 
 	filterList(event) {
 		if (this.state.search_skills) {
@@ -403,88 +405,23 @@ class LabSearch extends Component {
 	}
 
 	render() {
-		let temporary = "default";
-        if (document.getElementById('lab-topic')) {
-            let len = document.getElementById('lab-topic').value.length;
-            if (len !== 0) {
-                temporary = document.getElementById('lab-topic').value;
-            }
-        }
-
-        let searchBar = <div className='form labSearch shadow'>
-                            <div className='row'>
-                                <div className='col s12'><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
-                            </div>
-                        </div>
-
-        let modifiers = <div className='row lab-search-modifiers'>
-                            <i className='material-icons close-modifiers' onClick={this.closeModifiers.bind(this)}>close</i>
-                            <div className='col s6 left-align'>
-                                <p className="fe-test">SEARCH BY</p>
-                                <input className="radio" name="user_type" type="radio" id="skills" value="skills" checked={this.state.search_skills} onChange={this.handleSearchType.bind(this)} required />
-                                <label className='lab-search-radio-label' htmlFor="skills">Skills</label>
-                                <input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
-                                <label className='lab-search-radio-label' htmlFor="interests">Interests</label>
-                            </div>
-                            <div className='col s6 import-container'>
-                                <p className="fe-test">IMPORT</p>
-                                <button className="btn waves-effect waves-light submit-btn import-btn"
-                                    type="submit" 
-                                    name="action"
-                                    onClick={this.handleImport.bind(this, 'skills', temporary)}
-                                    style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
-                                >Skills
-                                </button>
-                                <button className="btn waves-effect waves-light submit-btn import-btn"
-                                    type="submit" 
-                                    name="action"
-                                    onClick={this.handleImport.bind(this, 'interests', temporary)}
-                                    style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
-                                >Interests
-                                </button>
-                            </div>
-                        </div>
-        let skillSection =  <div className='row search-interest-container'>
-                                <div className='interest-section search-interest-section-left col s6 left-align'>
-                                    <div className='interest-body'>
-                                        {this.state.filtered_catalog.map((interest) => {
-                                            return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
-                                        })}
-                                    </div>
-                                </div>
-                                <div className='interest-section search-interest-section-right col s6'>
-                                    <div className='interest-body'>
-                                        <div className='selected-container'>
-                                            <p> SKILLS </p>
-                                            {this.state.skills.map((interest) => {
-                                                return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
-                                            })}
-                                        </div>
-
-                                        <br></br>
-                                        <br></br><br></br>
-                                        <br></br>
-                                        
-                                        <div className='selected-container'>
-                                            <p style={{display: 'block'}}> INTERESTS </p>
-                                            {this.state.interests.map((interest) => {
-                                                return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             
 		return (
-			<div id='lab-search'>
-                {searchBar}
-				<div id='lab-search-box' className='hide'>
-					{modifiers}
-					{skillSection}
-				</div>
-				<div className='row'>
-					<LabList labs={this.state.filtered_labs} />	
-				</div>
+			<div id='lab-srch-2'>
+               <div className='lab-srch-mods'>
+                   <div className='lab-srch-depts'>
+                       Dept Search
+                   </div>
+               </div>
+               <div className='lab-srch-body'>
+                   <input id='lab-srch-input' placeholder='Search'/>
+                   <div id='lab-srch-results'>
+                        <LabSearchItem />
+                        <LabSearchItem />
+                        <LabSearchItem />
+                        <LabSearchItem />
+                   </div>
+               </div>
 			</div>
 		);
 	}
