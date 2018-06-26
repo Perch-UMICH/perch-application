@@ -6,6 +6,11 @@
 	--grey-shadow: 2px 3px 2px #c6c6c6;;
 }
 
+.active-blue-bg {
+	background-color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
 .shift-down {
 	margin-top: 40px;
 }

@@ -13,18 +13,12 @@
 	transition: .2s ease;
 }
 
-.lab-srch-project:hover:after {
-	color: var(--active-blue);
-	transition: .2s ease;
-}
-
 .lab-srch-project:after {
 	content: 'PROJECT';
 	position: absolute;
 	left: -125px;
 	top: 45%;
 	color: grey;
-	transition: .2s ease;
 }
 
 .lab-srch-project-title {
@@ -32,9 +26,17 @@
 	position: absolute;
 	top: 10px;
 	left: 30px;
+	transition: 0.2s ease;
+	color: var(--bright-blue);
+	cursor: pointer;
+}
+.lab-srch-project-title:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
 }
 
 .lab-srch-project-tag {
+	position: relative;
 	background-color: purple;
 	border-radius: 10px;
 	color:	white;
@@ -45,8 +47,8 @@
 
 .lab-srch-project-description {
 	position: absolute;
-	left: 10px;
-	top: 30px;
+	left: 50px;
+	top: 40px;
 	font-size: 12px;
 	width: 400px;
 }
@@ -74,7 +76,7 @@
 .lab-srch-project-openings {
 	color: black;
 	position: absolute;
-	top: 40px;
-	right: 2px;
+	top: 45px;
+	right: 4px;
 	font-size: 12px;
 }
