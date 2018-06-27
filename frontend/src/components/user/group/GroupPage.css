@@ -1,0 +1,70 @@
+#group-page {
+	width: 1200px;
+	height: 1000px;
+	background-color: black;
+	margin: auto auto;
+	margin-top: var(--shift-down);
+	position: relative;
+	background-color: #eaeaea;
+	padding: 10px;
+	border: 1px solid lightgrey;
+}
+
+#group-page-column-L, #group-page-column-R {
+	position: absolute;
+	width: 250px;
+	height: 1000px;
+	line-height: 1000px;
+	text-align: center;
+	background-color: grey;
+	top: 10px;
+}
+
+#group-page-column-L {
+	left: 0;
+}
+
+#group-page-column-R {
+	right: 0;
+}
+
+#group-page-main {
+	position: absolute;
+	width: 660px;
+	height: 1000px;
+	left: 250px;
+	margin: 0 20px;
+}
+
+#group-page-quickview {
+	width: 100%;
+	height: 275px;
+	background-color: white;
+	border-radius: 0 20px 0 40px;
+	border: 1px solid lightgrey;
+	margin-bottom: 15px;
+}
+
+#group-page-projects {
+	width: 100%;
+	height: 300px;
+	background-color: white;
+	border-radius: 0 0 0 40px;
+	border: 1px solid lightgrey;
+	margin-bottom: 15px;
+}
+
+#group-page-publications {
+	width: 100%;
+	height: 200px;
+	background-color: white;
+	border-radius: 0 0 0 40px;
+	border: 1px solid lightgrey;
+}
+
+#group-page-coverimage {
+	width: 100%;
+	height: 150px;
+	object-fit: cover;
+	object-position: 25% 25%;
+}

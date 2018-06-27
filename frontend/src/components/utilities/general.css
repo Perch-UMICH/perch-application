@@ -3,11 +3,17 @@
 	--bright-blue: #0277bd;
 	--active-blue: rgb(41, 182, 246);
 
-	--grey-shadow: 2px 3px 2px #c6c6c6;;
+	--grey-shadow: 2px 3px 2px #c6c6c6;
+	--shift-down: 30px;
 }
 
 .active-blue-bg {
 	background-color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
+.active-blue {
+	color: var(--active-blue);
 	transition: 0.2s ease;
 }
 
