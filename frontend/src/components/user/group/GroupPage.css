@@ -38,11 +38,22 @@
 
 #group-page-quickview {
 	width: 100%;
-	height: 275px;
+	/*max-height: 290px;*/
+	overflow: hidden;
 	background-color: white;
 	border-radius: 0 20px 0 40px;
 	border: 1px solid lightgrey;
 	margin-bottom: 15px;
+	position: relative;
+	text-overflow: ellipsis;
+	text-align: justify;
+	transition: 0.2s ease;
+	padding-bottom: 5px;
+}
+
+#group-page-quickview:hover {
+	box-shadow: var(--grey-shadow);
+	transition: 0.2s ease;
 }
 
 #group-page-projects {
@@ -66,5 +77,44 @@
 	width: 100%;
 	height: 150px;
 	object-fit: cover;
-	object-position: 25% 25%;
+	object-position: 10% 30%;
+}
+
+#group-page-name {
+	position: absolute;
+	text-align: center;
+	top: 130px;
+	font-size: 26px;
+	background-color: white;
+	left: 50%;
+	transform: translate(-50%);
+	padding: 0 20px;
+	border-left: 2px solid lightgrey;
+	font-weight: bold;
+	border-top: 2px solid lightgrey;
+	border-radius: 0 0 0 10px;
+	max-width: 100%;
+	white-space: nowrap;
+	color: #4c4c4c;
+}
+
+#group-page-description {
+	margin: 25px 30px;
+	font-size: 13px;
+	color: #4c4c4c;
+}
+
+#group-page-expand-icons {
+	position: absolute;
+	color: lightgrey;
+	bottom: -5px;
+	width: 100%;
+	text-align: center;
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+#group-page-expand-icons:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
 }
