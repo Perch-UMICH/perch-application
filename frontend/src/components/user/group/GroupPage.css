@@ -38,7 +38,6 @@
 
 #group-page-quickview {
 	width: 100%;
-	/*max-height: 290px;*/
 	overflow: hidden;
 	background-color: white;
 	border-radius: 0 20px 0 40px;
@@ -56,13 +55,21 @@
 	transition: 0.2s ease;
 }
 
-#group-page-projects {
+#group-page-project-container {
 	width: 100%;
 	height: 300px;
 	background-color: white;
 	border-radius: 0 0 0 40px;
 	border: 1px solid lightgrey;
 	margin-bottom: 15px;
+}
+
+.group-page-project {
+	height: 125px;
+	width: 100%;
+	text-align: center;
+	line-height: 125px;
+	border-bottom: 1px solid lightgrey;
 }
 
 #group-page-publications {
@@ -77,7 +84,7 @@
 	width: 100%;
 	height: 150px;
 	object-fit: cover;
-	object-position: 10% 30%;
+	object-position: 10% 50%;
 }
 
 #group-page-name {
@@ -89,10 +96,11 @@
 	left: 50%;
 	transform: translate(-50%);
 	padding: 0 20px;
-	border-left: 2px solid lightgrey;
 	font-weight: bold;
+	border-left: 2px solid lightgrey;
 	border-top: 2px solid lightgrey;
-	border-radius: 0 0 0 10px;
+	border-right: 2px solid lightgrey;
+	border-radius: 0 5px 0 10px;
 	max-width: 100%;
 	white-space: nowrap;
 	color: #4c4c4c;
