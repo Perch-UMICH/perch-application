@@ -13,11 +13,22 @@ class ProfPage extends Component {
 				<div id='group-page-main'>
 					<GroupQuickview />
 					<div id='group-page-project-container'>
-						<div className='group-page-project'>Project 1</div>
-						<div className='group-page-project'>Project 2</div>
+						<div className='group-header'>Projects</div>
+						<div className='group-page-project'>
+							<div className='group-project-name'>
+								<span>Data Analyst</span>
+								<span className='group-project-tag'>UROP</span>
+							</div>
+						</div>
+						<div className='group-page-project'>
+							<div className='group-project-name'>
+								<span>Coffee Runner</span>
+							</div>
+						</div>
+						
 					</div>
 					<div id='group-page-publications'>
-						publications
+						<div className='group-header'>Publications</div>
 					</div>
 				</div>
 			</div>

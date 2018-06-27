@@ -57,27 +57,75 @@
 
 #group-page-project-container {
 	width: 100%;
-	height: 300px;
 	background-color: white;
-	border-radius: 0 0 0 40px;
+	border-radius: 0 20px 0 40px;
 	border: 1px solid lightgrey;
 	margin-bottom: 15px;
+	transition: 0.2s ease;
+	overflow: hidden;
+	position: relative;
+}
+
+#group-page-project-container:hover {
+	box-shadow: var(--grey-shadow);
+	transition: 0.2s ease;
+}
+
+.group-header {
+	background-color: var(--bright-blue);
+	padding: 10px;
+	color: var(--lightish-blue);
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 20px;
 }
 
 .group-page-project {
 	height: 125px;
 	width: 100%;
-	text-align: center;
-	line-height: 125px;
 	border-bottom: 1px solid lightgrey;
+	position: relative;
+}
+
+.group-project-name {
+	font-size: 20px;
+	position: absolute;
+	top: 5px;
+	left: 20px;
+	color: var(--bright-blue);
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+.group-project-tag {
+	position: relative;
+	background-color: purple;
+	border-radius: 10px;
+	color:	white;
+	font-size: 12px;
+	padding: 5px 10px;
+	margin-left: 20px;
+}
+
+.group-project-name:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
 }
 
 #group-page-publications {
 	width: 100%;
 	height: 200px;
 	background-color: white;
-	border-radius: 0 0 0 40px;
+	border-radius: 0 20px 0 40px;
 	border: 1px solid lightgrey;
+	overflow: hidden;
+	transition: 0.2s ease;
+}
+
+#group-page-publications:hover {
+	box-shadow: var(--grey-shadow);
+	transition: 0.2s ease;
 }
 
 #group-page-coverimage {
@@ -126,3 +174,4 @@
 	color: var(--active-blue);
 	transition: 0.2s ease;
 }
+
