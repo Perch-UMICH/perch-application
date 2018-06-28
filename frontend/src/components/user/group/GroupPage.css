@@ -98,19 +98,67 @@
 	transition: 0.2s ease;
 }
 
-.group-project-tag {
-	position: relative;
-	background-color: purple;
-	border-radius: 10px;
-	color:	white;
+.group-project-keywords {
 	font-size: 12px;
-	padding: 5px 10px;
-	margin-left: 20px;
+	top: 32px;
+	position: absolute;
+	left: 20px;
+	font-style: italic;
+	color: grey;
 }
 
 .group-project-name:hover {
 	color: var(--active-blue);
 	transition: 0.2s ease;
+}
+
+.group-project-tag {
+	position: absolute;
+	background-color: purple;
+	border-radius: 10px;
+	color:	white;
+	font-size: 12px;
+	padding: 4px 10px;
+	margin-left: 20px;
+	top: 0;
+	font-size: 11px;
+	letter-spacing: 1px;
+}
+
+.group-project-apply {
+	position: absolute;
+	top: 10px;
+	right: 0;
+	width: 75px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: var(--bright-blue);
+	color: white;
+	cursor: pointer;
+	border-radius: 20px 0 0 20px;
+	transition: 0.2s ease;
+}
+
+.group-project-apply:hover {
+	background-color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
+.group-project-openings {
+	color: black;
+	position: absolute;
+	top: 50px;
+	right: 4px;
+	font-size: 12px;
+}
+
+.group-project-description {
+	position: absolute;
+	left: 20px;
+	top: 55px;
+	font-size: 12px;
+	width: 550px;
 }
 
 #group-page-publications {
