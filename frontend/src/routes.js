@@ -1,40 +1,40 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Team from './components/Team';
-import NavBar from './components/NavBar';
-import Home from './components/Home';
-import SignUpPage from './components/SignUpPage';
-import ConfirmEmail from './components/ConfirmEmail';
-import Timeline from './components/Timeline';
-import About from './components/About';
-import Login from './components/Login';
-import StudentProfile from './components/StudentProfile';
-import LabMatch from './components/LabMatch';
-import PickYourInterests from './components/PickYourInterests';
-import LabWebsite from './components/LabWebsite';
-import UploadImage from './components/UploadImage';
-import LabTextInfo from './components/LabTextInfo';
-import LabSpecifications from './components/LabSpecifications';
-import PastResearch from './components/PastResearch';
-import StudentBio from './components/StudentBio';
-import NotableClasses from './components/NotableClasses';
+import Team from './components/publicStatic/about/Team';
+import NavBar from './components/utilities/NavBar';
+import Home from './components/publicStatic/Home';
+import SignUpPage from './components/publicStatic/SignUpPage';
+import ConfirmEmail from './components/user/maintenance/ConfirmEmail';
+import Timeline from './components/publicStatic/about/Timeline';
+import About from './components/publicStatic/about/About';
+import Login from './components/publicStatic/Login';
+import StudentProfile from './components/user/individual/StudentProfile';
+import LabMatch from './components/labSearch/LabMatch';
+import PickYourInterests from './components/user/individual/PickYourInterests';
+import LabWebsite from './components/user/group/LabWebsite';
+import UploadImage from './components/user/maintenance/UploadImage';
+import LabTextInfo from './components/user/group/LabTextInfo';
+import LabSpecifications from './components/user/group/LabSpecifications';
+import PastResearch from './components/user/individual/PastResearch';
+import StudentBio from './components/user/individual/StudentBio';
+import NotableClasses from './components/user/individual/NotableClasses';
 import ExternalLinks from './components/ExternalLinks';
-import UpdateExternalLinks from './components/UpdateExternalLinks';
-import ProfPage from './components/ProfPage';
-import Apply from './components/Apply';
-import CreatePosition from './components/CreatePosition';
-import ViewApplicants from './components/ViewApplicants';
-import ScheduleInterview from './components/ScheduleInterview';
-import PickInterview from './components/PickInterview';
-import Settings from './components/Settings';
-import Feedback from './components/Feedback';
-import ForgotPassword from './components/ForgotPassword';
-import UpdateContact from './components/UpdateContact';
-import Footer from './components/Footer';
-import PrivacyPolicy from './components/PrivacyPolicy';
-import TermsOfService from './components/TermsOfService';
-import './components/TapTarget.css';
-import './components/general.css';
+import UpdateExternalLinks from './components/user/maintenance/UpdateExternalLinks';
+import ProfPage from './components/user/group/ProfPage';
+import Apply from './components/user/Apply';
+import CreatePosition from './components/user/group/CreatePosition';
+import ViewApplicants from './components/user/group/ViewApplicants';
+import ScheduleInterview from './components/user/ScheduleInterview';
+import PickInterview from './components/user/PickInterview';
+import Settings from './components/user/maintenance/Settings';
+import Feedback from './components/utilities/Feedback';
+import ForgotPassword from './components/user/maintenance/ForgotPassword';
+import UpdateContact from './components/user/maintenance/UpdateContact';
+import Footer from './components/utilities/Footer';
+import PrivacyPolicy from './components/publicStatic/PrivacyPolicy';
+import TermsOfService from './components/publicStatic/TermsOfService';
+import './components/utilities/TapTarget.css';
+import './components/utilities/general.css';
 
 class Router extends Component {
 	render() {
@@ -96,7 +96,7 @@ class Router extends Component {
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
-					<Footer />
+					{/*<Footer />*/}
 				</div>
 			</BrowserRouter>
 		);

@@ -1,0 +1,43 @@
+.perch-story {
+	/*color: black;
+	font-size: 100px;*/
+	padding: 40px 100px;
+	width: 1200px;
+	position: relative;
+	margin: auto auto;
+}
+
+.perch-story-header {
+	font-size: 50px;
+	text-transform: uppercase;
+	font-weight: 400;
+	background-color: white;
+	width: 700px;
+	margin: auto auto;
+}
+
+.perch-story-block-L, .perch-story-block-R {
+	/*background-color: rgb(2, 119, 189);*/
+	background-color: rgb(41, 182, 246);
+	color: white;
+	max-height: 300px;
+	width: 400px;
+	position: absolute;
+	text-align: left;
+	padding: 20px;
+	transition: .2s ease;
+}
+
+.perch-story-block-L:hover, .perch-story-block-R:hover {
+	background-color: white;
+	color: #000;
+	transition: 0.2s ease;
+}
+
+.perch-story-block-L {
+	left: 160px;
+}
+
+.perch-story-block-R {
+	right: 160px;
+}
