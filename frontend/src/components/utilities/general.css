@@ -5,6 +5,21 @@
 
 	--grey-shadow: 2px 3px 1px #c6c6c6;
 	--shift-down: 30px;
+
+	/* Subteam Colors for Perchiodic Table */
+	--t0-color: #FAFA1D;
+	--t1-color: #5FC9FC;
+	--t2-color: #0B70D1;
+	--t3-color: #204AD9;
+	--t4-color: #3A1689;
+	--t5-color: #8155E2;
+	--t6-color: #B99EF5;
+	--t7-color: #F260A7;
+	--t8-color: #E36337;
+	--t9-color: #E79D4B;
+	--t10-color: #E3E259;
+	--t11-color: #82D38D;
+	--t12-color: #44CAAC;
 }
 
 .active-blue-bg {

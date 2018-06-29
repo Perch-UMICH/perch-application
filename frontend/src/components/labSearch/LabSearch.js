@@ -75,7 +75,7 @@ class LabSearch extends Component {
             var temp_arr = [];
 			for (var key in resp.result) {
 				temp_arr.push(resp.result[key]);
-			}        
+			}
 			this.setState({all_labs: temp_arr});
 
 	  		let temp_labs = this.state.all_labs;
@@ -93,7 +93,7 @@ class LabSearch extends Component {
 				lab.skills.map((skill) => {
 					skill_temp_arr.push(skill.name);
 				});
-				
+
 				var temp_all_arr = tag_temp_arr;
 				skill_temp_arr.map((skill) => {
 					temp_all_arr.push(skill);
@@ -215,7 +215,7 @@ class LabSearch extends Component {
                 else if (check && (temporary == "default")) {
                     temp_filter.push(interest);
                 }
-                
+
                 if (prevState.search_interests) {
                 	if (!temp_delete.length && !this.state.interests.length) {
 			        	return {filtered_labs: prevState.all_labs, skills: temp_delete, skills_catalog: temp_add, filtered_catalog: temp_filter};
@@ -246,7 +246,7 @@ class LabSearch extends Component {
                 else if (check && (temporary == "default")) {
                     temp_filter.push(interest);
                 }
-                
+
                 if (prevState.search_skills) {
                 	if (!temp_delete.length && !this.state.skills.length) {
 			        	return {filtered_labs: prevState.all_labs, interests: temp_delete, interests_catalog: temp_add, filtered_catalog: temp_filter};
@@ -283,7 +283,7 @@ class LabSearch extends Component {
 				else {
 					updatedList = this.state.skills_catalog;
 				}
-				return {filtered_catalog: updatedList, 
+				return {filtered_catalog: updatedList,
 						search_skills: true,
 						search_interests: false};
 			});
@@ -300,7 +300,7 @@ class LabSearch extends Component {
 				else {
 					updatedList = this.state.interests_catalog;
 				}
-				return {filtered_catalog: updatedList, 
+				return {filtered_catalog: updatedList,
 						search_skills: false,
 						search_interests: true};
 			});
@@ -411,79 +411,194 @@ class LabSearch extends Component {
             }
         }
 
-        let searchBar = <div className='form labSearch shadow'>
-                            <div className='row'>
-                                <div className='col s12'><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
-                            </div>
-                        </div>
+				var fillerContent =
+				<div className="search-filter-content">
+					<div className="filter-item">Architecture</div>
+					<div className="filter-item">Art & Design</div>
+					<div className="filter-item">Business</div>
+					<div className="filter-item">Dentistry</div>
+					<div className="filter-item">Education</div>
+					<div className="filter-item">Engineering</div>
+					<div className="filter-item">Environment</div>
+					<div className="filter-item">Information</div>
+					<div className="filter-item">Kinesiology</div>
+					<div className="filter-item">Law</div>
+					<div className="filter-item">Medicine</div>
+					<div className="filter-item">Architecture</div>
+					<div className="filter-item">Art & Design</div>
+					<div className="filter-item">Business</div>
+					<div className="filter-item">Dentistry</div>
+					<div className="filter-item">Education</div>
+					<div className="filter-item">Engineering</div>
+					<div className="filter-item">Environment</div>
+					<div className="filter-item">Information</div>
+					<div className="filter-item">Kinesiology</div>
+					<div className="filter-item">Law</div>
+					<div className="filter-item">Medicine</div>
+				</div>
 
-        let modifiers = <div className='row lab-search-modifiers'>
-                            <i className='material-icons close-modifiers' onClick={this.closeModifiers.bind(this)}>close</i>
-                            <div className='col s6 left-align'>
-                                <p className="fe-test">SEARCH BY</p>
-                                <input className="radio" name="user_type" type="radio" id="skills" value="skills" checked={this.state.search_skills} onChange={this.handleSearchType.bind(this)} required />
-                                <label className='lab-search-radio-label' htmlFor="skills">Skills</label>
-                                <input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
-                                <label className='lab-search-radio-label' htmlFor="interests">Interests</label>
-                            </div>
-                            <div className='col s6 import-container'>
-                                <p className="fe-test">IMPORT</p>
-                                <button className="btn waves-effect waves-light submit-btn import-btn"
-                                    type="submit" 
-                                    name="action"
-                                    onClick={this.handleImport.bind(this, 'skills', temporary)}
-                                    style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
-                                >Skills
-                                </button>
-                                <button className="btn waves-effect waves-light submit-btn import-btn"
-                                    type="submit" 
-                                    name="action"
-                                    onClick={this.handleImport.bind(this, 'interests', temporary)}
-                                    style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
-                                >Interests
-                                </button>
-                            </div>
-                        </div>
-        let skillSection =  <div className='row search-interest-container'>
-                                <div className='interest-section search-interest-section-left col s6 left-align'>
-                                    <div className='interest-body'>
-                                        {this.state.filtered_catalog.map((interest) => {
-                                            return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
-                                        })}
-                                    </div>
-                                </div>
-                                <div className='interest-section search-interest-section-right col s6'>
-                                    <div className='interest-body'>
-                                        <div className='selected-container'>
-                                            <p> SKILLS </p>
-                                            {this.state.skills.map((interest) => {
-                                                return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
-                                            })}
-                                        </div>
+			var searchSideBar =
+				<div className="search-sidebar">
+					<div className="search-filter-container">
+						<div className="search-filter-title">Departments</div>
+						<hr/>
+						{fillerContent}
+					</div>
+					<div className="search-filter-container">
+						<div className="search-filter-title">Research Areas</div>
+						<hr/>
+						{fillerContent}
+					</div>
+					<div className="search-filter-container">
+						<div className="search-filter-title">Minimum Requirements</div>
+						<hr/>
+						{fillerContent}
+					</div>
+					<div className="search-filter-container">
+						<div className="search-filter-title">Other</div>
+					  <hr/>
+						{fillerContent}
+					</div>
+				</div>
 
-                                        <br></br>
-                                        <br></br><br></br>
-                                        <br></br>
-                                        
-                                        <div className='selected-container'>
-                                            <p style={{display: 'block'}}> INTERESTS </p>
-                                            {this.state.interests.map((interest) => {
-                                                return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
+      let searchBar = <div className='form labSearch shadow'>
+                          <div className='row'>
+                              <div className='col s12'><input id='lab-topic' className='lab-search-input' type='text' placeholder='keywords' onChange={this.filterList.bind(this)} /></div>
+                          </div>
+                      </div>
+
+      let modifiers = <div className='row lab-search-modifiers'>
+                          <i className='material-icons close-modifiers' onClick={this.closeModifiers.bind(this)}>close</i>
+                          <div className='col s6 left-align'>
+                              <p className="fe-test">SEARCH BY</p>
+                              <input className="radio" name="user_type" type="radio" id="skills" value="skills" checked={this.state.search_skills} onChange={this.handleSearchType.bind(this)} required />
+                              <label className='lab-search-radio-label' htmlFor="skills">Skills</label>
+                              <input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
+                              <label className='lab-search-radio-label' htmlFor="interests">Interests</label>
+                          </div>
+                          <div className='col s6 import-container'>
+                              <p className="fe-test">IMPORT</p>
+                              <button className="btn waves-effect waves-light submit-btn import-btn"
+                                  type="submit"
+                                  name="action"
+                                  onClick={this.handleImport.bind(this, 'skills', temporary)}
+                                  style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
+                              >Skills
+                              </button>
+                              <button className="btn waves-effect waves-light submit-btn import-btn"
+                                  type="submit"
+                                  name="action"
+                                  onClick={this.handleImport.bind(this, 'interests', temporary)}
+                                  style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
+                              >Interests
+                              </button>
+                          </div>
+                      </div>
+      let skillSection =  <div className='row search-interest-container'>
+                              <div className='interest-section search-interest-section-left col s6 left-align'>
+                                  <div className='interest-body'>
+                                      {this.state.filtered_catalog.map((interest) => {
+                                          return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
+                                      })}
+                                  </div>
+                              </div>
+                              <div className='interest-section search-interest-section-right col s6'>
+                                  <div className='interest-body'>
+                                      <div className='selected-container'>
+                                          <p> SKILLS </p>
+                                          {this.state.skills.map((interest) => {
+                                              return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
+                                          })}
+                                      </div>
+
+                                      <br></br>
+                                      <br></br><br></br>
+                                      <br></br>
+
+                                      <div className='selected-container'>
+                                          <p style={{display: 'block'}}> INTERESTS </p>
+                                          {this.state.interests.map((interest) => {
+                                              return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
+                                          })}
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
 		return (
 			<div id='lab-search'>
-                {searchBar}
+                {searchSideBar}
 				<div id='lab-search-box' className='hide'>
+					<div className='row lab-search-modifiers'>
+						<i className='material-icons close-modifiers' onClick={this.closeModifiers.bind(this)}>close</i>
+						<div className='col s6 left-align'>
+							<p className="fe-test">SEARCH BY</p>
+
+							{/*<input className="" name="user_type" type="radio" id="skills" value="skills" onChange={this.handleSearchType.bind(this)} required />
+							<label className='lab-search-radio-label' htmlFor="skills">Skills</label>
+							<input className="" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
+							<label className='lab-search-radio-label' htmlFor="interests">Interests</label>*/}
+
+							<input className="radio" name="user_type" type="radio" id="skills" value="skills" checked={this.state.search_skills} onChange={this.handleSearchType.bind(this)} required />
+							<label className='lab-search-radio-label' htmlFor="skills">Skills</label>
+							<input className="radio" name="user_type" type="radio" id="interests" value="interests" onChange={this.handleSearchType.bind(this)} required />
+							<label className='lab-search-radio-label' htmlFor="interests">Interests</label>
+
+						</div>
+						<div className='col s6 import-container'>
+							<p className="fe-test">IMPORT</p>
+							<button className="btn waves-effect waves-light submit-btn import-btn"
+			        			type="submit"
+			        			name="action"
+			        			onClick={this.handleImport.bind(this, 'skills', temporary)}
+			        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
+			        		>Skills
+			        		</button>
+			        		<button className="btn waves-effect waves-light submit-btn import-btn"
+			        			type="submit"
+			        			name="action"
+			        			onClick={this.handleImport.bind(this, 'interests', temporary)}
+			        			style={{marginTop: '0px', marginLeft: '15px', backgroundColor: '#eee', color: 'grey', letterSpacing: '2px'}}
+			        		>Interests
+			        		</button>
+						</div>
+					</div>
+
+					<div className='row search-interest-container'>
+						<div className='interest-section search-interest-section-left col s6 left-align'>
+							<div className='interest-body'>
+								{this.state.filtered_catalog.map((interest) => {
+									return (<span key={interest} onClick={this.handleClickAdd.bind(this, interest, temporary)} > <Bubble txt={interest} type='adder' /> </span>)
+								})}
+							</div>
+						</div>
+						<div className='interest-section search-interest-section-right col s6'>
+							<div className='interest-body'>
+								<div className='selected-container'>
+									<p> SKILLS </p>
+									{this.state.skills.map((interest) => {
+										return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'skill', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
+									})}
+								</div>
+
+								<br></br>
+								<br></br><br></br>
+								<br></br>
+
+								<div className='selected-container'>
+									<p style={{display: 'block'}}> INTERESTS </p>
+									{this.state.interests.map((interest) => {
+										return (<span key={interest} onClick={this.handleClickDelete.bind(this, interest, 'interest', temporary)} > <Bubble txt={interest} type='deleter' /> </span>)
+									})}
+								</div>
+							</div>
+						</div>
+					</div>
 					{modifiers}
 					{skillSection}
 				</div>
 				<div className='row'>
-					<LabList labs={this.state.filtered_labs} />	
+					<LabList labs={this.state.filtered_labs} />
 				</div>
 			</div>
 		);

@@ -4,14 +4,28 @@ import './LabSearch2.css';
 // import Bubble from '../utilities/Bubble';
 // import LabList from './LabList';
 import LabSearchItem from './LabSearchItem';
+
 import '../user/individual/PickYourInterests.css';
 import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser} from '../../helper.js'
-
+import {getDepartments} from '../../data/filterData';
 
 class LabSearch extends Component {
 	constructor(props) {
 		super(props);
+		this.handleDeptClick = this.handleDeptClick.bind(this);
+
+		var depts = {}; // contains all depts mapped by slug & whether or not they've been clicked.
+		var parentDepts = []; // arr of departments that are not sub-departments
+		getDepartments().map(dept => {
+			if (!dept.isSubDept) {
+				parentDepts.push(dept);
+			}
+		  depts[dept.slug] = dept;
+		});
+
 		this.state = {
+			depts,
+			parentDepts,
 			skills_catalog: [],
 			your_skills: [],
 			interests_catalog: [],
@@ -25,8 +39,7 @@ class LabSearch extends Component {
 			all_labs: [],
 			filtered_labs: [],
 			s_id: '',
-
-            search: '',
+      search: '',
 		}
 	}
 
@@ -79,7 +92,7 @@ class LabSearch extends Component {
  //            var temp_arr = [];
 	// 		for (var key in resp.result) {
 	// 			temp_arr.push(resp.result[key]);
-	// 		}        
+	// 		}
 	// 		this.setState({all_labs: temp_arr});
 
 	//   		let temp_labs = this.state.all_labs;
@@ -97,7 +110,7 @@ class LabSearch extends Component {
 	// 			lab.skills.map((skill) => {
 	// 				skill_temp_arr.push(skill.name);
 	// 			});
-				
+
 	// 			var temp_all_arr = tag_temp_arr;
 	// 			skill_temp_arr.map((skill) => {
 	// 				temp_all_arr.push(skill);
@@ -127,6 +140,16 @@ class LabSearch extends Component {
         	event.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
     	});
     	this.setState({filtered_catalog: updatedList, in_filter: true});
+	}
+
+	handleDeptClick(deptSlug) {
+		var newState = this.state;
+		if (newState.depts[deptSlug].clicked) {
+			newState.depts[deptSlug].clicked = false;
+		} else {
+			newState.depts[deptSlug].clicked = true;
+		}
+		this.setState(newState);
 	}
 
 	handleClickAdd(interest, temporary) {
@@ -219,7 +242,7 @@ class LabSearch extends Component {
                 else if (check && (temporary == "default")) {
                     temp_filter.push(interest);
                 }
-                
+
                 if (prevState.search_interests) {
                 	if (!temp_delete.length && !this.state.interests.length) {
 			        	return {filtered_labs: prevState.all_labs, skills: temp_delete, skills_catalog: temp_add, filtered_catalog: temp_filter};
@@ -250,7 +273,7 @@ class LabSearch extends Component {
                 else if (check && (temporary == "default")) {
                     temp_filter.push(interest);
                 }
-                
+
                 if (prevState.search_skills) {
                 	if (!temp_delete.length && !this.state.skills.length) {
 			        	return {filtered_labs: prevState.all_labs, interests: temp_delete, interests_catalog: temp_add, filtered_catalog: temp_filter};
@@ -287,7 +310,7 @@ class LabSearch extends Component {
 				else {
 					updatedList = this.state.skills_catalog;
 				}
-				return {filtered_catalog: updatedList, 
+				return {filtered_catalog: updatedList,
 						search_skills: true,
 						search_interests: false};
 			});
@@ -304,7 +327,7 @@ class LabSearch extends Component {
 				else {
 					updatedList = this.state.interests_catalog;
 				}
-				return {filtered_catalog: updatedList, 
+				return {filtered_catalog: updatedList,
 						search_skills: false,
 						search_interests: true};
 			});
@@ -411,13 +434,82 @@ class LabSearch extends Component {
     }
 
 	render() {
-                            
+
+		var fillerContent =
+
+			<ul className = "search-filter-content">
+		    {this.state.parentDepts.map((dept) => {
+					var subDeptSection = null;
+					if (this.state.depts[dept.slug].clicked &&
+							dept.subDepts && dept.subDepts.length > 0) {
+						subDeptSection =
+							<ul className="subfilter">
+								{dept.subDepts.map((subDeptSlug) => {
+									var subDept = this.state.depts[subDeptSlug];
+									return (
+										<li key={subDept.slug}>
+											<input type="checkbox"
+												className="checkbox-white filled-in"
+												id={subDept.slug}/>
+				      				<label
+											 	className="filter-checkbox-label"
+												for={subDept.slug}>
+												{subDept.friendlyName}
+											</label>
+										</li>)
+								})}
+							</ul>
+					}
+
+					var labelContent = null;
+					if (dept.subDepts && dept.subDepts.length > 0) {
+						labelContent =
+							<li key={dept.slug}>
+								<div className="filter-dropdown-container">
+									<a onClick={() => this.handleDeptClick(dept.slug)} id={dept.slug}>
+											<i className="material-icons search-expand-right">
+												{this.state.depts[dept.slug].clicked ? "expand_more" : "chevron_right"}
+											</i>
+										</a>
+						      <div className="filter-dropdown-label">{dept.friendlyName}</div>
+								</div>
+								{subDeptSection}
+							</li>
+					} else {
+						labelContent =
+							<li key={dept.slug}>
+								<input type="checkbox" className="checkbox-white filled-in" id={dept.slug}/>
+				      	<label
+									className="filter-checkbox-label"
+									for={dept.slug}>{dept.friendlyName}</label>
+					  	</li>
+					}
+					return (labelContent);
+				})}
+			</ul>
+
+	var searchSideBar =
+		<div className="search-sidebar">
+			<div className="search-filter-container">
+				<div className="search-filter-title">Departments</div>
+				<hr/>
+				{fillerContent}
+			</div>
+			<div className="search-filter-container">
+				<div className="search-filter-title">Research Areas</div>
+			</div>
+			<div className="search-filter-container">
+				<div className="search-filter-title">Minimum Requirements</div>
+			</div>
+			<div className="search-filter-container">
+				<div className="search-filter-title">Other</div>
+			</div>
+		</div>
+
 		return (
 			<div id='lab-srch-2'>
                <div className='lab-srch-mods'>
-                   <div className='lab-srch-depts'>
-                       Dept Search
-                   </div>
+                   {searchSideBar}
                </div>
                <div className='lab-srch-body'>
                    <input id='lab-srch-input' type='text' placeholder='keywords' onChange={event => this.updateSearch(event)}/>
