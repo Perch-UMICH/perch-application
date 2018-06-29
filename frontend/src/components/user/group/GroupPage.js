@@ -13,7 +13,6 @@ class ProfPage extends Component {
 				<div id='group-page-column-R'>Right Column</div>
 				<div id='group-page-main'>
 					<GroupQuickview />
-
 					<GroupProjectContainer>
 						<div className='group-header'>Projects</div>
 						<GroupProject title='Data Analyst' spots='1' keywords='paid, computer science, machine learning' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job. And we need hands on the job. And we need hands on the job.Cause research funding crisis. And we need hands on the job. And we need hands on the job. And we need hands on the job.Cause research funding crisis. And we need hands on the job. And we need hands on the job. And we need hands on the job.And we need hands on the job. And we need hands on the job.And we need hands on the job. And we need hands on the job.' urop/>
