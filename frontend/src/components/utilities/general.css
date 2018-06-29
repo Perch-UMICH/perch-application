@@ -7,19 +7,19 @@
 	--shift-down: 30px;
 
 	/* Subteam Colors for Perchiodic Table */
-	--t0-color: #FAFA1D;
+	--t0-color: #919191;
 	--t1-color: #5FC9FC;
 	--t2-color: #0B70D1;
 	--t3-color: #204AD9;
-	--t4-color: #3A1689;
+	--t4-color: #ff3e28;
 	--t5-color: #8155E2;
 	--t6-color: #B99EF5;
-	--t7-color: #F260A7;
-	--t8-color: #E36337;
-	--t9-color: #E79D4B;
-	--t10-color: #E3E259;
-	--t11-color: #82D38D;
-	--t12-color: #44CAAC;
+	--t7-color: #28e5ff;
+	--t8-color: #ff516b;
+	--t9-color: #ff9400;
+	--t10-color: #fffa05;
+	--t11-color: #4bbc3a;
+	--t12-color: #41f483;
 }
 
 .active-blue-bg {
@@ -117,4 +117,9 @@ input[type='text'] {
 input[type='text']:focus {
   border-bottom: 1px solid var(--active-blue) !important;
   box-shadow: 0 1px 0 0 var(--active-blue) !important;
+}
+
+.expand {
+	max-height: 500px !important;
+	transition: 1s ease;
 }

@@ -98,7 +98,7 @@ class Router extends Component {
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
-					{/*<Footer />*/}
+					<Footer />
 				</div>
 			</BrowserRouter>
 		);

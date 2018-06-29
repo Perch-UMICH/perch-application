@@ -9,6 +9,7 @@ nav {
     height: 70px;
     line-height: 70px;
     background-color: #0277bd;
+    box-shadow: none;
 }
 
 nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {

@@ -1,0 +1,115 @@
+.group-project {
+	width: 100%;
+	border-bottom: 1px solid lightgrey;
+	position: relative;
+	padding-bottom: 25px;
+	overflow: hidden;
+}
+
+.group-project-name {
+	font-size: 20px;
+	margin-top: 5px;
+	margin-left: 20px;
+	color: var(--bright-blue);
+	cursor: pointer;
+	transition: 0.2s ease;
+	display: block;
+}
+
+.group-project-keywords {
+	font-size: 12px;
+	margin-left: 20px;
+	font-style: italic;
+	color: grey;
+}
+
+.group-project-name:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
+.group-project-tag {
+	position: absolute;
+	background-color: purple;
+	border-radius: 10px;
+	color:	white;
+	font-size: 12px;
+	padding: 4px 10px;
+	margin-left: 20px;
+	top: 7px;
+	font-size: 11px;
+	letter-spacing: 1px;
+}
+
+.group-project-apply {
+	position: absolute;
+	top: 10px;
+	right: 0;
+	width: 75px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: var(--bright-blue);
+	color: white;
+	cursor: pointer;
+	border-radius: 20px 0 0 20px;
+	transition: 0.2s ease;
+}
+
+.group-project-apply:hover {
+	background-color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
+.group-project-openings {
+	color: black;
+	position: absolute;
+	top: 50px;
+	right: 4px;
+	font-size: 12px;
+}
+
+.group-project-description {
+	margin-left: 20px;
+	margin-top: 4px;
+	font-size: 12px;
+	width: 550px;
+	height: auto;
+	max-height: 56px;
+	overflow: hidden;
+	transition: .3s ease;
+}
+
+#group-project-container {
+	width: 100%;
+	background-color: white;
+	border-radius: 0 20px 0 40px;
+	border: 1px solid lightgrey;
+	margin-bottom: 15px;
+	transition: 0.2s ease;
+	overflow: hidden;
+	position: relative;
+}
+
+#group-project-container:hover {
+	box-shadow: var(--grey-shadow);
+	transition: 0.2s ease;
+}
+
+.group-project-requirement {
+	font-size: 12px;
+	margin-bottom: 2px;
+	margin-top: 4px;
+}
+
+.group-project-requirement span {
+	font-weight: bold;
+}
+
+.group-project-requirement > div {
+	border-left: 2px solid lightgrey;
+	padding-left: 5px;
+	margin-left: 10px;
+	display: inline-block;
+	vertical-align: top;
+}
