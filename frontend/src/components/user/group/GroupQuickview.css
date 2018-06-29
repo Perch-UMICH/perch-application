@@ -50,4 +50,5 @@
 	position: relative;
 	max-height: 95px;
 	overflow: hidden;
+	transition: 0.3s ease;
 }

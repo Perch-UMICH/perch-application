@@ -120,5 +120,6 @@ input[type='text']:focus {
 }
 
 .expand {
-	max-height: none !important;
+	max-height: 500px !important;
+	transition: 1s ease;
 }

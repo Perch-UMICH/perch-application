@@ -74,8 +74,10 @@
 	margin-top: 4px;
 	font-size: 12px;
 	width: 550px;
+	height: auto;
 	max-height: 56px;
 	overflow: hidden;
+	transition: .3s ease;
 }
 
 #group-project-container {
