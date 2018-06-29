@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './ExpanderIcons.css'
 
-
 /*
     id: (REQUIRED) base value for component, will automatically append "-expand-icons" to make unique. Used for toggling
     classBase: (OPTIONAL) base name for generic className, will automatically append "-expand-icons", use for styling

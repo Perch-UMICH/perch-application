@@ -129,15 +129,15 @@
 	/*width: 90%;*/
 	width: 1068px;
 	margin: 0px auto;
-	margin-top: 80px;
+	margin-top: 130px;
 	position: relative;
 }
 
 .perchiodic-table-key {
 	position: absolute;
 	align-self: center;
-	top: 125px;
-	left: 24%;
+	top: 175px;
+	left: 25%;
 	height: 150px;
 }
 
@@ -166,17 +166,24 @@
 	position: absolute;
 	text-transform: uppercase;
 	padding-bottom: 20px;
-	font-weight: 600;
-	width: 300px;
-	margin-top: -7px;
-	margin-left: -10px;
-	text-shadow: 1px 1px 0px rgba(155,155,155,.9);
+	padding-left: 14px;
+	font-weight: 500;
+	font-size: 36px;
+	width: 522px;
+	margin-top: -90px;
+	margin-left: -35px;
+	background-color: var(--bright-blue);
+	height: 60px;
+	border-left: 6px solid var(--active-blue);
+	border-right: 6px solid var(--active-blue);
+	border-radius: 0 15px 0 20px;
+	color: white;
 }
 
 .key-tile {
 	height: 100%;
 	width: 22px;
-	box-shadow: 0 2px 2px rgba(0,0,0,.3);
+	/*box-shadow: 0 2px 2px rgba(0,0,0,.3);*/
 	display: inline-block;
 }
 

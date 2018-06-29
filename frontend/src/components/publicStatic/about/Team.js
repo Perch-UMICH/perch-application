@@ -137,7 +137,7 @@ class Team extends Component {
     var keyColOne =
       <div className="key-col">
         <div className="key-item">
-          <div className="key-title">The Per [ ch ] iodic Table</div>
+          <div className="key-title">The Per<span style={{color: 'var(--active-blue)'}}>{"{ch}"}</span>iodic Table</div>
         </div>
         { subteams.map((subteamName, idx) => {
           var tileCSS = `key-tile t${idx}-tccbg`;
