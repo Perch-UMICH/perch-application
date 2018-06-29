@@ -5,6 +5,12 @@
 	margin-bottom: 15px;
 	position: relative;
 	border-radius: 0 20px 0 40px;
+	transition: .2s ease;
+}
+
+.lab-srch-project:hover {
+	box-shadow: var(--grey-shadow);
+	transition: .2s ease;
 }
 
 .lab-srch-project:after {
@@ -20,21 +26,61 @@
 	position: absolute;
 	top: 10px;
 	left: 30px;
+	transition: 0.2s ease;
+	color: var(--bright-blue);
+	cursor: pointer;
+}
+.lab-srch-project-title:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
 }
 
 .lab-srch-project-tag {
+	position: absolute;
 	background-color: purple;
 	border-radius: 10px;
 	color:	white;
-	font-size: 12px;
-	padding: 5px 10px;
 	margin-left: 20px;
+	font-size: 12px;
+	padding: 4px 10px;
+	margin-left: 20px;
+	top: 0;
+	font-size: 11px;
+	letter-spacing: 1px;
 }
 
 .lab-srch-project-description {
 	position: absolute;
-	left: 10px;
-	top: 30px;
+	left: 50px;
+	top: 40px;
 	font-size: 12px;
 	width: 400px;
+}
+
+.lab-srch-project-apply {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 75px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: var(--bright-blue);
+	color: white;
+	cursor: pointer;
+	border-radius: 20px 0 0 20px;
+	transition: 0.2s ease;
+}
+
+.lab-srch-project-apply:hover {
+	background-color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
+.lab-srch-project-openings {
+	color: black;
+	position: absolute;
+	top: 45px;
+	right: 4px;
+	font-size: 12px;
 }

@@ -10,7 +10,11 @@ class LabSearchItem extends Component {
             let expanderIcons = lab_srch_item.children[lab_srch_item.children.length - 1];
             for (let i = 0; i < expanderIcons.children.length; i++)
                 expanderIcons.children[i].innerText = (expanderIcons.children[i].innerText == 'expand_more') ? 'expand_less' : 'expand_more';
+            expanderIcons.classList.toggle('active-blue')
         }
+
+        let numProjects = document.getElementById(`lab-srch-item-num-projects_${this.props.name}`)
+        numProjects.classList.toggle('active-blue-bg')
 
         let expansion = document.getElementById(`lab_srch_expansion_${this.props.name}`)
         expansion.classList.toggle('hide')
@@ -26,8 +30,7 @@ class LabSearchItem extends Component {
                     <div className='lab-srch-item-depts'><b>Departments:</b> {this.props.dept}</div>
                     <div className='lab-srch-item-rsrch'><b>Research Areas:</b> {this.props.rsrch}</div>
                     <div className='lab-srch-item-description'><b>Description</b> {this.props.description}</div>
-                    <div className='lab-srch-item-apply'>Apply</div>
-                    <div className='lab-srch-item-openings'>spots: 1</div>
+                    <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects.bind(this)}><b>2</b> projects</div>
                     <div className='lab-srch-item-expand-icons' onClick={this.expandProjects.bind(this)}>
                         <i className='material-icons'>expand_more</i>
                         <i className='material-icons'>expand_more</i>

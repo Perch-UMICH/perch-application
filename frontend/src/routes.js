@@ -33,6 +33,7 @@ import UpdateContact from './components/user/maintenance/UpdateContact';
 import Footer from './components/utilities/Footer';
 import PrivacyPolicy from './components/publicStatic/PrivacyPolicy';
 import TermsOfService from './components/publicStatic/TermsOfService';
+import GroupPage from './components/user/group/GroupPage';
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
@@ -78,8 +79,9 @@ class Router extends Component {
 							<Route path='/external-links' component={ ExternalLinks } />
 							<Route path='/update-external-links' component={ ExternalLinks } />
 							<Route path='/edit-external-links' component={ UpdateExternalLinks } />
-							<Route path='/prof-page' component={ ProfPage }/>
-							<Route path='/prof-page/:labSlug' component={ ProfPage }/>
+							<Route path='/prof-page' component={ GroupPage }/>
+							{/*<Route path='/prof-page' component={ ProfPage }/>
+							<Route path='/prof-page/:labSlug' component={ ProfPage }/>*/}
 							<Route path='/apply/:labSlug' component={ Apply } />
 							<Route path='/create-position' component={ CreatePosition } />
 							<Route path='/view-applicants' component={ ViewApplicants } />

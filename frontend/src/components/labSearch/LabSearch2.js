@@ -474,7 +474,7 @@ class LabSearch extends Component {
                    {searchSideBar}
                </div>
                <div className='lab-srch-body'>
-                   <input id='lab-srch-input' type='text' placeholder='Search' onChange={event => this.updateSearch(event)}/>
+                   <input id='lab-srch-input' type='text' placeholder='keywords' onChange={event => this.updateSearch(event)}/>
                    <div id='lab-srch-result-summary'>Projects 1-50 (157 total) page 1 of 40 for <b>{this.state.search}</b></div>
                    <div id='lab-srch-results'>
                         <LabSearchItem name='Meha Patel' dept='English' rsrch='12th century grammar analysis' img='/img/meha.jpg' description='We love words. Especially old, hard to understand words.'/>
