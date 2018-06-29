@@ -15,7 +15,20 @@ export class GroupProject extends Component {
 					{this.props.urop && <span className='group-project-tag'>UROP</span>}
 				</div>
 				<div className='group-project-keywords'>{this.props.keywords}</div>
-				<div className='group-project-description'>{this.props.description}</div>
+				<div className='group-project-description'>{this.props.description}<div className='group-project-requirement'>
+					<span>Minimum Requirements</span>
+					<div>
+						<div>blah blah</div>
+						<div>blah blah</div>
+					</div>
+				</div>
+				<div className='group-project-requirement'>
+					<span>Minimum Requirements</span>
+					<div>
+						<div>40 hours</div>
+					</div>
+				</div></div>
+				
 				<div className='group-project-apply'>Apply</div>
 				<div className='group-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
 				<ExpanderIcons id={`group-project-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>
