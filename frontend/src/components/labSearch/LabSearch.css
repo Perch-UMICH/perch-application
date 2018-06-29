@@ -1,3 +1,76 @@
+.search-container {
+	display: inline-grid;
+	width: 110%;
+	margin-left: -20px;
+	grid-template-columns: 20% 80%;
+}
+
+.search-main {
+	grid-column-start: 2;
+}
+
+.search-sidebar {
+	grid-column-start: 1;
+	height: 40px;
+	margin: 5px;
+	margin-bottom: 0px;
+}
+
+.search-filter-container {
+	background-color: #FFF;
+	transition: all 0.5s ease;
+	transition-delay: 0.2s;
+	border-radius: 0px 10px 0px 10px;
+	max-height: 55px;
+	overflow-y: hidden;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.search-filter-container:hover,
+.search-filter-container:active,
+.search-filter-container:focus {
+	max-height: 500px;
+	box-shadow: 0 1px 4px 0 0 #29b6f6;
+}
+
+.search-filter-title {
+	padding: 12px;
+}
+
+.search-filter-content {
+	text-align: left;
+	overflow: scroll;
+	max-height: 400px;
+	width: 100%;
+	margin-left: 5px;
+}
+
+.search-expand-right {
+}
+
+.filter-dropdown-container {
+	display: inline-flex;
+}
+
+.filter-dropdown-label {
+	margin-top: 4px;
+	margin-left: 10px;
+	font-size: 13px;
+	color: black;
+}
+
+.filter-checkbox-label {
+	line-height: 20px !important;
+	font-size: 13px !important;
+	color: black;
+}
+
+.subfilter {
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+
 .labSearch {
 	padding: 20px;
 	padding-left: 0;
