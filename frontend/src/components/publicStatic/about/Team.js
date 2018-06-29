@@ -67,7 +67,7 @@ var teamMemIdx = {
   t0: 0,  t1: 0,  t2: 0,  t3: 0,  t4: 0,  t5: 0,  t6: 0, t7: 0,  t8: 0,  t9: 0,  t10: 0,  t11: 0,  t12: 0,
 }
 
-   // rows [0  1  2   3  4  5  6  7  8  9  10 11]
+   // rows [0   1   2   3   4   5   6   7   8   9  10  11]
 const r0 = [0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,  7];
 const r1 = [1,  5, -1, -1, -1, -1, -1, -1, 11, 10, 10,  7];
 const r2 = [2,  5,  4,  9,  9,  9,  9,  8, 11, 10, 10,  7];
@@ -77,8 +77,6 @@ const r4 = [3,  5,  6,  9,  9,  9,  9,  8, 11, 11, 10, 12];
 const tableBones = [r0, r1, r2, r3, r4];
 
 var cardTable = [ [], [], [], [], [] ];
-
-console.log("memberBySlug", memberBySlug);
 
 for (var i = 0; i < 5; ++i) {
   for (var j = 0; j < 12; ++j) {
@@ -181,12 +179,12 @@ class Team extends Component {
 
     return (
       <div>
-        <div className="perchiodic-table-key">
-          {keyColOne}
-          {keyColTwo}
-          {keyColThree}
-        </div>
         <div className="periodic-table-container">
+          <div className="perchiodic-table-key">
+            {keyColOne}
+            {keyColTwo}
+            {keyColThree}
+          </div>
           {perchiodicTable}
         </div>
         <div className="team">

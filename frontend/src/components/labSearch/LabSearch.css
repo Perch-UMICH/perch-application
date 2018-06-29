@@ -47,6 +47,12 @@
 }
 
 .search-expand-right {
+	cursor: pointer;
+}
+
+.search-expand-right:hover {
+	background-color: white !important;
+	color: var(--bright-blue) !important;
 }
 
 .filter-dropdown-container {

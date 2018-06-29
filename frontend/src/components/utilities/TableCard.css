@@ -33,7 +33,7 @@
 	position: absolute;
 	z-index: 7;
 	left: 0px;
-	opacity: 0.4;
+	opacity: 0.35;
 	transition: all .3s ease;
 	transition-delay: 0.2s;
 }
@@ -136,8 +136,8 @@
 .perchiodic-table-key {
 	position: absolute;
 	align-self: center;
-	top: 175px;
-	left: 25%;
+	top: -5px;
+	left: 20%;
 	height: 150px;
 }
 
