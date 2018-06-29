@@ -4,14 +4,28 @@ import './LabSearch2.css';
 // import Bubble from '../utilities/Bubble';
 // import LabList from './LabList';
 import LabSearchItem from './LabSearchItem';
+
 import '../user/individual/PickYourInterests.css';
 import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser} from '../../helper.js'
-
+import {getDepartments} from '../../data/filterData';
 
 class LabSearch extends Component {
 	constructor(props) {
 		super(props);
+		this.handleDeptClick = this.handleDeptClick.bind(this);
+
+		var depts = {}; // contains all depts mapped by slug & whether or not they've been clicked.
+		var parentDepts = []; // arr of departments that are not sub-departments
+		getDepartments().map(dept => {
+			if (!dept.isSubDept) {
+				parentDepts.push(dept);
+			}
+		  depts[dept.slug] = dept;
+		});
+
 		this.state = {
+			depts,
+			parentDepts,
 			skills_catalog: [],
 			your_skills: [],
 			interests_catalog: [],
@@ -25,8 +39,7 @@ class LabSearch extends Component {
 			all_labs: [],
 			filtered_labs: [],
 			s_id: '',
-
-            search: '',
+      search: '',
 		}
 	}
 
@@ -127,6 +140,16 @@ class LabSearch extends Component {
         	event.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
     	});
     	this.setState({filtered_catalog: updatedList, in_filter: true});
+	}
+
+	handleDeptClick(deptSlug) {
+		var newState = this.state;
+		if (newState.depts[deptSlug].clicked) {
+			newState.depts[deptSlug].clicked = false;
+		} else {
+			newState.depts[deptSlug].clicked = true;
+		}
+		this.setState(newState);
 	}
 
 	handleClickAdd(interest, temporary) {
@@ -411,38 +434,59 @@ class LabSearch extends Component {
     }
 
 	render() {
+
 		var fillerContent =
-		<div className="search-filter-content">
-			<input type="checkbox" id="scales" name="feature" value="scales" checked />
-			<input type="checkbox" id="scales" name="feature" value="scales" checked />
-			<input type="checkbox" id="scales" name="feature" value="scales" checked />
-			<input type="checkbox" id="scales" name="feature" value="scales" checked />
-			<div className="filter-item">
-				<input type="checkbox" id="scales" name="feature" value="scales" checked />
-				Architecture
-			</div>
-			<div className="filter-item">Art & Design</div>
-			<div className="filter-item">Business</div>
-			<div className="filter-item">Dentistry</div>
-			<div className="filter-item">Education</div>
-			<div className="filter-item">Engineering</div>
-			<div className="filter-item">Environment</div>
-			<div className="filter-item">Information</div>
-			<div className="filter-item">Kinesiology</div>
-			<div className="filter-item">Law</div>
-			<div className="filter-item">Medicine</div>
-			<div className="filter-item">Architecture</div>
-			<div className="filter-item">Art & Design</div>
-			<div className="filter-item">Business</div>
-			<div className="filter-item">Dentistry</div>
-			<div className="filter-item">Education</div>
-			<div className="filter-item">Engineering</div>
-			<div className="filter-item">Environment</div>
-			<div className="filter-item">Information</div>
-			<div className="filter-item">Kinesiology</div>
-			<div className="filter-item">Law</div>
-			<div className="filter-item">Medicine</div>
-		</div>
+
+			<ul className = "search-filter-content">
+		    {this.state.parentDepts.map((dept) => {
+					var subDeptSection = null;
+					if (this.state.depts[dept.slug].clicked &&
+							dept.subDepts && dept.subDepts.length > 0) {
+						subDeptSection =
+							<ul className="subfilter">
+								{dept.subDepts.map((subDeptSlug) => {
+									var subDept = this.state.depts[subDeptSlug];
+									return (
+										<li key={subDept.slug}>
+											<input type="checkbox"
+												className="checkbox-white filled-in"
+												id={subDept.slug}/>
+				      				<label
+											 	className="filter-checkbox-label"
+												for={subDept.slug}>
+												{subDept.friendlyName}
+											</label>
+										</li>)
+								})}
+							</ul>
+					}
+
+					var labelContent = null;
+					if (dept.subDepts && dept.subDepts.length > 0) {
+						labelContent =
+							<li key={dept.slug}>
+								<div className="filter-dropdown-container">
+									<a onClick={() => this.handleDeptClick(dept.slug)} id={dept.slug}>
+											<i className="material-icons search-expand-right">
+												{this.state.depts[dept.slug].clicked ? "expand_more" : "chevron_right"}
+											</i>
+										</a>
+						      <div className="filter-dropdown-label">{dept.friendlyName}</div>
+								</div>
+								{subDeptSection}
+							</li>
+					} else {
+						labelContent =
+							<li key={dept.slug}>
+								<input type="checkbox" className="checkbox-white filled-in" id={dept.slug}/>
+				      	<label
+									className="filter-checkbox-label"
+									for={dept.slug}>{dept.friendlyName}</label>
+					  	</li>
+					}
+					return (labelContent);
+				})}
+			</ul>
 
 	var searchSideBar =
 		<div className="search-sidebar">
@@ -453,18 +497,12 @@ class LabSearch extends Component {
 			</div>
 			<div className="search-filter-container">
 				<div className="search-filter-title">Research Areas</div>
-				<hr/>
-				{fillerContent}
 			</div>
 			<div className="search-filter-container">
 				<div className="search-filter-title">Minimum Requirements</div>
-				<hr/>
-				{fillerContent}
 			</div>
 			<div className="search-filter-container">
 				<div className="search-filter-title">Other</div>
-				<hr/>
-				{fillerContent}
 			</div>
 		</div>
 

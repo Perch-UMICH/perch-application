@@ -20,40 +20,46 @@ const subteams = [ "Mascot Division", "Director", "Administration", "Marketing",
    Member slugs may be added into these slots below:
 */
 
-// 1 member - Rodriguez! 1
+// Mascot
 const t0 = ['rodriguez']
 
-// 4 members max 1
+// Director
 const t1 = ['anishii']
 
-// 4 members max 1
+// Administration
 const t2 = ['nkataoka']
 
-// 18 members max
+// Marketing
 const t3 = ['mpatel', 'hpark']
 
- // 7 members max
+ // Back-end
 const t4 = ['arao', 'hwang']
 
-// 5 members max
-const t5 = ['bbear', 'rnayak', 'ejackson', 'ckaczmarek']
+// Front-end
+const t5 = ['bbear', 'ejackson', 'ckaczmarek', 'rnayak']
 
-// 5 members max
+// Graphics
 const t6 = ['kjohnson']
 
+// Business
 const t7 = ['vdoddipatla', 'aappukutty', 'rvaishnav', 'asatyavarapu']
 
+// Psychology/Sociology
 const t8 = ['kglozier', 'kniles', 'kmartin']
 
+// Chemical Engineering
+const t9 = ['ikopyeva', 'sbutrus', 'vraman', 'amin', 'adesai',
+             'abanka', 'cpalaciosrolston', 'eprantzalos', 'ekhera', 'jtan',
+             'kgreenman', 'lchen']
+
+// Chemistry
+const t10 = ['salektiar', 'jzhang', 'jmanske', 'mkuang', 'smccarthy', 'wni']
+
+// Biology
 const t11 = ['sbalijepalli', 'agirgis', 'kmckernan', 'njasti',
             'nbidthanapally', 'rkathawate']
 
-const t10 = ['salektia', 'jzhang', 'jmanske', 'mkuang', 'smccarthy', 'wni']
-
-const t9 = ['ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva',
-             'ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva', 'ikopyeva',
-             'ikopyeva', 'ikopyeva']
-
+// Perch Blog
 const t12 = ['rtarnopol']
 
 const teamsMap = {t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12}
@@ -114,7 +120,7 @@ class Team extends Component {
     var perchiodicTable =
       cardTable.map((cardRow, idx1) => {
         return (
-          <div className="row justify-content-around table-row">
+          <div key={`${idx1}hm`} className="row justify-content-around table-row">
             { cardRow.map((card, idx2) => {
               return (
                 <div
@@ -131,13 +137,13 @@ class Team extends Component {
     var keyColOne =
       <div className="key-col">
         <div className="key-item">
-          <div className="key-title">Perch, By Primary Gaggle</div>
+          <div className="key-title">The Per [ ch ] iodic Table</div>
         </div>
         { subteams.map((subteamName, idx) => {
           var tileCSS = `key-tile t${idx}-tccbg`;
           if (idx < 4) {
             return (
-              <div className="key-item">
+              <div key={idx} className="key-item">
                 <div className={tileCSS}></div>
                 <div className="key-item-text">{subteamName}</div>
               </div>
@@ -151,7 +157,7 @@ class Team extends Component {
           var tileCSS = `key-tile t${idx}-tccbg`;
           if (idx >= 4 && idx < 8) {
             return (
-              <div className="key-item">
+              <div key={idx} className="key-item">
                 <div className={tileCSS}></div>
                 <div className="key-item-text">{subteamName}</div>
               </div>
@@ -165,7 +171,7 @@ class Team extends Component {
           var tileCSS = `key-tile t${idx}-tccbg`;
           if (idx >= 8) {
             return (
-              <div className="key-item">
+              <div key={idx} className="key-item">
                 <div className={tileCSS}></div>
                 <div className="key-item-text">{subteamName}</div>
               </div>
@@ -176,14 +182,13 @@ class Team extends Component {
     return (
       <div>
         <div className="perchiodic-table-key">
-            {keyColOne}
-            {keyColTwo}
-            {keyColThree}
+          {keyColOne}
+          {keyColTwo}
+          {keyColThree}
         </div>
         <div className="periodic-table-container">
           {perchiodicTable}
         </div>
-
         <div className="team">
         </div>
       </div>

@@ -22,22 +22,30 @@ class TableCard extends Component {
 		var tableCardCSS = "table-card ";
 		var tableCardCoverCSS = "table-card-cover ";
 		var tableHoverCardCSS = "table-hovercard ";
+		var arrowCSS = "arrow-down ";
 		if (this.props.team) {
 			tableCardCSS += this.props.team + "-tcs";
 			tableCardCoverCSS += this.props.team + "-tccbg";
 			tableHoverCardCSS += this.props.team + "-tcs";
+			arrowCSS += this.props.team + "-a";
 		}
 
 		return(
 			<div className={tableCardCSS}>
 				<div className={tableHoverCardCSS}>
-					<b>{mem.firstName} {mem.lastName}</b><br/>
-					{mem.position}
+					<div>
+						<div className="table-hovercard-title">
+							{mem.firstName} {mem.lastName}
+						</div>
+						<div>{mem.position}</div>
+					</div>
 				</div>
+				<div className="arrow-down-white"></div>
+				<div className={arrowCSS}></div>
         <img
 					className="table-card-image"
 					alt="team member"
-					src={`img/${mem.firstName}.jpg`.toLowerCase()} />
+					src={`img/headshots/${mem.slug}.jpg`} />
         <div className={tableCardCoverCSS}></div>
         <div className="table-card-inits"> {initials} </div>
     	</div>

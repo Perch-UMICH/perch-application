@@ -21,19 +21,19 @@
 }
 
 .table-card-image {
-	width: 79px;
+	width: 81px;
 	position: absolute;
 	z-index: 5;
 	left: 0px;
 }
 
 .table-card-cover {
-	width: 79px;
-	height: 79px;
+	width: 81px;
+	height: 81px;
 	position: absolute;
 	z-index: 7;
 	left: 0px;
-	opacity: 0.2;
+	opacity: 0.4;
 	transition: all .3s ease;
 	transition-delay: 0.2s;
 }
@@ -51,13 +51,15 @@
   border-radius: 2px;
   color: $color-grey-1-v2;
   text-align: center;
-  padding: 5px 0px;
-	vertical-align: middle;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 5px;
 	top: -85px;
-	left: -50px;
+	left: -52px;
   position: absolute;
   z-index: 200;
-	width: 180px;
+	width: 185px;
 	height: 75px;
 	font-size: 14px;
 	box-shadow: 0 2px 4px rgba(0,0,0,.2);
@@ -69,6 +71,58 @@
   opacity: 1;
 	color: black;
 	font-size: 14px;
+}
+
+.arrow-down {
+	transition: all .2s ease-in-out;
+  transition-delay: .35s;
+	visibility: hidden;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+	position: absolute;
+	top: -12px;
+	left: 40%;
+	z-index: 250;
+}
+
+.arrow-down-white {
+	transition: all .2s ease-in-out;
+  transition-delay: .35s;
+	visibility: hidden;
+  opacity: 0;
+  width: 0;
+  height: 0;
+	border-top: 7px solid white;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+	position: absolute;
+	top: -14px;
+	left: 34px;
+	z-index: 255;
+}
+
+.table-card:hover .arrow-down {
+  visibility: visible;
+  z-index: 250;
+  opacity: 1;
+	color: black;
+	font-size: 14px;
+}
+
+.table-card:hover .arrow-down-white {
+	visibility: visible;
+  z-index: 255;
+  opacity: 1;
+}
+
+.table-hovercard-title {
+	text-transform: uppercase;
+	padding-bottom: 2px;
+	font-weight: 500;
+	text-shadow: 1px 1px 0px rgba(198,198,198,0.95);
 }
 
 .periodic-table-container {
@@ -112,15 +166,17 @@
 	position: absolute;
 	text-transform: uppercase;
 	padding-bottom: 20px;
-	font-weight: 400;
+	font-weight: 600;
 	width: 300px;
-	margin-top: -5px;
+	margin-top: -7px;
+	margin-left: -10px;
+	text-shadow: 1px 1px 0px rgba(155,155,155,.9);
 }
 
 .key-tile {
 	height: 100%;
 	width: 22px;
-	box-shadow: 0 2px 4px rgba(0,0,0,.2);
+	box-shadow: 0 2px 2px rgba(0,0,0,.3);
 	display: inline-block;
 }
 
@@ -137,144 +193,156 @@
 	font-size: 28px;
 	font-weight: 500;
 	color: inherit;
-	text-shadow: 1px 1px 6px rgba(0,0,0,.9);
-}
-
-/* TABLE CARD STYLE */
-
-.t0-tcs {
-	/*background-color: #FAFA1D;*/
-	border: 3px solid #FAFA1D;
-	color: #FAFA1D;
-}
-
-.t1-tcs {
-	/*background-color: #5FC9FC;*/
-	border: 3px solid #5FC9FC;
-	color: #5FC9FC;
-}
-
-.t2-tcs {
-	/*background-color: #A7F2E7;*/
-	border: 3px solid #A7F2E7;
-	color: #A7F2E7;
-}
-
-.t3-tcs {
-	/*background-color: #1A9CF6;*/
-	border: 3px solid #1A9CF6;
-	color: #1A9CF6;
-}
-
-.t4-tcs {
-	/*background-color: #A7EAF3;*/
-	border: 3px solid #A7EAF3;
-	color: #A7EAF3;
-}
-
-.t5-tcs {
-	/*background-color: white;*/
-	border: 3px solid white;
-	color: white;
-}
-
-.t6-tcs {
-	/*background-color: #53F6C5;*/
-	border: 3px solid #53F6C5;
-	color: #53F6C5;
-}
-
-.t7-tcs {
-	/*background-color: #5FC9FC;*/
-	border: 3px solid #5FC9FC;
-	color: #5FC9FC;
-}
-
-.t8-tcs {
-	/*background-color: #E36337;*/
-	border: 3px solid #E36337;
-	color: #E36337;
-}
-
-.t9-tcs {
-	/*background-color: #E79D4B;*/
-	border: 3px solid #E79D4B;
-	color: #E79D4B;
-}
-
-.t10-tcs {
-	/*background-color: #82D38D;*/
-	border: 3px solid #82D38D;
-	color: #82D38D;
-}
-
-.t11-tcs {
-	/*background-color: #DB9CB2;*/
-	border: 3px solid #DB9CB2;
-	color: #DB9CB2;
-}
-
-.t12-tcs {
-	/*background-color: #AA9CDB;*/
-	border: 3px solid #AA9CDB;
-	color: #AA9CDB;
-}
-
-
-/* TABLE CARD COVER BACKGROUNDS AND KEY TILE BACKGROUND */
-
-.t0-tccbg {
-	background-color: #FAFA1D;
-}
-
-.t1-tccbg {
-	background-color: #5FC9FC;
-}
-
-.t2-tccbg {
-	background-color: #A7F2E7;
-}
-
-.t3-tccbg {
-	background-color: #1A9CF6;
-}
-
-.t4-tccbg {
-	background-color: #A7EAF3;
-}
-
-.t5-tccbg {
-	background-color: white;
-}
-
-.t6-tccbg {
-	background-color: #53F6C5;
-}
-
-.t7-tccbg {
-	background-color: #5FC9FC;
-}
-
-.t8-tccbg {
-	background-color: #E36337;
-}
-
-.t9-tccbg {
-	background-color: #E79D4B;
-}
-
-.t10-tccbg {
-	background-color: #82D38D;
-}
-
-.t11-tccbg {
-	background-color: #DB9CB2;
-}
-
-.t12-tccbg {
-	background-color: #AA9CDB;
+	text-shadow: 1px 1px 0px rgba(255,255,255,.9);
 }
 
 .table-card-container {
 	display: inline-block;
+}
+
+/* TABLE CARD STYLE */
+.t0-tcs {
+	/*background-color: #FAFA1D;*/
+	border: 2px solid var(--t0-color);
+	color: var(--t0-color);
+}
+.t1-tcs {
+	/*background-color: #5FC9FC;*/
+	border: 2px solid var(--t1-color);
+	color: var(--t1-color);
+}
+.t2-tcs {
+	/*background-color: #A7F2E7;*/
+	border: 2px solid var(--t2-color);
+	color: var(--t2-color);
+}
+.t3-tcs {
+	/*background-color: #1A9CF6;*/
+	border: 2px solid var(--t3-color);
+	color: var(--t3-color);
+}
+.t4-tcs {
+	/*background-color: #A7EAF3;*/
+	border: 2px solid var(--t4-color);
+	color: var(--t4-color);
+}
+.t5-tcs {
+	/*background-color: white;*/
+	border: 2px solid var(--t5-color);
+	color: var(--t5-color);
+}
+.t6-tcs {
+	/*background-color: #53F6C5;*/
+	border: 2px solid var(--t6-color);
+	color: var(--t6-color);
+}
+.t7-tcs {
+	/*background-color: #5FC9FC;*/
+	border: 2px solid var(--t7-color);
+	color: var(--t7-color);
+}
+.t8-tcs {
+	/*background-color: #E36337;*/
+	border: 2px solid var(--t8-color);
+	color: var(--t8-color);
+}
+.t9-tcs {
+	/*background-color: #E79D4B;*/
+	border: 2px solid var(--t9-color);
+	color: var(--t9-color);
+}
+.t10-tcs {
+	/*background-color: #82D38D;*/
+	border: 2px solid var(--t10-color);
+	color: var(--t10-color);
+}
+.t11-tcs {
+	/*background-color: #DB9CB2;*/
+	border: 2px solid var(--t11-color);
+	color: var(--t11-color);
+}
+.t12-tcs {
+	/*background-color: #AA9CDB;*/
+	border: 2px solid var(--t12-color);
+	color: var(--t12-color);
+}
+
+/* TABLE CARD COVER BACKGROUNDS AND KEY TILE BACKGROUND */
+.t0-tccbg {
+	background-color: var(--t0-color);
+}
+.t1-tccbg {
+	background-color: var(--t1-color);
+}
+.t2-tccbg {
+	background-color: var(--t2-color);
+}
+.t3-tccbg {
+	background-color: var(--t3-color);
+}
+.t4-tccbg {
+	background-color: var(--t4-color);
+}
+.t5-tccbg {
+	background-color: var(--t5-color);
+}
+.t6-tccbg {
+	background-color: var(--t6-color);
+}
+.t7-tccbg {
+	background-color: var(--t7-color);
+}
+.t8-tccbg {
+	background-color: var(--t8-color);
+}
+.t9-tccbg {
+	background-color: var(--t9-color);
+}
+.t10-tccbg {
+	background-color: var(--t10-color);
+}
+.t11-tccbg {
+	background-color: var(--t11-color);
+}
+.t12-tccbg {
+	background-color: var(--t12-color);
+}
+
+
+/* TABLE HOVERCARD TRIAGLE COLORS */
+.t1-a {
+  border-top: 8px solid var(--t1-color);
+}
+.t2-a {
+  border-top: 8px solid var(--t2-color);
+}
+.t3-a {
+  border-top: 8px solid var(--t3-color);
+}
+.t4-a {
+  border-top: 8px solid var(--t4-color);
+}
+.t5-a {
+  border-top: 8px solid var(--t5-color);
+}
+.t6-a {
+  border-top: 8px solid var(--t6-color);
+}
+.t7-a {
+  border-top: 8px solid var(--t7-color);
+}
+.t8-a {
+  border-top: 8px solid var(--t8-color);
+}
+.t9-a {
+  border-top: 8px solid var(--t9-color);
+}
+.t10-a {
+  border-top: 8px solid var(--t10-color);
+}
+.t11-a {
+  border-top: 8px solid var(--t11-color);
+}
+.t12-a {
+  border-top: 8px solid var(--t12-color);
 }
