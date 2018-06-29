@@ -80,21 +80,6 @@
 	background-color: var(--active-blue);
 }
 
-.lab-srch-item-expand-icons {
-	position: absolute;
-	color: lightgrey;
-	bottom: -5px;
-	width: 100%;
-	text-align: center;
-	cursor: pointer;
-	transition: 0.2s ease;
-}
-
-.lab-srch-item-expand-icons:hover {
-	color: var(--active-blue);
-	transition: 0.2s ease;
-}
-
 .lab-srch-item-expansion {
 	width: 80%;
 	margin-left: 20%;

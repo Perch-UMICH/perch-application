@@ -12,7 +12,7 @@ class LabSearchProject extends Component {
                 </div>
                 <div className='lab-srch-project-description'>{this.props.description}</div>
                 <div className='lab-srch-project-apply'>Apply</div>
-                <div className='lab-srch-project-openings'><b>1</b> spot</div>
+                <div className='lab-srch-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
             </div>
              
 		);

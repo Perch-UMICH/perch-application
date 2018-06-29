@@ -423,7 +423,7 @@ class LabSearch extends Component {
                    <input id='lab-srch-input' type='text' placeholder='keywords' onChange={event => this.updateSearch(event)}/>
                    <div id='lab-srch-result-summary'>Projects 1-50 (157 total) page 1 of 40 for <b>{this.state.search}</b></div>
                    <div id='lab-srch-results'>
-                        <LabSearchItem name='Meha Patel' dept='English' rsrch='12th century grammar analysis' img='/img/meha.jpg' description='We love words. Especially old, hard to understand words.'/>
+                        <LabSearchItem name="Meha Patel's Lab" dept='English' rsrch='12th century grammar analysis' img='/img/meha.jpg' description='We love words. Especially old, hard to understand words.'/>
                         <LabSearchItem name='Sara Alektar' dept='Physics' rsrch='nuclear coffee decay' img='/img/sara.jpg' description="We make coffee, smell cofee, drink coffee, freeze coffee, sublimate coffee, distill cofee, and watch cofee. You should join!"/>
                         <LabSearchItem name='Sanjay B.' dept='Chemistry' rsrch='chromatography race betting' img='/img/sanjay.jpg' description='If the school asks, this does not exist.'/>
                         <LabSearchItem name='Nolan Kataoka' dept='Dance' rsrch='expressive feet dance' img='/img/nolan.jpg' description='We strongly feel feet are the window to the soul'/>

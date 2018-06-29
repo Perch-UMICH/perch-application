@@ -13,13 +13,15 @@
 	transition: .2s ease;
 }
 
-.lab-srch-project:after {
+/*.lab-srch-project:after {
 	content: 'PROJECT';
 	position: absolute;
-	left: -125px;
-	top: 45%;
+	left: -50px;
+	top: 30%;
 	color: grey;
-}
+	transform: rotate(-90deg);
+	font-size: 14px;
+}*/
 
 .lab-srch-project-title {
 	font-size: 18px;

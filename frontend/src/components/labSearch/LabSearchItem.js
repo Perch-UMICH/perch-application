@@ -1,8 +1,22 @@
 import React, {Component} from 'react';
 import LabSearchProject from './LabSearchProject'
+import ExpanderIcons from '../utilities/ExpanderIcons'
 import './LabSearchItem.css';
 
 class LabSearchItem extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            numProjects: null,
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            numProjects: document.getElementById(`lab_srch_expansion_${this.props.name}`).children.length
+        });
+    }
 
     expandProjects() {
         let toggleExpanderIcons = () => {
@@ -18,7 +32,7 @@ class LabSearchItem extends Component {
 
         let expansion = document.getElementById(`lab_srch_expansion_${this.props.name}`)
         expansion.classList.toggle('hide')
-        toggleExpanderIcons();
+        // toggleExpanderIcons();
     }
 
 	render() {
@@ -30,17 +44,13 @@ class LabSearchItem extends Component {
                     <div className='lab-srch-item-depts'><b>Departments:</b> {this.props.dept}</div>
                     <div className='lab-srch-item-rsrch'><b>Research Areas:</b> {this.props.rsrch}</div>
                     <div className='lab-srch-item-description'><b>Description</b> {this.props.description}</div>
-                    <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects.bind(this)}><b>2</b> projects</div>
-                    <div className='lab-srch-item-expand-icons' onClick={this.expandProjects.bind(this)}>
-                        <i className='material-icons'>expand_more</i>
-                        <i className='material-icons'>expand_more</i>
-                        <i className='material-icons'>expand_more</i>
-                    </div>
+                    <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects.bind(this)}><b>{this.state.numProjects}</b> {this.state.numProjects - 1 ? "Projects" : "Project"}</div>
+                    <ExpanderIcons id={`lab-srch-item_${this.props.name}`} action={this.expandProjects.bind(this)}/>
                 </div>
 
                 <div id={`lab_srch_expansion_${this.props.name}`} className='lab-srch-item-expansion hide'>
-                    <LabSearchProject title='Data Analysis' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.' urop/>
-                    <LabSearchProject title='Coffee Runner' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.' />
+                    <LabSearchProject title='Oncology Study' spots='1' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.' urop/>
+                    <LabSearchProject title='Coffee Tasting' spots='2' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.' />
                 </div>
             </div>
 		);
