@@ -466,8 +466,8 @@ class LabSearch extends Component {
 						labelContent =
 							<li key={dept.slug}>
 								<div className="filter-dropdown-container">
-									<a onClick={() => this.handleDeptClick(dept.slug)} id={dept.slug}>
-											<i className="material-icons search-expand-right">
+									<a className="search-expand-right" onClick={() => this.handleDeptClick(dept.slug)} id={dept.slug}>
+											<i className="material-icons">
 												{this.state.depts[dept.slug].clicked ? "expand_more" : "chevron_right"}
 											</i>
 										</a>
