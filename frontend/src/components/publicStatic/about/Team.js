@@ -78,8 +78,6 @@ const tableBones = [r0, r1, r2, r3, r4];
 
 var cardTable = [ [], [], [], [], [] ];
 
-console.log("memberBySlug", memberBySlug);
-
 for (var i = 0; i < 5; ++i) {
   for (var j = 0; j < 12; ++j) {
 
@@ -181,12 +179,12 @@ class Team extends Component {
 
     return (
       <div>
-        <div className="perchiodic-table-key">
-          {keyColOne}
-          {keyColTwo}
-          {keyColThree}
-        </div>
         <div className="periodic-table-container">
+          <div className="perchiodic-table-key">
+            {keyColOne}
+            {keyColTwo}
+            {keyColThree}
+          </div>
           {perchiodicTable}
         </div>
         <div className="team">
