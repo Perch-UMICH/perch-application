@@ -97,7 +97,7 @@ header p {
   padding: 10px 30px;
   border-radius: 4px;
   color: white;
-  background: #4B4B4B;
+  background: var(--bright-blue);
   box-shadow: 0 20px 25px -15px rgba(0, 0, 0, 0.3);
 }
 

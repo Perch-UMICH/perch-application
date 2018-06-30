@@ -14,16 +14,20 @@ class LabMatch extends Component {
 	}
 
 	render() {
-		if (isLoggedIn()) {
+		// Temporarily commented out for linking to others
+		//if (isLoggedIn()) {
 			return (
 				<div className='shift-down'>
 					<LabSearch2 />
 				</div>
 			);
-		}
+		// Temporarily commented out for linking to others
+		/*
+
 		else {
 			return <ErrorPage />
 		}
+		*/
 	}
 }
 
