@@ -5,11 +5,13 @@ import {GroupProject, GroupProjectContainer, GroupPublicationsContainer} from '.
 import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences, isStudent, isLab} from '../../../helper.js'
 import './GroupPage.css'
 
-class ProfPage extends Component {
+class GroupPage extends Component {
 	render() {
 		return(
 			<div id='group-page'>
-				<div id='group-page-column-L'>Left column</div>
+				<div id='group-page-column-L'>
+					<Administrators />
+				</div>
 				<div id='group-page-column-R'>Right Column</div>
 				<div id='group-page-main'>
 					<GroupQuickview />
@@ -22,11 +24,34 @@ class ProfPage extends Component {
 					<GroupPublicationsContainer>
 						<div className='group-header'>Publications</div>
 					</GroupPublicationsContainer>
-
 				</div>
 			</div>
 		)
 	}
 }
 
-export default ProfPage;
+const Administrators = () => {
+	return(
+		<div id='group-admins'>
+			<div className='group-header'>Admins</div>
+			<GroupPerson src='/img/sara.jpg'>Dr. Sara, 3rd of her name, Queen of the Andals</GroupPerson>
+			<GroupPerson src='/img/akira.jpg'>Dr. Akira, Sorcerer Supreme</GroupPerson>
+			<GroupPerson src='/img/meha.jpg'>Dr. Meha, of the Nights Watch</GroupPerson>
+			<GroupPerson src='/img/nolan.jpg'>Dr. Nolan, Eunuch</GroupPerson>
+		</div>
+	)
+}
+
+const GroupPerson = (props) => {
+	return(
+		<div className='group-person'>
+			<img src={props.src} />
+			<div className='group-person-overlay'>
+				<span>{props.children}</span>
+			</div>
+		</div>
+
+	);
+}
+
+export default GroupPage;
