@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ExpanderIcons from '../../utilities/ExpanderIcons'
+import GroupProjectRequirement from './GroupProjectRequirement'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
@@ -16,13 +17,8 @@ export class GroupProject extends Component {
 				</div>
 				<div className='group-project-keywords'>{this.props.keywords}</div>
 				<div className='group-project-description'>{this.props.description}
-					<div className='group-project-requirement'>
-						<span>Minimum Requirements</span>
-						<div>
-							<div>Do stuff</div>
-							<div>Do things</div>
-						</div>
-					</div>
+					<GroupProjectRequirement title='Min requirements' details={["3.2 GPA", "Good humor"]}/>
+					<GroupProjectRequirement title='Time commitment' details={["4-10 hrs/wk"]}/>
 				</div>
 				
 				<div className='group-project-apply'>Apply</div>

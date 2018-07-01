@@ -1,0 +1,21 @@
+.group-project-requirement {
+	font-size: 12px;
+	margin-bottom: 10px;
+	margin-top: 4px;
+}
+
+.group-project-requirement span {
+	font-weight: bold;
+	width: 160px;
+	display: inline-block;
+	text-align: right;
+	padding-right: 0px;
+}
+
+.group-project-requirement > div {
+	border-left: 2px solid lightgrey;
+	padding-left: 5px;
+	margin-left: 10px;
+	display: inline-block;
+	vertical-align: top;
+}

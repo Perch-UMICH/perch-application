@@ -1,27 +1,25 @@
 #group-page {
 	width: 1200px;
 	height: 1000px;
-	background-color: black;
 	margin: auto auto;
 	margin-top: var(--shift-down);
 	position: relative;
-	background-color: #eaeaea;
+	/*background-color: #eaeaea;*/
 	padding: 10px;
-	border: 1px solid lightgrey;
+	/*border: 1px solid lightgrey;*/
 }
 
 #group-page-column-L, #group-page-column-R {
 	position: absolute;
 	width: 250px;
 	height: 1000px;
-	line-height: 1000px;
 	text-align: center;
-	background-color: grey;
+	/*background-color: grey;*/
 	top: 10px;
 }
 
 #group-page-column-L {
-	left: 0;
+	left: 5px;
 }
 
 #group-page-column-R {
@@ -74,5 +72,62 @@
 #group-page-expand-icons:hover {
 	color: var(--active-blue);
 	transition: 0.2s ease;
+}
+
+#group-admins {
+	width: 100%;
+	background-color: white;
+	border-radius: 20px 0 0 40px;
+	overflow: hidden;
+	transition: 0.2s ease;
+	border: 1px solid lightgrey;
+	max-height: calc(275px + 50px);
+	overflow: scroll;
+}
+
+#group-admins:hover {
+	box-shadow: var(--grey-shadow);
+	transition: 0.2s ease;
+}
+
+.group-person {
+	width: 50%;
+	background-color: red;
+	float: left;
+	position: relative;
+	overflow: hidden;
+}
+
+.group-person img {
+	width: 100%;
+	display: block;
+}
+
+.group-person-overlay {
+	position: absolute;
+	right: -100%;
+	top: 0;
+	background-color: var(--bright-blue);
+	transition: 0.2s ease;
+	width: 100%;
+	height: 100%;
+	z-index: 20;
+	color: white;
+	overflow: hidden;
+	opacity: 0.8;
+}
+
+.group-person:hover .group-person-overlay {
+	right: 0;
+	transition: 0.2s ease;
+}
+
+.group-person-overlay span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	overflow-wrap: break-word;
+	width: 120px;
 }
 
