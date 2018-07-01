@@ -48,6 +48,7 @@
 
 .search-expand-right {
 	cursor: pointer;
+	margin-left: -2px;
 }
 
 .search-expand-right:hover {
@@ -61,7 +62,7 @@
 
 .filter-dropdown-label {
 	margin-top: 4px;
-	margin-left: 10px;
+	margin-left: 12px;
 	font-size: 13px;
 	color: black;
 }

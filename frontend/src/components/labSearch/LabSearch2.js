@@ -468,7 +468,7 @@ class LabSearch extends Component {
 								<div className="filter-dropdown-container">
 									<a className="search-expand-right" onClick={() => this.handleDeptClick(dept.slug)} id={dept.slug}>
 											<i className="material-icons">
-												{this.state.depts[dept.slug].clicked ? "expand_more" : "chevron_right"}
+												{this.state.depts[dept.slug].clicked ? "expand_less" : "expand_more"}
 											</i>
 										</a>
 						      <div className="filter-dropdown-label">{dept.friendlyName}</div>
