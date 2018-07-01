@@ -18,7 +18,7 @@
 
 .perch-story-block-L, .perch-story-block-R {
 	/*background-color: rgb(2, 119, 189);*/
-	background-color: rgb(41, 182, 246);
+	background-color: var(--bright-blue);
 	color: white;
 	max-height: 300px;
 	width: 400px;
@@ -29,8 +29,7 @@
 }
 
 .perch-story-block-L:hover, .perch-story-block-R:hover {
-	background-color: white;
-	color: #000;
+	background-color: var(--active-blue);
 	transition: 0.2s ease;
 }
 

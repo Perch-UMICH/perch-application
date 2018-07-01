@@ -7,7 +7,6 @@
 }
 
 .about {
-	/*border: 1px solid red;*/
 	height: 650px;
 	min-width: 1200px;
 	margin-top: 6px;
@@ -16,7 +15,8 @@
 }
 
 .about-nav {
-	background-color: #e5e5e5;
+	background-color: white;
+	border-bottom: 1px solid lightgrey;
 	height: 60px;
 }
 
@@ -27,9 +27,11 @@
 	text-transform: uppercase;
 	height: 100%;
 	border-right: 1px solid #d5d5d5;
+	color: grey;
 }
 
 .about-active {
 	background-color: rgb(2, 119, 189) !important;
 	color: white;
+	border-color: var(--bright-blue)
 }
