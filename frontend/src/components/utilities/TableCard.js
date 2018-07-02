@@ -29,6 +29,9 @@ class TableCard extends Component {
 			tableHoverCardCSS += this.props.team + "-tcs";
 			arrowCSS += this.props.team + "-a";
 		}
+		if (this.props.colSplit) {
+			tableCardCSS += " table-split";
+		}
 
 		return(
 			<div className={tableCardCSS}>

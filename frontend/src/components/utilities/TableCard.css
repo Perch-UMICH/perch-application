@@ -54,13 +54,12 @@
 	display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 5px;
-	top: -85px;
-	left: -52px;
+  padding: 10px 5px;
+	bottom: 92px;
+	left: -62px;
   position: absolute;
   z-index: 200;
-	width: 185px;
-	height: 75px;
+	width: 200px;
 	font-size: 14px;
 	box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
@@ -73,13 +72,16 @@
 	font-size: 14px;
 }
 
-.arrow-down {
+.arrow-down, .arrow-down-white {
 	transition: all .2s ease-in-out;
   transition-delay: .35s;
 	visibility: hidden;
   opacity: 0;
   width: 0;
   height: 0;
+}
+
+.arrow-down {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
 	position: absolute;
@@ -89,12 +91,6 @@
 }
 
 .arrow-down-white {
-	transition: all .2s ease-in-out;
-  transition-delay: .35s;
-	visibility: hidden;
-  opacity: 0;
-  width: 0;
-  height: 0;
 	border-top: 7px solid white;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
@@ -126,8 +122,7 @@
 }
 
 .periodic-table-container {
-	/*width: 90%;*/
-	width: 1068px;
+	width: 1200px;
 	margin: 0px auto;
 	margin-top: 130px;
 	position: relative;
@@ -136,8 +131,8 @@
 .perchiodic-table-key {
 	position: absolute;
 	align-self: center;
-	top: -5px;
-	left: 20%;
+	top: 10px;
+	left: 24%;
 	height: 150px;
 }
 
@@ -145,13 +140,16 @@
 	display: inline-block;
 	text-align: left;
 	vertical-align: center;
-	min-width: 180px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
 }
 
 .key-item {
 	height: 22px;
 	position: relative;
-	margin: 10px 0px;
+	margin: 5px 0px;
+	min-width: 180px;
+	justify-self: end;
 }
 
 .key-item-text {
@@ -171,7 +169,7 @@
 	font-size: 36px;
 	width: 522px;
 	margin-top: -90px;
-	margin-left: -35px;
+	margin-left: -290px;
 	background-color: var(--bright-blue);
 	height: 60px;
 	border-left: 6px solid var(--active-blue);
@@ -187,8 +185,16 @@
 	display: inline-block;
 }
 
+.table-split {
+	margin-right: 30px;
+}
+
 .table-row {
 	margin: 0 auto;
+}
+
+.table-row.advisors {
+	margin: 20px auto;
 }
 
 .table-card-inits {

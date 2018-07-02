@@ -1,4 +1,4 @@
-.expand-icons {
+.expand-icons, .expand-icons-filter-dropdown {
 	position: absolute;
 	color: lightgrey;
 	bottom: -5px;
@@ -8,7 +8,13 @@
 	transition: 0.2s ease;
 }
 
-.expand-icons:hover {
+.expand-icons-filter-dropdown {
+	bottom: 5px;
+	width: 96%;
+	text-align: right;
+}
+
+.expand-icons:hover, .expand-icons-filter-dropdown:hover {
 	color: var(--active-blue);
 	transition: 0.2s ease;
 }

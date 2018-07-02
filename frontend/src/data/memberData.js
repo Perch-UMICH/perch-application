@@ -63,21 +63,21 @@ exports.getMemberData = () => {
       {
         firstName: "Sean",
         lastName: "McCarthy",
-        position: "Chemistry Team",
+        position: "Chemistry",
         bio: [],
         slug: 'smccarthy',
       },
       {
         firstName: "Jessica",
         lastName: "Zhang",
-        position: "Chemistry Team",
+        position: "Chemistry",
         bio: [],
         slug: 'jzhang',
       },
       {
         firstName: "Alex",
         lastName: "Girgis",
-        position: "Biology Team",
+        position: "Biology",
         bio: [],
         slug: 'agirgis',
       },
@@ -105,7 +105,7 @@ exports.getMemberData = () => {
       {
         firstName: "Emi",
         lastName: "Jackson",
-        position: "Creator of this Page",
+        position: "Front-End Development",
         bio: [],
         slug: 'ejackson',
       },
@@ -224,14 +224,14 @@ exports.getMemberData = () => {
       {
         firstName: "Irina",
         lastName: "Kopyeva",
-        position: "Head of Chemical Eng.",
+        position: "Head of Chemical Engineering",
         bio: [],
         slug: 'ikopyeva',
       },
       {
         firstName: "Salwan",
         lastName: "Butrus",
-        position: "Head of Chemical Eng.",
+        position: "Head of Chemical Engineering",
         bio: [],
         slug: 'sbutrus',
       },
@@ -308,9 +308,80 @@ exports.getMemberData = () => {
       {
         firstName: "Rebecca",
         lastName: "Tarnopol",
-        position: "Blogs",
+        position: "Perch Blogs",
         bio: [],
         slug: 'rtarnopol',
+      },
+    ]
+  );
+}
+
+exports.getAdvisorData = () => {
+  return(
+    [
+      {
+        firstName: "Bob",
+        lastName: "Denver",
+        position: "Chair of University of Michigan Molecular Biology Dept.",
+        title: "Dr. ",
+        bio: [],
+        slug: "rdenver"
+      },
+      {
+        firstName: "John",
+        lastName: "Wolfe",
+        position: "Assc. Chair of University of Michigan Undergraduate Education, Professor in Chemistry",
+        title: "Dr. ",
+        bio: [],
+        slug: "jwolfe"
+      },
+      {
+        firstName: "Luciana",
+        lastName: "Aenasoaie",
+        position: "University of Michigan UROP Assistant Director",
+        title: "",
+        bio: [],
+        slug: "laenasoaie"
+      },
+      {
+        firstName: "Santiago",
+        lastName: "Schnell",
+        position: "Interim Chair of University of Michigan Physiology Dept.",
+        title: "Dr. ",
+        bio: [],
+        slug: "sschnell"
+      },
+      {
+        firstName: "Angie",
+        lastName: "Oehrli",
+        position: "University of Michigan Learning Librarian",
+        title: "",
+        bio: [],
+        slug: "aoehrli"
+      },
+      {
+        firstName: "Brian",
+        lastName: "Coppola",
+        position: "Associate Chair of University of Michigan Educational Development & Practice, Professor of Chemistry",
+        title: "Dr. ",
+        bio: [],
+        slug: "bcoppola"
+      },
+      {
+        firstName: "Kathleen",
+        lastName: "Nolta",
+        position: "University of Michigan Chemistry Faculty",
+        title: "Dr. ",
+        bio: [],
+        slug: "knolta"
+      },
+      {
+        firstName: "Ormond",
+        lastName: "MacDougald",
+        position: "University of Michigan Professor of Physiology",
+        title: "Dr. ",
+        bio: [],
+        slug: "omacdougald"
       },
     ]
   );

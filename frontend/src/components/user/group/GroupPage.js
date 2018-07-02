@@ -13,6 +13,7 @@ class GroupPage extends Component {
 			<div id='group-page'>
 				<div id='group-page-column-L'>
 					<Administrators />
+					<Members />
 				</div>
 				<div id='group-page-column-R'>Right Column</div>
 				<div id='group-page-main'>
@@ -38,10 +39,28 @@ const Administrators = () => {
 	return(
 		<div id='group-admins'>
 			<h1>Admins</h1>
-			<GroupPerson src='/img/sara.jpg'>Dr. Sara, 3rd of her name, Queen of the Andals</GroupPerson>
-			<GroupPerson src='/img/akira.jpg'>Dr. Akira, Sorcerer Supreme</GroupPerson>
-			<GroupPerson src='/img/meha.jpg'>Dr. Meha, of the Nights Watch</GroupPerson>
-			<GroupPerson src='/img/nolan.jpg'>Dr. Nolan, Eunuch</GroupPerson>
+			<div className='group-photos'>
+				<GroupPerson src='/img/sara.jpg'>Dr. Sara, 3rd of her name, Queen of the Andals</GroupPerson>
+				<GroupPerson src='/img/akira.jpg'>Dr. Akira, Sorcerer Supreme</GroupPerson>
+				<GroupPerson src='/img/meha.jpg'>Dr. Meha, of the Nights Watch</GroupPerson>
+				<GroupPerson src='/img/nolan.jpg'>Dr. Nolan, Eunuch</GroupPerson>
+			</div>
+		</div>
+	)
+}
+
+const Members = () => {
+	return(
+		<div id='group-members'>
+			<h1>Members</h1>
+			<div className='group-photos'>
+				<GroupPerson src='/img/headshots/jwolfe.jpg'>Mr. Wolfe, the wolfiest.</GroupPerson>
+				<GroupPerson src='/img/headshots/abanka.jpg'>Smarty McSmarty-Pants, of the Pants.</GroupPerson>
+				<GroupPerson src='/img/headshots/sbutrus.jpg'>Sal of the Salient Sals.</GroupPerson>
+				<GroupPerson src='/img/headshots/sschnell.jpg'>Another Smarty McSmarty-Pants, ft. Whiteboard</GroupPerson>
+				<GroupPerson src='/img/headshots/eprantzalos.jpg'>Smarty McSmarty-Capris, of the Short Pants</GroupPerson>
+				<GroupPerson src='/img/headshots/hwang.jpg'>Han of the Handiest Hans.</GroupPerson>
+			</div>
 		</div>
 	)
 }

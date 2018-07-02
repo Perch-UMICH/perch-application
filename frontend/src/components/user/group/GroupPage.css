@@ -49,15 +49,23 @@
 	transition: 0.2s ease;
 }
 
-#group-admins {
+#group-admins, #group-members {
 	width: 100%;
 	background-color: white;
 	border-radius: 20px 0 0 40px;
 	overflow: hidden;
 	transition: 0.2s ease;
 	border: 1px solid lightgrey;
-	max-height: calc(275px + 50px);
+	/*max-height: calc(275px + 50px); @benji, why this height? -emi */
 	overflow: scroll;
+	margin-bottom: 15px;
+}
+
+.group-photos {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	background-color: var(--dark-blue);
 }
 
 #group-admins:hover {
@@ -105,4 +113,3 @@
 	overflow-wrap: break-word;
 	width: 120px;
 }
-

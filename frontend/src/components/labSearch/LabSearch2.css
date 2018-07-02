@@ -1,25 +1,25 @@
-#lab-srch-2 {
+.lab-srch-2 {
 	width: 1200px;
 	margin: auto auto;
 	position: relative;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 250px 950px;
 }
 
 .lab-srch-mods {
-	width: 250px;
-	height: 700px;
+	height: 100%;
 	background-color: lightgrey;
 	display: inline-block;
-	position: absolute;
+	position: relative;
 	left: 0;
 	top: 0;
 }
 
 .lab-srch-body {
-	width: 950px;
 	background-color: #eaeaea;
-	position: absolute;
+	position: relative;
 	top: 0;
-	left: 250px;
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-top: 20px;
