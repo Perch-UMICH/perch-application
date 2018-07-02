@@ -7,7 +7,7 @@ export default class GroupProjectRequirement extends Component {
 			<div className='group-project-requirement'>
 				<span>{this.props.title}</span>
 				<div>
-					{this.props.details.map(item => <div>{item}</div>)}
+					{this.props.value}
 				</div>
 			</div>
 		)
