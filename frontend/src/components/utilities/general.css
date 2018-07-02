@@ -50,6 +50,7 @@
 	/* Border radius */
 	--border-radius-C: 0 20px 0 40px;
 	--border-radius-L: 20px 0 0 40px;
+	--border-radius-R: 0 20px 40px 0;
 }
 
 .active-blue-bg {
@@ -58,6 +59,7 @@
 }
 
 .active-blue {
+	color: var(--active-blue) !important;
 	color: var(--active-blue) !important;
 	transition: 0.2s ease;
 }
