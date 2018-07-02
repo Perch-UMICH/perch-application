@@ -1,31 +1,39 @@
 import React, {Component} from 'react';
 // import './LabSearch.css';
 import './LabSearch2.css';
+import ExpanderIcons from '../utilities/ExpanderIcons'
 // import Bubble from '../utilities/Bubble';
 // import LabList from './LabList';
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';
 import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser} from '../../helper.js'
-import {getDepartments} from '../../data/filterData';
+import {getFilters} from '../../data/filterData';
+
+const filterTypes = ['departments', 'researchAreas', 'minReqs', 'other'];
+const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Other'];
 
 class LabSearch extends Component {
 	constructor(props) {
 		super(props);
-		this.handleDeptClick = this.handleDeptClick.bind(this);
+		this.handleFilterClick = this.handleFilterClick.bind(this);
 
-		var depts = {}; // contains all depts mapped by slug & whether or not they've been clicked.
-		var parentDepts = []; // arr of departments that are not sub-departments
-		getDepartments().map(dept => {
-			if (!dept.isSubDept) {
-				parentDepts.push(dept);
-			}
-		  depts[dept.slug] = dept;
-		});
+		var filts = {};
+		var parentFilts = {}
+		filterTypes.map(type => {
+			filts[type] = {};
+			parentFilts[type] = [];
+			getFilters(type).map(filt => {
+				if (!filt.isSubFilt) {
+					parentFilts[type].push(filt);
+				}
+			  filts[type][filt.slug] = filt;
+			})
+		})
 
 		this.state = {
-			depts,
-			parentDepts,
+			filts,
+			parentFilts,
 			skills_catalog: [],
 			your_skills: [],
 			interests_catalog: [],
@@ -41,6 +49,10 @@ class LabSearch extends Component {
 			s_id: '',
       search: '',
 		}
+	}
+
+	expand(type) {
+		document.getElementById(`${type}-filter`).classList.toggle('expand')
 	}
 
 	// componentWillMount() {
@@ -142,12 +154,12 @@ class LabSearch extends Component {
     	this.setState({filtered_catalog: updatedList, in_filter: true});
 	}
 
-	handleDeptClick(deptSlug) {
+	handleFilterClick(filterType, slug) {
 		var newState = this.state;
-		if (newState.depts[deptSlug].clicked) {
-			newState.depts[deptSlug].clicked = false;
+		if (newState.filts[filterType][slug].clicked) {
+			newState.filts[filterType][slug].clicked = false;
 		} else {
-			newState.depts[deptSlug].clicked = true;
+			newState.filts[filterType][slug].clicked = true;
 		}
 		this.setState(newState);
 	}
@@ -434,80 +446,87 @@ class LabSearch extends Component {
     }
 
 	render() {
+		var filterContentArr = [];
+		filterTypes.map(type => {
+			var filterContent =
+				<ul className = "search-filter-content">
+					{this.state.parentFilts[type].map((filt) => {
+						var subFiltSection = null;
+						if (this.state.filts[type][filt.slug].clicked &&
+								filt.subFilts && filt.subFilts.length > 0) {
 
-		var fillerContent =
+							subFiltSection =
+								<ul className="subfilter">
+									{filt.subFilts.map((subFiltSlug) => {
+										var subFilt = this.state.filts[type][subFiltSlug];
+										return (
+											<li key={subFilt.slug}>
+												<input type="checkbox"
+													className="checkbox-white filled-in"
+													id={subFilt.slug}/>
+												<label
+													className="filter-checkbox-label"
+													for={subFilt.slug}>
+													{subFilt.friendlyName}
+												</label>
+											</li>)})}
+								</ul>
+						}
+						var labelContent = null;
+						if (filt.subFilts && filt.subFilts.length > 0) {
+							var expandCSS = this.state.filts[type][filt.slug].clicked ?
+								"search-expand-less" : "search-expand-more";
+							labelContent =
+								<li key={filt.slug}>
+									<div className="filter-dropdown-container">
+										<a className={expandCSS}
+											 onClick={() => this.handleFilterClick(type, filt.slug)}
+											 id={filt.slug}>
+												<i className="material-icons">
+													{this.state.filts[type][filt.slug].clicked ?
+														"expand_less" : "expand_more"}
+												</i>
+											</a>
+										<div className="filter-dropdown-label">{filt.friendlyName}</div>
+									</div>
+									{subFiltSection}
+								</li>
+						}
+						else {
+							labelContent =
+								<li key={filt.slug}>
+									<input type="checkbox"
+										className="checkbox-white filled-in"
+										id={filt.slug}/>
+									<label
+										className="filter-checkbox-label"
+										for={filt.slug}>{filt.friendlyName}</label>
+								</li>
+						}
+						return (labelContent);
+					})}
+				</ul>
 
-			<ul className = "search-filter-content">
-		    {this.state.parentDepts.map((dept) => {
-					var subDeptSection = null;
-					if (this.state.depts[dept.slug].clicked &&
-							dept.subDepts && dept.subDepts.length > 0) {
-						subDeptSection =
-							<ul className="subfilter">
-								{dept.subDepts.map((subDeptSlug) => {
-									var subDept = this.state.depts[subDeptSlug];
-									return (
-										<li key={subDept.slug}>
-											<input type="checkbox"
-												className="checkbox-white filled-in"
-												id={subDept.slug}/>
-				      				<label
-											 	className="filter-checkbox-label"
-												for={subDept.slug}>
-												{subDept.friendlyName}
-											</label>
-										</li>)
-								})}
-							</ul>
-					}
-
-					var labelContent = null;
-					if (dept.subDepts && dept.subDepts.length > 0) {
-						labelContent =
-							<li key={dept.slug}>
-								<div className="filter-dropdown-container">
-									<a className="search-expand-right" onClick={() => this.handleDeptClick(dept.slug)} id={dept.slug}>
-											<i className="material-icons">
-												{this.state.depts[dept.slug].clicked ? "expand_less" : "expand_more"}
-											</i>
-										</a>
-						      <div className="filter-dropdown-label">{dept.friendlyName}</div>
-								</div>
-								{subDeptSection}
-							</li>
-					} else {
-						labelContent =
-							<li key={dept.slug}>
-								<input type="checkbox" className="checkbox-white filled-in" id={dept.slug}/>
-				      	<label
-									className="filter-checkbox-label"
-									for={dept.slug}>{dept.friendlyName}</label>
-					  	</li>
-					}
-					return (labelContent);
-				})}
-			</ul>
+				filterContentArr.push(<div className="search-filter-content-wrapper">
+					{filterContent}</div>);
+		})
 
 	var searchSideBar =
 		<div className="search-sidebar">
-			<div className="search-filter-container">
-				<div className="search-filter-title">Departments</div>
-				<hr/>
-				{fillerContent}
-			</div>
-			<div className="search-filter-container">
-				<div className="search-filter-title">Research Areas</div>
-			</div>
-			<div className="search-filter-container">
-				<div className="search-filter-title">Minimum Requirements</div>
-			</div>
-			<div className="search-filter-container">
-				<div className="search-filter-title">Other</div>
-			</div>
+			{filterTypes.map((type, idx) => {
+				return (
+					<div id={`${type}-filter`} className="search-filter-container">
+						<div className="search-filter-title">{filterFriendlyNames[idx]}</div>
+						<ExpanderIcons id={`${type}-filter`} classBase='search-filter-container' action={() => {this.expand(type)}} filterDropdown={true}/>
+						<hr className="filter-hr"/>
+						{filterContentArr[idx]}
+					</div>
+				)
+			})}
 		</div>
 
 		return (
-			<div id='lab-srch-2'>
+			<div className='lab-srch-2'>
                <div className='lab-srch-mods'>
                    {searchSideBar}
                </div>

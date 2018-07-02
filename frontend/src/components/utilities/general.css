@@ -2,6 +2,7 @@
 	--lightish-blue: #f2fdff;
 	--bright-blue: #0277bd;
 	--active-blue: rgb(41, 182, 246);
+	--dark-blue: #002C47;
 
 	--grey-shadow: 2px 3px 1px #c6c6c6;
 	--shift-down: 30px;
@@ -9,15 +10,15 @@
 	/* Subteam Colors for Perchiodic Table */
 	--t0-color: #919191;
 	--t1-color: #5FC9FC;
-	--t2-color: #0B70D1;
+	--t2-color: #D4CE75;
 	--t3-color: #204AD9;
-	--t4-color: #ff3e28;
+	--t4-color: #ff9400;
 	--t5-color: #8155E2;
-	--t6-color: #B99EF5;
+	--t6-color: #4bbc3a;
 	--t7-color: #28e5ff;
 	--t8-color: #ff516b;
 	--t9-color: #ff9400;
-	--t10-color: #fffa05;
+	--t10-color: #41f483;
 	--t11-color: #4bbc3a;
 	--t12-color: #41f483;
 }
