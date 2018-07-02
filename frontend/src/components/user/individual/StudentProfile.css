@@ -50,10 +50,9 @@
 	height: 230px;
 	width: 700px;
 	margin-bottom: 20px;
-	background-color: #ddd;
+	background-color: white;
 	position: relative;
-	border: 1px solid #ddd;
-	border-bottom: none;
+	color: grey;
 }
 
 #student-main-card:hover .interest-editor{
@@ -62,11 +61,33 @@
 	color: #757575;
 }
 
+.tab-container-L {
+	width: 100%;
+	position: relative;
+	border-radius: 20px 0 0 40px;
+	overflow: hidden;
+	border: 1px solid lightgrey;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
 
+.tab-container-C {
+	width: 100%;
+	position: relative;
+	border-radius: 0 20px 0 40px;
+	overflow: hidden;
+	border: 1px solid lightgrey;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
 
 .tab-container {
 	width: 100%;
 	position: relative;
+	overflow: hidden;
+	border: 1px solid lightgrey;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
 }
 
 .floater-item {
@@ -185,15 +206,13 @@
 }
 
 #left-column {
-	/*position: fixed;*/
 	position: absolute;
 	left: 15px;
-	background-color: #ddd;
+	background-color: white;
 	width: 220px;
 }
 
 #right-column {
-	/*position: fixed;*/
 	position: absolute;
 	right: 15px;
 	background-color: #ddd;

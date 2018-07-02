@@ -1,0 +1,42 @@
+#group-publications-container {
+	width: 100%;
+	background-color: white;
+	border-radius: 0 20px 0 40px;
+	border: 1px solid lightgrey;
+	overflow: hidden;
+	transition: 0.2s ease;
+}
+
+#group-publications-container:hover {
+	box-shadow: var(--grey-shadow);
+	transition: 0.2s ease;
+}
+
+.group-publication {
+	border-bottom: 1px solid lightgrey;
+	width: 100%;
+	padding: 10px 20px;
+	color: var(--bright-blue);
+	transition: 0.2s ease;
+	position: relative;
+	padding-bottom: 30px;
+}
+
+.group-publication i:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
+	cursor: pointer;
+}
+
+.group-publication-description {
+	color: grey;
+	font-size: 12px;
+	max-height: 0;
+	overflow: hidden;
+	transition: 0.2s ease;
+}
+
+.group-publication-expand-icons {
+	margin-left: -20px;
+	margin-top: -10px;
+}

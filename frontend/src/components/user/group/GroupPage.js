@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import ErrorPage from '../../utilities/ErrorPage'
 import GroupQuickview from './GroupQuickview'
-import {GroupProject, GroupProjectContainer, GroupPublicationsContainer} from './GroupProject'
+import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
+import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences, isStudent, isLab} from '../../../helper.js'
 import './GroupPage.css'
 
+// Our Group Page master componenet
 class GroupPage extends Component {
 	render() {
 		return(
@@ -17,13 +19,14 @@ class GroupPage extends Component {
 				<div id='group-page-main'>
 					<GroupQuickview />
 					<GroupProjectContainer>
-						<div className='group-header'>Projects</div>
 						<GroupProject title='Data Analyst' spots='1' keywords='paid, computer science, machine learning' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job. And we need hands on the job. And we need hands on the job.Cause research funding crisis. And we need hands on the job. And we need hands on the job. And we need hands on the job.Cause research funding crisis. And we need hands on the job. And we need hands on the job. And we need hands on the job.And we need hands on the job. And we need hands on the job.And we need hands on the job. And we need hands on the job.' urop/>
 						<GroupProject title='Coffee Runner' spots='2' keywords='for-credit, chemistry, physics' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job. And we need hands on the job. And we need hands on the job.'/>
 					</GroupProjectContainer>
 
 					<GroupPublicationsContainer>
-						<div className='group-header'>Publications</div>
+						<GroupPublication title='Plasmid Pulverization in Perniscuous Polyfills' description="Plasmids pulverize these polyfills like its no one's business. When they pounce, energy is released similar to a small nuclear bomb. We had to relocate to a new lab when ours combusted..."/>
+						<GroupPublication title='Endomorph Entropy Escalates Energetically' description='We made up a complicated sounding name to get research funding after our lab exploded. It worked. Now we have pizza tuesdays... and thursdays.'/>
+						<GroupPublication title='Zebraonic Zenogs Zane Zealously' description='This one has no excuse. We like alliteration.'/>
 					</GroupPublicationsContainer>
 				</div>
 			</div>
@@ -31,10 +34,11 @@ class GroupPage extends Component {
 	}
 }
 
+// Our Admin Panel on Group Page. Uses GroupPerson componenets
 const Administrators = () => {
 	return(
 		<div id='group-admins'>
-			<div className='group-header'>Admins</div>
+			<h1>Admins</h1>
 			<div className='group-photos'>
 				<GroupPerson src='/img/sara.jpg'>Dr. Sara, 3rd of her name, Queen of the Andals</GroupPerson>
 				<GroupPerson src='/img/akira.jpg'>Dr. Akira, Sorcerer Supreme</GroupPerson>
@@ -48,7 +52,7 @@ const Administrators = () => {
 const Members = () => {
 	return(
 		<div id='group-members'>
-			<div className='group-header'>Members</div>
+			<h1>Members</h1>
 			<div className='group-photos'>
 				<GroupPerson src='/img/headshots/jwolfe.jpg'>Mr. Wolfe, the wolfiest.</GroupPerson>
 				<GroupPerson src='/img/headshots/abanka.jpg'>Smarty McSmarty-Pants, of the Pants.</GroupPerson>
@@ -61,6 +65,9 @@ const Members = () => {
 	)
 }
 
+// Used whenever we need a person img for Group Page
+// Takes src for image
+// Takes whatever is in its angle brackets for its name
 const GroupPerson = (props) => {
 	return(
 		<div className='group-person'>
