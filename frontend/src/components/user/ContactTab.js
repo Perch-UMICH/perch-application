@@ -12,13 +12,13 @@ class ContactTab extends Component {
 
 	render() {
 		return (
-			<div className='tab-container'>
-				<div className='tab-header' style={{fontSize: '16px', padding: '15px 10px'}}>
+			<div className='tab-container-L'>
+				<h1 id='contact-tab-header'>
 					{this.props.header.toUpperCase()}
 					{ permissionCheck() && 
 						<a href={this.state.dest}><i id='contact-editor' className="material-icons edit-icon">create</i></a>
 					}
-				</div>
+				</h1>
 				<div className='contact-tab'>
 					{this.props.contact_info.map((item) => <div key={item.value}>{`${item.value}`}</div>)}
 				</div>

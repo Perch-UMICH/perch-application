@@ -29,6 +29,11 @@ export class GroupProject extends Component {
 	}
 }
 
-export const GroupProjectContainer = (props) => <div id='group-project-container'>{props.children}</div>
-
-export const GroupPublicationsContainer = (props) => <div id='group-publications'>{props.children}</div>
+export const GroupProjectContainer = (props) => {
+	return(
+		<div id='group-project-container'>
+			<h1>Projects</h1>
+			<div>{props.children}</div>
+		</div>
+	)
+}

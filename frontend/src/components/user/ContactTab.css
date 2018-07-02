@@ -8,7 +8,7 @@
 	opacity: 0;
 }
 
-.tab-header:hover #contact-editor {
+#contact-tab-header:hover #contact-editor {
 	opacity: 1;
 	transition: .2s ease;
 }

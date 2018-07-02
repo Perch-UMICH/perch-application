@@ -101,7 +101,7 @@ class StudentProfile extends Component {
 		} else {
 	 	return (
 	 		<div className='content-body'>
-	 			<div className='shadow' id='left-column'>
+	 			<div id='left-column'>
 	 				<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/>
 	 				<ContactTab header='Contact' contact_info={[
 	 					{value: this.state.email},
@@ -109,13 +109,13 @@ class StudentProfile extends Component {
 	 				<PastResearchTab past_research={this.state.past_research}/>
 	 				<ExtLinks linkedin={this.state.linkedin} resume={this.state.resume} website={this.state.website} />
 	 			</div>
-	 			<div id='right-column' className='shadow center-align'>
+	 			<div id='right-column' className='center-align'>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>
 	 				<div className='ad'>AD</div>	
 	 			</div>
-				<div className='container shift-down' id='center-column'>
-						<div id='student-main-card' className='left-align shadow'>
+				<div id='center-column' className='container shift-down'>
+						<div id='student-main-card' className='left-align tab-container-C'>
 							<img id='student-image' src={this.state.img_src} alt='' />
 							{getCurrentUserId() === this.retrieveSlug() && 
 								<a href='/update-student-bio'><i className="material-icons interest-editor">create</i></a>

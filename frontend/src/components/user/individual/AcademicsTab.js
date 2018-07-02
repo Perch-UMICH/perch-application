@@ -12,14 +12,14 @@ class AcademicsTab extends Component {
 
 	render() {
 		return (
-			<div className='tab-container'>
-				<div className='mobile-header tab academic-tab-header'>school
+			<div id='academic-tab-header' className='tab-container-L'>
+				<h1>school
 					<a href='/update-notable-classes' id="editImageText" className="null-link-style" >
 					{ getCurrentUserId() === this.state.id && 
 						<i id='academics-editor' className="material-icons edit-icon" >create</i>
 					}
 					</a>
-				</div> 
+				</h1> 
 				<div className='academics-tab left-align'>
 					<div>
 						<span className='academic-label'>GPA: </span>

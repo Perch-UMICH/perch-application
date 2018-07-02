@@ -34,31 +34,6 @@
 	margin: 0 20px;
 }
 
-.group-header {
-	background-color: var(--bright-blue);
-	padding: 10px;
-	color: var(--lightish-blue);
-	text-align: center;
-	text-transform: uppercase;
-	letter-spacing: 3px;
-	font-size: 20px;
-}
-
-#group-page-publications {
-	width: 100%;
-	height: 200px;
-	background-color: white;
-	border-radius: 0 20px 0 40px;
-	border: 1px solid lightgrey;
-	overflow: hidden;
-	transition: 0.2s ease;
-}
-
-#group-page-publications:hover {
-	box-shadow: var(--grey-shadow);
-	transition: 0.2s ease;
-}
-
 #group-page-expand-icons {
 	position: absolute;
 	color: lightgrey;
@@ -105,21 +80,21 @@
 
 .group-person-overlay {
 	position: absolute;
-	right: -100%;
-	top: 0;
+	left: 0;
+	top: -100%;
 	background-color: var(--bright-blue);
-	transition: 0.2s ease;
 	width: 100%;
 	height: 100%;
 	z-index: 20;
 	color: white;
 	overflow: hidden;
 	opacity: 0.8;
+	transition: 0.3s ease;
 }
 
 .group-person:hover .group-person-overlay {
-	right: 0;
-	transition: 0.2s ease;
+	top: 0;
+	transition: 0.3s ease;
 }
 
 .group-person-overlay span {

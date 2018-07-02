@@ -3,7 +3,7 @@
 	--bright-blue: #0277bd;
 	--active-blue: rgb(41, 182, 246);
 
-	--grey-shadow: 2px 3px 1px #c6c6c6;
+	--grey-shadow: 1px 1px 2px #c6c6c6;
 	--shift-down: 30px;
 
 	/* Subteam Colors for Perchiodic Table */
@@ -122,4 +122,15 @@ input[type='text']:focus {
 .expand {
 	max-height: 500px !important;
 	transition: 1s ease;
+}
+
+h1 {
+	background-color: var(--bright-blue);
+	padding: 10px;
+	color: var(--lightish-blue);
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 20px;
+	margin: 0;
 }
