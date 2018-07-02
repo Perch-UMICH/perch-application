@@ -46,6 +46,9 @@
 	--t10-color: #41f483;
 	--t11-color: #4bbc3a;
 	--t12-color: #41f483;
+
+	/* Border radius */
+	--border-radius-C: 0 20px 0 40px;
 }
 
 .active-blue-bg {

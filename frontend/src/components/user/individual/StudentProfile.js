@@ -100,8 +100,16 @@ class StudentProfile extends Component {
 			return <ErrorPage fourofour="true" />
 		} else {
 	 	return (
-	 		<div className='content-body'>
-	 			<div id='left-column'>
+	 		<div id='student-content-body'>
+	 			<div id='student-profile-column-C'>
+	 				<div id='student-quickview'>
+	 					<img id='student-quickview-img' src='/img/sara.jpg'/>
+	 					<img id='student-quickview-coverimage' src='https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/NGTYhyRhgilq4uu1a/videoblocks-doodle-cartoon-animation-of-science-chemistry-physics-astronomy-and-biology-school-education-subject-used-for-presenation-title-in-4k-ultra-hd_sl2xqduzw_thumbnail-full12.png' />
+	 					<div id='student-quickview-footer'>University of Michigan</div>
+	 					<div id='student-quickview-name'>Susan Connor</div>
+	 				</div>
+	 			</div>
+	 			{/*<div id='left-column'>
 	 				<AcademicsTab classes={this.state.classes} major={this.state.major} year={this.state.year} gpa={this.state.gpa}/>
 	 				<ContactTab header='Contact' contact_info={[
 	 					{value: this.state.email},
@@ -131,7 +139,7 @@ class StudentProfile extends Component {
 							<div className='profile-tab shadow'><SkillsTab user_type="student" skills={this.state.skills}/></div>
 						</div>
 					</div>
-				</div>
+				</div>*/}
 			</div>
 			
 		);
