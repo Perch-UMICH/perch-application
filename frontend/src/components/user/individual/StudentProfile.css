@@ -120,13 +120,6 @@
 	border-bottom: none;
 }
 
-.student-work-experience img {
-	width: 75px;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
 /* Links */
 #student-links {
 	padding: 0 !important;

@@ -208,7 +208,6 @@ class StudentWorkExperience extends Component {
 	render() {
 		return(
 			<div className='student-work-experience'>
-				<img src='https://static.wixstatic.com/media/296b36_a4b53324411d4b63909286f88e3e4c53~mv2.jpg/v1/fill/w_498,h_498,al_c,q_90/file.jpg' />
 				Hey yall
 			</div>
 		)
