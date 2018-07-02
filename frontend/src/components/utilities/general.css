@@ -49,6 +49,7 @@
 
 	/* Border radius */
 	--border-radius-C: 0 20px 0 40px;
+	--border-radius-L: 20px 0 0 40px;
 }
 
 .active-blue-bg {

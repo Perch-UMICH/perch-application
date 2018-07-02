@@ -38,7 +38,7 @@ class GroupPage extends Component {
 const Administrators = () => {
 	return(
 		<div id='group-admins'>
-			<h1>Admins</h1>
+			<h1><i class="em em-crown"></i></h1>
 			<div className='group-photos'>
 				<GroupPerson src='/img/sara.jpg'>Dr. Sara, 3rd of her name, Queen of the Andals</GroupPerson>
 				<GroupPerson src='/img/akira.jpg'>Dr. Akira, Sorcerer Supreme</GroupPerson>
@@ -52,7 +52,10 @@ const Administrators = () => {
 const Members = () => {
 	return(
 		<div id='group-members'>
-			<h1>Members</h1>
+			<h1>
+				<i class="em em-female-scientist"></i>
+				<i class="em em-male-technologist"></i>
+			</h1>
 			<div className='group-photos'>
 				<GroupPerson src='/img/headshots/jwolfe.jpg'>Mr. Wolfe, the wolfiest.</GroupPerson>
 				<GroupPerson src='/img/headshots/abanka.jpg'>Smarty McSmarty-Pants, of the Pants.</GroupPerson>

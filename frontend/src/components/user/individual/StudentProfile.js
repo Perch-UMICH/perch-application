@@ -101,12 +101,34 @@ class StudentProfile extends Component {
 		} else {
 	 	return (
 	 		<div id='student-content-body'>
+	 			<div id='student-column-L'>
+	 				<div>
+	 					<h1><i className='em em-brain'/></h1>
+	 					<div>
+	 						<div><b>GPA</b> 3.4</div>
+	 						<div><b>Year</b> Senior</div>
+	 						<div><b>Notable Classes</b> EECS 281</div>
+	 					</div>
+	 				</div>
+	 				<div>
+	 					<h1><i class="em em-telephone_receiver"></i></h1>
+	 				</div>
+	 				<div>
+	 					<h1><i className='em em-link'/></h1>
+	 				</div>
+	 			</div>
 	 			<div id='student-profile-column-C'>
 	 				<div id='student-quickview'>
-	 					<img id='student-quickview-img' src='/img/sara.jpg'/>
+	 					<img id='student-quickview-img' src='/img/headshots/bbear.jpg'/>
 	 					<img id='student-quickview-coverimage' src='https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/NGTYhyRhgilq4uu1a/videoblocks-doodle-cartoon-animation-of-science-chemistry-physics-astronomy-and-biology-school-education-subject-used-for-presenation-title-in-4k-ultra-hd_sl2xqduzw_thumbnail-full12.png' />
 	 					<div id='student-quickview-footer'>University of Michigan</div>
-	 					<div id='student-quickview-name'>Susan Connor</div>
+	 					<div id='student-quickview-name'>Benji Bear</div>
+	 				</div>
+	 				<div id='student-work-experience'>
+	 					<h1>Work Experience</h1>
+	 				</div>
+	 				<div id='student-education'>
+	 					<h1>Education</h1>
 	 				</div>
 	 			</div>
 	 			{/*<div id='left-column'>

@@ -1,8 +1,3 @@
-#student-profile-column-C {
-	width: 660px;
-	margin: auto auto;
-}
-
 #student-content-body {
 	width: 1200px;
 	position: relative;
@@ -10,21 +5,71 @@
 	margin-top: var(--shift-down);
 }
 
-#student-quickview {
-	width: 100%;
-	height: 225px;
-	background-color: black;
+/* Left Column*/
+#student-column-L {
+	width: 250px;
+	position: absolute;
+	left: 5px;
+}
+
+#student-column-L > div {
 	border: 1px solid lightgrey;
-	border-radius: var(--border-radius-C);
+	background-color: white;
+	width: 100%;
 	overflow: hidden;
 	position: relative;
+	border-radius: var(--border-radius-L);
+	margin-top: 20px;
+	transition: 0.2s ease;
+	height: 150px;
+	color: grey;
+}
+
+/* This is so the header is not padded */
+#student-column-L > div > div {
+	padding: 10px 20px;
+}
+
+#student-column-L > div:first-of-type {
+	margin-top: 0;
+}
+
+#student-column-L > div:hover {
+	box-shadow: var(--grey-shadow);
+}
+
+/* Main Column */
+#student-profile-column-C {
+	width: 660px;
+	margin: auto auto;
+}
+
+#student-profile-column-C > div {
+	border: 1px solid lightgrey;
+	background-color: white;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	border-radius: var(--border-radius-C);
+	margin-top: 20px;
+	transition: 0.2s ease;
+}
+
+#student-profile-column-C > div:hover {
+	box-shadow: var(--grey-shadow);
+	transition: 0.2s ease;
+}
+
+/* Quickview */
+#student-quickview {
+	transition: 0.2s ease;
 }
 
 #student-quickview-img {
-	height: 80%;
+	height: 70%;
 	position: absolute;
 	bottom: 0;
-	border-radius: 0 20px 0px 0;
+	border-radius: 0 40px 0px 0;
 	z-index: 20;
 	border-top: 1px solid lightgrey;
 	border-right: 1px solid lightgrey;
@@ -34,9 +79,9 @@
 #student-quickview-name {
 	position: absolute;
 	bottom: 50px;
-	left: calc(0.8 * 225px - 2px);
+	left: calc(0.7 * 225px - 2px);
 	padding-left: 20px;
-	padding-right: 20px;
+	padding-right: 30px;
 	color: white;
 	font-size: 34px;
 	background-color: var(--bright-blue);
@@ -50,7 +95,7 @@
 	position: absolute;
 	bottom: 0;
 	border-top: 1px solid lightgrey;
-	padding-left: calc(0.8 * 225px + 20px);
+	padding-left: calc(0.7 * 225px + 20px);
 	font-size: 16px;
 	line-height: 50px;
 	color: grey;
@@ -63,256 +108,12 @@
 	object-position: 50% 70%;
 }
 
-/*OLD*/
-
-.grid-item {
-	height: 100px;
-	width: 20%;
-	border: 1px solid var(--white);
+/* Work Experience */
+#student-work-experience {
+	height: 200px;
 }
 
-.student-bio-form {
-	width: 85%;
-}
-
-.profile-pic {
-	width: 25%;
-	height: 300px;
-}
-
-.student-skills {
-	width: 30%;
-	height: 400px;
-}
-
-.profile-tab {
-	background-color: var(--d-grey);
-}
-
-.tab-header {
-	background-color: var(--bright-blue);
-	color: var(--white);
-	text-align: center;
-	letter-spacing: 4px;
-	font-size: 20px; 
-	position: relative;
-}
-
-.mobile-header {
-	background-color: var(--bright-blue);
-	color: var(--white);
-	text-align: center;
-	letter-spacing: 3px;
-	font-size: 16px; 
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
-
-/*.tab-header:hover .interest-editor {
-	opacity: 1 !important;
-	transition: .2s ease;
-}*/
-
-#student-main-card {
-	height: 230px;
-	width: 700px;
-	margin-bottom: 20px;
-	background-color: var(--white);
-	position: relative;
-	color: var(--eighty-grey);
-}
-
-#student-main-card:hover .interest-editor{
-	opacity: 1 !important;
-	transition: .2s ease;
-	color: var(--seventy-five-grey);
-}
-
-.tab-container-L {
-	width: 100%;
-	position: relative;
-	border-radius: 20px 0 0 40px;
-	overflow: hidden;
-	border: 1px solid var(--d-three-grey);
-	margin-bottom: 20px;
-	padding-bottom: 20px;
-}
-
-.tab-container-C {
-	width: 100%;
-	position: relative;
-	border-radius: 0 20px 0 40px;
-	overflow: hidden;
-	border: 1px solid var(--d-three-grey);
-	margin-bottom: 20px;
-	padding-bottom: 20px;
-}
-
-.tab-container {
-	width: 100%;
-	position: relative;
-	overflow: hidden;
-	border: 1px solid var(--d-three-grey);
-	margin-bottom: 20px;
-	padding-bottom: 20px;
-}
-
-.floater-item {
-	float: left;
-	border-radius: 20px;
-	padding: 5px 10px;
-	margin: 2.5px 2.5px;
-	background-color: var(--active-blue);
-	color: var(--white);
-	letter-spacing: 1px;
-	font-size: 12px;
-}
-
-/**/
-
-.flex { 
-	display: flex;
-}
-
-#imageEdit {
-	background-color: var(--bright-blue);
-	padding: 7px;
-	margin-right: -4px;
-	margin-top: -10px;
-}
-
-#editImageText {
-	color: var(--e-grey);
-	background-color: none;
-}
-
-#editImageText:hover {
-	background-color: none;
-}
-
-.update-info {
-	display: inline-block;
-	padding-right: 10px;
-}
-
-#academics-tab {
-	overflow: scroll;
-}
-
-#student-img {
-	padding: 0px;
-	/*padding-left: 0px;*/
-}
-
-.student-name {
-	background-color: var(--active-blue);
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	color: var(--white);
-	position: relative;
-}
-
-.student-name-mobile {
-	background-color: var(--active-blue);
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	color: var(--white);
-	padding: 20px;
-	margin: 0;
-	width: 100%;
-}
-
-.student-img-overlay-text {
-	position: absolute;
-	right: 0px;
-	top: 24px;
-	transform: translate(-50%, -50%);
-	color: var(--white);
-	font-weight: bold;
-	font-size: 20px;
-}
-
-.student-img-overlay {
-	position: absolute;
-	content:"";
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	opacity:1.0;
-}
-
-.student-current-lab {
-	position: absolute;
-	right: 8px;
-	top: 5px;
-	letter-spacing: 2px;
-	color: var(--d-grey);
-	transition: .2s ease-in;
-}
-
-.student-current-lab:hover {
-	color: var(--white);
-	transition: .2s ease-in;
-}
-
-.ad {
-	height: 150px;
-	background-color: var(--seventy-five-grey);
-	line-height: 150px;
-	color: var(--white);
-	border-bottom: 1px solid #ccc;
-}
-
-/* 2018.04.03 */
-
-#left-column {
-	position: absolute;
-	left: 15px;
-	background-color: var(--white);
-	width: 220px;
-}
-
-#right-column {
-	position: absolute;
-	right: 15px;
-	background-color: var(--d-grey);
-	width: 220px;
-}
-
-#center-column {
-	width: 700px;
-	align-self: center;
-}
-
-#student-image {
-	width: 230px;
-}
-
-#bio-card {
-	position: absolute;
-	top: 30px;
-	left: 250px;
-	color: var(--eighty-grey);
-	letter-spacing: 0px;
-}
-
-#bio-header {
-	border-bottom: 1px solid var(--b-grey);
-	display: inline-block;
-	padding-bottom: 10px;
-	color: var(--six-grey);
-}
-
-#bio {
-	padding-top: 20px;
-}
-
-#tag-boxes {
-	width: 700px;
-	margin-bottom: 20px;
-}
-
-.profile-tab {
-	width: 50%;
+/* Education */
+#student-education {
+	height: 200px;
 }
