@@ -1,9 +1,9 @@
 .card-reveal {
-	background-color: #0277bd !important;
-	color: white !important;
+	background-color: var(--bright-blue) !important;
+	color: var(--white) !important;
 	opacity: 0.8;
 }
 
 .card-title {
-	color: white;
+	color: var(--white);
 }

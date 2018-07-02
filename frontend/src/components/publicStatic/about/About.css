@@ -3,7 +3,7 @@
 }
 
 .white-text-about {
-	color: #FFF;
+	color: var(--white);
 }
 
 .about {
@@ -15,8 +15,8 @@
 }
 
 .about-nav {
-	background-color: white;
-	border-bottom: 1px solid lightgrey;
+	background-color: var(--white);
+	border-bottom: 1px solid var(--d-three-grey);
 	height: 60px;
 }
 
@@ -26,12 +26,12 @@
 	padding-top: 20px;
 	text-transform: uppercase;
 	height: 100%;
-	border-right: 1px solid #d5d5d5;
-	color: grey;
+	border-right: 1px solid var(--d-three-grey);
+	color: var(--eighty-grey);
 }
 
 .about-active {
-	background-color: rgb(2, 119, 189) !important;
-	color: white;
+	background-color: var(--bright-blue) !important;
+	color: var(--white);
 	border-color: var(--bright-blue)
 }

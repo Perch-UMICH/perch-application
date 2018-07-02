@@ -1,13 +1,13 @@
 .user-information {
 	text-align: left;
-	background-color: #eee;
+	background-color: var(--e-grey);
 	padding: 10px;
 	border-radius: 6px;
 	width: 100%;
 }
 
 .setting-col {
-	color: #fff;
+	color: var(--white);
 	position: relative;
 }
 

@@ -1,6 +1,6 @@
 .positions-tab {
 	position: relative;
-	color: grey;
+	color: var(--eighty-grey);
 	letter-spacing: 1px;
 	margin: 25px 15px;
 	padding-bottom: 5px;
@@ -10,7 +10,7 @@
 	position: relative;
 	width: 100%;
 	/*background-color: #8bc34a;*/
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 }
 
 .tab-fit {

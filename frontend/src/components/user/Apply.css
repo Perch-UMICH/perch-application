@@ -3,16 +3,16 @@
 }
 
 .apply-form {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	padding: 20px;
 	margin-bottom: 40px;
 }
 
 .apply-input {
 	height: 150px;
-	background-color: #eee;
+	background-color: var(--e-grey);
 	box-shadow: 1px 1px 5px;
-	color: #eee;
+	color: var(--e-grey);
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
@@ -22,52 +22,52 @@
 #textInput {
 	letter-spacing: 1px;
 	font-size: 16px;
-	color: #eee;
+	color: var(--e-grey);
 }
 
 #textInput:focus {
-	border-bottom: 1px solid #29b6f6;
-	box-shadow: 0 1px 0 0 #29b6f6;
+	border-bottom: 1px solid var(--active-blue);
+	box-shadow: 0 1px 0 0 var(--active-blue);
 }
 
 .apply-btn, 
 .apply-btn:hover {
-	background-color: #03a9f4;
+	background-color: var(--soft-blue);
 }
 
 .apply-question-label {
-	color: #eee;
+	color: var(--e-grey);
 	font-size: 16px;
 	text-align: left;
 }
 
 #apply-question-input {
-	background-color: #eee;
+	background-color: var(--e-grey);
 }
 
 textarea.materialize-textarea {
 	margin-top: 10px;
-	background-color: #eee;
+	background-color: var(--e-grey);
 	padding-left: 8px;
 	padding-right: 8px;
 
 }
 
 #apply-question-input:focus {
-  border-bottom: 1px solid #29b6f6;
-  box-shadow: 0 1px 0 0 #29b6f6;
+  border-bottom: 1px solid var(--active-blue);
+  box-shadow: 0 1px 0 0 var(--active-blue);
 }
 
 .apply-input:hover {
-	color: #eee;
+	color: var(--e-grey);
 }
 
 .apply-header {
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: rgb(41, 182, 246);
-	color: white;
+	background-color: var(--active-blue);
+	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;
 	margin-right: -20px;

@@ -1,7 +1,7 @@
 .grid-item {
 	height: 100px;
 	width: 20%;
-	border: 1px solid white;
+	border: 1px solid var(--white);
 }
 
 .student-bio-form {
@@ -19,12 +19,12 @@
 }
 
 .profile-tab {
-	background-color: #ddd;
+	background-color: var(--d-grey);
 }
 
 .tab-header {
-	background-color: #0277BD;
-	color: white;
+	background-color: var(--bright-blue);
+	color: var(--white);
 	text-align: center;
 	letter-spacing: 4px;
 	font-size: 20px; 
@@ -32,8 +32,8 @@
 }
 
 .mobile-header {
-	background-color: #0277BD;
-	color: white;
+	background-color: var(--bright-blue);
+	color: var(--white);
 	text-align: center;
 	letter-spacing: 3px;
 	font-size: 16px; 
@@ -50,15 +50,15 @@
 	height: 230px;
 	width: 700px;
 	margin-bottom: 20px;
-	background-color: white;
+	background-color: var(--white);
 	position: relative;
-	color: grey;
+	color: var(--eighty-grey);
 }
 
 #student-main-card:hover .interest-editor{
 	opacity: 1 !important;
 	transition: .2s ease;
-	color: #757575;
+	color: var(--seventy-five-grey);
 }
 
 .tab-container-L {
@@ -66,7 +66,7 @@
 	position: relative;
 	border-radius: 20px 0 0 40px;
 	overflow: hidden;
-	border: 1px solid lightgrey;
+	border: 1px solid var(--d-three-grey);
 	margin-bottom: 20px;
 	padding-bottom: 20px;
 }
@@ -76,7 +76,7 @@
 	position: relative;
 	border-radius: 0 20px 0 40px;
 	overflow: hidden;
-	border: 1px solid lightgrey;
+	border: 1px solid var(--d-three-grey);
 	margin-bottom: 20px;
 	padding-bottom: 20px;
 }
@@ -85,7 +85,7 @@
 	width: 100%;
 	position: relative;
 	overflow: hidden;
-	border: 1px solid lightgrey;
+	border: 1px solid var(--d-three-grey);
 	margin-bottom: 20px;
 	padding-bottom: 20px;
 }
@@ -95,8 +95,8 @@
 	border-radius: 20px;
 	padding: 5px 10px;
 	margin: 2.5px 2.5px;
-	background-color: rgb(41, 182, 246);
-	color: white;
+	background-color: var(--active-blue);
+	color: var(--white);
 	letter-spacing: 1px;
 	font-size: 12px;
 }
@@ -108,14 +108,14 @@
 }
 
 #imageEdit {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	padding: 7px;
 	margin-right: -4px;
 	margin-top: -10px;
 }
 
 #editImageText {
-	color: #eee;
+	color: var(--e-grey);
 	background-color: none;
 }
 
@@ -138,18 +138,18 @@
 }
 
 .student-name {
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	color: white;
+	color: var(--white);
 	position: relative;
 }
 
 .student-name-mobile {
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	color: white;
+	color: var(--white);
 	padding: 20px;
 	margin: 0;
 	width: 100%;
@@ -160,7 +160,7 @@
 	right: 0px;
 	top: 24px;
 	transform: translate(-50%, -50%);
-	color: white;
+	color: var(--white);
 	font-weight: bold;
 	font-size: 20px;
 }
@@ -180,20 +180,20 @@
 	right: 8px;
 	top: 5px;
 	letter-spacing: 2px;
-	color: #ddd;
+	color: var(--d-grey);
 	transition: .2s ease-in;
 }
 
 .student-current-lab:hover {
-	color: white;
+	color: var(--white);
 	transition: .2s ease-in;
 }
 
 .ad {
 	height: 150px;
-	background-color: #757575;
+	background-color: var(--seventy-five-grey);
 	line-height: 150px;
-	color: white;
+	color: var(--white);
 	border-bottom: 1px solid #ccc;
 }
 
@@ -208,14 +208,14 @@
 #left-column {
 	position: absolute;
 	left: 15px;
-	background-color: white;
+	background-color: var(--white);
 	width: 220px;
 }
 
 #right-column {
 	position: absolute;
 	right: 15px;
-	background-color: #ddd;
+	background-color: var(--d-grey);
 	width: 220px;
 }
 
@@ -232,15 +232,15 @@
 	position: absolute;
 	top: 30px;
 	left: 250px;
-	color: #808080;
+	color: var(--eighty-grey);
 	letter-spacing: 0px;
 }
 
 #bio-header {
-	border-bottom: 1px solid #bbb;
+	border-bottom: 1px solid var(--b-grey);
 	display: inline-block;
 	padding-bottom: 10px;
-	color: #666;
+	color: var(--six-grey);
 }
 
 #bio {

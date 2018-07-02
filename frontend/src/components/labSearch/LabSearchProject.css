@@ -1,6 +1,6 @@
 .lab-srch-project {
 	height: 130px;
-	background-color: white;
+	background-color: var(--white);
 	width: 100%;
 	margin-bottom: 15px;
 	position: relative;
@@ -39,9 +39,9 @@
 
 .lab-srch-project-tag {
 	position: absolute;
-	background-color: purple;
+	background-color: var(--purple);
 	border-radius: 10px;
-	color:	white;
+	color:	var(--white);
 	margin-left: 20px;
 	font-size: 12px;
 	padding: 4px 10px;
@@ -68,7 +68,7 @@
 	line-height: 40px;
 	text-align: center;
 	background-color: var(--bright-blue);
-	color: white;
+	color: var(--white);
 	cursor: pointer;
 	border-radius: 20px 0 0 20px;
 	transition: 0.2s ease;
@@ -80,7 +80,7 @@
 }
 
 .lab-srch-project-openings {
-	color: black;
+	color: var(--black);
 	position: absolute;
 	top: 45px;
 	right: 4px;

@@ -1,9 +1,9 @@
 #password_login:focus + label,  #username_login:focus + label {
-  color: #29b6f6;
+  color: var(--active-blue);
 }
 
 #password_login:focus, #username_login:focus {
-  border-bottom: 1px solid #29b6f6;
-  box-shadow: 0 1px 0 0 #29b6f6;
+  border-bottom: 1px solid var(--active-blue);
+  box-shadow: 0 1px 0 0 var(--active-blue);
 }
 

@@ -2,8 +2,8 @@
 	padding: 10px 20px;
 	margin: 20px;
 	height: 95px;
-	background-color: white;
-	color: grey;
+	background-color: var(--white);
+	color: var(--eighty-grey);
 }
 
 .student-list-item-img {

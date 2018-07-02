@@ -48,24 +48,24 @@
 	margin-top: 20px;
 	font-size: 16px;
 	line-height: 200%;
-	color: #e5e5e5;
-	/*color: rgb(41, 182, 246);*/
+	color: var(--e-grey);
+	/*color: var(--active-blue);*/
 	/*margin-left: 40px;*/
 }
 
 .atf {
-	color: white;
+	color: var(--white);
 	margin-bottom: 0;
-	background-color: #f2fdff;
+	background-color: var(--lightish-blue);
 	/*background-image: url(../assets/background-white.png);*/
 	background-size: cover;	
 }
 
 #atf-changer {
-	color: white;
+	color: var(--white);
 }
 
 #atf-perch {
-	color: white;
+	color: var(--white);
 }
 

@@ -33,7 +33,7 @@
 .terms-page-container {
 	margin: auto;
 	width: 90%;
-	background-color: #ffffff;
+	background-color: var(--white);
 	padding: 20px;
 	margin-bottom: 40px;
 }

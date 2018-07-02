@@ -1,12 +1,12 @@
 .big-feedback {
 	height: 75vh;
-	color: #0277bd;
+	color: var(--bright-blue);
 	font-size: 60px;
 	text-transform: uppercase;
 }
 
 .feedback-preface {
-	color: grey;
+	color: var(--eighty-grey);
 	padding-bottom: 20px;
 	line-height: 130%;
 }
@@ -16,16 +16,16 @@
 }
 
 .feedback-form {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	padding: 20px;
 }
 
 .feedback-input {
 	height: 150px;
-	background-color: #eee;
+	background-color: var(--e-grey);
 	box-shadow: 1px 1px 5px;
-	border-bottom: 1px solid #eee;
-	color: #eee;
+	border-bottom: 1px solid var(--e-grey);
+	color: var(--e-grey);
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
@@ -34,9 +34,9 @@
 
 .feedback-textarea-input {
 	height: 150px;
-	background-color: #eee;
+	background-color: var(--e-grey);
 	box-shadow: 1px 1px 5px;
-	color: #29b6f6;
+	color: var(--active-blue);
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 20px;
@@ -44,17 +44,17 @@
 }
 
 .feedback-input:focus {
-	color: #eee;
-	border-bottom: 1px solid #eee;
-	box-shadow: 0 1px 0 0 #eee;
+	color: var(--e-grey);
+	border-bottom: 1px solid var(--e-grey);
+	box-shadow: 0 1px 0 0 var(--e-grey);
 }
 
 .feedback-header {
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: rgb(41, 182, 246);
-	color: white;
+	background-color: var(--active-blue);
+	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;
 	margin-right: -20px;

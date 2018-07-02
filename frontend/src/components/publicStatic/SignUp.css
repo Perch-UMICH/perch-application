@@ -1,15 +1,15 @@
 [type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
-  background-color: #03a9f4;
-  border-color: #03a9f4;
+  background-color: var(--soft-blue);
+  border-color: var(--soft-blue);
 }
 
 #first_name:focus + label, #last_name:focus + label, #email:focus + label, #password:focus + label, #password_retype:focus + label, #name:focus + label {
-  color: #29b6f6;
+  color: var(--active-blue);
 }
 
 #first_name:focus, #last_name:focus, #email:focus, #password:focus, #password_retype:focus, #name:focus{
-  border-bottom: 1px solid #29b6f6;
-  box-shadow: 0 1px 0 0 #29b6f6;
+  border-bottom: 1px solid var(--active-blue);
+  box-shadow: 0 1px 0 0 var(--active-blue);
 }
 
 .min-margin {
@@ -17,18 +17,18 @@
 }
 
 .submit-btn {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	box-shadow: none;
 }
 
 .submit-btn:hover {
-	background-color: #4fc3f7 ;
+	background-color: var(--seafoam-blue) ;
 	box-shadow: none;
 }
 
 .new-signup-container {
 	/*border: 1px solid red;*/
-	color: grey;
+	color: var(--eighty-grey);
 	padding: 20px;
 }
 
@@ -36,7 +36,7 @@
 	font-size: 25px;
 	margin-bottom: 0px;
 	letter-spacing: 1px;
-	color: rgb(41, 182, 246);
+	color: var(--active-blue);
 	/*font-weight: bold;*/
 }
 
@@ -45,7 +45,7 @@
 	margin-bottom: 0px;
 	letter-spacing: 1px;
 	/*text-transform: lowercase;*/
-	color: #bbb;
+	color: var(--b-grey);
 }
 
 .new-signup-radio {

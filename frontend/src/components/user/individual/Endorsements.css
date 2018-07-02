@@ -10,12 +10,12 @@
 }
 
 .endorsement-name {
-	color: white;
+	color: var(--white);
 	transition: .2s ease-in;
 }
 
 .endorsement-name:hover {
-	color: #0277bd;
+	color: var(--bright-blue);
 	transition: .2s ease-in;
 }
 @media (min-width: 600px) {

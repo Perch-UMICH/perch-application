@@ -17,7 +17,7 @@
 }
 
 .search-filter-container {
-	background-color: #FFF;
+	background-color: var(--white);
 	transition: all 0.5s ease;
 	border-radius: 0px 10px 0px 20px;
 	max-height: 50px;
@@ -78,7 +78,7 @@
 .filter-checkbox-label {
 	line-height: 20px !important;
 	font-size: 13px !important;
-	color: black;
+	color: var(--black);
 }
 
 .subfilter {
@@ -96,7 +96,7 @@
 	padding: 20px;
 	padding-left: 0;
 	padding-right: 0;
-	background-color: #ddd;
+	background-color: var(--d-grey);
 }
 
 .labSearch .row {
@@ -105,8 +105,8 @@
 
 .lab-search-input {
 	border-radius: 40px !important;
-	background-color: white !important;
-	color: grey !important;
+	background-color: var(--white) !important;
+	color: var(--eighty-grey) !important;
 	padding-left: 20px !important;
 	margin: 5px 10px !important;
 	height: 40px !important;
@@ -114,12 +114,12 @@
 }
 
 #lab-name:focus + label,  #lab-topic:focus + label {
-  color: #29b6f6;
+  color: var(--active-blue);
 }
 
 #lab-name:focus, #lab-topic:focus {
-  border-bottom: 1px solid #29b6f6;
-  box-shadow: 0 1px 0 0 #29b6f6;
+  border-bottom: 1px solid var(--active-blue);
+  box-shadow: 0 1px 0 0 var(--active-blue);
 }
 
 .lab-search-label {
@@ -133,12 +133,12 @@
 }
 
 .lab-search-modifiers {
-	border: 1px solid #ddd;
+	border: 1px solid var(--d-grey);
 	border-bottom: none;
 	border-top: none;
 	margin-bottom: 0;
 	padding: 10px;
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	position: relative;
 }
 
@@ -147,16 +147,16 @@
 	right: 0px;
 	top: 0px;
 	padding: 5px;
-	color: white;
-	background-color: rgb(41, 182, 246);
+	color: var(--white);
+	background-color: var(--active-blue);
 }
 
 #interests, #skills {
-	color: white !important;
+	color: var(--white) !important;
 }
 
 .import-btn {
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 	font-size: 80%;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -174,20 +174,20 @@
 .search-interest-container {
 	display: flex;
 	flex-direction: row;
-	color: white;
-	background-color: #0277bd;
+	color: var(--white);
+	background-color: var(--bright-blue);
 	min-height: 30vh;
 }
 
 .search-interest-section-left {
-	border-color: #ddd !important;
+	border-color: var(--d-grey) !important;
 	/*border-top: none !important;*/
 	border-right: none !important;
 	/*border-left: none !important;*/
 }
 
 .search-interest-section-right {
-	border-color: #ddd !important;
+	border-color: var(--d-grey) !important;
 	/*border-top: none !important;*/
 	/*border-right: none !important;*/
 	/*border-left: none !important;*/
@@ -198,5 +198,5 @@
 }
 
 .lab-search-radio-label {
-	color: #ddd;
+	color: var(--d-grey);
 }

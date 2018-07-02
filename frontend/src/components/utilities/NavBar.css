@@ -8,7 +8,7 @@
 nav {
     height: 70px;
     line-height: 70px;
-    background-color: #0277bd;
+    background-color: var(--bright-blue);
     box-shadow: none;
 }
 
@@ -38,12 +38,12 @@ nav .brand-logo {
 }
 
 .contact-nav {
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 }
 
 .contact-nav:hover {
-	background-color: white;
-	color: rgb(41, 182, 246);
+	background-color: var(--white);
+	color: var(--active-blue);
 }
 
 #sidenav-overlay {
@@ -60,7 +60,7 @@ nav .brand-logo {
 
 #hamburger {
     font-size: 60px;
-    color: white;
+    color: var(--white);
     margin-right: 0px;
     padding-left: 10px;
     padding-right: 10px;

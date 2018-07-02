@@ -1,6 +1,6 @@
 .awkward {
-	color: rgb(41, 182, 246);
-	background-color: white;
+	color: var(--active-blue);
+	background-color: var(--white);
 	padding: 5px;
 	margin: 0px;
 	/*font-size: 1.4em;*/
@@ -8,21 +8,21 @@
 }
 
 .awkward-top {
-	border-top: 2px solid white;
-	border-left: 2px solid white;
-	border-right: 2px solid white;
+	border-top: 2px solid var(--white);
+	border-left: 2px solid var(--white);
+	border-right: 2px solid var(--white);
 	padding: 5px;
-	color: white;
+	color: var(--white);
 	margin-bottom: -2px;
 	padding-left: 4px;
 	padding-right: 4px;
 }
 
 .awkward-bottom {
-	border: 2px solid white;
+	border: 2px solid var(--white);
 	padding: 5px;
-	color: rgb(41, 182, 246);
-	background-color: white;
+	color: var(--active-blue);
+	background-color: var(--white);
 	padding-left: 83px;
 	padding-right: 83px;
 
@@ -30,17 +30,17 @@
 
 .awkward-mobile {
 	font-size: 30px;
-	border: 2px solid #0277bd;
+	border: 2px solid var(--bright-blue);
 }
 .awkward-desktop {
 	font-size: 30px;
-	border: 2px solid #0277bd;
+	border: 2px solid var(--bright-blue);
 	max-width: 350px;
-	background-color: white;
-	color: #0277bd;
+	background-color: var(--white);
+	color: var(--bright-blue);
 }
 
 #research-mobile {
-	color: white;
-	background-color: #0277bd;
+	color: var(--white);
+	background-color: var(--bright-blue);
 }

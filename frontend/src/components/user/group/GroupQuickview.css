@@ -3,7 +3,7 @@
 	overflow: hidden;
 	background-color: white;
 	border-radius: 0 20px 0 40px;
-	border: 1px solid lightgrey;
+	border: 1px solid var(--d-three-grey);
 	margin-bottom: 15px;
 	position: relative;
 	text-overflow: ellipsis;
@@ -29,24 +29,24 @@
 	text-align: center;
 	top: 130px;
 	font-size: 26px;
-	background-color: white;
+	background-color: var(--white);
 	left: 50%;
 	transform: translate(-50%);
 	padding: 0 20px;
 	font-weight: bold;
-	border-left: 2px solid lightgrey;
-	border-top: 2px solid lightgrey;
-	border-right: 2px solid lightgrey;
+	border-left: 2px solid var(--d-three-grey);
+	border-top: 2px solid var(--d-three-grey);
+	border-right: 2px solid var(--d-three-grey);
 	border-radius: 0 5px 0 10px;
 	max-width: 100%;
 	white-space: nowrap;
-	color: #4c4c4c;
+	color: var(--four-c-grey);
 }
 
 #group-page-description {
 	margin: 25px 30px;
 	font-size: 13px;
-	color: #4c4c4c;
+	color: var(--four-c-grey);
 	position: relative;
 	max-height: 95px;
 	overflow: hidden;
