@@ -1581,6 +1581,10 @@ export function returnToProfile() {
         window.location = `/prof-page/${getCurrentLabId()}`;
 }
 
+export function exists(item) {
+    return item ? true : false;
+}
+
 
 //OLD
 // /**

@@ -95,9 +95,3 @@
 	box-shadow: var(--grey-shadow);
 	transition: 0.2s ease;
 }
-
-.group-project-requirements-header {
-	font-weight: 600;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}

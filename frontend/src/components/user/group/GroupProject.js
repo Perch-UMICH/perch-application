@@ -22,7 +22,13 @@ export class GroupProject extends Component {
 					<GroupProjectRequirement title='GPA' value="3.2"/>
 					<GroupProjectRequirement title='Time commitment' value="4-10 hrs/wk"/>
 					<GroupProjectRequirement title='Year' value="Freshman-Junior"/>
-					<GroupProjectRequirement title='Proficiency' value="Matlab"/>
+					<GroupProjectRequirement value="Matlab"/>
+
+					<div className='group-project-requirements-header'>Skills</div>
+					<GroupProjectRequirement value="Matlab"/>
+					<GroupProjectRequirement value="R"/>
+					<GroupProjectRequirement value="NumPy"/>
+					<GroupProjectRequirement value="Pandas"/>
 				</div>
 				
 				<div className='group-project-apply'>Apply</div>
