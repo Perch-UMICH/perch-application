@@ -125,7 +125,7 @@ header p {
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.6);
 }
 
-a .time-a {
+.timeline a .time-a {
   background: var(--bright-blue);
   color: var(--white);
   padding: 8px 20px;
@@ -138,7 +138,7 @@ a .time-a {
   box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.6);
 }
 
-a:hover, a:active, a:focus {
+.timeline a:hover, .timeline a:active, .timeline a:focus {
   background: var(--slate-blue);
   color: var(--white);
   text-decoration: none;

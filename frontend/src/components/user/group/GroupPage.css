@@ -4,9 +4,7 @@
 	margin: auto auto;
 	margin-top: var(--shift-down);
 	position: relative;
-	/*background-color: #eaeaea;*/
 	padding: 10px;
-	/*border: 1px solid lightgrey;*/
 }
 
 #group-page-column-L, #group-page-column-R {
@@ -14,7 +12,6 @@
 	width: 250px;
 	height: 1000px;
 	text-align: center;
-	/*background-color: grey;*/
 	top: 10px;
 }
 
@@ -56,7 +53,6 @@
 	overflow: hidden;
 	transition: 0.2s ease;
 	border: 1px solid var(--d-three-grey);
-	/*max-height: calc(275px + 50px); @benji, why this height? -emi */
 	overflow: scroll;
 	margin-bottom: 15px;
 }

@@ -105,27 +105,37 @@ class StudentProfile extends Component {
 	 				<div>
 	 					<h1><i className='em em-brain'/></h1>
 	 					<div>
-	 						<div><b>GPA</b> 3.4</div>
+	 						<div><b>GPA</b> 3.99999</div>
 	 						<div><b>Year</b> Senior</div>
-	 						<div><b>Notable Classes</b> EECS 281</div>
+	 						<StudentClasses list={["EECS 281", "EECS 388", "EECS 376", "EECS 370"]}/>
 	 					</div>
 	 				</div>
 	 				<div>
 	 					<h1><i class="em em-telephone_receiver"></i></h1>
+	 					<div>
+	 						<div id='student-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bearb@umich.edu</a></div>
+	 						<div><b>Phone</b> 815 262 6642</div>
+	 					</div>
 	 				</div>
-	 				<div>
+	 				<div id='student-links'>
 	 					<h1><i className='em em-link'/></h1>
+	 					<div>
+	 						<a>LinkedIn</a>
+	 						<a>Resume</a>
+	 					</div>
 	 				</div>
 	 			</div>
 	 			<div id='student-profile-column-C'>
 	 				<div id='student-quickview'>
 	 					<img id='student-quickview-img' src='/img/headshots/bbear.jpg'/>
-	 					<img id='student-quickview-coverimage' src='https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/NGTYhyRhgilq4uu1a/videoblocks-doodle-cartoon-animation-of-science-chemistry-physics-astronomy-and-biology-school-education-subject-used-for-presenation-title-in-4k-ultra-hd_sl2xqduzw_thumbnail-full12.png' />
+	 					<img id='student-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
 	 					<div id='student-quickview-footer'>University of Michigan</div>
 	 					<div id='student-quickview-name'>Benji Bear</div>
 	 				</div>
-	 				<div id='student-work-experience'>
+	 				<div>
 	 					<h1>Work Experience</h1>
+	 					<StudentWorkExperience />
+	 					<StudentWorkExperience />
 	 				</div>
 	 				<div id='student-education'>
 	 					<h1>Education</h1>
@@ -168,5 +178,42 @@ class StudentProfile extends Component {
 	 }
 	}
 }
+
+
+class StudentClasses extends Component {
+	expand() {
+		let elem = document.getElementById('student-classes-expander')
+		elem.innerHTML = elem.innerHTML === 'expand_more' ? 'expand_less' : 'expand_more'
+		document.getElementById('student-classes').classList.toggle('active-blue')
+		document.getElementById('student-classes-list').classList.toggle('expand');
+
+	}
+
+	render() {
+		return(
+			<div id='student-classes' >
+				<span onClick={this.expand.bind(this)}>
+					Notable Classes 
+					<i className="material-icons" id='student-classes-expander'>expand_more</i>
+				</span>
+				<div id='student-classes-list'>
+					{this.props.list.map(item => <div>{item}</div>)}
+				</div>
+			</div>
+		)
+	}
+}
+
+class StudentWorkExperience extends Component {
+	render() {
+		return(
+			<div className='student-work-experience'>
+				<img src='https://static.wixstatic.com/media/296b36_a4b53324411d4b63909286f88e3e4c53~mv2.jpg/v1/fill/w_498,h_498,al_c,q_90/file.jpg' />
+				Hey yall
+			</div>
+		)
+	}
+}
+
 
 export default StudentProfile;

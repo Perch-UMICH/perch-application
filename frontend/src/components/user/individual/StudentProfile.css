@@ -21,8 +21,8 @@
 	border-radius: var(--border-radius-L);
 	margin-top: 20px;
 	transition: 0.2s ease;
-	height: 150px;
 	color: grey;
+	padding-bottom: 5px;
 }
 
 /* This is so the header is not padded */
@@ -108,12 +108,75 @@
 	object-position: 50% 70%;
 }
 
-/* Work Experience */
-#student-work-experience {
-	height: 200px;
+/* Work Experience*/
+.student-work-experience {
+	height: 75px;
+	border-bottom: 1px solid lightgrey;
+	padding: 10px 20px;
+	position: relative;
 }
 
-/* Education */
-#student-education {
-	height: 200px;
+.student-work-experience:last-of-type {
+	border-bottom: none;
+}
+
+.student-work-experience img {
+	width: 75px;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* Links */
+#student-links {
+	padding: 0 !important;
+}
+
+#student-links div {
+	padding: 0 !important;
+}
+
+#student-links a {
+	border-bottom: 1px solid lightgrey;
+	display: block;
+	padding: 20px 15px;
+	text-align: center;
+}
+
+#student-links a:last-of-type {
+	border-bottom: none;
+}
+
+#student-classes {
+	position: relative;
+	display: block;
+	color: var(--bright-blue);
+	transition: 0.2s ease;
+}
+
+#student-classes span:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
+	cursor: pointer;
+}
+
+#student-classes div {
+	margin-left: 7px;
+}
+
+#student-classes-expander {
+	position: absolute;
+	bottom: 0px;
+	padding-left: 3px;
+}
+
+#student-classes-list {
+	max-height: 0;
+	overflow: hidden;
+	color: grey;
+	transition: 0.2s ease;
+}
+
+#student-email {
+	overflow-wrap: break-word;
 }
