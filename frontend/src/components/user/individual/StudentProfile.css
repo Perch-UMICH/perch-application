@@ -73,7 +73,7 @@
 	z-index: 20;
 	border-top: 1px solid lightgrey;
 	border-right: 1px solid lightgrey;
-	border-right: 2px solid lightgrey;
+	border-right: 1px solid lightgrey;
 }
 
 #student-quickview-name {
