@@ -19,16 +19,13 @@ export class GroupProject extends Component {
 				<div className='group-project-description'>
 					<div>{this.props.description}</div>
 					<div className='group-project-requirements-header'>Minimum Requirements</div>
-					<GroupProjectRequirement title='GPA' value="3.2"/>
-					<GroupProjectRequirement title='Time commitment' value="4-10 hrs/wk"/>
-					<GroupProjectRequirement title='Year' value="Freshman-Junior"/>
-					<GroupProjectRequirement value="Matlab"/>
+					<GroupProjectRequirement title='GPA' value={this.props.gpa}/>
+					<GroupProjectRequirement title='Time commitment' value={this.props.time_commit}/>
+					<GroupProjectRequirement title='Year' value={this.props.year}/>
+					<GroupProjectRequirement value="MISSING"/>
 
 					<div className='group-project-requirements-header'>Skills</div>
-					<GroupProjectRequirement value="Matlab"/>
-					<GroupProjectRequirement value="R"/>
-					<GroupProjectRequirement value="NumPy"/>
-					<GroupProjectRequirement value="Pandas"/>
+					<GroupProjectRequirement value="MISSING"/>
 				</div>
 				
 				<div className='group-project-apply'>Apply</div>
