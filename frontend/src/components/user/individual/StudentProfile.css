@@ -5,6 +5,20 @@
 	margin-top: var(--shift-down);
 }
 
+/* Right Column*/
+#student-column-R {
+	width: 250px;
+	position: absolute;
+	right: 5px;
+}
+
+.ad {
+	height: 200px;
+	background-color: lightgrey;
+	border: 1px solid var(--bright-blue);
+	margin-bottom: 15px;
+}
+
 /* Left Column*/
 #student-column-L {
 	width: 250px;

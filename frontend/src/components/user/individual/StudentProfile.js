@@ -96,7 +96,7 @@ class StudentProfile extends Component {
 	 				<div>
 	 					<h1><i className='em em-brain'/></h1>
 	 					<div>
-	 						<div><b>GPA</b> 3.99999</div>
+	 						<div><b>GPA</b> 3.99</div>
 	 						<div><b>Year</b> Senior</div>
 	 						<StudentClasses list={["EECS 281", "EECS 388", "EECS 376", "EECS 370"]}/>
 	 					</div>
@@ -115,6 +115,11 @@ class StudentProfile extends Component {
 	 						<a>Resume</a>
 	 					</div>
 	 				</div>
+	 			</div>
+	 			<div id='student-column-R'>
+	 				<div className='ad'></div>
+	 				<div className='ad'></div>
+	 				<div className='ad'></div>
 	 			</div>
 	 			<div id='student-profile-column-C'>
 	 				<div id='student-quickview'>
