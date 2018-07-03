@@ -110,10 +110,36 @@
 
 /* Work Experience*/
 .student-work-experience {
-	height: 75px;
 	border-bottom: 1px solid lightgrey;
-	padding: 10px 20px;
 	position: relative;
+	overflow: hidden;
+	padding-bottom: 25px;
+}
+
+.student-work-title {
+	font-size: 20px;
+	margin-top: 5px;
+	margin-left: 20px;
+	transition: 0.2s ease;
+	display: block;
+}
+
+.student-work-time {
+	font-size: 12px;
+	margin-left: 20px;
+	font-style: italic;
+	color: var(--eighty-grey);
+}
+
+.student-work-description {
+	margin-left: 20px;
+	margin-top: 4px;
+	font-size: 12px;
+	width: 550px;
+	height: auto;
+	max-height: 56px;
+	overflow: hidden;
+	transition: .3s ease;
 }
 
 .student-work-experience:last-of-type {
