@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
-import BioTab from '../BioTab';
-import PositionsTab from './PositionsTab';
-import Indicator from './Indicator';
-import InterestsTab from '../InterestsTab';
-import SkillsTab from '../SkillsTab';
-import ContactTab from '../ContactTab'
-import AcceptRate from './AcceptRate'
 import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences, isStudent, isLab} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
+import ExpanderIcons from '../../utilities/ExpanderIcons'
 import './ProfPage.css'
 
 class ProfPage extends Component {
@@ -32,9 +26,9 @@ class ProfPage extends Component {
 	componentDidMount() {
 		console.log(getCurrentUserId());
 		if (isLoggedIn()) {
-			// check if student or faculty for viewing positions
+			// check if user or faculty for viewing positions
 			if (isStudent())
-				this.setState({user_type: "student"});
+				this.setState({user_type: "user"});
 			else if (isLab())
 				this.setState({user_type: "faculty"});
 	
@@ -87,90 +81,105 @@ class ProfPage extends Component {
 
 	render() {
 		var apply_dest = '/apply/' + window.location.pathname.split('/')[2];
-		if (!isLoggedIn()) {
-			return <ErrorPage /> 
-		} else if (this.state.no_lab) {
-			return <ErrorPage fourofour="true" />
-		} else {
-			return(
-				<div className='content-body'>
-					<div className='shadow' id='left-column'>
-						<ContactTab header='contact' contact_info={this.state.contact_info} />
-						{/*<AcceptRate rate={5} />*/}
-						{/*<div className='ext-links mobile-header tab academic-tab-header'>Links
-							<a href='#' className="null-link-style" >
-							{ permissionCheck() && 
-								<a href={this.state.dest}><i className="material-icons interest-editor edit-icon" style={{position: 'absolute', right: '0'}} >create</i></a>
-							}
-							</a>
-						</div>
-						<ExtLinkBox dest={this.state.website}>Website</ExtLinkBox>*/}
-					</div>
-					<div id='right-column' className='shadow center-align'>
-		 				<div className='ad'>AD</div>
-		 				<div className='ad'>AD</div>
-		 				<div className='ad'>AD</div>
+		// TODO TEMPORARILY COMMENTED OUT UNTIL INTEGRATED WITH BACKEND
+		// if (!isLoggedIn()) {
+		// 	return <ErrorPage /> 
+		// } else if (this.state.no_lab) {
+		// 	return <ErrorPage fourofour="true" />
+		// } else {
+			return (
+				<div id='user-content-body'>
+		 			<div id='user-column-L'>
+		 				<div>
+		 					<h1><i className='em em-brain'/></h1>
+		 					<div>
+		 						Extraordinary Alchemist
+		 					</div>
+		 				</div>
+		 				<div>
+		 					<h1><i class="em em-telephone_receiver"></i></h1>
+		 					<div>
+		 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bcoppola@umich.edu</a></div>
+		 						<div><b>Phone</b> 815 262 6642</div>
+		 					</div>
+		 				</div>
+		 				<div id='user-links'>
+		 					<h1><i className='em em-link'/></h1>
+		 					<div>
+		 						<a>LinkedIn</a>
+		 						<a>Website</a>
+		 						<a>Lab Resources</a>
+		 					</div>
+		 				</div>
 		 			</div>
-		 			<div className='container shift-down' id='center-column'>
-		 				<div id='student-main-card' className='left-align shadow'>
-							<img id='student-image' src={this.state.img_src} alt='' />
-							<div id='bio-card'>
-								<div id='bio-header' className='flow-text'><b>{this.state.lab_name}</b></div>
-								<div className='indicator-container'>
-									{this.state.yes.map((msg) => <Indicator key={msg} msg={msg} type='on'/>)}
-								</div>
-								<div className='indicator-container'>
-									{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
-								</div>
-							</div>
-
-							<div style={{backgroundColor: '#ddd', marginTop: '10px'}}>
-								<BioTab header='what we do' user_type='faculty' msg={this.state.lab_summary}/>
-							</div>
-
-							<div style={{backgroundColor: '#ddd'}}>
-								<PositionsTab header='open positions' positions={this.state.positions} user_type={this.state.user_type} apply_dest={apply_dest} />
-							</div>
-
-							<div id='tag-boxes' className='flex'>
-								<div className='profile-tab shadow'><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
-								<div className='profile-tab shadow'><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
-							</div>
-						</div>
+		 			<div id='user-column-R'>
+		 				<div className='ad'></div>
+		 				<div className='ad'></div>
+		 				<div className='ad'></div>
 		 			</div>
-				</div>
+		 			<div id='user-profile-column-C'>
+		 				<div id='user-quickview'>
+		 					<img id='user-quickview-img' src='/img/headshots/bcoppola.jpg'/>
+		 					<img id='user-quickview-coverimage' src='https://previews.123rf.com/images/balabolka/balabolka1609/balabolka160900265/62527939-cartoon-cute-hand-drawn-science-seamless-pattern-colorful-detailed-with-lots-of-objects-background-e.jpg' />
+		 					<div id='user-quickview-footer'>University of Michigan</div>
+		 					<div id='user-quickview-name'>Dr. Brian Coppola</div>
+		 				</div>
+		 				<div>
+		 					<h1>Work Experience</h1>
+		 					<UserWorkExperience title="Manhattan Project" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
+		 					<UserWorkExperience title="CVS" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
+		 				</div>
+		 				<div id='user-education'>
+		 					<h1>Education</h1>
+		 				</div>
+		 			</div>
+	 			</div>
 			)
-			// return(
-			// 	<div className='shift-down container'>
-			// 		<div className='row dark-blue-bg'>
-			// 			<img src={this.state.img_src} style={{height: '200px', width: '200px', float: 'left', marginRight: '10px'}} alt=''/>
-			// 			<div className='prof-page-name'>{this.state.lab_name}</div>
-			// 			<a href='/update-lab-specifications'><i className="material-icons interest-editor" id="specEdit">create</i></a>
-			// 			<div className='indicator-container'>
-			// 				{this.state.yes.map((msg) => <Indicator key={msg} msg={msg} type='on'/>)}
-			// 			</div>
-			// 			<div className='indicator-container'>
-			// 				{this.state.no.map((msg) => <Indicator key={msg} msg={msg} type='off'/>)}
-			// 			</div>
-			// 		</div>
+		// }
+	}
+}
 
-			// 		<div className='row flex ddd-bg'>
-			// 			<PositionsTab header='open positions' positions={this.state.positions} user_type={this.state.user_type} apply_dest={apply_dest} />
-			// 		</div>
-			// 		<div className='row flex ddd-bg'>
-			// 			<BioTab header='what we do' user_type='faculty' msg={this.state.lab_summary}/>
-			// 			<div className='hide-on-small-only' style={{width: '30%'}}><ContactTab header='contact' contact_info={this.state.contact_info} /></div>
-			// 		</div>
-			// 		<div className='row flex'>
-			// 			<div className='profile-tab shadow' style={{width: '50%'}}><InterestsTab tabTitle="LABELS" user_type="faculty" interests={this.state.labels}/></div>
-			// 			<div className='profile-tab shadow' style={{width: '50%'}}><SkillsTab user_type="faculty" skills={this.state.skills}/></div>
-			// 		</div>
-			// 		<div className='row ddd-bg hide-on-med-and-up'>
-			// 			<div className='profile-tab'><ContactTab header='contact info' contact_info={this.state.contact_info} /></div>
-			// 		</div>
-			// 	</div>
-			// );
-		}
+
+class UserClasses extends Component {
+	expand() {
+		let elem = document.getElementById('user-classes-expander')
+		elem.innerHTML = elem.innerHTML === 'expand_more' ? 'expand_less' : 'expand_more'
+		document.getElementById('user-classes').classList.toggle('active-blue')
+		document.getElementById('user-classes-list').classList.toggle('expand');
+
+	}
+
+	render() {
+		return(
+			<div id='user-classes' >
+				<span onClick={this.expand.bind(this)}>
+					Notable Classes 
+					<i className="material-icons" id='user-classes-expander'>expand_more</i>
+				</span>
+				<div id='user-classes-list'>
+					{this.props.list.map(item => <div>{item}</div>)}
+				</div>
+			</div>
+		)
+	}
+}
+
+class UserWorkExperience extends Component {
+	expand() {
+		document.getElementById(`user-work-description-${this.props.title}`).classList.toggle('expand')
+	}
+
+	render() {
+		return(
+			<div id={`user-work-${this.props.title}`} className='user-work-experience'>
+				<div className='user-work-title'>{this.props.title}</div>
+				<div className='user-work-time'>
+					{`${this.props.startTime} - ${this.props.endTime}`}
+				</div>
+				<div id={`user-work-description-${this.props.title}`} className='user-work-description'>{this.props.description}</div>
+				<ExpanderIcons id={`user-work-${this.props.title}`} action={this.expand.bind(this)}/>
+			</div>
+		)
 	}
 }
 

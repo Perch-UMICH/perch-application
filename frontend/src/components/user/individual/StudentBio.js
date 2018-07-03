@@ -17,14 +17,14 @@ class StudentBio extends Component {
 	componentDidMount() {
 		getStudentFromUser(getCurrentUserId()).then( r => {
 			console.log(r);
-			this.setState({bio: r.result.bio, student_id: r.result.id})
+			this.setState({bio: r.result.bio, user_id: r.result.id})
 		});
 	}
 
 	saveAndContinue(event) {
-		updateStudent(this.state.student_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=> {
-			if (this.state.url_string === "update-student-bio") {
-				window.location = `/student-profile/${getCurrentUserId()}`;
+		updateStudent(this.state.user_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=> {
+			if (this.state.url_string === "update-user-bio") {
+				window.location = `/user-profile/${getCurrentUserId()}`;
 			} else {
 				window.location = '/upload-image?user_type=student';
 			}
@@ -41,7 +41,7 @@ class StudentBio extends Component {
 		var url_arr = this.props.location.pathname.split('/');
 		var btn_msg = 'next';
 		var update = false;
-		if (url_arr[1] === "update-student-bio") {
+		if (url_arr[1] === "update-user-bio") {
 			btn_msg = 'save';
 			update = true;
 		}

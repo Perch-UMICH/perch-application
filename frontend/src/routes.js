@@ -80,8 +80,7 @@ class Router extends Component {
 							<Route path='/update-external-links' component={ ExternalLinks } />
 							<Route path='/edit-external-links' component={ UpdateExternalLinks } />
 							<Route path='/prof-page' component={ GroupPage }/>
-							{/*<Route path='/prof-page' component={ ProfPage }/>
-							<Route path='/prof-page/:labSlug' component={ ProfPage }/>*/}
+							<Route path='/prof/:profSlug' component={ ProfPage }/>
 							<Route path='/apply/:labSlug' component={ Apply } />
 							<Route path='/create-position' component={ CreatePosition } />
 							<Route path='/view-applicants' component={ ViewApplicants } />

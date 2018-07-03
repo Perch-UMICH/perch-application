@@ -1,4 +1,4 @@
-#student-content-body {
+#user-content-body {
 	width: 1200px;
 	position: relative;
 	margin: auto auto;
@@ -6,7 +6,7 @@
 }
 
 /* Right Column*/
-#student-column-R {
+#user-column-R {
 	width: 250px;
 	position: absolute;
 	right: 5px;
@@ -20,13 +20,13 @@
 }
 
 /* Left Column*/
-#student-column-L {
+#user-column-L {
 	width: 250px;
 	position: absolute;
 	left: 5px;
 }
 
-#student-column-L > div {
+#user-column-L > div {
 	border: 1px solid lightgrey;
 	background-color: white;
 	width: 100%;
@@ -40,25 +40,25 @@
 }
 
 /* This is so the header is not padded */
-#student-column-L > div > div {
+#user-column-L > div > div {
 	padding: 10px 20px;
 }
 
-#student-column-L > div:first-of-type {
+#user-column-L > div:first-of-type {
 	margin-top: 0;
 }
 
-#student-column-L > div:hover {
+#user-column-L > div:hover {
 	box-shadow: var(--grey-shadow);
 }
 
 /* Main Column */
-#student-profile-column-C {
+#user-profile-column-C {
 	width: 660px;
 	margin: auto auto;
 }
 
-#student-profile-column-C > div {
+#user-profile-column-C > div {
 	border: 1px solid lightgrey;
 	background-color: white;
 	width: 100%;
@@ -69,17 +69,17 @@
 	transition: 0.2s ease;
 }
 
-#student-profile-column-C > div:hover {
+#user-profile-column-C > div:hover {
 	box-shadow: var(--grey-shadow);
 	transition: 0.2s ease;
 }
 
 /* Quickview */
-#student-quickview {
+#user-quickview {
 	transition: 0.2s ease;
 }
 
-#student-quickview-img {
+#user-quickview-img {
 	height: 70%;
 	position: absolute;
 	bottom: 0;
@@ -90,7 +90,7 @@
 	border-right: 1px solid lightgrey;
 }
 
-#student-quickview-name {
+#user-quickview-name {
 	position: absolute;
 	bottom: 50px;
 	left: calc(0.7 * 225px - 2px);
@@ -102,7 +102,7 @@
 	border-radius: 0 40px 0 0 ;
 }
 
-#student-quickview-footer {
+#user-quickview-footer {
 	height: 50px;
 	width: 100%;
 	background-color: white;
@@ -115,7 +115,7 @@
 	color: grey;
 }
 
-#student-quickview-coverimage {
+#user-quickview-coverimage {
 	width: 100%;
 	height: 225px;
 	object-fit: cover;
@@ -123,14 +123,14 @@
 }
 
 /* Work Experience*/
-.student-work-experience {
+.user-work-experience {
 	border-bottom: 1px solid lightgrey;
 	position: relative;
 	overflow: hidden;
 	padding-bottom: 25px;
 }
 
-.student-work-title {
+.user-work-title {
 	font-size: 20px;
 	margin-top: 5px;
 	margin-left: 20px;
@@ -138,14 +138,14 @@
 	display: block;
 }
 
-.student-work-time {
+.user-work-time {
 	font-size: 12px;
 	margin-left: 20px;
 	font-style: italic;
 	color: var(--eighty-grey);
 }
 
-.student-work-description {
+.user-work-description {
 	margin-left: 20px;
 	margin-top: 4px;
 	font-size: 12px;
@@ -156,60 +156,60 @@
 	transition: .3s ease;
 }
 
-.student-work-experience:last-of-type {
+.user-work-experience:last-of-type {
 	border-bottom: none;
 }
 
 /* Links */
-#student-links {
+#user-links {
 	padding: 0 !important;
 }
 
-#student-links div {
+#user-links div {
 	padding: 0 !important;
 }
 
-#student-links a {
+#user-links a {
 	border-bottom: 1px solid lightgrey;
 	display: block;
 	padding: 20px 15px;
 	text-align: center;
 }
 
-#student-links a:last-of-type {
+#user-links a:last-of-type {
 	border-bottom: none;
 }
 
-#student-classes {
+#user-classes {
 	position: relative;
 	display: block;
 	color: var(--bright-blue);
 	transition: 0.2s ease;
 }
 
-#student-classes span:hover {
+#user-classes span:hover {
 	color: var(--active-blue);
 	transition: 0.2s ease;
 	cursor: pointer;
 }
 
-#student-classes div {
+#user-classes div {
 	margin-left: 7px;
 }
 
-#student-classes-expander {
+#user-classes-expander {
 	position: absolute;
 	bottom: 0px;
 	padding-left: 3px;
 }
 
-#student-classes-list {
+#user-classes-list {
 	max-height: 0;
 	overflow: hidden;
 	color: grey;
 	transition: 0.2s ease;
 }
 
-#student-email {
+#user-email {
 	overflow-wrap: break-word;
 }
