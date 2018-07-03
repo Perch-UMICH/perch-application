@@ -383,6 +383,22 @@ exports.getAdvisorData = () => {
         bio: [],
         slug: "omacdougald"
       },
+      {
+        firstName: "Paul J",
+        lastName: "Barrow",
+        position: "University of Michigan Foundation & Grants Librarian",
+        title: "",
+        bio: [],
+        slug: "pjbarrow"
+      },
+      {
+        firstName: "Jim",
+        lastName: "Bennett",
+        position: "Principal Program Manager at Microsoft",
+        title: "",
+        bio: [],
+        slug: "jbennett"
+      },
     ]
   );
 }
