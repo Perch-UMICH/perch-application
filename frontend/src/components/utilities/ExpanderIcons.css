@@ -1,6 +1,6 @@
 .expand-icons, .expand-icons-filter-dropdown {
 	position: absolute;
-	color: lightgrey;
+	color: var(--d-three-grey);
 	bottom: -5px;
 	width: 100%;
 	text-align: center;

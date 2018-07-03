@@ -16,9 +16,16 @@ export class GroupProject extends Component {
 					{this.props.urop && <span className='group-project-tag'>UROP</span>}
 				</div>
 				<div className='group-project-keywords'>{this.props.keywords}</div>
-				<div className='group-project-description'>{this.props.description}
-					<GroupProjectRequirement title='Min requirements' details={["3.2 GPA", "Good humor"]}/>
-					<GroupProjectRequirement title='Time commitment' details={["4-10 hrs/wk"]}/>
+				<div className='group-project-description'>
+					<div>{this.props.description}</div>
+					<div className='group-project-requirements-header'>Minimum Requirements</div>
+					<GroupProjectRequirement title='GPA' value={this.props.gpa}/>
+					<GroupProjectRequirement title='Time commitment' value={this.props.time_commit}/>
+					<GroupProjectRequirement title='Year' value={this.props.year}/>
+					<GroupProjectRequirement value="MISSING"/>
+
+					<div className='group-project-requirements-header'>Skills</div>
+					<GroupProjectRequirement value="MISSING"/>
 				</div>
 				
 				<div className='group-project-apply'>Apply</div>

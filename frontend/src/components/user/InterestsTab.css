@@ -10,11 +10,11 @@
 	float: right;
 	margin-right: 5px;
 	margin-top: 2px;
-	color: white;
+	color: var(--white);
 }
 
 .interest-editor:hover {
-	color: white;
+	color: var(--white);
 }
 
 #bio-editor {

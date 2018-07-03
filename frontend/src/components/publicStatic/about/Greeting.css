@@ -7,5 +7,5 @@
 	padding: 20px;
 	font-size: 38px;
 	letter-spacing: 1px;
-	color: #575757;
+	color: var(--fifty-seven-grey);
 }

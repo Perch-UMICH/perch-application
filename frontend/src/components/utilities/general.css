@@ -1,10 +1,35 @@
 :root {
-	--lightish-blue: #f2fdff;
-	--bright-blue: #0277bd;
-	--active-blue: rgb(41, 182, 246);
+	--lightish-blue: #F2FDFF;
+    --cloud-blue: #AAE5FF;
+    --sky-blue: #84D9FF;
+	--bright-blue: #0277BD;
+    --seafoam-blue: #5FC9FC; /*Also in the Perchiodic Table*/
+	--soft-blue: #03A9F4;
+	--active-blue: #29B6F6;
 	--dark-blue: #002C47;
+    --slate-blue: #01579B;
+	--purple: #800080; /*CSS purple*/
+    --error-yellow: #FFEA7B;
+    --sunset-orange: #EF5350;
+    --red: #FF0000; /*CSS red*/
 
-	--grey-shadow: 1px 1px 2px #c6c6c6;
+	/*Shades of grey are all that I see...*/
+	--white: #FFF; /*CSS white*/
+	--e-grey: #EEE;
+	--d-grey: #DDD;
+	--d-three-grey: #D3D3D3; /*CSS lightgrey*/
+	--b-grey: #BBB;
+	--eighty-grey: #808080; /*CSS grey*/
+    --seventy-five-grey: #757575;
+	--six-grey: #666;
+    --fifty-seven-grey: #575757;
+    --four-c-grey: #4C4C4C; 
+	--black: #000; /*CSS black*/
+
+	/*Low opacity shadow*/
+	--shadow-black: rgba(0, 0, 0, 0.2);
+
+	--grey-shadow: 1px 1px 2px #C6C6C6;
 	--shift-down: 30px;
 
 	/* Subteam Colors for Perchiodic Table */
@@ -21,6 +46,11 @@
 	--t10-color: #41f483;
 	--t11-color: #4bbc3a;
 	--t12-color: #41f483;
+
+	/* Border radius */
+	--border-radius-C: 0 20px 0 40px;
+	--border-radius-L: 20px 0 0 40px;
+	--border-radius-R: 0 20px 40px 0;
 }
 
 .active-blue-bg {
@@ -29,7 +59,8 @@
 }
 
 .active-blue {
-	color: var(--active-blue);
+	color: var(--active-blue) !important;
+	color: var(--active-blue) !important;
 	transition: 0.2s ease;
 }
 
@@ -38,11 +69,11 @@
 }
 
 .ddd-bg {
-	background-color: #ddd;
+	background-color: var(--d-grey);
 }
 
 .dark-blue-bg {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 }
 
 .null-link-style {
@@ -59,12 +90,12 @@
 }
 
 .gen-input:focus + label, .gen-input:focus + label  {
-  color: #0277bd;
+  color: var(--bright-blue);
 }
 
 .gen-input:focus {
-  border-bottom: 1px solid #29b6f6 !important;
-  box-shadow: 0 1px 0 0 #29b6f6;
+  border-bottom: 1px solid var(--active-blue) !important;
+  box-shadow: 0 1px 0 0 var(--active-blue);
   color: white !important;
 }
 
@@ -83,7 +114,7 @@
 }
 
 .light-blue-background {
-	background-color: rgb(41, 182, 246)
+	background-color: var(--active-blue)
 }
 
 .white-text-now {
@@ -92,15 +123,15 @@
 
 body {
 	font-family: montserrat;
-	background-color: #f2fdff;
+	background-color: var(--lightish-blue);
 }
 
 .link-color {
-	color: rgb(41, 182, 246);
+	color: var(--active-blue);
 }
 
 .shadow {
-	box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 3px 5px 1px var(--shadow-black);
 }
 
 .inline {
@@ -112,7 +143,7 @@ input[type='text']:focus {
 }
 
 input[type='text'] {
-	color: #757575;
+	color: var(--seventy-five-grey);
 }
 
 input[type='text']:focus {
@@ -134,4 +165,15 @@ h1 {
 	letter-spacing: 3px;
 	font-size: 20px;
 	margin: 0;
+}
+
+a {
+	color: var(--bright-blue);
+	transition: 0.2s ease;
+}
+
+a:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
+	cursor: pointer;
 }

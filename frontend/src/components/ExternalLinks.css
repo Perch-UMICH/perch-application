@@ -3,15 +3,15 @@
 }
 
 .external-links-form {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	padding: 20px;
 }
 
 .external-links-input {
 	height: 150px;
-	background-color: #eee;
+	background-color: var(--e-grey);
 	box-shadow: 1px 1px 5px;
-	color: #eee;
+	color: var(--e-grey);
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
@@ -20,18 +20,18 @@
 
 .external-links-btn, 
 .external-links-btn:hover {
-	background-color: #03a9f4;
+	background-color: var(--soft-blue);
 }
 
 .external-links-input:hover {
-	color: #eee;
+	color: var(--e-grey);
 }
 
 .external-links-header {
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 	color: white;
 	margin-bottom: 20px;
 	margin-left: -20px;

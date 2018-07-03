@@ -1,8 +1,8 @@
 #group-publications-container {
 	width: 100%;
-	background-color: white;
+	background-color: var(--white);
 	border-radius: 0 20px 0 40px;
-	border: 1px solid lightgrey;
+	border: 1px solid var(--d-three-grey);
 	overflow: hidden;
 	transition: 0.2s ease;
 }
@@ -13,7 +13,7 @@
 }
 
 .group-publication {
-	border-bottom: 1px solid lightgrey;
+	border-bottom: 1px solid var(--d-three-grey);
 	width: 100%;
 	padding: 10px 20px;
 	color: var(--bright-blue);

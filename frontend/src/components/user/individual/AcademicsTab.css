@@ -12,7 +12,7 @@
 }
 
 .academic-info {
-	color: grey;
+	color: var(--eighty-grey);
 	font-weight: normal;
 }
 

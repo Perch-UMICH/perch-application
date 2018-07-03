@@ -3,14 +3,14 @@
 }
 
 .lab-text-info-form {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	padding: 20px;
 }
 
 .lab-text-info-input {
 	height: 150px !important;
-	background-color: #eee;
-	color: #666;
+	background-color: var(--e-grey);
+	color: var(--six-grey);
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
@@ -19,7 +19,7 @@
 }
 
 .lab-text-info-input:hover {
-	color: #666;
+	color: var(--six-grey);
 	border: none;
 }
 
@@ -29,7 +29,7 @@
 }
 
 #lab-name-input {
-	color: #eee;
+	color: var(--e-grey);
 	letter-spacing: 1px;
 }
 
@@ -37,7 +37,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 	color: white;
 	margin-bottom: 20px;
 	margin-left: -20px;
@@ -46,10 +46,10 @@
 }
 
 .lab-text-info-input:focus + label, #lab-name-input:focus + label  {
-  color: #0277bd;
+  color: var(--bright-blue);
 }
 
 #lab-name-input:focus {
-  border-bottom: 1px solid #29b6f6 !important;
-  box-shadow: 0 1px 0 0 #29b6f6;
+  border-bottom: 1px solid var(--active-blue) !important;
+  box-shadow: 0 1px 0 0 var(--active-blue);
 }

@@ -9,7 +9,7 @@
 
 .lab-srch-mods {
 	height: 100%;
-	background-color: lightgrey;
+	background-color: var(--d-three-grey);
 	display: inline-block;
 	position: relative;
 	left: 0;
@@ -23,30 +23,30 @@
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-top: 20px;
-	border-right: 1px solid lightgrey;
-	border-top: 1px solid lightgrey;
+	border-right: 1px solid var(--d-three-grey);
+	border-top: 1px solid var(--d-three-grey);
 }
 
 .lab-srch-depts {
 	height: 330px;
-	background-color: grey;
+	background-color: var(--eighty-grey);
 	width: 100%;
 	line-height: 330px;
 	text-align: center;
 }
 
 #lab-srch-input {
-	background-color: white;
+	background-color: var(--white);
 	padding-left: 20px;
 	width: calc(100% - 20px);
 	height: 50px;
-	border: 1px solid lightgrey;
+	border: 1px solid var(--d-three-grey);
 }
 
 #lab-srch-result-summary {
 	margin-top: -15px;
 	margin-bottom: 20px;
-	color: grey;
+	color: var(--eighty-grey);
 }
 
 #lab-srch-result-summary b {

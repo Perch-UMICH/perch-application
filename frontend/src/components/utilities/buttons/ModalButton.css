@@ -15,7 +15,7 @@
 	height: 120%;
 	top: 0;
 	left: 0;
-	background-color: black;
+	background-color: var(--black);
 	z-index: 999;
 	opacity: 0.2;
 }
@@ -49,9 +49,9 @@
 }
 
 .modal-btn {
-	border: 2px solid #eee;
-	background-color: #0277BD;
-	color: #eee;
+	border: 2px solid var(--e-grey);
+	background-color: var(--bright-blue);
+	color: var(--e-grey);
 }
 
 #studentListButton {
@@ -60,7 +60,7 @@
 
 .fe-test {
 	display: inline-block;
-	color: #eee;
+	color: var(--e-grey);
 	padding-right: 10px;
 }
 

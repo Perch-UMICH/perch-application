@@ -11,15 +11,15 @@
 	font-size: 50px;
 	text-transform: uppercase;
 	font-weight: 400;
-	background-color: white;
+	background-color: var(--white);
 	width: 700px;
 	margin: auto auto;
 }
 
 .perch-story-block-L, .perch-story-block-R {
-	/*background-color: rgb(2, 119, 189);*/
+	/*background-color: var(--bright-blue);*/
 	background-color: var(--bright-blue);
-	color: white;
+	color: var(--white);
 	max-height: 300px;
 	width: 400px;
 	position: absolute;

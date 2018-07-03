@@ -1,5 +1,5 @@
 .bio-tab {
-	color: grey;
+	color: var(--eighty-grey);
 	letter-spacing: 1px;
 	padding: 10px 20px;
 	margin-bottom: 25px;
@@ -9,7 +9,7 @@
 	float: right;
 	margin-right: 5px;
 	margin-top: 2px;
-	color: white;
+	color: var(--white);
 }
 
 #bio-editor {

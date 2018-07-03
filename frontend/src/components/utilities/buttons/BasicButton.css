@@ -5,34 +5,34 @@
 }
 
 .basic-btn {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 	box-shadow: none;
 	letter-spacing: 1px;
 }
 
 .basic-btn:hover {
-	background-color: #4fc3f7 ;
+	background-color: var(--seafoam-blue) ;
 	box-shadow: none;
 }
 
 .basic-btn:focus {
-	background-color: #0277bd;
+	background-color: var(--bright-blue);
 }
 
 .basic-btn-light {
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 	box-shadow: none;
 	letter-spacing: 1px;
-	color: white;
+	color: var(--white);
 }
 
 .basic-btn-light:hover {
-	background-color: #4fc3f7 ;
+	background-color: var(--seafoam-blue) ;
 	box-shadow: none;
 }
 
 .basic-btn-light:focus {
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 }
 
 .inline-icon: {

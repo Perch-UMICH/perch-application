@@ -1,8 +1,8 @@
 .footer {
-	background-color: rgb(2, 119, 189);
+	background-color: var(--bright-blue);
 	width: 100%;
 	min-width: 1200px;
-	color: white;
+	color: var(--white);
 	display: flex;
 	position: relative;
 	padding: 10px 0px 15px 50px;
@@ -29,5 +29,5 @@
 }
 
 .white-link {
-	color: white;
+	color: var(--white);
 }

@@ -1,11 +1,11 @@
 .ext-link-box {
 	color: white;
-	background-color: rgb(41, 182, 246);
+	background-color: var(--active-blue);
 	text-transform: uppercase;
 	text-align: center;
 	padding: 20px;
 	letter-spacing: 2px;
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid var(--e-grey);
 	transition: .2s ease;
 	position: relative;
 	cursor: pointer;
@@ -13,7 +13,7 @@
 }
 
 .ext-link-box:hover {
-	background-color: white;
-	color: rgb(41, 182, 246);
+	background-color: var(--white);
+	color: var(--active-blue);
 	transition: .2s ease;
 }

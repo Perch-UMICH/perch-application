@@ -1,4 +1,4 @@
 body {
-	background-color: #eee;
+	background-color: var(--e-grey);
   	background-size: 100% auto;
 }
