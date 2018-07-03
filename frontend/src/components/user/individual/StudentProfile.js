@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
-import SquareButton from '../../utilities/buttons/SquareButton';
-import SkillsTab from '../SkillsTab';
-import InterestsTab from '../InterestsTab';
-import BioTab from '../BioTab';
-import AcademicsTab from './AcademicsTab';
-import PastResearchTab from './PastResearchTab';
-import Endorsements from './Endorsements'
-import ContactTab from '../ContactTab'
 import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
-import ExtLinks from '../ExtLinks'
-import $ from 'jquery'
+import ExpanderIcons from '../../utilities/ExpanderIcons'
 import './StudentProfile.css';
 
 var FontAwesome = require('react-fontawesome');
@@ -105,7 +96,7 @@ class StudentProfile extends Component {
 	 				<div>
 	 					<h1><i className='em em-brain'/></h1>
 	 					<div>
-	 						<div><b>GPA</b> 3.99999</div>
+	 						<div><b>GPA</b> 3.99</div>
 	 						<div><b>Year</b> Senior</div>
 	 						<StudentClasses list={["EECS 281", "EECS 388", "EECS 376", "EECS 370"]}/>
 	 					</div>
@@ -125,6 +116,11 @@ class StudentProfile extends Component {
 	 					</div>
 	 				</div>
 	 			</div>
+	 			<div id='student-column-R'>
+	 				<div className='ad'></div>
+	 				<div className='ad'></div>
+	 				<div className='ad'></div>
+	 			</div>
 	 			<div id='student-profile-column-C'>
 	 				<div id='student-quickview'>
 	 					<img id='student-quickview-img' src='/img/headshots/bbear.jpg'/>
@@ -134,8 +130,8 @@ class StudentProfile extends Component {
 	 				</div>
 	 				<div>
 	 					<h1>Work Experience</h1>
-	 					<StudentWorkExperience />
-	 					<StudentWorkExperience />
+	 					<StudentWorkExperience title="Dr. Patel's Neursurgery Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
+	 					<StudentWorkExperience title="Dr. Ramaswamy's Pharmaceutical Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
 	 				</div>
 	 				<div id='student-education'>
 	 					<h1>Education</h1>
@@ -205,10 +201,19 @@ class StudentClasses extends Component {
 }
 
 class StudentWorkExperience extends Component {
+	expand() {
+		document.getElementById(`student-work-description-${this.props.title}`).classList.toggle('expand')
+	}
+
 	render() {
 		return(
-			<div className='student-work-experience'>
-				Hey yall
+			<div id={`student-work-${this.props.title}`} className='student-work-experience'>
+				<div className='student-work-title'>{this.props.title}</div>
+				<div className='student-work-time'>
+					{`${this.props.startTime} - ${this.props.endTime}`}
+				</div>
+				<div id={`student-work-description-${this.props.title}`} className='student-work-description'>{this.props.description}</div>
+				<ExpanderIcons id={`student-work-${this.props.title}`} action={this.expand.bind(this)}/>
 			</div>
 		)
 	}

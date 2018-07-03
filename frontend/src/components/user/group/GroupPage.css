@@ -112,7 +112,7 @@
 #group-quick-info, #group-contact-info {
     width: 100%;
     background-color: var(--white);
-    border-radius: 20px 0 0 40px;
+    border-radius: var(--border-radius-R);
     overflow: hidden;
     transition: 0.2s ease;
     border: 1px solid var(--d-three-grey);
@@ -132,7 +132,6 @@
 .group-info-box {
     justify-content: center;
     background-color: var(--white);
-    margin-bottom: 15px;
     overflow: hidden;
     padding: 10px 20px 10px 20px;
 }
