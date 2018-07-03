@@ -15,7 +15,10 @@ class GroupPage extends Component {
 					<Administrators />
 					<Members />
 				</div>
-				<div id='group-page-column-R'>Right Column</div>
+				<div id='group-page-column-R'>
+                    <QuickInfo />
+                    <ContactInfo />
+                </div>
 				<div id='group-page-main'>
 					<GroupQuickview />
 					<GroupProjectContainer>
@@ -81,6 +84,35 @@ const GroupPerson = (props) => {
 		</div>
 
 	);
+}
+
+const QuickInfo = () => {
+    return( 
+        <div id='group-quick-info'>
+            <h1>Quick Info</h1>
+            <div className='group-info-box'>
+                <div className='group-info-box-heading'>UNIVERSITY</div>
+                <div className='group-info-box-content'>University of Michigan</div>
+                <div className='group-info-box-heading'>DEPARTMENTS</div>
+                <div className='group-info-box-content'>Chemistry</div>
+                <div className='group-info-box-heading'>RESEARCH AREAS</div>
+                <div className='group-info-box-content'>Polymers, Computational Chemistry, Lattes</div>
+            </div>
+        </div>
+    )
+} 
+
+const ContactInfo = () => {
+    return(
+        <div id='group-contact-info'>
+            <h1>Contact Info</h1>
+            <div className='group-info-box'>
+                <div className='group-info-box-content'><b>Email</b> <a href='mailto:rodriguez@perch.edu'>rodriguez@perch.edu</a></div>
+                <div className='group-info-box-content'><b>Phone</b> (741)867-5309</div>
+                <div className='group-info-box-content'><b>Office</b> 1800 Chemistry</div>
+            </div>
+        </div>
+    )
 }
 
 export default GroupPage;
