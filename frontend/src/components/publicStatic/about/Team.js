@@ -141,9 +141,6 @@ class Team extends Component {
         <div key="one-blank-for-offset" className="table-card-container">
           <div className="card-placehold"></div>
         </div>
-        <div key="two-blank-for-offset" className="table-card-container">
-          <div className="card-placehold"></div>
-        </div>
       </div>
 
     var perchiodicTable =
