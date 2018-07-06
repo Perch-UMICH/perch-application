@@ -3,8 +3,10 @@
 }
 
 .notable-classes-form {
-	background-color: var(--bright-blue);
+	background-color: var(--white);
 	padding: 20px;
+	border: var(--grey-shadow);
+	border-radius: var(--border-radius-C);
 }
 
 
@@ -46,7 +48,7 @@
 
 .year-selector {
 	text-transform: uppercase;
-	color: var(--e-grey);
+	color: var(--six-grey);
 }
 
 .year-selector-item {
@@ -55,7 +57,7 @@
 }
 
 .caret {
-	color: var(--white) !important;
+	color: var(--active-blue) !important;
 }
 
 .dropdown-content {

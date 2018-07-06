@@ -3,8 +3,10 @@
 }
 
 .past-research-form {
-	background-color: var(--bright-blue);
+	background-color: var(--white);
+	border: var(--grey-shadow);
 	padding: 20px;
+	border-radius: var(--border-radius-C);
 }
 
 .past-research-input {

@@ -5,6 +5,7 @@
 .student-bio-form {
 	background-color: var(--bright-blue);
 	padding: 20px;
+	border-radius: var(--border-radius-C);
 }
 
 .student-bio-input {

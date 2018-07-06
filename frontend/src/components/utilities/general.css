@@ -85,7 +85,7 @@
 }
 
 .gen-input {
-	color: white !important;
+	color: var(--six-grey) !important;
 	letter-spacing: 1px;
 }
 
