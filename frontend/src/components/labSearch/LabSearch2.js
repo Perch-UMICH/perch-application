@@ -10,8 +10,8 @@ import '../user/individual/PickYourInterests.css';
 import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser} from '../../helper.js'
 import {getFilters} from '../../data/filterData';
 
-const filterTypes = ['departments', 'researchAreas', 'minReqs', 'other'];
-const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Other'];
+const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
+const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Lab Skills'];
 
 class LabSearch extends Component {
 	constructor(props) {

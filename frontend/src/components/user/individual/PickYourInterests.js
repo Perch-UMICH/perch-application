@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
-import SquareButton from '../../utilities/buttons/SquareButton';
+import HugeButton from '../../utilities/buttons/HugeButton';
 import BubbleChoice	from '../../utilities/BubbleChoice';
 import Bubble from '../../utilities/Bubble';
 import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab, syncSkillsToLab, syncTagsToLab} from '../../../helper.js';
@@ -27,7 +27,7 @@ class PickYourInterests extends Component {
 			s_id: getCurrentStudentId(),
 			l_id: getCurrentLabId(),
 		};
-		
+
 		this.updateBubbleChoice = this.updateBubbleChoice.bind(this);
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
@@ -44,67 +44,69 @@ class PickYourInterests extends Component {
 	componentDidMount() {
 		var header_txt, placeholder_txt, dest = "";
 		var url_arr = this.props.location.pathname.split('/');
-		
+		var isLab = false; // isLab();
+		var isStudent = true; //isStudent();
+
 		if (url_arr[1] === "update-interests" || url_arr[1] === "pick-your-interests") {
-			if (isLab()) {
-	            this.setState({ 
-					display_info: Object.assign({}, this.state.display_info, {
-				      	header_txt: "Your Lab Labels",
-				  		placeholder_txt: "descriptors for your lab work",
-				  		user_type: 'faculty',
-				  		req_type: 'tags',
-				  		user_id: getCurrentLabId(),
-					}),
-				});
-			} 
-			else if (isStudent()) {
-			    this.setState({ 
-					display_info: Object.assign({}, this.state.display_info, {
-		      	    	header_txt: "Your Interests",
-		      			placeholder_txt: "field of interest",
-		      			user_type: 'student',
-		      			req_type: 'tags',
-		      			user_id: getCurrentUserId(),
+			if (isLab) {
+	         this.setState({
+						display_info: Object.assign({}, this.state.display_info, {
+				    header_txt: "Your Lab Labels",
+				  	placeholder_txt: "descriptors for your lab work",
+				  	user_type: 'faculty',
+				  	req_type: 'tags',
+				  	user_id: getCurrentLabId(),
 					}),
 				});
 			}
-		} 
+			else if (isStudent) {
+			    this.setState({
+						display_info: Object.assign({}, this.state.display_info, {
+		      	header_txt: "Your Interests",
+		      	placeholder_txt: "field of interest",
+		      	user_type: 'student',
+		      	req_type: 'tags',
+		      	user_id: getCurrentUserId(),
+					}),
+				});
+			}
+		}
 		else if (url_arr[1] === "update-skills" || url_arr[1] === "lab-skills") {
-			if (isLab()) {
-                this.setState({ 
-					display_info: Object.assign({}, this.state.display_info, {
-		      	    	header_txt: "Necessary Lab Skills",
+			if (isLab) {
+        this.setState({
+						display_info: Object.assign({}, this.state.display_info, {
+		      	header_txt: "Necessary Lab Skills",
 						placeholder_txt: "Skills used to work in your lab",
 						user_type: 'faculty',
 						req_type: 'skills',
 						user_id: getCurrentLabId(),
 					}),
-                });
-			} 
-			else if (isStudent()) {
-                this.setState({ 
-					display_info: Object.assign({}, this.state.display_info, {
-		      	    	header_txt: "Your Lab Skills",
+        });
+			}
+			else if (isStudent) {
+          this.setState({
+						display_info: Object.assign({}, this.state.display_info, {
+		      	header_txt: "Your Lab Skills",
 						placeholder_txt: "Skills you are competent in",
 						user_type: 'student',
 						req_type: 'skills',
 						user_id: getCurrentUserId(),
 					}),
-                });
+        });
 			}
 		}
 
 		if (url_arr[1] === "update-interests" || url_arr[1] === "update-skills") {
 			this.setState({btn_msg: 'save'});
-			if (isLab()) {
+			if (isLab) {
 				this.setState({dest: `/prof-page/${getCurrentLabId()}`});
-			} else if (isStudent()) {
+			} else if (isStudent) {
 				this.setState({dest: `/student-profile/${getCurrentUserId()}`});
 			}
 		} else {
-			if (isLab()) {
+			if (isLab) {
 				this.setState({dest: `/prof-page/${getCurrentLabId()}`}); // UPDATE FOR FACULTY FLOW
-			} else if (isStudent()) {
+			} else if (isStudent) {
 				this.setState({dest: '/notable-classes'});
 			}
 		}
@@ -163,12 +165,8 @@ class PickYourInterests extends Component {
 	render() {
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
-				{/*
-				{this.state.bubble_array.map((bubble) => {
-					return (<div key={bubble.id}> {bubble.name} </div>)
-				})}*/}
 				<BubbleChoice ref='bubble_choice' display_info={this.state.display_info} callbackSkills={this.updateBubbleChoice}/>
-				<SquareButton superClick={this.saveAndContinue} label={this.state.btn_msg}/>
+				<HugeButton superClick={this.saveAndContinue} msg={this.state.btn_msg}/>
 			</div>
 		);
 	}

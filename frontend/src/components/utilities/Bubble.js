@@ -8,18 +8,19 @@ class Bubble extends Component {
 	}
 
 	render() {
-
+		var bubbleCSS = "bubble ";
 		if (this.props.type === 'adder') {
 			this.interior = <i className="material-icons bubble-icon">add</i>
 		}
 		else {
+			bubbleCSS += "selected"
 			this.interior = <i className="material-icons bubble-icon">clear</i>
 		}
 
 		return(
-			<div className='bubble' >
+			<div className={bubbleCSS} >
 				{this.interior}
-				{this.props.txt}
+				<div className="bubble-text">{this.props.txt}</div>
 			</div>
 		);
 	}
