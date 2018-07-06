@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
+import Editor from '../../utilities/Editor'
 import './StudentProfile.css';
 
 var FontAwesome = require('react-fontawesome');
@@ -100,6 +101,7 @@ class StudentProfile extends Component {
 	 						<div><b>Year</b> Senior</div>
 	 						<StudentClasses list={["EECS 281", "EECS 388", "EECS 376", "EECS 370"]}/>
 	 					</div>
+	 					<Editor href='/'/>
 	 				</div>
 	 				<div>
 	 					<h1><i class="em em-telephone_receiver"></i></h1>
@@ -107,6 +109,7 @@ class StudentProfile extends Component {
 	 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bearb@umich.edu</a></div>
 	 						<div><b>Phone</b> 815 262 6642</div>
 	 					</div>
+	 					<Editor href='/'/>
 	 				</div>
 	 				<div id='user-links'>
 	 					<h1><i className='em em-link'/></h1>
@@ -114,6 +117,7 @@ class StudentProfile extends Component {
 	 						<a>LinkedIn</a>
 	 						<a>Resume</a>
 	 					</div>
+	 					<Editor href='/'/>
 	 				</div>
 	 			</div>
 	 			<div id='user-column-R'>
@@ -132,9 +136,11 @@ class StudentProfile extends Component {
 	 					<h1>Work Experience</h1>
 	 					<UserWorkExperience title="Dr. Patel's Neursurgery Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
 	 					<UserWorkExperience title="Dr. Ramaswamy's Pharmaceutical Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
+	 					<Editor href='/'/>
 	 				</div>
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
+	 					<Editor href='/'/>
 	 				</div>
 	 			</div>
 			</div>

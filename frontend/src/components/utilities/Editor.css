@@ -1,0 +1,15 @@
+.editor {
+	color: lightgrey;
+	position: absolute;
+	right: 12px;
+	top: 15px;
+	font-size: 12px;
+	transition: 0.2s ease;
+	cursor: pointer;
+	padding: 0 !important;
+}
+
+.editor:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
+}
