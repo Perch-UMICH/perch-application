@@ -1,13 +1,14 @@
 .huge-btn {
-	background-color: var(--active-blue);
+	background-color: var(--bright-blue);
 	/*border: 6px solid var(--bright-blue);*/
 	width: 100%;
 	margin-bottom: 20px;
+	border-radius: var(--border-radius-C) !important;
 	height: 80px;
 	padding: 0px;
 }
 
-.huge-btn:hover {
-	background-color: var(--seafoam-blue) ;
+.huge-btn:hover, .huge-btn:active, .huge-btn:focus {
+	background-color: var(--active-blue) ;
 	box-shadow: none;
 }

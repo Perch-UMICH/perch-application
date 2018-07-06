@@ -100,7 +100,37 @@ exports.getFilters = (type) => {
         {
           friendlyName: "Medicine",
           slug: "medicine",
-          subFilts: [],
+          subFilts: ['dermatology', 'pediatrics', 'obstetrics', 'optometry', 'oncology', 'optometry', 'neurology'],
+        },
+        {
+          friendlyName: "Dermatology",
+          slug: "dermatology",
+          isSubFilt: true,
+        },
+        {
+          friendlyName: "Pediatrics",
+          slug: "pediatrics",
+          isSubFilt: true,
+        },
+        {
+          friendlyName: "Obstetrics",
+          slug: "obstetrics",
+          isSubFilt: true,
+        },
+        {
+          friendlyName: "Oncology",
+          slug: "oncology",
+          isSubFilt: true,
+        },
+        {
+          friendlyName: "Optometry",
+          slug: "optometry",
+          isSubFilt: true,
+        },
+        {
+          friendlyName: "Neurology",
+          slug: "neurology",
+          isSubFilt: true,
         },
       ]
     );
@@ -109,84 +139,44 @@ exports.getFilters = (type) => {
     return(
       [
         {
-          friendlyName: "Research Area 1",
-          slug: "ra1",
+          friendlyName: "Social Sciences",
+          slug: "soc-sci",
           subFilts: [],
         },
         {
-          friendlyName: "Research Area 2",
-          slug: "ra2",
-          subFilts: ['ra2s1', 'ra2s2', 'ra2s3', 'ra2s4'],
+          friendlyName: "Health Sciences",
+          slug: "health-sci",
+          subFilts: [],
         },
         {
-          friendlyName: "Research Area 2 Sub 1",
-          slug: "ra2s1",
-          isSubFilt: true,
+          friendlyName: "Engineering",
+          slug: "engin-area",
+          subFilts: [],
         },
         {
-          friendlyName: "Research Area 2 Sub 2",
-          slug: "ra2s2",
-          isSubFilt: true,
+          friendlyName: "Arts & Humanities",
+          slug: "art-human",
+          subFilts: [],
         },
         {
-          friendlyName: "Research Area 2 Sub 3",
-          slug: "ra2s3",
-          isSubFilt: true,
+          friendlyName: "Life Sciences",
+          slug: "life-sci",
+          subFilts: [],
         },
         {
-          friendlyName: "Research Area 2 Sub 4",
-          slug: "ra2s4",
-          isSubFilt: true,
+          friendlyName: "Natural Sciences",
+          slug: "natural-sci",
+          subFilts: [],
         },
         {
-          friendlyName: "Research Area 3",
-          slug: "ra3",
-          subFilts: ['ra3s1', 'ra3s2', 'ra3s3', 'ra3s4'],
+          friendlyName: "Environmental Sciences",
+          slug: "enviro-sci",
+          subFilts: [],
         },
         {
-          friendlyName: "Research Area 3 Sub 1",
-          slug: "ra3s1",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Research Area 3 Sub 2",
-          slug: "ra3s2",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Research Area 3 Sub 3",
-          slug: "ra3s3",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Research Area 3 Sub 4",
-          slug: "ra3s4",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Research Area 4",
-          slug: "ra4",
-          subFilts: ['ra4s1', 'ra4s2', 'ra4s3', 'ra4s4'],
-        },
-        {
-          friendlyName: "Research Area 4 Sub 1",
-          slug: "ra4s1",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Research Area 4 Sub 2",
-          slug: "ra4s2",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Research Area 4 Sub 3",
-          slug: "ra4s3",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Research Area 4 Sub 4",
-          slug: "ra4s4",
-          isSubFilt: true,
+          friendlyName: "Public Health",
+          slug: "pub-health",
+          subFilts: [],
         },
       ]
     );
@@ -195,105 +185,70 @@ exports.getFilters = (type) => {
     return(
       [
         {
-          friendlyName: "Year",
-          slug: "year",
-          subFilts: ['freshman', 'sophomore', 'junior', 'senior'],
+          friendlyName: "Minimum Hours/Week",
+          slug: "hours-per-week",
+          subFilts: ['4-6', '6-8', '8-10', '10-12'],
         },
         {
-          friendlyName: "Freshman",
-          slug: "freshman",
+          friendlyName: "4-6",
+          slug: "4-6",
           isSubFilt: true,
         },
         {
-          friendlyName: "Sophomore",
-          slug: "sophomore",
+          friendlyName: "6-8",
+          slug: "6-8",
           isSubFilt: true,
         },
         {
-          friendlyName: "Junior",
-          slug: "junior",
+          friendlyName: "8-10",
+          slug: "8-10",
           isSubFilt: true,
         },
         {
-          friendlyName: "Senior",
-          slug: "senior",
+          friendlyName: "10-12",
+          slug: "10-12",
           isSubFilt: true,
-        },
-        {
-          friendlyName: "Minimum GPA",
-          slug: "min_gpa",
-          subFilts: ['none', 'gpa2_0', 'gpa3_0', 'gpa3_5'],
-        },
-        {
-          friendlyName: "None",
-          slug: "none",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "2.0",
-          slug: "gpa2_0",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "3.0",
-          slug: "gpa3_0",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "3.5",
-          slug: "gpa3_5",
-          isSubFilt: true,
-        },
-        {
-          friendlyName: "Ability to Balance Pencil on Head",
-          slug: "pencil_balancing",
-          subFilts: [],
-        },
-        {
-          friendlyName: "For Credit",
-          slug: "for_credit",
-          subFilts: [],
-        },
-        {
-          friendlyName: "Gourmet Chef Lunches",
-          slug: "lunch_provided",
-          subFilts: [],
-        },
-        {
-          friendlyName: "Has at least one miniature pig calendar",
-          slug: "mini_pig",
-          subFilts: [],
         },
       ]
     );
   }
-  else if (type === 'other') {
+  else if (type === 'lab-skills') {
     return(
       [
         {
-          friendlyName: "Will you feed my cat on vacation?",
-          slug: "cat_vacay",
+          friendlyName: "Animal Research",
+          slug: "animal-research",
           subFilts: [],
         },
         {
-          friendlyName: "Can you do a handstand?",
-          slug: "handstand",
-          subFilts: ['handstand_yes', 'handstand_hecksyes', 'handstand_now'],
+          friendlyName: "Computer Programming",
+          slug: "computer-programming",
+          subFilts: [],
         },
         {
-          friendlyName: "yes",
-          slug: "handstand_yes",
-          isSubFilt: true,
+          friendlyName: "Data Collection & Analysis",
+          slug: "data-collection",
+          subFilts: [],
         },
         {
-          friendlyName: "HECKS TO THE YES",
-          slug: "handstand_hecksyes",
-          isSubFilt: true,
+          friendlyName: "Clinical Research",
+          slug: "clinical-research",
+          subFilts: [],
         },
         {
-          friendlyName: "I\'m doing a handstand right now",
-          slug: "handstand_now",
-          isSubFilt: true,
+          friendlyName: "Community Research",
+          slug: "community-research",
+          subFilts: [],
+        },
+        {
+          friendlyName: "Library/Archival/Internet",
+          slug: "library-archival-internet",
+          subFilts: [],
+        },
+        {
+          friendlyName: "Experimental Research",
+          slug: "experimental-research",
+          subFilts: [],
         },
       ]
     );

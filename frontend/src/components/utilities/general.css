@@ -23,7 +23,7 @@
     --seventy-five-grey: #757575;
 	--six-grey: #666;
     --fifty-seven-grey: #575757;
-    --four-c-grey: #4C4C4C; 
+    --four-c-grey: #4C4C4C;
 	--black: #000; /*CSS black*/
 
 	/*Low opacity shadow*/
@@ -48,9 +48,11 @@
 	--t12-color: #41f483;
 
 	/* Border radius */
-	--border-radius-C: 0 20px 0 40px;
-	--border-radius-L: 20px 0 0 40px;
-	--border-radius-R: 0 20px 40px 0;
+	--border-radius-small: 20px;
+	--border-radius-large: 40px;
+	--border-radius-C: 0 var(--border-radius-small) 0 var(--border-radius-large);
+	--border-radius-L: var(--border-radius-small) 0 0 var(--border-radius-large);
+	--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;
 }
 
 .active-blue-bg {

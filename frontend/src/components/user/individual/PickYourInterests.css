@@ -1,5 +1,4 @@
 .pick-your-interests {
-	background-color: var(--bright-blue);
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
@@ -10,24 +9,33 @@
 	display: flex;
 	flex-direction: row;
 	color: var(--white);
-	background-color: var(--bright-blue);
 	min-height: 60vh;
-	
+
 }
 
 .interest-header {
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--active-blue);
+	background-color: var(--bright-blue);
 	flex: none;
+	border-top-right-radius: var(--border-radius-small);
 }
 
 .interest-section {
-	border-right: 0.1px solid var(--white);
-	border-bottom: 0.1px solid var(--white);
+	margin: 0px 15px;
 	padding: 0px !important;
+	background-color: var(--e-grey);
+	border: 1px solid lightgrey;
 	float: left;
+}
+
+.interest-section.left {
+	border-bottom-left-radius: var(--border-radius-large);
+}
+
+.interest-section.right {
+	border-top-right-radius: var(--border-radius-small);
 }
 
 .interest-body {
@@ -39,10 +47,11 @@
 .interest-search {
 	background-color: var(--white) !important;
 	color: var(--eighty-grey) !important;
-	padding-left: 10px !important;
+	padding-left: 9px !important;
 	height: 40px;
 	margin-bottom: 0px !important;
 	width: 97.8% !important;
 	/*width: 100% !important;*/
 	float: left;
+	border-bottom: 1px solid lightgrey !important;
 }

@@ -19,8 +19,6 @@ class BubbleChoice extends Component {
 		setTimeout(() => {
 			if (this.props.display_info.req_type === 'tags') {
 				getAllTags().then(resp => {
-					console.log("TAGS?");
-					console.log(resp);
 					if (resp.result) {
 						this.setState({ catalog: resp.result, filtered_catalog: resp.result.slice() });
 					}
@@ -29,8 +27,6 @@ class BubbleChoice extends Component {
 				});
 			} else {
 				getAllSkills().then(resp => {
-					console.log("skills?");
-					console.log(resp);
 					if (resp.result) {
 						this.setState({ catalog: resp.result, filtered_catalog: resp.result.slice() });
 					}
@@ -52,6 +48,7 @@ class BubbleChoice extends Component {
 						temp_choices = resp.skills;
 					}
 					var temp_catalog = this.state.catalog;
+				  temp_choices = temp_choices ? temp_choices : [];
 					/*temp_catalog = temp_catalog.filter( function( elt ) {
 					  return !temp_choices.includes( elt );
 					});*/
@@ -68,7 +65,7 @@ class BubbleChoice extends Component {
 							updated_catalog.push(temp_catalog[i]);
 						}
 					}
-				    this.setState({ 
+				    this.setState({
 				    	choices: temp_choices,
 				    	catalog: updated_catalog,
 				    	filtered_catalog: updated_catalog.slice(),
@@ -82,7 +79,6 @@ class BubbleChoice extends Component {
 		}
 		else if (this.props.display_info.user_type === 'faculty') {
 			getLab(getCurrentLabId()).then((resp) => {
-				console.log(this.props.display_info.req_type);
 				if (resp) {
 					if (this.props.display_info.req_type === 'tags') {
 						temp_choices = resp.tags;
@@ -90,6 +86,7 @@ class BubbleChoice extends Component {
 						temp_choices = resp.skills;
 					}
 					var temp_catalog = this.state.catalog;
+					temp_choices = temp_choices ? temp_choices : [];
 					/*
 					temp_catalog = temp_catalog.filter( function( elt ) {
 					  return !temp_choices.includes( elt );
@@ -107,7 +104,7 @@ class BubbleChoice extends Component {
 							updated_catalog.push(temp_catalog[i]);
 						}
 					}
-				    this.setState({ 
+				    this.setState({
 				    	choices: temp_choices,
 				    	catalog: updated_catalog,
 				    	filtered_catalog: updated_catalog.slice(),
@@ -180,7 +177,7 @@ class BubbleChoice extends Component {
 	render() {
 		return(
 			<div className='row interest-container'>
-				<div className='interest-section col s6 left-align'>
+				<div className='interest-section left col s6 left-align'>
 					<input id='search-term' className='interest-search' type='text' placeholder={this.props.display_info.placeholder_txt} onChange={this.filterList.bind(this)} />
 					<div className='interest-body'>
 						{this.state.filtered_catalog.map((bubble) => {
@@ -189,7 +186,7 @@ class BubbleChoice extends Component {
 					</div>
 				</div>
 
-				<div className='interest-section col s6'>
+				<div className='interest-section right col s6'>
 					<div className='interest-header'>
 						{this.props.display_info.header_txt}
 					</div>

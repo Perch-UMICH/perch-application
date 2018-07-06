@@ -3,10 +3,21 @@
 	border-radius: 20px;
 	padding: 5px 10px;
 	margin: 2.5px 2.5px;
-	background-color: var(--active-blue);
+	background-color: var(--bright-blue);
 	color: var(--white);
 	letter-spacing: 1px;
 	font-size: 12px;
+	transition: all 0.2s ease;
+	cursor: pointer;
+	display: inline-flex;
+}
+
+.bubble:hover, .bubble:active, .bubble:focus {
+	background-color: var(--active-blue);
+}
+
+.bubble.selected {
+	background-color: var(--active-blue) !important;
 }
 
 .bubble-icon {
@@ -16,6 +27,7 @@
 	line-height: 20px;
 	color: var(--e-grey);
 	cursor: pointer;
+	display: inline;
 }
 
 .bubble-loader {
@@ -25,6 +37,11 @@
     width: 60px;
     height: 60px;
     animation: bubble-loader-spin 2s linear infinite;
+}
+
+.bubble-text {
+	display: inline-block;
+	line-height: 20px;
 }
 
 @keyframes bubble-loader-spin {
