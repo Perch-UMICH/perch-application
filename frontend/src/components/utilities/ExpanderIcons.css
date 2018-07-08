@@ -1,4 +1,5 @@
 .expand-icons, .expand-icons-filter-dropdown {
+	font-family: 'montserrat';
 	position: absolute;
 	color: var(--d-three-grey);
 	bottom: -5px;
