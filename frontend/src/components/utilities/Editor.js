@@ -5,8 +5,14 @@ import './Editor.css'
 // href prop is the link it should go to
 // TODO add a certification check attrbute
 class Editor extends Component {
+
 	action() {
-		window.location.href = this.props.href;
+		if (this.props.href) {
+			window.location.href = this.props.href;
+		}
+		else if (this.props.superClick) {
+			this.props.superClick();
+		}
 	}
 
 	render() {

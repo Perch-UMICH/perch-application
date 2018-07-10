@@ -11,7 +11,7 @@ class ResetEmailModal extends Component {
 	}
 
 	onClick(event) {
-	    $("#resetEmail").fadeOut("slow");
+	    $("#resetEmail").removeClass('activated');
 	    $('#modalBackdrop').fadeOut("slow");
 	}
 
