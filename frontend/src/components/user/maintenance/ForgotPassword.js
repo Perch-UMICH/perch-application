@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import alertify from 'alertify.js';
 import iziToast from 'izitoast';
 import BasicButton from '../../utilities/buttons/BasicButton';
+import './ForgotPassword.css'
 
 class ForgotPassword extends Component {
 	constructor(props) {
@@ -74,10 +75,10 @@ class ForgotPassword extends Component {
 	validToken() {
 		return (
 			<div>
-				<div>
+				<div className='forgot-password-form container shift-down center-align'>
 			 		<div className="modal-content">
-			 			<h4> Reset Password </h4>
-			 			<p className="above-input"> Enter your and confirm your desired new password below, then click update. </p>
+			 			<h1 className="forgot-password-heading center-align"> Reset Password </h1>
+			 			<p className="above-input center-align"> Enter and confirm your desired new password below, then click update. </p>
           				<div className="input-field narrow">
         	                <input id="new_password" type="password" required />
         	                <label htmlFor="new_password">New Password</label>
@@ -100,7 +101,7 @@ class ForgotPassword extends Component {
 			<div className='error-page-container valign-wrapper'>
 				<div className='container center-align'>
 					{<img src='/assets/PERCH_MASCOT.svg' className='logo hide-on-med-and-down' style={{height: '250px'}} alt=""/>}
-						<div className='error-message'><b>You forgot your passord. <br/> Here's your token: {this.state.token} </b></div>
+						<div className='error-message'><b>You forgot your password. <br/> Here's your token: {this.state.token} </b></div>
 				</div>
 			</div>
 		);

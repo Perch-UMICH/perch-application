@@ -3,6 +3,7 @@ import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getStudentFromUse
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
+import EditModal from '../../utilities/modals/EditModal'
 import './StudentProfile.css';
 
 var FontAwesome = require('react-fontawesome');
@@ -10,6 +11,7 @@ var FontAwesome = require('react-fontawesome');
 class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
+		this.openModal = this.openModal.bind(this);
 		this.state = {
 			img_src: '/img/meha.jpg',
 			endorsements: [
@@ -37,7 +39,7 @@ class StudentProfile extends Component {
 	generalHandler() {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
-				var class_arr = []; 
+				var class_arr = [];
 				if (resp.result.classes) {
 					class_arr = resp.result.classes.split('|');
 				}
@@ -69,7 +71,7 @@ class StudentProfile extends Component {
 		return this;
 	}
 
-	// Beginning point for data handling 
+	// Beginning point for data handling
 	componentDidMount() {
 		getUser(this.retrieveSlug()).then(resp => {
 			if (resp.result) {
@@ -85,14 +87,43 @@ class StudentProfile extends Component {
 		// updateStudent(1, null, null, null, null, null, null, null, "experience1|experience2", "class1|class2")
 	}
 
+	// Handles opening of component editing modals
+	openModal(id) {
+		if (document.getElementById(id)) {
+			document.getElementById(id).classList.add('activated');
+			document.getElementById("greyBackdrop").classList.add('activated');
+		}
+	}
+
+	//
+	saveProfile() {
+		// should update and save profile from changes made during edit.
+	}
+
 	render() {
 		if (!isLoggedIn()) {
-			return <ErrorPage /> 
+			return <ErrorPage />
 		} else if (this.state.not_student) {
 			return <ErrorPage fourofour="true" />
 		} else {
 	 	return (
 	 		<div id='user-content-body'>
+				<div id="greyBackdrop" className="modal-backdrop"></div>
+				<EditModal id="contact-edit" title="Edit Contact Info">
+					<div> Edit Contact Info Component Here! </div>
+				</EditModal>
+				<EditModal id="link-edit" title="Edit Links">
+					<div> Edit Links Component Here! </div>
+				</EditModal>
+				<EditModal id="academics-edit" title="Edit Academic Info">
+					<div> Edit Academic Info Component Here! </div>
+				</EditModal>
+				<EditModal id="work-edit" title="Edit Work Info">
+					<div> Edit Work Info Component Here! </div>
+				</EditModal>
+				<EditModal id="education-edit" title="Edit Education Info">
+					<div> Edit Education Info Component Here! </div>
+				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
 	 					<h1><i className='em em-brain'/></h1>
@@ -101,7 +132,7 @@ class StudentProfile extends Component {
 	 						<div><b>Year</b> Senior</div>
 	 						<StudentClasses list={["EECS 281", "EECS 388", "EECS 376", "EECS 370"]}/>
 	 					</div>
-	 					<Editor href='/'/>
+	 					<Editor superClick={() => this.openModal('academics-edit')}/>
 	 				</div>
 	 				<div>
 	 					<h1><i class="em em-telephone_receiver"></i></h1>
@@ -109,7 +140,7 @@ class StudentProfile extends Component {
 	 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bearb@umich.edu</a></div>
 	 						<div><b>Phone</b> 815 262 6642</div>
 	 					</div>
-	 					<Editor href='/'/>
+	 					<Editor superClick={() => this.openModal('contact-edit')}/>
 	 				</div>
 	 				<div id='user-links'>
 	 					<h1><i className='em em-link'/></h1>
@@ -117,7 +148,7 @@ class StudentProfile extends Component {
 	 						<a>LinkedIn</a>
 	 						<a>Resume</a>
 	 					</div>
-	 					<Editor href='/'/>
+	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>
 	 			</div>
 	 			<div id='user-column-R'>
@@ -134,17 +165,17 @@ class StudentProfile extends Component {
 	 				</div>
 	 				<div>
 	 					<h1>Work Experience</h1>
-	 					<UserWorkExperience title="Dr. Patel's Neursurgery Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
+	 					<UserWorkExperience title="Dr. Patel's Neurosurgery Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
 	 					<UserWorkExperience title="Dr. Ramaswamy's Pharmaceutical Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
-	 					<Editor href='/'/>
+	 					<Editor superClick={() => this.openModal('work-edit')}/>
 	 				</div>
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
-	 					<Editor href='/'/>
+	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
 	 			</div>
 			</div>
-			
+
 		);
 	 }
 	}
@@ -164,7 +195,7 @@ class StudentClasses extends Component {
 		return(
 			<div id='user-classes' >
 				<span onClick={this.expand.bind(this)}>
-					Notable Classes 
+					Notable Classes
 					<i className="material-icons" id='user-classes-expander'>expand_more</i>
 				</span>
 				<div id='user-classes-list'>

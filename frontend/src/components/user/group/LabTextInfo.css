@@ -3,19 +3,20 @@
 }
 
 .lab-text-info-form {
-	background-color: var(--bright-blue);
+	background-color: var(--white);
+	border-radius: var(--border-radius-C);
 	padding: 20px;
 }
 
 .lab-text-info-input {
 	height: 150px !important;
 	background-color: var(--e-grey);
+	/*box-shadow: 1px 1px 5px;*/
 	color: var(--six-grey);
 	padding: 10px;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 	margin-bottom: 10px;
 	display: block;
-	border: none;
 }
 
 .lab-text-info-input:hover {
@@ -29,7 +30,7 @@
 }
 
 #lab-name-input {
-	color: var(--e-grey);
+	color: var(--four-c-grey);
 	letter-spacing: 1px;
 }
 
@@ -37,8 +38,8 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--active-blue);
-	color: white;
+	background-color: var(--bright-blue);
+	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;
 	margin-right: -20px;
@@ -52,4 +53,12 @@
 #lab-name-input:focus {
   border-bottom: 1px solid var(--active-blue) !important;
   box-shadow: 0 1px 0 0 var(--active-blue);
+}
+
+#next-btn {
+	width: 275px;
+	letter-spacing: 1.5px;
+	border: 2px solid var(--white);
+	color: var(--white);
+	background-color: var(--active-blue);
 }

@@ -67,18 +67,18 @@ class Settings extends Component {
 	}
 
 	openEmailModal() { // superClick
-		$("#resetEmail").fadeIn("slow");
-        $("#modalBackdrop").fadeIn("slow");
+		$("#resetEmail").addClass('activated');
+    $("#modalBackdrop").fadeIn("slow");
 	}
 
 	openPasswordModal() { // superClick
-		$("#resetPassword").fadeIn("slow");
-        $("#modalBackdrop").fadeIn("slow");
+		$("#resetPassword").addClass('activated');
+    $("#modalBackdrop").fadeIn("slow");
 	}
 
 	openDeleteModal() { // superClick
-		$("#deleteUser").fadeIn("slow");
-        $("#modalBackdrop").fadeIn("slow");
+		$("#deleteUser").addClass('activated');
+    $("#modalBackdrop").fadeIn("slow");
 	}
 
 	render() {
@@ -105,7 +105,7 @@ class Settings extends Component {
 								<BasicButton icon='remove circle' superClick={this.openDeleteModal} msg='delete account'/>
 							</div>
 						</div>
-						<div className='container user-information'> 
+						<div className='container user-information'>
 							<b>Current User Information</b> <br/>
 							Name: {this.state.name} <br/>
 							Email: {this.state.email} <br/>

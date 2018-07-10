@@ -1,7 +1,7 @@
 // Text gathering component for both lab-name and lab-description pages
 
 import React, {Component} from 'react';
-import SquareButton from '../../utilities/buttons/SquareButton';
+import BasicButton from '../../utilities/buttons/BasicButton';
 import '../group/LabTextInfo.css';
 
 class LabTextInfo extends Component {
@@ -54,7 +54,7 @@ class LabTextInfo extends Component {
 					    		onChange={event => this.updateDescription(event)}>
 					    	</textarea>
 					    }
-						<SquareButton destination={dest} label={btn_msg}/>
+						<BasicButton destination={dest} msg={btn_msg}/>
 					</form>
 				</div>
 			</div>

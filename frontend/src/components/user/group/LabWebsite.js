@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SquareButton from '../../utilities/buttons/SquareButton'
+import BasicButton from '../../utilities/buttons/BasicButton'
 import './LabWebsite.css';
 
 class LabWebsite extends Component {
@@ -14,7 +14,7 @@ class LabWebsite extends Component {
 					<div className='lab-website-header'>Your Current Lab Website</div>
 					<form className='container input-field'>
 						<input className='lab-website-input' type="text" placeholder="lab website URL"></input>
-						<SquareButton destination='upload-image' label='next'/>
+						<BasicButton destination='upload-image' msg='next'/>
 					</form>
 				</div>
 			</div>

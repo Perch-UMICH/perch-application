@@ -80,7 +80,7 @@ class LabTextInfo extends Component {
 					    		onChange={event => this.updateDescription(event)}>
 					    	</textarea>
 					    }
-						<BasicButton msg={btn_msg} color='light' />
+						<BasicButton msg={btn_msg} /*color='light'*/ />
 					</form>
 				</div>
 			</div>

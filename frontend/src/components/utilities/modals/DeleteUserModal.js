@@ -13,7 +13,7 @@ class DeleteUserModal extends Component {
 	}
 
 	onClick(event) {
-	    $("#deleteUser").fadeOut("slow");
+	    $("#deleteUser").removeClass('activated');
 	    $('#modalBackdrop').fadeOut("slow");
 	}
 

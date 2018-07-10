@@ -3,8 +3,9 @@
 }
 
 .upload-image-form {
-	background-color: var(--bright-blue);
+	background-color: var(--white);
 	padding: 20px;
+	border-radius: var(--border-radius-C);
 }
 
 .upload-image-input {
@@ -18,9 +19,12 @@
 	display: block;
 }
 
-.upload-image-btn, 
+.upload-image-btn {
+	background-color: var(--bright-blue);
+}
+
 .upload-image-btn:hover {
-	background-color: var(--soft-blue);
+	background-color: var(--active-blue);
 }
 
 .upload-image-input:hover {
@@ -31,7 +35,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--active-blue);
+	background-color: var(--bright-blue);
 	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;
