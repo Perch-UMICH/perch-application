@@ -130,7 +130,7 @@ class StudentProfile extends Component {
 	 					<img id='user-quickview-img' src='/img/headshots/bbear.jpg'/>
 	 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
 	 					<div id='user-quickview-footer'>University of Michigan</div>
-	 					<div id='user-quickview-name'></div>
+	 					<div id='user-quickview-name'>Benji Bear</div>
 	 				</div>
 	 				<div>
 	 					<h1>Work Experience</h1>

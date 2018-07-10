@@ -1,0 +1,44 @@
+#edit-container {
+	width: 800px;
+	transform: translateY(-50%);
+	margin: auto auto;
+	margin-top: 40vh;
+	text-align: center;
+}
+
+/* For the form */
+#edit-container > form {
+	border: 1px solid lightgrey;
+	overflow: hidden;
+	background-color: white;
+}
+
+/* For the submit button */
+#edit-container > div {
+	margin-top: 20px;
+}
+
+#edit-bio > textarea {
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid lightgrey;
+}
+
+textarea:focus {
+	border-bottom: 2px solid var(--active-blue);
+	box-shadow: 0 2px 0 0 var(--active-blue);
+	outline: none;
+	transition: 0.2s ease;
+}
+
+textarea {
+	transition: 0.2s ease;
+	width: 100%;
+	padding: 10px 30px;
+	background-color: white;
+	color: grey;
+	margin-top: 0px;
+	display: block;
+	min-height: 250px;
+	resize: none;
+}

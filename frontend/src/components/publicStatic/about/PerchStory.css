@@ -34,7 +34,8 @@
 }
 
 .perch-story-block-L:hover, .perch-story-block-R:hover {
-	background-color: var(--active-blue);
+	/*background-color: var(--active-blue);*/
+	border-color: var(--active-blue);
 	transition: 0.2s ease;
 }
 
