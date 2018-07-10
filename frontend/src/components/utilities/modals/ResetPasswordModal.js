@@ -13,7 +13,7 @@ class ResetPasswordModal extends Component {
 	}
 
 	onClick(event) {
-	    $("#resetPassword").fadeOut("slow");
+	    $("#resetPassword").removeClass('activated');
 	    $('#modalBackdrop').fadeOut("slow");
 	}
 
