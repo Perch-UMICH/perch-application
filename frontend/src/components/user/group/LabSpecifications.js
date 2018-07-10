@@ -1,7 +1,7 @@
 // Text gathering component for both lab-name and lab-description pages
 
 import React, {Component} from 'react';
-import SquareButton from '../../utilities/buttons/SquareButton';
+import BasicButton from '../../utilities/buttons/BasicButton';
 import {getAllPreferences, getLabPreferences, getCurrentLabId, addPreferencesToLab} from '../../../helper'
 import './LabSpecifications.css';
 
@@ -75,7 +75,7 @@ class LabSpecifications extends Component {
 						})}
 						</ul>
 					</form>
-					<SquareButton destination={dest} label={btn_msg}/>
+					<BasicButton destination={dest} msg={btn_msg}/>
 				</div>
 			</div>
 		);

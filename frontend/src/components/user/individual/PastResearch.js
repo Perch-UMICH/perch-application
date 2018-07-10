@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import SquareButton from '../../utilities/buttons/SquareButton';
+import BasicButton from '../../utilities/buttons/BasicButton';
 import {getStudent, getStudentFromUser, getCurrentUserId, updateStudent} from '../../../helper.js';
-
 import './PastResearch.css';
 
 class PastResearch extends Component {
@@ -109,7 +108,7 @@ class PastResearch extends Component {
 									</div>
 								</div>);
 						})} <br/>
-						<SquareButton superClick={this.saveAndContinue} label={btn_msg}/>
+						<BasicButton superClick={this.saveAndContinue} msg={btn_msg}/>
 					</form>
 				</div>
 			</div>

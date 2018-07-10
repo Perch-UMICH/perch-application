@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
 import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, /*getFacultyLabs*/ } from '../../../helper.js';
-import SquareButton from '../../utilities/buttons/SquareButton';
+import BasicButton from '../../utilities/buttons/BasicButton';
 import './UploadImage.css';
 import axios from 'axios';
 import $ from 'jquery';
@@ -92,7 +92,7 @@ class UploadImage extends Component {
 							  <input className="file-path validate" id="img_file" type="text" placeholder="Upload file" />
 							</div>
 						</form>
-						<SquareButton superClick={this.clickUpload} label={this.state.btn_msg}/>
+						<BasicButton superClick={this.clickUpload} msg={this.state.btn_msg}/>
 					</div>
 				</div>
 			</div>

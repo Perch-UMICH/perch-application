@@ -91,7 +91,7 @@ class UpdateExternalLinks extends Component {
                                 <label htmlFor="contact-email">Website</label>
                             </div>
                         </div>}
-                        <BasicButton msg='save' color='light'/>
+                        <BasicButton msg='save' /*color='light'*//>
                     </form>
                 </div>
             </div>

@@ -3,8 +3,9 @@
 }
 
 .lab-website-form {
-	background-color: var(--bright-blue);
+	background-color: var(--white);
 	padding: 20px;
+	border-radius: var(--border-radius-C);
 }
 
 .lab-website-input {
@@ -12,7 +13,7 @@
 	background-color: var(--e-grey);
 	box-shadow: 1px 1px 5px;
 	border-bottom: 1px solid var(--e-grey);
-	color: var(--e-grey);
+	color: var(--b-grey);
 	padding: 10px;
 	letter-spacing: 2px;
 	margin-bottom: 10px;
@@ -29,7 +30,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--active-blue);
+	background-color: var(--bright-blue);
 	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;

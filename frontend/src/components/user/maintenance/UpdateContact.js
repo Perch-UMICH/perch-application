@@ -82,8 +82,8 @@ class UpdateContact extends Component {
 							</div>
 						</div>}
 						{this.state.url_string === "update-contact" ?  
-							<BasicButton msg='save' color='light' /> : 
-							<BasicButton msg='next' color='light' /> }
+							<BasicButton msg='save' /*color='light'*/ /> : 
+							<BasicButton msg='next' /*color='light'*/ /> }
 					</form>
 				</div>
 			</div>

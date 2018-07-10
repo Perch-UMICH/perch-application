@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SquareButton from '../../utilities/buttons/SquareButton';
+import BasicButton from '../../utilities/buttons/BasicButton';
 import {getStudent, getStudentFromUser, getCurrentStudentId, getCurrentUserId, updateStudent} from '../../../helper.js';
 import './PastResearch.css';
 
@@ -58,7 +58,7 @@ class StudentBio extends Component {
 							placeholder={this.state.placeholder} 
 							onChange={event => this.updateBioText(event)}>
 						</textarea>
-						<SquareButton superClick={this.saveAndContinue} label={btn_msg}/>
+						<BasicButton superClick={this.saveAndContinue} msg={btn_msg}/>
 					</form>
 				</div>
 			</div>
