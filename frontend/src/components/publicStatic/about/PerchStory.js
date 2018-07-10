@@ -16,20 +16,20 @@ class PerchStory extends Component {
 	render() {
 		return (
 			<div className="perch-story">
-			<div className='perch-story-header shadow'>The Perch Story</div>
+			<div className='perch-story-header'>The Perch Story</div>
 				{
 					story.map((item ) => {
 						if (this.left) {
 							this.left = 0;
 							let shift = this.lshift;
-							this.lshift += 270;
-							return <div className='perch-story-block-L shadow' style={{top: `${shift}px`}}>{item}</div>
+							this.lshift += 250;
+							return <div className='perch-story-block-L' style={{top: `${shift}px`}} dangerouslySetInnerHTML={{__html: item}}></div>
 						}
 						else {
 							this.left = 1;
 							let shift = this.rshift;
-							this.rshift += 320;
-							return <div className='perch-story-block-R shadow' style={{top: `${shift}px`}}>{item}</div>
+							this.rshift += 300;
+							return <div className='perch-story-block-R' style={{top: `${shift}px`}} dangerouslySetInnerHTML={{__html: item}}></div>
 						}
 					})
 				}

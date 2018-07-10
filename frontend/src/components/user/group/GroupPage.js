@@ -91,10 +91,7 @@ class GroupPage extends Component {
 const Administrators = (props) => {
 	return(
 		<div id='group-admins'>
-			<h1>
-				<i class="em em-female-office-worker"></i>
-				<i class="em em-male-office-worker"></i>
-			</h1>
+			<h1>Admins</h1>
 			<div className='group-photos'>
 				{props.people}
 			</div>
@@ -105,10 +102,7 @@ const Administrators = (props) => {
 const Members = (props) => {
 	return(
 		<div id='group-members'>
-			<h1>
-				<i class="em em-female-scientist"></i>
-				<i class="em em-male-technologist"></i>
-			</h1>
+			<h1>Members</h1>
 			<div className='group-photos'>
 				{props.people}
 			</div>

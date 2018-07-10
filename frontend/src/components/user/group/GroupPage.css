@@ -77,8 +77,9 @@
 }
 
 .group-person img {
-	width: 100%;
+	width: calc(100% - 6px);
 	display: block;
+	border: 3px solid white;
 }
 
 .group-person-overlay {

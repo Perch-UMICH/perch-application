@@ -1,6 +1,4 @@
 .perch-story {
-	/*color: black;
-	font-size: 100px;*/
 	padding: 40px 100px;
 	width: 1200px;
 	position: relative;
@@ -14,18 +12,25 @@
 	background-color: var(--white);
 	width: 700px;
 	margin: auto auto;
+	border: 4px solid var(--bright-blue);
+	color: var(--bright-blue);
 }
 
 .perch-story-block-L, .perch-story-block-R {
-	/*background-color: var(--bright-blue);*/
-	background-color: var(--bright-blue);
-	color: var(--white);
-	max-height: 300px;
+	background-color: white;
+	color: grey;
 	width: 400px;
 	position: absolute;
 	text-align: left;
 	padding: 20px;
 	transition: .2s ease;
+	border: 1px solid lightgrey;
+}
+
+.perch-story-block-L b, .perch-story-block-R b {
+	font-size: 140%;
+	font-weight: normal;
+	color: var(--bright-blue);
 }
 
 .perch-story-block-L:hover, .perch-story-block-R:hover {

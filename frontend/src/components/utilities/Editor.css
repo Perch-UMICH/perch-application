@@ -1,12 +1,13 @@
 .editor {
-	color: lightgrey;
 	position: absolute;
 	right: 12px;
-	top: 15px;
+	top: 10px;
 	font-size: 12px;
 	transition: 0.2s ease;
 	cursor: pointer;
 	padding: 0 !important;
+	font-size: 18px;
+	color: lightblue;
 }
 
 .editor:hover {
