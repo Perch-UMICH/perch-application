@@ -38,7 +38,7 @@ import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
 
-import {EditContactInfo} from './components/user/individual/StudentEditors';
+import {Test} from './components/user/individual/StudentEditors';
 
 class Router extends Component {
 	render() {
@@ -97,7 +97,7 @@ class Router extends Component {
 							<Route path='/forgot-password/:token' component={ ForgotPassword } />
 							<Route path='/privacy-policy' component={ PrivacyPolicy } />
 							<Route path='/terms-of-service' component={ TermsOfService } />
-							<Route path='/test' component={ EditContactInfo } />
+							<Route path='/test' component={ Test } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>

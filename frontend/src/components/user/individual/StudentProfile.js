@@ -4,6 +4,7 @@ import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
+import {EditContact} from './StudentEditors'
 import './StudentProfile.css';
 
 var FontAwesome = require('react-fontawesome');
@@ -110,13 +111,21 @@ class StudentProfile extends Component {
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
 				<EditModal id="contact-edit" title="Edit Contact Info">
-					<div> Edit Contact Info Component Here! </div>
+					<EditContact />
 				</EditModal>
 				<EditModal id="link-edit" title="Edit Links">
-					<div> Edit Links Component Here! </div>
+					<div className='input-field'>
+						<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com'/>
+						<label htmlFor='linkedin'>Linkedin</label>
+					</div>
+					<div className='input-field'>
+						<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
+						<label htmlFor='resume'>Resume</label>
+					</div>
 				</EditModal>
 				<EditModal id="academics-edit" title="Edit Academic Info">
 					<div> Edit Academic Info Component Here! </div>
+					<textarea placeholder='Four score and seven years ago ... '></textarea>
 				</EditModal>
 				<EditModal id="work-edit" title="Edit Work Info">
 					<div> Edit Work Info Component Here! </div>

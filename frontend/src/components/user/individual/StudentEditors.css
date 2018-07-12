@@ -4,6 +4,8 @@
 	margin: auto auto;
 	margin-top: 40vh;
 	text-align: center;
+	border-radius: var(--border-radius-C);
+	overflow: hidden;
 }
 
 /* For the form */
@@ -11,6 +13,7 @@
 	border: 1px solid lightgrey;
 	overflow: hidden;
 	background-color: white;
+	padding: 20px;
 }
 
 /* For the submit button */
@@ -34,11 +37,12 @@ textarea:focus {
 textarea {
 	transition: 0.2s ease;
 	width: 100%;
-	padding: 10px 30px;
+	padding: 10px 20px;
 	background-color: white;
 	color: grey;
 	margin-top: 0px;
 	display: block;
 	min-height: 250px;
 	resize: none;
+	border: 1px solid lightgrey;
 }

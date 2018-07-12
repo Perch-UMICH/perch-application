@@ -1564,9 +1564,26 @@ export function getSearchData() {
 }
 
 // Does backend lab search based on parameters
-export function labSearch() {
+// Each paramters should be an array
+// Areas: ['Social Sciences', 'Health Sciences', 'Engineering', 'Arts & Humanities', 'Life Sciences', 'Natural Sciences', 'Environmental Sciences', 'Public Health'];
+// Skills: ['Lab - Animal', 'Lab Research', 'Computer Programming', 'Data Collection and Analysis', 'Clinical Research', 'Community Research', 'Library/archival/internet Research', 'Experimental Research', 'Field Work'];
+// Commitments: [6, 8, 10, 12]
+// Departments: list is way too long will add later
+// Keywords: can be any string, will search for exact match
+
+// Returns array of matching projects, along with the location of the searched keyword in the "description" of the project
+export function labSearch(areas, skills, commitments, departments, keywords) {
     console.log('Performing search');
-    return axios.post('api/search')
+
+    let payload = {
+        tags: areas,
+        skills: skills,
+        commitments: commitments,
+        departments: departments,
+        keywords: keywords
+    };
+
+    return axios.post('api/search', payload)
         .then(response => {
             console.log(response.data.message);
             return response.data.result;

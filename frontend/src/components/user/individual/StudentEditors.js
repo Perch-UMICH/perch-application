@@ -23,7 +23,22 @@ export class EditBio extends Component {
 	}
 }
 
-export class EditContactInfo extends Component {
+// Example
+export const Test = () => (
+	<EditContainer title='Contact Info'><EditContact /></EditContainer>
+)
+
+// Generic container for when needed as standalone component
+export let EditContainer = (props) => (
+	<div id='edit-container'>
+		<h1>Edit {props.title}</h1>
+		{props.children}
+		<BasicButton msg='return'/>
+	</div>
+)
+
+// Content, flexible to other containres
+export class EditContact extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -33,14 +48,16 @@ export class EditContactInfo extends Component {
 	}
 	render() {
 		return(
-			<div id='edit-container'>
-				<form id='edit-contact-info'>
-					<h1>Edit Contact Info</h1>
-					<input placeholder='815-262-4141' value={this.state.phone} onChange={(e) => this.setState({phone: e.target.value})}/>
-					<input type='email' placeholder='bearb@umich.edu' value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}/>
-				</form>
-				<BasicButton msg='return'/>
-			</div>
+			<form id='edit-contact-info'>
+				<div className='input-field'>
+					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.phone} onChange={(e) => this.setState({phone: e.target.value})}/>
+					<label htmlFor='phone-number'>Phone</label>
+				</div>
+				<div className='input-field'>
+					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}/>
+					<label htmlFor='email'>Email</label>
+				</div>
+			</form>
 		)
 	}
 }

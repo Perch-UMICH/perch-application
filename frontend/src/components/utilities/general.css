@@ -55,6 +55,10 @@
 	--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;
 }
 
+* {
+	font-variant-ligatures: none;
+}
+
 .active-blue-bg {
 	background-color: var(--active-blue);
 	transition: 0.2s ease;
@@ -142,17 +146,14 @@ body {
 	display: inline-block;
 }
 
-input[type='text']:focus {
-  color: var(--active-blue);
-}
-
-input[type='text'] {
+input[type='text'], input[type='email'] {
 	color: var(--seventy-five-grey);
 }
 
-input[type='text']:focus {
-  border-bottom: 1px solid var(--active-blue) !important;
-  box-shadow: 0 1px 0 0 var(--active-blue) !important;
+input[type='text']:focus, input[type='email']:focus {
+	color: var(--active-blue);
+	border-bottom: 1px solid var(--active-blue) !important;
+	box-shadow: 0 1px 0 0 var(--active-blue) !important;
 }
 
 .expand {
@@ -180,4 +181,9 @@ a:hover {
 	color: var(--active-blue);
 	transition: 0.2s ease;
 	cursor: pointer;
+}
+
+input:focus + label {
+	color: var(--active-blue) !important;
+	transition: 0.2s ease;
 }
