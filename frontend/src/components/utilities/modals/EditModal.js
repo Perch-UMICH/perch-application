@@ -18,6 +18,7 @@ Modal for profile edit components; usage:
 
 import React, {Component} from 'react';
 import BasicButton from '../buttons/BasicButton';
+import './EditModal.css'
 
 class EditModal extends Component {
 
