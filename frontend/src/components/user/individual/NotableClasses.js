@@ -13,14 +13,16 @@ class NotableClasses extends Component {
 			year: '',
 			major: '',
 			student_id: getCurrentStudentId(),
-			class_arr: [],
-			url_string: this.props.location.pathname.split('/')[1],
+			class_arr: [{
+				id: 'c_0',
+				text: ''
+			}],
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 		this.state.c_index = this.state.class_arr.length;
 	}
 
-	componentDidMount() {
+	/* componentDidMount() {
 		var id = getCurrentUserId();
 		if (id) {
 			getStudentFromUser(id).then( r => {
@@ -54,7 +56,7 @@ class NotableClasses extends Component {
 		        });
 			});
 		}
-	}
+	}*/
 
 	updateClasses(event) {
 		this.setState({ classes: event.target.value });
@@ -65,7 +67,6 @@ class NotableClasses extends Component {
 	}
 
 	updateYear(event) {
-		console.log("UPDATING YEAR");
 		console.log(event.target.value);
 		this.setState({ year: event.target.value });
 	}
@@ -83,8 +84,8 @@ class NotableClasses extends Component {
 		};
 		var newCIndex = this.state.c_index + 1;
 		var updated_classes = this.state.class_arr.concat([newClass]);
-		this.setState({ 
-			class_arr: updated_classes, 
+		this.setState({
+			class_arr: updated_classes,
 			c_index: newCIndex,
 		});
 	}
@@ -93,7 +94,7 @@ class NotableClasses extends Component {
 		var temp_classes = this.state.class_arr;
 		var index = temp_classes.findIndex(item => item.id === class_id);
 		temp_classes[index].text = event.target.value;
-		this.setState({ 
+		this.setState({
 			class_arr: temp_classes,
 		});
 	}
@@ -103,15 +104,13 @@ class NotableClasses extends Component {
 			var temp_classes = prevState.class_arr;
 			var removeIndex = temp_classes.map(function(item) { return item.id; }).indexOf(class_id);
 			temp_classes.splice(removeIndex, 1);
-			return { 
+			return {
 				class_arr: temp_classes,
 			};
 		});
 	}
 
 	saveAndContinue(event) {
-		console.log("SELECTED: state:");
-		console.log(this.state);
 		var temp_year = $('#year_select').val();
 		var year = this.state.year;
 		if (temp_year) {
@@ -121,77 +120,52 @@ class NotableClasses extends Component {
 		for (var i = 1; i < this.state.class_arr.length; ++i) {
 			classString += '|' + this.state.class_arr[i].text;
 		}
-		updateStudent(this.state.student_id, null, null, this.state.major, year, this.state.gpa, null, null, null, classString, null).then(resp => {
-			console.log(resp);
-		}).then(resp => {
-			if (this.state.url_string === "update-notable-classes") {
-				window.location = `/student-profile/${getCurrentUserId()}`;
-			} else {
-				window.location = '/past-research';
-			}
-		});
 	}
 
 	render() {
-		var url_arr = this.props.location.pathname.split('/');
-		var btn_msg = 'next';
-		var header = 'Academics';
-		if (url_arr[1] === "update-notable-classes") {
-			btn_msg = 'save';
-			header = 'Update Academics';
-		}
-
 		return (
-			<div className='notable-classes shift-down'>
-				<div className='container center-align notable-classes-form shadow'>
-					<div className='notable-classes-header'>{header}</div>
-					<form className='container'>
-						<div className='row'>
-							<div className='input-field col s4'>
-								<div className='notable-classes-label left-align'>GPA</div>
-								<input className='gen-input' type='number' step="0.1"
-									placeholder='4.0' value={this.state.gpa} 
-									onChange={event => this.updateGPA(event)} />
-							</div>
-							<div className='input-field col s4'>
-								<div className='notable-classes-label left-align'>Major</div>
-								<input className='gen-input' type='text' 
-									placeholder='your major' value = {this.state.major}
-									onChange={event => this.updateMajor(event)} />
-							</div>
-							<div className='input-field col s4'>
-								<div className='notable-classes-label left-align'>Year</div>
-								<select className='year-selector' id="year_select" value={this.state.year}>
-							      <option className='year-selector-item' value="" disabled>Choose your year</option>
-							      <option className='year-selector-item' value="Freshman">Freshman</option>
-							      <option className='year-selector-item' value="Sophomore">Sophomore</option>
-							      <option className='year-selector-item' value="Junior" >Junior</option>
-							      <option className='year-selector-item' value="Senior">Senior</option>
-							      <option className='year-selector-item' value="Senior+">Senior+</option>
-							    </select>
-							   
-							</div>
-						</div>
-						<div className='notable-classes-label left-align class-creation-label'>
-							List your notable classes
-							<a onClick={this.addClass.bind(this)} id="addQuestion" > <i className="material-icons">add</i></a>
-						</div>
-					    {this.state.class_arr.map((c) => {
-							return (
-								<div className="row" key={c.id}>
-									<div className="col s11">
-										{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
-										<textarea id={c.id} type="text" placeholder="EECS 281" className='notable-classes-input' id="class-input" rows='1' value={c.text} onChange={event => this.alterClass(event, c.id)} required></textarea>
-									</div>
-									<div className="col s1">
-										<a id={c.id} className="remove-question" onClick={() => this.removeClass(c.id)}><i className="material-icons interest-editor opacity-1">clear</i></a>
-									</div>
-								</div>);
-						})} <br/>
-						<SquareButton superClick={this.saveAndContinue} label={btn_msg}/>
-					</form>
+			<form className='container'>
+				<div className='row'>
+					<div className='input-field col s4'>
+						<div className='notable-classes-label left-align'>GPA</div>
+						<input type='number' step="0.1"
+							placeholder='4.0' value={this.state.gpa}
+							onChange={event => this.updateGPA(event)} />
+					</div>
+					<div className='input-field col s4'>
+						<div className='notable-classes-label left-align'>Major</div>
+						<input type='text'
+							placeholder='Your Major' value = {this.state.major}
+							onChange={event => this.updateMajor(event)} />
+					</div>
+					<div className='input-field col s4'>
+						<div className='notable-classes-label left-align'>Year</div>
+						<select className='year-selector' id="year_select" value={this.state.year}>
+				      <option className='year-selector-item' value="" disabled>Choose your year</option>
+				      <option className='year-selector-item' value="Freshman">Freshman</option>
+				      <option className='year-selector-item' value="Sophomore">Sophomore</option>
+				      <option className='year-selector-item' value="Junior" >Junior</option>
+				      <option className='year-selector-item' value="Senior">Senior</option>
+				      <option className='year-selector-item' value="Senior+">Senior+</option>
+				    </select>
+					</div>
 				</div>
-			</div>
+				<div className='notable-classes-label left-align class-creation-label'>
+					List your notable classes
+					<a onClick={this.addClass.bind(this)} id="addQuestion" > <i className="material-icons">add</i></a>
+				</div>
+			    {this.state.class_arr.map((c) => {
+					return (
+						<div className="row" key={c.id}>
+							<div className="col s11">
+								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.title} onChange={(e) => this.alterClass(e, c.id)}/>
+							</div>
+							<div className="col s1">
+								<a id={c.id} onClick={() => this.removeClass(c.id)}><i className="material-icons remove-class">clear</i></a>
+							</div>
+						</div>);
+				})} <br/>
+			</form>
 		);
 	}
 }

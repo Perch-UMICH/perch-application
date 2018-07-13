@@ -27,7 +27,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--active-blue);
+	background-color: var(--bright-blue);
 	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;
@@ -37,7 +37,7 @@
 
 .notable-classes-label {
 	font-size: 20px;
-	color: var(--active-blue);
+	color: var(--bright-blue);
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
