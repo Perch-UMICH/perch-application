@@ -164,6 +164,10 @@ option {
 	color: var(--active-blue) !important;
 }
 
+ul.dropdown-content.select-dropdown li:not(.disabled) span {
+    color: var(--active-blue);
+}
+
 .expand {
 	max-height: 500px !important;
 	transition: 1s ease;

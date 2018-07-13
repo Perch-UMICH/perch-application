@@ -83,15 +83,11 @@ export class EditExperience extends Component {
 	}
 
 	addObj(event) {
-		var id = 'o_' + this.state.index;
-		var title = '';
-		var text = '';
-		var timeRange = '';
 		var newObj = {
-			id,
-			title,
-			timeRange,
-			text,
+			id: 'o_' + this.state.index,
+			title: '',
+			timeRange: '',
+			text: '',
 		};
 		var newIndex = this.state.index + 1;
 		var updated_objs = this.state.objs.concat([newObj]);
@@ -136,10 +132,10 @@ export class EditExperience extends Component {
 									<input id='timeRange' type='text' name="timeRange" placeholder='August 2017 - April 2018' value={obj.timeRange} onChange={(e) => this.alterObj(e, obj.id)}/>
 									<label htmlFor='timeRange'>Time Range</label>
 								</div>
-								<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} id="class-input" name="text" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
+								<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} name="text" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
 							</div>
 							<div className="col s1">
-								<a id={obj.id} onClick={() => this.removeObj(obj.id)}><i className="material-icons">clear</i></a>
+								<a id={obj.id} onClick={() => this.removeObj(obj.id)}><i className="material-icons remove-obj">clear</i></a>
 							</div>
 						</div>)
 				})}
