@@ -1564,11 +1564,8 @@ export function getSearchData() {
 }
 
 // Does backend lab search based on parameters
-// Each paramters should be an array
-// Areas: ['Social Sciences', 'Health Sciences', 'Engineering', 'Arts & Humanities', 'Life Sciences', 'Natural Sciences', 'Environmental Sciences', 'Public Health'];
-// Skills: ['Lab - Animal', 'Lab Research', 'Computer Programming', 'Data Collection and Analysis', 'Clinical Research', 'Community Research', 'Library/archival/internet Research', 'Experimental Research', 'Field Work'];
-// Commitments: [6, 8, 10, 12]
-// Departments: list is way too long will add later
+// Each parameters should be an array
+// Areas, Skills, Commitments, Departments: use getSearchData to obtain possible queries, and use those queries exactly (case sensitive)
 // Keywords: can be any string, will search for exact match
 
 // Returns array of matching projects, along with the location of the searched keyword in the "description" of the project
