@@ -205,6 +205,7 @@
 	position: relative;
 	overflow: hidden;
 	padding-bottom: 25px;
+	padding-top: 5px;
 }
 
 .user-bio-content {
