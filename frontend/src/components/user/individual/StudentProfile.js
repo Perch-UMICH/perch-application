@@ -135,10 +135,11 @@ class StudentProfile extends Component {
 				</EditModal>
 				<EditModal id="bio-edit" title="Edit Bio">
 					<div> Edit Bio Component Here! </div>
+					<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
-	 					<h1><i className='em em-brain'/></h1>
+	 					<h1>Academics</h1>
 	 					<div>
 	 						<div><b>GPA</b> 3.99</div>
 	 						<div><b>Year</b> Senior</div>
@@ -147,7 +148,7 @@ class StudentProfile extends Component {
 	 					<Editor superClick={() => this.openModal('academics-edit')}/>
 	 				</div>
 	 				<div>
-	 					<h1><i class="em em-telephone_receiver"></i></h1>
+	 					<h1>Contact</h1>
 	 					<div>
 	 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bearb@umich.edu</a></div>
 	 						<div><b>Phone</b> 815 262 6642</div>
@@ -155,7 +156,7 @@ class StudentProfile extends Component {
 	 					<Editor superClick={() => this.openModal('contact-edit')}/>
 	 				</div>
 	 				<div id='user-links'>
-	 					<h1><i className='em em-link'/></h1>
+	 					<h1>Links</h1>
 	 					<div>
 	 						<a>LinkedIn</a>
 	 						<a>Resume</a>

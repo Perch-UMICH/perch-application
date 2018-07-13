@@ -29,7 +29,8 @@
 	/*Low opacity shadow*/
 	--shadow-black: rgba(0, 0, 0, 0.2);
 
-	--grey-shadow: 1px 1px 2px #C6C6C6;
+	/*--grey-shadow: 1px 1px 2px #C6C6C6;*/
+	--grey-shadow: 0px 0px 0px #C6C6C6;
 	--shift-down: 30px;
 
 	/* Subteam Colors for Perchiodic Table */
@@ -168,7 +169,7 @@ h1 {
 	text-align: center;
 	text-transform: uppercase;
 	letter-spacing: 3px;
-	font-size: 20px;
+	font-size: 16px;
 	margin: 0;
 }
 
