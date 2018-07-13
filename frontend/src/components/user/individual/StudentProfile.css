@@ -3,6 +3,7 @@
 	position: relative;
 	margin: auto auto;
 	margin-top: var(--shift-down);
+	padding-bottom: 20px;
 }
 
 /* Right Column*/
@@ -159,6 +160,64 @@
 .user-work-experience:last-of-type {
 	border-bottom: none;
 }
+
+/* Education*/
+.user-education {
+	border-bottom: 1px solid lightgrey;
+	position: relative;
+	overflow: hidden;
+	padding-bottom: 25px;
+}
+
+.user-education-title {
+	font-size: 20px;
+	margin-top: 5px;
+	margin-left: 20px;
+	transition: 0.2s ease;
+	display: block;
+}
+
+.user-education-time {
+	font-size: 12px;
+	margin-left: 20px;
+	font-style: italic;
+	color: var(--eighty-grey);
+}
+
+.user-education-description {
+	margin-left: 20px;
+	margin-top: 4px;
+	font-size: 12px;
+	width: 550px;
+	height: auto;
+	max-height: 56px;
+	overflow: hidden;
+	transition: .3s ease;
+}
+
+.user-education-experience:last-of-type {
+	border-bottom: none;
+}
+
+/* Bio */
+.user-bio {
+	border-bottom: 1px solid lightgrey;
+	position: relative;
+	overflow: hidden;
+	padding-bottom: 25px;
+}
+
+.user-bio-content {
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 4px;
+	font-size: 12px;
+	height: auto;
+	max-height: 76px;
+	overflow: hidden;
+	transition: .3s ease;
+}
+
 
 /* Links */
 #user-links {

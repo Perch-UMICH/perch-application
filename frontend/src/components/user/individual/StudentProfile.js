@@ -133,6 +133,9 @@ class StudentProfile extends Component {
 				<EditModal id="education-edit" title="Edit Education Info">
 					<div> Edit Education Info Component Here! </div>
 				</EditModal>
+				<EditModal id="bio-edit" title="Edit Bio">
+					<div> Edit Bio Component Here! </div>
+				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
 	 					<h1><i className='em em-brain'/></h1>
@@ -172,6 +175,11 @@ class StudentProfile extends Component {
 	 					<div id='user-quickview-footer'>University of Michigan</div>
 	 					<div id='user-quickview-name'>Benji Bear</div>
 	 				</div>
+	 				<div id='user-bio'>
+	 					<h1>Bio</h1>
+	 					<UserBio>Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. </UserBio>
+	 					<Editor superClick={() => this.openModal('bio-edit')}/>
+	 				</div>
 	 				<div>
 	 					<h1>Work Experience</h1>
 	 					<UserWorkExperience title="Dr. Patel's Neurosurgery Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
@@ -180,6 +188,8 @@ class StudentProfile extends Component {
 	 				</div>
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
+	 					<UserEducation title='University of Michigan BS' description='Undergraduate Degree in Computer Science' startTime='2015' endTime='2019'/>
+	 					<UserEducation title='Auburn Renaissance Academy' description='Graduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold Portfolio' startTime='2011' endTime='2015'/>
 	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
 	 			</div>
@@ -229,6 +239,40 @@ class UserWorkExperience extends Component {
 				</div>
 				<div id={`user-work-description-${this.props.title}`} className='user-work-description'>{this.props.description}</div>
 				<ExpanderIcons id={`user-work-${this.props.title}`} action={this.expand.bind(this)}/>
+			</div>
+		)
+	}
+}
+
+class UserEducation extends Component {
+	expand() {
+		document.getElementById(`user-education-description-${this.props.title}`).classList.toggle('expand')
+	}
+
+	render() {
+		return(
+			<div id={`user-education-${this.props.title}`} className='user-education'>
+				<div className='user-education-title'>{this.props.title}</div>
+				<div className='user-education-time'>
+					{`${this.props.startTime} - ${this.props.endTime}`}
+				</div>
+				<div id={`user-education-description-${this.props.title}`} className='user-education-description'>{this.props.description}</div>
+				<ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>
+			</div>
+		)
+	}
+}
+
+class UserBio extends Component {
+	expand() {
+		document.getElementById('user-bio-content').classList.toggle('expand')
+	}
+
+	render() {
+		return(
+			<div id='user-bio' className='user-bio'>
+				<div id='user-bio-content' className='user-bio-content'>{this.props.children}</div>
+				<ExpanderIcons id={`user-bio`} action={this.expand.bind(this)}/>
 			</div>
 		)
 	}
