@@ -200,3 +200,11 @@ input:focus + label {
 	color: var(--active-blue) !important;
 	transition: 0.2s ease;
 }
+
+.grabbable {
+	cursor: grab;
+}
+
+.grabbable:active {
+	cursor: grabbing;
+}

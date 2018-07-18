@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import BasicButton from '../../utilities/buttons/BasicButton'
+import AvatarEditor from 'react-avatar-editor'
+import Dropzone from 'react-dropzone'
 import './StudentEditors.css';
 
 
@@ -25,7 +27,7 @@ export class EditBio extends Component {
 
 // Example
 export const Test = () => (
-	<EditContainer title='Contact Info'><EditContact /></EditContainer>
+	<EditContainer title='Experience Info'><EditContact /></EditContainer>
 )
 
 // Generic container for when needed as standalone component
@@ -143,6 +145,78 @@ export class EditExperience extends Component {
 					<a onClick={this.addObj.bind(this)}><i className="material-icons add-obj-icon">add</i></a>
 				</div>
 			</form>
+		)
+	}
+}
+
+
+export class EditQuickview extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			image: '/img/headshots/bbear.jpg',
+			rotate: 0,
+			scale: 1.5,
+		}
+	}
+
+	handleDrop = dropped => {
+		this.setState({ image: dropped[0] })
+	}
+
+	handleSlider = e => {
+		this.setState({
+			scale: e.target.value
+		})
+	}
+
+	handleRotate = () => {
+		this.setState({rotate: this.state.rotate - 90})
+	}
+
+	componentDidUpdate() {
+		console.log(this.state.scale)
+	}
+
+	render() {
+		return(
+			<div>
+				<div id='quickview-editor-L'>
+					<Dropzone
+				        onDrop={this.handleDrop}
+				        disableClick
+				        style={{ width: '250px', height: '250px' }}
+				      >
+						<AvatarEditor
+					        image={this.state.image}
+					        width={200}
+					        height={200}
+					        border={20}
+					        color={[0, 0, 0, 0.2]}
+					        scale={this.state.scale}
+					        rotate={this.state.rotate}
+					        className='grabbable'
+					      />
+					</Dropzone>
+					<i>Drag and drop image</i>
+					<p id='prof-pic-editors'>
+				     	<div className='range-field'>
+				     		<input type="range" id="profile-pic-range" min="1" max="5" step='0.1' defaultValue='1.5' onChange={this.handleSlider}/>
+				    	</div>
+				    	<i id='rotate-icon' className='material-icons' onClick={this.handleRotate}>rotate_90_degrees_ccw</i>
+				    </p>
+			    </div>
+			   	<div id='quickview-editor-R'>
+			   		<div className='input-field'>
+			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' />
+			   			<label htmlFor='profile-name'>Name</label>
+			   		</div>
+			   		<div className='input-field'>
+			   			<input id='profile-school' type='text' placeholder='Hogwarts' />
+			   			<label htmlFor='profile-school'>School</label>
+			   		</div>
+			   	</div>
+			</div>
 		)
 	}
 }

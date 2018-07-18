@@ -1,0 +1,19 @@
+.lab-dashboard {
+	background-color: #eaeaea;
+	position: relative;
+	top: 0;
+	padding-left: 100px;
+	padding-right: 30px;
+	padding-top: 20px;
+	border: 1px solid var(--d-three-grey);
+	width: 900px;
+	margin: auto;
+}
+
+.lab-dashboard-lab-name {
+	background-color: white; 
+	padding: 10px;
+	margin: 0;
+	border-radius: 10px 10px 0 0;
+	font-size: 12px;
+}

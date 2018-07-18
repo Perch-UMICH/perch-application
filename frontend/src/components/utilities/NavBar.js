@@ -29,7 +29,8 @@ class NavBar extends Component {
 		if (isLoggedIn()) {
 			var navItems = <div>
 				<li><a className="nav-item" href={this.state.prof_dest}>PROFILE</a></li>
-			    <li><a className="nav-item" href="/lab-match">LABS</a></li>
+			    <li><a className="nav-item" href="/lab-match">SEARCH</a></li>
+			    <li><a className="nav-item" href="/dashboard">SAVED</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
 			    {/*<li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>*/}

@@ -11,7 +11,7 @@ class LabSearchProject extends Component {
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                 </div>
                 <div className='lab-srch-project-description'>{this.props.description}</div>
-                <div className='lab-srch-project-apply'>Apply</div>
+                <div className='lab-srch-project-apply'><a href='mailto:bearb@umich.edu?subject=Dear Future Master&body=Plz take me into your lab. I beg you'>Apply</a></div>
                 <div className='lab-srch-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
             </div>
              

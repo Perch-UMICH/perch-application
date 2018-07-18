@@ -11,11 +11,3 @@ ReactDOM.render((
 	<Router />
 	), document.getElementById('root'));
 registerServiceWorker();
-
-// var options = {
-//   strings: ["Research", "Finding a lab", "Finding lab assistants", "Learning lab skills", "Making an impact", "Research"],
-//   typeSpeed: 65
-// }
-
-// var typed = new Typed(".element", options);
-// var typed = new Typed(".element-mobile", options);

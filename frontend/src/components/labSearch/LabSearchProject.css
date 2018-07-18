@@ -4,7 +4,7 @@
 	width: 100%;
 	margin-bottom: 15px;
 	position: relative;
-	border-radius: 0 20px 0 40px;
+	/*border-radius: 0 20px 0 40px;*/
 	transition: .2s ease;
 }
 
@@ -68,10 +68,14 @@
 	line-height: 40px;
 	text-align: center;
 	background-color: var(--bright-blue);
-	color: var(--white);
+	color: var(--white) !important;
 	cursor: pointer;
 	border-radius: 20px 0 0 20px;
 	transition: 0.2s ease;
+}
+
+.lab-srch-project-apply > a {
+	color: var(--white) !important;
 }
 
 .lab-srch-project-apply:hover {

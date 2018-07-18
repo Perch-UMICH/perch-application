@@ -4,8 +4,9 @@ import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
-import {EditContact, EditExperience} from './StudentEditors'
+import {EditContact, EditExperience, EditQuickview} from './StudentEditors'
 import NotableClasses from './NotableClasses'
+import { TwitterTimelineEmbed} from 'react-twitter-embed';
 import './StudentProfile.css';
 
 var FontAwesome = require('react-fontawesome');
@@ -28,6 +29,8 @@ class StudentProfile extends Component {
 			],
 			classes: [],
 			not_student: false,
+			tempskills: ['python', 'javascript', 'HTML 5', 'CSS 3', 'C++', 'Splunk', 'matLab'],
+			tempinterests: ['Computer Science', 'Computer Security', 'Software Development', 'Management', 'Design'],
 		}
 	}
 
@@ -103,11 +106,11 @@ class StudentProfile extends Component {
 	}
 
 	render() {
-		if (!isLoggedIn()) {
-			return <ErrorPage />
-		} else if (this.state.not_student) {
-			return <ErrorPage fourofour="true" />
-		} else {
+		// if (!isLoggedIn()) {
+		// 	return <ErrorPage />
+		// } else if (this.state.not_student) {
+		// 	return <ErrorPage fourofour="true" />
+		// } else {
 	 	return (
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
@@ -137,6 +140,9 @@ class StudentProfile extends Component {
 					<div> Edit Bio Component Here! </div>
 					<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
 				</EditModal>
+				<EditModal id="quickview-edit" title="Edit Quickview Info">
+					<EditQuickview />
+				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
 	 					<h1>Academics</h1>
@@ -165,16 +171,24 @@ class StudentProfile extends Component {
 	 				</div>
 	 			</div>
 	 			<div id='user-column-R'>
-	 				<div className='ad'></div>
-	 				<div className='ad'></div>
-	 				<div className='ad'></div>
+	 				<TwitterTimelineEmbed
+					  sourceType="profile"
+					  screenName="UROPumich"
+					  options={{height: 'calc(100vh - 200px)'}}
+					/>
 	 			</div>
 	 			<div id='user-profile-column-C'>
 	 				<div id='user-quickview'>
-	 					<img id='user-quickview-img' src='/img/headshots/bbear.jpg'/>
-	 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
-	 					<div id='user-quickview-footer'>University of Michigan</div>
-	 					<div id='user-quickview-name'>Benji Bear</div>
+	 					<div id='user-quickview-img-container'>
+	 						<img id='user-quickview-img' src='/img/headshots/bbear.jpg'/>
+	 					</div>
+	 					<div style={{position: 'relative'}}>
+		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
+		 					<div id='user-quickview-footer'>University of Michigan</div>
+		 					<div id='user-quickview-name'>Benji Bear</div>
+	 					</div>
+	 					<SkillsInterests skills={this.state.tempskills} interests={this.state.tempinterests}/>
+	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 	 				</div>
 	 				<div id='user-bio'>
 	 					<h1>Bio</h1>
@@ -182,7 +196,7 @@ class StudentProfile extends Component {
 	 					<Editor superClick={() => this.openModal('bio-edit')}/>
 	 				</div>
 	 				<div>
-	 					<h1>Work Experience</h1>
+	 					<h1>Experience</h1>
 	 					<UserWorkExperience title="Dr. Patel's Neurosurgery Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
 	 					<UserWorkExperience title="Dr. Ramaswamy's Pharmaceutical Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
 	 					<Editor superClick={() => this.openModal('work-edit')}/>
@@ -198,7 +212,7 @@ class StudentProfile extends Component {
 
 		);
 	 }
-	}
+	// }
 }
 
 
@@ -279,5 +293,27 @@ class UserBio extends Component {
 	}
 }
 
+class SkillsInterests extends Component {
+	render(){
+		return(
+			<div id='user-skills-interests'>
+				{this.props.interests.map((item) => <Bubble type='interest'>{item}</Bubble>)}
+				{this.props.skills.map((item) => <Bubble type='skill'>{item}</Bubble>)}
+			</div>
+		)
+	}
+}
+
+class Bubble extends Component {
+	render(){
+		return(
+			<span className='bubble-container'>
+				<div className={this.props.type == 'skill' ? 'skill' : 'interest'}>
+					{this.props.children}
+				</div>
+			</span>
+		)
+	}
+}
 
 export default StudentProfile;

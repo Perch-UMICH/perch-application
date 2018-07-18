@@ -60,3 +60,63 @@ textarea {
 	resize: none;
 	border: 1px solid lightgrey;
 }
+
+#profile-pic-range {
+	width: 175px;
+}
+
+input[type=range] + .thumb {
+	background-color: var(--active-blue);
+}
+
+input[type=range]::-webkit-slider-thumb {
+	background-color: var(--active-blue);
+}
+input[type=range]::-moz-range-thumb {
+	background-color: var(--active-blue);
+}
+input[type=range]::-ms-thumb {
+	background-color: var(--active-blue);
+}
+
+#quickview-editor-L {
+	position: absolute;
+	left: 30px;
+	top: 20px;
+}
+
+/* Drag and Drop instruction */
+#quickview-editor-L > i {
+	font-size: 14px;
+	display: block;
+	text-align: center;
+	margin-bottom: 0;
+}
+
+#quickview-editor-R {
+	position: absolute;
+	left: 300px;
+	top: 20px;
+	width: calc(100% - 390px);
+	overflow: scroll;
+}
+
+#rotate-icon {
+	position: absolute;
+	color: var(--bright-blue);
+	right: 0;
+	top: 4px;
+	cursor: pointer;
+	transition: 0.2s ease;
+}
+
+#rotate-icon:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
+#prof-pic-editors {
+	position: relative;
+	width: 225px;
+	padding-left: 15px;
+}

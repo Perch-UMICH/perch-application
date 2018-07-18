@@ -34,6 +34,7 @@ import Footer from './components/utilities/Footer';
 import PrivacyPolicy from './components/publicStatic/PrivacyPolicy';
 import TermsOfService from './components/publicStatic/TermsOfService';
 import GroupPage from './components/user/group/GroupPage';
+import LabDashboard from './components/labSearch/LabDashboard';
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
@@ -97,6 +98,7 @@ class Router extends Component {
 							<Route path='/forgot-password/:token' component={ ForgotPassword } />
 							<Route path='/privacy-policy' component={ PrivacyPolicy } />
 							<Route path='/terms-of-service' component={ TermsOfService } />
+							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/test' component={ Test } />
 							<Route path='/' component={ Home } />
 						</Switch>

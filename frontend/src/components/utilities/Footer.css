@@ -6,7 +6,8 @@
 	display: flex;
 	position: relative;
 	padding: 10px 0px 15px 50px;
-	display: none;
+	margin-top: 20px;
+	/*display: none;*/
 }
 
 .footer-column {
