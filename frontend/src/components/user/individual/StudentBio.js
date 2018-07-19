@@ -11,24 +11,26 @@ class StudentBio extends Component {
 			bio: '',
 			url_string: this.props.location.pathname.split('/')[1],
 		};
-		this.saveAndContinue = this.saveAndContinue.bind(this);
 	}
 
 	componentDidMount() {
+		/* No good atm.
 		getStudentFromUser(getCurrentUserId()).then( r => {
 			console.log(r);
 			this.setState({bio: r.result.bio, user_id: r.result.id})
-		});
+		});*/
 	}
 
 	saveAndContinue(event) {
+		window.location = '/upload-image';
+		/* also no good
 		updateStudent(this.state.user_id, null, null, null, null, null, null, this.state.bio, null, null).then(()=> {
 			if (this.state.url_string === "update-user-bio") {
 				window.location = `/user-profile/${getCurrentUserId()}`;
 			} else {
 				window.location = '/upload-image?user_type=student';
 			}
-		});
+		}); */
 	}
 
 	updateBioText(event) {
@@ -49,17 +51,15 @@ class StudentBio extends Component {
 			<div className='past-research shift-down'>
 				<div className='container center-align past-research-form shadow'>
 					<div className='past-research-header'>
-						{ update ? <div className='update-info'>Update </div> : null } 
+						{ update ? <div className='update-info'>Update </div> : null }
 						Personal Bio
 					</div>
-					<form className='container'>
-						<textarea className='past-research-input' id="textArea" 
-							type="text" value={this.state.bio} 
-							placeholder={this.state.placeholder} 
-							onChange={event => this.updateBioText(event)}>
-						</textarea>
-						<BasicButton superClick={this.saveAndContinue} msg={btn_msg}/>
-					</form>
+					<textarea className='past-research-input' id="textArea"
+						type="text" value={this.state.bio}
+						placeholder={this.state.placeholder}
+						onChange={event => this.updateBioText(event)}>
+					</textarea>
+					<BasicButton superClick={this.saveAndContinue.bind(this)} msg={btn_msg}/>
 				</div>
 			</div>
 		);

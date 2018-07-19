@@ -25,7 +25,7 @@ class UploadImage extends Component {
 			if (resp.result) {
 				if (resp.result.is_student) {
 					getStudentFromUser(user_id).then(resp => {
-						this.setState({ 
+						this.setState({
 							dest: `/student-profile/${getCurrentUserId()}`,
 							user_type: "student",
 							type_id: resp.result.id,
@@ -36,8 +36,8 @@ class UploadImage extends Component {
 					getFacultyFromUser(user_id).then(resp => {
 						// TODO TEMPORARILY COMMENTED OUT SINCE NOT WORKING FROM API UPDATE
 						// getFacultyLabs(resp.result.id).then(labs => {
-						// 	this.setState({ 
-						// 		dest: `/prof-page/${labs[0].id}`, 
+						// 	this.setState({
+						// 		dest: `/prof-page/${labs[0].id}`,
 						// 		user_type: "lab",
 						// 		type_id: labs[0].id,
 						// 	});
@@ -52,6 +52,7 @@ class UploadImage extends Component {
 	}
 
 	clickUpload(event) {
+			/*
 		const fileInput = document.getElementById('fileToUpload').files[0];
 		const formData = new FormData();
 		formData.append( 'image', fileInput );
@@ -62,8 +63,6 @@ class UploadImage extends Component {
 		    headers: { 'content-type': 'multipart/form-data' }
 		};
 
-		/*
-
 		axios.post('api/pics', formData, config)
 		    .then(response => {
 		        console.log(response.data.message);
@@ -72,7 +71,7 @@ class UploadImage extends Component {
 		    .catch(function (error) {
 		        console.log(error);
 		    })*/
-		window.location.href = this.state.dest;
+		window.location = '/student-profile/1';
 	}
 
 	render() {

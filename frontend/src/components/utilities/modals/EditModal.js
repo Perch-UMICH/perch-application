@@ -1,4 +1,4 @@
-/*
+/*t
 Modal for profile edit components; usage:
 
 1) Pass relevant props:

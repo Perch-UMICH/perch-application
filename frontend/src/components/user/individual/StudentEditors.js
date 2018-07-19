@@ -39,6 +39,15 @@ export let EditContainer = (props) => (
 	</div>
 )
 
+// Generic container for holding onboarding editors
+export let EditContainerOnboarding = (props) => (
+	<div id='edit-container'>
+		<h1>Edit {props.title}</h1>
+		{props.children}
+		<BasicButton msg='next' superClick={props.redirect}/>
+	</div>
+)
+
 // Content, flexible to other containres
 export class EditContact extends Component {
 	constructor(props) {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { parse } from 'query-string';
-import HugeButton from '../../utilities/buttons/HugeButton';
+import BasicButton from '../../utilities/buttons/BasicButton';
 import BubbleChoice	from '../../utilities/BubbleChoice';
 import Bubble from '../../utilities/Bubble';
 import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab, syncSkillsToLab, syncTagsToLab} from '../../../helper.js';
@@ -111,8 +111,7 @@ class PickYourInterests extends Component {
 			}
 		}
 		if (url_arr[1] === "pick-your-interests") {
-			var route = '/lab-skills';
-			this.setState({dest: route});
+			this.setState({dest: '/lab-skills'});
 		}
 	}
 
@@ -166,7 +165,7 @@ class PickYourInterests extends Component {
 		return(
 			<div className='pick-your-interests shift-down container center-align'>
 				<BubbleChoice ref='bubble_choice' display_info={this.state.display_info} callbackSkills={this.updateBubbleChoice}/>
-				<HugeButton superClick={this.saveAndContinue} msg={this.state.btn_msg}/>
+				<BasicButton superClick={this.redirect.bind(this)} msg={this.state.btn_msg}/>
 			</div>
 		);
 	}
