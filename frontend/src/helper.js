@@ -357,7 +357,7 @@ export function createStudent(user_id, first_name, last_name, email, year, bio,m
 // RESTRICTED: student_id
 export function updateStudent(first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student) {
     console.log('Updating student');
-
+    /*
     let student_id = sessionStorage.getItem('student_id');
     let _method = 'PUT';
     return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id})
@@ -368,7 +368,7 @@ export function updateStudent(first_name, last_name, email, year, bio,major, gpa
         .catch(function (error) {
             console.log(error);
             return [];
-        })
+        })*/
 }
 
 // RESTRICTED: student_id
@@ -794,6 +794,7 @@ export function getLabData(lab_id, skilltag_data, preferences_data, position_dat
 
 export function createLab(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
     console.log('Creating lab');
+    /*
     return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
         .then(response => {
             sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
@@ -803,12 +804,43 @@ export function createLab(faculty_id, name, location, description, publications,
         .catch(function (error) {
             console.log(error);
             return [];
+        })*/
+}
+
+export function getLabPreferences(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
+    console.log('Creating lab');
+    /*
+    return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
+        .then(response => {
+            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
+            console.log(response.data.message);
+            return response.data.result;
         })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })*/
+}
+
+export function addPreferencesToLab(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
+    console.log('Creating lab');
+    /*
+    return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
+        .then(response => {
+            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })*/
 }
 
 // RESTRICTED: lab_id
 export function updateLab(name, location, description, publications, url, contact_phone, contact_email) {
     console.log('Updating lab');
+    /*
     let lab_id = sessionStorage.getItem('lab_id');
     let _method = 'PUT';
     return axios.post('api/labs/' + lab_id, {_method, lab_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
@@ -819,7 +851,7 @@ export function updateLab(name, location, description, publications, url, contac
         .catch(function (error) {
             console.log(error);
             return [];
-        })
+        })*/
 }
 
 // RESTRICTED: lab_id
