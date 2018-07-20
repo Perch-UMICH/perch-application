@@ -88,5 +88,21 @@
 	position: absolute;
 	top: 45px;
 	right: 4px;
-	font-size: 12px;
+	font-size: 14px;
+}
+
+.lab-srch-project-adder {
+	position: absolute;
+	right: 4px;
+	bottom: 4px;
+	/*top: 60px;*/
+	font-size: 30px;
+	color: var(--bright-blue);
+	transition: 0.2s ease;
+	cursor: pointer;
+}
+
+.lab-srch-project-adder:hover {
+	color: var(--active-blue);
+	transition: 0.2s ease;
 }
