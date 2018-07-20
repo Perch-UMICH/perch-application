@@ -47,7 +47,7 @@ class UpdateContact extends Component {
 		if (this.state.url_string === "update-contact") {
 			returnToProfile();
 		} else {
-			window.location = '/pick-your-interests?user_type=student';
+			window.location = '/lab-skills';
 			/* DEFAULTING TO STUDENT ONBOARDING
 			if (isStudent())
 				window.location = '/pick-your-interests?user_type=student';

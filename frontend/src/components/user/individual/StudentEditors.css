@@ -1,8 +1,9 @@
 #edit-container {
 	width: 800px;
-	transform: translateY(-50%);
 	margin: auto auto;
-	margin-top: 270px;
+	margin-top: 40px;
+	min-height: 550px;
+	margin-bottom: 20px;
 	text-align: center;
 	border-radius: var(--border-radius-C);
 	overflow: hidden;
@@ -44,6 +45,10 @@
 .min-height-edit-form {
 	min-height: 360px;
 	position: relative;
+}
+
+.skills-interests-form {
+	padding: 0px !important;
 }
 
 .textarea-experience {

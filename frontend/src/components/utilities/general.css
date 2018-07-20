@@ -111,12 +111,6 @@
 	transition: ease .2s;
 }
 
-.general-body {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
 /*.tab-container:hover .interest-editor {
 	opacity: 1;
 	transition: ease .2s;

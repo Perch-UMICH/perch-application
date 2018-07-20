@@ -3,14 +3,16 @@ import { parse } from 'query-string';
 import BasicButton from '../../utilities/buttons/BasicButton';
 import BubbleChoice	from '../../utilities/BubbleChoice';
 import Bubble from '../../utilities/Bubble';
+import {EditContainerOnboarding} from './StudentEditors';
 import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab, syncSkillsToLab, syncTagsToLab} from '../../../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
 	constructor(props) {
 		super(props);
-		var url_arr = this.props.location.pathname.split('/');
+		var url_arr = this.props.location ? this.props.location.pathname.split('/') : "";
 		this.state = {
+			url_arr,
 			dest: '',
 			student_id: 1,
 			lab_id: 1,
@@ -43,7 +45,7 @@ class PickYourInterests extends Component {
 
 	componentDidMount() {
 		var header_txt, placeholder_txt, dest = "";
-		var url_arr = this.props.location.pathname.split('/');
+		var url_arr = this.state.url_arr;
 		var isLab = false; // isLab();
 		var isStudent = true; //isStudent();
 
@@ -162,11 +164,32 @@ class PickYourInterests extends Component {
 	}
 
 	render() {
-		return(
-			<div className='pick-your-interests shift-down container center-align'>
-				<BubbleChoice ref='bubble_choice' display_info={this.state.display_info} callbackSkills={this.updateBubbleChoice}/>
-				<BasicButton superClick={this.redirect.bind(this)} msg={this.state.btn_msg}/>
+		// temp while waiting for backend updates
+		var skillsDisplayInfo = {
+			placeholder_txt: 'search skills',
+			header_txt: 'your skills',
+		}
+		var interestsDisplayInfo = {
+			placeholder_txt: 'search interests',
+			header_txt: 'your interests',
+		}
+
+		var bubblePickers =
+			<div>
+				<BubbleChoice ref='bubble_choice' skills={true} display_info={skillsDisplayInfo} callbackSkills={this.updateBubbleChoice}/>
+				<BubbleChoice ref='bubble_choice' skills={false} display_info={interestsDisplayInfo} callbackSkills={this.updateBubbleChoice}/>
 			</div>
+
+		if (this.props.editorOnly) {
+			return (bubblePickers)
+		}
+
+		return(
+			<EditContainerOnboarding title="Skills and Interests" redirect={this.redirect.bind(this)}>
+				<form className="skills-interests-form">
+					{bubblePickers}
+				</form>
+			</EditContainerOnboarding>
 		);
 	}
 }

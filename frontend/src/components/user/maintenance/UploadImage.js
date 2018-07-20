@@ -72,12 +72,12 @@ class UploadImage extends Component {
 		    .catch(function (error) {
 		        console.log(error);
 		    })*/
-		window.location = '/student-profile/';
+		window.location = '/experience';
 	}
 
 	render() {
 		return (
-			<EditContainerOnboarding title="Upload Image" redirect={this.clickUpload.bind(this)}>
+			<EditContainerOnboarding title="Profile Header" redirect={this.clickUpload.bind(this)}>
 				<form className="min-height-edit-form" >
 					<EditQuickview />
 				</form>

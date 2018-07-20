@@ -4,6 +4,22 @@ import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import './StudentEditors.css';
 
+export class EditLinks extends Component {
+	render() {
+		return (
+			<div>
+				<div className='input-field'>
+					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com'/>
+					<label htmlFor='linkedin'>Linkedin</label>
+				</div>
+				<div className='input-field'>
+					<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
+					<label htmlFor='resume'>Resume</label>
+				</div>
+			</div>
+		)
+	}
+}
 
 export class EditBio extends Component {
 	constructor(props) {
@@ -42,7 +58,7 @@ export let EditContainer = (props) => (
 // Generic container for holding onboarding editors
 export let EditContainerOnboarding = (props) => (
 	<div id='edit-container'>
-		<h1>Edit {props.title}</h1>
+		<h1>Add {props.title}</h1>
 		{props.children}
 		<BasicButton msg='next' superClick={props.redirect}/>
 	</div>
@@ -144,7 +160,7 @@ export class EditExperience extends Component {
 										<input id='timeRange' type='text' autofocus="autofocus" name="timeRange" placeholder='August 2017 - April 2018' value={obj.timeRange} onChange={(e) => this.alterObj(e, obj.id)}/>
 										<label htmlFor='timeRange' className="active">Time Range</label>
 									</div>
-									<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} className="textarea-edit-form"
+									<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} className="textarea-experience"
 										name="text" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
 								</div>
 								<div className="col s1">
