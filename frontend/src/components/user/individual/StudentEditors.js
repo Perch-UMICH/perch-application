@@ -4,6 +4,22 @@ import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import './StudentEditors.css';
 
+export class EditLinks extends Component {
+	render() {
+		return (
+			<div>
+				<div className='input-field'>
+					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com'/>
+					<label htmlFor='linkedin'>Linkedin</label>
+				</div>
+				<div className='input-field'>
+					<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
+					<label htmlFor='resume'>Resume</label>
+				</div>
+			</div>
+		)
+	}
+}
 
 export class EditBio extends Component {
 	constructor(props) {
@@ -42,7 +58,7 @@ export let EditContainer = (props) => (
 // Generic container for holding onboarding editors
 export let EditContainerOnboarding = (props) => (
 	<div id='edit-container'>
-		<h1>Edit {props.title}</h1>
+		<h1>Add {props.title}</h1>
 		{props.children}
 		<BasicButton msg='next' superClick={props.redirect}/>
 	</div>
@@ -130,24 +146,28 @@ export class EditExperience extends Component {
 
 	render() {
 		return(
-			<form id='edit-contact-info'>
+			<form id='edit-experience'>
 			  {this.state.objs.map((obj) => {
 					return (
-						<div className="row" key={obj.id}>
-							<div className="col s11">
-								<div className='input-field'>
-									<input id='title' type='text' name="title" placeholder={this.state.titlePlacehold} value={obj.title} onChange={(e) => this.alterObj(e, obj.id)}/>
-									<label htmlFor='title'>{this.state.titleText}</label>
+						<div>
+							<div className="row" key={obj.id}>
+								<div className="col s11">
+									<div className='input-field'>
+										<input id='title' type='text' autofocus="autofocus" name="title" placeholder={this.state.titlePlacehold} value={obj.title} onChange={(e) => this.alterObj(e, obj.id)}/>
+										<label htmlFor='title' className="active">{this.state.titleText}</label>
+									</div>
+									<div className='input-field'>
+										<input id='timeRange' type='text' autofocus="autofocus" name="timeRange" placeholder='August 2017 - April 2018' value={obj.timeRange} onChange={(e) => this.alterObj(e, obj.id)}/>
+										<label htmlFor='timeRange' className="active">Time Range</label>
+									</div>
+									<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} className="textarea-experience"
+										name="text" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
 								</div>
-								<div className='input-field'>
-									<input id='timeRange' type='text' name="timeRange" placeholder='August 2017 - April 2018' value={obj.timeRange} onChange={(e) => this.alterObj(e, obj.id)}/>
-									<label htmlFor='timeRange'>Time Range</label>
+								<div className="col s1">
+									<a id={obj.id} onClick={() => this.removeObj(obj.id)}><i className="material-icons remove-obj experience-remove">clear</i></a>
 								</div>
-								<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} name="text" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
 							</div>
-							<div className="col s1">
-								<a id={obj.id} onClick={() => this.removeObj(obj.id)}><i className="material-icons remove-obj">clear</i></a>
-							</div>
+							<div className="edit-experience-hr" />
 						</div>)
 				})}
 				<div className="add-obj-icon-container">
@@ -189,7 +209,7 @@ export class EditQuickview extends Component {
 
 	render() {
 		return(
-			<div>
+			<div className="quickview-editor-container">
 				<div id='quickview-editor-L'>
 					<Dropzone
 				        onDrop={this.handleDrop}

@@ -10,7 +10,7 @@
 #user-column-R {
 	width: 250px;
 	/* this is for formatting it to the middle with left side touching and 20px margin*/
-	right: calc(50vw - 660px/2 - 20px); 
+	right: calc(50vw - 660px/2 - 20px);
 	transform: translateX(100%);
 	position: fixed;
 }
@@ -291,10 +291,11 @@
 }
 
 #user-skills-interests {
-	padding-bottom: 20px;
+	padding-bottom: 10px;
 	padding-left: 20px;
-	padding-right: 20px;
-	padding-top: 0px;
+	padding-right: 30px;
+	padding-top: 5px;
+	position: relative;
 }
 
 .skill, .interest {

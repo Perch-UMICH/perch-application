@@ -1,8 +1,9 @@
 #edit-container {
 	width: 800px;
-	transform: translateY(-50%);
 	margin: auto auto;
-	margin-top: 40vh;
+	margin-top: 40px;
+	min-height: 550px;
+	margin-bottom: 20px;
 	text-align: center;
 	border-radius: var(--border-radius-C);
 	overflow: hidden;
@@ -39,6 +40,29 @@
 
 .remove-class, .remove-obj {
 	margin-top: 10px;
+}
+
+.min-height-edit-form {
+	min-height: 360px;
+	position: relative;
+}
+
+.skills-interests-form {
+	padding: 0px !important;
+}
+
+.textarea-experience {
+	min-height: 100px !important;
+}
+
+.edit-experience-hr {
+	border-top: 1px dashed var(--d-three-grey);
+	margin: 20px -25px;
+	padding: 0px 25px;
+}
+
+.experience-remove {
+	margin-top: 0px;
 }
 
 textarea:focus {

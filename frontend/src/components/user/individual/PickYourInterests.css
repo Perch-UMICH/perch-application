@@ -2,40 +2,38 @@
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
-	margin-bottom: 20px;
 }
 
 .interest-container {
 	display: flex;
 	flex-direction: row;
 	color: var(--white);
-	min-height: 60vh;
-
+	min-height: 200px;
+	margin-bottom: 0px !important;
 }
 
 .interest-header {
-	font-size: 30px;
+	font-size: 16px;
+	padding: 9px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--bright-blue);
+	background-color: var(--b-grey);
 	flex: none;
-	border-top-right-radius: var(--border-radius-small);
 }
 
 .interest-section {
-	margin: 0px 15px;
+	margin: 0px !important;
 	padding: 0px !important;
 	background-color: var(--e-grey);
-	border: 1px solid lightgrey;
 	float: left;
 }
 
 .interest-section.left {
-	border-bottom-left-radius: var(--border-radius-large);
+	border-right: none;
 }
 
 .interest-section.right {
-	border-top-right-radius: var(--border-radius-small);
+	border-left: 1px solid lightgrey;
 }
 
 .interest-body {
@@ -48,10 +46,11 @@
 	background-color: var(--white) !important;
 	color: var(--eighty-grey) !important;
 	padding-left: 9px !important;
-	height: 40px;
+	height: 40px !important;
 	margin-bottom: 0px !important;
 	width: 97.8% !important;
 	/*width: 100% !important;*/
 	float: left;
+	border-top: 1px solid lightgrey !important;
 	border-bottom: 1px solid lightgrey !important;
 }
