@@ -17,6 +17,10 @@ import LabTextInfo from './components/user/group/LabTextInfo';
 import LabSpecifications from './components/user/group/LabSpecifications';
 import PastResearch from './components/user/individual/PastResearch';
 import StudentBio from './components/user/individual/StudentBio';
+import EnterBio from './components/user/individual/EnterBio';
+import Experience from './components/user/individual/Experience';
+import Education from './components/user/individual/Education';
+import Links from './components/user/individual/Links';
 import NotableClasses from './components/user/individual/NotableClasses';
 import ExternalLinks from './components/ExternalLinks';
 import UpdateExternalLinks from './components/user/maintenance/UpdateExternalLinks';
@@ -30,6 +34,7 @@ import Settings from './components/user/maintenance/Settings';
 import Feedback from './components/utilities/Feedback';
 import ForgotPassword from './components/user/maintenance/ForgotPassword';
 import UpdateContact from './components/user/maintenance/UpdateContact';
+import EnterContact from './components/user/individual/EnterContact';
 import Footer from './components/utilities/Footer';
 import PrivacyPolicy from './components/publicStatic/PrivacyPolicy';
 import TermsOfService from './components/publicStatic/TermsOfService';
@@ -73,16 +78,19 @@ class Router extends Component {
 							<Route path='/lab-specifications' component= { LabSpecifications }/>
 							<Route path='/update-lab-specifications' component= { LabSpecifications }/>
 							<Route path='/update-contact' component= { UpdateContact }/>
-							<Route path='/enter-contact' component= { UpdateContact }/>
+							<Route path='/enter-contact' component= { EnterContact }/>
 							<Route path='/past-research' component={ PastResearch }/>
 							<Route path='/update-past-research' component={ PastResearch }/>
 							<Route path='/notable-classes' component={ NotableClasses }/>
 							<Route path='/update-notable-classes' component={ NotableClasses }/>
-							<Route path='/student-bio' component={ StudentBio }/>
+							<Route path='/student-bio' component={ EnterBio }/>
 							<Route path='/update-student-bio' component={ StudentBio }/>
 							<Route path='/external-links' component={ ExternalLinks } />
 							<Route path='/update-external-links' component={ ExternalLinks } />
 							<Route path='/edit-external-links' component={ UpdateExternalLinks } />
+							<Route path='/links' component={ Links } />
+							<Route path='/experience' component={ Experience } />
+							<Route path='/education' component={ Education } />
 							<Route path='/prof-page' component={ GroupPage }/>
 							<Route path='/prof/:profSlug' component={ ProfPage }/>
 							<Route path='/apply/:labSlug' component={ Apply } />
@@ -98,6 +106,7 @@ class Router extends Component {
 							<Route path='/forgot-password/:token' component={ ForgotPassword } />
 							<Route path='/privacy-policy' component={ PrivacyPolicy } />
 							<Route path='/terms-of-service' component={ TermsOfService } />
+							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/test' component={ Test } />
 							<Route path='/' component={ Home } />

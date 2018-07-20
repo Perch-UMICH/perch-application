@@ -11,7 +11,7 @@ class UpdateContact extends Component {
 		}
 	}
 
-	grabStudentInfo() { 
+	grabStudentInfo() {
 		getStudent(getCurrentStudentId()).then(resp => {
 			if (resp.data) {
 				this.setState({email: resp.data.email})
@@ -19,7 +19,7 @@ class UpdateContact extends Component {
 		});
 	}
 
-	grabLabInfo() { 
+	grabLabInfo() {
 		getLab(getCurrentLabId()).then(resp => this.setState({
 			email: resp.data.contact_email,
 			location: resp.data.location,
@@ -29,16 +29,16 @@ class UpdateContact extends Component {
 
 	updateInfo(event) {
 		event.preventDefault()
-		if (isStudent()) 
-			updateStudent(getCurrentStudentId(), null, null, null, null, null, this.state.email, null, null, null, null).then(this.redirect.bind(this)) 
-		else if (isLab()) 
+		if (isStudent())
+			updateStudent(getCurrentStudentId(), null, null, null, null, null, this.state.email, null, null, null, null).then(this.redirect.bind(this))
+		else if (isLab())
 			updateLab(getCurrentLabId(), null, null, this.state.location, null, null, null, null, null, null, this.state.email).then(this.redirect.bind(this))
 	}
 
 	componentDidMount() {
-		if (isStudent()) 
+		if (isStudent())
 			this.grabStudentInfo()
-		
+
 		else if (isLab())
 			this.grabLabInfo();
 	}
@@ -47,10 +47,12 @@ class UpdateContact extends Component {
 		if (this.state.url_string === "update-contact") {
 			returnToProfile();
 		} else {
+			window.location = '/lab-skills';
+			/* DEFAULTING TO STUDENT ONBOARDING
 			if (isStudent())
 				window.location = '/pick-your-interests?user_type=student';
 			else if (isLab())
-				window.location = '/lab-name';
+				window.location = '/lab-name';*/
 		}
 	}
 
@@ -70,7 +72,7 @@ class UpdateContact extends Component {
 							</div>
 						</div>}
 
-						{isLab() && 
+						{isLab() &&
 						<div className='row'>
 							<div className='input-field col s12'>
 								<input id='contact-email' className='gen-input' type='email' value={this.state.email} onChange={(event) => this.setState({email: event.target.value})} autofocus="autofocus"/>
@@ -81,9 +83,9 @@ class UpdateContact extends Component {
 								<label htmlFor="contact-location">Lab Location</label>
 							</div>
 						</div>}
-						{this.state.url_string === "update-contact" ?  
-							<BasicButton msg='save' /*color='light'*/ /> : 
-							<BasicButton msg='next' /*color='light'*/ /> }
+						{this.state.url_string === "update-contact" ?
+							<BasicButton msg='save' /*color='light'*/ superClick={this.redirect.bind(this)} /> :
+							<BasicButton msg='next' /*color='light'*/ superClick={this.redirect.bind(this)} /> }
 					</form>
 				</div>
 			</div>

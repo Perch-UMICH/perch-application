@@ -1,4 +1,4 @@
-/*
+/*t
 Modal for profile edit components; usage:
 
 1) Pass relevant props:
@@ -28,11 +28,12 @@ class EditModal extends Component {
 	}
 
 	render() {
+		var contentCSS = this.props.noPadding ? "modal-content-thin" : "modal-content";
 		return(
 			<div>
 				<div id={this.props.id} className="modal modal-fixed-footer display-modal">
 					<h1>{this.props.title}</h1>
-			 		<div className="modal-content">
+			 		<div className={contentCSS}>
 						{this.props.children}
           </div>
           <div className="modal-footer">

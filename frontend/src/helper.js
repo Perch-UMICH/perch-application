@@ -340,9 +340,9 @@ export function getStudent(student_id) {
         })
 }
 
-export function createStudent(user_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id) {
+export function createStudent(user_id, first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student) {
     console.log('Creating student');
-    return axios.post('api/students', {user_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id})
+    return axios.post('api/students', {user_id, first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student})
         .then(response => {
             sessionStorage.setItem('student_id', response.data.result.id) // CHANGED BY BENJI
             console.log(response.data.message);
@@ -355,9 +355,9 @@ export function createStudent(user_id, first_name, last_name, major, year, gpa, 
 }
 
 // RESTRICTED: student_id
-export function updateStudent(first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id) {
+export function updateStudent(first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student) {
     console.log('Updating student');
-
+    /*
     let student_id = sessionStorage.getItem('student_id');
     let _method = 'PUT';
     return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id})
@@ -368,7 +368,7 @@ export function updateStudent(first_name, last_name, major, year, gpa, email, bi
         .catch(function (error) {
             console.log(error);
             return [];
-        })
+        })*/
 }
 
 // RESTRICTED: student_id
@@ -673,9 +673,9 @@ export function getFaculty(faculty_id) {
         })
 }
 
-export function createFaculty(user_id, first_name, last_name, title, email) {
+export function createFaculty(user_id, first_name, last_name, title, contact_email) {
     console.log('Creating faculty');
-    return axios.post('api/faculties', {user_id, first_name, last_name, title, email}) /// EMI CHANGED THIS: "[]" to "{}"
+    return axios.post('api/faculties', {user_id, first_name, last_name, title, contact_email}) /// EMI CHANGED THIS: "[]" to "{}"
         .then(response => {
             console.log(response)
             sessionStorage.setItem('faculty_id', response.data.result.id)
@@ -688,10 +688,10 @@ export function createFaculty(user_id, first_name, last_name, title, email) {
         })
 }
 
-export function updateFaculty(faculty_id, first_name, last_name, title, email) {
+export function updateFaculty(faculty_id, first_name, last_name, title, contact_email) {
     console.log('Updating faculty');
     let _method = 'PUT';
-    return axios.post('api/faculties/' + faculty_id, {_method, faculty_id, first_name, last_name, title, email})
+    return axios.post('api/faculties/' + faculty_id, {_method, faculty_id, first_name, last_name, title, contact_email})
         .then(response => {
             console.log(response.data.message);
             return response.data.result;
@@ -790,10 +790,11 @@ export function getLabData(lab_id, skilltag_data, preferences_data, position_dat
             return [];
         })
 }
+//
 
-
-export function createLab(faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email) {
+export function createLab(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
     console.log('Creating lab');
+    /*
     return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
         .then(response => {
             sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
@@ -803,12 +804,43 @@ export function createLab(faculty_id, name, department, location, description, p
         .catch(function (error) {
             console.log(error);
             return [];
+        })*/
+}
+
+export function getLabPreferences(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
+    console.log('Creating lab');
+    /*
+    return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
+        .then(response => {
+            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
+            console.log(response.data.message);
+            return response.data.result;
         })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })*/
+}
+
+export function addPreferencesToLab(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
+    console.log('Creating lab');
+    /*
+    return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
+        .then(response => {
+            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
+            console.log(response.data.message);
+            return response.data.result;
+        })
+        .catch(function (error) {
+            console.log(error);
+            return [];
+        })*/
 }
 
 // RESTRICTED: lab_id
-export function updateLab(name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email) {
+export function updateLab(name, location, description, publications, url, contact_phone, contact_email) {
     console.log('Updating lab');
+    /*
     let lab_id = sessionStorage.getItem('lab_id');
     let _method = 'PUT';
     return axios.post('api/labs/' + lab_id, {_method, lab_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
@@ -819,7 +851,7 @@ export function updateLab(name, department, location, description, publications,
         .catch(function (error) {
             console.log(error);
             return [];
-        })
+        })*/
 }
 
 // RESTRICTED: lab_id
@@ -839,6 +871,8 @@ export function deleteLab() {
 }
 
 
+// NOTE: skill/tags are now added directly to positions; grabbing lab skills/tags compiles across all its positions
+
 export function getLabSkills(lab_id) {
     console.log('Getting lab skills');
     return axios.get('api/labs/' + lab_id + '/skills')
@@ -853,12 +887,13 @@ export function getLabSkills(lab_id) {
 }
 
 // RESTRICTED: lab_id
-export function addSkillsToLab(skill_ids) {
+export function addSkillsToLab(skill_ids, position_id) {
     console.log('Adding skills to lab');
 
     let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
-        skill_ids: skill_ids
+        skill_ids: skill_ids,
+        position_id: position_id
     };
     return axios.post('api/labs/' + lab_id + '/skills', payload)
         .then(response => {
@@ -872,12 +907,13 @@ export function addSkillsToLab(skill_ids) {
 }
 
 // RESTRICTED: lab_id
-export function syncSkillsToLab(skill_ids) {
+export function syncSkillsToLab(skill_ids, position_id) {
     console.log('Syncing skills to lab');
 
     let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
-        skill_ids: skill_ids
+        skill_ids: skill_ids,
+        position_id: position_id
     };
     return axios.post('api/labs/' + lab_id + '/skills/sync', payload)
         .then(response => {
@@ -891,12 +927,13 @@ export function syncSkillsToLab(skill_ids) {
 }
 
 // RESTRICTED: lab_id
-export function removeSkillsFromLab(skill_ids) {
+export function removeSkillsFromLab(skill_ids, position_id) {
     console.log('Removing skills from lab');
 
     let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
         skill_ids: skill_ids,
+        position_id: position_id,
         _method: 'PUT'
     };
     return axios.post('api/labs/' + lab_id + '/skills', payload)
@@ -925,12 +962,13 @@ export function getLabTags(lab_id) {
 }
 
 // RESTRICTED: lab_id
-export function addTagsToLab(tag_ids) {
+export function addTagsToLab(tag_ids, position_id) {
     console.log('Adding tags to lab');
 
     let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
-        tag_ids: tag_ids
+        tag_ids: tag_ids,
+        position_id: position_id
     };
     return axios.post('api/labs/' + lab_id + '/tags', payload)
         .then(response => {
@@ -944,12 +982,13 @@ export function addTagsToLab(tag_ids) {
 }
 
 // RESTRICTED: lab_id
-export function syncTagsToLab(tag_ids) {
+export function syncTagsToLab(tag_ids, position_id) {
     console.log('Syncing tags to lab');
 
     let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
-        tag_ids: tag_ids
+        tag_ids: tag_ids,
+        position_id: position_id
     };
     return axios.post('api/labs/' + lab_id + '/tags/sync', payload)
         .then(response => {
@@ -963,12 +1002,13 @@ export function syncTagsToLab(tag_ids) {
 }
 
 // RESTRICTED: lab_id
-export function removeTagsFromLab(tag_ids) {
+export function removeTagsFromLab(tag_ids, position_id) {
     console.log('Removing tag from lab');
 
     let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
         tag_ids: tag_ids,
+        position_id: position_id,
         _method: 'PUT'
     };
     return axios.post('api/labs/' + lab_id + '/tags', payload)
@@ -982,58 +1022,57 @@ export function removeTagsFromLab(tag_ids) {
         })
 }
 
-
-export function getLabPreferences(lab_id) {
-    console.log('Getting lab preferences');
-    return axios.get('api/labs/' + lab_id + '/preferences')
-        .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
-        })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })
-}
-
-// RESTRICTED: lab_id
-export function addPreferencesToLab(preference_ids) {
-    console.log('Adding preferences to lab');
-
-    let lab_id = sessionStorage.getItem('lab_id');
-    let payload = {
-        tag_ids: preference_ids
-    };
-    return axios.post('api/labs/' + lab_id + '/preferences', payload)
-        .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
-        })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })
-}
-
-// RESTRICTED: lab_id
-export function removePreferencesFromLab(preference_ids) {
-    console.log('Removing preferences from lab');
-
-    let lab_id = sessionStorage.getItem('lab_id');
-    let payload = {
-        tag_ids: preference_ids,
-        _method: 'PUT'
-    };
-    return axios.post('api/labs/' + lab_id + '/preferences', payload)
-        .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
-        })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })
-}
+// export function getLabPreferences(lab_id) {
+//     console.log('Getting lab preferences');
+//     return axios.get('api/labs/' + lab_id + '/preferences')
+//         .then(response => {
+//             console.log(response.data.message);
+//             return response.data.result;
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//             return [];
+//         })
+// }
+//
+// // RESTRICTED: lab_id
+// export function addPreferencesToLab(preference_ids) {
+//     console.log('Adding preferences to lab');
+//
+//     let lab_id = sessionStorage.getItem('lab_id');
+//     let payload = {
+//         tag_ids: preference_ids
+//     };
+//     return axios.post('api/labs/' + lab_id + '/preferences', payload)
+//         .then(response => {
+//             console.log(response.data.message);
+//             return response.data.result;
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//             return [];
+//         })
+// }
+//
+// // RESTRICTED: lab_id
+// export function removePreferencesFromLab(preference_ids) {
+//     console.log('Removing preferences from lab');
+//
+//     let lab_id = sessionStorage.getItem('lab_id');
+//     let payload = {
+//         tag_ids: preference_ids,
+//         _method: 'PUT'
+//     };
+//     return axios.post('api/labs/' + lab_id + '/preferences', payload)
+//         .then(response => {
+//             console.log(response.data.message);
+//             return response.data.result;
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//             return [];
+//         })
+// }
 
 
 // Lab members
@@ -1190,6 +1229,7 @@ export function getAllSchoolCourses() {
 }
 
 // LAB POSITIONS //
+// OBSOLETE FOR NOW SINCE WE'RE PRELOADING UROP POSITIONS
 
 // Positions
 // Open projects/positions in a lab

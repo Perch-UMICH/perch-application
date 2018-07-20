@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SquareButton from '../../utilities/buttons/SquareButton';
 import $ from 'jquery';
+import {EditContainerOnboarding} from './StudentEditors.js'
 import {updateStudent, getStudent, getCurrentUserId, getCurrentStudentId, getStudentFromUser} from '../../../helper.js';
 import './NotableClasses.css';
 
@@ -17,6 +18,7 @@ class NotableClasses extends Component {
 				id: 'c_0',
 				text: ''
 			}],
+			url_string: this.props.location ? this.props.location.pathname.split('/')[1] : "",
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 		this.state.c_index = this.state.class_arr.length;
@@ -122,9 +124,13 @@ class NotableClasses extends Component {
 		}
 	}
 
+	redirect() {
+		window.location = '/student-bio';
+	}
+
 	render() {
-		return (
-			<form className='container'>
+		var notableClassesForm =
+			<form>
 				<div className='row'>
 					<div className='input-field col s4'>
 						<div className='notable-classes-label left-align'>GPA</div>
@@ -166,7 +172,15 @@ class NotableClasses extends Component {
 						</div>);
 				})} <br/>
 			</form>
-		);
+
+		if (this.state.url_string === 'notable-classes') {
+			return (
+				<EditContainerOnboarding title="Academics" redirect={this.redirect.bind(this)}>
+					{notableClassesForm}
+				</EditContainerOnboarding>
+			);
+		}
+		return (notableClassesForm);
 	}
 }
 

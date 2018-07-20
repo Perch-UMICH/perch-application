@@ -4,8 +4,9 @@ import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
-import {EditContact, EditExperience, EditQuickview} from './StudentEditors'
+import {EditContact, EditExperience, EditQuickview, EditLinks} from './StudentEditors'
 import NotableClasses from './NotableClasses'
+import PickYourInterests from './PickYourInterests'
 import { TwitterTimelineEmbed} from 'react-twitter-embed';
 import './StudentProfile.css';
 
@@ -114,18 +115,14 @@ class StudentProfile extends Component {
 	 	return (
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
+				<EditModal id="skills-interests-edit" title="Edit Skills and Interests" noPadding={true}>
+					<PickYourInterests editorOnly={true} />
+				</EditModal>
 				<EditModal id="contact-edit" title="Edit Contact Info">
 					<EditContact />
 				</EditModal>
 				<EditModal id="link-edit" title="Edit Links">
-					<div className='input-field'>
-						<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com'/>
-						<label htmlFor='linkedin'>Linkedin</label>
-					</div>
-					<div className='input-field'>
-						<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
-						<label htmlFor='resume'>Resume</label>
-					</div>
+					<EditLinks />
 				</EditModal>
 				<EditModal id="academics-edit" title="Edit Academic Info">
 					<NotableClasses />
@@ -137,7 +134,6 @@ class StudentProfile extends Component {
 					<EditExperience type="educ"/>
 				</EditModal>
 				<EditModal id="bio-edit" title="Edit Bio">
-					<div> Edit Bio Component Here! </div>
 					<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
 				</EditModal>
 				<EditModal id="quickview-edit" title="Edit Quickview Info">
@@ -184,7 +180,9 @@ class StudentProfile extends Component {
 	 					</div>
 	 					<div style={{position: 'relative'}}>
 		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
-		 					<div id='user-quickview-footer'>University of Michigan</div>
+		 					<div id='user-quickview-footer'>
+								University of Michigan
+							</div>
 		 					<div id='user-quickview-name'>Benji Bear</div>
 	 					</div>
 	 					<SkillsInterests skills={this.state.tempskills} interests={this.state.tempinterests}/>
@@ -294,9 +292,17 @@ class UserBio extends Component {
 }
 
 class SkillsInterests extends Component {
+	openModal(id) {
+		if (document.getElementById(id)) {
+			document.getElementById(id).classList.add('activated');
+			document.getElementById("greyBackdrop").classList.add('activated');
+		}
+	}
+
 	render(){
 		return(
 			<div id='user-skills-interests'>
+				<Editor superClick={() => this.openModal('skills-interests-edit')}/>
 				{this.props.interests.map((item) => <Bubble type='interest'>{item}</Bubble>)}
 				{this.props.skills.map((item) => <Bubble type='skill'>{item}</Bubble>)}
 			</div>

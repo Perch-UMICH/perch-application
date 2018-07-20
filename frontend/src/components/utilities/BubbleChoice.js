@@ -7,15 +7,23 @@ import '../user/individual/PickYourInterests.css';
 class BubbleChoice extends Component {
 	constructor(props) {
 		super(props);
+		var tempIntCat = [{name: 'biology'}, {name: 'chemisty'}, {name: 'spoon making'}, {name: 'cross origin analysis'}, {name: 'grossly overpriced cheese'}];
+		var tempIntFiltCat = [{name: 'biology'}, {name: 'chemisty'}, {name: 'spoon making'}, {name: 'cross origin analysis'}, {name: 'grossly overpriced cheese'}];
+		var tempSkillCat = [{name: 'HTML'}, {name: 'CSS'}, {name: 'React'}, {name: 'patience'}, {name: 'typing with fingers'}, {name: 'thinking with brain'}];
+		var tempSkillFiltCat = [{name: 'HTML'}, {name: 'CSS'}, {name: 'React'}, {name: 'patience'}, {name: 'typing with fingers'}, {name: 'thinking with brain'}];
+		var tempCat = props.skills ? tempSkillCat : tempIntCat;
+		var tempFiltCat = props.skills ? tempSkillFiltCat : tempIntFiltCat;
+
 		this.state = {
-			catalog: [],
+			catalog: tempCat,
 			choices: [],
-			filtered_catalog: [],
+			filtered_catalog: tempFiltCat,
 			in_filter: false
 		};
 	}
 
 	componentDidMount() {
+		/* None of this works
 		setTimeout(() => {
 			if (this.props.display_info.req_type === 'tags') {
 				getAllTags().then(resp => {
@@ -34,7 +42,7 @@ class BubbleChoice extends Component {
 					this.setUserChoices();
 				});
 			}
-		}, 200);
+		}, 200);*/
 	}
 
 	setUserChoices() {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { parse } from 'query-string';
 import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, /*getFacultyLabs*/ } from '../../../helper.js';
 import BasicButton from '../../utilities/buttons/BasicButton';
+import {EditQuickview, EditContainerOnboarding} from '../individual/StudentEditors';
 import './UploadImage.css';
 import axios from 'axios';
 import $ from 'jquery';
@@ -25,7 +26,7 @@ class UploadImage extends Component {
 			if (resp.result) {
 				if (resp.result.is_student) {
 					getStudentFromUser(user_id).then(resp => {
-						this.setState({ 
+						this.setState({
 							dest: `/student-profile/${getCurrentUserId()}`,
 							user_type: "student",
 							type_id: resp.result.id,
@@ -36,8 +37,8 @@ class UploadImage extends Component {
 					getFacultyFromUser(user_id).then(resp => {
 						// TODO TEMPORARILY COMMENTED OUT SINCE NOT WORKING FROM API UPDATE
 						// getFacultyLabs(resp.result.id).then(labs => {
-						// 	this.setState({ 
-						// 		dest: `/prof-page/${labs[0].id}`, 
+						// 	this.setState({
+						// 		dest: `/prof-page/${labs[0].id}`,
 						// 		user_type: "lab",
 						// 		type_id: labs[0].id,
 						// 	});
@@ -52,6 +53,7 @@ class UploadImage extends Component {
 	}
 
 	clickUpload(event) {
+			/*
 		const fileInput = document.getElementById('fileToUpload').files[0];
 		const formData = new FormData();
 		formData.append( 'image', fileInput );
@@ -62,8 +64,6 @@ class UploadImage extends Component {
 		    headers: { 'content-type': 'multipart/form-data' }
 		};
 
-		/*
-
 		axios.post('api/pics', formData, config)
 		    .then(response => {
 		        console.log(response.data.message);
@@ -72,30 +72,16 @@ class UploadImage extends Component {
 		    .catch(function (error) {
 		        console.log(error);
 		    })*/
-		window.location.href = this.state.dest;
+		window.location = '/experience';
 	}
 
 	render() {
 		return (
-			<div className='upload-image shift-down'>
-				<div className='container center-align upload-image-form shadow'>
-					<div className='upload-image-header'>
-					{ this.state.update ? <div className='update-info'>Update </div> : <div className='update-info'>Upload a </div> }
-					Profile Image</div>
-					<div className="container">
-						<form className='file-field input-field'>
-							<div className="btn upload-image-btn">
-							  <span>File</span>
-							  <input type="file" name="fileToUpload" id="fileToUpload" />
-							</div>
-							<div className="file-path-wrapper">
-							  <input className="file-path validate" id="img_file" type="text" placeholder="Upload file" />
-							</div>
-						</form>
-						<BasicButton superClick={this.clickUpload} msg={this.state.btn_msg}/>
-					</div>
-				</div>
-			</div>
+			<EditContainerOnboarding title="Profile Header" redirect={this.clickUpload.bind(this)}>
+				<form className="min-height-edit-form" >
+					<EditQuickview />
+				</form>
+			</EditContainerOnboarding>
 		);
 	}
 }
