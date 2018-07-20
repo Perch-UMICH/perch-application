@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { parse } from 'query-string';
 import { uploadPic, getCurrentUserId, getUser, getStudentFromUser, getFacultyFromUser, /*getFacultyLabs*/ } from '../../../helper.js';
 import BasicButton from '../../utilities/buttons/BasicButton';
+import {EditQuickview, EditContainerOnboarding} from '../individual/StudentEditors';
 import './UploadImage.css';
 import axios from 'axios';
 import $ from 'jquery';
@@ -76,25 +77,11 @@ class UploadImage extends Component {
 
 	render() {
 		return (
-			<div className='upload-image shift-down'>
-				<div className='container center-align upload-image-form shadow'>
-					<div className='upload-image-header'>
-					{ this.state.update ? <div className='update-info'>Update </div> : <div className='update-info'>Upload a </div> }
-					Profile Image</div>
-					<div className="container">
-						<form className='file-field input-field'>
-							<div className="btn upload-image-btn">
-							  <span>File</span>
-							  <input type="file" name="fileToUpload" id="fileToUpload" />
-							</div>
-							<div className="file-path-wrapper">
-							  <input className="file-path validate" id="img_file" type="text" placeholder="Upload file" />
-							</div>
-						</form>
-						<BasicButton superClick={this.clickUpload} msg={this.state.btn_msg}/>
-					</div>
-				</div>
-			</div>
+			<EditContainerOnboarding title="Upload Image" redirect={this.clickUpload.bind(this)}>
+				<form className="min-height-edit-form" >
+					<EditQuickview />
+				</form>
+			</EditContainerOnboarding>
 		);
 	}
 }
