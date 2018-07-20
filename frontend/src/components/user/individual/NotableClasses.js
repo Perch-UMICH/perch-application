@@ -18,7 +18,7 @@ class NotableClasses extends Component {
 				id: 'c_0',
 				text: ''
 			}],
-			url_string: this.props.location.pathname.split('/')[1],
+			url_string: this.props.location ? this.props.location.pathname.split('/')[1] : "",
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
 		this.state.c_index = this.state.class_arr.length;

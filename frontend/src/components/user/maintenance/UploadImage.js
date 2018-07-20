@@ -71,7 +71,7 @@ class UploadImage extends Component {
 		    .catch(function (error) {
 		        console.log(error);
 		    })*/
-		window.location = '/student-profile/1';
+		window.location = '/student-profile/';
 	}
 
 	render() {
