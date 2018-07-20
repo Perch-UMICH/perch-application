@@ -21,25 +21,6 @@ export class EditLinks extends Component {
 	}
 }
 
-export class EditBio extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			bio: 'Four score and seven years ago',
-		}
-	}
-	render() {
-		return(
-			<div id='edit-container'>
-				<form id='edit-bio'>
-					<h1>Edit Bio</h1>
-					<textarea placeholder='Four score and seven years ago ... ' onChange={(bio) => this.setState({bio: bio})}>{this.state.bio}</textarea>
-				</form>
-				<BasicButton msg='return'/>
-			</div>
-		)
-	}
-}
 
 // Example
 export const Test = () => (
@@ -83,6 +64,25 @@ export class EditContact extends Component {
 				<div className='input-field'>
 					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}/>
 					<label htmlFor='email'>Email</label>
+				</div>
+			</form>
+		)
+	}
+}
+
+export class EditBio extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			placeholder: "Short description of background, experience, and interests",
+			bio: '',
+		}
+	}
+	render() {
+		return(
+			<form id='edit-bio'>
+				<div className='input-field'>
+					<textarea id='textArea' placeholder='Short description of background, experience, and interests' onChange={(bio) => this.setState({bio: bio})}>{this.state.bio}</textarea>
 				</div>
 			</form>
 		)
