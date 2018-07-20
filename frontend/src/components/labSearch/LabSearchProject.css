@@ -53,15 +53,31 @@
 
 .lab-srch-project-description {
 	position: absolute;
-	left: 50px;
-	top: 40px;
+	left: 30px;
+	top: 55px;
 	font-size: 12px;
 	width: 400px;
 }
 
+.lab-srch-project-action-label {
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: var(--bright-blue);
+	color: var(--white) !important;
+	cursor: pointer;
+	border-radius: 20px 0 0 20px;
+	transition: 0.2s ease;
+}
+
+.lab-srch-project-action-label:hover {
+	background-color: var(--active-blue);
+	transition: 0.2s ease;
+}
+
 .lab-srch-project-apply {
 	position: absolute;
-	top: 0;
+	top: 15px;
 	right: 0;
 	width: 75px;
 	height: 40px;
@@ -78,31 +94,18 @@
 	color: var(--white) !important;
 }
 
-.lab-srch-project-apply:hover {
-	background-color: var(--active-blue);
-	transition: 0.2s ease;
-}
-
 .lab-srch-project-openings {
 	color: var(--black);
 	position: absolute;
-	top: 45px;
-	right: 4px;
-	font-size: 14px;
+	top: 33px;
+	left: 30px;
+	font-size: 12px;
 }
 
 .lab-srch-project-adder {
 	position: absolute;
-	right: 4px;
-	bottom: 4px;
-	/*top: 60px;*/
-	font-size: 30px;
-	color: var(--bright-blue);
-	transition: 0.2s ease;
-	cursor: pointer;
-}
-
-.lab-srch-project-adder:hover {
-	color: var(--active-blue);
-	transition: 0.2s ease;
+	top: 60px;
+	right: 0;
+	padding: 0 10px;
+	background-color: lightblue;
 }

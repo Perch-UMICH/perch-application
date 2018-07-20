@@ -160,8 +160,8 @@ class StudentProfile extends Component {
 	 				<div id='user-links'>
 	 					<h1>Links</h1>
 	 					<div>
-	 						<a>LinkedIn</a>
-	 						<a>Resume</a>
+	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn</a>
+	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>
