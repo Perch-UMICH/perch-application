@@ -16,6 +16,12 @@ export class EditLinks extends Component {
 					<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
 					<label htmlFor='resume'>Resume</label>
 				</div>
+				{this.props.prof && 
+					<div className='input-field'>
+						<input type='text' id='lab-materials' placeholder='lab-materials.pdf'/>
+						<label htmlFor='lab-materials'>Lab Materials</label>
+					</div>
+				}
 			</div>
 		)
 	}
@@ -183,7 +189,7 @@ export class EditQuickview extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			image: '/img/headshots/bbear.jpg',
+			image: this.props.img,
 			rotate: 0,
 			scale: 1.5,
 		}

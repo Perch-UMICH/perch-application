@@ -137,7 +137,7 @@ class StudentProfile extends Component {
 					<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
 				</EditModal>
 				<EditModal id="quickview-edit" title="Edit Quickview Info">
-					<EditQuickview />
+					<EditQuickview img='/img/headshots/bbear.jpg'/>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
