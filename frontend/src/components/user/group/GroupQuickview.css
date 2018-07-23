@@ -30,13 +30,14 @@
 	top: 130px;
 	font-size: 26px;
 	background-color: var(--white);
-	left: 50%;
-	transform: translate(-50%);
+	left: 5px;
+	/*transform: translate(-50%);*/
 	padding: 0 20px;
 	font-weight: bold;
 	border-left: 2px solid var(--d-three-grey);
 	border-top: 2px solid var(--d-three-grey);
 	border-right: 2px solid var(--d-three-grey);
+	/*border-bottom: 2px solid var(--d-three-grey);*/
 	border-radius: 0 5px 0 10px;
 	max-width: 100%;
 	white-space: nowrap;

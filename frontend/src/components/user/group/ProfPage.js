@@ -3,6 +3,10 @@ import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacul
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
+import Editor from '../../utilities/Editor'
+import EditModal from '../../utilities/modals/EditModal'
+import {EditContact, EditExperience, EditQuickview, EditLinks} from '../individual/StudentEditors'
+import { TwitterTimelineEmbed} from 'react-twitter-embed';
 import './ProfPage.css'
 
 class ProfPage extends Component {
@@ -21,6 +25,14 @@ class ProfPage extends Component {
 			no_lab: false,
 			dest: '/edit-external-links',
 		};
+	}
+
+	// Handles opening of component editing modals
+	openModal(id) {
+		if (document.getElementById(id)) {
+			document.getElementById(id).classList.add('activated');
+			document.getElementById("greyBackdrop").classList.add('activated');
+		}
 	}
 
 	componentDidMount() {
@@ -89,48 +101,76 @@ class ProfPage extends Component {
 		// } else {
 			return (
 				<div id='user-content-body'>
+					<div id="greyBackdrop" className="modal-backdrop"></div>
+					<EditModal id="contact-edit" title="Edit Contact Info">
+						<EditContact />
+					</EditModal>
+					<EditModal id="link-edit" title="Edit Links">
+						<EditLinks prof/>
+					</EditModal>
+					<EditModal id="work-edit" title="Edit Work Info">
+						<EditExperience type="work"/>
+					</EditModal>
+					<EditModal id="education-edit" title="Edit Education Info">
+						<EditExperience type="educ"/>
+					</EditModal>
+					<EditModal id="bio-edit" title="Edit Bio">
+						<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
+					</EditModal>
+					<EditModal id="quickview-edit" title="Edit Quickview Info">
+						<EditQuickview img='/img/headshots/bcoppola.jpg'/>
+					</EditModal>
 		 			<div id='user-column-L'>
 		 				<div>
-		 					<h1><i className='em em-brain'/></h1>
+		 					<h1>Quick Info</h1>
 		 					<div>
 		 						Extraordinary Alchemist
 		 					</div>
 		 				</div>
 		 				<div>
-		 					<h1><i class="em em-telephone_receiver"></i></h1>
+		 					<h1>Contact Info</h1>
 		 					<div>
 		 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bcoppola@umich.edu</a></div>
 		 						<div><b>Phone</b> 815 262 6642</div>
 		 					</div>
+		 					<Editor superClick={() => this.openModal('contact-edit')}/>
 		 				</div>
 		 				<div id='user-links'>
-		 					<h1><i className='em em-link'/></h1>
+		 					<h1>Links</h1>
 		 					<div>
 		 						<a>LinkedIn</a>
 		 						<a>Website</a>
 		 						<a>Lab Resources</a>
 		 					</div>
+		 					<Editor superClick={() => this.openModal('link-edit')}/>
 		 				</div>
 		 			</div>
 		 			<div id='user-column-R'>
-		 				<div className='ad'></div>
-		 				<div className='ad'></div>
-		 				<div className='ad'></div>
-		 			</div>
+	 				<TwitterTimelineEmbed
+					  sourceType="profile"
+					  screenName="UROPumich"
+					  options={{height: 'calc(100vh - 200px)'}}
+					/>
+	 			</div>
 		 			<div id='user-profile-column-C'>
 		 				<div id='user-quickview'>
-		 					<img id='user-quickview-img' src='/img/headshots/bcoppola.jpg'/>
+		 					<div id='user-quickview-img-container'>
+	 							<img id='user-quickview-img' src='/img/headshots/bcoppola.jpg'/>
+	 						</div>
 		 					<img id='user-quickview-coverimage' src='https://previews.123rf.com/images/balabolka/balabolka1609/balabolka160900265/62527939-cartoon-cute-hand-drawn-science-seamless-pattern-colorful-detailed-with-lots-of-objects-background-e.jpg' />
 		 					<div id='user-quickview-footer'>University of Michigan</div>
 		 					<div id='user-quickview-name'>Dr. Brian Coppola</div>
+		 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 		 				</div>
 		 				<div>
 		 					<h1>Work Experience</h1>
 		 					<UserWorkExperience title="Manhattan Project" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
 		 					<UserWorkExperience title="CVS" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
+		 					<Editor superClick={() => this.openModal('work-edit')}/>
 		 				</div>
 		 				<div id='user-education'>
 		 					<h1>Education</h1>
+		 					<Editor superClick={() => this.openModal('education-edit')}/>
 		 				</div>
 		 			</div>
 	 			</div>

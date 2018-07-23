@@ -2,7 +2,7 @@
 	background-color: #eaeaea;
 	position: relative;
 	top: 0;
-	padding-left: 100px;
+	padding-left: 30px;
 	padding-right: 30px;
 	padding-top: 20px;
 	border: 1px solid var(--d-three-grey);
@@ -16,4 +16,15 @@
 	margin: 0;
 	border-radius: 10px 10px 0 0;
 	font-size: 12px;
+}
+
+#saved-labs-header {
+	text-align: center;
+	width: 900px;
+	margin: auto;
+	margin-bottom: 20px;
+	font-size: 60px;
+	color: var(--bright-blue);
+	/*text-transform: uppercase;*/
+	/*font-weight: bold;*/
 }

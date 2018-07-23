@@ -311,7 +311,7 @@
 }
 
 .skill {
-	border-color: lightgreen;
+	border-color: lightgrey;
 	transition: 0.2s ease;
 }
 /*
@@ -322,7 +322,7 @@
 }*/
 
 .interest {
-	border-color: orange;
+	border-color: grey;
 	transition: 0.2s ease;
 }
 

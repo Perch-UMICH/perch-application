@@ -137,7 +137,7 @@ class StudentProfile extends Component {
 					<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
 				</EditModal>
 				<EditModal id="quickview-edit" title="Edit Quickview Info">
-					<EditQuickview />
+					<EditQuickview img='/img/headshots/bbear.jpg'/>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
@@ -160,8 +160,8 @@ class StudentProfile extends Component {
 	 				<div id='user-links'>
 	 					<h1>Links</h1>
 	 					<div>
-	 						<a>LinkedIn</a>
-	 						<a>Resume</a>
+	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn</a>
+	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>
