@@ -1,0 +1,12 @@
+.indicator-circle, .indicator-circle-on {
+  background-color: var(--d-grey);
+  border-radius: 10px;
+  height: 8px;
+  width: 8px;
+  margin: 20px 10px;
+  display: inline-block;
+}
+
+.indicator-circle-on {
+  background-color: var(--active-blue);
+}

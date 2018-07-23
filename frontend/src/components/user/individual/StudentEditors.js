@@ -10,11 +10,11 @@ export class EditLinks extends Component {
 			<div>
 				<div className='input-field'>
 					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com'/>
-					<label htmlFor='linkedin'>Linkedin</label>
+					<label htmlFor='linkedin' className="active" >Linkedin</label>
 				</div>
 				<div className='input-field'>
 					<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
-					<label htmlFor='resume'>Resume</label>
+					<label htmlFor='resume' className="active" >Resume</label>
 				</div>
 			</div>
 		)
@@ -41,7 +41,7 @@ export let EditContainerOnboarding = (props) => (
 	<div id='edit-container'>
 		<h1>Add {props.title}</h1>
 		{props.children}
-		<BasicButton msg='next' superClick={props.redirect}/>
+		{/*<BasicButton msg='next' superClick={props.redirect}/>*/}
 	</div>
 )
 
@@ -59,11 +59,11 @@ export class EditContact extends Component {
 			<form id='edit-contact-info'>
 				<div className='input-field'>
 					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.phone} onChange={(e) => this.setState({phone: e.target.value})}/>
-					<label htmlFor='phone-number'>Phone</label>
+					<label htmlFor='phone-number' className="active">Phone</label>
 				</div>
 				<div className='input-field'>
 					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}/>
-					<label htmlFor='email'>Email</label>
+					<label htmlFor='email' className="active">Email</label>
 				</div>
 			</form>
 		)
@@ -149,15 +149,15 @@ export class EditExperience extends Component {
 			<form id='edit-experience'>
 			  {this.state.objs.map((obj) => {
 					return (
-						<div>
-							<div className="row" key={obj.id}>
+						<div key={obj.id}>
+							<div className="row">
 								<div className="col s11">
 									<div className='input-field'>
-										<input id='title' type='text' autofocus="autofocus" name="title" placeholder={this.state.titlePlacehold} value={obj.title} onChange={(e) => this.alterObj(e, obj.id)}/>
+										<input id='title' type='text' name="title" placeholder={this.state.titlePlacehold} value={obj.title} onChange={(e) => this.alterObj(e, obj.id)}/>
 										<label htmlFor='title' className="active">{this.state.titleText}</label>
 									</div>
 									<div className='input-field'>
-										<input id='timeRange' type='text' autofocus="autofocus" name="timeRange" placeholder='August 2017 - April 2018' value={obj.timeRange} onChange={(e) => this.alterObj(e, obj.id)}/>
+										<input id='timeRange' type='text' name="timeRange" placeholder='August 2017 - April 2018' value={obj.timeRange} onChange={(e) => this.alterObj(e, obj.id)}/>
 										<label htmlFor='timeRange' className="active">Time Range</label>
 									</div>
 									<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} className="textarea-experience"
@@ -228,21 +228,21 @@ export class EditQuickview extends Component {
 					      />
 					</Dropzone>
 					<i>Drag and drop image</i>
-					<p id='prof-pic-editors'>
+					<div id='prof-pic-editors'>
 				     	<div className='range-field'>
 				     		<input type="range" id="profile-pic-range" min="1" max="5" step='0.1' defaultValue='1.5' onChange={this.handleSlider}/>
 				    	</div>
 				    	<i id='rotate-icon' className='material-icons' onClick={this.handleRotate}>rotate_90_degrees_ccw</i>
-				    </p>
+				   </div>
 			    </div>
 			   	<div id='quickview-editor-R'>
 			   		<div className='input-field'>
 			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' />
-			   			<label htmlFor='profile-name'>Name</label>
+			   			<label htmlFor='profile-name' className="active" >Name</label>
 			   		</div>
 			   		<div className='input-field'>
 			   			<input id='profile-school' type='text' placeholder='Hogwarts' />
-			   			<label htmlFor='profile-school'>School</label>
+			   			<label htmlFor='profile-school' className="active" >School</label>
 			   		</div>
 			   	</div>
 			</div>

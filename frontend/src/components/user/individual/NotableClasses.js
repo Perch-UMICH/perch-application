@@ -173,7 +173,7 @@ class NotableClasses extends Component {
 				})} <br/>
 			</form>
 
-		if (this.state.url_string === 'notable-classes') {
+		if (this.state.url_string === 'notable-classes' || this.props.showForm) {
 			return (
 				<EditContainerOnboarding title="Academics" redirect={this.redirect.bind(this)}>
 					{notableClassesForm}

@@ -40,6 +40,7 @@ import PrivacyPolicy from './components/publicStatic/PrivacyPolicy';
 import TermsOfService from './components/publicStatic/TermsOfService';
 import GroupPage from './components/user/group/GroupPage';
 import LabDashboard from './components/labSearch/LabDashboard';
+import StudentOnboarding from './components/user/individual/StudentOnboarding';
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
@@ -108,6 +109,7 @@ class Router extends Component {
 							<Route path='/terms-of-service' component={ TermsOfService } />
 							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/dashboard' component={ LabDashboard } />
+							<Route path='/student-onboarding' component={ StudentOnboarding } />
 							<Route path='/test' component={ Test } />
 							<Route path='/' component={ Home } />
 						</Switch>

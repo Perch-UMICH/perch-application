@@ -12,7 +12,7 @@ class UploadImage extends Component {
 		super(props);
 		this.state = {
 			dest: '',
-			user_type: parse(this.props.location.search).user_type,
+			user_type: this.props.location ? parse(this.props.location.search).user_type : "student",
 			btn_msg: 'next',
 			update: false,
 		}
@@ -20,7 +20,7 @@ class UploadImage extends Component {
 	}
 
 	componentDidMount() {
-		var url_arr = this.props.location.pathname.split('/');
+		var url_arr = this.props.location ? this.props.location.pathname.split('/') : "";
 		var user_id = getCurrentUserId();
 		getUser(user_id).then(resp => {
 			if (resp.result) {
