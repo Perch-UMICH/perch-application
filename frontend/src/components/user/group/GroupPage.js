@@ -11,7 +11,8 @@ class GroupPage extends Component {
     constructor(props) {
         super(props);
         
-        var labID = window.location.pathname.split('/')[2]
+
+        var labID = window.location.pathname.split('/')[2];
         this.state = {
             lab_id: labID,
             lab_positions: [],
@@ -24,20 +25,23 @@ class GroupPage extends Component {
     componentWillMount() {
         getAllLabPositions(this.state.lab_id).then((resp) => {
             let positions = [];
+            console.log(resp);
             resp.map((pos) => {
                 positions.push(<GroupProject title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description} 
-                                time_commit={pos.time_commitment} gpa='MISSING' year='MISSING' urop={false}/>);
+                                time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
             })
             this.setState({lab_positions: positions});
         });
-
+        
         getLab(this.state.lab_id).then((resp) => {
+            console.log(resp);
             this.setState({lab_data: resp.data});
         });
 
         getLabMembers(this.state.lab_id).then((resp) => {
             let admins = [];
             let members = [];
+            console.log(resp.result);
             resp.result.faculty.map((person) => {
                 let fullname = person.data.first_name + ' ' + person.data.last_name;
                 if ((person.role === 1) || (person.role === 2)) {
@@ -69,17 +73,17 @@ class GroupPage extends Component {
 					<Members people={this.state.lab_members}/>
 				</div>
 				<div id='group-page-column-R'>
-                    <QuickInfo department={this.state.lab_data.department}/>
-                    <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
+                    <QuickInfo department='MISSING'/>
+                    <ContactInfo email='MISSING' phone='MISSING' location='MISSING'/>
                 </div>
 				<div id='group-page-main'>
-					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description}/>
+					<GroupQuickview title={this.state.lab_data.name} description='NULL'/>
 					<GroupProjectContainer>
 						{this.state.lab_positions}
 					</GroupProjectContainer>
 
 					<GroupPublicationsContainer>
-						<GroupPublication title={this.state.lab_data.publications} description="MISSING"/>
+						<GroupPublication title='MISSING' description="MISSING"/>
 					</GroupPublicationsContainer>
 				</div>
 			</div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences, isStudent, isLab} from '../../../helper.js'
+import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences, isStudent, isLab} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -33,6 +33,13 @@ class ProfPage extends Component {
 			document.getElementById(id).classList.add('activated');
 			document.getElementById("greyBackdrop").classList.add('activated');
 		}
+	}
+
+	componentWillMount() {
+		var prof_id = window.location.pathname.split('/')[2];
+		getFaculty(prof_id).then((resp) => {
+			console.log(resp);
+		});
 	}
 
 	componentDidMount() {
