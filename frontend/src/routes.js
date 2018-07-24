@@ -10,20 +10,7 @@ import About from './components/publicStatic/about/About';
 import Login from './components/publicStatic/Login';
 import StudentProfile from './components/user/individual/StudentProfile';
 import LabMatch from './components/labSearch/LabMatch';
-import PickYourInterests from './components/user/individual/PickYourInterests';
 import LabWebsite from './components/user/group/LabWebsite';
-import UploadImage from './components/user/maintenance/UploadImage';
-import LabTextInfo from './components/user/group/LabTextInfo';
-import LabSpecifications from './components/user/group/LabSpecifications';
-import PastResearch from './components/user/individual/PastResearch';
-import StudentBio from './components/user/individual/StudentBio';
-import EnterBio from './components/user/individual/EnterBio';
-import Experience from './components/user/individual/Experience';
-import Education from './components/user/individual/Education';
-import Links from './components/user/individual/Links';
-import NotableClasses from './components/user/individual/NotableClasses';
-import ExternalLinks from './components/ExternalLinks';
-import UpdateExternalLinks from './components/user/maintenance/UpdateExternalLinks';
 import ProfPage from './components/user/group/ProfPage';
 import Apply from './components/user/Apply';
 import CreatePosition from './components/user/group/CreatePosition';
@@ -40,6 +27,8 @@ import PrivacyPolicy from './components/publicStatic/PrivacyPolicy';
 import TermsOfService from './components/publicStatic/TermsOfService';
 import GroupPage from './components/user/group/GroupPage';
 import LabDashboard from './components/labSearch/LabDashboard';
+import StudentOnboarding from './components/user/individual/StudentOnboarding';
+import FacultyOnboarding from './components/user/individual/FacultyOnboarding';
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
@@ -65,32 +54,6 @@ class Router extends Component {
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/student-profile/:studentSlug' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMatch }/>
-							<Route path='/pick-your-interests' component={ PickYourInterests }/>
-							<Route path='/update-interests' component={ PickYourInterests }/>
-							<Route path='/lab-skills' component={ PickYourInterests }/>
-							<Route path='/update-skills' component={ PickYourInterests }/>
-							<Route path='/lab-website' component={ LabWebsite }/>
-							<Route path='/upload-image' component={ UploadImage }/>
-							<Route path='/update-image' component={ UploadImage }/>
-							<Route path='/lab-name' component= { LabTextInfo }/>
-							<Route path='/lab-description' component= { LabTextInfo }/>
-							<Route path='/update-lab-description' component= { LabTextInfo }/>
-							<Route path='/lab-specifications' component= { LabSpecifications }/>
-							<Route path='/update-lab-specifications' component= { LabSpecifications }/>
-							<Route path='/update-contact' component= { UpdateContact }/>
-							<Route path='/enter-contact' component= { EnterContact }/>
-							<Route path='/past-research' component={ PastResearch }/>
-							<Route path='/update-past-research' component={ PastResearch }/>
-							<Route path='/notable-classes' component={ NotableClasses }/>
-							<Route path='/update-notable-classes' component={ NotableClasses }/>
-							<Route path='/student-bio' component={ EnterBio }/>
-							<Route path='/update-student-bio' component={ StudentBio }/>
-							<Route path='/external-links' component={ ExternalLinks } />
-							<Route path='/update-external-links' component={ ExternalLinks } />
-							<Route path='/edit-external-links' component={ UpdateExternalLinks } />
-							<Route path='/links' component={ Links } />
-							<Route path='/experience' component={ Experience } />
-							<Route path='/education' component={ Education } />
 							<Route path='/prof-page' component={ GroupPage }/>
 							<Route path='/prof/:profSlug' component={ ProfPage }/>
 							<Route path='/apply/:labSlug' component={ Apply } />
@@ -108,6 +71,8 @@ class Router extends Component {
 							<Route path='/terms-of-service' component={ TermsOfService } />
 							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/dashboard' component={ LabDashboard } />
+							<Route path='/student-onboarding' component={ StudentOnboarding } />
+							<Route path='/faculty-onboarding' component={ FacultyOnboarding } />
 							<Route path='/test' component={ Test } />
 							<Route path='/' component={ Home } />
 						</Switch>
