@@ -44,7 +44,7 @@ import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
 
-import {Test} from './components/user/individual/StudentEditors';
+import {Test} from './components/user/group/GroupEditors';
 
 class Router extends Component {
 	render() {
