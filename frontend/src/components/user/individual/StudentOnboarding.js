@@ -24,7 +24,7 @@ class StudentOnboarding extends Component {
       steps: {
         0: <EnterContact />,
         1: <PickYourInterests />,
-        2: <NotableClasses showForm={true}/>,
+        2: <NotableClasses showForm={true} />,
         3: <EnterBio />,
         4: <UploadImage />,
         5: <Experience />,
@@ -41,17 +41,24 @@ class StudentOnboarding extends Component {
 	render() {
     var backBtn = <BasicButton msg='back' superClick={() => this.setState({curStep: this.state.curStep - 1})}/>;
     var nextBtn = <BasicButton msg='next' superClick={() => this.setState({curStep: this.state.curStep + 1})}/>;
+    var stepToRender = this.state.steps[this.state.curStep];
+    var noNotableClasses = true;
     if (this.state.curStep === 0) {
       backBtn = null;
-    } else if (this.state.curStep === (this.state.numSteps - 1)) {
+    }
+    else if (this.state.curStep === (this.state.numSteps - 1)) {
       nextBtn = <BasicButton msg='go to profile' superClick={this.redirect.bind(this)}/>
+    }
+    if (this.state.curStep === 2) {
+      noNotableClasses = false;
     }
 		return (
       <div className="onboarding-container">
         {backBtn}
         {nextBtn}
         <ProgressIndicator steps={this.state.numSteps} curStep={this.state.curStep} />
-        {this.state.steps[this.state.curStep]}
+        <NotableClasses showForm={true} noRender={false}/>
+        {stepToRender}
       </div>
 		)
 	}

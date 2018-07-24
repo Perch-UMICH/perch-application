@@ -129,6 +129,9 @@ class NotableClasses extends Component {
 	}
 
 	render() {
+		if (this.props.noRender) {
+			return ("");
+		}
 		var notableClassesForm =
 			<form>
 				<div className='row'>
