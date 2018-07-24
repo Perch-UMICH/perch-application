@@ -16,10 +16,10 @@ export class EditLinks extends Component {
 					<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
 					<label htmlFor='resume' className="active" >Resume</label>
 				</div>
-				{this.props.prof && 
+				{this.props.prof &&
 					<div className='input-field'>
 						<input type='text' id='lab-materials' placeholder='lab-materials.pdf'/>
-						<label htmlFor='lab-materials'>Lab Materials</label>
+						<label htmlFor='lab-materials' className="active">Lab Materials</label>
 					</div>
 				}
 			</div>

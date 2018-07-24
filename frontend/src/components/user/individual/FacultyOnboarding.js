@@ -13,29 +13,26 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
-import './StudentOnboarding.css'
 
-class StudentOnboarding extends Component {
+class FacultyOnboarding extends Component {
   constructor(props) {
     super(props);
     this.state = {
       curStep: 0,
-      numSteps: 8,
+      numSteps: 6,
       steps: {
         0: <EnterContact />,
-        1: <PickYourInterests />,
-        2: <NotableClasses showForm={true} />,
-        3: <EnterBio />,
-        4: <UploadImage />,
-        5: <Experience />,
-        6: <Education />,
-        7: <Links />,
+        1: <EnterBio />,
+        2: <UploadImage />,
+        3: <Experience />,
+        4: <Education />,
+        5: <Links prof={true}/>,
       }
     }
   }
 
   redirect() {
-    window.location = '/student-profile';
+    window.location = '/prof/1';
   }
 
 	render() {
@@ -59,4 +56,4 @@ class StudentOnboarding extends Component {
 	}
 }
 
-export default StudentOnboarding;
+export default FacultyOnboarding;
