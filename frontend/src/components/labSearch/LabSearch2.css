@@ -8,11 +8,14 @@
 
 .lab-srch-mods {
 	/*background-color: var(--d-three-grey);*/
-	background-color: lightblue;
+	border: 1px solid var(--d-three-grey);
+	border-right: none;
+	background-color: #eaeaea;
 	display: block;
 	position: relative;
 	left: 0;
 	top: 0;
+	height: fit-content;
 }
 
 .lab-srch-body {
@@ -70,6 +73,13 @@
 #lab-srch-more:hover {
 	background-color: var(--active-blue);
 	transition: 0.2s ease;
+}
+
+.search-sidebar {
+	grid-column-start: 1;
+	margin: 5px;
+	margin-bottom: 0px;
+	padding: 5px 0;
 }
 
 /*#lab-srch-results b {

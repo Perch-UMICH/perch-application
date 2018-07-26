@@ -9,12 +9,6 @@
 	grid-column-start: 2;
 }
 
-.search-sidebar {
-	grid-column-start: 1;
-	height: 40px;
-	margin: 5px;
-	margin-bottom: 0px;
-}
 
 .search-filter-container {
 	background-color: var(--white);
