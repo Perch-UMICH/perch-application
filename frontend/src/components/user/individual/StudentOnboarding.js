@@ -21,17 +21,30 @@ class StudentOnboarding extends Component {
     this.state = {
       curStep: 0,
       numSteps: 8,
-      steps: {
-        0: <EnterContact />,
-        1: <PickYourInterests />,
-        2: <NotableClasses showForm={true} />,
-        3: <EnterBio />,
-        4: <UploadImage />,
-        5: <Experience />,
-        6: <Education />,
-        7: <Links />,
-      }
+      user: {},
+      steps: {},
     }
+  }
+
+  componentDidMount() {
+    var steps = {
+      0: <EnterContact user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+      1: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+      2: <NotableClasses user={this.state.user} showForm={true} updateUser={this.updateUser.bind(this)}/>,
+      3: <EnterBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+      4: <UploadImage user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+      5: <Experience user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+      6: <Education user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+      7: <Links user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+    }
+    this.setState({steps})
+  }
+
+  updateUser(field, newValue) {
+    console.log("updating ", field, " to ", newValue);
+    var newState = this.state;
+    newState.user[field] = newValue;
+    this.setState(newState);
   }
 
   redirect() {

@@ -355,6 +355,7 @@ export function createStudent(user_id, first_name, last_name, email, year, bio,m
 }
 
 // RESTRICTED: student_id
+// From Frontend (Emi) - phone, profile_photo, eduaction (different than classes), school (if we want to keep a separate field), resume link instead of website link, lab materials link
 export function updateStudent(first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student) {
     console.log('Updating student');
     /*

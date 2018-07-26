@@ -13,12 +13,10 @@ class EnterBio extends Component {
 	render() {
 		return (
 			<EditContainerOnboarding title="Bio" redirect={this.redirect.bind(this)}>
-				<EditBio />
+				<EditBio updateUser={this.props.updateUser} user={this.props.user}/>
 			</EditContainerOnboarding>
 		);
 	}
 }
 
 export default EnterBio;
-
-

@@ -13,7 +13,7 @@ class Education extends Component {
 	render() {
 		return (
 			<EditContainerOnboarding title="Education" redirect={this.redirect.bind(this)}>
-				<EditExperience type="educ" />
+				<EditExperience type="educ" user={this.props.user} updateUser={this.props.updateUser}/>
 			</EditContainerOnboarding>
 		);
 	}

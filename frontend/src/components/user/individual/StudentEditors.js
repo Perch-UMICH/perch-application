@@ -5,20 +5,40 @@ import Dropzone from 'react-dropzone'
 import './StudentEditors.css';
 
 export class EditLinks extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			linkedin_link: props.user && props.user.linkedin_link ? props.user.linkedin_link : '',
+			website_link: props.user && props.user.website_link ? props.user.website_link : '',
+		}
+	}
+
 	render() {
 		return (
 			<div>
 				<div className='input-field'>
-					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com'/>
+					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com' value={this.state.linkedin_link}
+					onChange={(e) => {
+						if (this.props.updateUser) {
+							this.props.updateUser("linkedin_link", e.target.value); }
+						this.setState({linkedin_link: e.target.value})}}/>
 					<label htmlFor='linkedin' className="active" >Linkedin</label>
 				</div>
 				<div className='input-field'>
-					<input type='text' id='resume' placeholder='super-cool-resume.pdf'/>
+					<input type='text' id='resume' placeholder='super-cool-resume.pdf' value={this.state.website_link}
+					onChange={(e) => {
+						if (this.props.updateUser) {
+							this.props.updateUser("website_link", e.target.value); }
+						this.setState({website_link: e.target.value})}}/>
 					<label htmlFor='resume' className="active" >Resume</label>
 				</div>
 				{this.props.prof &&
 					<div className='input-field'>
-						<input type='text' id='lab-materials' placeholder='lab-materials.pdf'/>
+						<input type='text' id='lab-materials' placeholder='lab-materials.pdf' value={this.state.lab_materials_link}
+						onChange={(e) => {
+							if (this.props.updateUser) {
+								this.props.updateUser("lab_materials_link", e.target.value); }
+							this.setState({lab_materials_link: e.target.value})}}/>
 						<label htmlFor='lab-materials' className="active">Lab Materials</label>
 					</div>
 				}
@@ -56,19 +76,28 @@ export class EditContact extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: 'bearb@umich.edu',
-			phone: '815-276-4124',
+			email: props.user && props.user.email ?  props.user.email : '',
+			phone: props.user && props.user.phone ? props.user.phone : '',
 		}
 	}
+
 	render() {
 		return(
 			<form id='edit-contact-info'>
 				<div className='input-field'>
-					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.phone} onChange={(e) => this.setState({phone: e.target.value})}/>
+					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.phone}
+					onChange={(e) => {
+						if (this.props.updateUser) {
+							this.props.updateUser("phone", e.target.value); }
+						this.setState({phone: e.target.value})}}/>
 					<label htmlFor='phone-number' className="active">Phone</label>
 				</div>
 				<div className='input-field'>
-					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.email} onChange={(e) => this.setState({email: e.target.value})}/>
+					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.email}
+					onChange={(e) => {
+						if (this.props.updateUser) {
+							this.props.updateUser("email", e.target.value); }
+						this.setState({email: e.target.value})}}/>
 					<label htmlFor='email' className="active">Email</label>
 				</div>
 			</form>
@@ -81,14 +110,19 @@ export class EditBio extends Component {
 		super(props);
 		this.state = {
 			placeholder: "Short description of background, experience, and interests",
-			bio: '',
+			bio: this.props.user && this.props.user.bio ? this.props.user.bio : '',
 		}
 	}
 	render() {
 		return(
 			<form id='edit-bio'>
 				<div className='input-field'>
-					<textarea id='textArea' placeholder='Short description of background, experience, and interests' onChange={(bio) => this.setState({bio: bio})}>{this.state.bio}</textarea>
+					<textarea id='textArea' placeholder='Short description of background, experience, and interests'
+					onChange={(e) => {
+						if (this.props.updateUser) {
+							this.props.updateUser("bio", e.target.value);}
+						this.setState({bio: e.target.value})}}>
+					{this.state.bio}</textarea>
 				</div>
 			</form>
 		)
@@ -103,13 +137,20 @@ export class EditExperience extends Component {
 		var titleText = props.type === 'work' ? 'Title' : 'School Name';
 		var titlePlacehold = props.type === 'work' ? "Dr. Labby's Lab" : 'University of Michigan';
 		var textPlacehold = props.type === 'work' ? 'Decribe your role' : 'Undergraduate Degree in Biology ...';
+		var initObjs = [{
+			id: 'o_0',
+			title: '',
+			timeRange: '',
+			text: '',
+		}];
+		if (props.type === 'work' && props.user && props.user.experience) {
+			initObjs = props.user.experience;
+		}
+		if (props.type === 'educ' && props.user && props.user.education) {
+			initObjs = props.user.education;
+		}
 		this.state = {
-			objs: [{
-				id: 'o_0',
-				title: '',
-				timeRange: '',
-				text: '',
-			}],
+			objs: initObjs,
 			titleText, titlePlacehold, textPlacehold
 		}
 		this.state.index = this.state.objs.length;
@@ -128,6 +169,13 @@ export class EditExperience extends Component {
 			objs: updated_objs,
 			index: newIndex,
 		});
+		if (this.props.updateUser) {
+			if (this.props.type === "work") {
+				this.props.updateUser("experience", updated_objs);
+			} else {
+				this.props.updateUser("education", updated_objs);
+			}
+		}
 	}
 
 	alterObj(event, id) {
@@ -137,6 +185,13 @@ export class EditExperience extends Component {
 		this.setState({
 			objs: temp_objs,
 		});
+		if (this.props.updateUser) {
+			if (this.props.type === "work") {
+				this.props.updateUser("experience", temp_objs);
+			} else {
+				this.props.updateUser("education", temp_objs);
+			}
+		}
 	}
 
 	removeObj(id) {
@@ -144,6 +199,13 @@ export class EditExperience extends Component {
 			var temp_objs = prevState.objs;
 			var removeIndex = temp_objs.map(function(item) { return item.id; }).indexOf(id);
 			temp_objs.splice(removeIndex, 1);
+			if (this.props.updateUser) {
+				if (this.props.type === "work") {
+					this.props.updateUser("experience", temp_objs);
+				} else {
+					this.props.updateUser("education", temp_objs);
+				}
+			}
 			return {
 				objs: temp_objs,
 			};
@@ -192,21 +254,33 @@ export class EditQuickview extends Component {
 			image: this.props.img,
 			rotate: 0,
 			scale: 1.5,
+			name: "",
+			school: "",
 		}
 	}
 
 	handleDrop = dropped => {
 		this.setState({ image: dropped[0] })
+		if (this.props.updateUser) {
+			this.props.updateUser("profile-img", dropped[0]);
+		}
 	}
 
 	handleSlider = e => {
 		this.setState({
 			scale: e.target.value
 		})
+		if (this.props.updateUser) {
+			this.props.updateUser("profile-img-scale", e.target.value);
+		}
 	}
 
 	handleRotate = () => {
-		this.setState({rotate: this.state.rotate - 90})
+		this.setState({rotate: this.state.rotate - 90}, () => {
+			if (this.props.updateUser) {
+				this.props.updateUser("profile-img-rotate", this.state.rotate);
+			}
+		})
 	}
 
 	componentDidUpdate() {
@@ -243,11 +317,21 @@ export class EditQuickview extends Component {
 			    </div>
 			   	<div id='quickview-editor-R'>
 			   		<div className='input-field'>
-			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' />
+			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants'
+							 	onChange={(e) => {
+									if (this.props.updateUser) {
+										this.props.updateUser("profile-name", e.target.value)}
+									this.setState({name: e.target.value})
+								}}/>
 			   			<label htmlFor='profile-name' className="active" >Name</label>
 			   		</div>
 			   		<div className='input-field'>
-			   			<input id='profile-school' type='text' placeholder='Hogwarts' />
+			   			<input id='profile-school' type='text' placeholder='Hogwarts'
+								onChange={(e) => {
+									if (this.props.updateUser) {
+										this.props.updateUser("profile-school", e.target.value)}
+									this.setState({school: e.target.value})
+								}}/>
 			   			<label htmlFor='profile-school' className="active" >School</label>
 			   		</div>
 			   	</div>
