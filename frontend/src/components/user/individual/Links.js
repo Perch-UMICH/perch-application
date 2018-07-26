@@ -14,7 +14,7 @@ class Links extends Component {
 		return (
 			<EditContainerOnboarding title="Links" redirect={this.redirect.bind(this)}>
         <form>
-          <EditLinks prof={this.props.prof} />
+          <EditLinks prof={this.props.prof} user={this.props.user} updateUser={this.props.updateUser}/>
         </form>
 			</EditContainerOnboarding>
 		);

@@ -79,7 +79,7 @@ class UploadImage extends Component {
 		return (
 			<EditContainerOnboarding title="Profile Header" redirect={this.clickUpload.bind(this)}>
 				<form className="min-height-edit-form" >
-					<EditQuickview />
+					<EditQuickview updateUser={this.props.updateUser} user={this.props.user}/>
 				</form>
 			</EditContainerOnboarding>
 		);
