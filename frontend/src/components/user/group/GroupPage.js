@@ -83,7 +83,7 @@ class GroupPage extends Component {
 					</GroupProjectContainer>
 
 					<GroupPublicationsContainer>
-						<GroupPublication title='MISSING' description="MISSING"/>
+						<GroupPublication title='NULL' description="MISSING"/>
 					</GroupPublicationsContainer>
 				</div>
 			</div>

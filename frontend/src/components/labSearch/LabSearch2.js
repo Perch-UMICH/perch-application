@@ -7,7 +7,7 @@ import ExpanderIcons from '../utilities/ExpanderIcons'
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';
-import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData} from '../../helper.js'
+import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
 import {getFilters} from '../../data/filterData';
 
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
@@ -34,24 +34,29 @@ class LabSearch extends Component {
 		this.state = {
 			filts,
 			parentFilts,
-			skills_catalog: [],
-			your_skills: [],
-			interests_catalog: [],
-			your_interests: [],
-			skills: [],
-			interests: [],
-			filtered_catalog: [],
-			in_filter: false,
-			search_skills: true,
-			search_interests: false,
-			all_labs: [],
-			filtered_labs: [],
+            all_labs: [],
+            areas: [],
+            departments: [],
+            commitments: [],
+            skills: [],
 			s_id: '',
             search: '',
 		}
 	}
 
     componentWillMount() {
+        getAllLabs().then((resp) => {
+            var newState = this.state;
+            var all_labs = resp.result
+            //console.log(all_labs);
+            for (var key in all_labs) {
+                let lab = all_labs[key].data;
+                newState.all_labs.push(<LabSearchItem name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
+            }
+
+            this.setState(newState);
+        });
+
         getSearchData().then((resp) => {
             //console.log(resp);
             let new_filts = this.state.filts;
@@ -88,26 +93,42 @@ class LabSearch extends Component {
 		document.getElementById(`${type}-filter`).classList.toggle('expand')
 	}
 
-	filterList(event) {
-		if (this.state.search_skills) {
-			var updatedList = this.state.skills_catalog;
-		}
-		else {
-			var updatedList = this.state.interests_catalog;
-		}
-    	updatedList = updatedList.filter(function(item){
-      	return item.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").search(
-        	event.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-")) !== -1;
-    	});
-    	this.setState({filtered_catalog: updatedList, in_filter: true});
-	}
-
 	handleFilterClick(filterType, slug) {
 		var newState = this.state;
 		if (newState.filts[filterType][slug].clicked) {
 			newState.filts[filterType][slug].clicked = false;
+
+            switch(filterType) {
+                case 'departments':
+                    newState.departments.splice(newState.departments.indexOf(slug), 1);
+                    break;
+                case 'researchAreas':
+                    newState.areas.splice(newState.areas.indexOf(slug), 1);
+                    break;
+                case 'minReqs':
+                    newState.commitments.splice(newState.commitments.indexOf(slug), 1);
+                    break;
+                case 'lab-skills':
+                    newState.skills.splice(newState.skills.indexOf(slug), 1);
+                    break;
+            }
 		} else {
 			newState.filts[filterType][slug].clicked = true;
+
+            switch(filterType) {
+                case 'departments':
+                    newState.departments.push(slug);
+                    break;
+                case 'researchAreas':
+                    newState.areas.push(slug);
+                    break;
+                case 'minReqs':
+                    newState.commitments.push(slug);
+                    break;
+                case 'lab-skills':
+                    newState.skills.push(slug);
+                    break;
+            }
 		}
 		this.setState(newState);
 	}
@@ -118,6 +139,14 @@ class LabSearch extends Component {
 
     updateSearch(event) {
         this.setState({search: event.target.value})
+    }
+
+    executeSearch(event) {
+        if (event.key === 'Enter') {
+            labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search).then((resp) => {
+                console.log(resp);
+            })
+        }
     }
 
 	render() {
@@ -138,6 +167,7 @@ class LabSearch extends Component {
 											<li key={subFilt.slug}>
 												<input type="checkbox"
 													className="checkbox-white filled-in"
+                                                    onClick={() => this.handleFilterClick(type, filt.slug)}
 													id={subFilt.slug}/>
 												<label
 													className="filter-checkbox-label"
@@ -155,7 +185,6 @@ class LabSearch extends Component {
 								<li key={filt.slug}>
 									<div className="filter-dropdown-container">
 										<a className={expandCSS}
-											 onClick={() => this.handleFilterClick(type, filt.slug)}
 											 id={filt.slug}>
 												<i className="material-icons">
 													{this.state.filts[type][filt.slug].clicked ?
@@ -172,6 +201,7 @@ class LabSearch extends Component {
 								<li key={filt.slug}>
 									<input type="checkbox"
 										className="checkbox-white filled-in"
+                                        onClick={() => this.handleFilterClick(type, filt.slug)}
 										id={filt.slug}/>
 									<label
 										className="filter-checkbox-label"
@@ -205,13 +235,10 @@ class LabSearch extends Component {
                    {searchSideBar}
                </div>
                <div className='lab-srch-body'>
-                   <input id='lab-srch-input' type='text' placeholder='keywords' onChange={event => this.updateSearch(event)}/>
+                   <input id='lab-srch-input' type='text' placeholder='keywords' onChange={event => this.updateSearch(event)} onKeyPress={event => this.executeSearch(event)}/>
                    <div id='lab-srch-result-summary'>Projects 1-50 (157 total) page 1 of 40 for <b>{this.state.search}</b></div>
                    <div id='lab-srch-results'>
-                        <LabSearchItem name="Meha Patel's Lab" dept='English' rsrch='12th century grammar analysis' img='/img/meha.jpg' description='We love words. Especially old, hard to understand words.'/>
-                        <LabSearchItem name='Sara Alektar' dept='Physics' rsrch='nuclear coffee decay' img='/img/sara.jpg' description="We make coffee, smell cofee, drink coffee, freeze coffee, sublimate coffee, distill cofee, and watch cofee. You should join!"/>
-                        <LabSearchItem name='Sanjay B.' dept='Chemistry' rsrch='chromatography race betting' img='/img/sanjay.jpg' description='If the school asks, this does not exist.'/>
-                        <LabSearchItem name='Nolan Kataoka' dept='Dance' rsrch='expressive feet dance' img='/img/nolan.jpg' description='We strongly feel feet are the window to the soul'/>
+                        {this.state.all_labs}
                    </div>
                </div>
 			</div>
