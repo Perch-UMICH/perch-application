@@ -29,8 +29,7 @@ class LabSearchItem extends Component {
         let toggleExpanderIcons = () => {
             let lab_srch_item = document.getElementById(`lab_srch_item_${this.props.name}`)
             let expanderIcons = lab_srch_item.children[lab_srch_item.children.length - 1];
-            for (let i = 0; i < expanderIcons.children.length; i++)
-                expanderIcons.children[i].innerText = (expanderIcons.children[i].innerText == 'expand_more') ? 'expand_less' : 'expand_more';
+            
             expanderIcons.classList.toggle('active-blue')
         }
 
@@ -39,7 +38,7 @@ class LabSearchItem extends Component {
 
         let expansion = document.getElementById(`lab_srch_expansion_${this.props.name}`)
         expansion.classList.toggle('hide-projects')
-        // toggleExpanderIcons();
+        toggleExpanderIcons();
     }
 
 	render() {
