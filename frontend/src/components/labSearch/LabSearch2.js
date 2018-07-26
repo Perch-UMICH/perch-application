@@ -213,6 +213,7 @@ class LabSearch extends Component {
                         <LabSearchItem name='Sanjay B.' dept='Chemistry' rsrch='chromatography race betting' img='/img/sanjay.jpg' description='If the school asks, this does not exist.'/>
                         <LabSearchItem name='Nolan Kataoka' dept='Dance' rsrch='expressive feet dance' img='/img/nolan.jpg' description='We strongly feel feet are the window to the soul'/>
                    </div>
+                   <div id='lab-srch-more' onClick={()=>{alert('load em')}}>Mo' labs, mo' problems</div>
                </div>
 			</div>
 		);
