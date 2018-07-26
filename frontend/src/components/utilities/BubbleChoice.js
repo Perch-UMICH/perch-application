@@ -13,11 +13,26 @@ class BubbleChoice extends Component {
 		var tempSkillFiltCat = [{name: 'HTML'}, {name: 'CSS'}, {name: 'React'}, {name: 'patience'}, {name: 'typing with fingers'}, {name: 'thinking with brain'}];
 		var tempCat = props.skills ? tempSkillCat : tempIntCat;
 		var tempFiltCat = props.skills ? tempSkillFiltCat : tempIntFiltCat;
+		var choices =  props.display_info && props.display_info.interests ? props.display_info.interests : [];
+		var catalog = [];
+		var filtered_catalog = [];
+		tempCat.map(obj => {
+			var found = false;
+			choices.map(choice => {
+				if (choice.name === obj.name) {
+					found = true;
+				}
+			})
+			if (!found) {
+				 catalog.push(obj);
+				 filtered_catalog.push(obj);
+			}
+		})
 
 		this.state = {
-			catalog: tempCat,
-			choices: [],
-			filtered_catalog: tempFiltCat,
+			catalog,
+			choices,
+			filtered_catalog,
 			in_filter: false
 		};
 	}
@@ -79,7 +94,7 @@ class BubbleChoice extends Component {
 				    	filtered_catalog: updated_catalog.slice(),
 				    }, () => {
 				    	if (this.props.callbackSkills) {
-				    		this.props.callbackSkills(temp_choices);
+				    		this.props.callbackSkills(temp_choices, this.props.skills);
 				    	}
 				    });
 				}
@@ -118,7 +133,7 @@ class BubbleChoice extends Component {
 				    	filtered_catalog: updated_catalog.slice(),
 				    }, () => {
 				    	if (this.props.callbackSkills) {
-				    		this.props.callbackSkills(temp_choices);
+				    		this.props.callbackSkills(temp_choices, this.props.skills);
 				    	}
 				    });
 				}
@@ -152,7 +167,7 @@ class BubbleChoice extends Component {
 			return {catalog: temp_delete, choices: temp_add, filtered_catalog: temp_filter};
 		}, () => {
 			if (this.props.callbackSkills) {
-				this.props.callbackSkills(this.state.choices);
+				this.props.callbackSkills(this.state.choices, this.props.skills);
 			}
 		});
 	}
@@ -177,7 +192,7 @@ class BubbleChoice extends Component {
 			return {catalog: temp_add, choices: temp_delete, filtered_catalog: temp_filter};
 		}, () => {
 			if (this.props.callbackSkills) {
-				this.props.callbackSkills(this.state.choices);
+				this.props.callbackSkills(this.state.choices, this.props.skills);
 			}
 		});
 	}

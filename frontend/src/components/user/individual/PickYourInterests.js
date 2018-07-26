@@ -28,6 +28,8 @@ class PickYourInterests extends Component {
 			bubble_array: [],
 			s_id: getCurrentStudentId(),
 			l_id: getCurrentLabId(),
+			interests: props.user && props.user.interests ? props.user.interests : [],
+			skills: props.user && props.user.skills ? props.user.skills : [],
 		};
 
 		this.updateBubbleChoice = this.updateBubbleChoice.bind(this);
@@ -159,8 +161,12 @@ class PickYourInterests extends Component {
 		}
 	}
 
-	updateBubbleChoice(choices) {
-	    this.setState({ bubble_array: choices });
+	updateBubbleChoice(choices, skills) {
+	  this.setState({ bubble_array: choices });
+		if (this.props.updateUser) {
+			var type = skills ? "skills" : "interests";
+			this.props.updateUser(type, choices);
+		}
 	}
 
 	render() {
@@ -168,10 +174,12 @@ class PickYourInterests extends Component {
 		var skillsDisplayInfo = {
 			placeholder_txt: 'search skills',
 			header_txt: 'your skills',
+			interests: this.state.skills,
 		}
 		var interestsDisplayInfo = {
 			placeholder_txt: 'search interests',
 			header_txt: 'your interests',
+			interests: this.state.interests,
 		}
 
 		var bubblePickers =

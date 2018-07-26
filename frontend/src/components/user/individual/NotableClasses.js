@@ -8,16 +8,13 @@ import './NotableClasses.css';
 class NotableClasses extends Component {
 	constructor(props) {
 		super(props);
+		var class_arr = props.user && props.user.classes ? props.user.classes : [{ id: 'c_0', text: '' }]
 		this.state = {
-			classes: '',
-			gpa: '4.0',
-			year: '',
-			major: '',
+			gpa: props.user && props.user.gpa ? props.user.gpa : '4.0',
+			year: props.user && props.user.year ? props.user.year : '',
+			major: props.user && props.user.major ? props.user.major : '',
 			student_id: getCurrentStudentId(),
-			class_arr: [{
-				id: 'c_0',
-				text: ''
-			}],
+			class_arr,
 			url_string: this.props.location ? this.props.location.pathname.split('/')[1] : "",
 		};
 		this.saveAndContinue = this.saveAndContinue.bind(this);
@@ -60,21 +57,26 @@ class NotableClasses extends Component {
 		}
 	}*/
 
-	updateClasses(event) {
-		this.setState({ classes: event.target.value });
-	}
-
 	updateGPA(event) {
 		this.setState({ gpa: event.target.value });
+		if (this.props.updateUser) {
+			this.props.updateUser("gpa", event.target.value);
+		}
 	}
 
 	updateYear(event) {
 		console.log(event.target.value);
 		this.setState({ year: event.target.value });
+		if (this.props.updateUser) {
+			this.props.updateUser("year", event.target.value)
+		}
 	}
 
 	updateMajor(event) {
 		this.setState({ major: event.target.value });
+		if (this.props.updateUser) {
+			this.props.updateUser("major", event.target.value)
+		}
 	}
 
 	addClass(event) {
@@ -90,6 +92,9 @@ class NotableClasses extends Component {
 			class_arr: updated_classes,
 			c_index: newCIndex,
 		});
+		if (this.props.updateUser) {
+			this.props.updateUser("classes", updated_classes)
+		}
 	}
 
 	alterClass(event, class_id) {
@@ -99,6 +104,9 @@ class NotableClasses extends Component {
 		this.setState({
 			class_arr: temp_classes,
 		});
+		if (this.props.updateUser) {
+			this.props.updateUser("classes", temp_classes)
+		}
 	}
 
 	removeClass(class_id) {
@@ -109,6 +117,9 @@ class NotableClasses extends Component {
 			return {
 				class_arr: temp_classes,
 			};
+			if (this.props.updateUser) {
+				this.props.updateUser("classes", temp_classes)
+			}
 		});
 	}
 

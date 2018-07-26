@@ -13,7 +13,7 @@ class Experience extends Component {
 	render() {
 		return (
 			<EditContainerOnboarding title="Experience" redirect={this.redirect.bind(this)}>
-				<EditExperience type="work" />
+				<EditExperience type="work" user={this.props.user} updateUser={this.props.updateUser}/>
 			</EditContainerOnboarding>
 		);
 	}
