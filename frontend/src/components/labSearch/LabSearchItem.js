@@ -9,7 +9,7 @@ class LabSearchItem extends Component {
         super(props)
         this.state = {
             numProjects: null,
-            all_projects: []
+            all_projects: [],
         }
     }
 
@@ -17,11 +17,11 @@ class LabSearchItem extends Component {
         var projects = [];
         this.props.positions.map((position) => {
             let urop = position.is_urop_project;
-            projects.push(<LabSearchProject title={position.title} spots='MISSING' description={position.description} urop/>)
+            projects.push(<LabSearchProject key={this.i} title={position.title} spots='MISSING' description={position.description} urop/>)
         })
         this.setState({
             numProjects: document.getElementById(`lab_srch_expansion_${this.props.name}`).children.length,
-            all_projects: projects
+            all_projects: projects,
         });
     }
 
