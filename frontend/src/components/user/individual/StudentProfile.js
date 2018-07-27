@@ -7,7 +7,7 @@ import EditModal from '../../utilities/modals/EditModal'
 import {EditContact, EditExperience, EditQuickview, EditLinks, EditBio} from './StudentEditors'
 import NotableClasses from './NotableClasses'
 import PickYourInterests from './PickYourInterests'
-import { TwitterTimelineEmbed} from 'react-twitter-embed';
+import {TwitterTimelineEmbed} from 'react-twitter-embed';
 import './StudentProfile.css';
 
 var FontAwesome = require('react-fontawesome');
@@ -53,22 +53,25 @@ class StudentProfile extends Component {
 	generalHandler() {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
+				console.log(resp);
 				var class_arr = [];
-				if (resp.result.classes) {
-					class_arr = resp.result.classes.split('|');
+				if (resp.data.classes) {
+					class_arr = resp.data.classes.split('|');
 				}
 	            this.setState(
 	            	{
-	            		name: `${resp.result.first_name} ${resp.result.last_name}`,
-	            		gpa: resp.result.gpa,
-	            		major: resp.result.major,
-	            		year: resp.result.year,
-	            		bio: resp.result.bio,
-	            		email: resp.result.email,
+	            		name: `${resp.data.first_name} ${resp.data.last_name}`,
+	            		gpa: resp.data.gpa,
+	            		major: resp.data.major,
+	            		year: resp.data.year,
+	            		bio: resp.data.bio,
+	            		email: resp.data.email,
 	            		classes: class_arr,
-	            		past_research: resp.result.past_research,
+	            		experience: resp.data.experiences,
+	            		linkedin: resp.data.linkedin_link,
+	            		resume: resp.data.resume_path,
 	            		student: true,
-	            		s_id: resp.result.id,
+	            		s_id: resp.data.id,
 	            	}
 	            );
 	        }).then(this.retrieveTags.bind(this));
@@ -87,17 +90,18 @@ class StudentProfile extends Component {
 
 	// Beginning point for data handling
 	componentDidMount() {
-		getUser(this.retrieveSlug()).then(resp => {
-			if (resp.result) {
-				if (resp.result.is_student) {
-					this.generalHandler();
-				} else {
-					this.setState({ not_student: true });
-				}
-			} else {
-				this.setState({ not_student: true });
-			}
-		});
+		// getUser(this.retrieveSlug()).then(resp => {
+		// 	if (resp.data) {
+		// 		if (resp.data.is_student) {
+		// 			this.generalHandler();
+		// 		} else {
+		// 			this.setState({ not_student: true });
+		// 		}
+		// 	} else {
+		// 		this.setState({ not_student: true });
+		// 	}
+		// });
+		this.generalHandler();
 		// updateStudent(1, null, null, null, null, null, null, null, "experience1|experience2", "class1|class2")
 	}
 
@@ -151,25 +155,25 @@ class StudentProfile extends Component {
 	 				<div>
 	 					<h1>Academics</h1>
 	 					<div>
-	 						<div><b>GPA</b> 3.99</div>
-	 						<div><b>Year</b> Senior</div>
-	 						<StudentClasses list={["EECS 281", "EECS 388", "EECS 376", "EECS 370"]}/>
+	 						<div><b>GPA</b> NULL</div>
+	 						<div><b>Year</b> {this.state.year}</div>
+	 						<StudentClasses list={this.state.classes}/>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('academics-edit')}/>
 	 				</div>
 	 				<div>
 	 					<h1>Contact</h1>
 	 					<div>
-	 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bearb@umich.edu</a></div>
-	 						<div><b>Phone</b> 815 262 6642</div>
+	 						<div id='user-email'><b>Email</b> <a href={`mailto:${this.state.email}`}>{this.state.email}</a></div>
+	 						<div><b>Phone</b> MISSING</div>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('contact-edit')}/>
 	 				</div>
 	 				<div id='user-links'>
 	 					<h1>Links</h1>
 	 					<div>
-	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn</a>
-	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>
+	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn (No Link yet, path NULL)</a>
+	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>Resume (No Link yet, path NULL)</a>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>
@@ -189,28 +193,26 @@ class StudentProfile extends Component {
 	 					<div style={{position: 'relative'}}>
 		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
 		 					<div id='user-quickview-footer'>
-								University of Michigan
+								MISSING (UNIVERSITY)
 							</div>
-		 					<div id='user-quickview-name'>Benji Bear</div>
+		 					<div id='user-quickview-name'>{this.state.name}</div>
 	 					</div>
 	 					<SkillsInterests skills={this.state.tempskills} interests={this.state.tempinterests}/>
 	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 	 				</div>
 	 				<div id='user-bio'>
 	 					<h1>Bio</h1>
-	 					<UserBio>Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. Plz hire me. </UserBio>
+	 					<UserBio>NULL</UserBio>
 	 					<Editor superClick={() => this.openModal('bio-edit')}/>
 	 				</div>
 	 				<div>
 	 					<h1>Experience</h1>
-	 					<UserWorkExperience title="Dr. Patel's Neurosurgery Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
-	 					<UserWorkExperience title="Dr. Ramaswamy's Pharmaceutical Lab" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
+	 					<UserWorkExperience title={this.state.experience} description="MISSING" startTime='MISSING' endTime='MISSING'/>
 	 					<Editor superClick={() => this.openModal('work-edit')}/>
 	 				</div>
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
-	 					<UserEducation title='University of Michigan BS' description='Undergraduate Degree in Computer Science' startTime='2015' endTime='2019'/>
-	 					<UserEducation title='Auburn Renaissance Academy' description='Graduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold Portfolio' startTime='2011' endTime='2015'/>
+	 					<UserEducation title='MISSING' description='MISSING' startTime='MISSING' endTime='MISSING'/>
 	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
 	 			</div>
@@ -228,7 +230,6 @@ class StudentClasses extends Component {
 		elem.innerHTML = elem.innerHTML === 'expand_more' ? 'expand_less' : 'expand_more'
 		document.getElementById('user-classes').classList.toggle('active-blue')
 		document.getElementById('user-classes-list').classList.toggle('expand');
-
 	}
 
 	render() {
@@ -247,6 +248,18 @@ class StudentClasses extends Component {
 }
 
 class UserWorkExperience extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			showExpander: false,
+		}
+	}
+
+	componentDidMount() {
+		if (this.props.description.length >= 250)
+			this.setState({showExpander: true})
+	}
+
 	expand() {
 		document.getElementById(`user-work-description-${this.props.title}`).classList.toggle('expand')
 	}
@@ -259,13 +272,20 @@ class UserWorkExperience extends Component {
 					{`${this.props.startTime} - ${this.props.endTime}`}
 				</div>
 				<div id={`user-work-description-${this.props.title}`} className='user-work-description'>{this.props.description}</div>
-				<ExpanderIcons id={`user-work-${this.props.title}`} action={this.expand.bind(this)}/>
+				{this.state.showExpander && <ExpanderIcons id={`user-work-${this.props.title}`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}
 }
 
 class UserEducation extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			showExpander: false,
+		}
+	}
+
 	expand() {
 		document.getElementById(`user-education-description-${this.props.title}`).classList.toggle('expand')
 	}
@@ -278,13 +298,25 @@ class UserEducation extends Component {
 					{`${this.props.startTime} - ${this.props.endTime}`}
 				</div>
 				<div id={`user-education-description-${this.props.title}`} className='user-education-description'>{this.props.description}</div>
-				<ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>
+				{this.state.showExpander && <ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}
 }
 
 class UserBio extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			showExpander: false,
+		}
+	}
+
+	componentDidMount() {
+		if (this.props.children.length >= 380)
+			this.setState({showExpander: true})
+	}
+
 	expand() {
 		document.getElementById('user-bio-content').classList.toggle('expand')
 	}
@@ -292,8 +324,8 @@ class UserBio extends Component {
 	render() {
 		return(
 			<div id='user-bio' className='user-bio'>
-				<div id='user-bio-content' className='user-bio-content'>{this.props.children}</div>
-				<ExpanderIcons id={`user-bio`} action={this.expand.bind(this)}/>
+				<div id='user-bio-content' className='user-bio-content'>{this.props.children} </div>
+				{this.state.showExpander && <ExpanderIcons id={`user-bio`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}

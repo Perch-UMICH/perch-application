@@ -26,7 +26,7 @@ class GroupPage extends Component {
         getAllLabPositions(this.state.lab_id).then((resp) => {
             let positions = [];
             console.log(resp);
-            resp.map((pos) => {
+            resp.data.map((pos) => {
                 positions.push(<GroupProject title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description} 
                                 time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
             })
@@ -35,14 +35,14 @@ class GroupPage extends Component {
         
         getLab(this.state.lab_id).then((resp) => {
             console.log(resp);
-            this.setState({lab_data: resp.data});
+            this.setState({lab_data: resp.data.data});
         });
 
         getLabMembers(this.state.lab_id).then((resp) => {
             let admins = [];
             let members = [];
-            console.log(resp.result);
-            resp.result.faculty.map((person) => {
+            console.log(resp);
+            resp.data.faculty.map((person) => {
                 let fullname = person.data.first_name + ' ' + person.data.last_name;
                 if ((person.role === 1) || (person.role === 2)) {
                     admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
@@ -51,7 +51,7 @@ class GroupPage extends Component {
                     members.push(<GroupPerson src='/img/headshots/hwang.jpg'>{fullname}</GroupPerson>);
                 }
             })
-            resp.result.students.map((person) => {
+            resp.data.students.map((person) => {
                 let fullname = person.data.first_name + ' ' + person.data.last_name;
                 if ((person.role === 1) || (person.role === 2)) {
                     admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
@@ -83,7 +83,7 @@ class GroupPage extends Component {
 					</GroupProjectContainer>
 
 					<GroupPublicationsContainer>
-						<GroupPublication title='MISSING' description="MISSING"/>
+						<GroupPublication title='NULL' description="MISSING"/>
 					</GroupPublicationsContainer>
 				</div>
 			</div>
@@ -135,7 +135,8 @@ const QuickInfo = (props) => {
             <h1>Quick Info</h1>
             <div className='group-info-box'>
                 <div className='group-info-box-heading'>UNIVERSITY</div>
-                <div className='group-info-box-content'>MISSING</div>
+                {/*TODO: Tie this to the backend*/}
+                <div className='group-info-box-content'>University of Michigan</div>
                 <div className='group-info-box-heading'>DEPARTMENTS</div>
                 <div className='group-info-box-content'>{props.department}</div>
                 <div className='group-info-box-heading'>RESEARCH AREAS</div>

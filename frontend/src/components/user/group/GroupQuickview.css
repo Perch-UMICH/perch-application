@@ -10,6 +10,7 @@
 	text-align: justify;
 	transition: 0.2s ease;
 	padding-bottom: 5px;
+	min-height: 200px;
 }
 
 #group-page-quickview:hover {
@@ -39,7 +40,7 @@
 	border-right: 2px solid var(--d-three-grey);
 	/*border-bottom: 2px solid var(--d-three-grey);*/
 	border-radius: 0 5px 0 10px;
-	max-width: 100%;
+	max-width: calc(100% - 12px);
 	white-space: nowrap;
 	color: var(--four-c-grey);
 }

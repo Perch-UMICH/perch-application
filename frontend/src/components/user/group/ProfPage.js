@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, getLabPreferences, isStudent, isLab} from '../../../helper.js'
+import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -58,21 +58,6 @@ class ProfPage extends Component {
 					getAllLabPositions(lab_id).then(positions => {
 						console.log(positions);
 						this.setState({ positions: positions });
-					});
-					getLabPreferences(lab_id).then(prefs => {
-						console.log(prefs);
-						var no_arr = [];
-						var yes_arr = [];
-						if (prefs) {
-							for (var i = 0; i < prefs.length; ++i) {
-								if (prefs[i].type === "No") {
-									no_arr.push(prefs[i]);
-								} else {
-									yes_arr.push(prefs[i]);
-								}
-							}
-						}
-						// this.setState({ yes: yes_arr, no: no_arr });
 					});
 					var contact_info = [];
 					if (resp.data.location) {

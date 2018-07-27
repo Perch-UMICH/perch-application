@@ -18,18 +18,21 @@ export class GroupProject extends Component {
 				<div className='group-project-keywords'>{this.props.keywords}</div>
 				<div className='group-project-description'>
 					<div>{this.props.description}</div>
-					<div className='group-project-requirements-header'>Minimum Requirements</div>
-					<GroupProjectRequirement title='GPA' value={this.props.gpa}/>
+					{/* Edited for now since we don't have much
+						<div className='group-project-requirements-header'>Minimum Requirements</div>*/}
 					<GroupProjectRequirement title='Time commitment' value={this.props.time_commit}/>
+					{/*Edited For now since not in back end
+					<GroupProjectRequirement title='GPA' value={this.props.gpa}/>
 					<GroupProjectRequirement title='Year' value={this.props.year}/>
 					<GroupProjectRequirement value="MISSING"/>
-
-					<div className='group-project-requirements-header'>Skills</div>
+					*/}
+					{/* Edited for now ssince we don't have much
+					<div className='group-project-requirements-header'>Skills</div>*/}
 					<GroupProjectRequirement value="MISSING"/>
 				</div>
 				
 				<div className='group-project-apply'>Apply</div>
-				<div className='group-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
+				{this.props.spots && <div className='group-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>}
 				<ExpanderIcons id={`group-project-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>
 			</div>
 		)

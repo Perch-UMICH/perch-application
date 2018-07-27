@@ -16,6 +16,29 @@ if (sessionStorage.token){
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
 }
 
+// HELPER HELPERS //
+
+function respond(status, data) {
+    return {'status':status, 'data':data.result, 'msg': data.message}
+}
+
+// 0 is a made up error code for non-server-related issues
+function error_handle(error) {
+    if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        return respond(error.response.status, error.response.data);
+    } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        return respond(0, error.request)
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        return respond(0, error.message)
+    }
+}
+
 // AUTHENTICATION //
 
 export function isLoggedIn() {
@@ -30,14 +53,11 @@ export function isLoggedIn() {
 export function verifyLogin() {
     return axios.post('api/verify')
         .then(response => {
-            console.log(response.data);
-            return true;
+            return respond(response.status, response.data);
         })
-        .catch(error => {
-            console.error(error);
-            console.error('User not verified');
-            return false;
-        });
+        .catch((error) => {
+            return error_handle(error);
+        })
 }
 
 export function registerUser(name, email, password, password_confirmation) {
@@ -47,16 +67,12 @@ export function registerUser(name, email, password, password_confirmation) {
         password,
         password_confirmation
     })
-        .then(response=> {
-            console.log(response.data.message);
-            // redirect to login
-            return response.data;
+        .then(response => {
+            return respond(response.status, response.data);
         })
-        .catch(error=> {
-            console.error('Error in registration');
-            console.error(error);
-            return false;
-        });
+        .catch((error) => {
+            return error_handle(error);
+        })
 }
 
 export function loginUser(email, password) {
@@ -75,8 +91,8 @@ export function loginUser(email, password) {
         email, password
     })
         .then(response => {
-            console.log(response)
             sessionStorage.setItem('token', response.data.result.token);
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
             sessionStorage.setItem('user_id', response.data.result.user.id);
             if (response.data.result.user.is_student) {
                 // Save student id
@@ -92,13 +108,10 @@ export function loginUser(email, password) {
                 //     // sessionStorage.setItem('lab_id', somethin_good);
                 // }); // ... HERE!
             }
-            console.log('Successfully logged in');
-            return response.data
+            return respond(response.status, response.data);
         })
         .catch(error => {
-            console.error('Log in unsuccessful');
-            console.error(error);
-            return false;
+            return error_handle(error);
         });
 }
 
@@ -106,24 +119,17 @@ export function logoutCurrentUser() {
     // Clear all user cookies
     //   cookie.remove('perch_api_key');
     //   cookie.remove('perch_user_id');
-    let oldToken = sessionStorage.getItem('token')
+    let oldToken = sessionStorage.getItem('token');
     // Benji changed this
-    sessionStorage.clear()
+    sessionStorage.clear();
 
-    return axios.post('api/logout'
-
-    ).then(response => {
-        // cookie.remove('perch_api_key');
-        // cookie.remove('perch_user_id');
-        console.log(response.data.message);
-        // sessionStorage.removeItem('token');
-        return true;
-    })
-        .catch(error => {
-            console.error(error);
-            console.error('Could not logout');
-            return false;
-        });
+    return axios.post('api/logout')
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch((error) => {
+            return error_handle(error);
+        })
 }
 
 // Email password reset
@@ -201,11 +207,10 @@ export function getAllUsers() {
     console.log('Getting users');
     return axios.get('api/users')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch((error) => {
+            return error_handle(error);
         })
 }
 
@@ -213,11 +218,10 @@ export function getUser(user_id) {
     console.log('Getting user');
     return axios.get('api/users/' + user_id)
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -227,11 +231,10 @@ export function deleteUser() {
     let user_id = sessionStorage.getItem('user_id');
     return axios.delete('api/users/' + user_id)
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -244,11 +247,10 @@ export function updateUser(name, email, password, is_student, is_faculty) {
 
     return axios.post('api/users/' + user_id, {_method, name, email, password, is_student, is_faculty})
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -256,11 +258,10 @@ export function getStudentFromUser(user_id) {
     console.log('Getting student');
     return axios.get('api/users/' + user_id + '/student')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -268,11 +269,10 @@ export function getFacultyFromUser(user_id) {
     console.log('Getting faculty');
     return axios.get('api/users/' + user_id + '/faculty')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -282,11 +282,10 @@ export function getUserLabs(user_id) {
 
     return axios.get('api/users/' + user_id + '/labs')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -319,11 +318,10 @@ export function getAllStudents() {
     console.log('Getting students');
     return axios.get('api/students')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -331,12 +329,10 @@ export function getStudent(student_id) {
     console.log('Getting student');
     return axios.get('api/students/' + student_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -345,31 +341,26 @@ export function createStudent(user_id, first_name, last_name, email, year, bio,m
     return axios.post('api/students', {user_id, first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student})
         .then(response => {
             sessionStorage.setItem('student_id', response.data.result.id) // CHANGED BY BENJI
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
 // RESTRICTED: student_id
-// From Frontend (Emi) - phone, profile_photo, eduaction (different than classes), school (if we want to keep a separate field), resume link instead of website link, lab materials link
 export function updateStudent(first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student) {
     console.log('Updating student');
-    /*
+
     let student_id = sessionStorage.getItem('student_id');
     let _method = 'PUT';
-    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, major, year, gpa, email, bio, experiences, classes, faculty_endorsement_id})
+    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })*/
+        .catch(error => {
+            return error_handle(error);
+        })
 }
 
 // RESTRICTED: student_id
@@ -379,12 +370,10 @@ export function deleteStudent() {
     let student_id = sessionStorage.getItem('student_id');
     return axios.delete('api/students/' + student_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -393,12 +382,10 @@ export function getStudentSkills(student_id) {
     console.log('Getting student skills');
     return axios.get('api/students/' + student_id + '/skills')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -412,12 +399,10 @@ export function addSkillsToStudent(skill_ids) {
     };
     return axios.post('api/students/' + student_id + '/skills', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -431,12 +416,10 @@ export function syncSkillsToStudent(skill_ids) {
     };
     return axios.post('api/students/' + student_id + '/skills/sync', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -451,12 +434,10 @@ export function removeSkillsFromStudent(skill_ids) {
     };
     return axios.post('api/students/' + student_id + '/skills', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -465,12 +446,10 @@ export function getStudentTags(student_id) {
     console.log('Getting student tags');
     return axios.get('api/students/' + student_id + '/tags')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -484,12 +463,10 @@ export function addTagsToStudent(tag_ids) {
     };
     return axios.post('api/students/' + student_id + '/tags', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -503,12 +480,10 @@ export function syncTagsToStudent(tag_ids) {
     };
     return axios.post('api/students/' + student_id + '/tags/sync', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -523,12 +498,10 @@ export function removeTagsFromStudent(tag_ids) {
     };
     return axios.post('api/students/' + student_id + '/tags', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -537,12 +510,10 @@ export function getStudentFavLabs(student_id) {
     console.log('Getting student favorite labs');
     return axios.get('api/students/' + student_id + '/labs')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -556,12 +527,10 @@ export function addFavLabsToStudent(lab_ids) {
     };
     return axios.post('api/students/' + student_id + '/labs', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -576,12 +545,10 @@ export function removeFavLabsFromStudent(lab_ids) {
     };
     return axios.post('api/students/' + student_id + '/labs', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -653,11 +620,10 @@ export function getAllFaculties() {
     console.log('Getting all faculty');
     return axios.get('api/faculties')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -665,12 +631,10 @@ export function getFaculty(faculty_id) {
     console.log('Getting faculty');
     return axios.get('api/faculties/' + faculty_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -678,14 +642,11 @@ export function createFaculty(user_id, first_name, last_name, title, contact_ema
     console.log('Creating faculty');
     return axios.post('api/faculties', {user_id, first_name, last_name, title, contact_email}) /// EMI CHANGED THIS: "[]" to "{}"
         .then(response => {
-            console.log(response)
             sessionStorage.setItem('faculty_id', response.data.result.id)
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -694,12 +655,10 @@ export function updateFaculty(faculty_id, first_name, last_name, title, contact_
     let _method = 'PUT';
     return axios.post('api/faculties/' + faculty_id, {_method, faculty_id, first_name, last_name, title, contact_email})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -707,12 +666,10 @@ export function deleteFaculty(faculty_id) {
     console.log('Deleting faculty');
     return axios.delete('api/faculties/' + faculty_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -742,11 +699,10 @@ export function getAllLabs() {
     console.log('Getting all labs');
     return axios.get('api/labs')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -754,12 +710,10 @@ export function getLab(lab_id) {
     console.log('Getting lab');
     return axios.get('api/labs/' + lab_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -770,12 +724,10 @@ export function getAllLabData(skilltag_data, preferences_data, position_data, ap
     console.log('Getting all lab data');
     return axios.post('api/labs/all', {skilltag_data, preferences_data, position_data, application_data, student_data, faculty_data})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -783,76 +735,38 @@ export function getLabData(lab_id, skilltag_data, preferences_data, position_dat
     console.log('Getting lab data');
     return axios.post('api/labs/' + lab_id, {skilltag_data, preferences_data, position_data, application_data, student_data, faculty_data})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 //
 
 export function createLab(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
     console.log('Creating lab');
-    /*
-    return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
+    return axios.post('api/labs', {faculty_id, name, location, description, publications, url, contact_phone, contact_email})
         .then(response => {
             sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })*/
-}
-
-export function getLabPreferences(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
-    console.log('Creating lab');
-    /*
-    return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
-        .then(response => {
-            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
-            console.log(response.data.message);
-            return response.data.result;
+        .catch(error => {
+            return error_handle(error);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })*/
-}
-
-export function addPreferencesToLab(faculty_id, name, location, description, publications, url, contact_phone, contact_email) {
-    console.log('Creating lab');
-    /*
-    return axios.post('api/labs', {faculty_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
-        .then(response => {
-            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
-            console.log(response.data.message);
-            return response.data.result;
-        })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })*/
 }
 
 // RESTRICTED: lab_id
 export function updateLab(name, location, description, publications, url, contact_phone, contact_email) {
     console.log('Updating lab');
-    /*
     let lab_id = sessionStorage.getItem('lab_id');
     let _method = 'PUT';
-    return axios.post('api/labs/' + lab_id, {_method, lab_id, name, department, location, description, publications, url, gpa, weeklyCommitment, contact_phone, contact_email})
+    return axios.post('api/labs/' + lab_id, {_method, lab_id, name, location, description, publications, url, contact_phone, contact_email})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
-        })*/
+        .catch(error => {
+            return error_handle(error);
+        })
 }
 
 // RESTRICTED: lab_id
@@ -862,12 +776,10 @@ export function deleteLab() {
     let lab_id = sessionStorage.getItem('lab_id');
     return axios.delete('api/labs/' + lab_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -878,12 +790,10 @@ export function getLabSkills(lab_id) {
     console.log('Getting lab skills');
     return axios.get('api/labs/' + lab_id + '/skills')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -898,12 +808,10 @@ export function addSkillsToLab(skill_ids, position_id) {
     };
     return axios.post('api/labs/' + lab_id + '/skills', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -918,12 +826,10 @@ export function syncSkillsToLab(skill_ids, position_id) {
     };
     return axios.post('api/labs/' + lab_id + '/skills/sync', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -939,12 +845,10 @@ export function removeSkillsFromLab(skill_ids, position_id) {
     };
     return axios.post('api/labs/' + lab_id + '/skills', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -953,12 +857,10 @@ export function getLabTags(lab_id) {
     console.log('Getting lab tags');
     return axios.get('api/labs/' + lab_id + '/tags')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -973,12 +875,10 @@ export function addTagsToLab(tag_ids, position_id) {
     };
     return axios.post('api/labs/' + lab_id + '/tags', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -993,12 +893,10 @@ export function syncTagsToLab(tag_ids, position_id) {
     };
     return axios.post('api/labs/' + lab_id + '/tags/sync', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1014,12 +912,10 @@ export function removeTagsFromLab(tag_ids, position_id) {
     };
     return axios.post('api/labs/' + lab_id + '/tags', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1087,11 +983,10 @@ export function getLabMembers(lab_id) {
     console.log('Getting lab members');
     return axios.get('api/labs/' + lab_id + '/members')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1108,11 +1003,10 @@ export function addMembersToLab(user_ids, role_ids) {
 
     return axios.post('api/labs/' + lab_id + '/members', payload)
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1128,11 +1022,10 @@ export function removeMembersFromLab(user_ids) {
 
     return axios.post('api/labs/' + lab_id + '/members', payload)
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1146,11 +1039,10 @@ export function getAllSkills() {
     console.log('Getting all skills');
     return axios.get('api/skills')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1158,12 +1050,10 @@ export function getSkill(skill_id) {
     console.log('Getting skill');
     return axios.get('api/skills/' + skill_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1175,11 +1065,10 @@ export function getAllTags() {
     console.log('Getting all tags');
     return axios.get('api/tags')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1187,12 +1076,10 @@ export function getTag(tag_id) {
     console.log('Getting tag');
     return axios.get('api/tags/' + tag_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1204,11 +1091,10 @@ export function getAllPreferences() {
     console.log('Getting all preferences');
     return axios.get('api/preferences')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1221,11 +1107,10 @@ export function getAllSchoolCourses() {
     console.log('Getting all school courses');
     return axios.get('api/courses/school')
         .then(response => {
-            return response.data
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1245,12 +1130,10 @@ export function getAllLabPositions(lab_id) {
     console.log('Getting all lab positions');
     return axios.get('api/labs/' + lab_id + '/positions')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1258,12 +1141,10 @@ export function getLabPosition(position_id) {
     console.log('Getting position');
     return axios.get('api/positions/' + position_id)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1275,12 +1156,10 @@ export function createLabPosition(title, description, time_commitment, open_slot
 
     return axios.post('api/labs/' + lab_id + '/positions', {title, description, time_commitment, open_slots})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1291,12 +1170,10 @@ export function updateLabPosition(position_id, title, description, time_commitme
     let lab_id = sessionStorage.getItem('lab_id');
     return axios.post('api/labs/' + lab_id + '/positions/update', {position_id, title, description, time_commitment, open_slots})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1311,12 +1188,10 @@ export function deleteLabPosition(position_ids) {
 
     return axios.post('api/labs/' + lab_id + '/positions/delete', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1330,12 +1205,10 @@ export function getPositionApplication(position_id) {
 
     return axios.get('api/positions/' + position_id + '/application')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1352,12 +1225,10 @@ export function createApplication(position_id, questions) {
 
     return axios.post('api/labs/' + lab_id + '/applications', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1374,12 +1245,10 @@ export function updateApplication(position_id, questions) {
 
     return axios.post('api/labs/' + lab_id + '/applications/update', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1392,12 +1261,10 @@ export function getLabPositionApplicants(position_id) {
     console.log('Getting application responses');
     return axios.post('api/labs/' + lab_id + '/positions/responses', {position_id})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1422,12 +1289,10 @@ export function createApplicationResponse(position_id, answers) {
 
     return axios.post('api/students/' + student_id + '/responses', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1445,12 +1310,10 @@ export function updateApplicationResponse(application_response_id, answers) {
 
     return axios.post('api/students/' + student_id + '/responses/update', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1467,12 +1330,10 @@ export function submitApplicationResponse(application_response_id) {
 
     return axios.post('api/students/' + student_id + '/responses/update', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1489,12 +1350,10 @@ export function deleteApplicationResponse(application_response_id) {
 
     return axios.post('api/students/' + student_id + '/responses/delete', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1510,12 +1369,10 @@ export function getStudentPendingResponses() {
 
     return axios.get('api/students/' + student_id + '/responses', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1531,12 +1388,10 @@ export function submitUserFeedback(user_id, url, feedback) {
 
     return axios.post('api/feedback', {user_id, url, feedback})
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1558,11 +1413,10 @@ export function uploadPic(type, id, input_element_id) {
 
     axios.post('api/pics', formData, config)
         .then(response => {
-            console.log(response.data.message);
-            console.log(response.data.result);
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1582,11 +1436,10 @@ export function uploadResume(student_id, input_element_id) {
 
     axios.post('api/students/' + student_id + '/resume', formData, config)
         .then(response => {
-            console.log(response.data.message);
-            console.log(response.data.result);
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1595,12 +1448,10 @@ export function getSearchData() {
     console.log('Retrieving search data');
     return axios.get('api/search_data')
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 
@@ -1610,25 +1461,23 @@ export function getSearchData() {
 // Keywords: can be any string, will search for exact match
 
 // Returns array of matching projects, along with the location of the searched keyword in the "description" of the project
-export function labSearch(areas, skills, commitments, departments, keywords) {
+export function labSearch(areas, skills, commitments, departments, keyword) {
     console.log('Performing search');
 
     let payload = {
-        tags: areas,
+        areas: areas,
         skills: skills,
         commitments: commitments,
         departments: departments,
-        keywords: keywords
+        keyword: keyword
     };
 
     return axios.post('api/search', payload)
         .then(response => {
-            console.log(response.data.message);
-            return response.data.result;
+            return respond(response.status, response.data);
         })
-        .catch(function (error) {
-            console.log(error);
-            return [];
+        .catch(error => {
+            return error_handle(error);
         })
 }
 

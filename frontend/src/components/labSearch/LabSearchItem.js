@@ -9,12 +9,19 @@ class LabSearchItem extends Component {
         super(props)
         this.state = {
             numProjects: null,
+            all_projects: [],
         }
     }
 
     componentDidMount() {
+        var projects = [];
+        this.props.positions.map((position) => {
+            let urop = position.is_urop_project;
+            projects.push(<LabSearchProject key={this.i} title={position.title} spots='MISSING' description={position.description} urop/>)
+        })
         this.setState({
-            numProjects: document.getElementById(`lab_srch_expansion_${this.props.name}`).children.length
+            numProjects: document.getElementById(`lab_srch_expansion_${this.props.name}`).children.length,
+            all_projects: projects,
         });
     }
 
@@ -22,8 +29,7 @@ class LabSearchItem extends Component {
         let toggleExpanderIcons = () => {
             let lab_srch_item = document.getElementById(`lab_srch_item_${this.props.name}`)
             let expanderIcons = lab_srch_item.children[lab_srch_item.children.length - 1];
-            for (let i = 0; i < expanderIcons.children.length; i++)
-                expanderIcons.children[i].innerText = (expanderIcons.children[i].innerText == 'expand_more') ? 'expand_less' : 'expand_more';
+            
             expanderIcons.classList.toggle('active-blue')
         }
 
@@ -32,7 +38,7 @@ class LabSearchItem extends Component {
 
         let expansion = document.getElementById(`lab_srch_expansion_${this.props.name}`)
         expansion.classList.toggle('hide-projects')
-        // toggleExpanderIcons();
+        toggleExpanderIcons();
     }
 
 	render() {
@@ -49,8 +55,7 @@ class LabSearchItem extends Component {
                 </div>
 
                 <div id={`lab_srch_expansion_${this.props.name}`} className='lab-srch-item-expansion hide-projects'>
-                    <LabSearchProject title='Oncology Study' spots='1' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.' urop/>
-                    <LabSearchProject title='Coffee Tasting' spots='2' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.' />
+                    {this.state.all_projects}
                 </div>
             </div>
 		);

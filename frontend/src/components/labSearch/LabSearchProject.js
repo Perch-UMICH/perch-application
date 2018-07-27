@@ -6,21 +6,33 @@ class LabSearchProject extends Component {
         super(props)
         this.state = {
             added: true,
+            description: this.props.description,
         }
+    }
+
+    componentDidMount() {
+        this.formatTitle()
     }
 
     toggleAdder = () => {
         this.setState({added: !this.state.added})
     }
 
+    formatTitle = () => {
+        if (this.props.description.length > 270) {
+            this.setState({overflowDescription: true})
+        }
+        this.setState({description: this.props.description.slice(0,270)})
+    }
+
 	render() {
 		return (
             <div className='lab-srch-project'>
-                <div className='lab-srch-project-title'>
-                    <span>{this.props.title}</span>
+                <div className='lab-srch-project-title-container'>
+                    <span className='truncate lab-srch-project-title'>{this.props.title}</span>
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                 </div>
-                <div className='lab-srch-project-description'>{this.props.description}</div>
+                <div className='lab-srch-project-description'>{this.state.description} <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span></div>
                 <div className='lab-srch-project-apply lab-srch-project-action-label'><a href='mailto:bearb@umich.edu?subject=Dear Future Master&body=Plz take me into your lab. I beg you'>Apply</a></div>
                 <div className='lab-srch-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
                 {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.toggleAdder}>save</div>}
