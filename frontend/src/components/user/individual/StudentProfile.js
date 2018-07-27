@@ -111,11 +111,11 @@ class StudentProfile extends Component {
 	}
 
 	render() {
-		// if (!isLoggedIn()) {
-		// 	return <ErrorPage />
-		// } else if (this.state.not_student) {
-		// 	return <ErrorPage fourofour="true" />
-		// } else {
+		if (!isLoggedIn()) {
+			return <ErrorPage />
+		} else if (this.state.not_student) {
+			return <ErrorPage fourofour="true" />
+		} else {
 	 	return (
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
@@ -212,7 +212,7 @@ class StudentProfile extends Component {
 
 		);
 	 }
-	// }
+	}
 }
 
 
