@@ -47,7 +47,7 @@ class LabSearch extends Component {
     componentWillMount() {
         getAllLabs().then((resp) => {
             var newState = this.state;
-            var all_labs = resp.data.result
+            var all_labs = resp.data
             //console.log(resp);
             for (var key in all_labs) {
                 let lab = all_labs[key].data;
@@ -58,26 +58,26 @@ class LabSearch extends Component {
         });
 
         getSearchData().then((resp) => {
-            console.log(resp);
+            //console.log(resp);
             let new_filts = this.state.filts;
             let new_parentFilts = this.state.parentFilts;
 
-            resp.data.result.all_commitments.map((req) => {
+            resp.data.all_commitments.map((req) => {
                 new_filts['minReqs'][req] = {friendlyName: req, slug: req};
                 new_parentFilts['minReqs'].push({friendlyName: req, slug: req});
             });
 
-            resp.data.result.available_skills.map((skill) => {
+            resp.data.available_skills.map((skill) => {
                 new_filts['lab-skills'][skill] = {friendlyName: skill, slug: skill};
                 new_parentFilts['lab-skills'].push({friendlyName: skill, slug: skill});
             });
 
-            resp.data.result.available_areas.map((area) => {
+            resp.data.available_areas.map((area) => {
                 new_filts['researchAreas'][area] = {friendlyName: area, slug: area};
                 new_parentFilts['researchAreas'].push({friendlyName: area, slug: area});
             });
 
-            resp.data.result.available_departments.map((dept) => {
+            resp.data.available_departments.map((dept) => {
                 new_filts['departments'][dept] = {friendlyName: dept, slug: dept};
                 new_parentFilts['departments'].push({friendlyName: dept, slug: dept});
             });
