@@ -238,6 +238,18 @@ class StudentClasses extends Component {
 }
 
 class UserWorkExperience extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			showExpander: false,
+		}
+	}
+
+	componentDidMount() {
+		if (this.props.description.length >= 250)
+			this.setState({showExpander: true})
+	}
+
 	expand() {
 		document.getElementById(`user-work-description-${this.props.title}`).classList.toggle('expand')
 	}
@@ -250,7 +262,7 @@ class UserWorkExperience extends Component {
 					{`${this.props.startTime} - ${this.props.endTime}`}
 				</div>
 				<div id={`user-work-description-${this.props.title}`} className='user-work-description'>{this.props.description}</div>
-				<ExpanderIcons id={`user-work-${this.props.title}`} action={this.expand.bind(this)}/>
+				{this.state.showExpander && <ExpanderIcons id={`user-work-${this.props.title}`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}
@@ -261,13 +273,6 @@ class UserEducation extends Component {
 		super(props)
 		this.state = {
 			showExpander: false,
-		}
-	}
-
-	componentDidMount() {
-		let edu = document.getElementById(`user-education-description-${this.props.title}`)
-		if (edu.clientHeight <= 56) {
-			this.setState({showExpander: false})
 		}
 	}
 
@@ -283,7 +288,7 @@ class UserEducation extends Component {
 					{`${this.props.startTime} - ${this.props.endTime}`}
 				</div>
 				<div id={`user-education-description-${this.props.title}`} className='user-education-description'>{this.props.description}</div>
-				{this.showExpander && <ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>}
+				{this.state.showExpander && <ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}
