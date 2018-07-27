@@ -30,9 +30,24 @@ class StudentProfile extends Component {
 			],
 			classes: [],
 			not_student: false,
-			tempskills: ['python', 'javascript', 'HTML 5', 'CSS 3', 'C++', 'Splunk', 'matLab'],
-			tempinterests: ['Computer Science', 'Computer Security', 'Software Development', 'Management', 'Design'],
-			user: {},
+			tempskills: [{name: 'python'}, {name: 'javascript'}, {name: 'HTML 5'}, {name: 'CSS 3'}, {name: 'C++'}, {name: 'Splunk'}, {name: 'matLab'}],
+			tempinterests: [{name: 'Computer Science'}, {name: 'Computer Security'}, {name: 'Software Development'}, {name: 'Management'}, {name: 'Design'}],
+			user: {
+				name: "",
+				gpa: "",
+				major: "",
+				year: "",
+				bio: "",
+				email: "",
+				classes: [],
+				experience: [],
+				linkedin: "",
+				skills: [{name: 'python'}],
+				interests: [{name: 'groovy dancing'}],
+				resume: "",
+				student: true,
+				s_id: "",
+			},
 		}
 	}
 
@@ -45,8 +60,8 @@ class StudentProfile extends Component {
 
 	// Handles retrieving skilsl and tags
 	retrieveTags() {
-		getStudentTags(this.state.s_id).then(r => this.setState({interests: r}))
-		getStudentSkills(this.state.s_id).then(r => this.setState({skills: r}))
+		getStudentTags(this.state.s_id).then(r => console.log("R interests", r))
+		getStudentSkills(this.state.s_id).then(r => console.log("R skills", r))
 	}
 
 	// Handles data for page
@@ -55,24 +70,30 @@ class StudentProfile extends Component {
 			getStudentFromUser(id).then((resp) => {
 				console.log(resp);
 				var class_arr = [];
-				if (resp.data.classes) {
-					class_arr = resp.data.classes.split('|');
+				if (resp.data && resp.data.classes) {
+					resp.data.classes.split('|').map((name, index) => {
+						class_arr.push({name, index});
+					})
 				}
 	            this.setState(
 	            	{
-	            		name: `${resp.data.first_name} ${resp.data.last_name}`,
-	            		gpa: resp.data.gpa,
-	            		major: resp.data.major,
-	            		year: resp.data.year,
-	            		bio: resp.data.bio,
-	            		email: resp.data.email,
-	            		classes: class_arr,
-	            		experience: resp.data.experiences,
-	            		linkedin: resp.data.linkedin_link,
-	            		resume: resp.data.resume_path,
-	            		student: true,
-	            		s_id: resp.data.id,
-	            	}
+									user: {
+		            		name: `${resp.data.first_name} ${resp.data.last_name}`,
+		            		gpa: resp.data.gpa,
+		            		major: resp.data.major,
+		            		year: resp.data.year,
+		            		bio: resp.data.bio,
+		            		email: resp.data.email,
+		            		classes: class_arr,
+		            		experience: resp.data.experiences,
+		            		linkedin: resp.data.linkedin_link,
+		            		resume: resp.data.resume_path,
+										skills: [{name: 'python'}],
+										interests: [{name: 'groovy dancing'}],
+		            		student: true,
+		            		s_id: resp.data.id,
+		            	}
+								}
 	            );
 	        }).then(this.retrieveTags.bind(this));
 	}
@@ -128,52 +149,53 @@ class StudentProfile extends Component {
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
 				<EditModal id="skills-interests-edit" title="Edit Skills and Interests" noPadding={true}>
-					<PickYourInterests editorOnly={true} updateUser={this.updateUser.bind(this)}/>
+					<PickYourInterests editorOnly={true} user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="contact-edit" title="Edit Contact Info">
-					<EditContact  updateUser={this.updateUser.bind(this)}/>
+					<EditContact  user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="link-edit" title="Edit Links">
-					<EditLinks  updateUser={this.updateUser.bind(this)}/>
+					<EditLinks  user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="academics-edit" title="Edit Academic Info">
-					<NotableClasses  updateUser={this.updateUser.bind(this)}/>
+					<NotableClasses  user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="work-edit" title="Edit Work Info">
-					<EditExperience type="work" updateUser={this.updateUser.bind(this)}/>
+					<EditExperience type="work" user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="education-edit" title="Edit Education Info">
-					<EditExperience type="educ" updateUser={this.updateUser.bind(this)}/>
+					<EditExperience type="educ" user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="bio-edit" title="Edit Bio">
-					<EditBio updateUser={this.updateUser.bind(this)}/>
+					<EditBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="quickview-edit" title="Edit Quickview Info">
-					<EditQuickview img='/img/headshots/bbear.jpg' updateUser={this.updateUser.bind(this)}/>
+					<EditQuickview img='/img/headshots/bbear.jpg' user={this.state.user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
 	 					<h1>Academics</h1>
 	 					<div>
-	 						<div><b>GPA</b> NULL</div>
-	 						<div><b>Year</b> {this.state.year}</div>
-	 						<StudentClasses list={this.state.classes}/>
+	 						<div><b>GPA</b> {this.state.user.gpa}</div>
+							<div><b>Major</b> {this.state.user.major}</div>
+	 						<div><b>Year</b> {this.state.user.year}</div>
+	 						<StudentClasses list={this.state.user.classes}/>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('academics-edit')}/>
 	 				</div>
 	 				<div>
 	 					<h1>Contact</h1>
 	 					<div>
-	 						<div id='user-email'><b>Email</b> <a href={`mailto:${this.state.email}`}>{this.state.email}</a></div>
-	 						<div><b>Phone</b> MISSING</div>
+	 						<div id='user-email'><b>Email</b> <a href={`mailto:${this.state.user.email}`}>{this.state.user.email}</a></div>
+	 						<div><b>Phone</b>{this.state.user.phone}</div>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('contact-edit')}/>
 	 				</div>
 	 				<div id='user-links'>
 	 					<h1>Links</h1>
 	 					<div>
-	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn (No Link yet, path NULL)</a>
-	 						<a style={{textAlign: 'left', textDecoration: 'underline'}}>Resume (No Link yet, path NULL)</a>
+	 						<a target="_blank" href={this.state.user.linkedin_link} style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn</a>
+	 						<a target="_blank" href={this.state.user.resume_path} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>
@@ -193,26 +215,26 @@ class StudentProfile extends Component {
 	 					<div style={{position: 'relative'}}>
 		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
 		 					<div id='user-quickview-footer'>
-								MISSING (UNIVERSITY)
+								{this.state.user.school}
 							</div>
-		 					<div id='user-quickview-name'>{this.state.name}</div>
+		 					<div id='user-quickview-name'>{this.state.user.name}</div>
 	 					</div>
-	 					<SkillsInterests skills={this.state.tempskills} interests={this.state.tempinterests}/>
+	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>
 	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 	 				</div>
 	 				<div id='user-bio'>
 	 					<h1>Bio</h1>
-	 					<UserBio>NULL</UserBio>
+	 					<UserBio>{this.state.user.bio}</UserBio>
 	 					<Editor superClick={() => this.openModal('bio-edit')}/>
 	 				</div>
 	 				<div>
 	 					<h1>Experience</h1>
-	 					<UserWorkExperience title={this.state.experience} description="MISSING" startTime='MISSING' endTime='MISSING'/>
+	 					<UserWorkExperience expObj={this.state.user.experience}/>
 	 					<Editor superClick={() => this.openModal('work-edit')}/>
 	 				</div>
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
-	 					<UserEducation title='MISSING' description='MISSING' startTime='MISSING' endTime='MISSING'/>
+	 					<UserEducation expObj={this.state.user.experience}/>
 	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
 	 			</div>
@@ -240,7 +262,7 @@ class StudentClasses extends Component {
 					<i className="material-icons" id='user-classes-expander'>expand_more</i>
 				</span>
 				<div id='user-classes-list'>
-					{this.props.list.map(item => <div>{item}</div>)}
+					{this.props.list.map((item, index) => <div key={index}>{item.name}</div>)}
 				</div>
 			</div>
 		)
@@ -252,11 +274,12 @@ class UserWorkExperience extends Component {
 		super(props)
 		this.state = {
 			showExpander: false,
+			description: "",
 		}
 	}
 
 	componentDidMount() {
-		if (this.props.description.length >= 250)
+		if (this.state.description.length >= 250)
 			this.setState({showExpander: true})
 	}
 
@@ -265,14 +288,15 @@ class UserWorkExperience extends Component {
 	}
 
 	render() {
+		var exp = this.props.expObj ? this.props.expObj : "null";
 		return(
-			<div id={`user-work-${this.props.title}`} className='user-work-experience'>
-				<div className='user-work-title'>{this.props.title}</div>
+			<div id={`user-work-${"title"}`} className='user-work-experience'>
+				<div className='user-work-title'>{"title"}</div>
 				<div className='user-work-time'>
-					{`${this.props.startTime} - ${this.props.endTime}`}
+					{`${"endtiem"} - ${"start-time"}`}
 				</div>
-				<div id={`user-work-description-${this.props.title}`} className='user-work-description'>{this.props.description}</div>
-				{this.state.showExpander && <ExpanderIcons id={`user-work-${this.props.title}`} action={this.expand.bind(this)}/>}
+				<div id={`user-work-description-${"title"}`} className='user-work-description'>{"description"}</div>
+				{this.state.showExpander && <ExpanderIcons id={`user-work-${"title"}`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}
@@ -343,8 +367,8 @@ class SkillsInterests extends Component {
 		return(
 			<div id='user-skills-interests'>
 				<Editor superClick={() => this.openModal('skills-interests-edit')}/>
-				{this.props.interests.map((item) => <Bubble type='interest'>{item}</Bubble>)}
-				{this.props.skills.map((item) => <Bubble type='skill'>{item}</Bubble>)}
+				{this.props.interests.map((item) => <Bubble type='interest'>{item.name}</Bubble>)}
+				{this.props.skills.map((item) => <Bubble type='skill'>{item.name}</Bubble>)}
 			</div>
 		)
 	}

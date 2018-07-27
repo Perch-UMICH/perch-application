@@ -79,7 +79,7 @@ class LabSearch extends Component {
 
             resp.data.available_departments.map((dept) => {
                 new_filts['departments'][dept] = {friendlyName: dept, slug: dept};
-                new_parentFilts['departments'].push({friendlyName: dept, slug: dept});
+                new_parentFilts['departments'].push({friendlyName: dept, slug: dept, clicked: true});
             });
 
             this.setState({filts: new_filts, parentFilts: new_parentFilts});
@@ -91,6 +91,10 @@ class LabSearch extends Component {
 
 	expand(type) {
 		document.getElementById(`${type}-filter`).classList.toggle('expand')
+	}
+
+	componentDidMount() {
+		this.expand("departments");
 	}
 
 	handleFilterClick(filterType, slug) {
@@ -222,7 +226,7 @@ class LabSearch extends Component {
 				return (
 					<div id={`${type}-filter`} className="search-filter-container">
 						<div className="search-filter-title">{filterFriendlyNames[idx]}</div>
-						<ExpanderIcons id={`${type}-filter`} classBase='search-filter-container' action={() => {this.expand(type)}} filterDropdown={true}/>
+						<ExpanderIcons id={`${type}-filter`} classBase='search-filter-container' action={() => {this.expand(type)}} preClick={type === "departments"} filterDropdown={true}/>
 						<hr className="filter-hr"/>
 						{filterContentArr[idx]}
 					</div>

@@ -58,6 +58,13 @@ class NotableClasses extends Component {
 		}
 	}*/
 
+	componentWillReceiveProps(props) {
+		var newState = this.state;
+		newState.gpa = props.user && props.user.gpa ? props.user.gpa : '4.0';
+		newState.year = props.user && props.user.year ? props.user.year : '';
+		newState.major = props.user && props.user.major ? props.user.major : '';
+		this.setState(newState);
+	}
 
 	updateGPA(event) {
 		this.setState({ gpa: event.target.value });

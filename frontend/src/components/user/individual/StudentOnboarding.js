@@ -14,6 +14,7 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
+import {getStudent, updateStudent} from '../../../helper.js'
 import './StudentOnboarding.css'
 
 class StudentOnboarding extends Component {
@@ -50,7 +51,11 @@ class StudentOnboarding extends Component {
 
   redirect() {
     window.location = '/student-profile';
-
+    var nameArr = this.state.name ? this.state.name.split(' ') : [];
+    var first_name = nameArr[0] ? nameArr[0]: "";
+    var last_name = nameArr[1] ? nameArr[1] : "";
+    updateStudent(first_name, last_name, this.state.email, this.state.year, this.state.bio, this.state.major, this.state.gpa,
+      this.state.classes, this.state.experiences, this.state.linkedin_link, this.state.website_link, true);
   }
 
 	render() {

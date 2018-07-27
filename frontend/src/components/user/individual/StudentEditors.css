@@ -10,7 +10,6 @@
 /* For the form */
 #edit-container > form {
 	border: 1px solid lightgrey;
-	overflow: hidden;
 	background-color: white;
 	padding: 20px;
 }
