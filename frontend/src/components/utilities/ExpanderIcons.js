@@ -29,13 +29,16 @@ class ExpanderIcons extends Component {
 	render() {
 		var expandCSS = `${this.props.classBase}-expand-icons`;
         var expandIcon = <i className='material-icons'>expand_more</i>;
+				if (this.props.preClick) {
+					expandIcon = <i className='material-icons'>expand_less</i>;
+				}
         var expandLine = <div style={{marginBottom: '10px'}}><b>&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</b></div>
         var expandSection = this.props.filterDropdown ? expandIcon : expandLine
 		expandCSS += this.props.filterDropdown ?  ' expand-icons-filter-dropdown' : ' expand-icons';
 		return(
 			<div id={`${this.props.id}-expand-icons`} className={expandCSS} onClick={this.expandDescription.bind(this)}>
-                {expandSection}
-            </div>
+        {expandSection}
+    </div>
 		)
 	}
 }

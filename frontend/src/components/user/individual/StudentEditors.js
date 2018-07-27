@@ -251,18 +251,18 @@ export class EditQuickview extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			image: this.props.img,
+			image: props.user && props.user.img ? props.user.img : props.img,
 			rotate: 0,
 			scale: 1.5,
-			name: "",
-			school: "",
+			name: props.user && props.user.name ? props.user.name : "",
+			school: props.user && props.user.school ? props.user.school : "",
 		}
 	}
 
 	handleDrop = dropped => {
 		this.setState({ image: dropped[0] })
 		if (this.props.updateUser) {
-			this.props.updateUser("profile-img", dropped[0]);
+			this.props.updateUser("img", dropped[0]);
 		}
 	}
 
@@ -271,14 +271,14 @@ export class EditQuickview extends Component {
 			scale: e.target.value
 		})
 		if (this.props.updateUser) {
-			this.props.updateUser("profile-img-scale", e.target.value);
+			this.props.updateUser("img_scale", e.target.value);
 		}
 	}
 
 	handleRotate = () => {
 		this.setState({rotate: this.state.rotate - 90}, () => {
 			if (this.props.updateUser) {
-				this.props.updateUser("profile-img-rotate", this.state.rotate);
+				this.props.updateUser("img_rotate", this.state.rotate);
 			}
 		})
 	}
@@ -317,19 +317,19 @@ export class EditQuickview extends Component {
 			    </div>
 			   	<div id='quickview-editor-R'>
 			   		<div className='input-field'>
-			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants'
+			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' value={this.state.name}
 							 	onChange={(e) => {
 									if (this.props.updateUser) {
-										this.props.updateUser("profile-name", e.target.value)}
+										this.props.updateUser("name", e.target.value)}
 									this.setState({name: e.target.value})
 								}}/>
 			   			<label htmlFor='profile-name' className="active" >Name</label>
 			   		</div>
 			   		<div className='input-field'>
-			   			<input id='profile-school' type='text' placeholder='Hogwarts'
+			   			<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
 								onChange={(e) => {
 									if (this.props.updateUser) {
-										this.props.updateUser("profile-school", e.target.value)}
+										this.props.updateUser("school", e.target.value)}
 									this.setState({school: e.target.value})
 								}}/>
 			   			<label htmlFor='profile-school' className="active" >School</label>
