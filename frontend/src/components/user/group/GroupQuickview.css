@@ -10,6 +10,7 @@
 	text-align: justify;
 	transition: 0.2s ease;
 	padding-bottom: 5px;
+	min-height: 200px;
 }
 
 #group-page-quickview:hover {

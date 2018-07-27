@@ -135,7 +135,8 @@ const QuickInfo = (props) => {
             <h1>Quick Info</h1>
             <div className='group-info-box'>
                 <div className='group-info-box-heading'>UNIVERSITY</div>
-                <div className='group-info-box-content'>MISSING</div>
+                {/*TODO: Tie this to the backend*/}
+                <div className='group-info-box-content'>University of Michigan</div>
                 <div className='group-info-box-heading'>DEPARTMENTS</div>
                 <div className='group-info-box-content'>{props.department}</div>
                 <div className='group-info-box-heading'>RESEARCH AREAS</div>
