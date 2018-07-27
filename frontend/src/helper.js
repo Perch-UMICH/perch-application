@@ -1461,15 +1461,15 @@ export function getSearchData() {
 // Keywords: can be any string, will search for exact match
 
 // Returns array of matching projects, along with the location of the searched keyword in the "description" of the project
-export function labSearch(areas, skills, commitments, departments, keywords) {
+export function labSearch(areas, skills, commitments, departments, keyword) {
     console.log('Performing search');
 
     let payload = {
-        tags: areas,
+        areas: areas,
         skills: skills,
         commitments: commitments,
         departments: departments,
-        keywords: keywords
+        keyword: keyword
     };
 
     return axios.post('api/search', payload)
