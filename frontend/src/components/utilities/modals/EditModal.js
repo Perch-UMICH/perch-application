@@ -28,7 +28,7 @@ class EditModal extends Component {
 	}
 
 	render() {
-		var contentCSS = this.props.noPadding ? "modal-content-thin" : "modal-content";
+		var contentCSS = this.props.noPadding ? "modal-content modal-no-padding" : "modal-content";
 		return(
 			<div>
 				<div id={this.props.id} className="modal modal-fixed-footer display-modal">

@@ -4,7 +4,7 @@ import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
-import {EditContact, EditExperience, EditQuickview, EditLinks} from './StudentEditors'
+import {EditContact, EditExperience, EditQuickview, EditLinks, EditBio} from './StudentEditors'
 import NotableClasses from './NotableClasses'
 import PickYourInterests from './PickYourInterests'
 import { TwitterTimelineEmbed} from 'react-twitter-embed';
@@ -32,8 +32,16 @@ class StudentProfile extends Component {
 			not_student: false,
 			tempskills: ['python', 'javascript', 'HTML 5', 'CSS 3', 'C++', 'Splunk', 'matLab'],
 			tempinterests: ['Computer Science', 'Computer Security', 'Software Development', 'Management', 'Design'],
+			user: {},
 		}
 	}
+
+	updateUser(field, newValue) {
+    console.log("updating ", field, " to ", newValue);
+    var newState = this.state;
+    newState.user[field] = newValue;
+    this.setState(newState);
+  }
 
 	// Handles retrieving skilsl and tags
 	retrieveTags() {
@@ -116,28 +124,28 @@ class StudentProfile extends Component {
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
 				<EditModal id="skills-interests-edit" title="Edit Skills and Interests" noPadding={true}>
-					<PickYourInterests editorOnly={true} />
+					<PickYourInterests editorOnly={true} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="contact-edit" title="Edit Contact Info">
-					<EditContact />
+					<EditContact  updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="link-edit" title="Edit Links">
-					<EditLinks />
+					<EditLinks  updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="academics-edit" title="Edit Academic Info">
-					<NotableClasses />
+					<NotableClasses  updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="work-edit" title="Edit Work Info">
-					<EditExperience type="work"/>
+					<EditExperience type="work" updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="education-edit" title="Edit Education Info">
-					<EditExperience type="educ"/>
+					<EditExperience type="educ" updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="bio-edit" title="Edit Bio">
-					<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
+					<EditBio updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="quickview-edit" title="Edit Quickview Info">
-					<EditQuickview img='/img/headshots/bbear.jpg'/>
+					<EditQuickview img='/img/headshots/bbear.jpg' updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>

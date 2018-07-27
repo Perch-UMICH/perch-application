@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import BasicButton from '../../utilities/buttons/BasicButton'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
+import $ from 'jquery'
 import './StudentEditors.css'
 import {EditContact} from './StudentEditors'
 import ProgressIndicator from '../../utilities/ProgressIndicator'
@@ -30,7 +31,7 @@ class StudentOnboarding extends Component {
     var steps = {
       0: <EnterContact user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
       1: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-      2: <NotableClasses user={this.state.user} showForm={true} updateUser={this.updateUser.bind(this)}/>,
+      2: "",
       3: <EnterBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
       4: <UploadImage user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
       5: <Experience user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
@@ -49,6 +50,7 @@ class StudentOnboarding extends Component {
 
   redirect() {
     window.location = '/student-profile';
+
   }
 
 	render() {
@@ -61,11 +63,20 @@ class StudentOnboarding extends Component {
     else if (this.state.curStep === (this.state.numSteps - 1)) {
       nextBtn = <BasicButton msg='go to profile' superClick={this.redirect.bind(this)}/>
     }
+    var css = "invisible";
+    if (this.state.curStep === 2) {
+      css = "visible-yes";
+      nextBtn = <BasicButton msg='next' superClick={() => this.setState({curStep: this.state.curStep + 1})}/>;
+    }
+    var dropDown = <div className={css}>
+      <NotableClasses user={this.state.user} showForm={true} updateUser={this.updateUser.bind(this)}/>
+    </div>
 		return (
       <div className="onboarding-container">
         {backBtn}
         {nextBtn}
         <ProgressIndicator steps={this.state.numSteps} curStep={this.state.curStep} />
+        {dropDown}
         {stepToRender}
       </div>
 		)
