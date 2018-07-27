@@ -202,7 +202,7 @@ class StudentProfile extends Component {
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
 	 					<UserEducation title='University of Michigan BS' description='Undergraduate Degree in Computer Science' startTime='2015' endTime='2019'/>
-	 					<UserEducation title='Auburn Renaissance Academy' description='Graduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold Portfolio' startTime='2011' endTime='2015'/>
+	 					<UserEducation title='Auburn Renaissance Academy' description='Graduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold Portfolio. Graduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold PortfolioGraduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold PortfolioGraduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold PortfolioGraduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold PortfolioGraduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold PortfolioGraduated HS with a 4.3 GPA and received the Young American Award, YMCA Leadership Award, and the Scholastic Art and Writing Gold Portfolio' startTime='2011' endTime='2015'/>
 	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
 	 			</div>
@@ -220,7 +220,6 @@ class StudentClasses extends Component {
 		elem.innerHTML = elem.innerHTML === 'expand_more' ? 'expand_less' : 'expand_more'
 		document.getElementById('user-classes').classList.toggle('active-blue')
 		document.getElementById('user-classes-list').classList.toggle('expand');
-
 	}
 
 	render() {
@@ -258,6 +257,20 @@ class UserWorkExperience extends Component {
 }
 
 class UserEducation extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			showExpander: false,
+		}
+	}
+
+	componentDidMount() {
+		let edu = document.getElementById(`user-education-description-${this.props.title}`)
+		if (edu.clientHeight <= 56) {
+			this.setState({showExpander: false})
+		}
+	}
+
 	expand() {
 		document.getElementById(`user-education-description-${this.props.title}`).classList.toggle('expand')
 	}
@@ -270,7 +283,7 @@ class UserEducation extends Component {
 					{`${this.props.startTime} - ${this.props.endTime}`}
 				</div>
 				<div id={`user-education-description-${this.props.title}`} className='user-education-description'>{this.props.description}</div>
-				<ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>
+				{this.showExpander && <ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}

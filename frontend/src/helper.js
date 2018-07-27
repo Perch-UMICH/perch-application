@@ -19,7 +19,7 @@ if (sessionStorage.token){
 // HELPER HELPERS //
 
 function response(status, data) {
-    return ['status': stats, 'data': data];
+    return {'status': status, 'data': data};
 }
 
 // 0 is a made up error code for non-server-related issues

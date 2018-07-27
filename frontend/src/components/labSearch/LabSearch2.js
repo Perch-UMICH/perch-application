@@ -58,29 +58,29 @@ class LabSearch extends Component {
         });
 
         getSearchData().then((resp) => {
-            //console.log(resp);
+            console.log(resp);
             let new_filts = this.state.filts;
             let new_parentFilts = this.state.parentFilts;
 
-            resp.all_commitments.map((req) => {
-                new_filts['minReqs'][req] = {friendlyName: req, slug: req};
-                new_parentFilts['minReqs'].push({friendlyName: req, slug: req});
-            });
+            // resp.response.data.all_commitments.map((req) => {
+            //     new_filts['minReqs'][req] = {friendlyName: req, slug: req};
+            //     new_parentFilts['minReqs'].push({friendlyName: req, slug: req});
+            // });
 
-            resp.available_skills.map((skill) => {
-                new_filts['lab-skills'][skill] = {friendlyName: skill, slug: skill};
-                new_parentFilts['lab-skills'].push({friendlyName: skill, slug: skill});
-            });
+            // resp.response.data.available_skills.map((skill) => {
+            //     new_filts['lab-skills'][skill] = {friendlyName: skill, slug: skill};
+            //     new_parentFilts['lab-skills'].push({friendlyName: skill, slug: skill});
+            // });
 
-            resp.available_areas.map((area) => {
-                new_filts['researchAreas'][area] = {friendlyName: area, slug: area};
-                new_parentFilts['researchAreas'].push({friendlyName: area, slug: area});
-            });
+            // resp.response.data.available_areas.map((area) => {
+            //     new_filts['researchAreas'][area] = {friendlyName: area, slug: area};
+            //     new_parentFilts['researchAreas'].push({friendlyName: area, slug: area});
+            // });
 
-            resp.available_departments.map((dept) => {
-                new_filts['departments'][dept] = {friendlyName: dept, slug: dept};
-                new_parentFilts['departments'].push({friendlyName: dept, slug: dept});
-            });
+            // resp.response.data.available_departments.map((dept) => {
+            //     new_filts['departments'][dept] = {friendlyName: dept, slug: dept};
+            //     new_parentFilts['departments'].push({friendlyName: dept, slug: dept});
+            // });
 
             this.setState({filts: new_filts, parentFilts: new_parentFilts});
             //console.log(this.state.filts);
