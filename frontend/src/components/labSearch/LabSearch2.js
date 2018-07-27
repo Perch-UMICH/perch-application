@@ -47,8 +47,8 @@ class LabSearch extends Component {
     componentWillMount() {
         getAllLabs().then((resp) => {
             var newState = this.state;
-            var all_labs = resp.result
-            //console.log(all_labs);
+            var all_labs = resp.data.result
+            //console.log(resp);
             for (var key in all_labs) {
                 let lab = all_labs[key].data;
                 newState.all_labs.push(<LabSearchItem name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
@@ -62,25 +62,25 @@ class LabSearch extends Component {
             let new_filts = this.state.filts;
             let new_parentFilts = this.state.parentFilts;
 
-            // resp.response.data.all_commitments.map((req) => {
-            //     new_filts['minReqs'][req] = {friendlyName: req, slug: req};
-            //     new_parentFilts['minReqs'].push({friendlyName: req, slug: req});
-            // });
+            resp.data.result.all_commitments.map((req) => {
+                new_filts['minReqs'][req] = {friendlyName: req, slug: req};
+                new_parentFilts['minReqs'].push({friendlyName: req, slug: req});
+            });
 
-            // resp.response.data.available_skills.map((skill) => {
-            //     new_filts['lab-skills'][skill] = {friendlyName: skill, slug: skill};
-            //     new_parentFilts['lab-skills'].push({friendlyName: skill, slug: skill});
-            // });
+            resp.data.result.available_skills.map((skill) => {
+                new_filts['lab-skills'][skill] = {friendlyName: skill, slug: skill};
+                new_parentFilts['lab-skills'].push({friendlyName: skill, slug: skill});
+            });
 
-            // resp.response.data.available_areas.map((area) => {
-            //     new_filts['researchAreas'][area] = {friendlyName: area, slug: area};
-            //     new_parentFilts['researchAreas'].push({friendlyName: area, slug: area});
-            // });
+            resp.data.result.available_areas.map((area) => {
+                new_filts['researchAreas'][area] = {friendlyName: area, slug: area};
+                new_parentFilts['researchAreas'].push({friendlyName: area, slug: area});
+            });
 
-            // resp.response.data.available_departments.map((dept) => {
-            //     new_filts['departments'][dept] = {friendlyName: dept, slug: dept};
-            //     new_parentFilts['departments'].push({friendlyName: dept, slug: dept});
-            // });
+            resp.data.result.available_departments.map((dept) => {
+                new_filts['departments'][dept] = {friendlyName: dept, slug: dept};
+                new_parentFilts['departments'].push({friendlyName: dept, slug: dept});
+            });
 
             this.setState({filts: new_filts, parentFilts: new_parentFilts});
             //console.log(this.state.filts);
