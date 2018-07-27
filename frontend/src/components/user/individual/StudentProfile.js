@@ -7,7 +7,7 @@ import EditModal from '../../utilities/modals/EditModal'
 import {EditContact, EditExperience, EditQuickview, EditLinks} from './StudentEditors'
 import NotableClasses from './NotableClasses'
 import PickYourInterests from './PickYourInterests'
-import { TwitterTimelineEmbed} from 'react-twitter-embed';
+import {TwitterTimelineEmbed} from 'react-twitter-embed';
 import './StudentProfile.css';
 
 var FontAwesome = require('react-fontawesome');
@@ -297,6 +297,18 @@ class UserEducation extends Component {
 }
 
 class UserBio extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			showExpander: false,
+		}
+	}
+
+	componentDidMount() {
+		if (this.props.children.length >= 380)
+			this.setState({showExpander: true})
+	}
+
 	expand() {
 		document.getElementById('user-bio-content').classList.toggle('expand')
 	}
@@ -304,8 +316,8 @@ class UserBio extends Component {
 	render() {
 		return(
 			<div id='user-bio' className='user-bio'>
-				<div id='user-bio-content' className='user-bio-content'>{this.props.children}</div>
-				<ExpanderIcons id={`user-bio`} action={this.expand.bind(this)}/>
+				<div id='user-bio-content' className='user-bio-content'>{this.props.children} </div>
+				{this.state.showExpander && <ExpanderIcons id={`user-bio`} action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}
