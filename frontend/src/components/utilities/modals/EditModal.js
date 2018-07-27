@@ -28,7 +28,7 @@ class EditModal extends Component {
 	}
 
 	render() {
-		var contentCSS = this.props.noPadding ? "modal-content-thin" : "modal-content";
+		var contentCSS = this.props.noPadding ? "modal-content modal-no-padding" : "modal-content";
 		return(
 			<div>
 				<div id={this.props.id} className="modal modal-fixed-footer display-modal">
@@ -39,7 +39,11 @@ class EditModal extends Component {
           <div className="modal-footer">
 				     	<BasicButton superClick={this.handleClose.bind(this)} msg='close' />
 				     	<BasicButton
-								superClick={this.props.modalAction}
+								superClick={() => {
+									if (this.props.modalAction) {
+										this.props.modalAction();
+									}
+									this.handleClose();}}
 								msg={this.props.actionName ? this.props.actionName : "save"} />
 				  	</div>
 			 	</div>

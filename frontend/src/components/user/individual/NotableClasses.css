@@ -9,6 +9,15 @@
 	border-radius: var(--border-radius-C);
 }
 
+.invisible {
+	display: none;
+	opacity: 0;
+}
+
+.visible-yes {
+	display: block;
+	opacity: 1;
+}
 
 .notable-classes-input {
 	background-color: var(--e-grey);

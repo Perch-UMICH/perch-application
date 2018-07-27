@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SquareButton from '../../utilities/buttons/SquareButton';
 import $ from 'jquery';
+import ReactDOM from 'react-dom';
 import {EditContainerOnboarding} from './StudentEditors.js'
 import {updateStudent, getStudent, getCurrentUserId, getCurrentStudentId, getStudentFromUser} from '../../../helper.js';
 import './NotableClasses.css';
@@ -57,6 +58,14 @@ class NotableClasses extends Component {
 		}
 	}*/
 
+	componentWillReceiveProps(props) {
+		var newState = this.state;
+		newState.gpa = props.user && props.user.gpa ? props.user.gpa : '4.0';
+		newState.year = props.user && props.user.year ? props.user.year : '';
+		newState.major = props.user && props.user.major ? props.user.major : '';
+		this.setState(newState);
+	}
+
 	updateGPA(event) {
 		this.setState({ gpa: event.target.value });
 		if (this.props.updateUser) {
@@ -64,11 +73,9 @@ class NotableClasses extends Component {
 		}
 	}
 
-	updateYear(event) {
-		console.log(event.target.value);
-		this.setState({ year: event.target.value });
-		if (this.props.updateUser) {
-			this.props.updateUser("year", event.target.value)
+	updateYear() {
+		if (this.props.updateUser && $('#year_select').val()) {
+			this.props.updateUser("year", $('#year_select').val())
 		}
 	}
 
@@ -144,7 +151,7 @@ class NotableClasses extends Component {
 			return ("");
 		}
 		var notableClassesForm =
-			<form>
+			<form onClick={this.updateYear.bind(this)}>
 				<div className='row'>
 					<div className='input-field col s4'>
 						<div className='notable-classes-label left-align'>GPA</div>

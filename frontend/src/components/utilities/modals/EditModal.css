@@ -85,3 +85,8 @@
 .modal-content {
 	text-align: left;
 }
+
+.modal-no-padding {
+	padding: 0px !important;
+	margin: 0px !important;
+}

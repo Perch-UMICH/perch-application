@@ -17,7 +17,7 @@ class Editor extends Component {
 
 	render() {
 		return(
-			<div className='editor' onClick={this.action.bind(this)}><i class="fas fa-pencil-alt"></i></div>
+			<div className='editor' onClick={this.action.bind(this)}><i className="fas fa-pencil-alt"></i></div>
 		);
 	}
 }

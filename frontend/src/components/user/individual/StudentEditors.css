@@ -5,13 +5,11 @@
 	margin-bottom: 20px;
 	text-align: center;
 	border-radius: var(--border-radius-C);
-	overflow: hidden;
 }
 
 /* For the form */
 #edit-container > form {
 	border: 1px solid lightgrey;
-	overflow: hidden;
 	background-color: white;
 	padding: 20px;
 }
