@@ -137,6 +137,7 @@
 	height: 225px;
 	object-fit: cover;
 	object-position: 70% 20%;
+	filter: grayscale(100%);
 }
 
 /* Work Experience*/

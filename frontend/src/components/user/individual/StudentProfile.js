@@ -341,6 +341,12 @@ class UserBio extends Component {
 			this.setState({showExpander: true})
 	}
 
+	// componentDidUpdate() {
+	// 	console.log(this.props)
+	// 	if (this.props.children.length >= 380)
+	// 		this.setState({showExpander: true})
+	// }
+
 	expand() {
 		document.getElementById('user-bio-content').classList.toggle('expand')
 	}
