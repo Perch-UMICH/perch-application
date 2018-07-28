@@ -64,6 +64,8 @@ class Timeline extends Component {
 		return (
 			<div>
 				{/*<CountdownTimer />*/}
+				<br /><br />
+				<div className='perch-story-header'>Timeline</div>
 				<section className="timeline">
 				    <div className="container">
                         <TimelineItem
