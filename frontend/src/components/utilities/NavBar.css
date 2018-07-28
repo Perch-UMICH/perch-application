@@ -10,7 +10,7 @@ nav {
     line-height: 70px;
     background-color: var(--primary);
     box-shadow: none;
-    border-bottom: 1px solid #1c69a5;
+    border-bottom: 1px solid var(--highlight);
 }
 
 nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {

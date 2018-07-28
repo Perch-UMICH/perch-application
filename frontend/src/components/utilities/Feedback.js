@@ -40,7 +40,7 @@ class Feedback extends Component {
 						</div>
 						<div className='container center-align feedback-form'>
 							<div className='feedback-header'>Submit Feedback</div>
-							<form className='container input-field'>
+							<form className='feedback-input-container input-field'>
 								<input id='feedback-src' className='feedback-input' value={this.state.url} onChange={e => this.setState({url: e.target.value})} type="text" placeholder="Page URL"></input>
 								<label htmlFor='feedback-src'>Problem Url</label>
 								<textArea className='feedback-textarea-input' type="textArea" 

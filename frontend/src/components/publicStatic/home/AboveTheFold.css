@@ -2,6 +2,10 @@
 	letter-spacing: 1px;
 }
 
+.atf-moving-text {
+	background-color: var(--primary);
+}
+
 @media only screen and (max-width: 600px){
 	.atf-header {
 		font-size: 25px;
@@ -56,8 +60,7 @@
 .atf {
 	color: var(--white);
 	margin-bottom: 0;
-	background-color: var(--lightish-blue);
-	/*background-image: url(../assets/background-white.png);*/
+	background-color: var(--highlight);
 	background-size: cover;	
 }
 

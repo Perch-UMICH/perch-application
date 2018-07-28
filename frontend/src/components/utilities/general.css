@@ -15,22 +15,21 @@
 
     /*THEMES*/
     /*Blue*/
-    --primary: #0277BD;
+    /*--primary: #0277BD;
     --active: #29B6F6;
-    --highlight: lightblue;
+    --highlight: lightblue;*/
     /*Purple*/
 	--primary: #6c5b7b;
 	--active: #c06c84;
 	--highlight: #ffdfd3;
 	/*Teal*/
-	--primary: #2b7a78;
+/*	--primary: #2b7a78;
 	--active: #3aafa9;
-	--highlight: #def2f1;
-	/*Loud*/
-	/*Teal*/
-	--primary: #ff913d;
+	--highlight: #def2f1;*/
+	/*Orange and Blue*/
+	/*--primary: #ff913d;
 	--active: #73f0f4;
-	--highlight: #efbc4c;
+	--highlight: #efbc4c;*/
 
 	/*Shades of grey are all that I see...*/
 	--white: #FFF; /*CSS white*/
@@ -73,6 +72,11 @@
 	--border-radius-C: 0 var(--border-radius-small) 0 var(--border-radius-large);
 	--border-radius-L: 0 0 0 var(--border-radius-large);
 	--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;
+}
+
+::selection {
+	background-color: var(--active);
+	color: white;
 }
 
 * {

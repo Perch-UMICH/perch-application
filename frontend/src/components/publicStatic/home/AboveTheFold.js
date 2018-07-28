@@ -34,7 +34,7 @@ class AboveTheFold extends Component {
 	render() {
 		return(
 			  <div className="atf row">
-			  		<div className='col s12 m7 atf-height valign-wrapper' style={{backgroundColor: '#0277bd'}}>
+			  		<div className='col s12 m7 atf-moving-text atf-height valign-wrapper'>
 			  			<div className='container center-align'>
 				  			<div className='atf-header-big left-align'><span id='atf-perch'></span></div>
 				  			<div className='atf-header left-align'>deawkwardizing <br/><span id='atf-changer'></span></div>

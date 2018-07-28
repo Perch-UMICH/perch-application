@@ -12,7 +12,7 @@
 }
 
 .basic-btn:hover {
-	background-color: var(--seafoam-blue) ;
+	background-color: var(--active) ;
 	box-shadow: none;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .basic-btn-light:hover {
-	background-color: var(--seafoam-blue) ;
+	background-color: var(--active) ;
 	box-shadow: none;
 }
 
