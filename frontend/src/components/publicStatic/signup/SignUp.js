@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../../helper.js';
-import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ } from '../../helper.js'
+import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../../../helper.js';
+import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ } from '../../../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
 	constructor(props) {

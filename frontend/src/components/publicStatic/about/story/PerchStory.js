@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './PerchStory.css';
-import story from '../../../data/perchStoryData'
+import story from '../../../../data/perchStoryData'
 import $ from 'jquery'
 
 class PerchStory extends Component {

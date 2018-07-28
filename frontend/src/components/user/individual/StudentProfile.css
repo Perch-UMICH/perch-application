@@ -286,7 +286,7 @@
 	transition: 0.2s ease;
 }
 
-#user-email {
+#user-email, #user-phone {
 	overflow-wrap: break-word;
 }
 

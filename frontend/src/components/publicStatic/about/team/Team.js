@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Team.css';
 import Card from './Card.js';
-import TableCard from '../../utilities/TableCard.js';
-import {getMemberData, getAdvisorData} from '../../../data/memberData';
+import TableCard from '../../../utilities/TableCard.js';
+import {getMemberData, getAdvisorData} from '../../../../data/memberData';
 
 // initialize member mapping
 var memberBySlug = {};

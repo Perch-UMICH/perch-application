@@ -33,7 +33,6 @@ class NavBar extends Component {
 			    <li><a className="nav-item" href="/dashboard">SAVED</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
-			    {/*<li><a className="nav-item contact-nav" href="#">PERCH CERTIFIED</a></li>*/}
 			</div>
 		}
 		else {

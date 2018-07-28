@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from '../../utilities/buttons/BasicButton';
-import SignUp from '../SignUp';
+import SignUp from '../signup/SignUp';
 import Typed from 'typed.js';
 import './AboveTheFold.css';
 

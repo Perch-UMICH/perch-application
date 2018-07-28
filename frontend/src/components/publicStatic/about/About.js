@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Timeline from './Timeline'
-import Team from './Team'
-import PerchStory from './PerchStory'
+import Timeline from './timeline/Timeline'
+import Team from './team/Team'
+import PerchStory from './story/PerchStory'
 import './About.css';
 
 class About extends Component {

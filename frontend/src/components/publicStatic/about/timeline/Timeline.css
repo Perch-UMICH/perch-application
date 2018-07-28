@@ -12,17 +12,8 @@
   color: var(--eighty-grey);
 }
 
-#countdown {
-  /*margin-bottom: 20px;*/
-}
-
-
 section {
   padding: 100px 0;
-}
-
-html, body {
-  /*overflow-x: hidden;*/
 }
 
 h1 {
@@ -33,7 +24,6 @@ h1 {
 }
 
 header {
-  background-image: url(../../../assets/background.png);
   background-size: 100% auto;
   color: var(--white);
   padding: 75px 0;
@@ -233,7 +223,7 @@ header p {
 }
 /*Wireframe*/
 .timeline-item:nth-child(15) .timeline-img-header {
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.4)), url("../../../assets/LOGO.svg") center center no-repeat;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.4)), url("../../../../assets/LOGO.svg") center center no-repeat;
   background-size: cover;
 }
 /*Jim Wolfe*/
@@ -302,5 +292,4 @@ blockquote {
 
 #countdown {
   font-size: 60px;
-  /*margin-bottom: 0px;*/
 }

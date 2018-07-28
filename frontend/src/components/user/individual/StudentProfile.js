@@ -187,7 +187,7 @@ class StudentProfile extends Component {
 	 					<h1>Contact</h1>
 	 					<div>
 	 						<div id='user-email'><b>Email</b> <a href={`mailto:${this.state.user.email}`}>{this.state.user.email}</a></div>
-	 						<div><b>Phone</b>{this.state.user.phone}</div>
+	 						<div id='user-phone'><b>Phone</b> {this.state.user.phone}fasdfasdfasdfasdf</div>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('contact-edit')}/>
 	 				</div>
@@ -220,7 +220,7 @@ class StudentProfile extends Component {
 		 					<div id='user-quickview-name'>{this.state.user.name}</div>
 	 					</div>
 	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>
-	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
+	 					<div style={{backgroundColor: 'white', position: 'absolute', top: '0', right: '0', width: '45px', height: '40px', borderRadius: '10px'}}><Editor superClick={() => this.openModal('quickview-edit')}/></div>
 	 				</div>
 	 				<div id='user-bio'>
 	 					<h1>Bio</h1>

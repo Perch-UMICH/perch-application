@@ -30,14 +30,14 @@ class Settings extends Component {
 				console.log(resp);
 				this.setState(
 					{
-						name: resp.result.name,
-						email: resp.result.email,
-						user_type: resp.result.is_student ? "Student" : "Faculty",
+						name: resp.data.name,
+						email: resp.data.email,
+						user_type: resp.data.is_student ? "Student" : "Faculty",
 					}
 				);
-				if (resp.result.is_student) {
+				if (resp.data.is_student) {
 					getStudentFromUser(getCurrentUserId()).then( r => {
-						this.setState({student_id: r.result.id})
+						this.setState({student_id: r.data.id})
 					});
 				}
 			});

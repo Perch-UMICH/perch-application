@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-// import './LabSearch.css';
 import './LabSearch2.css';
 import ExpanderIcons from '../utilities/ExpanderIcons'
-// import Bubble from '../utilities/Bubble';
-// import LabList from './LabList';
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';

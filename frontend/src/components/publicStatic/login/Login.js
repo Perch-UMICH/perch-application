@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
-import {isLoggedIn, loginUser, getCurrentUserId, isStudent, isLab, isFaculty, getCurrentLabId} from '../../helper.js';
+import {isLoggedIn, loginUser, getCurrentUserId, isStudent, isLab, isFaculty, getCurrentLabId} from '../../../helper.js';
 import alertify from 'alertify.js';
 import iziToast from 'izitoast';
 

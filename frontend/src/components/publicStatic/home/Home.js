@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import AboveTheFold from './about/AboveTheFold.js';
+import AboveTheFold from './AboveTheFold.js';
 import './Home.css'
-import {getAllTags, getAllSkills, getAllLabs} from '../../helper.js'
+import {getAllTags, getAllSkills, getAllLabs} from '../../../helper.js'
 
 
 class Home extends Component {

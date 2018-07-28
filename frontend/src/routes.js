@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Team from './components/publicStatic/about/Team';
 import NavBar from './components/utilities/NavBar';
-import Home from './components/publicStatic/Home';
-import SignUpPage from './components/publicStatic/SignUpPage';
+import Home from './components/publicStatic/home/Home';
+import SignUpPage from './components/publicStatic/signup/SignUpPage';
 import ConfirmEmail from './components/user/maintenance/ConfirmEmail';
-import Timeline from './components/publicStatic/about/Timeline';
 import About from './components/publicStatic/about/About';
-import Login from './components/publicStatic/Login';
+import Login from './components/publicStatic/login/Login';
 import StudentProfile from './components/user/individual/StudentProfile';
 import LabMatch from './components/labSearch/LabMatch';
-import LabWebsite from './components/user/group/LabWebsite';
 import ProfPage from './components/user/group/ProfPage';
 import Apply from './components/user/Apply';
 import CreatePosition from './components/user/group/CreatePosition';
@@ -23,8 +20,8 @@ import ForgotPassword from './components/user/maintenance/ForgotPassword';
 import UpdateContact from './components/user/maintenance/UpdateContact';
 import EnterContact from './components/user/individual/EnterContact';
 import Footer from './components/utilities/Footer';
-import PrivacyPolicy from './components/publicStatic/PrivacyPolicy';
-import TermsOfService from './components/publicStatic/TermsOfService';
+import PrivacyPolicy from './components/publicStatic/info/PrivacyPolicy';
+import TermsOfService from './components/publicStatic/info/TermsOfService';
 import GroupPage from './components/user/group/GroupPage';
 import LabDashboard from './components/labSearch/LabDashboard';
 import StudentOnboarding from './components/user/individual/StudentOnboarding';
@@ -44,10 +41,8 @@ class Router extends Component {
 					<div>
 						<Switch>
 							<Route path='/home' component={ Home } />
-							<Route path='/team' component={ Team } />
 							<Route path='/about' component={ About } />
 							<Route path='/about/:tab' component={ About } />
-							<Route path='/timeline' component={ Timeline } />
 							<Route path='/login' component={ Login } />
 							<Route path='/sign-up' component={ SignUpPage } />
 							<Route path='/confirm-email' component={ ConfirmEmail } />
