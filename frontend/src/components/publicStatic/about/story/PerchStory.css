@@ -13,8 +13,8 @@
 	background-color: var(--white);
 	width: 700px;
 	margin: auto auto;
-	border: 4px solid var(--bright-blue);
-	color: var(--bright-blue);
+	border: 4px solid var(--primary);
+	color: var(--primary);
 }
 
 .perch-story-block-L, .perch-story-block-R {
@@ -31,12 +31,12 @@
 .perch-story-block-L b, .perch-story-block-R b {
 	font-size: 140%;
 	font-weight: normal;
-	color: var(--bright-blue);
+	color: var(--primary);
 }
 
 .perch-story-block-L:hover, .perch-story-block-R:hover {
-	/*background-color: var(--active-blue);*/
-	border-color: var(--active-blue);
+	/*background-color: var(--active);*/
+	border-color: var(--active);
 	transition: 0.2s ease;
 }
 

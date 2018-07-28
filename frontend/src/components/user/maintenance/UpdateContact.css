@@ -1,9 +1,9 @@
 #contact-email:focus + label, #contact-location:focus + label {
-  color: var(--active-blue);
+  color: var(--active);
 }
 
 #contact-email:focus, #contact-location:focus {
-  border-bottom: 1px solid var(--active-blue);
-  box-shadow: 0 1px 0 0 var(--active-blue);
+  border-bottom: 1px solid var(--active);
+  box-shadow: 0 1px 0 0 var(--active);
 }
 

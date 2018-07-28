@@ -63,8 +63,8 @@
 }
 
 textarea:focus {
-	border-bottom: 2px solid var(--active-blue);
-	box-shadow: 0 2px 0 0 var(--active-blue);
+	border-bottom: 2px solid var(--active);
+	box-shadow: 0 2px 0 0 var(--active);
 	outline: none;
 	transition: 0.2s ease;
 }
@@ -87,17 +87,17 @@ textarea {
 }
 
 input[type=range] + .thumb {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }
 
 input[type=range]::-webkit-slider-thumb {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }
 input[type=range]::-moz-range-thumb {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }
 input[type=range]::-ms-thumb {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }
 
 #quickview-editor-L {
@@ -124,7 +124,7 @@ input[type=range]::-ms-thumb {
 
 #rotate-icon {
 	position: absolute;
-	color: var(--bright-blue);
+	color: var(--primary);
 	right: 0;
 	top: 4px;
 	cursor: pointer;
@@ -132,7 +132,7 @@ input[type=range]::-ms-thumb {
 }
 
 #rotate-icon:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 }
 

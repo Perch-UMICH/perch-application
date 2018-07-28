@@ -1,6 +1,6 @@
 .big-feedback {
 	height: 75vh;
-	color: var(--bright-blue);
+	color: var(--primary);
 	font-size: 60px;
 	text-transform: uppercase;
 }
@@ -29,7 +29,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;

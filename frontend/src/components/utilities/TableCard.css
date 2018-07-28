@@ -170,10 +170,10 @@
 	width: 522px;
 	margin-top: -90px;
 	margin-left: -290px;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	height: 60px;
-	border-left: 6px solid var(--active-blue);
-	border-right: 6px solid var(--active-blue);
+	border-left: 6px solid var(--active);
+	border-right: 6px solid var(--active);
 	border-radius: 0 15px 0 20px;
 	color: var(--white);
 }

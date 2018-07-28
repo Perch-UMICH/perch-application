@@ -25,7 +25,7 @@
 .edit-modal-title {
 	width: 100%;
 	text-transform: uppercase;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 }
 
 #modalBackdrop {

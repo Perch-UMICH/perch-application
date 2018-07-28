@@ -5,7 +5,7 @@
 }
 
 .basic-btn {
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	box-shadow: none;
 	letter-spacing: 1px;
 	border-radius: 1px;
@@ -17,11 +17,11 @@
 }
 
 .basic-btn:focus {
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 }
 
 .basic-btn-light {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	box-shadow: none;
 	letter-spacing: 1px;
 	color: var(--white);
@@ -33,7 +33,7 @@
 }
 
 .basic-btn-light:focus {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }
 
 .inline-icon: {

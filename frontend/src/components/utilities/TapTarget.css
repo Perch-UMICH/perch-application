@@ -2,14 +2,14 @@
 	position: fixed;
 	right: 20px;
 	bottom: 20px;
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	/*height: 50px;
 	width: 50px;*/
 	opacity: 0.8;
 }
 
 .tap-target {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	color: var(--white);
 	letter-spacing: 2px;
 }
@@ -19,5 +19,5 @@
 }
 
 i#tap-target-icon.material-icons {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }

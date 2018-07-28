@@ -3,7 +3,7 @@
 }
 
 .student-bio-form {
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	padding: 20px;
 	border-radius: var(--border-radius-C);
 }
@@ -12,7 +12,7 @@
 	height: 150px;
 	background-color: var(--e-grey);
 	box-shadow: 1px 1px 5px;
-	color: var(--bright-blue);
+	color: var(--primary);
 	padding: 10px;
 	letter-spacing: 1px;
 	margin-bottom: 10px;
@@ -21,14 +21,14 @@
 
 .student-bio-input:hover {
 	box-shadow: 1px 1px 5px;
-	color: var(--bright-blue);
+	color: var(--primary);
 }
 
 .student-bio-header {
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;

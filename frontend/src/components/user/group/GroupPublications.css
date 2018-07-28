@@ -16,14 +16,14 @@
 	border-bottom: 1px solid var(--d-three-grey);
 	width: 100%;
 	padding: 10px 20px;
-	color: var(--bright-blue);
+	color: var(--primary);
 	transition: 0.2s ease;
 	position: relative;
 	padding-bottom: 30px;
 }
 
 .group-publication i:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 	cursor: pointer;
 }

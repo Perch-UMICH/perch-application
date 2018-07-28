@@ -1,6 +1,6 @@
 .huge-btn {
-	background-color: var(--bright-blue);
-	/*border: 6px solid var(--bright-blue);*/
+	background-color: var(--primary);
+	/*border: 6px solid var(--primary);*/
 	width: 100%;
 	margin-bottom: 20px;
 	border-radius: var(--border-radius-C) !important;
@@ -9,6 +9,6 @@
 }
 
 .huge-btn:hover, .huge-btn:active, .huge-btn:focus {
-	background-color: var(--active-blue) ;
+	background-color: var(--active) ;
 	box-shadow: none;
 }

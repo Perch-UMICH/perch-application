@@ -1,5 +1,5 @@
 .card-reveal {
-	background-color: var(--bright-blue) !important;
+	background-color: var(--primary) !important;
 	color: var(--white) !important;
 	opacity: 0.8;
 }

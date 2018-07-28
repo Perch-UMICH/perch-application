@@ -47,7 +47,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	color: white;
 	margin-bottom: 20px;
 	margin-left: -20px;
@@ -56,10 +56,10 @@
 }
 
 .checkbox-white[type="checkbox"].filled-in:checked + label:after{
- border: 2px solid var(--active-blue) !important;
- background-color: var(--active-blue) !important;
+ border: 2px solid var(--active) !important;
+ background-color: var(--active) !important;
 }
 
 label:after {
-	border-color: var(--bright-blue) !important;
+	border-color: var(--primary) !important;
 }

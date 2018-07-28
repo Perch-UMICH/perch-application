@@ -30,7 +30,7 @@
 	top: 10px;
 	left: 30px;
 	transition: 0.2s ease;
-	color: var(--bright-blue);
+	color: var(--primary);
 	cursor: pointer;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .lab-srch-project-title:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 }
 
@@ -74,7 +74,7 @@
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	color: var(--white) !important;
 	cursor: pointer;
 	border-radius: 20px 0 0 20px;
@@ -82,7 +82,7 @@
 }
 
 .lab-srch-project-action-label:hover {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	transition: 0.2s ease;
 }
 
@@ -94,7 +94,7 @@
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	color: var(--white) !important;
 	cursor: pointer;
 	border-radius: 20px 0 0 20px;
@@ -118,11 +118,11 @@
 	top: 60px;
 	right: 0;
 	padding: 0 10px;
-	background-color: lightblue;
+	background-color: var(--highlight);
 }
 
 .ellipsis {
-	color: var(--bright-blue);
+	color: var(--primary);
 	font-size: 25px;
 	line-height: 10px;
 	overflow: hidden;
@@ -131,6 +131,6 @@
 }
 
 .ellipsis:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 }

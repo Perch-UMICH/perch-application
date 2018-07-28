@@ -16,6 +16,6 @@
 }
 
 .expand-icons:hover, .expand-icons-filter-dropdown:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 }

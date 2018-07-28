@@ -30,7 +30,7 @@
 }
 
 .about-active {
-	background-color: var(--bright-blue) !important;
+	background-color: var(--primary) !important;
 	color: var(--white);
-	border-color: var(--bright-blue)
+	border-color: var(--primary)
 }

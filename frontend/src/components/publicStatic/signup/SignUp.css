@@ -4,12 +4,12 @@
 }
 
 #first_name:focus + label, #last_name:focus + label, #email:focus + label, #password:focus + label, #password_retype:focus + label, #name:focus + label {
-  color: var(--active-blue);
+  color: var(--active);
 }
 
 #first_name:focus, #last_name:focus, #email:focus, #password:focus, #password_retype:focus, #name:focus{
-  border-bottom: 1px solid var(--active-blue);
-  box-shadow: 0 1px 0 0 var(--active-blue);
+  border-bottom: 1px solid var(--active);
+  box-shadow: 0 1px 0 0 var(--active);
 }
 
 .min-margin {
@@ -17,7 +17,7 @@
 }
 
 .submit-btn {
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	box-shadow: none;
 }
 
@@ -36,7 +36,7 @@
 	font-size: 25px;
 	margin-bottom: 0px;
 	letter-spacing: 1px;
-	color: var(--active-blue);
+	color: var(--active);
 	/*font-weight: bold;*/
 }
 

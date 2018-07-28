@@ -1,6 +1,6 @@
 .ext-link-box {
 	color: white;
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	text-transform: uppercase;
 	text-align: center;
 	padding: 20px;
@@ -14,6 +14,6 @@
 
 .ext-link-box:hover {
 	background-color: var(--white);
-	color: var(--active-blue);
+	color: var(--active);
 	transition: .2s ease;
 }

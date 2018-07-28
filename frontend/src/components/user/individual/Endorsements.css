@@ -15,7 +15,7 @@
 }
 
 .endorsement-name:hover {
-	color: var(--bright-blue);
+	color: var(--primary);
 	transition: .2s ease-in;
 }
 @media (min-width: 600px) {

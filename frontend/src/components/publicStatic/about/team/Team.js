@@ -171,7 +171,7 @@ class Team extends Component {
       <div>
         <div className="periodic-table-container">
           <div className="perchiodic-table-key">
-            <div className="key-title">The Per<span style={{color: 'var(--active-blue)'}}>{"{ch}"}</span>iodic Table</div>
+            <div className="key-title">The Per<span style={{color: 'var(--active)'}}>{"{ch}"}</span>iodic Table</div>
             <div className="key-col">
             {key}
             </div>

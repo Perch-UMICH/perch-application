@@ -6,6 +6,11 @@
 	padding-bottom: 20px;
 }
 
+body {
+	/*background-color: #e8e8e8 !important;*/
+	background-color: var(--highlight) !important;
+}
+
 /* Right Column*/
 #user-column-R {
 	width: 250px;
@@ -18,7 +23,7 @@
 .ad {
 	height: 200px;
 	background-color: lightgrey;
-	border: 1px solid var(--bright-blue);
+	border: 1px solid var(--primary);
 	margin-bottom: 15px;
 }
 
@@ -35,7 +40,7 @@
 	overflow: hidden;
 	position: relative;
 	border-radius: var(--border-radius-L);
-	margin-top: 20px;
+	margin-top: 10px;
 	transition: 0.2s ease;
 	color: grey;
 	padding-bottom: 5px;
@@ -56,7 +61,7 @@
 
 /* Main Column */
 #user-profile-column-C {
-	width: 660px;
+	width: 675px;
 	margin: auto auto;
 }
 
@@ -67,7 +72,7 @@
 	overflow: hidden;
 	position: relative;
 	border-radius: var(--border-radius-C);
-	margin-top: 20px;
+	margin-top: 10px;
 	transition: 0.2s ease;
 }
 
@@ -115,7 +120,7 @@
 	padding-right: 30px;
 	color: white;
 	font-size: 34px;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	border-radius: 0 40px 0 0 ;
 }
 
@@ -259,12 +264,12 @@
 #user-classes {
 	position: relative;
 	display: block;
-	color: var(--bright-blue);
+	color: var(--primary);
 	transition: 0.2s ease;
 }
 
 #user-classes span:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 	cursor: pointer;
 }

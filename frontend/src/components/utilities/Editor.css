@@ -7,10 +7,10 @@
 	cursor: pointer;
 	padding: 0 !important;
 	font-size: 18px;
-	color: lightblue;
+	color: var(--highlight);
 }
 
 .editor:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 }

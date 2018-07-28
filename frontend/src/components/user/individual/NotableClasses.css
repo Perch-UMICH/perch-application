@@ -36,7 +36,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;
@@ -46,7 +46,7 @@
 
 .notable-classes-label {
 	font-size: 16px;
-	color: var(--bright-blue);
+	color: var(--primary);
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
@@ -61,14 +61,14 @@
 }
 
 .year-selector-item {
-	color: var(--active-blue) !important;
+	color: var(--active) !important;
 	letter-spacing: 1px;
 }
 
 .caret {
-	color: var(--active-blue) !important;
+	color: var(--active) !important;
 }
 
 .dropdown-content {
-	color: var(--active-blue) !important;
+	color: var(--active) !important;
 }

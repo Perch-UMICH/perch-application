@@ -4,7 +4,6 @@
 	background-color: white;
 	border-radius: 0 20px 0 40px;
 	border: 1px solid var(--d-three-grey);
-	margin-bottom: 15px;
 	position: relative;
 	text-overflow: ellipsis;
 	text-align: justify;

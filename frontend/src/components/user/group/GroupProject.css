@@ -10,7 +10,7 @@
 	font-size: 20px;
 	margin-top: 5px;
 	margin-left: 20px;
-	color: var(--bright-blue);
+	color: var(--primary);
 	cursor: pointer;
 	transition: 0.2s ease;
 	display: block;
@@ -24,7 +24,7 @@
 }
 
 .group-project-name:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 }
 
@@ -48,7 +48,7 @@
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	color: var(--white);
 	cursor: pointer;
 	border-radius: 20px 0 0 20px;
@@ -56,7 +56,7 @@
 }
 
 .group-project-apply:hover {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	transition: 0.2s ease;
 }
 
@@ -84,7 +84,6 @@
 	background-color: var(--white);
 	border-radius: 0 20px 0 40px;
 	border: 1px solid var(--d-three-grey);
-	margin-bottom: 15px;
 	transition: 0.2s ease;
 	overflow: hidden;
 	position: relative;

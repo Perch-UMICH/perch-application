@@ -8,7 +8,7 @@
 nav {
     height: 70px;
     line-height: 70px;
-    background-color: var(--bright-blue);
+    background-color: var(--primary);
     box-shadow: none;
     border-bottom: 1px solid #1c69a5;
 }
@@ -39,12 +39,12 @@ nav .brand-logo {
 }
 
 .contact-nav {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }
 
 .contact-nav:hover {
 	background-color: var(--white);
-	color: var(--active-blue);
+	color: var(--active);
 }
 
 #sidenav-overlay {

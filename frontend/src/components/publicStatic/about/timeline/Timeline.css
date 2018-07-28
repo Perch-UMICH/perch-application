@@ -43,8 +43,8 @@ header p {
 }
 .timeline::before {
   content: '';
-  background-color: var(--bright-blue);
-  background-color: var(--bright-blue);
+  background-color: var(--primary);
+  background-color: var(--primary);
   width: 5px;
   height: 95%;
   position: absolute;
@@ -73,7 +73,7 @@ header p {
   top: 30px;
   left: -15px;
   border-width: 10px 15px 10px 0;
-  border-color: transparent var(--bright-blue) transparent transparent;
+  border-color: transparent var(--primary) transparent transparent;
 }
 .timeline-item::after {
   content: '';
@@ -87,7 +87,7 @@ header p {
   padding: 10px 30px;
   border-radius: 4px;
   color: var(--white);
-  background: var(--bright-blue);
+  background: var(--primary);
   box-shadow: 0 20px 25px -15px rgba(0, 0, 0, 0.3);
 }
 
@@ -100,13 +100,13 @@ header p {
   top: 30px;
   right: -15px;
   border-width: 10px 0 10px 15px;
-  border-color: transparent transparent transparent var(--bright-blue);
+  border-color: transparent transparent transparent var(--primary);
 }
 
 .timeline-img {
   width: 30px;
   height: 30px;
-  background-color: var(--bright-blue);
+  background-color: var(--primary);
   border-radius: 50%;
   position: absolute;
   left: 50%;
@@ -116,7 +116,7 @@ header p {
 }
 
 .timeline a .time-a {
-  background: var(--bright-blue);
+  background: var(--primary);
   color: var(--white);
   padding: 8px 20px;
   text-transform: uppercase;
@@ -218,7 +218,7 @@ header p {
 }
 /*Optimize*/
 .timeline-item:nth-child(14) .timeline-img-header {
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.4)), url("http://static1.squarespace.com/static/574341bb8a65e27900eb5610/t/58be0d5ad1758e41e24f2917/1488850269716/optiMize_LightBlue_Globe.png?format=1000w") center center no-repeat;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.4)), url("http://static1.squarespace.com/static/574341bb8a65e27900eb5610/t/58be0d5ad1758e41e24f2917/1488850269716/optiMize_var(--highlight)_Globe.png?format=1000w") center center no-repeat;
   background-size: cover;
 }
 /*Wireframe*/
@@ -247,13 +247,13 @@ header p {
 blockquote {
   margin-top: 30px;
   color: var(--seventy-five-grey);
-  border-left-color: var(--bright-blue);
+  border-left-color: var(--primary);
   padding: 0 20px;
 }
 
 .date {
   /*background-color: rgba(122, 207, 214, 1);*/
-  background-color: var(--bright-blue);
+  background-color: var(--primary);
   display: inline-block;
   color: var(--white);
   padding: 10px;
@@ -286,7 +286,7 @@ blockquote {
     top: 30px;
     left: -15px;
     border-width: 10px 15px 10px 0;
-    border-color: transparent var(--bright-blue) transparent transparent;
+    border-color: transparent var(--primary) transparent transparent;
   }
 }
 

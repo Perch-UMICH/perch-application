@@ -43,14 +43,14 @@
 	cursor: pointer;
 	margin-left: -1px;
 	transition: all 0.2s ease;
-	color: var(--bright-blue) !important;
+	color: var(--primary) !important;
 }
 
 .search-expand-less {
 	cursor: pointer;
 	margin-left: -1px;
 	transition: all 0.2s ease;
-	color: var(--active-blue) !important;
+	color: var(--active) !important;
 }
 
 .search-expand-more:hover, .search-expand-less:hover {
@@ -108,12 +108,12 @@
 }
 
 #lab-name:focus + label,  #lab-topic:focus + label {
-  color: var(--active-blue);
+  color: var(--active);
 }
 
 #lab-name:focus, #lab-topic:focus {
-  border-bottom: 1px solid var(--active-blue);
-  box-shadow: 0 1px 0 0 var(--active-blue);
+  border-bottom: 1px solid var(--active);
+  box-shadow: 0 1px 0 0 var(--active);
 }
 
 .lab-search-label {
@@ -132,7 +132,7 @@
 	border-top: none;
 	margin-bottom: 0;
 	padding: 10px;
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	position: relative;
 }
 
@@ -142,7 +142,7 @@
 	top: 0px;
 	padding: 5px;
 	color: var(--white);
-	background-color: var(--active-blue);
+	background-color: var(--active);
 }
 
 #interests, #skills {
@@ -150,7 +150,7 @@
 }
 
 .import-btn {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	font-size: 80%;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -169,7 +169,7 @@
 	display: flex;
 	flex-direction: row;
 	color: var(--white);
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	min-height: 30vh;
 }
 
@@ -251,7 +251,7 @@
 }
 
 #lab-srch-result-summary b {
-	color: var(--bright-blue);
+	color: var(--primary);
 }
 
 #lab-srch-results {
@@ -259,7 +259,7 @@
 }
 
 #lab-srch-more {
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	color: white;
 	text-align: center;
 	padding: 20px;
@@ -269,7 +269,7 @@
 }
 
 #lab-srch-more:hover {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	transition: 0.2s ease;
 }
 
@@ -281,5 +281,5 @@
 }
 
 /*#lab-srch-results b {
-	color: var(--bright-blue);
+	color: var(--primary);
 }*/

@@ -2,16 +2,35 @@
 	--lightish-blue: #F2FDFF;
     --cloud-blue: #AAE5FF;
     --sky-blue: #84D9FF;
-	--bright-blue: #0277BD;
+	/*--primary: #0277BD;*/
     --seafoam-blue: #5FC9FC; /*Also in the Perchiodic Table*/
 	--soft-blue: #03A9F4;
-	--active-blue: #29B6F6;
+	/*--active: #29B6F6;*/
 	--dark-blue: #002C47;
     --slate-blue: #01579B;
 	--purple: #800080; /*CSS purple*/
     --error-yellow: #FFEA7B;
     --sunset-orange: #EF5350;
     --red: #FF0000; /*CSS red*/
+
+    /*THEMES*/
+    /*Blue*/
+    --primary: #0277BD;
+    --active: #29B6F6;
+    --highlight: lightblue;
+    /*Purple*/
+	--primary: #6c5b7b;
+	--active: #c06c84;
+	--highlight: #ffdfd3;
+	/*Teal*/
+	--primary: #2b7a78;
+	--active: #3aafa9;
+	--highlight: #def2f1;
+	/*Loud*/
+	/*Teal*/
+	--primary: #ff913d;
+	--active: #73f0f4;
+	--highlight: #efbc4c;
 
 	/*Shades of grey are all that I see...*/
 	--white: #FFF; /*CSS white*/
@@ -52,7 +71,7 @@
 	--border-radius-small: 20px;
 	--border-radius-large: 40px;
 	--border-radius-C: 0 var(--border-radius-small) 0 var(--border-radius-large);
-	--border-radius-L: var(--border-radius-small) 0 0 var(--border-radius-large);
+	--border-radius-L: 0 0 0 var(--border-radius-large);
 	--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;
 }
 
@@ -61,13 +80,13 @@
 }
 
 .active-blue-bg {
-	background-color: var(--active-blue);
+	background-color: var(--active);
 	transition: 0.2s ease;
 }
 
 .active-blue {
-	color: var(--active-blue) !important;
-	color: var(--active-blue) !important;
+	color: var(--active) !important;
+	color: var(--active) !important;
 	transition: 0.2s ease;
 }
 
@@ -80,7 +99,7 @@
 }
 
 .dark-blue-bg {
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 }
 
 .null-link-style {
@@ -97,12 +116,12 @@
 }
 
 .gen-input:focus + label, .gen-input:focus + label  {
-  color: var(--bright-blue);
+  color: var(--primary);
 }
 
 .gen-input:focus {
-  border-bottom: 1px solid var(--active-blue) !important;
-  box-shadow: 0 1px 0 0 var(--active-blue);
+  border-bottom: 1px solid var(--active) !important;
+  box-shadow: 0 1px 0 0 var(--active);
   color: white !important;
 }
 
@@ -121,7 +140,7 @@
 }
 
 .light-blue-background {
-	background-color: var(--active-blue)
+	background-color: var(--active)
 }
 
 .white-text-now {
@@ -136,7 +155,7 @@ body {
 }
 
 .link-color {
-	color: var(--active-blue);
+	color: var(--active);
 }
 
 .shadow {
@@ -152,21 +171,21 @@ input[type='text'], input[type='email'], input[type='number'] {
 }
 
 .input-field input[type='text']:focus, .input-field input[type='email']:focus, .input-field input[type='number']:focus {
-	color: var(--active-blue);
-	border-bottom: 1px solid var(--active-blue) !important;
-	box-shadow: 0 1px 0 0 var(--active-blue) !important;
+	color: var(--active);
+	border-bottom: 1px solid var(--active) !important;
+	box-shadow: 0 1px 0 0 var(--active) !important;
 }
 
 select {
-	color: var(--active-blue);
+	color: var(--active);
 }
 
 option {
-	color: var(--active-blue) !important;
+	color: var(--active) !important;
 }
 
 ul.dropdown-content.select-dropdown li:not(.disabled) span {
-    color: var(--active-blue);
+    color: var(--active);
 }
 
 .expand {
@@ -175,7 +194,7 @@ ul.dropdown-content.select-dropdown li:not(.disabled) span {
 }
 
 h1 {
-	background-color: var(--bright-blue);
+	background-color: var(--primary);
 	padding: 10px;
 	color: var(--lightish-blue);
 	text-align: left;
@@ -188,18 +207,18 @@ h1 {
 }
 
 a {
-	color: var(--bright-blue);
+	color: var(--primary);
 	transition: 0.2s ease;
 }
 
 a:hover {
-	color: var(--active-blue);
+	color: var(--active);
 	transition: 0.2s ease;
 	cursor: pointer;
 }
 
 input:focus + label {
-	color: var(--active-blue) !important;
+	color: var(--active) !important;
 	transition: 0.2s ease;
 }
 
