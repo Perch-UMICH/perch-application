@@ -16,7 +16,7 @@ class AboveTheFold extends Component {
 
 	componentDidMount() {
 		var options = {
-		  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "making an impact", "research"],
+		  strings: ["research", "finding a lab", "finding lab assistants", "learning lab skills", "<b>making an impact</b>"],
 		  typeSpeed: 75
 		}
 		var typed = new Typed("#atf-changer", options);

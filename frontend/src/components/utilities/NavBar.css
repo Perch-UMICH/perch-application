@@ -41,6 +41,7 @@ nav .brand-logo {
 
 .contact-nav {
 	background-color: var(--active);
+    height: 69px;
 }
 
 .contact-nav:hover {
