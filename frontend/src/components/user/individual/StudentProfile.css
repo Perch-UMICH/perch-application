@@ -6,11 +6,6 @@
 	padding-bottom: 20px;
 }
 
-body {
-	/*background-color: #e8e8e8 !important;*/
-	background-color: var(--highlight) !important;
-}
-
 /* Right Column*/
 #user-column-R {
 	width: 250px;

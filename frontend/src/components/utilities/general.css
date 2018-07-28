@@ -155,7 +155,7 @@ body {
 	/*font-family: montserrat;*/
 	letter-spacing: 0.5px;
 	font-family: 'Raleway', sans-serif;
-	background-color: var(--lightish-blue);
+	background-color: #e8e8e8 !important;
 }
 
 .link-color {
