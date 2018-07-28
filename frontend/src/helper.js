@@ -1057,6 +1057,32 @@ export function getSkill(skill_id) {
         })
 }
 
+export function createSkill(name, description) {
+    let payload = {
+        name: name,
+        description: description
+    };
+
+    return axios.post('api/skills/', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+export function searchMatchingSkills(query) {
+    return axios.post('api/skills/match', query)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+
 // Tags
 // Academic subjects/disciplines, areas of study, etc.
 // name - (string)
@@ -1075,6 +1101,31 @@ export function getAllTags() {
 export function getTag(tag_id) {
     console.log('Getting tag');
     return axios.get('api/tags/' + tag_id)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+export function createTag(name, description) {
+    let payload = {
+        name: name,
+        description: description
+    };
+
+    return axios.post('api/skills/', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+export function searchMatchingTags(query) {
+    return axios.post('api/tags/match', query)
         .then(response => {
             return respond(response.status, response.data);
         })
