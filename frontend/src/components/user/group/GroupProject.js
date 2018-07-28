@@ -11,9 +11,11 @@ export class GroupProject extends Component {
 	render() {
 		return(
 			<div id={`group-project-${this.props.title}`} className='group-project'>
-				<div className='group-project-name'>
-					<span>{this.props.title}</span>
-					{this.props.urop && <span className='group-project-tag'>UROP</span>}
+				<div className='group-project-name-container'>
+					<span className='group-project-name'>
+						<span>{this.props.title}</span>
+						{this.props.urop && <span className='group-project-tag'>UROP</span>}</span>
+					
 				</div>
 				<div className='group-project-keywords'>{this.props.keywords}</div>
 				<div className='group-project-description'>
