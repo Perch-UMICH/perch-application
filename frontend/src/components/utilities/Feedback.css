@@ -16,37 +16,13 @@
 }
 
 .feedback-form {
-	background-color: var(--bright-blue);
+	background-color: white;
+	border: 1px solid lightgrey;
 	padding: 20px;
-}
-
-.feedback-input {
-	height: 150px;
-	background-color: var(--e-grey);
-	box-shadow: 1px 1px 5px;
-	border-bottom: 1px solid var(--e-grey);
-	color: var(--e-grey);
-	padding: 10px;
-	letter-spacing: 2px;
-	margin-bottom: 10px;
-	display: block;
 }
 
 .feedback-textarea-input {
 	height: 150px;
-	background-color: var(--e-grey);
-	box-shadow: 1px 1px 5px;
-	color: var(--active-blue);
-	padding: 10px;
-	letter-spacing: 2px;
-	margin-bottom: 20px;
-	display: block;
-}
-
-.feedback-input:focus {
-	color: var(--e-grey);
-	border-bottom: 1px solid var(--e-grey);
-	box-shadow: 0 1px 0 0 var(--e-grey);
 }
 
 .feedback-header {

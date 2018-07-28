@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {submitUserFeedback, getCurrentUserId} from '../../helper'
+import BasicButton from './buttons/BasicButton'
 import './Feedback.css';
 
 class Feedback extends Component {
@@ -37,13 +38,15 @@ class Feedback extends Component {
 								Particularly right? We want to know! 
 							</h3>
 						</div>
-						<div className='container center-align feedback-form shadow'>
+						<div className='container center-align feedback-form'>
 							<div className='feedback-header'>Submit Feedback</div>
 							<form className='container input-field'>
-								<input className='feedback-input' value={this.state.url} onChange={e => this.setState({url: e.target.value})}type="text" placeholder="Page URL"></input>
+								<input id='feedback-src' className='feedback-input' value={this.state.url} onChange={e => this.setState({url: e.target.value})} type="text" placeholder="Page URL"></input>
+								<label htmlFor='feedback-src'>Problem Url</label>
 								<textArea className='feedback-textarea-input' type="textArea" 
 									placeholder="A short description of your experience" onChange={e => this.setState({text: e.target.value})}></textArea>
-								<a onClick={this.submitFeedback} id="join-btn" className="waves-effect btn-flat btn-large">submit</a>
+								<br/>
+								<BasicButton msg='roast us' superClick={this.submitFeedback}/>
 							</form>
 						</div>
 					</div> 
