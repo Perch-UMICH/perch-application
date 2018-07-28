@@ -33,7 +33,7 @@ import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
 
-import {Test} from './components/user/group/GroupEditors';
+import UserTest from './UserTest';
 
 class Router extends Component {
 	render() {
@@ -73,7 +73,7 @@ class Router extends Component {
 							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/student-onboarding' component={ StudentOnboarding } />
 							<Route path='/faculty-onboarding' component={ FacultyOnboarding } />
-							<Route path='/test' component={ Test } />
+							<Route path='/test' component={ UserTest } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
