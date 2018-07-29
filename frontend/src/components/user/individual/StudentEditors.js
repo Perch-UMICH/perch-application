@@ -113,6 +113,13 @@ export class EditBio extends Component {
 			bio: this.props.user && this.props.user.bio ? this.props.user.bio : '',
 		}
 	}
+
+	componentWillReceiveProps(props) {
+		if (props.user && props.user.bio) {
+			this.setState({bio: props.user.bio})
+		}
+	}
+
 	render() {
 		return(
 			<form id='edit-bio'>
@@ -160,8 +167,9 @@ export class EditExperience extends Component {
 		var newObj = {
 			id: 'o_' + this.state.index,
 			title: '',
-			timeRange: '',
-			text: '',
+			start_date: '',
+			end_date: '',
+			description: '',
 		};
 		var newIndex = this.state.index + 1;
 		var updated_objs = this.state.objs.concat([newObj]);
@@ -224,12 +232,16 @@ export class EditExperience extends Component {
 										<input id='title' type='text' name="title" placeholder={this.state.titlePlacehold} value={obj.title} onChange={(e) => this.alterObj(e, obj.id)}/>
 										<label htmlFor='title' className="active">{this.state.titleText}</label>
 									</div>
-									<div className='input-field'>
-										<input id='timeRange' type='text' name="timeRange" placeholder='August 2017 - April 2018' value={obj.timeRange} onChange={(e) => this.alterObj(e, obj.id)}/>
-										<label htmlFor='timeRange' className="active">Time Range</label>
+									<div className='input-field col s5'>
+										<input id='start_date' type='text' name="start_date" placeholder='August 2017' value={obj.start_date} onChange={(e) => this.alterObj(e, obj.id)}/>
+										<label htmlFor='start_date' className="active">Start Date</label>
+									</div>
+									<div className='input-field col s5'>
+										<input id='end_date' type='text' name="end_date" placeholder='April 2018' value={obj.end_date} onChange={(e) => this.alterObj(e, obj.id)}/>
+										<label htmlFor='end_date' className="active">End Date</label>
 									</div>
 									<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} className="textarea-experience"
-										name="text" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
+										name="description" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
 								</div>
 								<div className="col s1">
 									<a id={obj.id} onClick={() => this.removeObj(obj.id)}><i className="material-icons remove-obj experience-remove">clear</i></a>
@@ -304,8 +316,7 @@ export class EditQuickview extends Component {
 					        color={[0, 0, 0, 0.2]}
 					        scale={this.state.scale}
 					        rotate={this.state.rotate}
-					        className='grabbable'
-					      />
+					        className='grabbable'/>
 					</Dropzone>
 					<i>Drag and drop image</i>
 					<div id='prof-pic-editors'>

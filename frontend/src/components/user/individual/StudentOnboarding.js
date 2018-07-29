@@ -14,12 +14,13 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
-import {getStudent, updateStudent} from '../../../helper.js'
+import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../../../helper.js'
 import './StudentOnboarding.css'
 
 class StudentOnboarding extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+    this.sendUpdate = this.sendUpdate.bind(this);
     this.state = {
       curStep: 0,
       numSteps: 8,
@@ -29,6 +30,8 @@ class StudentOnboarding extends Component {
   }
 
   componentDidMount() {
+    console.log("MOUNTED");
+    getStudentFromUser(getCurrentUserId()).then(r => console.log("RESPPP!!!", r));
     var steps = {
       0: <EnterContact user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
       1: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
@@ -42,6 +45,28 @@ class StudentOnboarding extends Component {
     this.setState({steps})
   }
 
+  sendUpdate(redirect) {
+    var user = this.state.user;
+    var nameArr = user && user.name ? user.name.split(' ') : [];
+    var first_name = nameArr[0] ? nameArr[0]: "";
+    var last_name = nameArr[1] ? nameArr[1] : "";
+    var s = {
+      email: user.email ? user.email : null,
+      year: user.year ? user.year : null,
+      bio: user.bio ? user.bio : null,
+      major: user.major ? user.major : null,
+      gpa: user.gpa ? user.gpa : null,
+      experiences: user.experiences ? user.experiences : null,
+      classes: user.classes ? user.classes : null,
+      linkedin_link: user.linkedin_link ? user.linkedin_link : null,
+      website_link: user.website_link ? user.website_link : null,
+    }
+    updateStudent(first_name, last_name, s.email, s.year, s.bio, s.major, s.gpa, s.classes, s.experiences, s.linkedin_link, s.website_link).then(r => console.log("blahhhh", r));
+    if (redirect) {
+      window.location = '/student-profile/' + getCurrentUserId();
+    }
+  }
+
   updateUser(field, newValue) {
     console.log("updating ", field, " to ", newValue);
     var newState = this.state;
@@ -49,29 +74,20 @@ class StudentOnboarding extends Component {
     this.setState(newState);
   }
 
-  redirect() {
-    window.location = '/student-profile';
-    var nameArr = this.state.name ? this.state.name.split(' ') : [];
-    var first_name = nameArr[0] ? nameArr[0]: "";
-    var last_name = nameArr[1] ? nameArr[1] : "";
-    updateStudent(first_name, last_name, this.state.email, this.state.year, this.state.bio, this.state.major, this.state.gpa,
-      this.state.classes, this.state.experiences, this.state.linkedin_link, this.state.website_link, true);
-  }
-
 	render() {
-    var backBtn = <BasicButton msg='back' superClick={() => this.setState({curStep: this.state.curStep - 1})}/>;
-    var nextBtn = <BasicButton msg='next' superClick={() => this.setState({curStep: this.state.curStep + 1})}/>;
+    var backBtn = <BasicButton msg='back' superClick={() => {this.setState({curStep: this.state.curStep - 1}); this.sendUpdate()}}/>;
+    var nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.sendUpdate()}}/>;
     var stepToRender = this.state.steps[this.state.curStep];
     if (this.state.curStep === 0) {
       backBtn = null;
     }
     else if (this.state.curStep === (this.state.numSteps - 1)) {
-      nextBtn = <BasicButton msg='go to profile' superClick={this.redirect.bind(this)}/>
+      nextBtn = <BasicButton msg='go to profile' superClick={() => this.sendUpdate(true)}/>
     }
     var css = "invisible";
     if (this.state.curStep === 2) {
       css = "visible-yes";
-      nextBtn = <BasicButton msg='next' superClick={() => this.setState({curStep: this.state.curStep + 1})}/>;
+      nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.sendUpdate()}}/>;
     }
     var dropDown = <div className={css}>
       <NotableClasses user={this.state.user} showForm={true} updateUser={this.updateUser.bind(this)}/>

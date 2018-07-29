@@ -15,12 +15,15 @@ class ExpanderIcons extends Component {
         let toggleExpanderIcons = () => {
             let expanderIcons = document.getElementById(`${this.props.id}-expand-icons`)
             for (let i = 0; i < expanderIcons.children.length; i++) {
-                if (expanderIcons.children[i].innerText == 'expand_more')
-                    expanderIcons.children[i].innerText = 'expand_less'
-                else if (expanderIcons.children[i].innerText == 'expand_less')
-                    expanderIcons.children[i].innerText = 'expand_more'
+                if (expanderIcons.children[i].innerText == 'expand_more') {
+									expanderIcons.children[i].innerText = 'expand_less'
+									expanderIcons.classList.add('active-blue')
+								}
+                else if (expanderIcons.children[i].innerText == 'expand_less') {
+									expanderIcons.children[i].innerText = 'expand_more'
+									expanderIcons.classList.remove('active-blue')
+								}
             }
-            expanderIcons.classList.toggle('active-blue')
         }
         toggleExpanderIcons();
         this.props.action();
@@ -30,6 +33,7 @@ class ExpanderIcons extends Component {
 		var expandCSS = `${this.props.classBase}-expand-icons`;
         var expandIcon = <i className='material-icons'>expand_more</i>;
 				if (this.props.preClick) {
+					expandCSS += ' active-blue'
 					expandIcon = <i className='material-icons'>expand_less</i>;
 				}
         var expandLine = <div style={{marginBottom: '10px'}}><b>&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;</b></div>

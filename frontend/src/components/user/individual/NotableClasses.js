@@ -22,48 +22,62 @@ class NotableClasses extends Component {
 		this.state.c_index = this.state.class_arr.length;
 	}
 
-	/* componentDidMount() {
+	componentDidMount() {
 		var id = getCurrentUserId();
 		if (id) {
 			getStudentFromUser(id).then( r => {
-				this.setState({student_id: r.result.id, user_id: id});
-				getStudent(this.state.student_id).then((resp) => {
-					var class_arr = [];
-					var class_str_arr = [''];
-					if (resp.data.classes) {
-						class_str_arr = resp.data.classes.split('|');
-					}
-					var index = 1;
-					for (var i = 0; i < class_str_arr.length; ++i) {
-						var class_item = {
-							id: `c_${index}`,
-							text: class_str_arr[i],
+				this.setState({student_id: r.data.id, user_id: id}, () => {
+					getStudent(this.state.student_id).then((resp) => {
+						var class_arr = [];
+						var class_str_arr = [''];
+						if (resp.data.classes) {
+							class_str_arr = resp.data.classes.split('|');
 						}
-						class_arr.push(class_item);
-						++index;
-					}
-		            this.setState(
-		            	{
-		            		gpa: resp.data.gpa,
-		            		major: resp.data.major,
-		            		year: resp.data.year,
-		            		classes: class_str_arr,
-		            		class_arr: class_arr,
-		            		c_index: index,
-		            	}
-		            );
-		            console.log(resp);
-		        });
+						var index = 1;
+						for (var i = 0; i < class_str_arr.length; ++i) {
+							var class_item = {
+								id: `c_${index}`,
+								text: class_str_arr[i],
+							}
+							class_arr.push(class_item);
+							++index;
+						}
+						this.setState(
+							{
+								gpa: resp.data.gpa,
+								major: resp.data.major,
+								year: resp.data.year,
+								classes: class_str_arr,
+								class_arr: class_arr,
+								c_index: index,
+							}
+						);
+					});
+				});
 			});
 		}
-	}*/
+	}
+
+	componentWillMount() {
+    document.body.addEventListener('mousedown', this.handleScreenMouseDown.bind(this))
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('mousedown', this.handleScreenMouseDown.bind(this))
+  }
+
+	handleScreenMouseDown() {
+		if (this.props.updateUser && $('#year_select').val()) {
+			this.props.updateUser("year", $('#year_select').val())
+		}
+  }
 
 	componentWillReceiveProps(props) {
-		var newState = this.state;
+		/*var newState = this.state;
 		newState.gpa = props.user && props.user.gpa ? props.user.gpa : '4.0';
 		newState.year = props.user && props.user.year ? props.user.year : '';
 		newState.major = props.user && props.user.major ? props.user.major : '';
-		this.setState(newState);
+		this.setState(newState);*/
 	}
 
 	updateGPA(event) {
@@ -184,8 +198,8 @@ class NotableClasses extends Component {
 			    {this.state.class_arr.map((c) => {
 					return (
 						<div className="row" key={c.id}>
-							<div className="col s11">
-								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.title} onChange={(e) => this.alterClass(e, c.id)}/>
+							<div className="input-field col s11">
+								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.text} onChange={(e) => this.alterClass(e, c.id)}/>
 							</div>
 							<div className="col s1">
 								<a id={c.id} onClick={() => this.removeClass(c.id)}><i className="material-icons remove-class">clear</i></a>

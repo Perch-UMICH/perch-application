@@ -6,7 +6,7 @@ class SignUp extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			route: '/enter-contact'
+			route: '/student-onboarding'
 		};
 		getAllUsers().then(r=>console.log(r))
 		getAllStudents().then(r=>console.log(r))
@@ -46,17 +46,14 @@ class SignUp extends Component {
 
 		if (student) {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(() => {
-				window.location.href = this.state.route;
+				window.location.href = '/student-onboarding'
 			});
 		}
 		else {
 			createFaculty(id, first_name, last_name, null, email).then(fac => {
-				console.log("created faculty??");
 				createLab(fac.id, `${first_name} ${last_name}'s Lab`, null, null, null, null, null, null, null, null, email).then(lab => {
 					addMembersToLab(lab.id,[fac.id],[1]).then(resp => {
-						console.log("ADDED MEMS TO LAB?");
-						console.log(resp)
-						window.location.href = this.state.route;
+						window.location.href = '/faculty-onboarding'
 					});
 					// TODO TEMPORARILY NOT WORKING FROM API UPDATE
 					// addLabToFaculty(fac.id, lab.id).then(resp => {
