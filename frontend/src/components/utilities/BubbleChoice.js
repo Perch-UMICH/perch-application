@@ -38,26 +38,22 @@ class BubbleChoice extends Component {
 	}
 
 	componentDidMount() {
-		/* None of this works
 		setTimeout(() => {
-			if (this.props.display_info.req_type === 'tags') {
-				getAllTags().then(resp => {
-					if (resp.result) {
-						this.setState({ catalog: resp.result, filtered_catalog: resp.result.slice() });
-					}
-				}).then(resp => {
-					this.setUserChoices();
-				});
-			} else {
-				getAllSkills().then(resp => {
-					if (resp.result) {
-						this.setState({ catalog: resp.result, filtered_catalog: resp.result.slice() });
-					}
-				}).then(resp => {
-					this.setUserChoices();
-				});
-			}
-		}, 200);*/
+			getAllTags().then(resp => {
+				if (resp.data) {
+					this.setState({ catalog: resp.data, filtered_catalog: resp.data.slice() });
+				}
+			}).then(resp => {
+				this.setUserChoices();
+			});
+			getAllSkills().then(resp => {
+				if (resp.data) {
+					this.setState({ catalog: resp.data, filtered_catalog: resp.data.slice() });
+				}
+			}).then(resp => {
+				this.setUserChoices();
+			});
+		}, 200);
 	}
 
 	setUserChoices() {
