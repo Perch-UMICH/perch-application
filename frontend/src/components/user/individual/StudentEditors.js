@@ -147,11 +147,12 @@ export class EditExperience extends Component {
 		var initObjs = [{
 			id: 'o_0',
 			title: '',
-			timeRange: '',
-			text: '',
+			start_date: '',
+			end_date: '',
+			description: '',
 		}];
-		if (props.type === 'work' && props.user && props.user.experience) {
-			initObjs = props.user.experience;
+		if (props.type === 'work' && props.user && props.user.work_experiences) {
+			initObjs = props.user.work_experiences;
 		}
 		if (props.type === 'educ' && props.user && props.user.education) {
 			initObjs = props.user.education;
@@ -163,7 +164,17 @@ export class EditExperience extends Component {
 		this.state.index = this.state.objs.length;
 	}
 
+	componentWillReceiveProps(nextProps) {
+		console.log("nextprops!", nextProps);
+		if (nextProps.user && (nextProps.user.work_experiences || nextProps.user.education)) {
+			if (nextProps.user.work_experiences) {
+				this.setState({objs: nextProps.user.work_experiences})
+			}
+		}
+	}
+
 	addObj(event) {
+		console.log("ADDING OBJ")
 		var newObj = {
 			id: 'o_' + this.state.index,
 			title: '',
@@ -172,14 +183,14 @@ export class EditExperience extends Component {
 			description: '',
 		};
 		var newIndex = this.state.index + 1;
-		var updated_objs = this.state.objs.concat([newObj]);
+		var updated_objs = this.state.objs.push(newObj);
 		this.setState({
 			objs: updated_objs,
 			index: newIndex,
 		});
 		if (this.props.updateUser) {
 			if (this.props.type === "work") {
-				this.props.updateUser("experience", updated_objs);
+				this.props.updateUser("work_experiences", updated_objs);
 			} else {
 				this.props.updateUser("education", updated_objs);
 			}
@@ -195,7 +206,7 @@ export class EditExperience extends Component {
 		});
 		if (this.props.updateUser) {
 			if (this.props.type === "work") {
-				this.props.updateUser("experience", temp_objs);
+				this.props.updateUser("work_experiences", temp_objs);
 			} else {
 				this.props.updateUser("education", temp_objs);
 			}
@@ -209,7 +220,7 @@ export class EditExperience extends Component {
 			temp_objs.splice(removeIndex, 1);
 			if (this.props.updateUser) {
 				if (this.props.type === "work") {
-					this.props.updateUser("experience", temp_objs);
+					this.props.updateUser("work_experiences", temp_objs);
 				} else {
 					this.props.updateUser("education", temp_objs);
 				}
@@ -221,35 +232,43 @@ export class EditExperience extends Component {
 	}
 
 	render() {
+		console.log("EXP OBJS", this.state.objs)
+		console.log("length?", this.state.objs.length)
+		var experiences = [];
+		for (var i = 0; i < this.state.objs.length; ++i) {
+			var obj = this.state.objs[i];
+			console.log('rendering obj??', obj);
+			experiences.push(
+				<div key={obj.id}>
+					<div className="row">
+						<div className="col s11">
+							<div className='input-field'>
+								<input id='title' type='text' name="title" placeholder={this.state.titlePlacehold} value={obj.title} onChange={(e) => this.alterObj(e, obj.id)}/>
+								<label htmlFor='title' className="active">{this.state.titleText}</label>
+							</div>
+							<div className='input-field col s5'>
+								<input id='start_date' type='text' name="start_date" placeholder='August 2017' value={obj.start_date} onChange={(e) => this.alterObj(e, obj.id)}/>
+								<label htmlFor='start_date' className="active">Start Date</label>
+							</div>
+							<div className='input-field col s5'>
+								<input id='end_date' type='text' name="end_date" placeholder='April 2018' value={obj.end_date} onChange={(e) => this.alterObj(e, obj.id)}/>
+								<label htmlFor='end_date' className="active">End Date</label>
+							</div>
+							<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} className="textarea-experience"
+								name="description" value={obj.description} onChange={e => this.alterObj(e, obj.id)} required></textarea>
+						</div>
+						<div className="col s1">
+							<a id={obj.id} onClick={() => this.removeObj(obj.id)}><i className="material-icons remove-obj experience-remove">clear</i></a>
+						</div>
+					</div>
+					<div className="edit-experience-hr" />
+				</div>)
+		}
+		console.log("exps", experiences)
+
 		return(
 			<form id='edit-experience'>
-			  {this.state.objs.map((obj) => {
-					return (
-						<div key={obj.id}>
-							<div className="row">
-								<div className="col s11">
-									<div className='input-field'>
-										<input id='title' type='text' name="title" placeholder={this.state.titlePlacehold} value={obj.title} onChange={(e) => this.alterObj(e, obj.id)}/>
-										<label htmlFor='title' className="active">{this.state.titleText}</label>
-									</div>
-									<div className='input-field col s5'>
-										<input id='start_date' type='text' name="start_date" placeholder='August 2017' value={obj.start_date} onChange={(e) => this.alterObj(e, obj.id)}/>
-										<label htmlFor='start_date' className="active">Start Date</label>
-									</div>
-									<div className='input-field col s5'>
-										<input id='end_date' type='text' name="end_date" placeholder='April 2018' value={obj.end_date} onChange={(e) => this.alterObj(e, obj.id)}/>
-										<label htmlFor='end_date' className="active">End Date</label>
-									</div>
-									<textarea id={obj.id} type="text" placeholder={this.state.textPlacehold} className="textarea-experience"
-										name="description" value={obj.text} onChange={e => this.alterObj(e, obj.id)} required></textarea>
-								</div>
-								<div className="col s1">
-									<a id={obj.id} onClick={() => this.removeObj(obj.id)}><i className="material-icons remove-obj experience-remove">clear</i></a>
-								</div>
-							</div>
-							<div className="edit-experience-hr" />
-						</div>)
-				})}
+				{experiences}
 				<div className="add-obj-icon-container">
 					<a onClick={this.addObj.bind(this)}><i className="material-icons add-obj-icon">add</i></a>
 				</div>

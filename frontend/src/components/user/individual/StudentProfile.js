@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, createAndAddClassExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../../../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeWorkExperiencesFromStudent, createAndAddClassExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -103,6 +103,7 @@ class StudentProfile extends Component {
 	}
 
 	updateExperience() {
+		removeWorkExperiencesFromStudent([1,2,3,4,5,6,7,8,9,10,11,12])
 		if (this.state.updated_user.experience) {
 			addWorkExperiencesToStudent(this.state.updated_user.experience).then(r => {
 				console.log(r)
@@ -144,37 +145,36 @@ class StudentProfile extends Component {
 						class_arr.push({name, index});
 					})
 				}
-        this.setState(
-        	{
-						user: {
-          		name: `${resp.data.first_name} ${resp.data.last_name}`,
-          		gpa: resp.data.gpa,
-          		major: resp.data.major,
-          		year: resp.data.year,
-          		bio: resp.data.bio,
-          		email: resp.data.email,
-          		classes: class_arr,
-          		experience: resp.data.experiences,
-          		linkedin: resp.data.linkedin_link,
-          		resume: resp.data.resume_path,
-							skills: [],
-							interests: [],
-          		student: true,
-          		s_id: resp.data.id,
-							work_experiences: [],
-          	}
-					}
-        );
-      }).then(addWorkExperiencesToStudent([]).then(r => {
-				if (r && r.data) {
-					console.log("R DATA", r.data);
-					var newState = this.state;
-					newState.user.work_experiences = r.data.work_experiences;
-					this.setState(newState, () => {
-						this.retrieveTags.bind(this);
+        this.setState({
+					user: {
+        		name: `${resp.data.first_name} ${resp.data.last_name}`,
+        		gpa: resp.data.gpa,
+        		major: resp.data.major,
+        		year: resp.data.year,
+        		bio: resp.data.bio,
+        		email: resp.data.email,
+        		classes: class_arr,
+        		experience: resp.data.experiences,
+        		linkedin: resp.data.linkedin_link,
+        		resume: resp.data.resume_path,
+						skills: [],
+						interests: [],
+        		student: true,
+        		s_id: resp.data.id,
+						work_experiences: [],
+        	}
+				}, () => {
+					addWorkExperiencesToStudent([]).then(r => {
+						if (r && r.data) {
+							var newState = this.state;
+							newState.user.work_experiences = r.data.work_experiences;
+							this.setState(newState, () => {
+								this.retrieveTags.bind(this);
+							})
+						}
 					})
-				}
-			}))
+				});
+			})
 	}
 
 	// Retrives slug from url
@@ -363,7 +363,6 @@ class UserWorkExperience extends Component {
 
 	render() {
 		var expObjs = this.props.expObjs ? this.props.expObjs : [];
-		console.log("EXP OBJS", expObjs);
 		return(expObjs.map((expObj, index) => {
 			return(
 				<div key={`user-work-${index}`}  id={`user-work-${expObj.title}`} className='user-work-experience'>
