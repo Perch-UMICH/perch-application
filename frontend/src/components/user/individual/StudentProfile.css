@@ -297,6 +297,7 @@
 	padding-right: 30px;
 	padding-top: 5px;
 	position: relative;
+	min-height: 40px;
 }
 
 .skill, .interest {

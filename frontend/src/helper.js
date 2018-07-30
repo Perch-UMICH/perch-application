@@ -229,6 +229,7 @@ export function getUser(user_id) {
 export function deleteUser() {
     console.log('Deleting user');
     let user_id = sessionStorage.getItem('user_id');
+    sessionStorage.clear();
     return axios.delete('api/users/' + user_id)
         .then(response => {
             return respond(response.status, response.data);
@@ -506,26 +507,20 @@ export function removeTagsFromStudent(tag_ids) {
 }
 
 
-export function getStudentFavLabs(student_id) {
-    console.log('Getting student favorite labs');
-    return axios.get('api/students/' + student_id + '/labs')
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
+// Class Experiences
+// Classes that student has taken at a university
+//  title - (string) name of class
 
 // RESTRICTED: student_id
-export function addFavLabsToStudent(lab_ids) {
-    console.log('Adding favorite lab to student');
+// 'classes' should be an array of titles (strings)
+export function createAndAddClassExperiencesToStudent(class_experiences) {
+    console.log('Adding classes to student');
 
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        tag_ids: lab_ids
+        class_experiences: class_experiences
     };
-    return axios.post('api/students/' + student_id + '/labs', payload)
+    return axios.post('api/students/' + student_id + '/class_experiences', payload)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -535,15 +530,15 @@ export function addFavLabsToStudent(lab_ids) {
 }
 
 // RESTRICTED: student_id
-export function removeFavLabsFromStudent(lab_ids) {
-    console.log('Removing favorite lab from student');
+export function removeClassExperiencesFromStudent(class_experience_ids) {
+    console.log('Adding classes to student');
 
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        tag_ids: lab_ids,
+        ids: class_experience_ids,
         _method: 'PUT'
     };
-    return axios.post('api/students/' + student_id + '/labs', payload)
+    return axios.post('api/students/' + student_id + '/class_experiences', payload)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -552,6 +547,77 @@ export function removeFavLabsFromStudent(lab_ids) {
         })
 }
 
+// Work Experiences
+// Student work experience
+//  title - (string)
+//  description - (string)
+//  start_date - (string)
+//  end_date - (string)
+
+// RESTRICTED: student_id
+// Input should be an array of objects formatted like:
+// {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
+export function addWorkExperiencesToStudent(work_experiences) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        work_experiences: work_experiences,
+    };
+    return axios.post('api/students/' + student_id + '/work_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+// RESTRICTED: student_id
+export function removeWorkExperiencesFromStudent(work_experience_ids) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        ids: work_experience_ids,
+        _method: 'PUT'
+    };
+    return axios.post('api/students/' + student_id + '/work_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+
+// Lab list
+// RESTRICTED: student_id
+export function addToStudentLabList(lab_ids) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        ids: lab_ids,
+    };
+    return axios.post('api/students/' + student_id + '/lab_list', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+export function removeFromStudentLabList(lab_ids) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        ids: lab_ids,
+        _method: 'PUT'
+    };
+    return axios.post('api/students/' + student_id + '/lab_list', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
 
 // export function getStudentSchoolCourses(student_id) {
 //     console.log('Getting student school courses');
@@ -1134,36 +1200,6 @@ export function searchMatchingTags(query) {
         })
 }
 
-// Preferences
-// Lab preferences for applicants
-// type - (string)
-// title - (string)
-export function getAllPreferences() {
-    console.log('Getting all preferences');
-    return axios.get('api/preferences')
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-
-// School Courses
-// University courses
-// title - (string)
-// description - (string)
-export function getAllSchoolCourses() {
-    console.log('Getting all school courses');
-    return axios.get('api/courses/school')
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
 
 // LAB POSITIONS //
 // OBSOLETE FOR NOW SINCE WE'RE PRELOADING UROP POSITIONS

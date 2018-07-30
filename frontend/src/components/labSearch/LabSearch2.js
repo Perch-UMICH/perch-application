@@ -36,7 +36,7 @@ class LabSearch extends Component {
             departments: [],
             commitments: [],
             skills: [],
-			s_id: '',
+						s_id: '',
             search: '',
 		}
 	}

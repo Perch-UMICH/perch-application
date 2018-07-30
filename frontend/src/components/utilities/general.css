@@ -179,6 +179,15 @@ body {
 	display: inline-block;
 }
 
+.checkbox-white[type="checkbox"].filled-in:checked + label:after{
+   border: 2px solid var(--active);
+   background-color: var(--active);
+}
+
+input[type="checkbox"] {
+	background-color: var(--active);
+}
+
 input[type='text'], input[type='email'], input[type='number'] {
 	color: var(--seventy-five-grey);
 }
