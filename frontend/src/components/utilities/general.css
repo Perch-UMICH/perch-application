@@ -19,9 +19,9 @@
     --active: #29B6F6;
     --highlight: lightblue;*/
     /*Purple*/
-	--primary: #6c5b7b;
+	/*--primary: #6c5b7b;
 	--active: #c06c84;
-	--highlight: #ffdfd3;
+	--highlight: #ffdfd3;*/
 	/*Teal*/
 /*	--primary: #2b7a78;
 	--active: #3aafa9;
@@ -30,6 +30,15 @@
 	/*--primary: #ff913d;
 	--active: #73f0f4;
 	--highlight: #efbc4c;*/
+	/*Purple*/
+	--primary: #2f9395;
+	--active: #f7d909;
+	/*--highlight: #F16a43;*/
+	--highlight: #bababa;
+	/*Purple*/
+	--primary: #547a82;
+	--active: #a2d4ab;
+	--highlight: #a2d4ab;
 
 	/*Shades of grey are all that I see...*/
 	--white: #FFF; /*CSS white*/
