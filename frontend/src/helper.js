@@ -229,6 +229,7 @@ export function getUser(user_id) {
 export function deleteUser() {
     console.log('Deleting user');
     let user_id = sessionStorage.getItem('user_id');
+    sessionStorage.clear();
     return axios.delete('api/users/' + user_id)
         .then(response => {
             return respond(response.status, response.data);
@@ -587,6 +588,36 @@ export function removeWorkExperiencesFromStudent(work_experience_ids) {
 }
 
 
+// Lab list
+// RESTRICTED: student_id
+export function addToStudentLabList(lab_ids) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        ids: lab_ids,
+    };
+    return axios.post('api/students/' + student_id + '/lab_list', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+export function removeFromStudentLabList(lab_ids) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        ids: lab_ids,
+        _method: 'PUT'
+    };
+    return axios.post('api/students/' + student_id + '/lab_list', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
 
 // export function getStudentSchoolCourses(student_id) {
 //     console.log('Getting student school courses');
