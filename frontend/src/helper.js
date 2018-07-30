@@ -535,7 +535,7 @@ export function removeClassExperiencesFromStudent(class_experience_ids) {
 
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        ids: class_experience_ids,
+        class_experience_ids: class_experience_ids,
         _method: 'PUT'
     };
     return axios.post('api/students/' + student_id + '/class_experiences', payload)
@@ -575,7 +575,7 @@ export function addWorkExperiencesToStudent(work_experiences) {
 export function removeWorkExperiencesFromStudent(work_experience_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        ids: work_experience_ids,
+        work_experience_ids: work_experience_ids,
         _method: 'PUT'
     };
     return axios.post('api/students/' + student_id + '/work_experiences', payload)
@@ -593,7 +593,7 @@ export function removeWorkExperiencesFromStudent(work_experience_ids) {
 export function addToStudentLabList(lab_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        ids: lab_ids,
+        lab_ids: lab_ids,
     };
     return axios.post('api/students/' + student_id + '/lab_list', payload)
         .then(response => {
@@ -607,7 +607,7 @@ export function addToStudentLabList(lab_ids) {
 export function removeFromStudentLabList(lab_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        ids: lab_ids,
+        lab_ids: lab_ids,
         _method: 'PUT'
     };
     return axios.post('api/students/' + student_id + '/lab_list', payload)
