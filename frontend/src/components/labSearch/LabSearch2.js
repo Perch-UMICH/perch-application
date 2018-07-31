@@ -48,7 +48,7 @@ class LabSearch extends Component {
             //console.log(resp);
             for (var key in all_labs) {
                 let lab = all_labs[key].data;
-                newState.all_labs.push(<LabSearchItem name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
+                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
             }
 
             this.setState(newState);
@@ -151,7 +151,7 @@ class LabSearch extends Component {
                 
                 resp.data.results.map((lab) => {
                     console.log(lab);
-                    newState.all_labs.push(<LabSearchItem name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
+                    newState.all_labs.push(<LabSearchItem name={lab.name} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
                 })
 
                 this.setState(newState);
@@ -215,7 +215,7 @@ class LabSearch extends Component {
 										id={filt.slug}/>
 									<label
 										className="filter-checkbox-label"
-										for={filt.slug}>{filt.friendlyName}</label>
+										htmlFor={filt.slug}>{filt.friendlyName}</label>
 								</li>
 						}
 						return (labelContent);
@@ -230,7 +230,7 @@ class LabSearch extends Component {
 		<div className="search-sidebar">
 			{filterTypes.map((type, idx) => {
 				return (
-					<div id={`${type}-filter`} className="search-filter-container">
+					<div key={`${type}-filter`} id={`${type}-filter`} className="search-filter-container">
 						<div className="search-filter-title">{filterFriendlyNames[idx]}</div>
 						<ExpanderIcons id={`${type}-filter`} classBase='search-filter-container' action={() => {this.expand(type)}} preClick={type === "departments"} filterDropdown={true}/>
 						<hr className="filter-hr"/>

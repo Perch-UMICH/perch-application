@@ -15,11 +15,11 @@ class ExpanderIcons extends Component {
         let toggleExpanderIcons = () => {
             let expanderIcons = document.getElementById(`${this.props.id}-expand-icons`)
             for (let i = 0; i < expanderIcons.children.length; i++) {
-                if (expanderIcons.children[i].innerText == 'expand_more') {
+                if (expanderIcons.children[i].innerText === 'expand_more') {
 									expanderIcons.children[i].innerText = 'expand_less'
 									expanderIcons.classList.add('active-blue')
 								}
-                else if (expanderIcons.children[i].innerText == 'expand_less') {
+                else if (expanderIcons.children[i].innerText === 'expand_less') {
 									expanderIcons.children[i].innerText = 'expand_more'
 									expanderIcons.classList.remove('active-blue')
 								}
