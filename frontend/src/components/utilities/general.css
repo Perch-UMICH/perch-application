@@ -15,9 +15,9 @@
 
     /*THEMES*/
     /*Blue*/
-    /*--primary: #0277BD;
+    --primary: #0277BD;
     --active: #29B6F6;
-    --highlight: lightblue;*/
+    --highlight: lightblue;
     /*Purple*/
 	/*--primary: #6c5b7b;
 	--active: #c06c84;
@@ -31,14 +31,15 @@
 	--active: #73f0f4;
 	--highlight: #efbc4c;*/
 	/*Purple*/
-	--primary: #2f9395;
-	--active: #f7d909;
+	/*--primary: #2f9395;*/
+	/*--active: #f7d909;*/
 	/*--highlight: #F16a43;*/
-	--highlight: #bababa;
-	/*Purple*/
-	--primary: #547a82;
+	/*--highlight: #bababa;*/
+	/*Green*/
+/*	--primary: #547a82;
 	--active: #a2d4ab;
-	--highlight: #a2d4ab;
+	--highlight: #a2d4ab;*/
+	
 
 	/*Shades of grey are all that I see...*/
 	--white: #FFF; /*CSS white*/
@@ -190,6 +191,10 @@ input[type="checkbox"] {
 
 input[type='text'], input[type='email'], input[type='number'] {
 	color: var(--seventy-five-grey);
+}
+
+input[type='text']:focus {
+	border-bottom: 1px solid var(--active) !important;
 }
 
 .input-field input[type='text']:focus, .input-field input[type='email']:focus, .input-field input[type='number']:focus {

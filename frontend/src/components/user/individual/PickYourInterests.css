@@ -40,6 +40,8 @@
 	text-align: left;
 	padding: 10px;
 	float: left;
+	max-height: 200px;
+	overflow: scroll;
 }
 
 .interest-search {

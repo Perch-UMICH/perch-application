@@ -92,6 +92,8 @@ class LabSearch extends Component {
 
 	componentDidMount() {
 		this.expand("departments");
+		let search = document.getElementById('lab-srch-input')
+		search.addEventListener('keyup', this.updateSearch.bind(this))
 	}
 
 	handleFilterClick(filterType, slug) {
@@ -139,7 +141,11 @@ class LabSearch extends Component {
 	}
 
     updateSearch(event) {
-        this.setState({search: event.target.value})
+    	// event.preventDefault()
+    	// if (event.keyCode == 13) {
+    		//alert(event.keyCode)
+        	this.setState({search: event.target.value})
+        // }
     }
 
     executeSearch(event) {
@@ -148,7 +154,7 @@ class LabSearch extends Component {
                 var newState = this.state;
                 var all_search_labs = resp.data.results;
                 newState.all_labs = [];
-                
+      
                 resp.data.results.map((lab) => {
                     console.log(lab);
                     newState.all_labs.push(<LabSearchItem name={lab.name} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
@@ -245,8 +251,8 @@ class LabSearch extends Component {
                    {searchSideBar}
                </div>
                <div className='lab-srch-body'>
-                   <input id='lab-srch-input' type='text' placeholder='keywords' onChange={event => this.updateSearch(event)} onKeyPress={event => this.executeSearch(event)}/>
-                   <div id='lab-srch-result-summary'>Projects 1-50 (157 total) page 1 of 40 for <b>{this.state.search}</b></div>
+                   <input id='lab-srch-input' type='text' placeholder='keywords' onKeyPress={event => this.executeSearch(event)}/>
+                   <div id='lab-srch-result-summary'>Projects 1-{this.state.all_labs.length} ({this.state.all_labs.length} total) {/*page 1 of 40*/} for <b>{this.state.search}</b></div>
                    <div id='lab-srch-results'>
                         {this.state.all_labs}
                    </div>
