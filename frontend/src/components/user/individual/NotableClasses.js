@@ -30,7 +30,7 @@ class NotableClasses extends Component {
 					getStudent(this.state.student_id).then((resp) => {
 						var class_arr = [];
 						var class_str_arr = [''];
-						if (resp.data.classes) {
+						if (resp.data && resp.data.classes) {
 							class_str_arr = resp.data.classes.split('|');
 						}
 						var index = 1;

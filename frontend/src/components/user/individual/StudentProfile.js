@@ -178,6 +178,7 @@ class StudentProfile extends Component {
 						class_arr.push({name, index});
 					})
 				}
+				console.log("RESP DATA = GOT STUDENT", resp.data);
         this.setState({
 					user: {
         		name: `${resp.data.first_name} ${resp.data.last_name}`,
