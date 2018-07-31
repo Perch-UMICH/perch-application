@@ -40,7 +40,7 @@ class LabSearchItem extends Component {
                     <div className='lab-srch-item-depts'><b>Departments:</b> {this.props.dept}</div>
                     <div className='lab-srch-item-rsrch'><b>Research Areas:</b> {this.props.rsrch}</div>
                     <div className='lab-srch-item-description'><b>Description</b> {this.props.description}</div>
-                    <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects.bind(this)}><b>{this.props.positions.length}</b> {this.props.positions.length - 1 ? "Projects" : "Project"}</div>
+                    <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects}><b>{this.props.positions.length}</b> {this.props.positions.length - 1 ? "Projects" : "Project"}</div>
                     <ExpanderIcons id={`lab-srch-item_${this.props.name}`} action={this.expandProjects}/>
                 </div>
 

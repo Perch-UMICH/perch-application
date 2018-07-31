@@ -151,7 +151,7 @@ class LabSearch extends Component {
                 
                 resp.data.results.map((lab) => {
                     console.log(lab);
-                    newState.all_labs.push(<LabSearchItem name={lab.name} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
+                    newState.all_labs.push(<LabSearchItem name={lab.name} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
                 })
 
                 this.setState(newState);
