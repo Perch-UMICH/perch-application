@@ -28,30 +28,32 @@ class NotableClasses extends Component {
 			getStudentFromUser(id).then( r => {
 				this.setState({student_id: r.data.id, user_id: id}, () => {
 					getStudent(this.state.student_id).then((resp) => {
-						var class_arr = [];
-						var class_str_arr = [''];
-						if (resp.data.classes) {
-							class_str_arr = resp.data.classes.split('|');
-						}
-						var index = 1;
-						for (var i = 0; i < class_str_arr.length; ++i) {
-							var class_item = {
-								id: `c_${index}`,
-								text: class_str_arr[i],
+						if (resp.data) {
+							var class_arr = [];
+							var class_str_arr = [''];
+							if (resp.data.classes) {
+								class_str_arr = resp.data.classes.split('|');
 							}
-							class_arr.push(class_item);
-							++index;
-						}
-						this.setState(
-							{
-								gpa: resp.data.gpa ? resp.data.gpa : 4.0,
-								major: resp.data.major ? resp.data.major : "",
-								year: resp.data.year ? resp.data.year : "",
-								classes: class_str_arr,
-								class_arr: class_arr,
-								c_index: index,
+							var index = 1;
+							for (var i = 0; i < class_str_arr.length; ++i) {
+								var class_item = {
+									id: `c_${index}`,
+									text: class_str_arr[i],
+								}
+								class_arr.push(class_item);
+								++index;
 							}
-						);
+							this.setState(
+								{
+									gpa: resp.data.gpa ? resp.data.gpa : 4.0,
+									major: resp.data.major ? resp.data.major : "",
+									year: resp.data.year ? resp.data.year : "",
+									classes: class_str_arr,
+									class_arr: class_arr,
+									c_index: index,
+								}
+							);
+						}
 					});
 				});
 			});
