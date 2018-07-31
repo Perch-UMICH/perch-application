@@ -10,6 +10,7 @@
 	color: var(--white);
 	min-height: 250px;
 	margin-bottom: 0px !important;
+	position: relative;
 }
 
 .interest-header {
@@ -40,6 +41,14 @@
 	text-align: left;
 	padding: 10px;
 	float: left;
+}
+
+.interest-custom-add {
+	position: absolute;
+	color: lightgrey;
+	right: 51%;
+	cursor: pointer;
+	top: 8px;
 }
 
 .interest-search {

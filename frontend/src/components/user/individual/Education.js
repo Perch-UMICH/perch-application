@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {EditContainerOnboarding, EditExperience} from './StudentEditors.js'
+import {EditContainerOnboarding, EditClasses} from './StudentEditors.js'
 
 class Education extends Component {
 	constructor(props) {
@@ -13,7 +13,7 @@ class Education extends Component {
 	render() {
 		return (
 			<EditContainerOnboarding title="Education" redirect={this.redirect.bind(this)}>
-				<EditExperience type="educ" user={this.props.user} updateUser={this.props.updateUser}/>
+				<EditClasses user={this.props.user} updateUser={this.props.updateUser}/>
 			</EditContainerOnboarding>
 		);
 	}

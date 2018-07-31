@@ -44,9 +44,9 @@ class NotableClasses extends Component {
 						}
 						this.setState(
 							{
-								gpa: resp.data.gpa,
-								major: resp.data.major,
-								year: resp.data.year,
+								gpa: resp.data.gpa ? resp.data.gpa : 4.0,
+								major: resp.data.major ? resp.data.major : "",
+								year: resp.data.year ? resp.data.year : "",
 								classes: class_str_arr,
 								class_arr: class_arr,
 								c_index: index,
@@ -100,50 +100,6 @@ class NotableClasses extends Component {
 		}
 	}
 
-	addClass(event) {
-		var newClassID = "c_" + this.state.c_index;
-		var newClassText = '';
-		var newClass = {
-			"id": newClassID,
-			"text": newClassText
-		};
-		var newCIndex = this.state.c_index + 1;
-		var updated_classes = this.state.class_arr.concat([newClass]);
-		this.setState({
-			class_arr: updated_classes,
-			c_index: newCIndex,
-		});
-		if (this.props.updateUser) {
-			this.props.updateUser("classes", updated_classes)
-		}
-	}
-
-	alterClass(event, class_id) {
-		var temp_classes = this.state.class_arr;
-		var index = temp_classes.findIndex(item => item.id === class_id);
-		temp_classes[index].text = event.target.value;
-		this.setState({
-			class_arr: temp_classes,
-		});
-		if (this.props.updateUser) {
-			this.props.updateUser("classes", temp_classes)
-		}
-	}
-
-	removeClass(class_id) {
-		this.setState((prevState) => {
-			var temp_classes = prevState.class_arr;
-			var removeIndex = temp_classes.map(function(item) { return item.id; }).indexOf(class_id);
-			temp_classes.splice(removeIndex, 1);
-			return {
-				class_arr: temp_classes,
-			};
-			if (this.props.updateUser) {
-				this.props.updateUser("classes", temp_classes)
-			}
-		});
-	}
-
 	saveAndContinue(event) {
 		var temp_year = $('#year_select').val();
 		var year = this.state.year;
@@ -191,21 +147,6 @@ class NotableClasses extends Component {
 				    </select>
 					</div>
 				</div>
-				<div className='notable-classes-label left-align class-creation-label'>
-					List your notable classes
-					<a onClick={this.addClass.bind(this)} id="addQuestion" > <i className="material-icons">add</i></a>
-				</div>
-			    {this.state.class_arr.map((c) => {
-					return (
-						<div className="row" key={c.id}>
-							<div className="input-field col s11">
-								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.text} onChange={(e) => this.alterClass(e, c.id)}/>
-							</div>
-							<div className="col s1">
-								<a id={c.id} onClick={() => this.removeClass(c.id)}><i className="material-icons remove-class">clear</i></a>
-							</div>
-						</div>);
-				})} <br/>
 			</form>
 
 		if (this.state.url_string === 'notable-classes' || this.props.showForm) {

@@ -14,35 +14,43 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
-import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../../../helper.js'
+import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, addSkillsToStudent, addTagsToStudent, addWorkExperiencesToStudent} from '../../../helper.js'
 import './StudentOnboarding.css'
 
 class StudentOnboarding extends Component {
   constructor(props) {
     super(props)
     this.sendUpdate = this.sendUpdate.bind(this);
+    this.updateTags = this.updateTags.bind(this);
+    this.updateExperience = this.updateExperience.bind(this);
     this.state = {
       curStep: 0,
       numSteps: 8,
       user: {},
-      steps: {},
     }
   }
 
   componentDidMount() {
-    console.log("MOUNTED");
-    getStudentFromUser(getCurrentUserId()).then(r => console.log("RESPPP!!!", r));
-    var steps = {
-      0: <EnterContact user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-      1: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-      2: "",
-      3: <EnterBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-      4: <UploadImage user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-      5: <Experience user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-      6: <Education user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-      7: <Links user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-    }
-    this.setState({steps})
+    getStudentFromUser(getCurrentUserId()).then(r => {
+      var user = r.data;
+      var skills = [];
+  		var interests = [];
+  		getStudentSkills(getCurrentStudentId())
+  		.then(skillsResp => {
+  			if (skillsResp.data) {
+  				skills = skillsResp.data
+  			}
+  			getStudentTags(getCurrentStudentId())
+  			.then(tagsResp => {
+  				if (tagsResp.data) {
+  					interests = tagsResp.data
+  				}
+          user.skills = skills;
+          user.interests = interests;
+  				this.setState({user})
+  				});
+  		});
+    });
   }
 
   sendUpdate(redirect) {
@@ -56,16 +64,40 @@ class StudentOnboarding extends Component {
       bio: user.bio ? user.bio : null,
       major: user.major ? user.major : null,
       gpa: user.gpa ? user.gpa : null,
-      experiences: user.experiences ? user.experiences : null,
+      work_experiences: user.work_experiences ? user.work_experiences : null,
       classes: user.classes ? user.classes : null,
-      linkedin_link: user.linkedin_link ? user.linkedin_link : null,
+      linkedin: user.linkedin ? user.linkedin : null,
       website_link: user.website_link ? user.website_link : null,
     }
-    updateStudent(first_name, last_name, s.email, s.year, s.bio, s.major, s.gpa, s.classes, s.experiences, s.linkedin_link, s.website_link).then(r => console.log("blahhhh", r));
+    updateStudent(first_name, last_name, s.email, s.year, s.bio, s.major, s.gpa, s.classes, s.work_experiences, s.linkedin, s.website_link).then(r => console.log("blahhhh", r));
     if (redirect) {
       window.location = '/student-profile/' + getCurrentUserId();
     }
   }
+
+  updateTags() {
+		var skillIds = [];
+		var intIds = [];
+    if (this.state.user.skills && this.state.user.skills.length) {
+			this.state.user.skills.map(skill => {
+				skillIds.push(skill.id);
+			})
+		}
+		if (this.state.user.interests && this.state.user.interests.length) {
+			this.state.user.interests.map(interest => {
+				intIds.push(interest.id);
+			})
+		}
+		addTagsToStudent(intIds).then(r => {
+			addSkillsToStudent(skillIds).then(r => {
+			});
+		});
+	}
+
+	updateExperience() {
+		addWorkExperiencesToStudent(this.state.user.work_experiences).then(r => {
+		});
+	}
 
   updateUser(field, newValue) {
     console.log("updating ", field, " to ", newValue);
@@ -77,7 +109,41 @@ class StudentOnboarding extends Component {
 	render() {
     var backBtn = <BasicButton msg='back' superClick={() => {this.setState({curStep: this.state.curStep - 1}); this.sendUpdate()}}/>;
     var nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.sendUpdate()}}/>;
-    var stepToRender = this.state.steps[this.state.curStep];
+    var steps = {
+      0: {
+        comp: <EnterContact user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Welcome to Perch! We'll begin by gathering some information about you to set up your profile. \nDon't worry about perfection - you can edit these fields afterwards at any time."
+      },
+      1: {
+        comp: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Search skills/interests that apply to you and click on bubbles to add."
+      },
+      2: {
+        comp: "",
+        text: "Enter your GPA, major (or intended major), and class year.",
+      },
+      3: {
+        comp: <EnterBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Enter a short description to describe yourself professionally."
+      },
+      4: {
+        comp: <UploadImage user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Upload a professional profile image, preferred name, and school. Add a new image by dragging-and-dropping and adjust using the slider/rotate-tool below.",
+      },
+      5: {
+        comp: <Experience user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Enter any relevant lab or work experience, including time range and a short description of your personal contributions."
+      },
+      6: {
+        comp: <Education user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Please enter any classes you've taken that may be relevant to research positions you are interested in."
+      },
+      7: {
+        comp: <Links user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "If applicable, enter a link to your LinkedIn page and resume below. That's it!",
+      },
+    }
+    var stepToRender = steps[this.state.curStep];
     if (this.state.curStep === 0) {
       backBtn = null;
     }
@@ -85,9 +151,15 @@ class StudentOnboarding extends Component {
       nextBtn = <BasicButton msg='go to profile' superClick={() => this.sendUpdate(true)}/>
     }
     var css = "invisible";
+    if (this.state.curStep === 1) {
+      nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.updateTags()}}/>
+    }
     if (this.state.curStep === 2) {
       css = "visible-yes";
       nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.sendUpdate()}}/>;
+    }
+    if (this.state.curStep === 5) {
+      nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.updateExperience()}}/>
     }
     var dropDown = <div className={css}>
       <NotableClasses user={this.state.user} showForm={true} updateUser={this.updateUser.bind(this)}/>
@@ -97,8 +169,9 @@ class StudentOnboarding extends Component {
         {backBtn}
         {nextBtn}
         <ProgressIndicator steps={this.state.numSteps} curStep={this.state.curStep} />
+        <div className="onboarding-text">{stepToRender.text}</div>
         {dropDown}
-        {stepToRender}
+        {stepToRender.comp}
       </div>
 		)
 	}
