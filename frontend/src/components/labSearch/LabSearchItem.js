@@ -7,22 +7,7 @@ class LabSearchItem extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            numProjects: null,
-            all_projects: [],
-        }
-    }
 
-    componentDidMount() {
-        var projects = [];
-        this.props.positions.map((position) => {
-            let urop = position.is_urop_project;
-            projects.push(<LabSearchProject key={this.i} title={position.title} spots='MISSING' description={position.description} urop/>)
-        })
-        this.setState({
-            numProjects: document.getElementById(`lab_srch_expansion_${this.props.name}`).children.length,
-            all_projects: projects,
-        });
     }
 
     expandProjects() {
@@ -42,6 +27,11 @@ class LabSearchItem extends Component {
     }
 
 	render() {
+        var all_projects = [];
+        this.props.positions.map((position) => {
+            let urop = position.is_urop_project;
+            all_projects.push(<LabSearchProject key={this.i} title={position.title} spots='MISSING' description={position.description} urop/>)
+        })
 		return (
             <div className='lab-srch-item-container'>
                 <div id={`lab_srch_item_${this.props.name}`} className='lab-srch-item'> 
@@ -50,12 +40,12 @@ class LabSearchItem extends Component {
                     <div className='lab-srch-item-depts'><b>Departments:</b> {this.props.dept}</div>
                     <div className='lab-srch-item-rsrch'><b>Research Areas:</b> {this.props.rsrch}</div>
                     <div className='lab-srch-item-description'><b>Description</b> {this.props.description}</div>
-                    <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects.bind(this)}><b>{this.state.numProjects}</b> {this.state.numProjects - 1 ? "Projects" : "Project"}</div>
+                    <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects.bind(this)}><b>{this.props.positions.length}</b> {this.props.positions.length - 1 ? "Projects" : "Project"}</div>
                     <ExpanderIcons id={`lab-srch-item_${this.props.name}`} action={this.expandProjects.bind(this)}/>
                 </div>
 
                 <div id={`lab_srch_expansion_${this.props.name}`} className='lab-srch-item-expansion hide-projects'>
-                    {this.state.all_projects}
+                    {all_projects}
                 </div>
             </div>
 		);

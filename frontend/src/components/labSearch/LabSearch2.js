@@ -36,7 +36,7 @@ class LabSearch extends Component {
             departments: [],
             commitments: [],
             skills: [],
-						s_id: '',
+			s_id: '',
             search: '',
 		}
 	}
@@ -145,7 +145,16 @@ class LabSearch extends Component {
     executeSearch(event) {
         if (event.key === 'Enter') {
             labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search).then((resp) => {
-                console.log(resp);
+                var newState = this.state;
+                var all_search_labs = resp.data.results;
+                newState.all_labs = [];
+                
+                resp.data.results.map((lab) => {
+                    console.log(lab);
+                    newState.all_labs.push(<LabSearchItem name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
+                })
+
+                this.setState(newState);
             })
         }
     }
