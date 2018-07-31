@@ -2,39 +2,53 @@ import React, {Component} from 'react';
 import BasicButton from '../../utilities/buttons/BasicButton'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
+import {deepCopy} from '../../../helper.js'
 import './StudentEditors.css';
 
 export class EditLinks extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			linkedin_link: props.user && props.user.linkedin_link ? props.user.linkedin_link : '',
-			website_link: props.user && props.user.website_link ? props.user.website_link : '',
+		var resume = "";
+		var linkedin = "";
+		var website_link = "";
+		if (props.user) {
+			if (props.user.website_link) {
+				resume = props.user.website_link;
+				website_link = props.user.website_link;
+			} else if (props.user.resume) {
+				resume = props.user.resume;
+			}
+			if (props.user.linkedin) {
+				linkedin = props.user.linkedin;
+			} else if (props.user.linkedin_link) {
+				linkedin = props.user.linkedin_link;
+			}
 		}
+		this.state = { linkedin, resume, website_link	}
 	}
 
 	render() {
 		return (
 			<div>
 				<div className='input-field'>
-					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com' value={this.state.linkedin_link}
+					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com' value={this.state.linkedin}
 					onChange={(e) => {
 						if (this.props.updateUser) {
-							this.props.updateUser("linkedin_link", e.target.value); }
-						this.setState({linkedin_link: e.target.value})}}/>
+							this.props.updateUser("linkedin", e.target.value); }
+						this.setState({linkedin: e.target.value})}}/>
 					<label htmlFor='linkedin' className="active" >Linkedin</label>
 				</div>
 				<div className='input-field'>
-					<input type='text' id='resume' placeholder='super-cool-resume.pdf' value={this.state.website_link}
+					<input type='text' id='resume' placeholder='super-cool-resume.pdf' value={this.state.resume}
 					onChange={(e) => {
 						if (this.props.updateUser) {
-							this.props.updateUser("website_link", e.target.value); }
-						this.setState({website_link: e.target.value})}}/>
+							this.props.updateUser("resume", e.target.value); }
+						this.setState({resume: e.target.value})}}/>
 					<label htmlFor='resume' className="active" >Resume</label>
 				</div>
 				{this.props.prof &&
 					<div className='input-field'>
-						<input type='text' id='lab-materials' placeholder='lab-materials.pdf' value={this.state.lab_materials_link}
+						<input type='text' id='lab-materials' placeholder='lab-materials.pdf' value={this.state.website_link}
 						onChange={(e) => {
 							if (this.props.updateUser) {
 								this.props.updateUser("lab_materials_link", e.target.value); }
@@ -81,6 +95,17 @@ export class EditContact extends Component {
 		}
 	}
 
+	componentWillReceiveProps(props) {
+		if (props.user) {
+			if (props.user.email) {
+				this.setState({email: props.user.email})
+			}
+			if (props.user.phone) {
+				this.setState({phone: props.user.phone})
+			}
+		}
+	}
+
 	render() {
 		return(
 			<form id='edit-contact-info'>
@@ -124,13 +149,95 @@ export class EditBio extends Component {
 		return(
 			<form id='edit-bio'>
 				<div className='input-field'>
-					<textarea id='textArea' placeholder='Short description of background, experience, and interests'
+					<textarea id='textArea'
+					value = {this.state.bio}
+					placeholder='Short description of background, experience, and interests'
 					onChange={(e) => {
 						if (this.props.updateUser) {
 							this.props.updateUser("bio", e.target.value);}
 						this.setState({bio: e.target.value})}}>
-					{this.state.bio}</textarea>
+					</textarea>
 				</div>
+			</form>
+		)
+	}
+}
+
+export class EditClasses extends Component {
+	constructor(props) {
+		super(props)
+		this.addClass = this.addClass.bind(this)
+		this.alterClass = this.alterClass.bind(this)
+		this.removeClass = this.removeClass.bind(this)
+		var class_arr = props.user && props.user.classes ? props.user.classes : [{ id: 'c_0', text: '' }]
+		this.state = {
+			class_arr,
+		}
+		this.state.c_index = this.state.class_arr.length;
+	}
+
+	addClass(event) {
+		var newClassID = "c_" + this.state.c_index;
+		var newClassText = '';
+		var newClass = {
+			"id": newClassID,
+			"text": newClassText
+		};
+		var newCIndex = this.state.c_index + 1;
+		var updated_classes = this.state.class_arr.concat([newClass]);
+		this.setState({
+			class_arr: updated_classes,
+			c_index: newCIndex,
+		});
+		if (this.props.updateUser) {
+			this.props.updateUser("classes", updated_classes)
+		}
+	}
+
+	alterClass(event, class_id) {
+		var temp_classes = this.state.class_arr;
+		var index = temp_classes.findIndex(item => item.id === class_id);
+		temp_classes[index].text = event.target.value;
+		this.setState({
+			class_arr: temp_classes,
+		});
+		if (this.props.updateUser) {
+			this.props.updateUser("classes", temp_classes)
+		}
+	}
+
+	removeClass(class_id) {
+		this.setState((prevState) => {
+			var temp_classes = prevState.class_arr;
+			var removeIndex = temp_classes.map(function(item) { return item.id; }).indexOf(class_id);
+			temp_classes.splice(removeIndex, 1);
+			return {
+				class_arr: temp_classes,
+			};
+			if (this.props.updateUser) {
+				this.props.updateUser("classes", temp_classes)
+			}
+		});
+	}
+
+	render() {
+		return (
+			<form id='edit-classes'>
+				<div className='notable-classes-label left-align class-creation-label'>
+					List your notable classes
+					<a onClick={this.addClass.bind(this)} id="addQuestion" > <i className="material-icons">add</i></a>
+				</div>
+			    {this.state.class_arr.map((c) => {
+					return (
+						<div className="row" key={c.id}>
+							<div className="input-field col s11">
+								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.text} onChange={(e) => this.alterClass(e, c.id)}/>
+							</div>
+							<div className="col s1">
+								<a id={c.id} onClick={() => this.removeClass(c.id)}><i className="material-icons remove-class">clear</i></a>
+							</div>
+						</div>);
+				})} <br/>
 			</form>
 		)
 	}
@@ -151,11 +258,11 @@ export class EditExperience extends Component {
 			end_date: '',
 			description: '',
 		}];
-		if (props.type === 'work' && props.user && props.user.work_experiences) {
-			initObjs = props.user.work_experiences;
+		if (props.type === 'work' && props.user && props.user.work_experiences && props.user.work_experiences.length) {
+			initObjs = deepCopy(props.user.work_experiences);
 		}
-		if (props.type === 'educ' && props.user && props.user.education) {
-			initObjs = props.user.education;
+		if (props.type === 'educ' && props.user && props.user.education && props.user.education.length) {
+			initObjs = deepCopy(props.user.education);
 		}
 		this.state = {
 			objs: initObjs,
@@ -165,16 +272,14 @@ export class EditExperience extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log("nextprops!", nextProps);
 		if (nextProps.user && (nextProps.user.work_experiences || nextProps.user.education)) {
-			if (nextProps.user.work_experiences) {
-				this.setState({objs: nextProps.user.work_experiences})
+			if (nextProps.user.work_experiences && nextProps.user.work_experiences.length) {
+				this.setState({objs: deepCopy(nextProps.user.work_experiences)})
 			}
 		}
 	}
 
 	addObj(event) {
-		console.log("ADDING OBJ")
 		var newObj = {
 			id: 'o_' + this.state.index,
 			title: '',
@@ -183,7 +288,8 @@ export class EditExperience extends Component {
 			description: '',
 		};
 		var newIndex = this.state.index + 1;
-		var updated_objs = this.state.objs.push(newObj);
+		var updated_objs = this.state.objs;
+		updated_objs.push(newObj)
 		this.setState({
 			objs: updated_objs,
 			index: newIndex,
@@ -232,12 +338,9 @@ export class EditExperience extends Component {
 	}
 
 	render() {
-		console.log("EXP OBJS", this.state.objs)
-		console.log("length?", this.state.objs.length)
 		var experiences = [];
 		for (var i = 0; i < this.state.objs.length; ++i) {
 			var obj = this.state.objs[i];
-			console.log('rendering obj??', obj);
 			experiences.push(
 				<div key={obj.id}>
 					<div className="row">
@@ -264,7 +367,6 @@ export class EditExperience extends Component {
 					<div className="edit-experience-hr" />
 				</div>)
 		}
-		console.log("exps", experiences)
 
 		return(
 			<form id='edit-experience'>
@@ -281,12 +383,42 @@ export class EditExperience extends Component {
 export class EditQuickview extends Component {
 	constructor(props) {
 		super(props)
+		var name = "";
+		if (props.user) {
+			if (props.user.first_name) {
+				name = props.user.first_name + " ";
+			}
+			if (props.user.last_name) {
+				name += props.user.last_name
+			}
+		}
 		this.state = {
 			image: props.user && props.user.img ? props.user.img : props.img,
 			rotate: 0,
 			scale: 1.5,
-			name: props.user && props.user.name ? props.user.name : "",
+			name,
 			school: props.user && props.user.school ? props.user.school : "",
+		}
+	}
+
+	componentWillReceiveProps(props) {
+		if (props.user) {
+			var name = "";
+			if (props.user.first_name) {
+				name = props.user.first_name + " ";
+			}
+			if (props.user.last_name) {
+				name += props.user.last_name
+			}
+			if (name !== " ") {
+				this.setState({name})
+			}
+			if (props.user.school) {
+				this.setState({school: props.user.school})
+			}
+			if (props.user.img) {
+				this.setState({image: props.user.img})
+			}
 		}
 	}
 
@@ -315,7 +447,6 @@ export class EditQuickview extends Component {
 	}
 
 	componentDidUpdate() {
-		console.log(this.state.scale)
 	}
 
 	render() {

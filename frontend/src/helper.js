@@ -1588,3 +1588,15 @@ export function returnToProfile() {
 export function exists(item) {
     return item ? true : false;
 }
+
+//// CHANGED BY EMI
+
+export function deepCopy(object) {
+   var output, value, key;
+   output = Array.isArray(object) ? [] : {};
+   for (key in object) {
+       value = object[key];
+       output[key] = (typeof value === "object") ? deepCopy(value) : value;
+   }
+   return output;
+}

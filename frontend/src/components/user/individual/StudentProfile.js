@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeWorkExperiencesFromStudent, createAndAddClassExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent} from '../../../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent, removeWorkExperiencesFromStudent, createAndAddClassExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
-import {EditContact, EditExperience, EditQuickview, EditLinks, EditBio} from './StudentEditors'
+import {EditContact, EditExperience, EditQuickview, EditLinks, EditBio, EditClasses} from './StudentEditors'
 import NotableClasses from './NotableClasses'
 import PickYourInterests from './PickYourInterests'
 import {TwitterTimelineEmbed} from 'react-twitter-embed';
@@ -16,6 +16,24 @@ class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.openModal = this.openModal.bind(this);
+		var user = {
+			name: "",
+			gpa: "",
+			major: "",
+			year: "",
+			bio: "",
+			email: "",
+			classes: [],
+			experience: [],
+			linkedin: "",
+			skills: [],
+			interests: [],
+			resume: "",
+			student: true,
+			s_id: "",
+			work_experiences: [],
+		}
+		var updated_user = deepCopy(user);
 		this.state = {
 			img_src: '/img/meha.jpg',
 			endorsements: [
@@ -32,31 +50,20 @@ class StudentProfile extends Component {
 			not_student: false,
 			tempskills: [{name: 'python'}, {name: 'javascript'}, {name: 'HTML 5'}, {name: 'CSS 3'}, {name: 'C++'}, {name: 'Splunk'}, {name: 'matLab'}],
 			tempinterests: [{name: 'Computer Science'}, {name: 'Computer Security'}, {name: 'Software Development'}, {name: 'Management'}, {name: 'Design'}],
-			user: {
-				name: "",
-				gpa: "",
-				major: "",
-				year: "",
-				bio: "",
-				email: "",
-				classes: [],
-				experience: [],
-				linkedin: "",
-				skills: [],
-				interests: [],
-				resume: "",
-				student: true,
-				s_id: "",
-				work_experiences: [],
-			},
-			updated_user: {}
+			user,
+			updated_user,
+			prevField: "",
 		}
 	}
 
 	updateUser(field, newValue) {
     var newState = this.state;
     newState.updated_user[field] = newValue;
-    this.setState(newState);
+		if (field === 'classes') {
+			newState.classes = newValue;
+		}
+    this.setState(newState, () => {
+		});
   }
 
 	sendUpdate() {
@@ -73,8 +80,8 @@ class StudentProfile extends Component {
 				class_arr.push(c.text);
 			})
 		}
-		createAndAddClassExperiencesToStudent(class_arr).then(r => console.log("CLASS R", r));
-		updateStudent(first_name, last_name, updated_user.email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin_link, updated_user.website_link)
+		createAndAddClassExperiencesToStudent(class_arr).then();
+		updateStudent(first_name, last_name, updated_user.email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin, updated_user.website_link)
 		.then(r => {
 			this.generalHandler();
 		});
@@ -84,31 +91,60 @@ class StudentProfile extends Component {
 		var skillIds = [];
 		var intIds = [];
 		var updated_user = this.state.updated_user;
+		var skill_match = {};
+		var int_match = {};
+		var skill_diff = [];
+		var int_diff = [];
 		if (updated_user.skills && updated_user.skills.length) {
 			updated_user.skills.map(skill => {
 				skillIds.push(skill.id);
+				skill_match[skill.id] = true;
 			})
 		}
 		if (updated_user.interests && updated_user.interests.length) {
 			updated_user.interests.map(interest => {
 				intIds.push(interest.id);
+				int_match[interest.id] = true;
+			})
+		}
+		if (this.state.user.skills && this.state.user.skills.length) {
+			this.state.user.skills.map(skill => {
+				if (!skill_match[skill.id]) {
+					skill_diff.push(skill.id);
+				}
+			})
+		}
+		if (this.state.user.interests && this.state.user.interests.length) {
+			this.state.user.interests.map(interest => {
+				if (!int_match[interest.id]) {
+					int_diff.push(interest.id);
+				}
 			})
 		}
 		addTagsToStudent(intIds).then(r => {
 			addSkillsToStudent(skillIds).then(r => {
-				this.generalHandler();
+				removeTagsFromStudent(int_diff).then(r => {
+					removeSkillsFromStudent(skill_diff).then(r => {
+						this.generalHandler();
+					})
+				})
 			});
 		});
-		console.log("adding skills", skillIds, "adding ints", intIds);
 	}
 
 	updateExperience() {
-		removeWorkExperiencesFromStudent([1,2,3,4,5,6,7,8,9,10,11,12])
-		if (this.state.updated_user.experience) {
-			addWorkExperiencesToStudent(this.state.updated_user.experience).then(r => {
-				console.log(r)
-				this.generalHandler();
-			});
+		if (this.state.updated_user.work_experiences) {
+			var idsToRemove = [];
+			if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
+				this.state.user.work_experiences.map(exp => {
+					idsToRemove.push(exp.id);
+				})
+			}
+			removeWorkExperiencesFromStudent(idsToRemove).then(r => {
+				addWorkExperiencesToStudent(this.state.updated_user.work_experiences).then(r => {
+					this.generalHandler();
+				});
+			})
 		}
 	}
 
@@ -118,17 +154,15 @@ class StudentProfile extends Component {
 		var skills = [];
 		var interests = [];
 		getStudentSkills(getCurrentStudentId())
-		.then(r => {
-			if (r.data) {
-				newState.skills = r.data
+		.then(skillsResp => {
+			if (skillsResp.data) {
+				newState.user.skills = skillsResp.data
 			}
-			getStudentSkills(getCurrentStudentId())
-			.then(r => {
-				if (r.data) {
-					newState.interests = r.data
+			getStudentTags(getCurrentStudentId())
+			.then(tagsResp => {
+				if (tagsResp.data) {
+					newState.user.interests = tagsResp.data
 				}
-				console.log("SKILLS?", skills)
-				console.log("INTERESTS?", interests)
 				this.setState(newState);
 				});
 		});
@@ -138,7 +172,6 @@ class StudentProfile extends Component {
 	generalHandler() {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
-				console.log("GETTING STUDENT", resp);
 				var class_arr = [];
 				if (resp.data && resp.data.classes) {
 					resp.data.classes.split(',').map((name, index) => {
@@ -155,7 +188,9 @@ class StudentProfile extends Component {
         		email: resp.data.email,
         		classes: class_arr,
         		experience: resp.data.experiences,
-        		linkedin: resp.data.linkedin_link,
+        		linkedin: resp.data.linkedin,
+						linkedin_link: resp.data.linkedin_link,
+						website_link: resp.data.website_link,
         		resume: resp.data.resume_path,
 						skills: [],
 						interests: [],
@@ -168,11 +203,11 @@ class StudentProfile extends Component {
 						if (r && r.data) {
 							var newState = this.state;
 							newState.user.work_experiences = r.data.work_experiences;
-							this.setState(newState, () => {
-								this.retrieveTags.bind(this);
-							})
+							newState.updated_user = deepCopy(this.state.user);
+							this.setState(newState);
 						}
 					})
+					this.retrieveTags();
 				});
 			})
 	}
@@ -214,6 +249,22 @@ class StudentProfile extends Component {
 	}
 
 	render() {
+		var linkedinLink, resumeLink = null;
+		if (this.state.user.linkedin) {
+			linkedinLink = this.state.user.linkedin;
+		}
+		else if (this.state.user.linkedin_link) {
+			linkedinLink = this.state.user.linkedin_link;
+		}
+		if (this.state.user.resume_path) {
+			resumeLink = this.state.user.resume_path;
+		}
+		else if (this.state.user.website_link) {
+			resumeLink = this.state.user.website_link;
+		}
+		else if (this.state.user.resume) {
+			resumeLink = this.state.user.resume;
+		}
 		if (!isLoggedIn()) {
 			return <ErrorPage />
 		} else if (this.state.not_student) {
@@ -223,28 +274,28 @@ class StudentProfile extends Component {
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
 				<EditModal id="skills-interests-edit" title="Edit Skills and Interests" modalAction={this.updateTags.bind(this)} noPadding={true}>
-					<PickYourInterests editorOnly={true} user={this.state.user} updateUser={this.updateUser.bind(this)}/>
+					<PickYourInterests editorOnly={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal >
 				<EditModal id="contact-edit" title="Edit Contact Info" modalAction={this.sendUpdate.bind(this)}>
-					<EditContact  user={this.state.user} updateUser={this.updateUser.bind(this)}/>
+					<EditContact  user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="link-edit" title="Edit Links" modalAction={this.sendUpdate.bind(this)}>
-					<EditLinks  user={this.state.user} updateUser={this.updateUser.bind(this)}/>
+					<EditLinks  user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="academics-edit" title="Edit Academic Info" modalAction={this.sendUpdate.bind(this)}>
 					<NotableClasses updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="work-edit" title="Edit Work Info" modalAction={this.updateExperience.bind(this)}>
-					<EditExperience type="work" user={this.state.user} updateUser={this.updateUser.bind(this)}/>
+					<EditExperience type="work" user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="education-edit" title="Edit Education Info" modalAction={this.sendUpdate.bind(this)}>
-					<EditExperience type="educ" user={this.state.user} updateUser={this.updateUser.bind(this)}/>
+					<EditClasses updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="bio-edit" title="Edit Bio" modalAction={this.sendUpdate.bind(this)}>
-					<EditBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>
+					<EditBio user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="quickview-edit" title="Edit Quickview Info" modalAction={this.sendUpdate.bind(this)}>
-					<EditQuickview img='/img/headshots/bbear.jpg' user={this.state.user} updateUser={this.updateUser.bind(this)}/>
+					<EditQuickview img='/img/rodriguez.jpg' user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
@@ -253,7 +304,6 @@ class StudentProfile extends Component {
 	 						<div><b>GPA</b> {this.state.user.gpa}</div>
 							<div><b>Major</b> {this.state.user.major}</div>
 	 						<div><b>Year</b> {this.state.user.year}</div>
-	 						<StudentClasses list={this.state.user.classes}/>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('academics-edit')}/>
 	 				</div>
@@ -268,8 +318,8 @@ class StudentProfile extends Component {
 	 				<div id='user-links'>
 	 					<h1>Links</h1>
 	 					<div>
-	 						<a target="_blank" href={this.state.user.linkedin_link} style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn</a>
-	 						<a target="_blank" href={this.state.user.resume_path} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>
+	 						<a target="_blank" href={linkedinLink} style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn</a>
+	 						<a target="_blank" href={resumeLink} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>
@@ -284,7 +334,7 @@ class StudentProfile extends Component {
 	 			<div id='user-profile-column-C'>
 	 				<div id='user-quickview'>
 	 					<div id='user-quickview-img-container'>
-	 						<img id='user-quickview-img' src={this.state.user.img ? this.state.user.img : '/img/headshots/bbear.jpg'}/>
+	 						<img id='user-quickview-img' src={this.state.user.img ? this.state.user.img : '/img/rodriguez.jpg'}/>
 	 					</div>
 	 					<div style={{position: 'relative'}}>
 		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
@@ -308,7 +358,7 @@ class StudentProfile extends Component {
 	 				</div>
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
-	 					<UserEducation expObj={this.state.user.experience}/>
+	 					<UserEducation expObj={this.state.classes}/>
 	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
 	 			</div>
@@ -392,13 +442,10 @@ class UserEducation extends Component {
 
 	render() {
 		return(
-			<div id={`user-education-${this.props.title}`} className='user-education'>
-				<div className='user-education-title'>{this.props.title}</div>
-				<div className='user-education-time'>
-					{`${this.props.startTime} - ${this.props.endTime}`}
-				</div>
-				<div id={`user-education-description-${this.props.title}`} className='user-education-description'>{this.props.description}</div>
-				{this.state.showExpander && <ExpanderIcons id={`user-education-${this.props.title}`} action={this.expand.bind(this)}/>}
+			<div className='user-classes'>
+				{this.props.expObj.map(classObj => {
+					return(<div>{classObj.text}</div>)
+				})}
 			</div>
 		)
 	}

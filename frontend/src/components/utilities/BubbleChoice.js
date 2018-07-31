@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
 import Bubble from './Bubble';
-import {getStudent, getLab, getAllTags, getAllSkills, getCurrentStudentId, getCurrentLabId} from '../../helper.js';
+import {getStudent, getLab, getAllTags, getAllSkills, getCurrentStudentId, getCurrentLabId, deepCopy, createSkill} from '../../helper.js';
 import $ from 'jquery';
 import '../user/individual/PickYourInterests.css';
 
 class BubbleChoice extends Component {
 	constructor(props) {
 		super(props);
-		var tempIntCat = [{name: 'biology'}, {name: 'chemisty'}, {name: 'spoon making'}, {name: 'cross origin analysis'}, {name: 'grossly overpriced cheese'}];
-		var tempIntFiltCat = [{name: 'biology'}, {name: 'chemisty'}, {name: 'spoon making'}, {name: 'cross origin analysis'}, {name: 'grossly overpriced cheese'}];
-		var tempSkillCat = [{name: 'HTML'}, {name: 'CSS'}, {name: 'React'}, {name: 'patience'}, {name: 'typing with fingers'}, {name: 'thinking with brain'}];
-		var tempSkillFiltCat = [{name: 'HTML'}, {name: 'CSS'}, {name: 'React'}, {name: 'patience'}, {name: 'typing with fingers'}, {name: 'thinking with brain'}];
-		var tempCat = props.skills ? tempSkillCat : tempIntCat;
-		var tempFiltCat = props.skills ? tempSkillFiltCat : tempIntFiltCat;
+		var tempCat = [];
+		var tempFiltCat = [];
 		var choices =  props.display_info && props.display_info.interests ? props.display_info.interests : [];
 		var catalog = [];
 		var filtered_catalog = [];
@@ -33,27 +29,54 @@ class BubbleChoice extends Component {
 			catalog,
 			choices,
 			filtered_catalog,
-			in_filter: false
+			in_filter: false,
+			max_length: 100,
 		};
 	}
 
 	componentDidMount() {
 		setTimeout(() => {
-			getAllTags().then(resp => {
-				if (resp.data) {
-					this.setState({ catalog: resp.data, filtered_catalog: resp.data.slice() });
-				}
-			}).then(resp => {
-				this.setUserChoices();
-			});
-			getAllSkills().then(resp => {
-				if (resp.data) {
-					this.setState({ catalog: resp.data, filtered_catalog: resp.data.slice() });
-				}
-			}).then(resp => {
-				this.setUserChoices();
-			});
+			if (this.props.skills) {
+				getAllSkills().then(resp => {
+					if (resp.data) {
+						this.setState({ catalog: deepCopy(resp.data), filtered_catalog: deepCopy(resp.data), max_length: resp.data.length });
+					}
+				}).then(resp => {
+					this.setUserChoices();
+				});
+			} else {
+				getAllTags().then(resp => {
+					if (resp.data) {
+						this.setState({ catalog: deepCopy(resp.data), filtered_catalog: deepCopy(resp.data), max_length: resp.data.length });
+					}
+				}).then(resp => {
+					this.setUserChoices();
+				});
+			}
 		}, 200);
+	}
+
+	componentWillReceiveProps(props) {
+		if (!this.state.search_term || this.state.search_term === "") {
+			if (props.display_info && props.display_info.interests) {
+				var filtered_catalog = [];
+				var catalog = [];
+				var choices = deepCopy(props.display_info.interests);
+				this.state.catalog.map(obj => {
+					var found = false;
+					choices.map(choice => {
+						if (choice.name === obj.name) {
+							found = true;
+						}
+					})
+					if (!found) {
+						 catalog.push(obj);
+						 filtered_catalog.push(obj);
+					}
+				})
+				this.setState({choices, filtered_catalog});
+			}
+		}
 	}
 
 	setUserChoices() {
@@ -168,6 +191,17 @@ class BubbleChoice extends Component {
 		});
 	}
 
+	handleClickCustomAdd() {
+		/*createSkill(this.state.search_term, "").then(r => {
+			console.log("CREATED SKILL?", r);
+		})*/
+		var newState = this.state;
+		newState.choices.push({id: this.state.max_length + 1, name: this.state.search_term});
+		newState.max_length += 1;
+		newState.search_term = "";
+		this.setState(newState);
+	}
+
 	handleClickDelete(bubble) {
 		this.setState((prevState) => {
 			var temp_delete = prevState.choices;
@@ -197,6 +231,7 @@ class BubbleChoice extends Component {
 		return(
 			<div className='row interest-container'>
 				<div className='interest-section left col s6 left-align'>
+					<div className="interest-custom-add" onClick={this.handleClickCustomAdd.bind(this)}>+ custom</div>
 					<input id='search-term' className='interest-search' type='text' placeholder={this.props.display_info.placeholder_txt} onChange={this.filterList.bind(this)} />
 					<div className='interest-body'>
 						{this.state.filtered_catalog.map((bubble) => {

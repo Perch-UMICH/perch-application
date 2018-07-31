@@ -10,6 +10,7 @@
 	color: var(--white);
 	min-height: 250px;
 	margin-bottom: 0px !important;
+	position: relative;
 }
 
 .interest-header {
@@ -42,6 +43,14 @@
 	float: left;
 	max-height: 200px;
 	overflow: scroll;
+}
+
+.interest-custom-add {
+	position: absolute;
+	color: lightgrey;
+	right: 51%;
+	cursor: pointer;
+	top: 8px;
 }
 
 .interest-search {

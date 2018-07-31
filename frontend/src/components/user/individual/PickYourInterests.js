@@ -4,7 +4,7 @@ import BasicButton from '../../utilities/buttons/BasicButton';
 import BubbleChoice	from '../../utilities/BubbleChoice';
 import Bubble from '../../utilities/Bubble';
 import {EditContainerOnboarding} from './StudentEditors';
-import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab, syncSkillsToLab, syncTagsToLab} from '../../../helper.js';
+import {getStudent, getStudentTags, getCurrentStudentId, getStudentSkills, getLab, addSkillsToLab, syncTagsToStudent, syncSkillsToStudent, addTagsToLab, addSkillsToStudent, addTagsToStudent, getAllSkills, getAllTags, getCurrentUserId, getCurrentLabId, getStudentFromUser, isStudent, isLab, syncSkillsToLab, syncTagsToLab, deepCopy} from '../../../helper.js';
 import './PickYourInterests.css';
 
 class PickYourInterests extends Component {
@@ -28,12 +28,23 @@ class PickYourInterests extends Component {
 			bubble_array: [],
 			s_id: getCurrentStudentId(),
 			l_id: getCurrentLabId(),
-			interests: props.user && props.user.interests ? props.user.interests : [],
-			skills: props.user && props.user.skills ? props.user.skills : [],
+			interests: props.user && props.user.interests ? deepCopy(props.user.interests) : [],
+			skills: props.user && props.user.skills ? deepCopy(props.user.skills) : [],
 		};
 
 		this.updateBubbleChoice = this.updateBubbleChoice.bind(this);
 		this.saveAndContinue = this.saveAndContinue.bind(this);
+	}
+
+	componentWillReceiveProps(props) {
+		if (props.user) {
+			if (props.user.interests && props.user.interests.length) {
+				this.setState({interests: deepCopy(props.user.interests)})
+			}
+			if (props.user.skills && props.user.skills.length) {
+				this.setState({skills: deepCopy(props.user.skills)})
+			}
+		}
 	}
 
 	getInterests() {
@@ -124,8 +135,6 @@ class PickYourInterests extends Component {
 	}
 
 	saveAndContinue(event) {
-		console.log("tag/skill array to add:");
-		console.log(this.state.bubble_array);
 		var item_ids = this.state.bubble_array.map((item) => {
 			return item.id;
 		});

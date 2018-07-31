@@ -140,6 +140,11 @@
 	filter: grayscale(100%);
 }
 
+/* Classes */
+.user-classes {
+	margin: 10px 20px;
+}
+
 /* Work Experience*/
 .user-work-experience {
 	border-bottom: 1px solid lightgrey;
