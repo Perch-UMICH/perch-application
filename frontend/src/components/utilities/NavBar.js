@@ -31,6 +31,7 @@ class NavBar extends Component {
 				<li><a className="nav-item" href={this.state.prof_dest}>PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>
 			    <li><a className="nav-item" href="/dashboard">SAVED</a></li>
+			    <li><a className="nav-item" href="/help">HELP</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
 			</div>
@@ -38,6 +39,7 @@ class NavBar extends Component {
 		else {
 			var navItems = <div>
 				<li><a className="nav-item" href="/about">ABOUT</a></li>
+				<li><a className="nav-item" href="/help">DEMO</a></li>
 			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}

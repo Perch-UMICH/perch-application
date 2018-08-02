@@ -26,6 +26,7 @@ import GroupPage from './components/user/group/GroupPage';
 import LabDashboard from './components/labSearch/LabDashboard';
 import StudentOnboarding from './components/user/individual/StudentOnboarding';
 import FacultyOnboarding from './components/user/individual/FacultyOnboarding';
+import Help from './components/publicStatic/help/Help'
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
@@ -68,6 +69,7 @@ class Router extends Component {
 							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/student-onboarding' component={ StudentOnboarding } />
 							<Route path='/faculty-onboarding' component={ FacultyOnboarding } />
+							<Route path='/help' component={ Help } />
 							<Route path='/test' component={ UserTest } />
 							<Route path='/' component={ Home } />
 						</Switch>

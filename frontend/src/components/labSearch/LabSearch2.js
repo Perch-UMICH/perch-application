@@ -48,7 +48,7 @@ class LabSearch extends Component {
             //console.log(resp);
             for (var key in all_labs) {
                 let lab = all_labs[key].data;
-                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
+                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
             }
 
             this.setState(newState);
@@ -157,7 +157,7 @@ class LabSearch extends Component {
       
                 resp.data.results.map((lab) => {
                     console.log(lab);
-                    newState.all_labs.push(<LabSearchItem name={lab.name} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/akira.jpg' description='NULL' positions={lab.positions}/>);
+                    newState.all_labs.push(<LabSearchItem name={lab.name} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
                 })
 
                 this.setState(newState);
