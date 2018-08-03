@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import SquareButton from '../../utilities/buttons/SquareButton';
 import $ from 'jquery';
 import ReactDOM from 'react-dom';
-import {EditContainerOnboarding} from './StudentEditors.js'
+import {EditContainerOnboarding, EditClasses} from './StudentEditors.js'
 import {updateStudent, getStudent, getCurrentUserId, getCurrentStudentId, getStudentFromUser} from '../../../helper.js';
 import './NotableClasses.css';
 
@@ -119,11 +119,31 @@ class NotableClasses extends Component {
 	}
 
 	render() {
+		var schoolSection = null;
+		var classesSection = null;
+
 		if (this.props.noRender) {
 			return ("");
 		}
+
+		if (this.props.showAllEducation) {
+			schoolSection =
+				<div className='input-field'>
+					<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
+						onChange={(e) => {
+							if (this.props.updateUser) {
+								this.props.updateUser("school", e.target.value)}
+							this.setState({school: e.target.value})
+						}}/>
+					<label htmlFor='profile-school' className="active" >School</label>
+				</div>
+
+			classesSection =
+				<EditClasses user={this.state.user} updateUser={this.props.updateUser} />
+		}
 		var notableClassesForm =
 			<form onClick={this.updateYear.bind(this)}>
+				{schoolSection}
 				<div className='row'>
 					<div className='input-field col s4'>
 						<div className='notable-classes-label left-align'>GPA</div>
@@ -149,6 +169,8 @@ class NotableClasses extends Component {
 				    </select>
 					</div>
 				</div>
+				<div className='notable-classes-label left-align'>Relevant Classes</div>
+				{classesSection}
 			</form>
 
 		if (this.state.url_string === 'notable-classes' || this.props.showForm) {
