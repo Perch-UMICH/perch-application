@@ -223,10 +223,6 @@ export class EditClasses extends Component {
 	render() {
 		return (
 			<form id='edit-classes'>
-				<div className='notable-classes-label left-align class-creation-label'>
-					List your notable classes
-					<a onClick={this.addClass.bind(this)} id="addQuestion" > <i className="material-icons">add</i></a>
-				</div>
 			    {this.state.class_arr.map((c) => {
 					return (
 						<div className="row" key={c.id}>
@@ -238,6 +234,9 @@ export class EditClasses extends Component {
 							</div>
 						</div>);
 				})} <br/>
+				<div className="add-obj-icon-container">
+					<a onClick={this.addClass.bind(this)}><i className="material-icons add-obj-icon">add</i></a>
+				</div>
 			</form>
 		)
 	}
@@ -403,16 +402,6 @@ export class EditQuickview extends Component {
 
 	componentWillReceiveProps(props) {
 		if (props.user) {
-			var name = "";
-			if (props.user.first_name) {
-				name = props.user.first_name + " ";
-			}
-			if (props.user.last_name) {
-				name += props.user.last_name
-			}
-			if (name !== " ") {
-				this.setState({name})
-			}
 			if (props.user.school) {
 				this.setState({school: props.user.school})
 			}
@@ -450,6 +439,21 @@ export class EditQuickview extends Component {
 	}
 
 	render() {
+		var schoolSection =
+			<div className='input-field'>
+				<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
+					onChange={(e) => {
+						if (this.props.updateUser) {
+							this.props.updateUser("school", e.target.value)}
+						this.setState({school: e.target.value})
+					}}/>
+				<label htmlFor='profile-school' className="active" >School</label>
+			</div>
+
+		if (this.props.showNoSchool) {
+			schoolSection = null;
+		}
+
 		return(
 			<div className="quickview-editor-container">
 				<div id='quickview-editor-L'>
@@ -480,21 +484,13 @@ export class EditQuickview extends Component {
 			   		<div className='input-field'>
 			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' value={this.state.name}
 							 	onChange={(e) => {
+									this.setState({name: e.target.value})
 									if (this.props.updateUser) {
 										this.props.updateUser("name", e.target.value)}
-									this.setState({name: e.target.value})
 								}}/>
 			   			<label htmlFor='profile-name' className="active" >Name</label>
 			   		</div>
-			   		<div className='input-field'>
-			   			<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
-								onChange={(e) => {
-									if (this.props.updateUser) {
-										this.props.updateUser("school", e.target.value)}
-									this.setState({school: e.target.value})
-								}}/>
-			   			<label htmlFor='profile-school' className="active" >School</label>
-			   		</div>
+			   		{schoolSection}
 			   	</div>
 			</div>
 		)

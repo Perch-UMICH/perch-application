@@ -115,30 +115,26 @@ class StudentOnboarding extends Component {
         text: "Welcome to Perch! We'll begin by gathering some information about you to set up your profile. \nDon't worry about perfection - you can edit these fields afterwards at any time."
       },
       1: {
-        comp: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-        text: "Search skills/interests that apply to you and click on bubbles to add."
+        comp: <UploadImage user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Upload a profile image and your preferred name. Add a new image by dragging-and-dropping and adjust using the editing tools below.",
       },
       2: {
+        comp: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Search skills and interests that apply to you, and click on the bubbles to add them to your profile."
+      },
+      3: {
         comp: "",
         text: "Enter your GPA, major (or intended major), and class year.",
       },
-      3: {
-        comp: <EnterBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-        text: "Enter a short description to describe yourself professionally."
-      },
       4: {
-        comp: <UploadImage user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-        text: "Upload a professional profile image, preferred name, and school. Add a new image by dragging-and-dropping and adjust using the slider/rotate-tool below.",
+        comp: <Experience user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Enter any relevant lab or work experience and a short description of your contributions."
       },
       5: {
-        comp: <Experience user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-        text: "Enter any relevant lab or work experience, including time range and a short description of your personal contributions."
+        comp: <EnterBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        text: "Enter a short description to describe yourself research interests and experience." // add word limit
       },
       6: {
-        comp: <Education user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-        text: "Please enter any classes you've taken that may be relevant to research positions you are interested in."
-      },
-      7: {
         comp: <Links user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
         text: "If applicable, enter a link to your LinkedIn page and resume below. That's it!",
       },
@@ -154,15 +150,15 @@ class StudentOnboarding extends Component {
     if (this.state.curStep === 1) {
       nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.updateTags()}}/>
     }
-    if (this.state.curStep === 2) {
+    if (this.state.curStep === 3) {
       css = "visible-yes";
       nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.sendUpdate()}}/>;
     }
-    if (this.state.curStep === 5) {
+    if (this.state.curStep === 4) {
       nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.updateExperience()}}/>
     }
     var dropDown = <div className={css}>
-      <NotableClasses user={this.state.user} showForm={true} updateUser={this.updateUser.bind(this)}/>
+      <NotableClasses user={this.state.user} showForm={true} showAllEducation={true} updateUser={this.updateUser.bind(this)}/>
     </div>
 		return (
       <div className="onboarding-container">
