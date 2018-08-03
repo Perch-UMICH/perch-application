@@ -398,7 +398,6 @@ export class EditQuickview extends Component {
 			name,
 			school: props.user && props.user.school ? props.user.school : "",
 		}
-		console.log("STATE", this.state)
 	}
 
 	componentWillReceiveProps(props) {
