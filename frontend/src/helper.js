@@ -337,9 +337,9 @@ export function getStudent(student_id) {
         })
 }
 
-export function createStudent(user_id, first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student) {
+export function createStudent(user_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student) {
     console.log('Creating student');
-    return axios.post('api/students', {user_id, first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student})
+    return axios.post('api/students', {user_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student})
         .then(response => {
             sessionStorage.setItem('student_id', response.data.result.id) // CHANGED BY BENJI
             return respond(response.status, response.data);
@@ -350,12 +350,13 @@ export function createStudent(user_id, first_name, last_name, email, year, bio,m
 }
 
 // RESTRICTED: student_id
-export function updateStudent(first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student) {
+// NOTE: skill_ids and tag_ids must be an array of integer ids
+export function updateStudent(first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids) {
     console.log('Updating student');
 
     let student_id = sessionStorage.getItem('student_id');
     let _method = 'PUT';
-    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, email, year, bio,major, gpa, classes, experiences, linkedin_link, website_link, is_urop_student})
+    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student})
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -507,89 +508,9 @@ export function removeTagsFromStudent(tag_ids) {
 }
 
 
-// Class Experiences
-// Classes that student has taken at a university
-//  title - (string) name of class
-
-// RESTRICTED: student_id
-// 'classes' should be an array of titles (strings)
-export function createAndAddClassExperiencesToStudent(class_experiences) {
-    console.log('Adding classes to student');
-
-    let student_id = sessionStorage.getItem('student_id');
-    let payload = {
-        class_experiences: class_experiences
-    };
-    return axios.post('api/students/' + student_id + '/class_experiences', payload)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-// RESTRICTED: student_id
-export function removeClassExperiencesFromStudent(class_experience_ids) {
-    console.log('Adding classes to student');
-
-    let student_id = sessionStorage.getItem('student_id');
-    let payload = {
-        class_experience_ids: class_experience_ids,
-        _method: 'PUT'
-    };
-    return axios.post('api/students/' + student_id + '/class_experiences', payload)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-// Work Experiences
-// Student work experience
-//  title - (string)
-//  description - (string)
-//  start_date - (string)
-//  end_date - (string)
-
-// RESTRICTED: student_id
-// Input should be an array of objects formatted like:
-// {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
-export function addWorkExperiencesToStudent(work_experiences) {
-    let student_id = sessionStorage.getItem('student_id');
-    let payload = {
-        work_experiences: work_experiences,
-    };
-    return axios.post('api/students/' + student_id + '/work_experiences', payload)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-// RESTRICTED: student_id
-export function removeWorkExperiencesFromStudent(work_experience_ids) {
-    let student_id = sessionStorage.getItem('student_id');
-    let payload = {
-        work_experience_ids: work_experience_ids,
-        _method: 'PUT'
-    };
-    return axios.post('api/students/' + student_id + '/work_experiences', payload)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-
 // Lab list
 // RESTRICTED: student_id
+// NOTE: lab_ids must be an array of integer ids
 export function addToStudentLabList(lab_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
@@ -618,6 +539,122 @@ export function removeFromStudentLabList(lab_ids) {
             return error_handle(error);
         })
 }
+
+// Edu Experiences
+// Description of education at a school/university
+// university_name: (string) name of university
+// start_date: (string)
+// end_date: (string)
+// current: (bool) student is currently at this university
+// class_experiences: (string) (array) names of classes student took (are taking) at this uni
+// majors: (string) (array) names of subjects they majored (are majoring) in
+
+// RESTRICTED: student_id
+export function createAndAddEduExperiencesToStudent(university_name, start_date, end_date, current, class_experience_names, major_names) {
+    console.log('Adding edu experiences to student');
+
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        university_name: university_name,
+        start_date: start_date,
+        end_date: end_date,
+        current: current,
+        class_experience_names: class_experience_names,
+        major_names: major_names
+    };
+    return axios.post('api/students/' + student_id + '/edu_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+// RESTRICTED: student_id
+export function updateEduExperiencesToStudent(edu_experience_id, university_name, start_date, end_date, current, class_experience_names, major_names) {
+    console.log('Adding edu experiences to student');
+
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        edu_experience_id: edu_experience_id,
+        university_name: university_name,
+        start_date: start_date,
+        end_date: end_date,
+        current: current,
+        class_experience_names: class_experience_names,
+        major_names: major_names,
+        _method: 'PUT'
+    };
+    return axios.post('api/students/' + student_id + '/edu_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+// RESTRICTED: student_id
+export function removeEduExperiencesFromStudent(edu_experience_ids) {
+    console.log('Removing edu experiences from student');
+
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        edu_experience_ids: edu_experience_ids,
+        _method: 'PUT'
+    };
+    return axios.post('api/students/' + student_id + '/edu_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+// Work Experiences
+// Student work experience
+//  title - (string)
+//  description - (string)
+//  start_date - (string)
+//  end_date - (string)
+
+// RESTRICTED: student_id
+// NOTE: Input should be an array of objects formatted like:
+// {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
+export function addWorkExperiencesToStudent(work_experiences) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        work_experiences: work_experiences,
+    };
+    return axios.post('api/students/' + student_id + '/work_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+// RESTRICTED: student_id
+// NOTE: work_experience_ids must be an array of integer ids
+export function removeWorkExperiencesFromStudent(work_experience_ids) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        work_experience_ids: work_experience_ids,
+        _method: 'PUT'
+    };
+    return axios.post('api/students/' + student_id + '/work_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+//
 
 // export function getStudentSchoolCourses(student_id) {
 //     console.log('Getting student school courses');
@@ -1587,16 +1624,4 @@ export function returnToProfile() {
 
 export function exists(item) {
     return item ? true : false;
-}
-
-//// CHANGED BY EMI
-
-export function deepCopy(object) {
-   var output, value, key;
-   output = Array.isArray(object) ? [] : {};
-   for (key in object) {
-       value = object[key];
-       output[key] = (typeof value === "object") ? deepCopy(value) : value;
-   }
-   return output;
 }
