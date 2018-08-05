@@ -29,7 +29,7 @@
 	font-size: 30px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	background-color: var(--active);
+	background-color: var(--primary);
 	color: var(--white);
 	margin-bottom: 20px;
 	margin-left: -20px;

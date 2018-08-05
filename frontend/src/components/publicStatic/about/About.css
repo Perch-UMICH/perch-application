@@ -34,3 +34,10 @@
 	color: var(--white);
 	border-color: var(--primary)
 }
+
+.about-header {
+	text-align: left;
+	font-weight: bold;
+	font-size: 20px;
+	
+}

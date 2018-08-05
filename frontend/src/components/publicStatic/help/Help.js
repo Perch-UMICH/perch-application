@@ -25,12 +25,12 @@ class Help extends Component {
 	render() {
 		return(
 			  <div id='help'>
-			  	<div className='perch-story-header'>Tutorials</div>
+			  	<div className='about-header'>We got your back</div>
 			  	<div id='help-video-wrapper'>
 			  		<video src={`/vids/${this.state.vid}`} controls/>
 			  	</div>
 			  	<div id='vid-panel'>
-			  		<h1>We got your back</h1>
+			  		<h1>Tutorials</h1>
 			  		<VidItem title='Making a Student Account' 				vid='test.mov' superClick={this.activate.bind(this)} active={this.state.active} />
 			  		<VidItem title='Making a Professor Account' 			vid='test2.mov' superClick={this.activate.bind(this)} active={this.state.active}/>
 			  		<VidItem title='Editing Info' 							vid='test.mov' superClick={this.activate.bind(this)} active={this.state.active}/>

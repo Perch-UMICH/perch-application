@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent, removeWorkExperiencesFromStudent, createAndAddClassExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent, removeWorkExperiencesFromStudent, createAndAddEduExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -80,7 +80,7 @@ class StudentProfile extends Component {
 				class_arr.push(c.text);
 			})
 		}
-		createAndAddClassExperiencesToStudent(class_arr).then();
+		createAndAddEduExperiencesToStudent(class_arr).then();
 		updateStudent(first_name, last_name, updated_user.email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin, updated_user.website_link)
 		.then(r => {
 			this.generalHandler();
@@ -103,7 +103,7 @@ class StudentProfile extends Component {
 				class_arr.push(c.text);
 			})
 		}
-		createAndAddClassExperiencesToStudent(class_arr);
+		createAndAddEduExperiencesToStudent(class_arr);
 	}
 
 	sendHeaderInfo() {
