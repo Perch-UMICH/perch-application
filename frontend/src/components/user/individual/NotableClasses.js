@@ -121,6 +121,7 @@ class NotableClasses extends Component {
 	render() {
 		var schoolSection = null;
 		var classesSection = null;
+		var classesLabel = null;
 
 		if (this.props.noRender) {
 			return ("");
@@ -137,6 +138,9 @@ class NotableClasses extends Component {
 						}}/>
 					<label htmlFor='profile-school' className="active" >School</label>
 				</div>
+
+			classesLabel =
+				<div className='notable-classes-label left-align'>Relevant Classes</div>
 
 			classesSection =
 				<EditClasses user={this.state.user} updateUser={this.props.updateUser} />
@@ -169,7 +173,7 @@ class NotableClasses extends Component {
 				    </select>
 					</div>
 				</div>
-				<div className='notable-classes-label left-align'>Relevant Classes</div>
+				{classesLabel}
 				{classesSection}
 			</form>
 

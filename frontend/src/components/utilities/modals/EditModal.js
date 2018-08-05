@@ -45,7 +45,7 @@ class EditModal extends Component {
 									}
 									this.handleClose();}}
 								msg={this.props.actionName ? this.props.actionName : "save"} />
-				  	</div>
+				  </div>
 			 	</div>
 			</div>
 		);
