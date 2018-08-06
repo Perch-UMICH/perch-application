@@ -352,7 +352,7 @@ export function createStudent(user_id, first_name, last_name, contact_email, con
 // RESTRICTED: student_id
 // NOTE: skill_ids and tag_ids must be an array of integer ids
 export function updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids) {
-    console.log('Updating student');
+    console.log('Updating student', first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids);
 
     let student_id = sessionStorage.getItem('student_id');
     let _method = 'PUT';

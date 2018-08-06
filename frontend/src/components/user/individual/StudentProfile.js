@@ -71,27 +71,6 @@ class StudentProfile extends Component {
 		});
   }
 
-	sendUpdate() {
-		var updated_user = this.state.updated_user;
-		var nameArr = updated_user && updated_user.name ? updated_user.name.split(' ') : [];
-    var first_name = nameArr[0] ? nameArr[0]: "";
-    var last_name = nameArr[1] ? nameArr[1] : "";
-		// need school,
-		var classes = "";
-		var class_arr = [];
-		if (updated_user.classes) {
-			updated_user.classes.map(c => {
-				classes += c.text + ',';
-				class_arr.push(c.text);
-			})
-		}
-		createAndAddEduExperiencesToStudent(class_arr).then();
-		updateStudent(first_name, last_name, updated_user.contact_email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin_link, updated_user.website_link)
-		.then(r => {
-			this.generalHandler();
-		});
-	}
-
 	sendExperiences() {
 		console.log("WORK EXP??", this.state.updated_user.work_experiences)
 		if (this.state.updated_user.work_experiences) {
@@ -107,11 +86,6 @@ class StudentProfile extends Component {
 				});
 			})
 		}
-		/*
-		updateStudent(null, null, null, null, null, null, null, this.state.updated_user.experiences, null, null)
-		.then(r => {
-			this.generalHandler();
-		});*/
 	}
 
 	sendClasses() {
@@ -125,38 +99,44 @@ class StudentProfile extends Component {
 		}
 		console.log("CLASS ARR")
 		//(university_name, start_date, end_date, current, class_experience_names, major_names)
-		createAndAddEduExperiencesToStudent("Cool university", "start date", "end-date", true, "soph", "9.9", class_arr, this.state.updated_user.major).then(r => {
+		/*createAndAddEduExperiencesToStudent("Cool university", "start date", "end-date", true, "soph", "9.9", class_arr, ["hey"]).then(r => {
 			console.log("experience update resp", r);
 			this.generalHandler();
-		});
+		});*/
+		createAndAddEduExperiencesToStudent('uni name','start','end',true,null,null,['EECS 280'],['majory major']).then((resp) => {
+       console.log("RESPPP!!!!", resp);
+			 this.generalHandler();
+   	})
 	}
 
 	sendHeaderInfo() {
 		var nameArr = this.state.updated_user && this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
     var first_name = nameArr[0] ? nameArr[0]: "";
     var last_name = nameArr[1] ? nameArr[1] : "";
-		updateStudent(first_name, last_name, null, null, null, null, null, null, null)
+		updateStudent(first_name, last_name, null, null, null, null, null, null, [], [])
 		.then(r => {
 			this.generalHandler();
 		});
 	}
 
 	sendLinks() {
-		updateStudent(null, null, null, null, null, this.state.updated_user.linkedin_link, this.state.updated_user.website_link, null, null, null)
+		updateStudent(null, null, null, null, null, this.state.updated_user.linkedin_link, this.state.updated_user.website_link, null, [], [])
 		.then(r => {
 			this.generalHandler();
 		});
 	}
 
 	sendAcademicInfo() {
-		updateStudent(null, null, null, this.state.updated_user.year, null, this.state.updated_user.major, this.state.updated_user.gpa, null, null, null)
+			// updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
+		updateStudent(null, null, null, null, null, null, null, null, [], [])
 		.then(r => {
 			this.generalHandler();
 		});
 	}
 
 	sendContactInfo() {
-		updateStudent(null, null, this.state.updated_user.contact_email, null, null, null, null, null, null, null)
+		// updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
+		updateStudent(null, null, this.state.updated_user.contact_email, this.state.updated_user.contact_phone, null, null, null, null, [], [])
 		.then(r => {
 			console.log("update response", r);
 			this.generalHandler();
@@ -164,7 +144,8 @@ class StudentProfile extends Component {
 	}
 
 	sendBio() {
-		updateStudent(null, null, null, null, null, this.state.updated_user.bio, null, null, null, null, null)
+		// updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
+		updateStudent(null, null, null, null, this.state.updated_user.bio, null, null, null,  [], [])
 		.then(r => {
 			this.generalHandler();
 		});
@@ -213,23 +194,6 @@ class StudentProfile extends Component {
 				})
 			});
 		});
-	}
-
-	updateExperience() {
-		console.log("WORK EXP??", this.state.updated_ser.work_experiences)
-		if (this.state.updated_user.work_experiences) {
-			var idsToRemove = [];
-			if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
-				this.state.user.work_experiences.map(exp => {
-					idsToRemove.push(exp.id);
-				})
-			}
-			removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-				addWorkExperiencesToStudent(this.state.updated_user.work_experiences).then(r => {
-					this.generalHandler();
-				});
-			})
-		}
 	}
 
 	// Handles retrieving skilsl and tags

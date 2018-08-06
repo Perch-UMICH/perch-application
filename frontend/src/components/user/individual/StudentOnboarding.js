@@ -25,7 +25,7 @@ class StudentOnboarding extends Component {
     this.updateExperience = this.updateExperience.bind(this);
     this.state = {
       curStep: 0,
-      numSteps: 8,
+      numSteps: 7,
       user: {},
     }
   }
@@ -59,17 +59,27 @@ class StudentOnboarding extends Component {
     var first_name = nameArr[0] ? nameArr[0]: "";
     var last_name = nameArr[1] ? nameArr[1] : "";
     var s = {
-      email: user.email ? user.email : null,
+      contact_email: user.contact_email ? user.contact_email : null,
+      contact_phone: user.contact_phone ? user.contact_phone : null,
       year: user.year ? user.year : null,
       bio: user.bio ? user.bio : null,
       major: user.major ? user.major : null,
       gpa: user.gpa ? user.gpa : null,
       work_experiences: user.work_experiences ? user.work_experiences : null,
       classes: user.classes ? user.classes : null,
-      linkedin: user.linkedin ? user.linkedin : null,
+      linkedin_link: user.linkedin_link ? user.linkedin_link : null,
+      skills: user.skills ? user.skills : [],
+      interests: user.interests ? user.interests : [],
       website_link: user.website_link ? user.website_link : null,
     }
-    updateStudent(first_name, last_name, s.email, s.year, s.bio, s.major, s.gpa, s.classes, s.work_experiences, s.linkedin, s.website_link).then(r => console.log("blahhhh", r));
+    // updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
+    updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, s.linkedin_link, s.website_link, true, s.skills, s.interests)
+    .then(r => {
+      getStudentFromUser(getCurrentUserId()).then(r => {
+        console.log("Got student through current user", r.data);
+      });
+      console.log("blahhhh", r)
+    });
     if (redirect) {
       window.location = '/student-profile/' + getCurrentUserId();
     }
