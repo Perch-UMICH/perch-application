@@ -10,9 +10,10 @@ import FormData from 'form-data'
 axios.defaults.headers.common = {};
 // axios.defaults.baseURL = 'http://perch-api.us-east-1.elasticbeanstalk.com';
 axios.defaults.baseURL = 'http://perchapi-test.us-east-1.elasticbeanstalk.com/';
-// axios.defaults.baseURL = 'http://52.87.159.159:8000/';
 //axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['Accept'] = 'application/json';
+
 if (sessionStorage.token){
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token');
 }
@@ -551,7 +552,7 @@ export function removeFromStudentPositionList(position_ids) {
 // majors: (string) (array) names of subjects they majored (are majoring) in
 
 // RESTRICTED: student_id
-export function createAndAddEduExperiencesToStudent(university_name, start_date, end_date, current, year, gpa, class_experience_names, major_names) {
+export function addEduExperienceToStudent(university_name, start_date, end_date, current, year, gpa, class_experience_names, major_names) {
     console.log('Adding edu experiences to student')
 
     let student_id = sessionStorage.getItem('student_id');
@@ -575,7 +576,7 @@ export function createAndAddEduExperiencesToStudent(university_name, start_date,
 }
 
 // RESTRICTED: student_id
-export function updateEduExperiencesToStudent(edu_experience_id, university_name, start_date, end_date, current, year, gpa, class_experience_names, major_names) {
+export function updateEduExperienceOfStudent(edu_experience_id, university_name, start_date, end_date, current, year, gpa, class_experience_names, major_names) {
     console.log('Adding edu experiences to student');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -601,15 +602,15 @@ export function updateEduExperiencesToStudent(edu_experience_id, university_name
 }
 
 // RESTRICTED: student_id
+// NOTE: edu_experience_ids must be an array of integer ids
 export function removeEduExperiencesFromStudent(edu_experience_ids) {
     console.log('Removing edu experiences from student');
 
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
         edu_experience_ids: edu_experience_ids,
-        _method: 'PUT'
     };
-    return axios.post('api/students/' + student_id + '/edu_experiences', payload)
+    return axios.post('api/students/' + student_id + '/edu_experiences/delete', payload)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -626,12 +627,12 @@ export function removeEduExperiencesFromStudent(edu_experience_ids) {
 //  end_date - (string)
 
 // RESTRICTED: student_id
-// NOTE: Input should be an array of objects formatted like:
+// NOTE: Input should be an object formatted like
 // {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
-export function addWorkExperiencesToStudent(work_experiences) {
+export function addWorkExperienceToStudent(work_experience) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        work_experiences: work_experiences,
+        work_experience: work_experience,
     };
     return axios.post('api/students/' + student_id + '/work_experiences', payload)
         .then(response => {
