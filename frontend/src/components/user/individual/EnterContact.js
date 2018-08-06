@@ -14,7 +14,7 @@ class EnterContact extends Component {
 	render() {
 		return (
 			<EditContainerOnboarding title="Contact Information" redirect={this.redirect.bind(this)}>
-				<EditContact updateUser={this.props.updateUser} user={this.props.user}/>
+				<EditContact noEmail={true} updateUser={this.props.updateUser} user={this.props.user}/>
 			</EditContainerOnboarding>
 		);
 	}

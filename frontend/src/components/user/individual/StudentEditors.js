@@ -127,16 +127,23 @@ export class EditContact extends Component {
 	}
 
 	render() {
+		var emailSection =
+			<div className='input-field'>
+				<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.contact_email}
+				onChange={(e) => {
+					if (this.props.updateUser) {
+						this.props.updateUser("contact_email", e.target.value); }
+					this.setState({contact_email: e.target.value})}}/>
+				<label htmlFor='email' className="active">Email</label>
+			</div>
+
+		if (this.props.noEmail) {
+			emailSection = null;
+		}
+		
 		return(
 			<form id='edit-contact-info'>
-				<div className='input-field'>
-					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.contact_email}
-					onChange={(e) => {
-						if (this.props.updateUser) {
-							this.props.updateUser("contact_email", e.target.value); }
-						this.setState({contact_email: e.target.value})}}/>
-					<label htmlFor='email' className="active">Email</label>
-				</div>
+				{emailSection}
 				<div className='input-field'>
 					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.contact_phone}
 					onChange={(e) => {
@@ -415,14 +422,22 @@ export class EditQuickview extends Component {
 			rotate: 0,
 			scale: 1.5,
 			name,
-			school: props.user && props.user.school ? props.user.school : "",
+			university: props.user && props.user.university ? props.user.university : "",
 		}
 	}
 
 	componentWillReceiveProps(props) {
+		var name = "";
 		if (props.user) {
-			if (props.user.school) {
-				this.setState({school: props.user.school})
+			if (props.user.first_name) {
+				name = props.user.first_name + " ";
+			}
+			if (props.user.last_name) {
+				name += props.user.last_name;
+			}
+			this.setState({name})
+			if (props.user.university) {
+				this.setState({university: props.user.university})
 			}
 			if (props.user.img) {
 				this.setState({image: props.user.img})
@@ -463,14 +478,29 @@ export class EditQuickview extends Component {
 				<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
 					onChange={(e) => {
 						if (this.props.updateUser) {
-							this.props.updateUser("school", e.target.value)}
-						this.setState({school: e.target.value})
+							this.props.updateUser("university", e.target.value)}
+						this.setState({university: e.target.value})
 					}}/>
 				<label htmlFor='profile-school' className="active" >School</label>
 			</div>
 
+		var nameSection =
+			<div className='input-field'>
+   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' value={this.state.name}
+				 	onChange={(e) => {
+						this.setState({name: e.target.value})
+						if (this.props.updateUser) {
+							this.props.updateUser("name", e.target.value)}
+					}}/>
+   			<label htmlFor='profile-name' className="active" >Name</label>
+   		</div>
+
 		if (this.props.showNoSchool) {
 			schoolSection = null;
+			nameSection =
+			<div className="onboarding-text">
+			Add a profile photo and edit using the slider and rotate tool below.
+			<br/><br/>Or, by default, stick with our friendly mascot, Rodriguez!</div>
 		}
 
 		return(
@@ -501,15 +531,7 @@ export class EditQuickview extends Component {
 					 <br/><br/>
 			    </div>
 			   	<div id='quickview-editor-R'>
-			   		<div className='input-field'>
-			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' value={this.state.name}
-							 	onChange={(e) => {
-									this.setState({name: e.target.value})
-									if (this.props.updateUser) {
-										this.props.updateUser("name", e.target.value)}
-								}}/>
-			   			<label htmlFor='profile-name' className="active" >Name</label>
-			   		</div>
+			   		{nameSection}
 			   		{schoolSection}
 			   	</div>
 			</div>

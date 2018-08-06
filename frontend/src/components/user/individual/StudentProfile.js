@@ -26,6 +26,7 @@ class StudentProfile extends Component {
 			major: "",
 			year: "",
 			bio: "",
+			university: "",
 			contact_email: "",
 			contact_phone: "",
 			classes: [],
@@ -33,6 +34,8 @@ class StudentProfile extends Component {
 			linkedin: "",
 			skills: [],
 			interests: [],
+			work_experiences: [],
+			edu_experiences: [],
 			resume: "",
 			student: true,
 			s_id: "",
@@ -89,21 +92,16 @@ class StudentProfile extends Component {
 	}
 
 	sendClasses() {
-		var classes = "";
 		var class_arr = [];
+		var major_arr = [];
 		if (this.state.updated_user.classes) {
 			this.state.updated_user.classes.map(c => {
-				classes += c.text + ',';
 				class_arr.push(c.text);
 			})
 		}
-		console.log("CLASS ARR")
-		//(university_name, start_date, end_date, current, class_experience_names, major_names)
-		/*createAndAddEduExperiencesToStudent("Cool university", "start date", "end-date", true, "soph", "9.9", class_arr, ["hey"]).then(r => {
-			console.log("experience update resp", r);
-			this.generalHandler();
-		});*/
-		createAndAddEduExperiencesToStudent('uni name','start','end',true,null,null,['EECS 280'],['majory major']).then((resp) => {
+		major_arr.push(this.state.user.major);
+
+		createAndAddEduExperiencesToStudent(this.state.user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
        console.log("RESPPP!!!!", resp);
 			 this.generalHandler();
    	})
@@ -115,7 +113,12 @@ class StudentProfile extends Component {
     var last_name = nameArr[1] ? nameArr[1] : "";
 		updateStudent(first_name, last_name, null, null, null, null, null, null, [], [])
 		.then(r => {
-			this.generalHandler();
+			var major_arr = [];
+			major_arr.push(this.state.user.major);
+
+			createAndAddEduExperiencesToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, this.state.user.classes, major_arr).then((resp) => {
+				 this.generalHandler();
+	   	})
 		});
 	}
 
@@ -127,11 +130,13 @@ class StudentProfile extends Component {
 	}
 
 	sendAcademicInfo() {
-			// updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
-		updateStudent(null, null, null, null, null, null, null, null, [], [])
-		.then(r => {
-			this.generalHandler();
-		});
+		var major_arr = [];
+		major_arr.push(this.state.updated_user.major);
+
+		createAndAddEduExperiencesToStudent(this.state.user.university,'start','end', true, this.state.updated_user.year, this.state.updated_user.gpa, this.state.user.classes, major_arr).then((resp) => {
+       console.log("RESPPP!!!!", resp);
+			 this.generalHandler();
+   	})
 	}
 
 	sendContactInfo() {
@@ -221,17 +226,37 @@ class StudentProfile extends Component {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
 				var class_arr = [];
-				if (resp.data && resp.data.classes) {
-					resp.data.classes.split(',').map((name, index) => {
-						class_arr.push({name, index});
-					})
-				}
 				console.log("GENERAL HANDLER", resp);
+				var major = "";
+				var gpa = "";
+				var year = "";
+				var university = "";
+				if (resp.data.edu_experiences && resp.data.edu_experiences.length) {
+					var eduExp = resp.data.edu_experiences[resp.data.edu_experiences.length - 1];
+					if (eduExp.majors && eduExp.majors.length) {
+						major = eduExp.majors[0] ? eduExp.majors[0].name : "";
+					}
+					if (eduExp.classes && eduExp.classes.length) {
+						eduExp.classes.map(classItem => {
+							class_arr.push(classItem.name)
+						});
+					}
+					if (eduExp.gpa) {
+						gpa = eduExp.gpa;
+					}
+					if (eduExp.year) {
+						year = eduExp.year;
+					}
+					if (eduExp.university) {
+						university = eduExp.university.name;
+					}
+				}
 				var user = {
 					name: `${resp.data.first_name} ${resp.data.last_name}`,
-					gpa: resp.data.gpa,
-					major: resp.data.major,
-					year: resp.data.year,
+					gpa,
+					major,
+					year,
+					university,
 					bio: resp.data.bio,
 					contact_email: resp.data.contact_email,
 					contact_phone: resp.data.contact_phone,
@@ -243,6 +268,8 @@ class StudentProfile extends Component {
 					resume: resp.data.resume_path,
 					skills: resp.data.skills ? resp.data.skills : [],
 					interests: resp.data.tags ? resp.data.tags : [],
+					work_experiences: resp.data.work_experiences,
+					edu_experiences: resp.data.edu_experiences,
 					student: true,
 					s_id: resp.data.id,
 					work_experiences: [],
@@ -366,7 +393,7 @@ class StudentProfile extends Component {
 	 					<div style={{position: 'relative'}}>
 		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
 		 					<div id='user-quickview-footer'>
-								{this.state.user.school}
+								{this.state.user.university}
 							</div>
 		 					<div id='user-quickview-name'>{this.state.user.name}</div>
 	 					</div>
@@ -385,7 +412,7 @@ class StudentProfile extends Component {
 	 				</div>
 	 				<div id='user-education'>
 	 					<h1>Education</h1>
-	 					<UserEducation expObj={this.state.classes}/>
+	 					<UserEducation classes={this.state.user.classes}/>
 	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
 	 			</div>
@@ -458,8 +485,19 @@ class UserWorkExperience extends Component {
 class UserEducation extends Component {
 	constructor(props) {
 		super(props)
+		var classes = [];
+		if (props.classes && props.classes.length) {
+			classes: props.classes;
+		}
 		this.state = {
 			showExpander: false,
+			classes
+		}
+	}
+
+	componentWillReceiveProps(props) {
+		if (props.classes && props.classes.length) {
+			this.setState({classes: props.classes})
 		}
 	}
 
@@ -470,8 +508,8 @@ class UserEducation extends Component {
 	render() {
 		return(
 			<div className='user-classes'>
-				{this.props.expObj.map(classObj => {
-					return(<div>{classObj.text}</div>)
+				{this.state.classes.map(classObj => {
+					return(<div key={classObj}>{classObj}</div>)
 				})}
 			</div>
 		)
