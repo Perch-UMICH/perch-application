@@ -515,7 +515,7 @@ export function removeTagsFromStudent(tag_ids) {
 export function addToStudentLabList(lab_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        lab_ids: lab_ids,
+        lab_ids: lab_ids
     };
     return axios.post('api/students/' + student_id + '/lab_list', payload)
         .then(response => {

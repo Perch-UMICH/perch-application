@@ -1,17 +1,28 @@
 import React, {Component} from 'react';
+import {addToStudentLabList, removeFromStudentLabList} from '../../helper.js'
 import './LabSearchProject.css';
 
 class LabSearchProject extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            added: true,
+            added: this.props.saved,
             description: this.props.description,
         }
     }
 
     componentDidMount() {
         this.formatTitle()
+    }
+
+    saveProject = () => {
+        addToStudentLabList([this.props.id])
+        this.toggleAdder()
+    }
+
+    removeProject = () => {
+        removeFromStudentLabList([this.props.id])
+        this.toggleAdder()
     }
 
     toggleAdder = () => {
@@ -35,8 +46,8 @@ class LabSearchProject extends Component {
                 <div className='lab-srch-project-description'>{this.state.description} <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span></div>
                 <div className='lab-srch-project-apply lab-srch-project-action-label'><a href='mailto:bearb@umich.edu?subject=Dear Future Master&body=Plz take me into your lab. I beg you'>Apply</a></div>
                 <div className='lab-srch-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
-                {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.toggleAdder}>save</div>}
-                {!this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.toggleAdder}>remove</div>}
+                {!this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.saveProject}>save</div>}
+                {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.removeProject}>remove</div>}
             </div>
              
 		);
