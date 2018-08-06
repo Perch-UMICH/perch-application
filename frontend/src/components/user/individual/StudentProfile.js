@@ -156,7 +156,6 @@ class StudentProfile extends Component {
 	}
 
 	sendContactInfo() {
-		(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
 		updateStudent(null, null, this.state.updated_user.contact_email, null, null, null, null, null, null, null)
 		.then(r => {
 			console.log("update response", r);
