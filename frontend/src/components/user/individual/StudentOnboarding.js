@@ -115,7 +115,7 @@ class StudentOnboarding extends Component {
         text: "Welcome to Perch! We'll begin by gathering some information about you to set up your profile. \nDon't worry about perfection - you can edit these fields afterwards at any time."
       },
       1: {
-        comp: <UploadImage user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
+        comp: <UploadImage showContact={true} user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
         text: "Upload a profile image and your preferred name. Add a new image by dragging-and-dropping and adjust using the editing tools below.",
       },
       2: {

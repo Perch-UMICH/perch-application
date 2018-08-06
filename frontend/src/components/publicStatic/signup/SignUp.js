@@ -45,8 +45,9 @@ class SignUp extends Component {
 		let email = document.getElementById('email').value;
 
 		if (student) {
-			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then(() => {
-				window.location.href = '/student-onboarding'
+			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then((resp) => {
+				console.log("CREATE STUDENT RESP", resp)
+				//window.location.href = '/student-onboarding'
 			});
 		}
 		else {
