@@ -19,12 +19,12 @@
 }
 
 #saved-labs-header {
-	text-align: center;
+	text-align: left;
 	width: 900px;
 	margin: auto;
-	margin-bottom: 20px;
-	font-size: 60px;
+	margin-bottom: 10px;
+	font-size: 30px;
 	color: var(--primary);
-	/*text-transform: uppercase;*/
-	/*font-weight: bold;*/
+	text-transform: uppercase;
+	font-weight: bold;
 }

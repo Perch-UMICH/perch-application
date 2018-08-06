@@ -57,7 +57,7 @@ class LabSearch extends Component {
         });
 
         getSearchData().then((resp) => {
-            //console.log(resp);
+            console.log(resp);
             let new_filts = this.state.filts;
             let new_parentFilts = this.state.parentFilts;
 
@@ -98,7 +98,7 @@ class LabSearch extends Component {
 		search.addEventListener('keyup', this.updateSearch.bind(this))
 
 		getStudentFromUser(getCurrentUserId()).then((resp) => {
-			this.setState({lab_list: resp.data.lab_list})
+			this.setState({lab_list: resp.data.position_list})
 		})
 
 	}
@@ -158,6 +158,7 @@ class LabSearch extends Component {
     executeSearch(event) {
         if (event.key === 'Enter') {
             labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search).then((resp) => {
+                console.log(resp)
                 var newState = this.state;
                 var all_search_labs = resp.data.results;
                 newState.all_labs = [];

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {addToStudentLabList, removeFromStudentLabList} from '../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList} from '../../helper.js'
 import './LabSearchProject.css';
 
 class LabSearchProject extends Component {
@@ -16,12 +16,12 @@ class LabSearchProject extends Component {
     }
 
     saveProject = () => {
-        addToStudentLabList([this.props.id])
+        addToStudentPositionList([this.props.id])
         this.toggleAdder()
     }
 
     removeProject = () => {
-        removeFromStudentLabList([this.props.id])
+        removeFromStudentPositionList([this.props.id])
         this.toggleAdder()
     }
 

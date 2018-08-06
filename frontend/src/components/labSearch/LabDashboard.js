@@ -1,23 +1,38 @@
 import React, {Component} from 'react';
 import LabSearchProject from './LabSearchProject'
+import {getCurrentUserId, getStudentFromUser} from '../../helper.js'
 import './LabDashboard.css';
 
 class LabDashboard extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			position_list: [],
+		}
+	}
+
+	componentDidMount() {
+		getStudentFromUser(getCurrentUserId()).then((resp) => {
+			console.log(resp.data.position_list)
+			this.setState({position_list: resp.data.position_list})
+		})
+	}
 
 	render() {
 		return (
-			<div className='shift-down'>
+			<div className='shift-down' style={{minHeight: '70vh'}}>
 				<div id='saved-labs-header'>Saved Labs</div>
 				<div className='lab-dashboard'>
 		           	<div id='lab-srch-results'>
-		           		<a className='lab-dashboard-lab-name'>Dr. Meha's Lab</a>
-		           		<LabSearchProject title='Oncology Study' spots='1' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.' urop/>
-		           		<a className='lab-dashboard-lab-name'>Dr. Patel's Lab</a>
-		           		<LabSearchProject title='Pharmaceutical Assistant' spots='2' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.'/>
-		           		<a className='lab-dashboard-lab-name'>Dr. Jone's Lab</a>
-		           		<LabSearchProject title='Lab Analyst' spots='1' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.'/>
-		           		<a className='lab-dashboard-lab-name'>Dr. Manischevitz's Lab</a>
-		           		<LabSearchProject title='Rat Overlord' spots='2' description='We need you to do stuff on this project. Cause research funding crisis. And we need hands on the job.'/>
+		           		{
+		           			this.state.position_list.map((position) => {
+		           				return(
+				           			<div>
+				           				<a className='lab-dashboard-lab-name'>{position.lab.name}</a>
+				           				<LabSearchProject key={position.id} id={position.id} title={position.title} spots='MISSING' saved='true' description={position.description} urop={position.is_urop_project}/>
+				           			</div>
+			           			)
+		           		})}
 		        	</div>
 		       </div>
 	       </div>

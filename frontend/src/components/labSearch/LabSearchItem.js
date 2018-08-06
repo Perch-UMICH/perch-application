@@ -30,11 +30,18 @@ class LabSearchItem extends Component {
         toggleExpanderIcons();
     }
 
+
+
 	render() {
         var all_projects = [];
         this.props.positions.map((position) => {
             let urop = position.is_urop_project;
-            all_projects.push(<LabSearchProject key={position.id} id={position.id} saved={this.props.saved_labs.includes(position.id)}title={position.title} spots='MISSING' description={position.description} urop/>)
+            let saved = false;
+            for (var item in this.props.saved_labs) {
+                if (position.id == this.props.saved_labs[item].id)
+                    saved = true
+            }
+            all_projects.push(<LabSearchProject key={position.id} id={position.id} saved={saved} title={position.title} spots='MISSING' description={position.description} urop/>)
         })
 		return (
             <div className='lab-srch-item-container'>
