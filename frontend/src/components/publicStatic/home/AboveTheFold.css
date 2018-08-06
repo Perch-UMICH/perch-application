@@ -53,13 +53,11 @@
 	font-size: 16px;
 	line-height: 200%;
 	color: var(--e-grey);
-	/*color: var(--active);*/
-	/*margin-left: 40px;*/
 }
 
 .atf {
 	color: var(--white);
-	margin-bottom: 0;
+	margin-bottom: -20px;
 	background-color: var(--highlight);
 	background-color: white;
 	background-size: cover;	

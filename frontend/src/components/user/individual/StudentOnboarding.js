@@ -162,12 +162,12 @@ class StudentOnboarding extends Component {
     </div>
 		return (
       <div className="onboarding-container">
-        {backBtn}
-        {nextBtn}
         <ProgressIndicator steps={this.state.numSteps} curStep={this.state.curStep} />
         <div className="onboarding-text">{stepToRender.text}</div>
         {dropDown}
         {stepToRender.comp}
+        {backBtn}
+        {nextBtn}
       </div>
 		)
 	}

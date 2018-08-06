@@ -479,6 +479,7 @@ export class EditQuickview extends Component {
 				    	</div>
 				    	<i id='rotate-icon' className='material-icons' onClick={this.handleRotate}>rotate_90_degrees_ccw</i>
 				   </div>
+					 <br/><br/>
 			    </div>
 			   	<div id='quickview-editor-R'>
 			   		<div className='input-field'>

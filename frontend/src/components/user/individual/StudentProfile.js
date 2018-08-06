@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent, removeWorkExperiencesFromStudent, createAndAddClassExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent, removeWorkExperiencesFromStudent, createAndAddEduExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -80,8 +80,65 @@ class StudentProfile extends Component {
 				class_arr.push(c.text);
 			})
 		}
-		createAndAddClassExperiencesToStudent(class_arr).then();
+		createAndAddEduExperiencesToStudent(class_arr).then();
 		updateStudent(first_name, last_name, updated_user.email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin, updated_user.website_link)
+		.then(r => {
+			this.generalHandler();
+		});
+	}
+
+	sendExperiences() {
+		updateStudent(null, null, null, null, null, null, null, null, this.state.updated_user.experiences, null, null)
+		.then(r => {
+			this.generalHandler();
+		});
+	}
+
+	sendClasses() {
+		var classes = "";
+		var class_arr = [];
+		if (this.state.updated_user.classes) {
+			this.state.updated_user.classes.map(c => {
+				classes += c.text + ',';
+				class_arr.push(c.text);
+			})
+		}
+		createAndAddEduExperiencesToStudent(class_arr);
+	}
+
+	sendHeaderInfo() {
+		var nameArr = this.state.updated_user && this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
+    var first_name = nameArr[0] ? nameArr[0]: "";
+    var last_name = nameArr[1] ? nameArr[1] : "";
+		updateStudent(first_name, last_name, null, null, null, null, null, null, null, null, null)
+		.then(r => {
+			this.generalHandler();
+		});
+	}
+
+	sendLinks() {
+		updateStudent(null, null, null, null, null, null, null, null, null, this.state.updated_user.linkedin, this.state.updated_user.website_link)
+		.then(r => {
+			this.generalHandler();
+		});
+	}
+
+	sendAcademicInfo() {
+		updateStudent(null, null, null, this.state.updated_user.year, null, this.state.updated_user.major, this.state.updated_user.gpa, null, null, null, null)
+		.then(r => {
+			this.generalHandler();
+		});
+	}
+
+	sendContactInfo() {
+		updateStudent(null, null, this.state.updated_user.email, null, null, null, null, null, null, null, null)
+		.then(r => {
+			this.generalHandler();
+		});
+	}
+
+	sendBio() {
+		updateStudent(null, null, null, null, this.state.updated_user.bio, null, null, null, null, null, null)
 		.then(r => {
 			this.generalHandler();
 		});
@@ -225,19 +282,7 @@ class StudentProfile extends Component {
 
 	// Beginning point for data handling
 	componentDidMount() {
-		// getUser(this.retrieveSlug()).then(resp => {
-		// 	if (resp.data) {
-		// 		if (resp.data.is_student) {
-		// 			this.generalHandler();
-		// 		} else {
-		// 			this.setState({ not_student: true });
-		// 		}
-		// 	} else {
-		// 		this.setState({ not_student: true });
-		// 	}
-		// });
 		this.generalHandler();
-		// updateStudent(1, null, null, null, null, null, null, null, "experience1|experience2", "class1|class2")
 	}
 
 	// Handles opening of component editing modals
@@ -265,7 +310,7 @@ class StudentProfile extends Component {
 		else if (this.state.user.resume) {
 			resumeLink = this.state.user.resume;
 		}
-		if (!isLoggedIn()) {
+		if (!true) {//(!isLoggedIn()) {
 			return <ErrorPage />
 		} else if (this.state.not_student) {
 			return <ErrorPage fourofour="true" />
@@ -274,28 +319,28 @@ class StudentProfile extends Component {
 	 		<div id='user-content-body'>
 				<div id="greyBackdrop" className="modal-backdrop"></div>
 				<EditModal id="skills-interests-edit" title="Edit Skills and Interests" modalAction={this.updateTags.bind(this)} noPadding={true}>
-					<PickYourInterests editorOnly={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
+					<PickYourInterests modalEdit={true} editorOnly={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal >
-				<EditModal id="contact-edit" title="Edit Contact Info" modalAction={this.sendUpdate.bind(this)}>
-					<EditContact  user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="contact-edit" title="Edit Contact Info" modalAction={this.sendContactInfo.bind(this)}>
+					<EditContact modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				<EditModal id="link-edit" title="Edit Links" modalAction={this.sendUpdate.bind(this)}>
-					<EditLinks  user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="link-edit" title="Edit Links" modalAction={this.sendLinks.bind(this)}>
+					<EditLinks modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				<EditModal id="academics-edit" title="Edit Academic Info" modalAction={this.sendUpdate.bind(this)}>
-					<NotableClasses updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="academics-edit" title="Edit Academic Info" modalAction={this.sendAcademicInfo.bind(this)}>
+					<NotableClasses modalEdit={true} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				<EditModal id="work-edit" title="Edit Work Info" modalAction={this.updateExperience.bind(this)}>
-					<EditExperience type="work" user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="work-edit" title="Edit Work Info" modalAction={this.sendExperiences.bind(this)}>
+					<EditExperience type="work" modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				<EditModal id="education-edit" title="Edit Education Info" modalAction={this.sendUpdate.bind(this)}>
-					<EditClasses updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="education-edit" title="Edit Education Info" modalAction={this.sendClasses.bind(this)}>
+					<EditClasses modalEdit={true} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				<EditModal id="bio-edit" title="Edit Bio" modalAction={this.sendUpdate.bind(this)}>
-					<EditBio user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="bio-edit" title="Edit Bio" modalAction={this.sendBio.bind(this)}>
+					<EditBio modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				<EditModal id="quickview-edit" title="Edit Quickview Info" modalAction={this.sendUpdate.bind(this)}>
-					<EditQuickview img='/img/rodriguez.jpg' user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="quickview-edit" title="Edit Quickview Info" modalAction={this.sendHeaderInfo.bind(this)}>
+					<EditQuickview modalEdit={true} img='/img/rodriguez.jpg' user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>
