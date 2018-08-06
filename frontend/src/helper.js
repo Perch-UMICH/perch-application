@@ -352,7 +352,7 @@ export function createStudent(user_id, first_name, last_name, contact_email, con
 // RESTRICTED: student_id
 // NOTE: skill_ids and tag_ids must be an array of integer ids
 export function updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids) {
-    console.log('Updating student', first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids);
+    console.log('Updating student');
 
     let student_id = sessionStorage.getItem('student_id');
     let _method = 'PUT';
@@ -628,7 +628,6 @@ export function removeEduExperiencesFromStudent(edu_experience_ids) {
 // NOTE: Input should be an array of objects formatted like:
 // {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
 export function addWorkExperiencesToStudent(work_experiences) {
-  console.log("WORK EXPERIENCES BACKEND", work_experiences)
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
         work_experiences: work_experiences,
@@ -1634,11 +1633,11 @@ export function exists(item) {
 /// CHANGED BY EMI
 
 export function deepCopy(object) {
-   var output, value, key;
-   output = Array.isArray(object) ? [] : {};
-   for (key in object) {
-       value = object[key];
-       output[key] = (typeof value === "object") ? deepCopy(value) : value;
-   }
-   return output;
+    var output, value, key;
+    output = Array.isArray(object) ? [] : {};
+    for (key in object) {
+        value = object[key];
+        output[key] = (typeof value === "object") ? deepCopy(value) : value;
+    }
+    return output;
 }
