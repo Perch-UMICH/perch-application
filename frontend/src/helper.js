@@ -337,6 +337,7 @@ export function getStudent(student_id) {
         })
 }
 
+
 export function createStudent(user_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student) {
     console.log('Creating student');
     return axios.post('api/students', {user_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student})
@@ -624,6 +625,7 @@ export function removeEduExperiencesFromStudent(edu_experience_ids) {
 // NOTE: Input should be an array of objects formatted like:
 // {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
 export function addWorkExperiencesToStudent(work_experiences) {
+  console.log("WORK EXPERIENCES BACKEND", work_experiences)
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
         work_experiences: work_experiences,

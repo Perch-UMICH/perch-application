@@ -9,7 +9,7 @@ export class EditLinks extends Component {
 	constructor(props) {
 		super(props);
 		var resume = "";
-		var linkedin = "";
+		var linkedin_link = "";
 		var website_link = "";
 		if (props.user) {
 			if (props.user.website_link) {
@@ -18,34 +18,34 @@ export class EditLinks extends Component {
 			} else if (props.user.resume) {
 				resume = props.user.resume;
 			}
-			if (props.user.linkedin) {
-				linkedin = props.user.linkedin;
+			if (props.user.linkedin_link) {
+				linkedin_link = props.user.linkedin_link;
 			} else if (props.user.linkedin_link) {
-				linkedin = props.user.linkedin_link;
+				linkedin_link = props.user.linkedin_link;
 			}
 		}
-		this.state = { linkedin, resume, website_link	}
+		this.state = { linkedin_link, resume, website_link	}
 	}
 
 	render() {
 		return (
 			<div>
 				<div className='input-field'>
-					<input type='text' id='linkedin' placeholder='Rodriguez@linkedin.com' value={this.state.linkedin}
+					<input type='text' id='linkedin_link' placeholder='Rodriguez@linkedin.com' value={this.state.linkedin_link}
 					onChange={(e) => {
 						if (this.props.updateUser) {
-							this.props.updateUser("linkedin", e.target.value); }
-						this.setState({linkedin: e.target.value})}}/>
-					<label htmlFor='linkedin' className="active" >Linkedin</label>
+							this.props.updateUser("linkedin_link", e.target.value); }
+						this.setState({linkedin_link: e.target.value})}}/>
+					<label htmlFor='linkedin_link' className="active" >Linkedin</label>
 				</div>
-				<div className='input-field'>
+				{/*<div className='input-field'>
 					<input type='text' id='resume' placeholder='super-cool-resume.pdf' value={this.state.resume}
 					onChange={(e) => {
 						if (this.props.updateUser) {
 							this.props.updateUser("resume", e.target.value); }
 						this.setState({resume: e.target.value})}}/>
 					<label htmlFor='resume' className="active" >Resume</label>
-				</div>
+				</div>*/}
 				{this.props.prof &&
 					<div className='input-field'>
 						<input type='text' id='lab-materials' placeholder='lab-materials.pdf' value={this.state.website_link}
@@ -90,18 +90,18 @@ export class EditContact extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: props.user && props.user.email ?  props.user.email : '',
-			phone: props.user && props.user.phone ? props.user.phone : '',
+			contact_email: props.user && props.user.contact_email ?  props.user.contact_email : '',
+			contact_phone: props.user && props.user.contact_phone ? props.user.contact_phone : '',
 		}
 	}
 
 	componentWillReceiveProps(props) {
 		if (props.user) {
-			if (props.user.email) {
-				this.setState({email: props.user.email})
+			if (props.user.contact_email) {
+				this.setState({contact_email: props.user.contact_email})
 			}
 			if (props.user.phone) {
-				this.setState({phone: props.user.phone})
+				this.setState({contact_phone: props.user.contact_phone})
 			}
 		}
 	}
@@ -110,20 +110,20 @@ export class EditContact extends Component {
 		return(
 			<form id='edit-contact-info'>
 				<div className='input-field'>
-					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.phone}
+					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.contact_email}
 					onChange={(e) => {
 						if (this.props.updateUser) {
-							this.props.updateUser("phone", e.target.value); }
-						this.setState({phone: e.target.value})}}/>
-					<label htmlFor='phone-number' className="active">Phone</label>
+							this.props.updateUser("contact_email", e.target.value); }
+						this.setState({contact_email: e.target.value})}}/>
+					<label htmlFor='email' className="active">Email</label>
 				</div>
 				<div className='input-field'>
-					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.email}
+					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.contact_phone}
 					onChange={(e) => {
 						if (this.props.updateUser) {
-							this.props.updateUser("email", e.target.value); }
-						this.setState({email: e.target.value})}}/>
-					<label htmlFor='email' className="active">Email</label>
+							this.props.updateUser("contact_phone", e.target.value); }
+						this.setState({contact_phone: e.target.value})}}/>
+					<label htmlFor='phone-number' className="active">Phone</label>
 				</div>
 			</form>
 		)
@@ -135,11 +135,12 @@ export class EditBio extends Component {
 		super(props);
 		this.state = {
 			placeholder: "Short description of background, experience, and interests",
-			bio: this.props.user && this.props.user.bio ? this.props.user.bio : '',
+			bio: props.user && props.user.bio ? props.user.bio : '',
 		}
 	}
 
 	componentWillReceiveProps(props) {
+		console.log("bioooo", props)
 		if (props.user && props.user.bio) {
 			this.setState({bio: props.user.bio})
 		}
@@ -377,7 +378,6 @@ export class EditExperience extends Component {
 		)
 	}
 }
-
 
 export class EditQuickview extends Component {
 	constructor(props) {

@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent, removeWorkExperiencesFromStudent, createAndAddEduExperiencesToStudent, addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId,
+				addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent,
+				removeWorkExperiencesFromStudent, createAndAddEduExperiencesToStudent,
+				addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser,
+				getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -22,7 +26,8 @@ class StudentProfile extends Component {
 			major: "",
 			year: "",
 			bio: "",
-			email: "",
+			contact_email: "",
+			contact_phone: "",
 			classes: [],
 			experience: [],
 			linkedin: "",
@@ -81,17 +86,32 @@ class StudentProfile extends Component {
 			})
 		}
 		createAndAddEduExperiencesToStudent(class_arr).then();
-		updateStudent(first_name, last_name, updated_user.email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin, updated_user.website_link)
+		updateStudent(first_name, last_name, updated_user.contact_email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin, updated_user.website_link)
 		.then(r => {
 			this.generalHandler();
 		});
 	}
 
 	sendExperiences() {
-		updateStudent(null, null, null, null, null, null, null, null, this.state.updated_user.experiences, null, null)
+		console.log("WORK EXP??", this.state.updated_user.work_experiences)
+		if (this.state.updated_user.work_experiences) {
+			var idsToRemove = [];
+			if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
+				this.state.user.work_experiences.map(exp => {
+					idsToRemove.push(exp.id);
+				})
+			}
+			removeWorkExperiencesFromStudent(idsToRemove).then(r => {
+				addWorkExperiencesToStudent(this.state.updated_user.work_experiences).then(r => {
+					this.generalHandler();
+				});
+			})
+		}
+		/*
+		updateStudent(null, null, null, null, null, null, null, this.state.updated_user.experiences, null, null)
 		.then(r => {
 			this.generalHandler();
-		});
+		});*/
 	}
 
 	sendClasses() {
@@ -103,42 +123,49 @@ class StudentProfile extends Component {
 				class_arr.push(c.text);
 			})
 		}
-		createAndAddEduExperiencesToStudent(class_arr);
+		console.log("CLASS ARR")
+		//(university_name, start_date, end_date, current, class_experience_names, major_names)
+		createAndAddEduExperiencesToStudent("Cool university", "start date", "end-date", true, class_arr, this.state.updated_user.major).then(r => {
+			console.log("experience update resp", r);
+			this.generalHandler();
+		});
 	}
 
 	sendHeaderInfo() {
 		var nameArr = this.state.updated_user && this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
     var first_name = nameArr[0] ? nameArr[0]: "";
     var last_name = nameArr[1] ? nameArr[1] : "";
-		updateStudent(first_name, last_name, null, null, null, null, null, null, null, null, null)
+		updateStudent(first_name, last_name, null, null, null, null, null, null, null)
 		.then(r => {
 			this.generalHandler();
 		});
 	}
 
 	sendLinks() {
-		updateStudent(null, null, null, null, null, null, null, null, null, this.state.updated_user.linkedin, this.state.updated_user.website_link)
+		updateStudent(null, null, null, null, null, this.state.updated_user.linkedin, this.state.updated_user.website_link, null, null, null)
 		.then(r => {
 			this.generalHandler();
 		});
 	}
 
 	sendAcademicInfo() {
-		updateStudent(null, null, null, this.state.updated_user.year, null, this.state.updated_user.major, this.state.updated_user.gpa, null, null, null, null)
+		updateStudent(null, null, null, this.state.updated_user.year, null, this.state.updated_user.major, this.state.updated_user.gpa, null, null, null)
 		.then(r => {
 			this.generalHandler();
 		});
 	}
 
 	sendContactInfo() {
-		updateStudent(null, null, this.state.updated_user.email, null, null, null, null, null, null, null, null)
+		console.log("SENDING CONTACT INFO", this.state.updated_user.contact_email)
+		updateStudent(null, null, this.state.updated_user.contact_email, null, null, null, null, null, null, null)
 		.then(r => {
+			console.log("update response", r);
 			this.generalHandler();
 		});
 	}
 
 	sendBio() {
-		updateStudent(null, null, null, null, this.state.updated_user.bio, null, null, null, null, null, null)
+		updateStudent(null, null, null, null, this.state.updated_user.bio, null, null, null, null, null)
 		.then(r => {
 			this.generalHandler();
 		});
@@ -190,6 +217,7 @@ class StudentProfile extends Component {
 	}
 
 	updateExperience() {
+		console.log("WORK EXP??", this.state.updated_ser.work_experiences)
 		if (this.state.updated_user.work_experiences) {
 			var idsToRemove = [];
 			if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
@@ -235,36 +263,30 @@ class StudentProfile extends Component {
 						class_arr.push({name, index});
 					})
 				}
+				console.log("GENERAL HANDLER", resp);
+				var user = {
+					name: `${resp.data.first_name} ${resp.data.last_name}`,
+					gpa: resp.data.gpa,
+					major: resp.data.major,
+					year: resp.data.year,
+					bio: resp.data.bio,
+					contact_email: resp.data.contact_email,
+					contact_phone: resp.data.contact_phone,
+					classes: class_arr,
+					experience: resp.data.experiences,
+					linkedin: resp.data.linkedin,
+					linkedin_link: resp.data.linkedin_link,
+					website_link: resp.data.website_link,
+					resume: resp.data.resume_path,
+					skills: resp.data.skills ? resp.data.skills : [],
+					interests: resp.data.tags ? resp.data.tags : [],
+					student: true,
+					s_id: resp.data.id,
+					work_experiences: [],
+				}
+				var updated_user = deepCopy(user);
         this.setState({
-					user: {
-        		name: `${resp.data.first_name} ${resp.data.last_name}`,
-        		gpa: resp.data.gpa,
-        		major: resp.data.major,
-        		year: resp.data.year,
-        		bio: resp.data.bio,
-        		email: resp.data.email,
-        		classes: class_arr,
-        		experience: resp.data.experiences,
-        		linkedin: resp.data.linkedin,
-						linkedin_link: resp.data.linkedin_link,
-						website_link: resp.data.website_link,
-        		resume: resp.data.resume_path,
-						skills: [],
-						interests: [],
-        		student: true,
-        		s_id: resp.data.id,
-						work_experiences: [],
-        	}
-				}, () => {
-					addWorkExperiencesToStudent([]).then(r => {
-						if (r && r.data) {
-							var newState = this.state;
-							newState.user.work_experiences = r.data.work_experiences;
-							newState.updated_user = deepCopy(this.state.user);
-							this.setState(newState);
-						}
-					})
-					this.retrieveTags();
+					user, updated_user
 				});
 			})
 	}
@@ -295,10 +317,7 @@ class StudentProfile extends Component {
 
 	render() {
 		var linkedinLink, resumeLink = null;
-		if (this.state.user.linkedin) {
-			linkedinLink = this.state.user.linkedin;
-		}
-		else if (this.state.user.linkedin_link) {
+		if (this.state.user.linkedin_link) {
 			linkedinLink = this.state.user.linkedin_link;
 		}
 		if (this.state.user.resume_path) {
@@ -355,8 +374,8 @@ class StudentProfile extends Component {
 	 				<div>
 	 					<h1>Contact</h1>
 	 					<div>
-	 						<div id='user-email'><b>Email</b> <a href={`mailto:${this.state.user.email}`}>{this.state.user.email}</a></div>
-	 						<div id='user-phone'><b>Phone</b> {this.state.user.phone}</div>
+	 						<div id='user-email'><b>Email</b> <a href={`mailto:${this.state.user.contact_email}`}>{this.state.user.contact_email}</a></div>
+	 						<div id='user-phone'><b>Phone</b> {this.state.user.contact_phone}</div>
 	 					</div>
 	 					<Editor superClick={() => this.openModal('contact-edit')}/>
 	 				</div>
@@ -364,7 +383,7 @@ class StudentProfile extends Component {
 	 					<h1>Links</h1>
 	 					<div>
 	 						<a target="_blank" href={linkedinLink} style={{textAlign: 'left', textDecoration: 'underline'}}>LinkedIn</a>
-	 						<a target="_blank" href={resumeLink} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>
+	 						{/*<a target="_blank" href={resumeLink} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a>*/}
 	 					</div>
 	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>
