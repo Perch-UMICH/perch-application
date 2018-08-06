@@ -314,7 +314,7 @@ export function getUserLabs(user_id) {
 // Users
 // Skills
 // Tags
-// Labs ("favorited")
+// Labs ("favorited")d
 
 export function getAllStudents() {
     console.log('Getting students');
@@ -338,9 +338,9 @@ export function getStudent(student_id) {
         })
 }
 
-export function createStudent(user_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student) {
+export function createStudent(user_id, first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids) {
     console.log('Creating student');
-    return axios.post('api/students', {user_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student})
+    return axios.post('api/students', {user_id, first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids})
         .then(response => {
             sessionStorage.setItem('student_id', response.data.result.id) // CHANGED BY BENJI
             return respond(response.status, response.data);
@@ -352,12 +352,12 @@ export function createStudent(user_id, first_name, last_name, contact_email, yea
 
 // RESTRICTED: student_id
 // NOTE: skill_ids and tag_ids must be an array of integer ids
-export function updateStudent(first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids) {
+export function updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids) {
     console.log('Updating student');
 
     let student_id = sessionStorage.getItem('student_id');
     let _method = 'PUT';
-    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, contact_email, year, bio, linkedin_link, website_link, is_urop_student})
+    return axios.post('api/students/' + student_id, {_method, student_id, first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids})
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -551,8 +551,8 @@ export function removeFromStudentLabList(lab_ids) {
 // majors: (string) (array) names of subjects they majored (are majoring) in
 
 // RESTRICTED: student_id
-export function createAndAddEduExperiencesToStudent(university_name, start_date, end_date, current, class_experience_names, major_names) {
-    console.log('Adding edu experiences to student');
+export function createAndAddEduExperiencesToStudent(university_name, start_date, end_date, current, year, gpa, class_experience_names, major_names) {
+    console.log('Adding edu experiences to student')
 
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
@@ -560,6 +560,8 @@ export function createAndAddEduExperiencesToStudent(university_name, start_date,
         start_date: start_date,
         end_date: end_date,
         current: current,
+        year: year,
+        gpa: gpa,
         class_experience_names: class_experience_names,
         major_names: major_names
     };
@@ -573,7 +575,7 @@ export function createAndAddEduExperiencesToStudent(university_name, start_date,
 }
 
 // RESTRICTED: student_id
-export function updateEduExperiencesToStudent(edu_experience_id, university_name, start_date, end_date, current, class_experience_names, major_names) {
+export function updateEduExperiencesToStudent(edu_experience_id, university_name, start_date, end_date, current, year, gpa, class_experience_names, major_names) {
     console.log('Adding edu experiences to student');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -583,6 +585,8 @@ export function updateEduExperiencesToStudent(edu_experience_id, university_name
         start_date: start_date,
         end_date: end_date,
         current: current,
+        year: year,
+        gpa: gpa,
         class_experience_names: class_experience_names,
         major_names: major_names,
         _method: 'PUT'
