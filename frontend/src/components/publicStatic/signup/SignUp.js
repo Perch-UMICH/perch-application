@@ -22,6 +22,8 @@ class SignUp extends Component {
 		let last_name = document.getElementById('last_name').value;
 
 		registerUser(`${first_name} ${last_name}`, email, password, password).then((resp) => {
+			console.log('Response mofo')
+			console.log(resp)
 			this.handleLoginAndCreation();
 		})
 	}

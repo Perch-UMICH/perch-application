@@ -38,6 +38,7 @@ class LabSearch extends Component {
             skills: [],
 			s_id: '',
             search: '',
+            lab_list: [],
 		}
 	}
 
@@ -45,10 +46,11 @@ class LabSearch extends Component {
         getAllLabs().then((resp) => {
             var newState = this.state;
             var all_labs = resp.data
-            //console.log(resp);
+
+            console.log(resp);
             for (var key in all_labs) {
                 let lab = all_labs[key].data;
-                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
             }
 
             this.setState(newState);
@@ -94,6 +96,11 @@ class LabSearch extends Component {
 		this.expand("departments");
 		let search = document.getElementById('lab-srch-input')
 		search.addEventListener('keyup', this.updateSearch.bind(this))
+
+		getStudentFromUser(getCurrentUserId()).then((resp) => {
+			this.setState({lab_list: resp.data.lab_list})
+		})
+
 	}
 
 	handleFilterClick(filterType, slug) {
@@ -157,7 +164,7 @@ class LabSearch extends Component {
       
                 resp.data.results.map((lab) => {
                     console.log(lab);
-                    newState.all_labs.push(<LabSearchItem name={lab.name} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+                    newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
                 })
 
                 this.setState(newState);

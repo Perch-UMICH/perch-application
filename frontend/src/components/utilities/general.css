@@ -79,9 +79,11 @@
 	/* Border radius */
 	--border-radius-small: 20px;
 	--border-radius-large: 40px;
-	--border-radius-C: 0 var(--border-radius-small) 0 var(--border-radius-large);
-	--border-radius-L: 0 0 0 var(--border-radius-large);
-	--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;
+	/*--border-radius-C: 0 var(--border-radius-small) 0 var(--border-radius-large);*/
+	--border-radius-C: 4px;
+	--border-radius-L: 4px;
+	/*--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;*/
+	--border-radius-R: 4px;
 }
 
 ::selection {

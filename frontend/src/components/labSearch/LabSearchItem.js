@@ -10,6 +10,10 @@ class LabSearchItem extends Component {
         this.expandProjects = this.expandProjects.bind(this);
     }
 
+    componentDidMount(){
+        console.log(this.props.saved_labs)
+    }
+
     expandProjects() {
         let toggleExpanderIcons = () => {
             let lab_srch_item = document.getElementById(`lab_srch_item_${this.props.name}`)
@@ -30,7 +34,7 @@ class LabSearchItem extends Component {
         var all_projects = [];
         this.props.positions.map((position) => {
             let urop = position.is_urop_project;
-            all_projects.push(<LabSearchProject key={position.id} title={position.title} spots='MISSING' description={position.description} urop/>)
+            all_projects.push(<LabSearchProject key={position.id} id={position.id} saved={this.props.saved_labs.includes(position.id)}title={position.title} spots='MISSING' description={position.description} urop/>)
         })
 		return (
             <div className='lab-srch-item-container'>
