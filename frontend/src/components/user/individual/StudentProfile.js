@@ -86,7 +86,7 @@ class StudentProfile extends Component {
 			})
 		}
 		createAndAddEduExperiencesToStudent(class_arr).then();
-		updateStudent(first_name, last_name, updated_user.contact_email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin, updated_user.website_link)
+		updateStudent(first_name, last_name, updated_user.contact_email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin_link, updated_user.website_link)
 		.then(r => {
 			this.generalHandler();
 		});
@@ -125,7 +125,7 @@ class StudentProfile extends Component {
 		}
 		console.log("CLASS ARR")
 		//(university_name, start_date, end_date, current, class_experience_names, major_names)
-		createAndAddEduExperiencesToStudent("Cool university", "start date", "end-date", true, class_arr, this.state.updated_user.major).then(r => {
+		createAndAddEduExperiencesToStudent("Cool university", "start date", "end-date", true, "soph", "9.9", class_arr, this.state.updated_user.major).then(r => {
 			console.log("experience update resp", r);
 			this.generalHandler();
 		});
@@ -142,7 +142,7 @@ class StudentProfile extends Component {
 	}
 
 	sendLinks() {
-		updateStudent(null, null, null, null, null, this.state.updated_user.linkedin, this.state.updated_user.website_link, null, null, null)
+		updateStudent(null, null, null, null, null, this.state.updated_user.linkedin_link, this.state.updated_user.website_link, null, null, null)
 		.then(r => {
 			this.generalHandler();
 		});
@@ -156,7 +156,7 @@ class StudentProfile extends Component {
 	}
 
 	sendContactInfo() {
-		console.log("SENDING CONTACT INFO", this.state.updated_user.contact_email)
+		(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
 		updateStudent(null, null, this.state.updated_user.contact_email, null, null, null, null, null, null, null)
 		.then(r => {
 			console.log("update response", r);
@@ -165,7 +165,7 @@ class StudentProfile extends Component {
 	}
 
 	sendBio() {
-		updateStudent(null, null, null, null, this.state.updated_user.bio, null, null, null, null, null)
+		updateStudent(null, null, null, null, null, this.state.updated_user.bio, null, null, null, null, null)
 		.then(r => {
 			this.generalHandler();
 		});
