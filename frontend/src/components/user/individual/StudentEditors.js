@@ -27,6 +27,23 @@ export class EditLinks extends Component {
 		this.state = { linkedin_link, resume, website_link	}
 	}
 
+	componentDidUpdate(props) {
+		if (props.user) {
+			if (props.user.website_link) {
+				resume = props.user.website_link;
+				website_link = props.user.website_link;
+			} else if (props.user.resume) {
+				resume = props.user.resume;
+			}
+			if (props.user.linkedin_link) {
+				linkedin_link = props.user.linkedin_link;
+			} else if (props.user.linkedin_link) {
+				linkedin_link = props.user.linkedin_link;
+			}
+		}
+		this.setState({ linkedin_link, resume, website_link	})
+	}
+
 	render() {
 		return (
 			<div>
