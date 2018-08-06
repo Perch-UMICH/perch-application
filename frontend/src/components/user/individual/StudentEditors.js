@@ -120,7 +120,7 @@ export class EditContact extends Component {
 			if (props.user.contact_email) {
 				this.setState({contact_email: props.user.contact_email})
 			}
-			if (props.user.phone) {
+			if (props.user.contact_phone) {
 				this.setState({contact_phone: props.user.contact_phone})
 			}
 		}
@@ -160,7 +160,6 @@ export class EditBio extends Component {
 	}
 
 	componentWillReceiveProps(props) {
-		console.log("bioooo", props)
 		if (props.user && props.user.bio) {
 			this.setState({bio: props.user.bio})
 		}

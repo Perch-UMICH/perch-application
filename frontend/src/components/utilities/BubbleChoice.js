@@ -231,7 +231,7 @@ class BubbleChoice extends Component {
 		return(
 			<div className='row interest-container'>
 				<div className='interest-section left col s6 left-align'>
-					<div className="interest-custom-add" onClick={this.handleClickCustomAdd.bind(this)}>+ custom</div>
+					{/*<div className="interest-custom-add" onClick={this.handleClickCustomAdd.bind(this)}>+ custom</div>*/}
 					<input id='search-term' className='interest-search' type='text' placeholder={this.props.display_info.placeholder_txt} onChange={this.filterList.bind(this)} />
 					<div className='interest-body'>
 						{this.state.filtered_catalog.map((bubble) => {
