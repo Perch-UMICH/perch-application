@@ -629,7 +629,6 @@ export function removeEduExperiencesFromStudent(edu_experience_ids) {
 // NOTE: Input should be an array of objects formatted like:
 // {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
 export function addWorkExperiencesToStudent(work_experiences) {
-  console.log("WORK EXPERIENCES BACKEND", work_experiences)
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
         work_experiences: work_experiences,
@@ -1635,11 +1634,11 @@ export function exists(item) {
 /// CHANGED BY EMI
 
 export function deepCopy(object) {
-   var output, value, key;
-   output = Array.isArray(object) ? [] : {};
-   for (key in object) {
-       value = object[key];
-       output[key] = (typeof value === "object") ? deepCopy(value) : value;
-   }
-   return output;
+    var output, value, key;
+    output = Array.isArray(object) ? [] : {};
+    for (key in object) {
+        value = object[key];
+        output[key] = (typeof value === "object") ? deepCopy(value) : value;
+    }
+    return output;
 }

@@ -27,6 +27,26 @@ export class EditLinks extends Component {
 		this.state = { linkedin_link, resume, website_link	}
 	}
 
+	componentWillReceiveProps(props) {
+		var resume = "";
+		var linkedin_link = "";
+		var website_link = "";
+		if (props.user) {
+			if (props.user.website_link) {
+				resume = props.user.website_link;
+				website_link = props.user.website_link;
+			} else if (props.user.resume) {
+				resume = props.user.resume;
+			}
+			if (props.user.linkedin_link) {
+				linkedin_link = props.user.linkedin_link;
+			} else if (props.user.linkedin_link) {
+				linkedin_link = props.user.linkedin_link;
+			}
+		}
+		this.setState({ linkedin_link, resume, website_link	})
+	}
+
 	render() {
 		return (
 			<div>
@@ -100,7 +120,7 @@ export class EditContact extends Component {
 			if (props.user.contact_email) {
 				this.setState({contact_email: props.user.contact_email})
 			}
-			if (props.user.phone) {
+			if (props.user.contact_phone) {
 				this.setState({contact_phone: props.user.contact_phone})
 			}
 		}
@@ -140,7 +160,6 @@ export class EditBio extends Component {
 	}
 
 	componentWillReceiveProps(props) {
-		console.log("bioooo", props)
 		if (props.user && props.user.bio) {
 			this.setState({bio: props.user.bio})
 		}
