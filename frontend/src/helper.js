@@ -629,6 +629,7 @@ export function removeEduExperiencesFromStudent(edu_experience_ids) {
 // NOTE: Input should be an array of objects formatted like:
 // {title: 'string',description: 'string',start_date: 'string',end_date: 'string'}
 export function addWorkExperiencesToStudent(work_experiences) {
+  console.log("WORK EXPERIENCES BACKEND", work_experiences)
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
         work_experiences: work_experiences,
