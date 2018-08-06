@@ -27,7 +27,10 @@ export class EditLinks extends Component {
 		this.state = { linkedin_link, resume, website_link	}
 	}
 
-	componentDidUpdate(props) {
+	componentWillReceiveProps(props) {
+		var resume = "";
+		var linkedin_link = "";
+		var website_link = "";
 		if (props.user) {
 			if (props.user.website_link) {
 				resume = props.user.website_link;
