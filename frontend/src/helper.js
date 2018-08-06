@@ -511,12 +511,12 @@ export function removeTagsFromStudent(tag_ids) {
 // Lab list
 // RESTRICTED: student_id
 // NOTE: lab_ids must be an array of integer ids
-export function addToStudentLabList(lab_ids) {
+export function addToStudentPositionList(position_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        lab_ids: lab_ids,
+        position_ids: position_ids
     };
-    return axios.post('api/students/' + student_id + '/lab_list', payload)
+    return axios.post('api/students/' + student_id + '/position_list', payload)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -525,13 +525,13 @@ export function addToStudentLabList(lab_ids) {
         })
 }
 
-export function removeFromStudentLabList(lab_ids) {
+export function removeFromStudentPositionList(position_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        lab_ids: lab_ids,
+        position_ids: position_ids,
         _method: 'PUT'
     };
-    return axios.post('api/students/' + student_id + '/lab_list', payload)
+    return axios.post('api/students/' + student_id + '/position_list', payload)
         .then(response => {
             return respond(response.status, response.data);
         })
