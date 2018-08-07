@@ -140,7 +140,7 @@ class ProfPage extends Component {
 		 			<div id='user-column-R'>
 	 				<TwitterTimelineEmbed
 					  sourceType="profile"
-					  screenName="UROPumich"
+					  screenName="UMichResearch"
 					  options={{height: 'calc(100vh - 200px)'}}
 					/>
 	 			</div>

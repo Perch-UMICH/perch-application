@@ -49,7 +49,7 @@ class SignUp extends Component {
 		if (student) {
 			createStudent(id, first_name, last_name, null, null, null, null, null, null, null, null).then((resp) => {
 				console.log("CREATE STUDENT RESP", resp)
-				//window.location.href = '/student-onboarding'
+				window.location.href = '/student-onboarding'
 			});
 		}
 		else {

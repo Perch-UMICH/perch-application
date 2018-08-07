@@ -14,7 +14,7 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
-import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, addSkillsToStudent, addTagsToStudent, addWorkExperiencesToStudent, createAndAddEduExperiencesToStudent} from '../../../helper.js'
+import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, addSkillsToStudent, addTagsToStudent, addWorkExperienceToStudent, addEduExperienceToStudent} from '../../../helper.js'
 import './StudentOnboarding.css'
 
 class StudentOnboarding extends Component {
@@ -96,7 +96,7 @@ class StudentOnboarding extends Component {
 		}
 		major_arr.push(this.state.user.major);
 
-		createAndAddEduExperiencesToStudent(this.state.user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
+		addEduExperienceToStudent(this.state.user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
       getStudentFromUser(getCurrentUserId()).then(r => {
         console.log("Got student through current user!!!! Experiences??", r.data);
       });
@@ -123,7 +123,7 @@ class StudentOnboarding extends Component {
 	}
 
 	updateExperience() {
-		addWorkExperiencesToStudent(this.state.user.work_experiences).then(r => {
+		addWorkExperienceToStudent(this.state.user.work_experiences).then(r => {
 		});
 	}
 

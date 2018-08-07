@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId,
 				addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent,
-				removeWorkExperiencesFromStudent, createAndAddEduExperiencesToStudent,
-				addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser,
+				removeWorkExperiencesFromStudent, addEduExperienceToStudent,
+				addWorkExperienceToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser,
 				getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -65,14 +65,14 @@ class StudentProfile extends Component {
 	}
 
 	updateUser(field, newValue) {
-    var newState = this.state;
-    newState.updated_user[field] = newValue;
-		if (field === 'classes') {
-			newState.classes = newValue;
-		}
-    this.setState(newState, () => {
-		});
-  }
+	    var newState = this.state;
+	    newState.updated_user[field] = newValue;
+			if (field === 'classes') {
+				newState.classes = newValue;
+			}
+	    this.setState(newState, () => {
+			});
+  	}
 
 	sendExperiences() {
 		console.log("WORK EXP??", this.state.updated_user.work_experiences)
@@ -84,9 +84,14 @@ class StudentProfile extends Component {
 				})
 			}
 			removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-				addWorkExperiencesToStudent(this.state.updated_user.work_experiences).then(r => {
-					this.generalHandler();
-				});
+				for (let item in this.state.updated_user.work_experiences) {
+					addWorkExperienceToStudent(this.state.updated_user.work_experiences[item]).then(r => {
+						this.generalHandler();
+					})
+				}
+				// addWorkExperienceToStudent(this.state.updated_user.work_experiences).then(r => {
+				// 	this.generalHandler();
+				// });
 			})
 		}
 	}
@@ -101,24 +106,24 @@ class StudentProfile extends Component {
 		}
 		major_arr.push(this.state.user.major);
 
-		createAndAddEduExperiencesToStudent(this.state.user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
+		addEduExperienceToStudent(this.state.user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
        console.log("RESPPP!!!!", resp);
 			 this.generalHandler();
-   	})
+   		})
 	}
 
 	sendHeaderInfo() {
 		var nameArr = this.state.updated_user && this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
-    var first_name = nameArr[0] ? nameArr[0]: "";
-    var last_name = nameArr[1] ? nameArr[1] : "";
+	    var first_name = nameArr[0] ? nameArr[0]: "";
+	    var last_name = nameArr[1] ? nameArr[1] : "";
 		updateStudent(first_name, last_name, null, null, null, null, null, null, [], [])
 		.then(r => {
 			var major_arr = [];
 			major_arr.push(this.state.user.major);
 
-			createAndAddEduExperiencesToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, this.state.user.classes, major_arr).then((resp) => {
+			addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, this.state.user.classes, major_arr).then((resp) => {
 				 this.generalHandler();
-	   	})
+	   		})
 		});
 	}
 
@@ -133,10 +138,10 @@ class StudentProfile extends Component {
 		var major_arr = [];
 		major_arr.push(this.state.updated_user.major);
 
-		createAndAddEduExperiencesToStudent(this.state.user.university,'start','end', true, this.state.updated_user.year, this.state.updated_user.gpa, this.state.user.classes, major_arr).then((resp) => {
+		addEduExperienceToStudent(this.state.user.university,'start','end', true, this.state.updated_user.year, this.state.updated_user.gpa, this.state.user.classes, major_arr).then((resp) => {
        console.log("RESPPP!!!!", resp);
 			 this.generalHandler();
-   	})
+   		})
 	}
 
 	sendContactInfo() {
@@ -275,7 +280,7 @@ class StudentProfile extends Component {
 					work_experiences: [],
 				}
 				var updated_user = deepCopy(user);
-        this.setState({
+		        this.setState({
 					user, updated_user
 				});
 			})
@@ -381,7 +386,7 @@ class StudentProfile extends Component {
 	 			<div id='user-column-R'>
 	 				<TwitterTimelineEmbed
 					  sourceType="profile"
-					  screenName="UROPumich"
+					  screenName="UMichResearch"
 					  options={{height: 'calc(100vh - 200px)'}}
 					/>
 	 			</div>
@@ -422,6 +427,7 @@ class StudentProfile extends Component {
 	 }
 	}
 }
+
 
 
 class StudentClasses extends Component {
@@ -524,8 +530,9 @@ class UserBio extends Component {
 		}
 	}
 
-	componentDidMount() {
-		if (this.props.children.length >= 380)
+	componentWillReceiveProps() {
+		console.log(this.props)
+		// if (this.props.children.length >= 280)
 			this.setState({showExpander: true})
 	}
 

@@ -8,6 +8,8 @@ class LabSearchItem extends Component {
     constructor(props) {
         super(props)
         this.expandProjects = this.expandProjects.bind(this);
+        this.default_pics = ['batman','boba','spock','superman','wonder_woman','wonder_woman','yoda']
+        this.pic = this.default_pics[Math.floor(Math.random()*this.default_pics.length)]
     }
 
     componentDidMount(){
@@ -46,11 +48,11 @@ class LabSearchItem extends Component {
 		return (
             <div className='lab-srch-item-container'>
                 <div id={`lab_srch_item_${this.props.name}`} className='lab-srch-item'> 
-                    <img src={this.props.img} className='lab-srch-item-pic' />
+                    <img src={`/img/default/${this.pic}.jpg`} className='lab-srch-item-pic' />
                     <div> <a className='lab-srch-item-name' href={`prof-page/${this.props.id}`}>{this.props.name}</a></div>
                     <div className='lab-srch-item-depts'><b>Departments:</b> {this.props.dept}</div>
                     <div className='lab-srch-item-rsrch'><b>Research Areas:</b> {this.props.rsrch}</div>
-                    <div className='lab-srch-item-description'><b>Description</b> {this.props.description}</div>
+                    {this.props.description != 'NULL'  && <div className='lab-srch-item-description'><b>Description</b> {this.props.description}</div>}
                     <div id={`lab-srch-item-num-projects_${this.props.name}`} className='lab-srch-item-num-projects' onClick={this.expandProjects}><b>{this.props.positions.length}</b> {this.props.positions.length - 1 ? "Projects" : "Project"}</div>
                     <ExpanderIcons id={`lab-srch-item_${this.props.name}`} action={this.expandProjects}/>
                 </div>

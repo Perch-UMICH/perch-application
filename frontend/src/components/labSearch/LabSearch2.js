@@ -141,6 +141,7 @@ class LabSearch extends Component {
             }
 		}
 		this.setState(newState);
+		this.executeSearch({key: 'Enter'})
 	}
 
 	closeModifiers() {

@@ -421,7 +421,7 @@ export class EditQuickview extends Component {
 			image: props.user && props.user.img ? props.user.img : props.img,
 			rotate: 0,
 			scale: 1.5,
-			name,
+			name: '',
 			university: props.user && props.user.university ? props.user.university : "",
 		}
 	}
