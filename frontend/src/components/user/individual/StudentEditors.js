@@ -140,7 +140,7 @@ export class EditContact extends Component {
 		if (this.props.noEmail) {
 			emailSection = null;
 		}
-		
+
 		return(
 			<form id='edit-contact-info'>
 				{emailSection}
@@ -196,7 +196,7 @@ export class EditClasses extends Component {
 		this.addClass = this.addClass.bind(this)
 		this.alterClass = this.alterClass.bind(this)
 		this.removeClass = this.removeClass.bind(this)
-		var class_arr = props.user && props.user.classes ? props.user.classes : [{ id: 'c_0', text: '' }]
+		var class_arr = props.user && props.user.classes  && props.user.classes.length ? props.user.classes : [{ id: 'c_0', name: '' }]
 		this.state = {
 			class_arr,
 		}
@@ -208,7 +208,7 @@ export class EditClasses extends Component {
 		var newClassText = '';
 		var newClass = {
 			"id": newClassID,
-			"text": newClassText
+			"name": newClassText
 		};
 		var newCIndex = this.state.c_index + 1;
 		var updated_classes = this.state.class_arr.concat([newClass]);
@@ -224,7 +224,7 @@ export class EditClasses extends Component {
 	alterClass(event, class_id) {
 		var temp_classes = this.state.class_arr;
 		var index = temp_classes.findIndex(item => item.id === class_id);
-		temp_classes[index].text = event.target.value;
+		temp_classes[index].name = event.target.value;
 		this.setState({
 			class_arr: temp_classes,
 		});
@@ -254,7 +254,7 @@ export class EditClasses extends Component {
 					return (
 						<div className="row" key={c.id}>
 							<div className="input-field col s11">
-								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.text} onChange={(e) => this.alterClass(e, c.id)}/>
+								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.name} onChange={(e) => this.alterClass(e, c.id)}/>
 							</div>
 							<div className="col s1">
 								<a id={c.id} onClick={() => this.removeClass(c.id)}><i className="material-icons remove-class">clear</i></a>
@@ -364,6 +364,7 @@ export class EditExperience extends Component {
 	}
 
 	render() {
+		console.log("STATE, PROPS", this.state, this.props)
 		var experiences = [];
 		for (var i = 0; i < this.state.objs.length; ++i) {
 			var obj = this.state.objs[i];
@@ -408,20 +409,11 @@ export class EditExperience extends Component {
 export class EditQuickview extends Component {
 	constructor(props) {
 		super(props)
-		var name = "";
-		if (props.user) {
-			if (props.user.first_name) {
-				name = props.user.first_name + " ";
-			}
-			if (props.user.last_name) {
-				name += props.user.last_name
-			}
-		}
 		this.state = {
 			image: props.user && props.user.img ? props.user.img : props.img,
 			rotate: 0,
 			scale: 1.5,
-			name: '',
+			name: props.user && props.user.name ? props.user.name : '',
 			university: props.user && props.user.university ? props.user.university : "",
 		}
 	}
@@ -429,13 +421,9 @@ export class EditQuickview extends Component {
 	componentWillReceiveProps(props) {
 		var name = "";
 		if (props.user) {
-			if (props.user.first_name) {
-				name = props.user.first_name + " ";
+			if (props.user.name) {
+				this.setState({name: props.user.name})
 			}
-			if (props.user.last_name) {
-				name += props.user.last_name;
-			}
-			this.setState({name})
 			if (props.user.university) {
 				this.setState({university: props.user.university})
 			}
@@ -469,13 +457,10 @@ export class EditQuickview extends Component {
 		})
 	}
 
-	componentDidUpdate() {
-	}
-
 	render() {
 		var schoolSection =
 			<div className='input-field'>
-				<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
+				<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.university}
 					onChange={(e) => {
 						if (this.props.updateUser) {
 							this.props.updateUser("university", e.target.value)}
