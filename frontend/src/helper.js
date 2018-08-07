@@ -11,6 +11,7 @@ axios.defaults.headers.common = {};
 // axios.defaults.baseURL = 'http://perch-api.us-east-1.elasticbeanstalk.com';
 axios.defaults.baseURL = 'http://perchapi-test.us-east-1.elasticbeanstalk.com/';
 //axios.defaults.baseURL = 'http://localhost:8000';
+//axios.defaults.baseURL = 'http://52.87.159.159:8000';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
@@ -643,15 +644,30 @@ export function addWorkExperienceToStudent(work_experience) {
         })
 }
 
+export function updateWorkExperienceOfStudent(work_experience_id, updated_work_experience) {
+    let student_id = sessionStorage.getItem('student_id');
+    let payload = {
+        work_experience_id: work_experience_id,
+        updated_work_experience: updated_work_experience,
+        _method: 'PUT'
+    };
+    return axios.post('api/students/' + student_id + '/work_experiences', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
 // RESTRICTED: student_id
 // NOTE: work_experience_ids must be an array of integer ids
 export function removeWorkExperiencesFromStudent(work_experience_ids) {
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
-        work_experience_ids: work_experience_ids,
-        _method: 'PUT'
+        work_experience_ids: work_experience_ids
     };
-    return axios.post('api/students/' + student_id + '/work_experiences', payload)
+    return axios.post('api/students/' + student_id + '/work_experiences/delete', payload)
         .then(response => {
             return respond(response.status, response.data);
         })
