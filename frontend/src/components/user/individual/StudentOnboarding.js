@@ -14,7 +14,9 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
-import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId, verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent, addSkillsToStudent, addTagsToStudent, addWorkExperienceToStudent, addEduExperienceToStudent} from '../../../helper.js'
+import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId,
+  verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent,
+  addSkillsToStudent, addTagsToStudent, addWorkExperienceToStudent, addEduExperienceToStudent} from '../../../helper.js'
 import './StudentOnboarding.css'
 
 class StudentOnboarding extends Component {
@@ -27,7 +29,12 @@ class StudentOnboarding extends Component {
     this.state = {
       curStep: 0,
       numSteps: 5,
-      user: {},
+      user: {
+        gpa: 3.7,
+        year: "None Selected",
+        classes: [],
+        bio: "",
+      },
     }
   }
 
@@ -43,13 +50,18 @@ class StudentOnboarding extends Component {
   			}
   			getStudentTags(getCurrentStudentId())
   			.then(tagsResp => {
-  				if (tagsResp.data) {
-  					interests = tagsResp.data
-  				}
-          user.skills = skills;
-          user.interests = interests;
-  				this.setState({user})
-  				});
+          getUser(getCurrentUserId()).then(r => {
+            if (r.data) {
+              user.contact_email = r.data.email;
+            }
+            if (tagsResp.data) {
+              interests = tagsResp.data
+            }
+            user.skills = skills;
+            user.interests = interests;
+            this.setState({user})
+            });
+          })
   		});
     });
   }
@@ -66,7 +78,6 @@ class StudentOnboarding extends Component {
       bio: user.bio ? user.bio : null,
       major: user.major ? user.major : null,
       gpa: user.gpa ? user.gpa : null,
-      work_experiences: user.work_experiences ? user.work_experiences : null,
       classes: user.classes ? user.classes : null,
       linkedin_link: user.linkedin_link ? user.linkedin_link : null,
       skills: user.skills ? user.skills : [],
@@ -74,32 +85,28 @@ class StudentOnboarding extends Component {
       website_link: user.website_link ? user.website_link : null,
     }
     // updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
-    updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, s.linkedin_link, s.website_link, true, s.skills, s.interests)
+    updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, s.linkedin_link, s.website_link, true, [], [])
     .then(r => {
       getStudentFromUser(getCurrentUserId()).then(r => {
-        console.log("Got student through current user", r.data);
+        if (redirect) {
+          window.location = '/student-profile/' + getCurrentUserId();
+        }
       });
-      console.log("blahhhh", r)
     });
-    if (redirect) {
-      window.location = '/student-profile/' + getCurrentUserId();
-    }
   }
 
   sendAcademicInfo() {
     var class_arr = [];
-		var major_arr = [];
-		if (this.state.user.classes) {
-			this.state.user.classes.map(c => {
-				class_arr.push(c.text);
-			})
-		}
+    if (this.state.user.classes) {
+      this.state.user.classes.map(c => {
+        class_arr.push(c.name);
+      })
+    }
+    var major_arr = [];
 		major_arr.push(this.state.user.major);
 
 		addEduExperienceToStudent(this.state.user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
-      getStudentFromUser(getCurrentUserId()).then(r => {
-        console.log("Got student through current user!!!! Experiences??", r.data);
-      });
+      getStudentFromUser(getCurrentUserId()).then(r => { });
     })
   }
 
@@ -117,18 +124,21 @@ class StudentOnboarding extends Component {
 			})
 		}
 		addTagsToStudent(intIds).then(r => {
-			addSkillsToStudent(skillIds).then(r => {
-			});
+			addSkillsToStudent(skillIds).then(r => { });
 		});
 	}
 
 	updateExperience() {
-		addWorkExperienceToStudent(this.state.user.work_experiences).then(r => {
-		});
+    if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
+      this.state.user.work_experiences.map(exp => {
+        addWorkExperienceToStudent(exp).then(r => {
+          getStudentFromUser(getCurrentUserId()).then(r2 => { });
+    		});
+      })
+    }
 	}
 
   updateUser(field, newValue) {
-    console.log("updating ", field, " to ", newValue);
     var newState = this.state;
     newState.user[field] = newValue;
     this.setState(newState);
@@ -144,10 +154,6 @@ class StudentOnboarding extends Component {
                <Links user={this.state.user} updateUser={this.updateUser.bind(this)}/>],
         text: "Welcome to Perch! We'll begin by gathering some information about you to set up your profile. \nDon't worry about perfection - you can edit these fields afterwards at any time."
       },
-      /*1: {
-        comp: <UploadImage showContact={true} user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-        text: "Upload a profile image and your preferred name. Add a new image by dragging-and-dropping and adjust using the editing tools below.",
-      },*/
       1: {
         comp: <PickYourInterests user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
         text: "Search skills and interests that apply to you, and click on the bubbles to add them to your profile."
@@ -163,11 +169,7 @@ class StudentOnboarding extends Component {
       4: {
         comp: <EnterBio user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
         text: "Enter a short description to describe yourself research interests and experience." // add word limit
-      },
-      /*6: {
-        comp: <Links user={this.state.user} updateUser={this.updateUser.bind(this)}/>,
-        text: "If applicable, enter a link to your LinkedIn page and resume below. That's it!",
-      },*/
+      }
     }
     var stepToRender = steps[this.state.curStep];
     if (this.state.curStep === 0) {

@@ -71,11 +71,11 @@ class StudentProfile extends Component {
 				newState.classes = newValue;
 			}
 	    this.setState(newState, () => {
+				//console.log("update", field, newValue)
 			});
   	}
 
 	sendExperiences() {
-		console.log("WORK EXP??", this.state.updated_user.work_experiences)
 		if (this.state.updated_user.work_experiences) {
 			var idsToRemove = [];
 			if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
@@ -84,9 +84,11 @@ class StudentProfile extends Component {
 				})
 			}
 			removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-				for (let item in this.state.updated_user.work_experiences) {
-					addWorkExperienceToStudent(this.state.updated_user.work_experiences[item]).then(r => {
-						this.generalHandler();
+				if (this.state.updated_user.work_experiences.length) {
+					this.state.updated_user.work_experiences.map(exp => {
+						addWorkExperienceToStudent(exp).then(r => {
+							this.generalHandler();
+						})
 					})
 				}
 				// addWorkExperienceToStudent(this.state.updated_user.work_experiences).then(r => {
@@ -101,27 +103,32 @@ class StudentProfile extends Component {
 		var major_arr = [];
 		if (this.state.updated_user.classes) {
 			this.state.updated_user.classes.map(c => {
-				class_arr.push(c.text);
+				class_arr.push(c.name);
 			})
 		}
 		major_arr.push(this.state.user.major);
 
 		addEduExperienceToStudent(this.state.user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
-       console.log("RESPPP!!!!", resp);
 			 this.generalHandler();
    		})
 	}
 
 	sendHeaderInfo() {
 		var nameArr = this.state.updated_user && this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
-	    var first_name = nameArr[0] ? nameArr[0]: "";
-	    var last_name = nameArr[1] ? nameArr[1] : "";
+    var first_name = nameArr[0] ? nameArr[0]: "";
+    var last_name = nameArr[1] ? nameArr[1] : "";
+		var class_arr = [];
+		if (this.state.user.classes) {
+			this.state.user.classes.map(c => {
+				class_arr.push(c.name);
+			})
+		}
 		updateStudent(first_name, last_name, null, null, null, null, null, null, [], [])
 		.then(r => {
 			var major_arr = [];
 			major_arr.push(this.state.user.major);
 
-			addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, this.state.user.classes, major_arr).then((resp) => {
+			addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
 				 this.generalHandler();
 	   		})
 		});
@@ -137,9 +144,14 @@ class StudentProfile extends Component {
 	sendAcademicInfo() {
 		var major_arr = [];
 		major_arr.push(this.state.updated_user.major);
+		var class_arr = [];
+		if (this.state.user.classes) {
+			this.state.user.classes.map(c => {
+				class_arr.push(c.name);
+			})
+		}
 
-		addEduExperienceToStudent(this.state.user.university,'start','end', true, this.state.updated_user.year, this.state.updated_user.gpa, this.state.user.classes, major_arr).then((resp) => {
-       console.log("RESPPP!!!!", resp);
+		addEduExperienceToStudent(this.state.user.university,'start','end', true, this.state.updated_user.year, this.state.updated_user.gpa, class_arr, major_arr).then((resp) => {
 			 this.generalHandler();
    		})
 	}
@@ -148,7 +160,6 @@ class StudentProfile extends Component {
 		// updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
 		updateStudent(null, null, this.state.updated_user.contact_email, this.state.updated_user.contact_phone, null, null, null, null, [], [])
 		.then(r => {
-			console.log("update response", r);
 			this.generalHandler();
 		});
 	}
@@ -231,7 +242,7 @@ class StudentProfile extends Component {
 			let id = this.retrieveSlug();
 			getStudentFromUser(id).then((resp) => {
 				var class_arr = [];
-				console.log("GENERAL HANDLER", resp);
+				//console.log("GENERAL HANDLER", resp);
 				var major = "";
 				var gpa = "";
 				var year = "";
@@ -242,9 +253,7 @@ class StudentProfile extends Component {
 						major = eduExp.majors[0] ? eduExp.majors[0].name : "";
 					}
 					if (eduExp.classes && eduExp.classes.length) {
-						eduExp.classes.map(classItem => {
-							class_arr.push(classItem.name)
-						});
+						class_arr = eduExp.classes;
 					}
 					if (eduExp.gpa) {
 						gpa = eduExp.gpa;
@@ -262,7 +271,7 @@ class StudentProfile extends Component {
 					major,
 					year,
 					university,
-					bio: resp.data.bio,
+					bio: resp.data.bio ? resp.data.bio : "",
 					contact_email: resp.data.contact_email,
 					contact_phone: resp.data.contact_phone,
 					classes: class_arr,
@@ -277,7 +286,6 @@ class StudentProfile extends Component {
 					edu_experiences: resp.data.edu_experiences,
 					student: true,
 					s_id: resp.data.id,
-					work_experiences: [],
 				}
 				var updated_user = deepCopy(user);
 		        this.setState({
@@ -348,7 +356,7 @@ class StudentProfile extends Component {
 					<EditExperience type="work" modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="education-edit" title="Edit Education Info" modalAction={this.sendClasses.bind(this)}>
-					<EditClasses modalEdit={true} updateUser={this.updateUser.bind(this)}/>
+					<EditClasses modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="bio-edit" title="Edit Bio" modalAction={this.sendBio.bind(this)}>
 					<EditBio modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
@@ -515,7 +523,7 @@ class UserEducation extends Component {
 		return(
 			<div className='user-classes'>
 				{this.state.classes.map(classObj => {
-					return(<div key={classObj}>{classObj}</div>)
+					return(<div key={classObj.id}>{classObj.name}</div>)
 				})}
 			</div>
 		)
@@ -531,7 +539,6 @@ class UserBio extends Component {
 	}
 
 	componentWillReceiveProps() {
-		console.log(this.props)
 		// if (this.props.children.length >= 280)
 			this.setState({showExpander: true})
 	}
