@@ -8,7 +8,8 @@ import axios from 'axios';
 import FormData from 'form-data'
 
 axios.defaults.headers.common = {};
-axios.defaults.baseURL = 'http://18.211.86.64:8000';
+axios.defaults.baseURL = 'http://18.211.86.64:8000/';
+
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
@@ -282,6 +283,56 @@ export function getUserLabs(user_id) {
     console.log('Getting user labs');
 
     return axios.get('api/users/' + user_id + '/labs')
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+// USER FILES //
+
+// RESTRICTED: user_id
+// Possible types:
+// 'resume'
+// 'profile_pic'
+// NOTE: you should pass in a FormData object with the file appended, for example
+// let formData = new FormData();
+// formData.append('file', fileInputElement.files[0])
+// uploadUserFile(formData, 'resume');
+export function uploadUserFile(formData, type) {
+    if (type !== 'resume' && type !== 'profile_pic') {
+        console.log('Error: invalid type parameter');
+        return;
+    }
+
+    let user_id = sessionStorage.getItem('user_id');
+
+    return axios.post('api/users/' + user_id + '/' + type,
+        formData,
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+export function getUserFile(type) {
+    if (type !== 'resume' && type !== 'profile_pic') {
+        console.log('Error: invalid type parameter');
+        return;
+    }
+
+    let user_id = sessionStorage.getItem('user_id');
+
+    return axios.get('api/users/' + user_id + '/' + type)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1538,53 +1589,6 @@ export function submitUserFeedback(user_id, url, feedback) {
         })
 }
 
-// Pictures
-// type - should be either "student", "faculty", or "lab"
-// id - based on type, should be the id of that object
-// input_element_id - (string) name of the html id of the "input" element
-export function uploadPic(type, id, input_element_id) {
-    const fileInput = document.getElementById(input_element_id.files[0]);
-    const formData = new FormData();
-    formData.append( 'image', fileInput );
-
-    formData.append('type', type);
-    formData.append('id', id);
-    console.log(formData);
-    const config = {
-        headers: { 'content-type': 'multipart/form-data' }
-    };
-
-    axios.post('api/pics', formData, config)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-// Resumes
-// student_id - (int)
-// input_element_id - (string) name of the html id of the "input" element
-
-export function uploadResume(student_id, input_element_id) {
-    const fileInput = document.getElementById(input_element_id.files[0]);
-    const formData = new FormData();
-    formData.append( 'resume', fileInput );
-
-    console.log(formData);
-    const config = {
-        headers: { 'content-type': 'multipart/form-data' }
-    };
-
-    axios.post('api/students/' + student_id + '/resume', formData, config)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
 
 // Returns all data necessary for student lab search
 export function getSearchData() {
