@@ -24,14 +24,16 @@ class EditModal extends Component {
 
 	handleClose(event) {
     document.getElementById(this.props.id).classList.remove('activated');
-    document.getElementById("greyBackdrop").classList.remove('activated');
+    document.getElementById(`${this.props.id}-backdrop`).classList.remove('activated');
 	}
 
 	render() {
 		var contentCSS = this.props.noPadding ? "modal-content modal-no-padding" : "modal-content";
+		var bodyCSS = this.props.wide ? "modal modal-fixed-footer wide-modal" : "modal modal-fixed-footer display-modal";
 		return(
 			<div>
-				<div id={this.props.id} className="modal modal-fixed-footer display-modal">
+				<div className="modal-backdrop" id={`${this.props.id}-backdrop`} />
+				<div id={this.props.id} className={bodyCSS}>
 					<h1>{this.props.title}</h1>
 			 		<div className={contentCSS}>
 						{this.props.children}

@@ -71,7 +71,7 @@ class StudentProfile extends Component {
 				newState.classes = newValue;
 			}
 	    this.setState(newState, () => {
-				//console.log("update", field, newValue)
+				console.log("updated", field, newValue)
 			});
   	}
 
@@ -314,7 +314,7 @@ class StudentProfile extends Component {
 	openModal(id) {
 		if (document.getElementById(id)) {
 			document.getElementById(id).classList.add('activated');
-			document.getElementById("greyBackdrop").classList.add('activated');
+			document.getElementById(`${id}-backdrop`).classList.add('activated');
 		}
 	}
 
@@ -339,7 +339,6 @@ class StudentProfile extends Component {
 		} else {
 	 	return (
 	 		<div id='user-content-body'>
-				<div id="greyBackdrop" className="modal-backdrop"></div>
 				<EditModal id="skills-interests-edit" title="Edit Skills and Interests" modalAction={this.updateTags.bind(this)} noPadding={true}>
 					<PickYourInterests modalEdit={true} editorOnly={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal >
@@ -561,7 +560,7 @@ class SkillsInterests extends Component {
 	openModal(id) {
 		if (document.getElementById(id)) {
 			document.getElementById(id).classList.add('activated');
-			document.getElementById("greyBackdrop").classList.add('activated');
+			document.getElementById(`${id}-backdrop`).classList.add('activated');
 		}
 	}
 

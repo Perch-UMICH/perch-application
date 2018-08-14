@@ -364,10 +364,8 @@ export class EditExperience extends Component {
 	}
 
 	render() {
-		console.log("STATE, PROPS", this.state, this.props)
 		var experiences = [];
-		for (var i = 0; i < this.state.objs.length; ++i) {
-			var obj = this.state.objs[i];
+		this.state.objs.map(obj => {
 			experiences.push(
 				<div key={obj.id}>
 					<div className="row">
@@ -393,7 +391,7 @@ export class EditExperience extends Component {
 					</div>
 					<div className="edit-experience-hr" />
 				</div>)
-		}
+		})
 
 		return(
 			<form id='edit-experience'>

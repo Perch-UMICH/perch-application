@@ -1,30 +1,24 @@
 .app-question-tab-body {
-	color: var(--eighty-grey);
 	letter-spacing: 0.5px;
 	padding-right: 20px;
 	margin: 25px 15px;
 }
 
 .app-question-tab-header {
-	margin-top: 40px;
-	padding: 6px;
-	background-color: var(--active);
-	color: var(--e-grey);
-	font-size: 20px;
+	background-color: var(--primary);
+	color: white;
 }
 
 .app-question-tab-label {
 	text-align: left;
-	color: var(--e-grey);
+	font-weight: bold;
 	font-size: 20px;
-	margin-top: 0px;
 }
 
 .app-question-tab {
 	display: block;
-	background-color: var(--d-grey);
-	color: var(--eighty-grey);
-	padding-bottom: 6px;
+	margin: 20px 0px;
+	background-color: var(--e-grey);
 }
 
 .app-question-desc {
@@ -34,6 +28,6 @@
 
 .apply-question-tab-label {
 	color: var(--eighty-grey);
-	font-size: 16px;
 	text-align: left;
+	margin-bottom: 5px;
 }

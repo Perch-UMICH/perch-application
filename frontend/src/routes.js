@@ -52,7 +52,7 @@ class Router extends Component {
 							<Route path='/lab-match' component={ LabMatch }/>
 							<Route path='/prof-page' component={ GroupPage }/>
 							<Route path='/prof/:profSlug' component={ ProfPage }/>
-							<Route path='/apply/:labSlug' component={ Apply } />
+							<Route path='/apply/:labId' component={ Apply } />
 							<Route path='/create-position' component={ CreatePosition } />
 							<Route path='/view-applicants' component={ ViewApplicants } />
 							<Route path='/view-applicants/:posId' component={ ViewApplicants } />
