@@ -12,13 +12,13 @@ class NavBar extends Component {
 
 	componentDidMount() {
 		if (isStudent()) {
-			this.setState({ 
-				is_student: true, 
+			this.setState({
+				is_student: true,
 				prof_dest: `/student-profile/${getCurrentUserId()}`,
 			});
 		} else if (isLab()) {
-			this.setState({ 
-				is_student: false, 
+			this.setState({
+				is_student: false,
 				prof_dest: `/prof-page/${getCurrentLabId()}`,
 			});
 		}
@@ -30,7 +30,7 @@ class NavBar extends Component {
 			var navItems = <div>
 				<li><a className="nav-item" href={this.state.prof_dest}>PROFILE</a></li>
 			    <li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>
-			    <li><a className="nav-item" href="/dashboard">SAVED</a></li>
+			    <li><a className="nav-item" href="/dashboard">YOUR PROJECTS</a></li>
 			    <li><a className="nav-item" href="/help">HELP</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
@@ -50,9 +50,9 @@ class NavBar extends Component {
 			      <div className="nav-wrapper">
 			        <a href="#" data-activates="mobile-demo" className="right button-collapse hide-on-large-only"><i id="hamburger" className="material-icons">menu</i></a>
 			      <ul id="nav-mobile" className="right hide-on-med-and-down">
-			  
+
 			        {navItems}
-		
+
 			      </ul>
 			        <ul className="left hide-on-small-only">
 			        {!isLoggedIn() &&
@@ -72,7 +72,7 @@ class NavBar extends Component {
 			        </ul>
 			      </div>
 			      <div className='right'>
-			      
+
 			      </div>
 			    </nav>
 
@@ -80,6 +80,6 @@ class NavBar extends Component {
 		);
 	}
 }
-	
+
 
 export default NavBar;

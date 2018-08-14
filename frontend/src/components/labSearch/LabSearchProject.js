@@ -56,6 +56,20 @@ class LabSearchProject extends Component {
     }
 
 	render() {
+    var applyButton =
+      <div className='lab-srch-project-apply lab-srch-project-action-label'><a onClick={() => this.openModal(`${this.props.id}-apply`)}>Apply</a></div>
+
+    var saveRemoveButton =
+      <div>
+        {!this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.saveProject}>save</div>}
+        {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.removeProject}>remove</div>}
+      </div>
+
+    if (this.props.applied) {
+      applyButton = null;
+      saveRemoveButton = null;
+    }
+    
 		return (
             <div className='lab-srch-project'>
                 <EditModal id={`${this.props.id}-apply`} wide={true} actionName="submit"
@@ -67,10 +81,9 @@ class LabSearchProject extends Component {
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                 </div>
                 <div className='lab-srch-project-description'>{this.state.description} <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span></div>
-                <div className='lab-srch-project-apply lab-srch-project-action-label'><a onClick={() => this.openModal(`${this.props.id}-apply`)}>Apply</a></div>
+                {applyButton}
                 <div className='lab-srch-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
-                {!this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.saveProject}>save</div>}
-                {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.removeProject}>remove</div>}
+                {saveRemoveButton}
             </div>
 
 		);
