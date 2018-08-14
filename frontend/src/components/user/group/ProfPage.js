@@ -17,8 +17,8 @@ class ProfPage extends Component {
 			yes: ['spots open', 'undergrads', 'credit'],
 			no: ['paid', 'seniors', 'freshmen'],
 			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
-			labels: [], 
-			skills: [], 
+			labels: [],
+			skills: [],
 			positions: [],
 			contact_info: [],
 			user_id: getCurrentUserId(),
@@ -31,7 +31,7 @@ class ProfPage extends Component {
 	openModal(id) {
 		if (document.getElementById(id)) {
 			document.getElementById(id).classList.add('activated');
-			document.getElementById("greyBackdrop").classList.add('activated');
+			document.getElementById(`${id}-backdrop`).classList.add('activated');
 		}
 	}
 
@@ -50,7 +50,7 @@ class ProfPage extends Component {
 				this.setState({user_type: "user"});
 			else if (isLab())
 				this.setState({user_type: "faculty"});
-	
+
 			var lab_id = window.location.pathname.split('/')[2];
 			getLab(lab_id).then((resp) => {
 				console.log(resp);
@@ -62,7 +62,7 @@ class ProfPage extends Component {
 					var contact_info = [];
 					if (resp.data.location) {
 						contact_info.push({label: 'location', value: resp.data.location});
-					} 
+					}
 					if (resp.data.contact_email) {
 						contact_info.push({label: 'email', value: resp.data.contact_email});
 					}
@@ -87,13 +87,12 @@ class ProfPage extends Component {
 		var apply_dest = '/apply/' + window.location.pathname.split('/')[2];
 		// TODO TEMPORARILY COMMENTED OUT UNTIL INTEGRATED WITH BACKEND
 		// if (!isLoggedIn()) {
-		// 	return <ErrorPage /> 
+		// 	return <ErrorPage />
 		// } else if (this.state.no_lab) {
 		// 	return <ErrorPage fourofour="true" />
 		// } else {
 			return (
 				<div id='user-content-body'>
-					<div id="greyBackdrop" className="modal-backdrop"></div>
 					<EditModal id="contact-edit" title="Edit Contact Info">
 						<EditContact />
 					</EditModal>
@@ -185,7 +184,7 @@ class UserClasses extends Component {
 		return(
 			<div id='user-classes' >
 				<span onClick={this.expand.bind(this)}>
-					Notable Classes 
+					Notable Classes
 					<i className="material-icons" id='user-classes-expander'>expand_more</i>
 				</span>
 				<div id='user-classes-list'>

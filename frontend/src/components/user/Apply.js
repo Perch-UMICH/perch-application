@@ -8,56 +8,50 @@ class Apply extends Component {
 		super(props);
 		this.state = {
 			questions: [],
+			applyHelpText: "To apply, fill out the questions below & click submit. A lab contact will reach out to you if it seems like a good match!",
 		};
 	}
 
+	updateQuestions(questions) {
+		if (this.props.updateQuestions) {
+			this.props.updateQuestions(questions);
+		}
+	}
+
 	componentDidMount() {
+		// retreive lab id & pull application info.
 		var url_arr = window.location.pathname.split('/');
 		var lab_id = url_arr[2];
 		var position_id = url_arr[3];
-		getLab(lab_id).then(resp => {
-			if (resp.data) {
-				this.setState({ lab_name: resp.data.name })
-			}
-		});
-		getLabPosition(position_id).then(position => {
-			console.log('position!');
-			console.log(position);
-			this.setState({ 
-				pos_description: position.description,
-				pos_name: position.title,
-				time_comm: position.time_commitment,
-				open_slots: position.open_slots,
-			})
-		});
-		getPositionApplication(position_id).then(app => {
-			console.log("application");
-			console.log(app);
-			this.setState({
-				questions: app.questions,
-			});
+
+		this.setState({
+			pos_description: this.props.description ? this.props.description : "You do interesting work.", //position.description,
+			pos_name: "Cool Position", //position.title,
+			time_comm: "5-10 hours",//position.time_commitment,
+			open_slots: 2, //position.open_slots,
+			questions: [
+				{
+					id: 1,
+					question: "Why are you interested in this project?",
+					response: "",
+				},
+				{
+					id: 2,
+					question: "What makes you a good fit to work in our lab?",
+					response: "",
+				},
+			]
 		});
 	}
 
 	render() {
 		return (
-			<div className='apply shift-down'>
-				<div className='container center-align apply-form shadow'>
-					<div className='apply-header'>Apply to {this.state.lab_name}:<br/>{this.state.pos_name}</div><br/>
-					<div className="container app-question-desc">{this.state.pos_description}</div>
-					<div className="container"> 
-						<div className='floater-item'>{this.state.time_comm}</div>
-						<div className='floater-item'>Open Slots: {this.state.open_slots}</div>
-					</div><br/>
-					{/*<h2 className="app-question-tab-label">SKILLS REQUIRED:</h2>
-					<div className="container">
-					    {this.state.skills.map((skill) => {
-							return (
-								<div key={skill} className='floater-item'>{skill}</div>);
-						})}
-					</div><br/>*/}
-					<AppQuestionTab questions={this.state.questions} />
-				</div>
+			<div className="apply-wrapper">
+				<div className="apply-descriptor"><b>Position Description: </b>{this.state.pos_description}</div>
+				<div className="apply-descriptor"><b>Time Commitment: </b>{this.state.time_comm}</div>
+				<div className="apply-descriptor"><b>Open Slots: </b>{this.state.open_slots}</div><br/>
+				<div className="apply-help-text">{this.state.applyHelpText}</div>
+				<AppQuestionTab updateQuestions={this.updateQuestions.bind(this)} questions={(this.state.questions && this.state.questions.length) ? this.state.questions : []} />
 			</div>
 		);
 	}

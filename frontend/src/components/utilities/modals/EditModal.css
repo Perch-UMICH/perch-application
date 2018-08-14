@@ -17,6 +17,12 @@
 	top: 15%;
 }
 
+.modal.wide-modal {
+	top: 15%;
+	width: 80%;
+	max-height: 80%;
+}
+
 .modal.activated {
 	visibility: visible !important;
 	opacity: 1 !important;
@@ -89,4 +95,8 @@
 .modal-no-padding {
 	padding: 0px !important;
 	margin: 0px !important;
+}
+
+.modal-wide {
+	width: 70% !important;
 }
