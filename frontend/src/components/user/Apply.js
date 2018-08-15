@@ -19,17 +19,12 @@ class Apply extends Component {
 	}
 
 	componentDidMount() {
-		// retreive lab id & pull application info.
-		var url_arr = window.location.pathname.split('/');
-		var lab_id = url_arr[2];
-		var position_id = url_arr[3];
-
+		// set state from passed-in position information (some currently defaulted)
 		this.setState({
-			pos_description: this.props.description ? this.props.description : "You do interesting work.", //position.description,
-			pos_name: "Cool Position", //position.title,
-			time_comm: "5-10 hours",//position.time_commitment,
-			open_slots: 2, //position.open_slots,
-			questions: [
+			pos_description: this.props.description ? this.props.description : "You do interesting work.",
+			time_comm: "5-10 hours", // TODO: receive & set actual time commitment
+			open_slots: 2, // TODO: receive & set actual open slots
+			questions: [ // currently using default two questions, could make position-specific
 				{
 					id: 1,
 					question: "Why are you interested in this project?",

@@ -1,3 +1,13 @@
+/* Lab Dashboard ('YOUR PROJECTS') page for both students and faculty
+Students:
+  -  Display saved projects
+	-  Display projects that they've applied to
+
+Faculty: (an idea)
+  -  Display the projects that they own / have created
+	-  Display applicants to their projects (THIS COULD DEFINITELY GO IN ANOTHER AREA)
+*/
+
 import React, {Component} from 'react';
 import LabSearchProject from './LabSearchProject'
 import {getCurrentUserId, getStudentFromUser, getFacultyFromUser, isStudent, isFaculty} from '../../helper.js'
