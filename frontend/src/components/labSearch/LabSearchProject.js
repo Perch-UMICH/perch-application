@@ -30,6 +30,8 @@ class LabSearchProject extends Component {
       this.setState({question_resps});
     }
 
+    // Update this function with backend functionality to save application
+    // You can access the response under 'this.state.question_resps'
     submitApplication = () => {
       alert("Application Submitted! ... But not really.")
     }
@@ -65,11 +67,12 @@ class LabSearchProject extends Component {
         {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.removeProject}>remove</div>}
       </div>
 
+    // if the user is viewing this project on their lab dashboard page in the 'applied' section, don't show the 'apply' and 'save' buttons
     if (this.props.applied) {
       applyButton = null;
       saveRemoveButton = null;
     }
-    
+
 		return (
             <div className='lab-srch-project'>
                 <EditModal id={`${this.props.id}-apply`} wide={true} actionName="submit"

@@ -11,6 +11,7 @@ class AppQuestionTab extends Component {
 		}
 	}
 
+	// set initial questions from parent
 	componentWillReceiveProps(props) {
 		if (props.questions) {
 			this.setState({questions: props.questions})
