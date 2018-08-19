@@ -1391,10 +1391,11 @@ export function deleteLabPosition(position_ids) {
 
 // Applications
 // Application of questions attached to an open lab position
+// Object which contains:
 // position_id - (integer)
 // questions - (array of strings)
 
-export function getPositionApplication(position_id) {
+export function getApplicationFromPosition(position_id) {
     console.log('Getting application');
 
     return axios.get('api/positions/' + position_id + '/application')
@@ -1407,17 +1408,17 @@ export function getPositionApplication(position_id) {
 }
 
 // RESTRICTED: lab_id
-export function createApplication(position_id, questions) {
+export function createApplication(application) {
     console.log('Creating application');
 
     let lab_id = sessionStorage.getItem('lab_id');
 
-    let payload = {
-        position_id: position_id,
-        questions: questions
-    };
+    // let payload = {
+    //     position_id: position_id,
+    //     questions: questions
+    // };
 
-    return axios.post('api/labs/' + lab_id + '/applications', payload)
+    return axios.post('api/labs/' + lab_id + '/applications', application)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1427,17 +1428,17 @@ export function createApplication(position_id, questions) {
 }
 
 // RESTRICTED: lab_id
-export function updateApplication(position_id, questions) {
+export function updateApplication(application) {
     console.log('Creating application');
 
     let lab_id = sessionStorage.getItem('lab_id');
 
-    let payload = {
-        position_id: position_id,
-        questions: questions
-    };
+    // let payload = {
+    //     position_id: position_id,
+    //     questions: questions
+    // };
 
-    return axios.post('api/labs/' + lab_id + '/applications/update', payload)
+    return axios.post('api/labs/' + lab_id + '/applications/update', application)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1464,24 +1465,24 @@ export function getLabPositionApplicants(position_id) {
 
 // Application Responses
 // Response to an application for a position, created by a student
-// student_id
+// Object with contains:
 // position_id
 // answers - (array of strings)
 // NOTE: 'create' allows a student to start an application, but it must be 'submitted' for the lab to see
 
 // RESTRICTED: student_id
-export function createApplicationResponse(position_id, answers) {
+export function createApplicationResponse(application_response) {
     console.log('Creating application response');
 
     let student_id = sessionStorage.getItem('student_id');
 
-    let payload = {
-        student_id: student_id,
-        position_id: position_id,
-        answers: answers
-    };
+    // let payload = {
+    //     student_id: student_id,
+    //     position_id: position_id,
+    //     answers: answers
+    // };
 
-    return axios.post('api/students/' + student_id + '/responses', payload)
+    return axios.post('api/students/' + student_id + '/responses', application_response)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1491,15 +1492,14 @@ export function createApplicationResponse(position_id, answers) {
 }
 
 // RESTRICTED: student_id
-export function updateApplicationResponse(application_response_id, answers) {
+export function updateApplicationResponse(application_response_id, application_response) {
     console.log('Updating application response');
 
     let student_id = sessionStorage.getItem('student_id');
 
     let payload = {
-        student_id: student_id,
-        position_id: application_response_id,
-        answers: answers
+        application_response_id: application_response_id,
+        application_response: application_response
     };
 
     return axios.post('api/students/' + student_id + '/responses/update', payload)
@@ -1519,7 +1519,7 @@ export function submitApplicationResponse(application_response_id) {
 
     let payload = {
         student_id: student_id,
-        position_id: application_response_id
+        application_response_id: application_response_id
     };
 
     return axios.post('api/students/' + student_id + '/responses/update', payload)
@@ -1539,7 +1539,7 @@ export function deleteApplicationResponse(application_response_id) {
 
     let payload = {
         student_id: student_id,
-        position_id: application_response_id
+        application_response_id: application_response_id
     };
 
     return axios.post('api/students/' + student_id + '/responses/delete', payload)
