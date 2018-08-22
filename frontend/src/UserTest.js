@@ -2,7 +2,7 @@
  * Created by aksha on 7/22/2018.
  */
 import React from 'react'
-import {getAllUsers, registerUser, updateUser, deleteUser, loginUser, verifyLogin, isLoggedIn} from './helper'
+import {getAllUsers, registerUser, updateUser, deleteUser, loginUser, verifyLogin, isLoggedIn, getCurrentUserId, isStudent, getAllStudents, getStudent, getStudentSkills, getStudentTags} from './helper'
 
 class UserTest extends React.Component {
     constructor() {
@@ -17,6 +17,13 @@ class UserTest extends React.Component {
             deleteUser_result: null,
             verifyLong_result: null,
             isLoggedIn_result: null,
+            userId_result: null,
+            isStudent_result: null,
+            getAllStudents_result: null,
+            getStudentFour_result: null,
+            getStudentFourMil_result: null,
+            getStudentSkills_result: null,
+            getStudentTags_result: null,
         }
     }
 
@@ -35,7 +42,7 @@ class UserTest extends React.Component {
         });
 
         // Register a user
-        registerUser('name','email','password','password').then(function (resp) {
+        registerUser('name@name.com','email','password','password').then(function (resp) {
            comp.setState({registerUser_result: JSON.stringify(resp)});
 
            // Then, Login the user
@@ -53,6 +60,9 @@ class UserTest extends React.Component {
                         deleteUser().then(function (resp) {
                             comp.setState({deleteUser_result: JSON.stringify(resp)});
 
+                            //Then, check userId() 
+                            comp.setState({userId_result: getCurrentUserId()});
+
                             //Then, checked if the user is logged in (they shouldn't be)
                             comp.setState({isLoggedIn_result: isLoggedIn().toString});
                         });
@@ -60,6 +70,28 @@ class UserTest extends React.Component {
                 });
             });
         });
+
+        getAllStudents().then(function (resp) {
+            comp.setState({getAllStudents_result: JSON.stringify(resp)});
+        });
+
+        getStudent(4).then(function (resp) {
+            comp.setState({getStudentFour_result: JSON.stringify(resp)});
+        });
+
+        //Expecting an error
+        getStudent(4000000).then(function (resp) {
+            comp.setState({getStudentFourMil_result: JSON.stringify(resp)});
+        });
+
+        getStudentSkills(4).then(function (resp) {
+            comp.setState({getStudentSkills_result: JSON.stringify(resp)});
+        });
+
+        getStudentTags(4).then(function (resp) {
+            comp.setState({getStudentTags_result: JSON.stringify(resp)});
+        });
+
     }
 
 
@@ -77,8 +109,20 @@ class UserTest extends React.Component {
                 <p>{this.state.verifyLong_result}</p>
                 <h2>deleteUser</h2>
                 <p>{this.state.deleteUser_result}</p>
+                <h2>getCurrentUserId</h2>
+                <p>{this.state.userId_result}</p>
                 <h2>isLoggedIn</h2>
                 <p>{this.state.isLoggedIn_result}</p>
+                <h2>getAllStudents</h2>
+                <p>{this.state.getAllStudents_result}</p>
+                <h2>getStudent(4)</h2>
+                <p>{this.state.getStudentFour_result}</p>
+                <h2>getStudent(4000000)</h2>
+                <p>{this.state.getStudentFourMil_result}</p>
+                <h2>getStudentSkills</h2>
+                <p>{this.state.getStudentSkills_result}</p>
+                <h2>getStudentTags</h2>
+                <p>{this.state.getStudentTags_result}</p>
             </div>
         )
     }
