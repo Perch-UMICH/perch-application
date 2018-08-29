@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import ErrorPage from '../../utilities/ErrorPage'
+import EditModal from '../../utilities/modals/EditModal'
 import GroupQuickview from './GroupQuickview'
+import CreatePosition from './CreatePosition'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPreferences, isStudent, isLab, getLabMembers} from '../../../helper.js'
@@ -10,7 +12,7 @@ import './GroupPage.css'
 class GroupPage extends Component {
     constructor(props) {
         super(props);
-        
+
 
         var labID = window.location.pathname.split('/')[2];
         this.state = {
@@ -23,51 +25,66 @@ class GroupPage extends Component {
     }
 
     componentWillMount() {
-        getAllLabPositions(this.state.lab_id).then((resp) => {
-            let positions = [];
-            console.log(resp);
-            resp.data.map((pos) => {
-                positions.push(<GroupProject title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description} 
-                                time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
-            })
-            this.setState({lab_positions: positions});
-        });
-        
-        getLab(this.state.lab_id).then((resp) => {
-            console.log(resp);
-            this.setState({lab_data: resp.data.data});
-        });
+      getAllLabPositions(this.state.lab_id).then((resp) => {
+          let positions = [];
+          console.log(resp);
+          resp.data.map((pos) => {
+              positions.push(<GroupProject title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
+                              time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
+          })
+          this.setState({lab_positions: positions});
+      });
 
-        getLabMembers(this.state.lab_id).then((resp) => {
-            let admins = [];
-            let members = [];
-            console.log(resp);
-            resp.data.faculty.map((person) => {
-                let fullname = person.data.first_name + ' ' + person.data.last_name;
-                if ((person.role === 1) || (person.role === 2)) {
-                    admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
-                }
-                else {
-                    members.push(<GroupPerson src='/img/headshots/hwang.jpg'>{fullname}</GroupPerson>);
-                }
-            })
-            resp.data.students.map((person) => {
-                let fullname = person.data.first_name + ' ' + person.data.last_name;
-                if ((person.role === 1) || (person.role === 2)) {
-                    admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
-                }
-                else {
-                    members.push(<GroupPerson src='/img/headshots/hwang.jpg'>{fullname}</GroupPerson>);
-                }
-            })
-            this.setState({lab_admins: admins, lab_members: members});
-        });
- 
+      getLab(this.state.lab_id).then((resp) => {
+          console.log(resp);
+          this.setState({lab_data: resp.data.data});
+      });
+
+      getLabMembers(this.state.lab_id).then((resp) => {
+          let admins = [];
+          let members = [];
+          console.log(resp);
+          resp.data.faculty.map((person) => {
+              let fullname = person.data.first_name + ' ' + person.data.last_name;
+              if ((person.role === 1) || (person.role === 2)) {
+                  admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
+              }
+              else {
+                  members.push(<GroupPerson src='/img/headshots/hwang.jpg'>{fullname}</GroupPerson>);
+              }
+          })
+          resp.data.students.map((person) => {
+              let fullname = person.data.first_name + ' ' + person.data.last_name;
+              if ((person.role === 1) || (person.role === 2)) {
+                  admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
+              }
+              else {
+                  members.push(<GroupPerson src='/img/headshots/hwang.jpg'>{fullname}</GroupPerson>);
+              }
+          })
+          this.setState({lab_admins: admins, lab_members: members});
+      });
+
+  }
+
+  createPosition() {
+    alert("attempting to create position")
+  }
+
+  openModal(id) {
+    if (document.getElementById(id)) {
+      document.getElementById(id).classList.add('activated');
+      document.getElementById(`${id}-backdrop`).classList.add('activated');
     }
+  }
 
 	render() {
 		return(
 			<div id='group-page'>
+        <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="submit"
+          title={`Create New Position`} modalAction={this.createPosition.bind(this)}>
+          <CreatePosition />
+        </EditModal>
 				<div id='group-page-column-L'>
 					<Administrators people={this.state.lab_admins}/>
 					<Members people={this.state.lab_members}/>
@@ -78,6 +95,7 @@ class GroupPage extends Component {
                 </div>
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description='NULL'/>
+
 					<GroupProjectContainer>
 						{this.state.lab_positions}
 					</GroupProjectContainer>
@@ -130,7 +148,7 @@ const GroupPerson = (props) => {
 }
 
 const QuickInfo = (props) => {
-    return( 
+    return(
         <div id='group-quick-info'>
             <h1>Quick Info</h1>
             <div className='group-info-box'>
@@ -144,7 +162,7 @@ const QuickInfo = (props) => {
             </div>
         </div>
     )
-} 
+}
 
 const ContactInfo = (props) => {
     return(
