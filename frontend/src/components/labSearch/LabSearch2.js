@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './LabSearch2.css';
 import ExpanderIcons from '../utilities/ExpanderIcons'
+import RodriguezLoader from '../utilities/animations/RodriguezLoader'
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';
@@ -39,6 +40,7 @@ class LabSearch extends Component {
 			s_id: '',
             search: '',
             lab_list: [],
+			loading: true,
 		}
 	}
 
@@ -53,6 +55,7 @@ class LabSearch extends Component {
                 newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
             }
 
+						newState.loading = false;
             this.setState(newState);
         });
 
@@ -148,31 +151,34 @@ class LabSearch extends Component {
 		document.getElementById('lab-search-box').classList.add('hide');
 	}
 
-    updateSearch(event) {
-    	// event.preventDefault()
-    	// if (event.keyCode == 13) {
-    		//alert(event.keyCode)
-        	this.setState({search: event.target.value})
-        // }
-    }
+  updateSearch(event) {
+  	// event.preventDefault()
+  	// if (event.keyCode == 13) {
+  		//alert(event.keyCode)
+      	this.setState({search: event.target.value})
+      // }
+  }
 
-    executeSearch(event) {
-        if (event.key === 'Enter') {
-            labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search).then((resp) => {
-                console.log(resp)
-                var newState = this.state;
-                var all_search_labs = resp.data.results;
-                newState.all_labs = [];
-      
-                resp.data.results.map((lab) => {
-                    console.log(lab);
-                    newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
-                })
+  executeSearch(event) {
+		if (event.key === 'Enter') {
+			this.setState({loading: true}, () => {
+        labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search).then((resp) => {
+          console.log(resp)
+          var newState = this.state;
+          var all_search_labs = resp.data.results;
+          newState.all_labs = [];
 
-                this.setState(newState);
-            })
-        }
-    }
+          resp.data.results.map((lab) => {
+              console.log(lab);
+              newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+          })
+
+					newState.loading = false;
+          this.setState(newState);
+        })
+      })
+		}
+  }
 
 	render() {
 		var filterContentArr = [];
@@ -241,6 +247,19 @@ class LabSearch extends Component {
 					{filterContent}</div>);
 		})
 
+	var labSearchContent =
+     <div id='lab-srch-results'>
+          {this.state.all_labs}
+     </div>
+
+	var showMoreButton =
+     <div id='lab-srch-more' onClick={()=>{alert('load em')}}>Mo' labs, mo' problems</div>
+
+	if (this.state.loading) {
+		labSearchContent = <RodriguezLoader />
+		showMoreButton = null;
+	}
+
 	var searchSideBar =
 		<div className="search-sidebar">
 			{filterTypes.map((type, idx) => {
@@ -256,16 +275,15 @@ class LabSearch extends Component {
 		</div>
 		return (
 			<div className='lab-srch-2'>
+
                <div className='lab-srch-mods'>
                    {searchSideBar}
                </div>
                <div className='lab-srch-body'>
                    <input id='lab-srch-input' type='text' placeholder='keywords' onKeyPress={event => this.executeSearch(event)}/>
-                   <div id='lab-srch-result-summary'>Projects 1-{this.state.all_labs.length} ({this.state.all_labs.length} total) {/*page 1 of 40*/} for <b>{this.state.search}</b></div>
-                   <div id='lab-srch-results'>
-                        {this.state.all_labs}
-                   </div>
-                   <div id='lab-srch-more' onClick={()=>{alert('load em')}}>Mo' labs, mo' problems</div>
+									 <div id='lab-srch-result-summary'>Projects 1-{this.state.all_labs.length} ({this.state.all_labs.length} total) {/*page 1 of 40*/} for <b>{this.state.search}</b></div>
+                   {labSearchContent}
+									 {showMoreButton}
                </div>
 			</div>
 		);

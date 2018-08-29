@@ -16,7 +16,7 @@ import Education from './Education'
 import Links from './Links'
 import {getStudent, isLoggedIn, isStudent, getCurrentStudentId, getCurrentUserId,
   verifyLogin, getStudentFromUser, getStudentTags, getStudentSkills, getUser, updateStudent,
-  addSkillsToStudent, addTagsToStudent, addWorkExperienceToStudent, addEduExperienceToStudent} from '../../../helper.js'
+  addSkillsToStudent, addTagsToStudent, addWorkExperienceToStudent, addEduExperienceToStudent, primeExternalLink} from '../../../helper.js'
 import './StudentOnboarding.css'
 
 class StudentOnboarding extends Component {
@@ -71,21 +71,21 @@ class StudentOnboarding extends Component {
     var nameArr = user && user.name ? user.name.split(' ') : [];
     var first_name = nameArr[0] ? nameArr[0]: "";
     var last_name = nameArr[1] ? nameArr[1] : "";
+    var linkedin_link = user.linkedin_link ? primeExternalLink(user.linkedin_link) : "";
+    var website_link = user.website_link ? primeExternalLink(user.website_link) : "";
     var s = {
-      contact_email: user.contact_email ? user.contact_email : null,
-      contact_phone: user.contact_phone ? user.contact_phone : null,
-      year: user.year ? user.year : null,
-      bio: user.bio ? user.bio : null,
-      major: user.major ? user.major : null,
-      gpa: user.gpa ? user.gpa : null,
-      classes: user.classes ? user.classes : null,
-      linkedin_link: user.linkedin_link ? user.linkedin_link : null,
+      contact_email: user.contact_email ? user.contact_email : "",
+      contact_phone: user.contact_phone ? user.contact_phone : "",
+      year: user.year ? user.year : "",
+      bio: user.bio ? user.bio : "",
+      major: user.major ? user.major : "",
+      gpa: user.gpa ? user.gpa : 4.0,
+      classes: user.classes ? user.classes : [],
       skills: user.skills ? user.skills : [],
       interests: user.interests ? user.interests : [],
-      website_link: user.website_link ? user.website_link : null,
     }
     // updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
-    updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, s.linkedin_link, s.website_link, true, [], [])
+    updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, linkedin_link, website_link, true, [], [])
     .then(r => {
       getStudentFromUser(getCurrentUserId()).then(r => {
         if (redirect) {
