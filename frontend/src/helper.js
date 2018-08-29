@@ -1651,6 +1651,7 @@ export function exists(item) {
 
 /// CHANGED BY EMI
 
+// Create a deep copy of any array/object
 export function deepCopy(object) {
     var output, value, key;
     output = Array.isArray(object) ? [] : {};
@@ -1659,4 +1660,14 @@ export function deepCopy(object) {
         output[key] = (typeof value === "object") ? deepCopy(value) : value;
     }
     return output;
+}
+
+// Check if external link contains 'http:' or 'https:'; if not, add.
+export function primeExternalLink(url) {
+  if (url && typeof url === 'string') {
+    if (url.includes('http:') || url.includes('https:')) {
+      return url;
+    }
+    return('http://' + url);
+  }
 }

@@ -3,7 +3,8 @@ import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId,
 				addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent,
 				removeWorkExperiencesFromStudent, addEduExperienceToStudent,
 				addWorkExperienceToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser,
-				getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
+				getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy, primeExternalLink,
+				uploadUserFile, getUserFile} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -43,24 +44,8 @@ class StudentProfile extends Component {
 		}
 		var updated_user = deepCopy(user);
 		this.state = {
-			img_src: '/img/meha.jpg',
-			endorsements: [
-				{
-					name: 'Dr. Ed Einstein',
-					url: '/prof-page'
-				},
-				{
-					name: 'Dr. Mary Poppins',
-					url: 'prof-page'
-				},
-			],
-			classes: [],
-			not_student: false,
-			tempskills: [{name: 'python'}, {name: 'javascript'}, {name: 'HTML 5'}, {name: 'CSS 3'}, {name: 'C++'}, {name: 'Splunk'}, {name: 'matLab'}],
-			tempinterests: [{name: 'Computer Science'}, {name: 'Computer Security'}, {name: 'Software Development'}, {name: 'Management'}, {name: 'Design'}],
 			user,
 			updated_user,
-			prevField: "",
 		}
 	}
 
@@ -123,11 +108,21 @@ class StudentProfile extends Component {
 				class_arr.push(c.name);
 			})
 		}
+
+		// update profile picture
+		if (this.state.user.img) {
+			let formData = new FormData();
+			formData.append('file', this.state.user.img);
+			uploadUserFile(formData, 'profile_pic');
+		}
+
+		// update name
 		updateStudent(first_name, last_name, null, null, null, null, null, null, [], [])
 		.then(r => {
 			var major_arr = [];
 			major_arr.push(this.state.user.major);
 
+			// update school
 			addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, major_arr).then((resp) => {
 				 this.generalHandler();
 	   		})
@@ -135,7 +130,7 @@ class StudentProfile extends Component {
 	}
 
 	sendLinks() {
-		updateStudent(null, null, null, null, null, this.state.updated_user.linkedin_link, this.state.updated_user.website_link, null, [], [])
+		updateStudent(null, null, null, null, null, primeExternalLink(this.state.updated_user.linkedin_link), primeExternalLink(this.state.updated_user.website_link), null, [], [])
 		.then(r => {
 			this.generalHandler();
 		});
@@ -291,6 +286,9 @@ class StudentProfile extends Component {
 		        this.setState({
 					user, updated_user
 				});
+			})
+			getUserFile('profile_pic').then(resp => {
+				console.log("RESP!!!", resp);
 			})
 	}
 
