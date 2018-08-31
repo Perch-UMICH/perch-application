@@ -19,6 +19,7 @@ class LabSearchProject extends Component {
     }
 
     openModal(id) {
+      console.log("CLICKING OPEN ?")
   		if (document.getElementById(id)) {
   			document.getElementById(id).classList.add('activated');
         document.getElementById(`${id}-backdrop`).classList.add('activated');

@@ -121,8 +121,8 @@ class CreatePosition extends Component {
 		};
 		var newQIndex = this.state.q_index + 1;
 		var updated_questions = this.state.questions.concat([newQuestion]);
-		this.setState({ 
-			questions: updated_questions, 
+		this.setState({
+			questions: updated_questions,
 			q_index: newQIndex,
 			modal_info: Object.assign({}, this.state.modal_info, {
 			  questions: updated_questions,
@@ -134,7 +134,7 @@ class CreatePosition extends Component {
 		var temp_questions = this.state.questions;
 		var index = temp_questions.findIndex(item => item.id === question_id);
 		temp_questions[index].text = event.target.value;
-		this.setState({ 
+		this.setState({
 			questions: temp_questions,
 			modal_info: Object.assign({}, this.state.modal_info, {
 			  questions: temp_questions,
@@ -163,57 +163,52 @@ class CreatePosition extends Component {
 
 	render() {
 		return (
-			<div className='apply shift-down'>
-				<div className='container center-align apply-form shadow'>
-					<div className='apply-header'>Create Position Application</div>
-					<div className="container">
-						<form className='file-field'>
-							<input className='apply-input' id="textInput" value={this.state.positionName} type="text" placeholder="Position Title" onChange={event => this.updatePositionName(event)}></input>
-							<h2 className="apply-question-label">Position Description</h2>
-							<textArea className='lab-text-info-input' id="textArea" type="text" placeholder="short description of position responsibilities" onChange={event => this.updatePositionDesc(event)}></textArea>
-							<div className='row create-position-row'>
-								<h2 className="apply-question-label col s7">Time Commitment</h2>
-								<h2 className="apply-question-label col s5">Open Slots</h2>
-							</div>
-			  				<div className='row'>
-			  					<div className="input-field col s3">
-				                	<input className='gen-input' id='lower_bound_hours' type='number' step="1" placeholder='8' value={this.state.lowerHours} onChange={event => this.updateLowerHours(event)} />
-				                	<label htmlFor="lower_bound_hours">Min Hours/Week</label>
-				            	</div>
-				            	<div className="input-field col s3">
-					                <input className='gen-input' id='upper_bound_hours' type='number' step="1" placeholder='10' value={this.state.upperHours} onChange={event => this.updateUpperHours(event)} />
-					                <label htmlFor="upper_bound_hours">Max Hours/Week</label>
-					            </div>
-	                        	<div className="input-field col s1">
-	            	            </div>
-	                        	<div className="input-field col s4">
-	            	                <input className='gen-input' id='num_open_slots' type='number' step="1" value={this.state.numSlots} onChange={event => this.updateNumSlots(event)} />
-	            	                <label htmlFor="num_open_slots"># Open Slots</label>
-	            	            </div>
-			  				</div>
-			  				{/*							
-							<h2 className="apply-question-label">Skills Required { this.state.positionName ? "for " + this.state.positionName + "-ing": null } </h2>
-							<BubbleChoice display_info={this.state.display_info} callbackSkills={this.updateSkills}/>*/}
-							<h2 className="apply-question-label">Short Answer Questions</h2>
-							    {this.state.questions.map((question) => {
-									return (
-										<div className="row">
-											<div className="col s11">
-												{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
-												<textarea id={question.id} type="text" className='question-input' id="apply-question-input" value={question.text} rows='3' onChange={event => this.alterQuestion(event, question.id)} required></textarea>
-												
-											</div>
-											<div className="col s1">
-												<a id={question.id} className="remove-question" onClick={() => this.removeQuestion(question.id)}><i className="material-icons interest-editor opacity-1">clear</i></a>
-											</div>
-										</div>);
-								})}
-							<a onClick={this.addQuestion.bind(this)} id="addQuestionCenter" > <i className="material-icons">add</i></a>
-						</form>
-						<ModalButton type="create_app" label="create application" info={this.state.modal_info}/>
-					</div>
+			<div className='center-align'>
+					<form className='file-field'>
+						<input className='apply-input' id="textInput" value={this.state.positionName} type="text" placeholder="Project Title" onChange={event => this.updatePositionName(event)}></input>
+						<h2 className="apply-question-label"><b>Project Description</b></h2>
+						<textArea className="textarea-experience" id="textArea" type="text" placeholder="short description of project and responsibilities for workers on project team" onChange={event => this.updatePositionDesc(event)}></textArea>
+						<div className='row create-position-row'>
+							<h2 className="apply-question-label col s7"><b>Time Commitment</b></h2>
+							<h2 className="apply-question-label col s5"><b>Open Slots</b></h2>
+						</div>
+		  				<div className='row'>
+		  					<div className="input-field col s3">
+			                	<input className='gen-input' id='lower_bound_hours' type='number' step="1" placeholder='8' value={this.state.lowerHours} onChange={event => this.updateLowerHours(event)} />
+			                	<label htmlFor="lower_bound_hours">Min Hours/Week</label>
+			            	</div>
+			            	<div className="input-field col s3">
+				                <input className='gen-input' id='upper_bound_hours' type='number' step="1" placeholder='10' value={this.state.upperHours} onChange={event => this.updateUpperHours(event)} />
+				                <label htmlFor="upper_bound_hours">Max Hours/Week</label>
+				            </div>
+                        	<div className="input-field col s1">
+            	            </div>
+                        	<div className="input-field col s4">
+            	                <input className='gen-input' id='num_open_slots' type='number' step="1" value={this.state.numSlots} onChange={event => this.updateNumSlots(event)} />
+            	                <label htmlFor="num_open_slots"># Open Slots</label>
+            	            </div>
+		  				</div>
+		  				{/*
+						<h2 className="apply-question-label">Skills Required { this.state.positionName ? "for " + this.state.positionName + "-ing": null } </h2>
+						<BubbleChoice display_info={this.state.display_info} callbackSkills={this.updateSkills}/>*/}
+						<h2 className="apply-question-label"><b>Project Application Questions</b></h2>
+						    {this.state.questions.map((question) => {
+								return (
+									<div key={`${question.id}-q`} className="row">
+										<div className="col s11">
+											{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
+											<textarea id={question.id} type="text" className="textarea-experience" id="apply-question-input" value={question.text} rows='3' onChange={event => this.alterQuestion(event, question.id)} required></textarea>
+
+										</div>
+										<div className="col s1">
+											<a id={question.id} className="remove-question" onClick={() => this.removeQuestion(question.id)}><i className="material-icons interest-editor opacity-1">clear</i></a>
+										</div>
+									</div>);
+							})}
+						<a onClick={this.addQuestion.bind(this)} id="addQuestionCenter" > <i className="material-icons">add</i></a>
+						<br/><br/>
+					</form>
 				</div>
-			</div>
 		);
 	}
 }

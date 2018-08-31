@@ -13,7 +13,6 @@ class GroupPage extends Component {
     constructor(props) {
         super(props);
 
-
         var labID = window.location.pathname.split('/')[2];
         this.state = {
             lab_id: labID,
@@ -28,8 +27,8 @@ class GroupPage extends Component {
       getAllLabPositions(this.state.lab_id).then((resp) => {
           let positions = [];
           console.log(resp);
-          resp.data.map((pos) => {
-              positions.push(<GroupProject title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
+          resp.data.map((pos, index) => {
+              positions.push(<GroupProject key={`${index}-p`} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
                               time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
           })
           this.setState({lab_positions: positions});
@@ -82,7 +81,7 @@ class GroupPage extends Component {
 		return(
 			<div id='group-page'>
         <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="submit"
-          title={`Create New Position`} modalAction={this.createPosition.bind(this)}>
+          title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
           <CreatePosition />
         </EditModal>
 				<div id='group-page-column-L'>
@@ -96,7 +95,7 @@ class GroupPage extends Component {
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description='NULL'/>
 
-					<GroupProjectContainer>
+					<GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
 						{this.state.lab_positions}
 					</GroupProjectContainer>
 
