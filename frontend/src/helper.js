@@ -1645,9 +1645,9 @@ export function returnToProfile() {
         window.location = `/prof-page/${getCurrentLabId()}`;
 }
 
-export function exists(item) {
-    return item ? true : false;
-}
+// export function exists(item) {
+//     return item ? true : false;
+// }
 
 /// CHANGED BY EMI
 
@@ -1671,3 +1671,14 @@ export function primeExternalLink(url) {
     return('http://' + url);
   }
 }
+
+
+// TODO ADDED BY BENJI
+export function exists(input) {
+            let type = typeof input
+            if (!input)
+                return false
+            if (type == 'object' && !input.length)
+                return false
+            return true
+        }

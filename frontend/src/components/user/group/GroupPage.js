@@ -5,14 +5,14 @@ import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPreferences, isStudent, isLab, getLabMembers} from '../../../helper.js'
+import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
+        getLabPreferences, isStudent, isLab, getLabMembers, createLabPosition, createApplication} from '../../../helper.js'
 import './GroupPage.css'
 
 // Our Group Page master componenet
 class GroupPage extends Component {
     constructor(props) {
         super(props);
-
 
         var labID = window.location.pathname.split('/')[2];
         this.state = {
@@ -21,6 +21,7 @@ class GroupPage extends Component {
             lab_data: {},
             lab_admins: [],
             lab_members: [],
+            new_pos: {},
         }
     }
 
@@ -28,8 +29,8 @@ class GroupPage extends Component {
       getAllLabPositions(this.state.lab_id).then((resp) => {
           let positions = [];
           console.log(resp);
-          resp.data.map((pos) => {
-              positions.push(<GroupProject title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
+          resp.data.map((pos, index) => {
+              positions.push(<GroupProject key={`${index}-p`} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
                               time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
           })
           this.setState({lab_positions: positions});
@@ -67,8 +68,22 @@ class GroupPage extends Component {
 
   }
 
+  // Update the new position from modal, to be submitted by createPosition
+  updateNewPosState(name, value) {
+    let newState = this.state;
+    newState.new_pos[name] = value;
+    this.setState(newState);
+    console.log("UPDATE", name, "TO", value)
+  }
+
+  // create position and position application, call from create position modal
   createPosition() {
-    alert("attempting to create position")
+    let new_pos = this.state.new_pos;
+    alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
+    createLabPosition(new_pos.title, new_pos.description, new_pos.time_commitment, new_pos.open_slots).then(resp => {
+      // hopefully get position_id from resp
+      // createApplication({pos_id, new_pos.questions})
+    });
   }
 
   openModal(id) {
@@ -81,9 +96,9 @@ class GroupPage extends Component {
 	render() {
 		return(
 			<div id='group-page'>
-        <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="submit"
-          title={`Create New Position`} modalAction={this.createPosition.bind(this)}>
-          <CreatePosition />
+        <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="create"
+          title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
+          <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} />
         </EditModal>
 				<div id='group-page-column-L'>
 					<Administrators people={this.state.lab_admins}/>
@@ -96,7 +111,7 @@ class GroupPage extends Component {
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description='NULL'/>
 
-					<GroupProjectContainer>
+					<GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
 						{this.state.lab_positions}
 					</GroupProjectContainer>
 
