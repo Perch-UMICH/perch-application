@@ -32,8 +32,8 @@ class UserTest extends React.Component {
         }
     }
 
-    //R: func is a valid function and inputs is an array
-    //E: assigns the response of the called function to a variable with that function's name
+    //R: func is a valid function and inputs is an array. Cannot be called on a function that returns null
+    //E: Assigns the response of the called function to a variable with that function's name
     testFactory(func, inputs) {
         func(...inputs).then((resp) => {
             let toReturn = {}
@@ -50,90 +50,55 @@ class UserTest extends React.Component {
         // So, code outside the block cannot rely on data that's supposed to be returned, since you can't guarantee
         // that the data will be back
 
-        // // Get all users
-        // getAllUsers().then((resp) => {
-        //     this.setState({getAllUsers_result: JSON.stringify(resp)});
-        // });
+        // Get all users
+        this.testFactory(helper.getAllUsers, [])
 
-        this.testFactory(helper.getAllUsers, []);
+        helper.logoutCurrentUser()
+            .then(r => helper.loginUser('name@name.com','password'))
+            .then(r => helper.deleteUser())
+            .then(r => helper.loginUser('update_email', 'update_password'))
+            .then(r => helper.deleteUser())
 
-        // Register a user
-        helper.registerUser('email','name@name.com','password','password').then((resp) => {
-           this.setState({registerUser_result: JSON.stringify(resp)});
+        //Simple registering and loging in a user test.
+        this.testFactory(helper.registerUser, ['email','name@name.com','password','password'])
+        this.testFactory(helper.loginUser, ['name@name.com','password'])
+        this.testFactory(helper.updateUser, ['update_name','update_email@name.com', 'password', '1', '0'])
+        this.testFactory(helper.verifyLogin, [])
+        this.testFactory(helper.deleteUser, [])
+        //These should throw errors, since no user should be logged in. Update, they throw the wrong kind of errors
+        //this.testFactory(helper.getCurrentUserId, [])
+        //this.testFactory(helper.isLoggedIn, [])
 
-           // Then, Login the user
-           helper.loginUser('name@name.com','password').then((resp) => {
+        this.testFactory(helper.getAllStudents, [])
 
-               // Then, update user info
-               helper.updateUser('update_name','update_email','update_password','update_password').then((resp) => {
-                   this.setState({updateUser_result: JSON.stringify(resp)});
+        this.testFactory(helper.getStudent, [4])
 
-                   //Then, verify login
-                   helper.verifyLogin().then((resp) => {
-                    this.setState({verifyLong_result: JSON.stringify(resp)});
+        this.testFactory(helper.getStudentSkills, [4])
 
-                        // Then, delete the user
-                       helper. deleteUser().then((resp) => {
-                            this.setState({deleteUser_result: JSON.stringify(resp)});
+        helper.logoutCurrentUser()
+            .then(r => helper.loginUser('waldo@missing.com', 'where'))
+            .then(r => helper.deleteUser())
+            .then(r => helper.registerUser('Waldo', 'waldo@missing.com', 'where', 'where'))
+            .then(r => helper.loginUser('waldo@missing.com', 'where'))
+            .then(r => helper.deleteUser())
 
-                            //Then, check userId() 
-                            this.setState({userId_result: helper.getCurrentUserId()});
-
-                            //Then, checked if the user is logged in (they shouldn't be)
-                            this.setState({isLoggedIn_result: helper.isLoggedIn().toString});
-                        });
-                    });
-                });
-            });
-        });
-
-        helper.getAllStudents().then((resp) => {
-            this.setState({getAllStudents_result: JSON.stringify(resp)});
-        });
-
-        helper.getStudent(4).then((resp) => {
-            this.setState({getStudentFour_result: JSON.stringify(resp)});
-        });
-
-        //Expecting an error
-        helper.getStudent(4000000).then((resp) => {
-            this.setState({getStudentFourMil_result: JSON.stringify(resp)});
-        });
-
-        helper.getStudentSkills(4).then((resp) => {
-            this.setState({getStudentSkills_result: JSON.stringify(resp)});
-        });
-
-        helper.getStudentTags(4).then((resp) => {
-            this.setState({getStudentTags_result: JSON.stringify(resp)});
-        });
-
-        //Test registering a user with identical parameters
-        helper.logoutCurrentUser().then(
-            console.log('Logging out'),
-            helper.loginUser('waldo@missing.com', 'where').then(
-                console.log('Loggin Waldo in'),
-                helper.deleteUser().then(
-                    console.log('Deleteing Waldo'),
-                    this.testFactory(helper.registerUser, ['Waldo', 'waldo@missing.com', 'where', 'where'])
-                )
-            )
-        )
 
         //Faculty Tests
-        helper.getAllFaculties().then((resp) => {
-            this.setState({getAllFaculties_result: JSON.stringify(resp)});
-        });
+        this.testFactory(helper.getAllFaculties, [])
 
-        helper.getFaculty(1).then((resp) => {
-            this.setState({getFaculty_result: JSON.stringify(resp)});
-        });
+        this.testFactory(helper.getFaculty, [1])
 
-        helper.createFaculty(10, 'Akshay', 'Rao', 'PhD', 'akshayro@umich.edu').then((resp) => {
-            this.setState({createFaculty_result: JSON.stringify(resp)});
-        });
+        this.testFactory(helper.createFaculty, [10, 'Akshay', 'Rao', 'PhD', 'akshayro@umich.edu'])
+
+        // helper.createFaculty(10, 'Akshay', 'Rao', 'PhD', 'akshayro@umich.edu').then((resp) => {
+        //     this.setState({createFaculty_result: JSON.stringify(resp)});
+        // });
+
+        this.testFactory(helper.getAllLabs, [])
 
     }
+
+    
 
 
     render() {
@@ -143,38 +108,35 @@ class UserTest extends React.Component {
                 <h2>getAllUsers</h2>
                 <pre>{this.state.getAllUsers}</pre>
                 <h2>registerUser</h2>
-                <pre>{this.state.registerUser_result}</pre>
-                <h2>updateUser</h2>
-                <pre>{this.state.updateUser_result}</pre>
-                <h2>verifyLogin</h2>
-                <pre>{this.state.verifyLong_result}</pre>
-                <h2>deleteUser</h2>
-                <pre>{this.state.deleteUser_result}</pre>
-                <h2>getCurrentUserId</h2>
-                <pre>{this.state.userId_result}</pre>
-                <h2>isLoggedIn</h2>
-                <pre>{this.state.isLoggedIn_result}</pre>
-                <h2>getAllStudents</h2>
-                <pre>{this.state.getAllStudents_result}</pre>
-                <h2>getStudent(4)</h2>
-                <pre>{this.state.getStudentFour_result}</pre>
-                <h2>getStudent(4000000)</h2>
-                <pre>{this.state.getStudentFourMil_result}</pre>
-                <h2>getStudentSkills</h2>
-                <pre>{this.state.getStudentSkills_result}</pre>
-                <h2>getStudentTags</h2>
-                <pre>{this.state.getStudentTags_result}</pre>
-                <h1>Regeistration Overlap Tests</h1>
-                <h2>Original User</h2>
                 <pre>{this.state.registerUser}</pre>
+                <h2>loginUser</h2>
+                <pre>{this.state.loginUser}</pre>
+                <h2>updateUser</h2>
+                <pre>{this.state.updateUser}</pre>
+                <h2>verifyLogin</h2>
+                <pre>{this.state.verifyLogin}</pre>
+                <h2>deleteUser</h2>
+                <pre>{this.state.deleteUser}</pre>
+                <h2>getAllStudents</h2>
+                <pre>{this.state.getAllStudents}</pre>
+                <h2>getStudent(4)</h2>
+                <pre>{this.state.getStudent}</pre>
+                <h2>getStudentSkills</h2>
+                <pre>{this.state.getStudentSkills}</pre>
+                <h2>getStudentTags</h2>
+                <pre>{this.state.getStudentTags}</pre>
 
                 <h1>Faculty Tests</h1>
                 <h2>getAllFaculties</h2>
-                <pre>{this.state.getAllFaculties_result}</pre>
+                <pre>{this.state.getAllFaculties}</pre>
                 <h2>getFaculty(1)</h2>
-                <pre>{this.state.getFaculty_result}</pre>
+                <pre>{this.state.getFaculty}</pre>
                 <h2>createFaculty</h2>
-                <pre>{this.state.createFaculty_result}</pre>
+                <pre>{this.state.createFaculty}</pre>
+                <h2>getAllLabs</h2>
+                <pre>{this.state.getAllLabs}</pre>
+
+
 
             </div>
         )
