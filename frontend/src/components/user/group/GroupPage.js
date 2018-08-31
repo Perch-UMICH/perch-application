@@ -5,7 +5,8 @@ import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, getLabPreferences, isStudent, isLab, getLabMembers} from '../../../helper.js'
+import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
+        getLabPreferences, isStudent, isLab, getLabMembers, createLabPosition, createApplication} from '../../../helper.js'
 import './GroupPage.css'
 
 // Our Group Page master componenet
@@ -20,6 +21,7 @@ class GroupPage extends Component {
             lab_data: {},
             lab_admins: [],
             lab_members: [],
+            new_pos: {},
         }
     }
 
@@ -66,8 +68,22 @@ class GroupPage extends Component {
 
   }
 
+  // Update the new position from modal, to be submitted by createPosition
+  updateNewPosState(name, value) {
+    let newState = this.state;
+    newState.new_pos[name] = value;
+    this.setState(newState);
+    console.log("UPDATE", name, "TO", value)
+  }
+
+  // create position and position application, call from create position modal
   createPosition() {
-    alert("attempting to create position")
+    let new_pos = this.state.new_pos;
+    alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
+    createLabPosition(new_pos.title, new_pos.description, new_pos.time_commitment, new_pos.open_slots).then(resp => {
+      // hopefully get position_id from resp
+      // createApplication({pos_id, new_pos.questions})
+    });
   }
 
   openModal(id) {
@@ -80,9 +96,9 @@ class GroupPage extends Component {
 	render() {
 		return(
 			<div id='group-page'>
-        <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="submit"
+        <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="create"
           title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
-          <CreatePosition />
+          <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} />
         </EditModal>
 				<div id='group-page-column-L'>
 					<Administrators people={this.state.lab_admins}/>
