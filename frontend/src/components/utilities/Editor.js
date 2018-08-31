@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Editor.css'
 
-// Put this at the end of a componenet to get an edit icon in the top right
+// Put this at the end of a componenet to get an edit icon (or add icon) in the top right
 // href prop is the link it should go to
 // TODO add a certification check attrbute
 class Editor extends Component {
@@ -16,8 +16,12 @@ class Editor extends Component {
 	}
 
 	render() {
+		var icon = <i className="fas fa-pencil-alt"></i>
+		if (this.props.add) {
+			icon = <i className="material-icons">add</i>
+		}
 		return(
-			<div className='editor' onClick={this.action.bind(this)}><i className="fas fa-pencil-alt"></i></div>
+			<div className='editor' onClick={this.action.bind(this)}>{icon}</div>
 		);
 	}
 }
