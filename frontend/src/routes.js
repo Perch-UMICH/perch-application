@@ -31,7 +31,7 @@ import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
 
-import UserTest from './UserTest';
+import UserTest from './components/utilities/tests/UserTest';
 
 class Router extends Component {
 	render() {
