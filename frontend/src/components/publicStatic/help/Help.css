@@ -49,9 +49,16 @@
 	color: white;
 }
 
+#help b {
+	color: var(--active);
+}
+
 #help > div:first-of-type {
 	margin-top: 20px;
 	margin-left: 60px;
-	text-align: center;
-	width: calc(100% - 400px);
+	text-align: left;
+	width: 200px;
+	background-color: white;
+	padding: 4px 10px;
+	margin-bottom: -10px;
 }
