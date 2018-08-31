@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
+import Apply from '../../user/Apply'
+import EditModal from '../../utilities/modals/EditModal'
 import GroupProjectRequirement from './GroupProjectRequirement'
 import './GroupProject.css'
 
@@ -37,6 +39,10 @@ export class GroupProject extends Component {
 	render() {
 		return(
 			<div id={`group-project-${this.props.title}`} className='group-project'>
+				<EditModal id={`${this.props.id}-apply`} wide={true} actionName="submit"
+					title={`Apply To ${this.props.title}`} modalAction={this.submitApplication}>
+					<Apply updateQuestions={this.updateApplication} description={this.state.description}/>
+				</EditModal>
 				<div className='group-project-name-container'>
 					<span className='group-project-name'>
 						<span>{this.props.title}</span>

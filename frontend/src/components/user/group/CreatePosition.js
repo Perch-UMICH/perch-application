@@ -8,50 +8,24 @@ class CreatePosition extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lab_name: "The Infant Cognition Project",
+			lab_name: "",
+			createHelpText: "Create a new group project! First, fill out some quick project information.",
+			createApplyHelpText: "Next, add or edit questions you'd like to see answered by applicants to your lab.",
 			positionName: '',
 			questions: [
 				{
 					"id": "q_0",
-					"text": "Why are you interested in working for our lab?"
+					"text": "Why are you interested in this project?"
 				},
 				{
 					"id": "q_1",
-					"text": "How do your skills/experiences align with our lab work?"
-				},
-				{
-					"id": "q_2",
-					"text": "How much wood would a wood chuck chuck if a wood chuck *couldn't* chuck wood?"
+					"text": "What makes you a good fit to work in our lab?"
 				},
 			],
 			lowerHours: 8,
 			upperHours: 10,
 			numSlots: 1,
 			q_index: 0,
-			display_info: {
-				placeholder_txt: "Search skills",
-				header_txt: "Required Skills",
-				catalog: [
-					'React.js',
-					'Node.js',
-					'Meteor.js',
-					'Kali Linux',
-					'Pen Testing',
-					'plating',
-					'chromatography',
-					'R',
-					'C++',
-					'MatLab',
-					'Javascript',
-					"pun making",
-					"spectography",
-					"total phosphorus digestion",
-					"outlet finding",
-					"envelope sealing",
-					"grant writing",
-				],
-				interests: []
-			},
 			modal_info: {
 				positionName: '',
 				positionDesc: '',
@@ -65,7 +39,12 @@ class CreatePosition extends Component {
 		this.state.modal_info.questions = this.state.questions;
 		this.state.q_index = this.state.questions.length;
 		this.alterQuestion = this.alterQuestion.bind(this);
-		this.updateSkills = this.updateSkills.bind(this); // callback to BubbleChoice
+	}
+
+	// send position updates to parent
+	updateNewPosState(name, value) {
+		if (this.props.updateNewPosState)
+			this.props.updateNewPosState(name, value)
 	}
 
 	updatePositionName(event) {
@@ -75,6 +54,7 @@ class CreatePosition extends Component {
 		      positionName: event.target.value,
 		    }),
 		});
+		this.updateNewPosState('title', event.target.value)
 	}
 
 	updatePositionDesc(event) {
@@ -82,7 +62,8 @@ class CreatePosition extends Component {
 		    modal_info: Object.assign({}, this.state.modal_info, {
 		      positionDesc: event.target.value,
 		    }),
-		});
+		})
+		this.updateNewPosState('description', event.target.value)
 	}
 
 	updateLowerHours(event) {
@@ -92,6 +73,7 @@ class CreatePosition extends Component {
 		      lowerHours: event.target.value,
 		    }),
 		});
+		this.updateNewPosState('time_commitment', `${event.target.value}-${this.state.upperHours}`)
 	}
 
 	updateUpperHours(event) {
@@ -101,6 +83,7 @@ class CreatePosition extends Component {
 		      upperHours: event.target.value,
 		    }),
 		});
+		this.updateNewPosState('time_commitment', `${this.state.lowerHours}-${event.target.value}`)
 	}
 
 	updateNumSlots(event) {
@@ -110,6 +93,7 @@ class CreatePosition extends Component {
 		      numSlots: event.target.value,
 		    }),
 		});
+		this.updateNewPosState('open_slots', event.target.value)
 	}
 
 	addQuestion(event) {
@@ -128,6 +112,7 @@ class CreatePosition extends Component {
 			  questions: updated_questions,
 			}),
 		});
+		this.updateNewPosState('questions', updated_questions)
 	}
 
 	alterQuestion(event, question_id) {
@@ -140,6 +125,7 @@ class CreatePosition extends Component {
 			  questions: temp_questions,
 			}),
 		});
+		this.updateNewPosState('questions', temp_questions)
 	}
 
 	removeQuestion(question_id) {
@@ -152,27 +138,23 @@ class CreatePosition extends Component {
 				  questions: temp_questions,
 				}),
 			};
+			this.updateNewPosState('questions', temp_questions)
 		});
-	}
-
-	updateSkills(skills) {
-		var new_modal_info = this.state.modal_info;
-		new_modal_info.skills = skills;
-		this.setState({ modal_info: new_modal_info });
 	}
 
 	render() {
 		return (
 			<div className='center-align'>
 					<form className='file-field'>
-						<input className='apply-input' id="textInput" value={this.state.positionName} type="text" placeholder="Project Title" onChange={event => this.updatePositionName(event)}></input>
-						<h2 className="apply-question-label"><b>Project Description</b></h2>
+						<div className="apply-help-text">{this.state.createHelpText}</div>
+						<h2 className="apply-question-label"><b>Title & Description</b></h2>
+						<input value={this.state.positionName} type="text" placeholder="Project Title" onChange={event => this.updatePositionName(event)}></input>
 						<textArea className="textarea-experience" id="textArea" type="text" placeholder="short description of project and responsibilities for workers on project team" onChange={event => this.updatePositionDesc(event)}></textArea>
 						<div className='row create-position-row'>
 							<h2 className="apply-question-label col s7"><b>Time Commitment</b></h2>
 							<h2 className="apply-question-label col s5"><b>Open Slots</b></h2>
 						</div>
-		  				<div className='row'>
+		  				<div className='row create-position-row-input'>
 		  					<div className="input-field col s3">
 			                	<input className='gen-input' id='lower_bound_hours' type='number' step="1" placeholder='8' value={this.state.lowerHours} onChange={event => this.updateLowerHours(event)} />
 			                	<label htmlFor="lower_bound_hours">Min Hours/Week</label>
@@ -188,13 +170,11 @@ class CreatePosition extends Component {
             	                <label htmlFor="num_open_slots"># Open Slots</label>
             	            </div>
 		  				</div>
-		  				{/*
-						<h2 className="apply-question-label">Skills Required { this.state.positionName ? "for " + this.state.positionName + "-ing": null } </h2>
-						<BubbleChoice display_info={this.state.display_info} callbackSkills={this.updateSkills}/>*/}
+		  			<div className="apply-help-text">{this.state.createApplyHelpText}</div>
 						<h2 className="apply-question-label"><b>Project Application Questions</b></h2>
 						    {this.state.questions.map((question) => {
 								return (
-									<div key={`${question.id}-q`} className="row">
+									<div key={`${question.id}-q`} className="row create-position-row-input">
 										<div className="col s11">
 											{/*TODO: TURN TEXTAREA INTO A COMPONENT*/}
 											<textarea id={question.id} type="text" className="textarea-experience" id="apply-question-input" value={question.text} rows='3' onChange={event => this.alterQuestion(event, question.id)} required></textarea>

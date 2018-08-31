@@ -99,7 +99,7 @@ class StudentProfile extends Component {
 	}
 
 	sendHeaderInfo() {
-		var nameArr = this.state.updated_user && this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
+		var nameArr = this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
     var first_name = nameArr[0] ? nameArr[0]: "";
     var last_name = nameArr[1] ? nameArr[1] : "";
 		var class_arr = [];
