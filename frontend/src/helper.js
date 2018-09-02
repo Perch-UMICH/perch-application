@@ -9,6 +9,7 @@ import FormData from 'form-data'
 
 axios.defaults.headers.common = {};
 axios.defaults.baseURL = 'http://18.211.86.64:8000/';
+//axios.defaults.baseURL = 'http://localhost:8000';
 
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -20,7 +21,11 @@ if (sessionStorage.token){
 // HELPER HELPERS //
 
 function respond(status, data) {
-    return {'status':status, 'data':data.result, 'msg': data.message}
+    return {'status': status, 'data': data.result, 'msg': data.message}
+}
+
+function error_respond(error) {
+    return {'status': error.response.status, 'error': error.response.data.error.message, 'exception': error.response.data.error.exception}
 }
 
 // 0 is a made up error code for non-server-related issues
@@ -28,15 +33,21 @@ function error_handle(error) {
     if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        return respond(error.response.status, error.response.data);
+        //return respond(error.response.status, error.response);
+        if (error.response.data.error)
+            return error_respond(error);
+        else
+            return error.response.data;
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        return respond(0, error.request)
+        //return respond(0, error.request)
+        return error;
     } else {
         // Something happened in setting up the request that triggered an Error
-        return respond(0, error.message)
+        //return respond(0, error.message)
+        return error;
     }
 }
 
