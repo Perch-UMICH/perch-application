@@ -2,15 +2,13 @@
  * Created by aksha on 7/22/2018.
  */
 import React from 'react'
-import * as helper from '../../../helper.js'
+import * as H from '../../../helper.js'
 import './tests.css'
 
 
 class UserTest extends React.Component {
     constructor() {
-
         super();
-
         this.state = {
             //getAllUsers_result: null,
             getUser_result: null,
@@ -51,66 +49,66 @@ class UserTest extends React.Component {
         // that the data will be back
 
         //So the tests don't mess up a logged-in user
-        helper.logoutCurrentUser()
-            .then(r => helper.loginUser('name@name.com','password'))
-            .then(r => helper.deleteUser())
-            .then(r => helper.loginUser('update_email', 'update_password'))
-            .then(r => helper.deleteUser())
+        H.logoutCurrentUser()
+            .then(r => H.loginUser('name@name.com','password'))
+            .then(r => H.deleteUser())
+            .then(r => H.loginUser('update_email', 'update_password'))
+            .then(r => H.deleteUser())
 
         //Student Tests
-        this.testFactory(helper.getAllUsers, [])
+        this.testFactory(H.getAllUsers, [])
         //Simple registering and loging in a user test.
-        this.testFactory(helper.registerUser, ['email','name@name.com','password','password'])
-        this.testFactory(helper.loginUser, ['name@name.com','password'])
-        this.testFactory(helper.updateUser, ['update_name','update_email@name.com', 'password', true, false])
-        this.testFactory(helper.verifyLogin, [])
-        this.testFactory(helper.deleteUser, [])
+        this.testFactory(H.registerUser, ['email','name@name.com','password','password'])
+        this.testFactory(H.loginUser, ['name@name.com','password'])
+        this.testFactory(H.updateUser, ['update_name','update_email@name.com', 'password', true, false])
+        this.testFactory(H.verifyLogin, [])
+        this.testFactory(H.deleteUser, [])
 
         //These should throw errors, since no user should be logged in. Update, they throw the wrong kind of errors
-        //this.testFactory(helper.getCurrentUserId, [])
-        //this.testFactory(helper.isLoggedIn, [])
+        //this.testFactory(H.getCurrentUserId, [])
+        //this.testFactory(H.isLoggedIn, [])
 
-        this.testFactory(helper.getAllStudents, [])
-        this.testFactory(helper.getStudent, [4])
-        this.testFactory(helper.getStudentSkills, [4])
-        this.testFactory(helper.getStudentTags, [4])
+        this.testFactory(H.getAllStudents, [])
+        this.testFactory(H.getStudent, [4])
+        this.testFactory(H.getStudentSkills, [4])
+        this.testFactory(H.getStudentTags, [4])
 
         //Faculty Tests
-        this.testFactory(helper.getAllFaculties, [])
-        this.testFactory(helper.getFaculty, [1])
-        this.testFactory(helper.createFaculty, [10, 'Akshay', 'Rao', 'PhD', 'akshayro@umich.edu'])
-        this.testFactory(helper.updateFaculty, [1, 'Akira', 'Nishii', 'MD, PhD', 'anishii@osu.edu'])
+        this.testFactory(H.getAllFaculties, [])
+        this.testFactory(H.getFaculty, [1])
+        this.testFactory(H.createFaculty, [10, 'Akshay', 'Rao', 'PhD', 'akshayro@umich.edu'])
+        this.testFactory(H.updateFaculty, [1, 'Akira', 'Nishii', 'MD, PhD', 'anishii@osu.edu'])
 
         //Lab Tests
-        //this.testFactory(helper.getAllLabs, [])
-        this.testFactory(helper.getLab, [5])
+        //this.testFactory(H.getAllLabs, [])
+        this.testFactory(H.getLab, [5])
         //Should return no data with all parameters set to false
-        //this.testFactory(helper.getAllLabData, [false, false, false, false, false, false])
-        this.testFactory(helper.getLabData, [10, true, true, true, true, true, true])
-        this.testFactory(helper.createLab, [1, 'Nishii Lab', '1800 Chemistry', 'We do cool stuff', 'N/A', 'perchresearch.com', null, 'anishii@umich.edu'])
-        this.testFactory(helper.updateLab, ['Nishii Lab', '1800 Chemistry', 'We do cool stuff', 'perchresearch.com', 'phone', 'N/A', 'anishii@umich.edu'])
-        this.testFactory(helper.getLabSkills, [10])
-        this.testFactory(helper.getLabTags, [10])
-        this.testFactory(helper.getLabMembers, [10])
-        this.testFactory(helper.getAllLabPositions, [10])
-        this.testFactory(helper.getLabPosition, [16])
-        this.testFactory(helper.getApplicationFromPosition, [16])
-        this.testFactory(helper.getLabPositionApplicants, [16])
+        //this.testFactory(H.getAllLabData, [false, false, false, false, false, false])
+        this.testFactory(H.getLabData, [10, true, true, true, true, true, true])
+        this.testFactory(H.createLab, [1, 'Nishii Lab', '1800 Chemistry', 'We do cool stuff', 'N/A', 'perchresearch.com', null, 'anishii@umich.edu'])
+        this.testFactory(H.updateLab, ['Nishii Lab', '1800 Chemistry', 'We do cool stuff', 'perchresearch.com', 'phone', 'N/A', 'anishii@umich.edu'])
+        this.testFactory(H.getLabSkills, [10])
+        this.testFactory(H.getLabTags, [10])
+        this.testFactory(H.getLabMembers, [10])
+        this.testFactory(H.getAllLabPositions, [10])
+        this.testFactory(H.getLabPosition, [1])
+        this.testFactory(H.getApplicationFromPosition, [16])
+        this.testFactory(H.getLabPositionApplicants, [16])
 
         //Meta Data
-        this.testFactory(helper.getAllSkills, [])
-        this.testFactory(helper.getSkill, [1])
-        this.testFactory(helper.createSkill, ['Typing', 'Fast and accurate keyboard wizardry'])
-        this.testFactory(helper.searchMatchingSkills, ['Typ'])
-        this.testFactory(helper.getAllTags, [])
-        this.testFactory(helper.getTag, [1])
-        this.testFactory(helper.createTag, ['Nuclear Physics', 'Actually, most of the explosions are on the particle scale'])
-        this.testFactory(helper.searchMatchingTags, ['Nucl'])
+        this.testFactory(H.getAllSkills, [])
+        this.testFactory(H.getSkill, [1])
+        this.testFactory(H.createSkill, ['Typing', 'Fast and accurate keyboard wizardry'])
+        this.testFactory(H.searchMatchingSkills, ['Typ'])
+        this.testFactory(H.getAllTags, [])
+        this.testFactory(H.getTag, [1])
+        this.testFactory(H.createTag, ['Nuclear Physics', 'Actually, most of the explosions are on the particle scale'])
+        this.testFactory(H.searchMatchingTags, ['Nucl'])
 
         //Et al.
-        this.testFactory(helper.submitUserFeedback, [1, 'perchresearch.com', 'Testing -Caleb'])
-        this.testFactory(helper.getSearchData, [])
-        this.testFactory(helper.labSearch, [ [], [], [], [], []])
+        this.testFactory(H.submitUserFeedback, [1, 'perchresearch.com', 'Testing -Caleb'])
+        this.testFactory(H.getSearchData, [])
+        this.testFactory(H.labSearch, [ [], [], [], [], []])
 
     }
 

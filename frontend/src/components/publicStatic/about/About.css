@@ -11,6 +11,8 @@
 	margin-top: 6px;
 	position: relative;
 	display: block;
+	background-color: white;
+	min-height: 100vh;
 }
 
 .about-nav {

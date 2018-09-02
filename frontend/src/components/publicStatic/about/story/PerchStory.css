@@ -15,33 +15,43 @@
 	color: var(--primary);
 }
 
-.perch-story-block-L, .perch-story-block-R {
+.perch-story-block {
 	background-color: white;
 	color: grey;
-	width: 400px;
-	position: absolute;
 	text-align: left;
 	padding: 20px;
 	transition: .2s ease;
-	border: 1px solid lightgrey;
+	position: relative;
+	font-size: 25px;
 }
 
-.perch-story-block-L b, .perch-story-block-R b {
-	font-size: 140%;
+.perch-story-block img {
+	height: 100px;	
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 50px;
+}
+
+.perch-story-block div {
+	width: calc(100% - 200px);
+	margin-left: auto;
+	margin-right: 20px;
+}
+
+.perch-story-block b {
+	font-size: 120%;
 	font-weight: normal;
 	color: var(--primary);
 }
 
 .perch-story-block-L:hover, .perch-story-block-R:hover {
-	/*background-color: var(--active);*/
 	border-color: var(--active);
 	transition: 0.2s ease;
 }
 
-.perch-story-block-L {
-	left: 160px;
-}
-
-.perch-story-block-R {
-	right: 160px;
+.perch-story div:last-of-type {
+	background-color: white;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
