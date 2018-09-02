@@ -38,7 +38,7 @@ class LabSearch extends Component {
             search: '',
             lab_list: [],
 			loading: true,
-			limit: 20,
+			limit: 15,
 		}
 	}
 
