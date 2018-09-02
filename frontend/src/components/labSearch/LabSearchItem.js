@@ -13,7 +13,7 @@ class LabSearchItem extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.saved_labs)
+        // console.log(this.props.saved_labs)
     }
 
     expandProjects() {

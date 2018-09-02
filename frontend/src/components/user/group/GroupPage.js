@@ -6,7 +6,7 @@ import CreatePosition from './CreatePosition'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
-        getLabPreferences, isStudent, isLab, getLabMembers, createLabPosition, createApplication} from '../../../helper.js'
+        getLabPreferences, isStudent, isLab, getLabMembers, createApplication} from '../../../helper.js'
 import './GroupPage.css'
 
 // Our Group Page master componenet
@@ -80,10 +80,10 @@ class GroupPage extends Component {
   createPosition() {
     let new_pos = this.state.new_pos;
     alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
-    createLabPosition(new_pos.title, new_pos.description, new_pos.time_commitment, new_pos.open_slots).then(resp => {
-      // hopefully get position_id from resp
-      // createApplication({pos_id, new_pos.questions})
-    });
+    // createLabPosition(new_pos.title, new_pos.description, new_pos.time_commitment, new_pos.open_slots).then(resp => {
+    //   // hopefully get position_id from resp
+    //   // createApplication({pos_id, new_pos.questions})
+    // });
   }
 
   openModal(id) {

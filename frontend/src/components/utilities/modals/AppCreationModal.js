@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from '../buttons/BasicButton'
-import {createLabPosition, createApplication, updateApplication, getCurrentLabId, returnToProfile} from '../../../helper.js';
+import {createApplication, updateApplication, getCurrentLabId, returnToProfile} from '../../../helper.js';
 import $ from 'jquery';
 
 class AppCreationModal extends Component {
@@ -21,17 +21,17 @@ class AppCreationModal extends Component {
 
 	postApplication(event) {
 		var time_commit = this.props.info.lowerHours + "-" + this.props.info.upperHours + " hours/week";
-		createLabPosition(getCurrentLabId(), this.props.info.positionName, this.props.info.positionDesc, time_commit, this.props.info.numSlots).then(position => {
-			createApplication(position.id, []).then(resp => {
-				var q_arr = [];
-				for (var i = 0; i < this.props.info.questions.length; ++i) {
-					q_arr.push(this.props.info.questions[i].text);
-				}
-				updateApplication(position.id, q_arr).then(resp => {
-					returnToProfile()
-				});
-			});
-		});
+		// createLabPosition(getCurrentLabId(), this.props.info.positionName, this.props.info.positionDesc, time_commit, this.props.info.numSlots).then(position => {
+		// 	createApplication(position.id, []).then(resp => {
+		// 		var q_arr = [];
+		// 		for (var i = 0; i < this.props.info.questions.length; ++i) {
+		// 			q_arr.push(this.props.info.questions[i].text);
+		// 		}
+		// 		updateApplication(position.id, q_arr).then(resp => {
+		// 			returnToProfile()
+		// 		});
+		// 	});
+		// });
 	}
 
 	render() {
