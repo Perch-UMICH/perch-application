@@ -10,6 +10,7 @@ class UserTest extends React.Component {
     constructor() {
         super();
         this.state = {
+            errors: [],
             //getAllUsers_result: null,
             getUser_result: null,
             registerUser_result: null,
@@ -36,6 +37,9 @@ class UserTest extends React.Component {
         func(...inputs).then((resp) => {
             let toReturn = {}
             toReturn[func.name] = JSON.stringify(resp, undefined, 2);
+            if (resp.status != 200)
+                this.state.errors.push(<div style={{color: 'red', fontSize: '30px'}}>ERROR <b>{resp.status}</b> in <b>{func.name}</b></div>)
+            
             this.setState(toReturn);
         });
     }
@@ -68,41 +72,65 @@ class UserTest extends React.Component {
         // //this.testFactory(H.getCurrentUserId, [])
         // //this.testFactory(H.isLoggedIn, [])
 
-        // this.testFactory(H.getAllStudents, [])
-        // this.testFactory(H.getStudent, [4])
-        // this.testFactory(H.getStudentSkills, [4])
-        // this.testFactory(H.getStudentTags, [4])
+        this.testFactory(H.getAllStudents, [])
+        this.testFactory(H.getStudent, [1])
+        this.testFactory(H.getStudentSkills, [1])
+        this.testFactory(H.getStudentTags, [1])
 
         // //Faculty Tests
-        // this.testFactory(H.getAllFaculties, [])
-        // this.testFactory(H.getFaculty, [1])
-        // this.testFactory(H.createFaculty, [10, 'Akshay', 'Rao', 'PhD', 'akshayro@umich.edu'])
-        // this.testFactory(H.updateFaculty, [1, 'Akira', 'Nishii', 'MD, PhD', 'anishii@osu.edu'])
+        this.testFactory(H.getAllFaculties, [])
+        this.testFactory(H.getFaculty, [1])
+        this.testFactory(H.createFaculty, [10, {
+                                                first_name: 'Akira', 
+                                                last_name: 'Nishii', 
+                                                title: 'MD, PhD', 
+                                                contact_email: 'anishii@osu.edu'
+                                            }])
+
+        this.testFactory(H.updateFaculty, [1, {
+                                                first_name: 'Akira', 
+                                                last_name: 'Nishii', 
+                                                title: 'MD, PhD', 
+                                                contact_email: 'anishii@osu.edu'
+                                            }])
 
         // //Lab Tests
         // //this.testFactory(H.getAllLabs, [])
         this.testFactory(H.getLab, [5])
         // //Should return no data with all parameters set to false
-        // //this.testFactory(H.getAllLabData, [false, false, false, false, false, false])
-        // this.testFactory(H.getLabData, [10, true, true, true, true, true, true])
-        // this.testFactory(H.createLab, [1, 'Nishii Lab', '1800 Chemistry', 'We do cool stuff', 'N/A', 'perchresearch.com', null, 'anishii@umich.edu'])
-        // this.testFactory(H.updateLab, ['Nishii Lab', '1800 Chemistry', 'We do cool stuff', 'perchresearch.com', 'phone', 'N/A', 'anishii@umich.edu'])
-        // this.testFactory(H.getLabSkills, [10])
-        // this.testFactory(H.getLabTags, [10])
-        // this.testFactory(H.getLabMembers, [10])
-        // this.testFactory(H.getAllLabPositions, [10])
-        // this.testFactory(H.getLabPosition, [1])
-        // this.testFactory(H.getLabPositionApplicants, [16])
+        // this.testFactory(H.getAllLabData, [false, false, false, false, false, false])
+        this.testFactory(H.getLabData, [10, true, true, true, true, true, true])        
+        this.testFactory(H.createLab, [1, {
+                                            name: 'Nishii Lab', 
+                                            location: '1800 Chemistry', 
+                                            description: 'We do cool stuff', 
+                                            url: 'perchresearch.com', 
+                                            contact_email: 'anishii@umich.edu'
+                                        }])
+        this.testFactory(H.updateLab, [1, {  
+                                            name: 'Nishii Lab', 
+                                            location: '1800 Chemistry', 
+                                            description: 'We do cool stuff', 
+                                            url: 'perchresearch.com', 
+                                            contact_phone: 'phone', 
+                                            contact_email: 'anishii@umich.edu'
+                                        }])
+        this.testFactory(H.getLabSkills, [10])
+        this.testFactory(H.getLabTags, [10])
+        this.testFactory(H.getLabMembers, [10])
+        this.testFactory(H.getAllLabPositions, [10])
+        this.testFactory(H.getLabPosition, [1,1])
+        this.testFactory(H.getLabPositionApplicants, [16])
 
         // //Meta Data
-        // this.testFactory(H.getAllSkills, [])
-        // this.testFactory(H.getSkill, [1])
-        // this.testFactory(H.createSkill, ['Typing', 'Fast and accurate keyboard wizardry'])
-        // this.testFactory(H.searchMatchingSkills, ['Typ'])
-        // this.testFactory(H.getAllTags, [])
-        // this.testFactory(H.getTag, [1])
-        // this.testFactory(H.createTag, ['Nuclear Physics', 'Actually, most of the explosions are on the particle scale'])
-        // this.testFactory(H.searchMatchingTags, ['Nucl'])
+        this.testFactory(H.getAllSkills, [])
+        this.testFactory(H.getSkill, [1])
+        this.testFactory(H.createSkill, ['Typing', 'Fast and accurate keyboard wizardry'])
+        this.testFactory(H.searchMatchingSkills, ['Typ'])
+        this.testFactory(H.getAllTags, [])
+        this.testFactory(H.getTag, [1])
+        this.testFactory(H.createTag, ['Nuclear Physics', 'Actually, most of the explosions are on the particle scale'])
+        this.testFactory(H.searchMatchingTags, ['nucl'])
 
         // //Et al.
         this.testFactory(H.submitUserFeedback, [1, 'perchresearch.com', 'Testing -Caleb'])
@@ -116,6 +144,8 @@ class UserTest extends React.Component {
     render() {
         return(
             <div id='test'>
+                <h1>Bad Status Codes</h1>
+                {this.state.errors.map(item => item)}
                 <h1>Student Tests</h1>
                 <h2>getAllUsers</h2>
                 <pre>{this.state.getAllUsers}</pre>
