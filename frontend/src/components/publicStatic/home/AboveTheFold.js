@@ -42,13 +42,15 @@ class AboveTheFold extends Component {
 			  			</div>
 			  		</div>
 
-			  		<div className='hide-on-med-and-up center-align' style={{marginBottom: '20px'}}>
-			  			<BasicButton dest='sign-up' msg='sign up'/><BasicButton dest='login' msg='log in'/>
-			  		</div>
+			  		{/*<div className='hide-on-med-and-up center-align' style={{marginBottom: '20px'}}>*/}
+			  			{/*<BasicButton dest='sign-up' msg='sign up'/><BasicButton dest='login' msg='log in'/>*/}
+			  		{/*</div>*/}
 
 			  		<div className='col s12 m5 atf-height valign-wrapper hide-on-small-only'>
-			  			<SignUp />
+			  			{/*<SignUp />*/}
+						<h1>Signup will be available in late 2018!</h1>
 			  		</div>
+
 			  </div>
 		);
 	}
