@@ -23,7 +23,7 @@ class PerchStory extends Component {
 		})
 		return (
 			<div className="perch-story">
-				<div className='perch-story-header'>The Perch Story</div>
+				{this.props.page !== 'main' && <div className='perch-story-header'>The Perch Story</div>}
 				<div>{text}</div>
 			</div>
 

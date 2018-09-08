@@ -10,18 +10,19 @@
 }
 
 .join-header {
-	font-size: 40px;
+	font-size: 60px;
 	text-transform: uppercase;
 	font-weight: 400;
 	width: 700px;
-	margin: auto auto;
+	margin-left: 16px;
+	/*margin: auto auto;*/
 	color: var(--primary);
-	text-align: center;
+	/*text-align: center;*/
 }
 
 .join-sub-header {
 	color: grey;
-	text-align: center;
+	text-align: left;
 	padding: 16px;
 	font-size: 25px;
 }
@@ -29,19 +30,20 @@
 .join-position {
 	padding: 15px;
 	margin: 20px 0px;
-	border: 2px solid grey;
+	border-bottom: 1px solid lightgrey;
 	width: auto;
 }
 
 .join-position-title {
-	color: var(--six-grey);
+	color: var(--primary);
+	font-weight: bolder;
 	text-align: left;
 	font-size: 20px;
 	margin-bottom: 5px;
 }
 
 .join-position-sub-title {
-	color: var(--six-grey);
+	color: var(--primary);
 	text-align: left;
 	font-size: 18px;
 }
@@ -52,7 +54,7 @@
 }
 
 .join-position-list-item {
-	text-size: 16px;
+	font-size: 16px;
 	color: var(--six-grey);
 	margin-left: 25px;
 }

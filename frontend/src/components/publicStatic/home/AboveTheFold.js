@@ -46,9 +46,12 @@ class AboveTheFold extends Component {
 			  			{/*<BasicButton dest='sign-up' msg='sign up'/><BasicButton dest='login' msg='log in'/>*/}
 			  		{/*</div>*/}
 
-			  		<div className='col s12 m5 atf-height valign-wrapper hide-on-small-only'>
+			  		<div className='col s12 m5 atf-height'>
 			  			{/*<SignUp />*/}
-						<h1>Signup will be available in late 2018!</h1>
+
+						<div className='temp-signup'><a href='/join'>We're looking for people <u>to join the team!</u></a></div>
+						<div className='temp-signup-sub'><b>Mass Meeting</b> and application information <br/>September 14th 7-8 Mason Hall 3411</div>
+						<br /><div className='temp-signup-sub'>Signup coming in 2018</div>
 			  		</div>
 
 			  </div>
