@@ -36,7 +36,7 @@ const INSTRUCTIONS = [
                         'and submit your code as a tar to our email.'
                     ]
                     
-const DUE_DATE = new Date('September 20, 2018')
+const DUE_DATE = new Date('September 30, 2018')
 
 let levelOne = 'Make a single view react app showing one lab and its data'
 let levelTwo = 'Make a single view react app with our api showing a lab list'
