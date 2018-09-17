@@ -11,7 +11,7 @@ class Join extends Component {
         return (
             <div className='join-content'>
                 <div className='join-header'>Join the Perch Team!</div>
-                <div className='join-sub-header'>Perch is looking for motivated students to help as we expand our service at all levels. <br /><b>Applications due 9/20</b><br /> and you can <a dest='mailto:info@perchresearch.com'>Contact Us</a> for any questions</div>
+                <div className='join-sub-header'>Perch is looking for motivated students to help as we expand our service at all levels. <br /><b>Applications due 9/30</b><br /> and you can <a dest='mailto:info@perchresearch.com'>Contact Us</a> for any questions</div>
                 <div className='join-position'>
                     <div className='join-position-title'>Software Developers (Frontend/Backend)</div>
                     <div className='join-position-sub-title'>Description:</div>
