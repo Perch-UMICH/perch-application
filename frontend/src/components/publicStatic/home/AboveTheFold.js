@@ -50,7 +50,7 @@ class AboveTheFold extends Component {
 			  			{/*<SignUp />*/}
 
 						<div className='temp-signup'><a href='/join'>We're looking for people <u>to join the team!</u></a></div>
-						<div className='temp-signup-sub'><b>Mass Meeting</b> and application information <br/>September 14th 7-8 Mason Hall 3411</div>
+						<div className='temp-signup-sub'><b>Applications due 9/20</b></div>
 						<br /><div className='temp-signup-sub'>Signup coming in 2018</div>
 			  		</div>
 
