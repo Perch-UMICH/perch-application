@@ -1,0 +1,62 @@
+.dot-loader-wrapper {
+  width: 100%;
+  padding-left: 50%;
+}
+
+.dot-loader-container {
+  position: relative;
+  width: 200px;
+  transform: translateX(-50%);
+  padding-bottom: 20px;
+}
+
+.dot {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 40px;
+  background-color: var(--primary);
+  margin-right: 10px;
+}
+
+.dot-one {
+  animation: dot_one var(--dot-speed) infinite linear;
+  -moz-animation: dot_one var(--dot-speed) infinite linear;
+  -webkit-animation: dot_one var(--dot-speed) infinite linear;
+  -o-animation: dot_one var(--dot-speed) infinite linear;
+}
+
+.dot-two {
+  animation: dot_two var(--dot-speed) infinite linear;
+  -moz-animation: dot_two var(--dot-speed) infinite linear;
+  -webkit-animation: dot_two var(--dot-speed) infinite linear;
+  -o-animation: dot_two var(--dot-speed) infinite linear;
+}
+
+.dot-three {
+  animation: dot_three var(--dot-speed) infinite linear;
+  -moz-animation: dot_three var(--dot-speed) infinite linear;
+  -webkit-animation: dot_three var(--dot-speed) infinite linear;
+  -o-animation: dot_three var(--dot-speed) infinite linear;
+}
+
+@keyframes dot_one {
+  0% { opacity: 1}
+  33% { opacity: 0}
+  66% { opacity: 0}
+  100% { opacity: 1}
+}
+
+@keyframes dot_two {
+  0% { opacity: 0}
+  33% { opacity: 1}
+  66% { opacity: 0}
+  100% { opacity: 0}
+}
+
+@keyframes dot_three {
+  0% { opacity: 0}
+  33% { opacity: 0}
+  66% { opacity: 1}
+  100% { opacity: 0}
+}

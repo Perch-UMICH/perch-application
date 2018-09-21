@@ -83,6 +83,7 @@
 	/* Animation Variables */
 	/* Flap Speed for Rodriguez Loader */
 	--flap-speed: 0.5s;
+	--dot-speed: 1.5s;
 }
 
 ::selection {

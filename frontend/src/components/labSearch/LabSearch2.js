@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './LabSearch2.css';
 import ExpanderIcons from '../utilities/ExpanderIcons'
-import RodriguezLoader from '../utilities/animations/RodriguezLoader'
+import DotLoader from '../utilities/animations/DotLoader'
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';
@@ -49,7 +49,7 @@ class LabSearch extends Component {
     			all_labs: this.state.all_labs,
     		}
 
-		if (positions.length > limit) 
+		if (positions.length > limit)
 			newState.next = positions.slice(limit)
 
     	getSearchResults(positions.slice(0,limit)).then(r => {
@@ -72,7 +72,7 @@ class LabSearch extends Component {
 	    	.then(r => {
 	    		let positions = r.data.results
 	    		let limit = this.state.limit
-	    		if (positions.length > limit) 
+	    		if (positions.length > limit)
 	    			newState.next = positions.slice(limit)
 	    		return getSearchResults(positions.slice(0,limit))
 	    	})
@@ -85,7 +85,7 @@ class LabSearch extends Component {
 	        	newState.loading = false;
             	this.setState(newState);
 	    	})
-     
+
 
         getSearchData().then((resp) => {
             console.log(resp);
@@ -113,7 +113,7 @@ class LabSearch extends Component {
             });
 
             this.setState({filts: new_filts, parentFilts: new_parentFilts});
-           
+
         });
 
     }
@@ -287,7 +287,7 @@ class LabSearch extends Component {
      <div id='lab-srch-more' onClick={this.moreLabs.bind(this)}>Mo' labs, mo' problems</div>
 
 	if (this.state.loading) {
-		labSearchContent = <RodriguezLoader />
+		labSearchContent = <DotLoader />
 		showMoreButton = null;
 	}
 

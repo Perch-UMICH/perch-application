@@ -4,6 +4,7 @@ import Editor from '../../utilities/Editor'
 import Apply from '../../user/Apply'
 import EditModal from '../../utilities/modals/EditModal'
 import GroupProjectRequirement from './GroupProjectRequirement'
+import {createApplicationResponse, isFaculty} from '../../../helper.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
@@ -33,7 +34,13 @@ export class GroupProject extends Component {
 	// Update this function with backend functionality to save application
 	// You can access the response under 'this.state.question_resps'
 	submitApplication = () => {
-		alert("Application Submitted! ... But not really.")
+		createApplicationResponse(this.state.question_resps).then(resp => {
+			if (resp.data) {
+				// get some info from resp when working
+
+			}
+		});
+
 	}
 
 	render() {
@@ -74,10 +81,11 @@ export class GroupProject extends Component {
 }
 
 export const GroupProjectContainer = (props) => {
+	let editor = isFaculty() ? <Editor superClick={props.addFunction} add={true}/> : null
 	return(
 		<div id='group-project-container'>
 			<h1>Projects
-			<Editor superClick={props.addFunction} add={true}/>
+			{editor}
 			</h1>
 			<div>{props.children}</div>
 		</div>
