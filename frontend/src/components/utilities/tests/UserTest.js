@@ -5,41 +5,29 @@ import React from 'react'
 import * as H from '../../../helper.js'
 import './tests.css'
 
+var queued = 0;
+var completed = 0;
 
 class UserTest extends React.Component {
     constructor() {
         super();
         this.state = {
             errors: [],
-            //getAllUsers_result: null,
-            getUser_result: null,
-            registerUser_result: null,
-            updateUser_result: null,
-            deleteUser_result: null,
-            verifyLong_result: null,
-            isLoggedIn_result: null,
-            userId_result: null,
-            isStudent_result: null,
-            getAllStudents_result: null,
-            getStudentFour_result: null,
-            getStudentFourMil_result: null,
-            getStudentSkills_result: null,
-            getStudentTags_result: null,
-            getAllFaculties_result: null,
-            getFaculty_result: null,
-            createFaculty_result: null,
         }
     }
 
     //R: func is a valid function and inputs is an array. Cannot be called on a function that returns null
     //E: Assigns the response of the called function to a variable with that function's name
     testFactory(func, inputs) {
+        ++queued; // hopefully this is atomic - have we learned nothing from 482??
+        this.setState({inputs})
         func(...inputs).then((resp) => {
             let toReturn = {}
             toReturn[func.name] = JSON.stringify(resp, undefined, 2);
             if (resp.status != 200)
                 this.state.errors.push(<div style={{color: 'red', fontSize: '30px'}}>ERROR <b>{resp.status}</b> in <b>{func.name}</b></div>)
-            
+
+            ++completed;
             this.setState(toReturn);
         });
     }
@@ -81,16 +69,16 @@ class UserTest extends React.Component {
         this.testFactory(H.getAllFaculties, [])
         this.testFactory(H.getFaculty, [1])
         this.testFactory(H.createFaculty, [10, {
-                                                first_name: 'Akira', 
-                                                last_name: 'Nishii', 
-                                                title: 'MD, PhD', 
+                                                first_name: 'Akira',
+                                                last_name: 'Nishii',
+                                                title: 'MD, PhD',
                                                 contact_email: 'anishii@osu.edu'
                                             }])
 
         this.testFactory(H.updateFaculty, [1, {
-                                                first_name: 'Akira', 
-                                                last_name: 'Nishii', 
-                                                title: 'MD, PhD', 
+                                                first_name: 'Akira',
+                                                last_name: 'Nishii',
+                                                title: 'MD, PhD',
                                                 contact_email: 'anishii@osu.edu'
                                             }])
 
@@ -99,20 +87,20 @@ class UserTest extends React.Component {
         this.testFactory(H.getLab, [5])
         // //Should return no data with all parameters set to false
         // this.testFactory(H.getAllLabData, [false, false, false, false, false, false])
-        this.testFactory(H.getLabData, [10, true, true, true, true, true, true])        
+        this.testFactory(H.getLabData, [10, true, true, true, true, true, true])
         this.testFactory(H.createLab, [1, {
-                                            name: 'Nishii Lab', 
-                                            location: '1800 Chemistry', 
-                                            description: 'We do cool stuff', 
-                                            url: 'perchresearch.com', 
+                                            name: 'Nishii Lab',
+                                            location: '1800 Chemistry',
+                                            description: 'We do cool stuff',
+                                            url: 'perchresearch.com',
                                             contact_email: 'anishii@umich.edu'
                                         }])
-        this.testFactory(H.updateLab, [1, {  
-                                            name: 'Nishii Lab', 
-                                            location: '1800 Chemistry', 
-                                            description: 'We do cool stuff', 
-                                            url: 'perchresearch.com', 
-                                            contact_phone: 'phone', 
+        this.testFactory(H.updateLab, [1, {
+                                            name: 'Nishii Lab',
+                                            location: '1800 Chemistry',
+                                            description: 'We do cool stuff',
+                                            url: 'perchresearch.com',
+                                            contact_phone: 'phone',
                                             contact_email: 'anishii@umich.edu'
                                         }])
         this.testFactory(H.getLabSkills, [10])
@@ -121,6 +109,12 @@ class UserTest extends React.Component {
         this.testFactory(H.getAllLabPositions, [10])
         this.testFactory(H.getLabPosition, [1,1])
         this.testFactory(H.getLabPositionApplicants, [16])
+
+        // Application Tests
+        this.testFactory(H.createApplicationResponse, [['good answer', 'extra good answer']])
+        this.testFactory(H.updateApplicationResponse, [1, ['gooder answer', 'extra gooder answer']])
+        this.testFactory(H.submitApplicationResponse, [1])
+        //this.testFactory(H.deleteApplicationResponse, [1])
 
         // //Meta Data
         this.testFactory(H.getAllSkills, [])
@@ -144,8 +138,10 @@ class UserTest extends React.Component {
     render() {
         return(
             <div id='test'>
+                <h1>Tests Completed/Total: {completed}/{queued}</h1>
                 <h1>Bad Status Codes</h1>
                 {this.state.errors.map(item => item)}
+
                 <h1>Student Tests</h1>
                 <h2>getAllUsers</h2>
                 <pre>{this.state.getAllUsers}</pre>
@@ -205,6 +201,16 @@ class UserTest extends React.Component {
                 <pre>{this.state.getApplicationFromPosition}</pre>
                 <h2>getLabPositionApplicants</h2>
                 <pre>{this.state.getLabPositionApplicants}</pre>
+
+                <h1>Application Tests</h1>
+                <h2>createApplicationResponse</h2>
+                <pre>{this.state.createApplicationResponse}</pre>
+                <h2>updateApplicationResponse</h2>
+                <pre>{this.state.updateApplicationResponse}</pre>
+                <h2>submitApplicationResponse</h2>
+                <pre>{this.state.submitApplicationResponse}</pre>
+                <h2>deleteApplicationResponse</h2>
+                <pre>{this.state.deleteApplicationResponse}</pre>
 
                 <h1>Meta Tests</h1>
                 <h2>getAllSkills</h2>
