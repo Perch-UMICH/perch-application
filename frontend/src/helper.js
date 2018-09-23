@@ -37,19 +37,19 @@ function error_handle(error) {
         // that falls out of the range of 2xx
         //return respond(error.response.status, error.response);
         if (error.response.data.error)
-            return error_respond(error);
+            throw error_respond(error);
         else
-            return error.response.data;
+            throw error.response.data;
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
         //return respond(0, error.request)
-        return error;
+        throw error;
     } else {
         // Something happened in setting up the request that triggered an Error
         //return respond(0, error.message)
-        return error;
+        throw error;
     }
 }
 
