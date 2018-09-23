@@ -1,4 +1,4 @@
-Perch React Applcation
+Perch React Application
 ======================
 
 The tentative perch application that will be backed on react and using dockerization for development purposes. `docker-compose` is used to spin up services together and handle the way that they communicate and interact.
