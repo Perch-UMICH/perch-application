@@ -69,20 +69,20 @@ class StudentOnboarding extends Component {
   sendUpdate(redirect) {
     var user = this.state.user;
     var nameArr = user && user.name ? user.name.split(' ') : [];
-    var first_name = nameArr[0] ? nameArr[0]: "";
-    var last_name = nameArr[1] ? nameArr[1] : "";
+    var first_name = nameArr[0] || "";
+    var last_name = nameArr[1] || "";
     var linkedin_link = user.linkedin_link ? primeExternalLink(user.linkedin_link) : "";
     var website_link = user.website_link ? primeExternalLink(user.website_link) : "";
     var s = {
-      contact_email: user.contact_email ? user.contact_email : "",
-      contact_phone: user.contact_phone ? user.contact_phone : "",
-      year: user.year ? user.year : "",
-      bio: user.bio ? user.bio : "",
-      major: user.major ? user.major : "",
-      gpa: user.gpa ? user.gpa : 4.0,
-      classes: user.classes ? user.classes : [],
-      skills: user.skills ? user.skills : [],
-      interests: user.interests ? user.interests : [],
+      contact_email: user.contact_email || "",
+      contact_phone: user.contact_phone || "",
+      year: user.year || "",
+      bio: user.bio || "",
+      major: user.major || "",
+      gpa: user.gpa || 4.0,
+      classes: user.classes || [],
+      skills: user.skills || [],
+      interests: user.interests || [],
     }
     // updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
     updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, linkedin_link, website_link, true, [], [])
