@@ -202,7 +202,7 @@ export function isLab() {
 }
 
 export function isFaculty() {
-    return sessionStorage.getItem('lab_id') != null;
+    return sessionStorage.getItem('faculty_id') != null; // changed by benji
 }
 
 // USERS //

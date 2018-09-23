@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab} from '../../../helper.js'
+import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -37,9 +37,17 @@ class ProfPage extends Component {
 
 	componentWillMount() {
 		var prof_id = window.location.pathname.split('/')[2];
-		getFaculty(prof_id).then((resp) => {
-			console.log(resp);
+		getFaculty(prof_id).then((r) => {
+			console.log(r)
+			r = r.data
+			this.setState({
+				name: r.first_name + " " + r.last_name,
+				contact_email: r.contact_email,
+				contact_phone: r.contact_phone,
+
+			})
 		});
+		getUser(getCurrentUserId()).then(r => console.log(r))
 	}
 
 	componentDidMount() {
@@ -48,7 +56,7 @@ class ProfPage extends Component {
 			// check if user or faculty for viewing positions
 			if (isStudent())
 				this.setState({user_type: "user"});
-			else if (isLab())
+			else if (isFaculty())
 				this.setState({user_type: "faculty"});
 
 			var lab_id = window.location.pathname.split('/')[2];
@@ -121,8 +129,8 @@ class ProfPage extends Component {
 		 				<div>
 		 					<h1>Contact Info</h1>
 		 					<div>
-		 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>bcoppola@umich.edu</a></div>
-		 						<div><b>Phone</b> 815 262 6642</div>
+		 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>{this.state.contact_email}</a></div>
+		 						<div><b>Phone</b>{this.state.contact_phone}</div>
 		 					</div>
 		 					<Editor superClick={() => this.openModal('contact-edit')}/>
 		 				</div>
@@ -150,7 +158,7 @@ class ProfPage extends Component {
 	 						</div>
 		 					<img id='user-quickview-coverimage' src='https://previews.123rf.com/images/balabolka/balabolka1609/balabolka160900265/62527939-cartoon-cute-hand-drawn-science-seamless-pattern-colorful-detailed-with-lots-of-objects-background-e.jpg' />
 		 					<div id='user-quickview-footer'>University of Michigan</div>
-		 					<div id='user-quickview-name'>Dr. Brian Coppola</div>
+		 					<div id='user-quickview-name'>{this.state.name}</div>
 		 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 		 				</div>
 		 				<div>

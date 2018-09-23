@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, /*getFacultyLabs*/} from '../../helper.js'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId,/*getFacultyLabs*/} from '../../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -16,10 +16,10 @@ class NavBar extends Component {
 				is_student: true,
 				prof_dest: `/student-profile/${getCurrentUserId()}`,
 			});
-		} else if (isLab()) {
+		} else if (isFaculty()) {
 			this.setState({
 				is_student: false,
-				prof_dest: `/prof-page/${getCurrentLabId()}`,
+				prof_dest: `/prof/${getCurrentFacultyId()}`,
 			});
 		}
 	}
@@ -29,8 +29,8 @@ class NavBar extends Component {
 		if (isLoggedIn()) {
 			var navItems = <div>
 				<li><a className="nav-item" href={this.state.prof_dest}>PROFILE</a></li>
-			    <li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>
-			    <li><a className="nav-item" href="/dashboard">YOUR PROJECTS</a></li>
+			    {isStudent() && <li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>}
+			    {isStudent() && <li><a className="nav-item" href="/dashboard">YOUR PROJECTS</a></li>}
 			    <li><a className="nav-item" href="/help">HELP</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
