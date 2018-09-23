@@ -92,13 +92,13 @@ class StudentProfile extends Component {
 			uploadUserFile(formData, 'profile_pic');
 		}
 		// update name, school, general handler
-		updateStudent(name, null, null, null, null, null, null, null, [], [])
+		updateStudent({first_name: name})
 			.then(r => addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, [this.state.user.major]))
 			.then((resp) => this.generalHandler());
 	}
 
 	sendLinks() {
-		updateStudent(null, null, null, null, null, primeExternalLink(this.state.updated_user.linkedin_link), primeExternalLink(this.state.updated_user.website_link), null, [], [])
+		updateStudent({linkedin_link: primeExternalLink(this.state.updated_user.linkedin_link), website_link: primeExternalLink(this.state.updated_user.website_link)})
 			.then(r => this.generalHandler());
 	}
 
@@ -112,12 +112,12 @@ class StudentProfile extends Component {
 	}
 
 	sendContactInfo() {
-		updateStudent(null, null, this.state.updated_user.contact_email, this.state.updated_user.contact_phone, null, null, null, null, [], [])
+		updateStudent({contact_email: this.state.updated_user.contact_email, contact_phone: this.state.updated_user.contact_phone})
 			.then(r => this.generalHandler());
 	}
 
 	sendBio() {
-		updateStudent(null, null, null, null, this.state.updated_user.bio, null, null, null,  [], [])
+		updateStudent({bio: this.state.updated_user.bio})
 			.then(r => this.generalHandler());
 	}
 
