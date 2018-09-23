@@ -5,10 +5,11 @@ import DotLoader from '../utilities/animations/DotLoader'
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';
-import {getAllLabs, getSearchResults, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
+import {isStudent, getAllLabs, getSearchResults, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
 import {getFilters} from '../../data/filterData';
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
 const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Lab Skills'];
+
 
 
 
@@ -126,10 +127,11 @@ class LabSearch extends Component {
 		this.expand("departments");
 		let search = document.getElementById('lab-srch-input')
 		search.addEventListener('keyup', this.updateSearch.bind(this))
-
-		getStudentFromUser(getCurrentUserId()).then((resp) => {
-			this.setState({lab_list: resp.data.position_list})
-		})
+		if (isStudent()) {
+			getStudentFromUser(getCurrentUserId()).then((resp) => {
+				this.setState({lab_list: resp.data.position_list})
+			})
+		}
 
 	}
 

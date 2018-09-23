@@ -11,12 +11,13 @@ export class GroupProject extends Component {
 	constructor(props) {
 			super(props)
 			this.state = {
-					question_resps: [],
+				question_resps: [],
 			}
 	}
 
+	// Grab the description and add expand
 	expand() {
-		document.getElementById(`group-project-${this.props.title}`).children[2].classList.toggle('expand')
+		document.getElementById(`group-project-description-${this.props.title}`).classList.toggle('expand')
 	}
 
 	openModal(id) {
@@ -40,41 +41,59 @@ export class GroupProject extends Component {
 
 			}
 		});
+	}
 
+	renderModal() {
+		return(
+			<EditModal id={`${this.props.id}-apply`} wide={true} actionName="submit"
+				title={`Apply To ${this.props.title}`} modalAction={this.submitApplication}>
+				<Apply updateQuestions={this.updateApplication} description={this.state.description}/>
+			</EditModal>
+		)
+	}
+
+	renderProjectName() {
+		return(
+			<div className='group-project-name-container'>
+				<span className='group-project-name'>
+					<span>{this.props.title}</span>
+					{this.props.urop && <span className='group-project-tag'>UROP</span>}
+				</span>
+			</div>
+		)
 	}
 
 	render() {
+
+		const keywords = <div className='group-project-keywords'>{this.props.keywords}</div>
+
+		const description = <div id={`group-project-description-${this.props.title}`} className='group-project-description'>
+								<div>{this.props.description}</div>
+								{/* Edited for now since we don't have much
+									<div className='group-project-requirements-header'>Minimum Requirements</div>*/}
+								<GroupProjectRequirement title='Time commitment' value={this.props.time_commit}/>
+								{/*Edited For now since not in back end
+								<GroupProjectRequirement title='GPA' value={this.props.gpa}/>
+								<GroupProjectRequirement title='Year' value={this.props.year}/>
+								<GroupProjectRequirement value="MISSING"/>
+								*/}
+								{/* Edited for now ssince we don't have much
+								<div className='group-project-requirements-header'>Skills</div>*/}
+								<GroupProjectRequirement value="MISSING"/>
+							</div>
+
+		const apply = <div>
+							<div className='group-project-apply' onClick={() => this.openModal(`${this.props.id}-apply`)}>Apply</div>
+							{this.props.spots && <div className='group-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>}
+					</div>
 		return(
 			<div id={`group-project-${this.props.title}`} className='group-project'>
-				<EditModal id={`${this.props.id}-apply`} wide={true} actionName="submit"
-					title={`Apply To ${this.props.title}`} modalAction={this.submitApplication}>
-					<Apply updateQuestions={this.updateApplication} description={this.state.description}/>
-				</EditModal>
-				<div className='group-project-name-container'>
-					<span className='group-project-name'>
-						<span>{this.props.title}</span>
-						{this.props.urop && <span className='group-project-tag'>UROP</span>}</span>
-
-				</div>
-				<div className='group-project-keywords'>{this.props.keywords}</div>
-				<div className='group-project-description'>
-					<div>{this.props.description}</div>
-					{/* Edited for now since we don't have much
-						<div className='group-project-requirements-header'>Minimum Requirements</div>*/}
-					<GroupProjectRequirement title='Time commitment' value={this.props.time_commit}/>
-					{/*Edited For now since not in back end
-					<GroupProjectRequirement title='GPA' value={this.props.gpa}/>
-					<GroupProjectRequirement title='Year' value={this.props.year}/>
-					<GroupProjectRequirement value="MISSING"/>
-					*/}
-					{/* Edited for now ssince we don't have much
-					<div className='group-project-requirements-header'>Skills</div>*/}
-					<GroupProjectRequirement value="MISSING"/>
-				</div>
-
-				<div className='group-project-apply' onClick={() => this.openModal(`${this.props.id}-apply`)}>Apply</div>
-				{this.props.spots && <div className='group-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>}
-				<ExpanderIcons id={`group-project-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>
+				{this.renderModal()}
+				{this.renderProjectName()}
+				{keywords}
+				{description}
+				{apply}
+				<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>
 			</div>
 		)
 	}
