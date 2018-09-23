@@ -52,7 +52,6 @@ class FacultyOnboarding extends Component {
   sendUpdate() {
     console.log(this.state.user);
     updateFaculty(getCurrentFacultyId(), this.state.user).then(r => console.log(r))
-
   }
 
 	render() {

@@ -39,21 +39,13 @@ class SignUp extends Component {
 		}
 		if (student) {
 			createStudent(id, individual)
-				.then(r => {
-					console.log("CREATE STUDENT RESP", r)
-					alert('STUDENT CREATED')
-					window.location.href = '/student-onboarding'
-				})
+				.then(r => window.location.href = '/student-onboarding')
 				.catch(e => alert('ERROR in student creation'))
 		}
 		else {
-			console.log('Faculty creation section');
 			createFaculty(id, individual)
-				.then(r => {
-					console.log("CREATE FAC RESPONSE", r)
-					alert("FACULTY CREATED")
-					window.location.href = '/faculty-onboarding'
-				})
+				.then(r => window.location.href = '/faculty-onboarding')
+				.catch(e => alert('ERROR in faculty creation'))
 
 
 			// createFaculty(id, first_name, last_name, null, email).then(fac => {
@@ -66,7 +58,7 @@ class SignUp extends Component {
 			// 		// 	window.location.href = this.state.route;
 			// 		// });
 			// 	});
-			// });
+			// // });
 		}
 	}
 
