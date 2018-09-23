@@ -3,6 +3,7 @@ import ErrorPage from '../../utilities/ErrorPage'
 import EditModal from '../../utilities/modals/EditModal'
 import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
+import ExpanderIcons from '../../utilities/ExpanderIcons'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
