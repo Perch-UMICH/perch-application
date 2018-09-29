@@ -343,22 +343,29 @@ export function uploadUserFile(file) {
         })
 }
 
-export function getUserFile(type) {
+export function getUserFile(type, user_id) {
     if (type !== 'resume' && type !== 'profile_pic') {
         console.log('Error: invalid type parameter');
         return;
     }
 
-    let user_id = sessionStorage.getItem('user_id');
-
+    if (!user_id){
+        console.log('getting default user')
+        user_id = sessionStorage.getItem('user_id');
+    }
+    else {
+        console.log(`getting user id ${user_id}`)
+    }
     return axios.get('api/users/' + user_id + '/' + type)
         .then(response => {
+            console.log(response)
             return respond(response.status, response.data);
         })
         .catch(error => {
             return error_handle(error);
         })
 }
+
 
 // STUDENTS //
 
