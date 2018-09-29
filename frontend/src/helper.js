@@ -356,7 +356,11 @@ export function getUserFile(type, user_id) {
     else {
         console.log(`getting user id ${user_id}`)
     }
-    return axios.get('api/users/' + user_id + '/' + type)
+    let payload = {
+        _method: 'PUT',
+        user_id: user_id
+    }
+    return axios.post('api/users/' + user_id + '/' + type, payload)
         .then(response => {
             console.log(response)
             return respond(response.status, response.data);
