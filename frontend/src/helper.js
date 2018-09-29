@@ -903,9 +903,9 @@ export function getLabData(lab_id, skilltag_data, preferences_data, position_dat
 }
 //
 
-export function createLab(faculty_id, lab) {
+// RESTRICTED: authenticated faculty member
+export function createLab(lab) {
     console.log('Creating lab');
-    lab.faculty_id = faculty_id;
     return axios.post('api/labs', lab)
         .then(response => {
             sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
