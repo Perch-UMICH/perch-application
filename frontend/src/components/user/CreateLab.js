@@ -3,13 +3,15 @@ import AppQuestionTab from './AppQuestionTab';
 import { getLabPosition, getLab, getPositionApplication, getCurrentUserId, createApplication, createLab, updateLab, addMembersToLab, getCurrentFacultyId, getAllLabData, getAllLabs, isFaculty } from '../../helper.js';
 import './CreateLab.css';
 
-export var modalCreateLab = (lab) => {
+export var modalCreateLab = (lab, callback) => {
 	if (isFaculty()) {
 		console.log("Attempting to create lab ...");
 		console.log(lab);
 		createLab(getCurrentFacultyId(), lab).then(r => {
 			console.log(r);
-			alert("lab created!!!");
+			console.log("r.data.id ", r.data.id)
+			//window.locaton.href = '/prof-page/' + r.data.id; // redirect to new lab page
+			callback(r.data.id);
 		})
 	}
 }
@@ -69,6 +71,7 @@ class CreateLab extends Component {
 	render() {
 		return (
 			<div className="create-lab-wrapper">
+				<p>So you want to create a new lab, eh? Let&#39;s get started! Upon clicking 'create', you&#39;ll be redirected to your new lab page.</p>
 				<b>Name</b>
 				<input type='text' name='name' value={this.state.lab.name} onChange={(e) => this.alterObj(e)}/>
 				<b>Description</b>
@@ -79,16 +82,20 @@ class CreateLab extends Component {
 				<input type='text' name='url' value={this.state.lab.url} onChange={(e) => this.alterObj(e)}/>
 				<b>Location</b>
 				<input type='text' name='location' value={this.state.lab.location} onChange={(e) => this.alterObj(e)}/>
-				<b>Contact Phone</b>
-				<input type='text' name='contact_phone' value={this.state.lab.contact_phone} onChange={(e) => this.alterObj(e)}/>
-				<b>Contact Email</b>
-				<input type='text' name='contact_email' value={this.state.lab.contact_email} onChange={(e) => this.alterObj(e)}/>
-				<b>LabPic Path</b>
-				<input type='text' name='labpic_path' value={this.state.lab.labpic_path} onChange={(e) => this.alterObj(e)}/>
+				<div className="contact-line">
+					<div className="contact-left">
+						<b>Contact Phone</b>
+						<input type='text' name='contact_phone' value={this.state.lab.contact_phone} onChange={(e) => this.alterObj(e)}/>
+					</div>
+					<div>
+						<b>Contact Email</b>
+						<input type='text' name='contact_email' value={this.state.lab.contact_email} onChange={(e) => this.alterObj(e)}/>
+					</div>
+				</div>
+				{/*<b>LabPic Path</b>
+				<input type='text' name='labpic_path' value={this.state.lab.labpic_path} onChange={(e) => this.alterObj(e)}/>*/}
 				{/*<br/><button onClick={this.modalCreateLab.bind(this)}>CREATE A NEW LAB!</button><br/><br/>*/}
 				{/*<br/><button onClick={this.modalUpdateLab.bind(this)}>Update Lab! (Be sure to include the correct id below)</button><br/>*/}
-				<b>Lab ID: (for updating labs)</b>
-				<input type='text' name='id' value={this.state.lab.id} onChange={(e) => this.alterObj(e)}/>
 			</div>
 		);
 	}
