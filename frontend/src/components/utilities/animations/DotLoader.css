@@ -5,7 +5,7 @@
 
 .dot-loader-container {
   position: relative;
-  width: 200px;
+  width: 90px;
   transform: translateX(-50%);
   padding-bottom: 20px;
 }
@@ -17,46 +17,50 @@
   border-radius: 40px;
   background-color: var(--primary);
   margin-right: 10px;
+  border: 2px solid var(--b-grey);
 }
 
 .dot-one {
-  animation: dot_one var(--dot-speed) infinite linear;
-  -moz-animation: dot_one var(--dot-speed) infinite linear;
-  -webkit-animation: dot_one var(--dot-speed) infinite linear;
-  -o-animation: dot_one var(--dot-speed) infinite linear;
+  animation: dot_one var(--dot-speed) infinite var(--loader-transition);
+  -moz-animation: dot_one var(--dot-speed) infinite var(--loader-transition);
+  -webkit-animation: dot_one var(--dot-speed) infinite var(--loader-transition);
+  -o-animation: dot_one var(--dot-speed) infinite var(--loader-transition);
 }
 
 .dot-two {
-  animation: dot_two var(--dot-speed) infinite linear;
-  -moz-animation: dot_two var(--dot-speed) infinite linear;
-  -webkit-animation: dot_two var(--dot-speed) infinite linear;
-  -o-animation: dot_two var(--dot-speed) infinite linear;
+  animation: dot_two var(--dot-speed) infinite var(--loader-transition);
+  -moz-animation: dot_two var(--dot-speed) infinite var(--loader-transition);
+  -webkit-animation: dot_two var(--dot-speed) infinite var(--loader-transition);
+  -o-animation: dot_two var(--dot-speed) infinite var(--loader-transition);
 }
 
 .dot-three {
-  animation: dot_three var(--dot-speed) infinite linear;
-  -moz-animation: dot_three var(--dot-speed) infinite linear;
-  -webkit-animation: dot_three var(--dot-speed) infinite linear;
-  -o-animation: dot_three var(--dot-speed) infinite linear;
+  animation: dot_three var(--dot-speed) infinite var(--loader-transition);
+  -moz-animation: dot_three var(--dot-speed) infinite var(--loader-transition);
+  -webkit-animation: dot_three var(--dot-speed) infinite var(--loader-transition);
+  -o-animation: dot_three var(--dot-speed) infinite var(--loader-transition);
 }
 
 @keyframes dot_one {
-  0% { opacity: 1}
-  33% { opacity: 0}
-  66% { opacity: 0}
-  100% { opacity: 1}
+  0% { background-color: var(--white)}
+  25% { background-color: var(--primary)}
+  50% { background-color: var(--white)}
+  75% { background-color: var(--white)}
+  100% { background-color: var(--white)}
 }
 
 @keyframes dot_two {
-  0% { opacity: 0}
-  33% { opacity: 1}
-  66% { opacity: 0}
-  100% { opacity: 0}
+  0% { background-color: var(--white)}
+  25% { background-color: var(--white)}
+  50% { background-color: var(--primary)}
+  75% { background-color: var(--white)}
+  100% { background-color: var(--white)}
 }
 
 @keyframes dot_three {
-  0% { opacity: 0}
-  33% { opacity: 0}
-  66% { opacity: 1}
-  100% { opacity: 0}
+  0% { background-color: var(--white)}
+  25% { background-color: var(--white)}
+  50% { background-color: var(--white)}
+  75% { background-color: var(--primary)}
+  100% { background-color: var(--white)}
 }
