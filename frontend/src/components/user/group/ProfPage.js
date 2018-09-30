@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
+import {permissionCheck, getLab, createLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -7,6 +7,7 @@ import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
 import {EditContact, EditExperience, EditQuickview, EditLinks} from '../individual/StudentEditors'
 import { TwitterTimelineEmbed} from 'react-twitter-embed';
+import BasicButton from '../../utilities/buttons/BasicButton'
 import './ProfPage.css'
 
 class ProfPage extends Component {
@@ -91,6 +92,26 @@ class ProfPage extends Component {
 		}
 	}
 
+	handleLabCreation() {
+		let name = document.getElementById('lab-create-name').value
+		let email = document.getElementById('lab-create-email').value
+		let phone = document.getElementById('lab-create-phone').value
+		let description = document.getElementById('lab-create-description').value
+		let lab = {
+			'name': name,
+			'email': email,
+			'phone': phone,
+			'description': description,
+		}
+
+		createLab(lab)
+			.then(r => {
+				console.log('created lab')
+				console.log(r)
+			})
+
+	}
+
 	render() {
 		var apply_dest = '/apply/' + window.location.pathname.split('/')[2];
 		// TODO TEMPORARILY COMMENTED OUT UNTIL INTEGRATED WITH BACKEND
@@ -119,7 +140,33 @@ class ProfPage extends Component {
 					<EditModal id="quickview-edit" title="Edit Quickview Info">
 						<EditQuickview img='/img/headshots/bcoppola.jpg'/>
 					</EditModal>
+					{/*<EditModal id="join-lab-modal" title="Join A Lab">
+						<input type='text' placeholder=''></input>
+					</EditModal>*/}
+					<EditModal id="create-lab-modal" title="Create A Lab" modalAction={r=>this.handleLabCreation()}>
+						<div className='input-field'>
+							<input id='lab-create-name' type='text' placeholder='Smooth Jazz Lab' />
+							<label htmlFor='name' className="active">Lab Name</label>
+						</div>
+						<div className='input-field'>
+							<input id='lab-create-email' type='email' placeholder='lab@labemail.com' />
+							<label htmlFor='email' className="active">Email</label>
+						</div>
+						<div className='input-field'>
+							<input id='lab-create-phone' type='text' placeholder='123-456-7890' />
+							<label htmlFor='phone' className="active">Phone</label>
+						</div>
+						<div className='input-field'>
+							<textarea id='lab-create-description' placeholder='we do cool stuff' />
+						</div>
+					</EditModal>
 		 			<div id='user-column-L'>
+		 				{/*<div className='join-lab' onClick={r => this.openModal('join-lab-modal')}>
+							<div>Join A Lab</div>
+						</div>*/}
+						<div className='join-lab' onClick={r => this.openModal('create-lab-modal')}>
+							<div>Create A Lab</div>
+						</div>
 		 				<div>
 		 					<h1>Quick Info</h1>
 		 					<div>
@@ -156,7 +203,7 @@ class ProfPage extends Component {
 		 					<div id='user-quickview-img-container'>
 	 							<img id='user-quickview-img' src='/img/headshots/bcoppola.jpg'/>
 	 						</div>
-		 					<img id='user-quickview-coverimage' src='https://previews.123rf.com/images/balabolka/balabolka1609/balabolka160900265/62527939-cartoon-cute-hand-drawn-science-seamless-pattern-colorful-detailed-with-lots-of-objects-background-e.jpg' />
+		 					<img id='user-quickview-coverimage' src='https://www.desktopbackground.org/download/o/2014/06/30/786009_2048x2048-italian-sky-blue-solid-color-backgrounds_2048x2048_h.jpg' />
 		 					<div id='user-quickview-footer'>University of Michigan</div>
 		 					<div id='user-quickview-name'>{this.state.name}</div>
 		 					<Editor superClick={() => this.openModal('quickview-edit')}/>
@@ -221,5 +268,24 @@ class UserWorkExperience extends Component {
 		)
 	}
 }
+
+
+class JoinLab extends Component {
+	handleClick() {
+		alert('hello')
+	}
+
+	render() {
+		return(
+			<div id='join-lab' onClick={r => this.openModal('join-lab-modal')}>
+				<div>Join A Lab</div>
+			</div>
+		)
+	}
+}
+
+
+
+
 
 export default ProfPage;

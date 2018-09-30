@@ -6,9 +6,22 @@ import CreatePosition from './CreatePosition'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
-import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
-        getLabPreferences, isStudent, isLab, getLabMembers, createApplication} from '../../../helper.js'
+import {EditAdmins} from './GroupEditors'
+import BasicButton from '../../utilities/buttons/BasicButton'
+import {permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
+        getLabPreferences, isStudent, isLab, getLabMembers, createApplication, addMembersToLab} from '../../../helper.js'
+import Editor from '../../utilities/Editor'
+// import $ from 'jquery'
+// import M from 'materialize-css'
+
 import './GroupPage.css'
+
+function openModal(id) {
+  if (document.getElementById(id)) {
+    document.getElementById(id).classList.add('activated');
+    document.getElementById(`${id}-backdrop`).classList.add('activated');
+  }
+}
 
 // Our Group Page master componenet
 class GroupPage extends Component {
@@ -23,6 +36,8 @@ class GroupPage extends Component {
             lab_admins: [],
             lab_members: [],
             new_pos: {},
+            members_raw: [],
+            admins_raw: [],
         }
     }
 
@@ -45,26 +60,32 @@ class GroupPage extends Component {
       getLabMembers(this.state.lab_id).then((resp) => {
           let admins = [];
           let members = [];
+          let admins_raw = [];
+          let members_raw = [];
           console.log(resp);
           resp.data.faculty.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson src='/img/headshots/hwang.jpg'>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  members_raw.push([fullname, person.data.user_id]);
               }
           })
           resp.data.students.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson src='/img/akira.jpg'>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson src='/img/headshots/hwang.jpg'>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  members_raw.push([fullname, person.data.user_id]);
               }
           })
-          this.setState({lab_admins: admins, lab_members: members});
+          this.setState({lab_admins: admins, lab_members: members, admins_raw: admins_raw, members_raw: members_raw});
       });
 
   }
@@ -94,6 +115,11 @@ class GroupPage extends Component {
     }
   }
 
+  handleEditMembers() {
+    let id = document.getElementById('new-member').value
+    addMembersToLab(145, [id], [3]).then(r=>console.log(r))
+  }
+
 	render() {
 		return(
 			<div id='group-page'>
@@ -101,14 +127,42 @@ class GroupPage extends Component {
           title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
           <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} />
         </EditModal>
+
+        <EditModal id='edit-admins' wide={true}
+          title='Edit Admins'>
+          <div className='row'>
+            <h5 className='col s12'>Modify Admins</h5>
+            {this.state.admins_raw.map(e => <AdminView name={e[0]} id={e[1]}/>)}
+          </div>
+        </EditModal>
+
+        <EditModal id='edit-members' wide={true}
+          title='Edit Members'>
+          <div className='row'>
+            <h5>Add a new member</h5>
+            <div className='input-field col s10'>
+              <input id='new-member' type='number' placeholder='#' />
+              <label htmlFor='email' className="active">User ID</label>
+            </div>
+            <div className='col s2'>
+              <BasicButton msg='add member' superClick={this.handleEditMembers.bind(this)} />
+            </div>
+          </div>
+          <div className='row'>
+            <h5 className='col s12'>Modify Users</h5>
+            {this.state.members_raw.map(e => <MemberView name={e[0]} id={e[1]}/>)}
+          </div>
+        </EditModal>
+
+
 				<div id='group-page-column-L'>
 					<Administrators people={this.state.lab_admins}/>
 					<Members people={this.state.lab_members}/>
 				</div>
 				<div id='group-page-column-R'>
-                    <QuickInfo department='MISSING'/>
-                    <ContactInfo email='MISSING' phone='MISSING' location='MISSING'/>
-                </div>
+            <QuickInfo department='MISSING'/>
+            <ContactInfo email='MISSING' phone='MISSING' location='MISSING'/>
+        </div>
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description='NULL'/>
 
@@ -133,6 +187,7 @@ const Administrators = (props) => {
 			<div className='group-photos'>
 				{props.people}
 			</div>
+      <Editor superClick={() => openModal('edit-admins')}/>
 		</div>
 	)
 }
@@ -144,6 +199,7 @@ const Members = (props) => {
 			<div className='group-photos'>
 				{props.people}
 			</div>
+      <Editor superClick={() => openModal('edit-members')}/>
 		</div>
 	)
 }
@@ -191,6 +247,52 @@ const ContactInfo = (props) => {
             </div>
         </div>
     )
+}
+
+class AdminView extends Component {
+
+  removeMember() {
+    alert(this.props.id)
+    removeMembersFromLab(145, [this.props.id]).then(r => this.setState())
+  }
+
+  removeAdmin() {
+    removeMembersFromLab(145, [this.props.id])
+      .then(r => addMembersToLab(145, [this.props.id], [3]))
+  }
+
+  render(props) {
+    return(
+      <div id={this.props.name} className='member-view col s3'>
+        <span>{this.props.name}</span>
+        <div onClick={this.removeMember.bind(this)}>remove</div>
+        <div onClick={this.removeAdmin.bind(this)}>remove admin priveleges</div>
+      </div>
+    )
+  }
+}
+
+class MemberView extends Component {
+
+  removeMember() {
+    alert(this.props.id)
+    removeMembersFromLab(145, [this.props.id]).then(r => this.setState())
+  }
+
+  makeAdmin() {
+    removeMembersFromLab(145, [this.props.id])
+      .then(r => addMembersToLab(145, [this.props.id], [2]))
+  }
+
+  render(props) {
+    return(
+      <div id={this.props.name} className='member-view col s3'>
+        <span>{this.props.name}</span>
+        <div onClick={this.removeMember.bind(this)}>remove</div>
+        <div onClick={this.makeAdmin.bind(this)}>make admin</div>
+      </div>
+    )
+  }
 }
 
 export default GroupPage;

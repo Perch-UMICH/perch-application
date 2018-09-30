@@ -915,7 +915,6 @@ export function createLab(lab) {
     console.log('Creating lab');
     return axios.post('api/labs', lab)
         .then(response => {
-            sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI
             return respond(response.status, response.data);
         })
         .catch(error => {
@@ -1153,10 +1152,9 @@ export function getLabMembers(lab_id) {
 
 // Order of role_ids should correspond with order of user_ids (same size)
 // RESTRICTED: lab_id
-export function addMembersToLab(user_ids, role_ids) {
+export function addMembersToLab(lab_id, user_ids, role_ids) {
     console.log('Adding members to lab');
 
-    let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
         user_ids: user_ids,
         role_ids: role_ids
@@ -1170,12 +1168,11 @@ export function addMembersToLab(user_ids, role_ids) {
             return error_handle(error);
         })
 }
-
+// changed by benji
 // RESTRICTED: lab_id
-export function removeMembersFromLab(user_ids) {
+export function removeMembersFromLab(lab_id, user_ids) {
     console.log('Removing members from lab');
 
-    let lab_id = sessionStorage.getItem('lab_id');
     let payload = {
         _method: 'PUT',
         user_ids: user_ids
