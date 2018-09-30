@@ -299,9 +299,15 @@
 	font-size: 110%;
 }
 
-#user-labs a:last-of-type {
+#user-labs div:last-of-type {
 	border-bottom: none;
 }
+
+.user-labs-delete {
+	position: absolute;
+	right: 5px;
+}
+
 
 #user-classes {
 	position: relative;

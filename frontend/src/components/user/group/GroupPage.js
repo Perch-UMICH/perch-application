@@ -5,6 +5,7 @@ import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
+import {modalUpdateLab} from '../CreateLab'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {EditAdmins} from './GroupEditors'
 import BasicButton from '../../utilities/buttons/BasicButton'
@@ -36,6 +37,7 @@ class GroupPage extends Component {
             lab_admins: [],
             lab_members: [],
             new_pos: {},
+            updated_lab: {},
             members_raw: [],
             admins_raw: [],
         }
@@ -53,8 +55,7 @@ class GroupPage extends Component {
       });
 
       getLab(this.state.lab_id).then((resp) => {
-          console.log(resp);
-          this.setState({lab_data: resp.data.data});
+          this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
       });
 
       getLabMembers(this.state.lab_id).then((resp) => {
@@ -96,8 +97,14 @@ class GroupPage extends Component {
     let newState = this.state;
     newState.new_pos[name] = value;
     this.setState(newState);
-    console.log("UPDATE", name, "TO", value)
   }
+
+  // Update the revisionist lab from modal, to be submitted by createPosition
+  updateLabState(e) {
+		let updated_lab = this.state.updated_lab;
+		updated_lab[e.target.name] = e.target.value;
+		this.setState({updated_lab});
+	}
 
   // create position and position application, call from create position modal
   createPosition() {
@@ -123,7 +130,7 @@ class GroupPage extends Component {
 
   hasPermissions(admins) {
     let user_id = getCurrentUserId()
-    for (let i = 0; i < admins.length; i++) 
+    for (let i = 0; i < admins.length; i++)
       if (admins[i][1] == user_id)
         return true
     return false
@@ -132,11 +139,18 @@ class GroupPage extends Component {
 	render() {
 		return(
 			<div id='group-page'>
+        {/* Editors (default hidden) */}
         <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="create"
           title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
           <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} />
         </EditModal>
-
+        <EditModal id={`edit-name`} wide={true} actionName="update" medium={true}
+          title={`Update Name & Description`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
+          <b>New Name</b>
+          <input type='text' name='name' value={this.state.updated_lab.name} onChange={(e) => this.updateLabState(e)}/>
+          <b>New Description</b>
+          <input type='text' name='description' value={this.state.updated_lab.description} onChange={(e) => this.updateLabState(e)}/>
+        </EditModal>
         <EditModal id='edit-admins' wide={true}
           title='Edit Admins'>
           <div className='row'>
@@ -148,7 +162,6 @@ class GroupPage extends Component {
             <BasicButton msg='delete page' superClick={r => deleteLab(this.state.lab_id)}/>
           </div>
         </EditModal>
-
         <EditModal id='edit-members' wide={true}
           title='Edit Members'>
           <div className='row'>
@@ -167,24 +180,22 @@ class GroupPage extends Component {
           </div>
         </EditModal>
 
-
+          {/* Main Page Content */}
 				<div id='group-page-column-L'>
 					<Administrators admin_access={this.state.admin_access} people={this.state.lab_admins}/>
 					<Members admin_access={this.state.admin_access} people={this.state.lab_members}/>
 				</div>
 				<div id='group-page-column-R'>
             <QuickInfo department='MISSING'/>
-            <ContactInfo email='MISSING' phone='MISSING' location='MISSING'/>
+            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
         </div>
 				<div id='group-page-main'>
-					<GroupQuickview title={this.state.lab_data.name} description='NULL'/>
-
+					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} superClick={() => this.openModal('edit-name')}/>
 					<GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
 						{this.state.lab_positions}
 					</GroupProjectContainer>
-
 					<GroupPublicationsContainer>
-						<GroupPublication title='NULL' description="MISSING"/>
+						<GroupPublication title={this.state.lab_data.publications}/>
 					</GroupPublicationsContainer>
 				</div>
 			</div>
