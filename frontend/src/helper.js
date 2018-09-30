@@ -1139,6 +1139,21 @@ export function addMembersToLab(user_ids, role_ids) {
         })
 }
 
+export function updateLabMember(user_id, role_id) {
+
+    let payload = {
+        user_ids: user_id,
+        role_ids: role_id
+    }
+    return axios.post('api/labs/' + lab_id + '/members/update', payload)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
 // RESTRICTED: authenticated faculty member + lab owner
 export function removeMembersFromLab(user_ids) {
     console.log('Removing members from lab');
