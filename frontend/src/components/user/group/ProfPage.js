@@ -77,6 +77,7 @@ class ProfPage extends Component {
 				this.setState({user_type: "faculty"});
 
 			getUserLabs(this.state.user_id).then(r => {
+				console.log(r)
 				this.setState({labs: r.data, loading_labs: false});
 			})
 
