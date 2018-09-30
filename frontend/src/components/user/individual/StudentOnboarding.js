@@ -85,7 +85,8 @@ class StudentOnboarding extends Component {
       interests: user.interests || [],
     }
     // updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
-    updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, linkedin_link, website_link, true, [], [])
+    // updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, linkedin_link, website_link, true, [], [])
+    updateStudent(s).then(r => console.log("updated student", r))
     .then(r => {
       getStudentFromUser(getCurrentUserId()).then(r => {
         if (redirect) {

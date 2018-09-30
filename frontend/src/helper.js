@@ -37,19 +37,19 @@ function error_handle(error) {
         // that falls out of the range of 2xx
         //return respond(error.response.status, error.response);
         if (error.response.data.error)
-            return error_respond(error);
+            throw error_respond(error);
         else
-            return error.response.data;
+            throw error.response.data;
     } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
         //return respond(0, error.request)
-        return error;
+        throw error;
     } else {
         // Something happened in setting up the request that triggered an Error
         //return respond(0, error.message)
-        return error;
+        throw error;
     }
 }
 
@@ -343,22 +343,33 @@ export function uploadUserFile(file) {
         })
 }
 
-export function getUserFile(type) {
+export function getUserFile(type, user_id) {
     if (type !== 'resume' && type !== 'profile_pic') {
         console.log('Error: invalid type parameter');
         return;
     }
 
-    let user_id = sessionStorage.getItem('user_id');
-
-    return axios.get('api/users/' + user_id + '/' + type)
+    if (!user_id){
+        console.log('getting default user')
+        user_id = sessionStorage.getItem('user_id');
+    }
+    else {
+        console.log(`getting user id ${user_id}`)
+    }
+    let payload = {
+        _method: 'PUT',
+        user_id: user_id
+    }
+    return axios.post('api/users/' + user_id + '/' + type, payload)
         .then(response => {
+            console.log(response)
             return respond(response.status, response.data);
         })
         .catch(error => {
             return error_handle(error);
         })
 }
+
 
 // STUDENTS //
 
@@ -903,9 +914,9 @@ export function getLabData(lab_id, skilltag_data, preferences_data, position_dat
 }
 //
 
-export function createLab(faculty_id, lab) {
+// RESTRICTED: authenticated faculty member
+export function createLab(lab) {
     console.log('Creating lab');
-    lab.faculty_id = faculty_id;
     return axios.post('api/labs', lab)
         .then(response => {
             sessionStorage.setItem('lab_id', response.data.result.id) // CHANGED BY BENJI

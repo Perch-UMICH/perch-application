@@ -81,7 +81,7 @@ class LabSearchProject extends Component {
                   <Apply updateQuestions={this.updateApplication} description={this.state.description}/>
                 </EditModal>
                 <div className='lab-srch-project-title-container'>
-                    <span className='truncate lab-srch-project-title'>{this.props.title}</span>
+                    <a className='truncate lab-srch-project-title' href={`prof-page/${this.props.id}`}>{this.props.title}</a>
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                 </div>
                 <div className='lab-srch-project-description'>{this.state.description} <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span></div>

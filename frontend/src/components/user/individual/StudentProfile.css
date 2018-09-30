@@ -86,12 +86,14 @@
 	float: left;
 	height: 100%;
 	z-index: 20;
-	border-radius: 0 40px 0px 0;
+	border-radius: 0 4px 0px 0;
 	z-index: 20;
 	border-top: 1px solid white;
 	border-right: 1px solid white;
 	border-left: 1px solid white;
 	border-bottom: 1px solid white;
+	position: relative;
+	background-color: var(--highlight);
 	/*border-bottom: 2px solid lightgrey;*/
 }
 
@@ -99,25 +101,23 @@
 	height: 160px;
 	position: absolute;
 	top: 60px;
-	border-radius: 0 40px 0px 0;
+	border-radius: 0 4px 0px 0;
 	z-index: 19;
-	border-top: 1px solid grey;
-	border-right: 1px solid grey;
-	border-left: 1px solid grey;
-	border-bottom: 1px solid grey;
-	background-color: grey;
+	border-top: 1px solid lightgrey;
+	border-right: 1px solid lightgrey;
+	border-left: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
 }
 
 #user-quickview-name {
 	position: absolute;
 	bottom: 50px;
-	left: calc(0.7 * 225px - 2px);
+	left: calc(225px - 2px);
 	padding-left: 20px;
 	padding-right: 30px;
 	color: white;
-	font-size: 34px;
+	font-size: 50px;
 	background-color: var(--primary);
-	border-radius: 0 40px 0 0 ;
 }
 
 #user-quickview-footer {
@@ -138,7 +138,8 @@
 	height: 225px;
 	object-fit: cover;
 	object-position: 70% 20%;
-	filter: grayscale(100%);
+	/*filter: grayscale(100%);*/
+	opacity: 0.5;
 }
 
 /* Classes */
@@ -235,9 +236,9 @@
 	margin-left: 20px;
 	margin-right: 20px;
 	margin-top: 4px;
-	font-size: 12px;
+	font-size: 14px;
 	height: auto;
-	max-height: 76px;
+	max-height: 82px;
 	overflow: hidden;
 	transition: .3s ease;
 }
@@ -307,11 +308,11 @@
 }
 
 .skill, .interest {
-	font-size: 10px;
+	font-size: 12px;
 	margin-top: 4px;
 	margin-bottom: 4px;
-	border: 1px solid lightgrey;
-	border-radius: 10px;
+	border-bottom: 1px solid lightgrey;
+	/*border-radius: 10px;*/
 	display: inline-block;
 	padding: 5px;
 	margin-right: 5px;
@@ -331,6 +332,7 @@
 
 .interest {
 	border-color: grey;
+	border-color: var(--primary);
 	transition: 0.2s ease;
 }
 
