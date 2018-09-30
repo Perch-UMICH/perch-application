@@ -1,3 +1,6 @@
+/* global gapi */
+/* global initClient */
+/* global updateSigninStatus */
 import React, {Component} from 'react';
 import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../../../helper.js';
 import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ getAllFaculties } from '../../../helper.js'
@@ -70,6 +73,35 @@ class SignUp extends Component {
 		}
 	}
 
+	// Google authentication functions
+	handleClientLoad() {
+	    // Loads the client library and the auth2 library together for efficiency.
+	    // Loading the auth2 library is optional here since `gapi.client.init` function will load
+	    // it if not already loaded. Loading it upfront can save one network request.
+	    gapi.load('client:auth2', initClient);
+	}
+
+	initClient() {
+	    // Initialize the client with API key and People API, and initialize OAuth with an
+	    // OAuth 2.0 client ID and scopes (space delimited string) to request access.
+	    gapi.client.init({
+	        apiKey: 'YOUR_API_KEY',
+	        discoveryDocs: ["https://people.googleapis.com/$discovery/rest?version=v1"],
+	        clientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+	        scope: 'profile'
+	    }).then(function () {
+	        // Listen for sign-in state changes.
+	        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+	        // Handle the initial sign-in state.
+	        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+	    });
+	}
+
+	onSignIn(googleUser) {
+	  var id_token = googleUser.getAuthResponse().id_token;
+	}
+
 	render() {
 		return (
 				<form className='container left-align new-signup-container' onSubmit={this.generalHandler.bind(this)}>
@@ -77,30 +109,31 @@ class SignUp extends Component {
 	  				<a href='login' ><div className='new-signup-sub-header'>or <span className='link-color'>login</span> if you have an account</div></a>
 	  				<div className='row'>
 	  					<div className="input-field col s6">
-		                	<input id="first_name" type="text" required autofocus="autofocus"/>
+		                	<input id="first_name" type="text" required autoFocus="autofocus"/>
 		                	<label htmlFor="first_name">First name</label>
 		            	</div>
 		            	<div className="input-field col s6">
-			                <input id="last_name" type="text" required autofocus="autofocus"/>
+			                <input id="last_name" type="text" required autoFocus="autofocus"/>
 			                <label htmlFor="last_name">Last name</label>
 			            </div>
 	  				</div>
 	  				<div className="input-field">
-		                <input id="email" type="email" required autofocus="autofocus"/>
+		                <input id="email" type="email" required autoFocus="autofocus"/>
 		                <label htmlFor="email">Email</label>
 		            </div>
 		            <div className="input-field">
-		                <input id="password" type="password" required autofocus="autofocus"/>
+		                <input id="password" type="password" required autoFocus="autofocus"/>
 		                <label htmlFor="password">Password</label>
 		            </div>
 		            <div className='center-align'>
-		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required autofocus="autofocus"/>
+		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required autoFocus="autofocus"/>
 		              	<label className='new-signup-radio' htmlFor="faculty">Faculty</label>
-		              	<input className="radio" name="user_type" type="radio" id="student" value="student" required autofocus="autofocus"/>
+		              	<input className="radio" name="user_type" type="radio" id="student" value="student" required autoFocus="autofocus"/>
 		              	<label className='new-signup-radio' htmlFor="student">Student</label>
 		            </div>
 		            <br />
 		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} >deawkwardize</button>
+	  				<div className="g-signin2" data-onsuccess="this.onSignIn"></div>
 	  			</form>
 		);
 	}
