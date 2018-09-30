@@ -25,7 +25,7 @@ class ProfPage extends Component {
 			positions: [],
 			contact_info: [],
 			labs: [],
-			user_id: getCurrentUserId(),
+			user_id: null,
 			no_lab: false,
 			loading_labs: true,
 			dest: '/edit-external-links',
@@ -53,22 +53,9 @@ class ProfPage extends Component {
 	}
 
 	componentWillMount() {
-		var prof_id = window.location.pathname.split('/')[2];
-		getFaculty(prof_id).then((r) => {
-			console.log(r)
-			r = r.data
-			this.setState({
-				name: r.first_name + " " + r.last_name,
-				contact_email: r.contact_email,
-				contact_phone: r.contact_phone,
-
-			})
-		});
-		getUser(getCurrentUserId()).then(r => console.log(r))
 	}
 
 	componentDidMount() {
-		console.log(getCurrentUserId());
 		if (isLoggedIn()) {
 			// check if user or faculty for viewing positions
 			if (isStudent())
@@ -76,7 +63,20 @@ class ProfPage extends Component {
 			else if (isFaculty())
 				this.setState({user_type: "faculty"});
 
-			getUserLabs(this.state.user_id).then(r => {
+			var prof_id = window.location.pathname.split('/')[2];
+			getFaculty(prof_id).then((r) => {
+				console.log(r)
+				r = r.data
+				this.setState({
+					name: r.first_name + " " + r.last_name,
+					contact_email: r.contact_email,
+					contact_phone: r.contact_phone,
+					user_id: r.user_id,
+
+				})
+			})
+			.then(r => getUserLabs(this.state.user_id))
+			.then(r => {
 				console.log(r)
 				this.setState({labs: r.data, loading_labs: false});
 			})
@@ -215,15 +215,6 @@ class ProfPage extends Component {
 		 					</div>
 		 					<Editor superClick={() => this.openModal('link-edit')}/>
 		 				</div>
-						<div id='user-labs'>
-		 					<h1>Labs</h1>
-		 					<div>
-		 						{this.state.labs.map(labAssoc => {
-									return <a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
-								})}
-		 					</div>
-		 					<Editor superClick={() => this.openModal('create-lab')} add={true}/>
-		 				</div>
 		 			</div>
 		 			<div id='user-column-R'>
 	 				<TwitterTimelineEmbed
@@ -235,23 +226,35 @@ class ProfPage extends Component {
 		 			<div id='user-profile-column-C'>
 		 				<div id='user-quickview'>
 		 					<div id='user-quickview-img-container'>
-	 							<img id='user-quickview-img' src='/img/headshots/bcoppola.jpg'/>
+	 							<img id='user-quickview-img' src='http://i.imgur.com/Qz9T4SC.jpg'/>
 	 						</div>
-		 					<img id='user-quickview-coverimage' src='https://www.desktopbackground.org/download/o/2014/06/30/786009_2048x2048-italian-sky-blue-solid-color-backgrounds_2048x2048_h.jpg' />
+		 					<img id='user-quickview-coverimage' src='https://images.pexels.com/photos/242236/pexels-photo-242236.jpeg?auto=compress&cs=tinysrgb&h=350' />
 		 					<div id='user-quickview-footer'>University of Michigan</div>
 		 					<div id='user-quickview-name'>{this.state.name}</div>
 		 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 		 				</div>
+		 				<div id='user-labs'>
+		 					<h1>Labs</h1>
+		 					<div>
+		 						{this.state.labs.map(labAssoc => {
+		 							console.log(labAssoc)
+									return (<div>
+										<a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
+										<span>{labAssoc.lab.description}</span>
+										</div>)
+								})}
+		 					</div>
+		 					<Editor superClick={() => this.openModal('create-lab-modal')} add={true}/>
+		 				</div>
 		 				<div>
 		 					<h1>Work Experience</h1>
 		 					<UserWorkExperience title="Manhattan Project" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
-		 					<UserWorkExperience title="CVS" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='June 2015' endTime='September 2016'/>
 		 					<Editor superClick={() => this.openModal('work-edit')}/>
 		 				</div>
-		 				<div id='user-education'>
+		 				{/*<div id='user-education'>
 		 					<h1>Education</h1>
 		 					<Editor superClick={() => this.openModal('education-edit')}/>
-		 				</div>
+		 				</div>*/}
 		 			</div>
 	 			</div>
 			)

@@ -19,9 +19,9 @@
     --active: #29B6F6;
     --highlight: lightblue;
     /*Purple*/
-	/*--primary: #6c5b7b;
+	--primary: #6c5b7b;
 	--active: #c06c84;
-	--highlight: #ffdfd3;*/
+	--highlight: #ffdfd3;
 	/*Teal*/
 	/*--primary: #2b7a78;
 	--active: #3aafa9;
@@ -256,4 +256,12 @@ input:focus + label {
 
 .grabbable:active {
 	cursor: grabbing;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+{
+  -webkit-box-shadow: 0 0 0px 1000px none inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

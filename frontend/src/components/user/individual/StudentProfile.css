@@ -11,9 +11,11 @@
 #user-column-R {
 	width: 250px;
 	/* this is for formatting it to the middle with left side touching and 20px margin*/
-	right: calc(50vw - 660px/2 - 20px);
-	transform: translateX(100%);
-	position: fixed;
+	/*right: calc(50vw - 660px/2 - 20px);*/
+	/*transform: translateX(100%);*/
+	/*position: fixed;*/
+	position: absolute;
+	right: 0;
 }
 
 .ad {
@@ -26,7 +28,8 @@
 /* Left Column*/
 #user-column-L {
 	width: 250px;
-	position: fixed;
+	/*position: fixed;*/
+	position: absolute;
 }
 
 #user-column-L > div {
@@ -112,7 +115,7 @@
 #user-quickview-name {
 	position: absolute;
 	bottom: 50px;
-	left: calc(225px - 2px);
+	left: calc(.55*225px - 2px);
 	padding-left: 20px;
 	padding-right: 30px;
 	color: white;
@@ -153,6 +156,7 @@
 	position: relative;
 	overflow: hidden;
 	padding-bottom: 25px;
+	color: grey;
 }
 
 .user-work-title {
@@ -161,6 +165,7 @@
 	margin-left: 20px;
 	transition: 0.2s ease;
 	display: block;
+	color: black;
 }
 
 .user-work-time {
@@ -173,10 +178,10 @@
 .user-work-description {
 	margin-left: 20px;
 	margin-top: 4px;
-	font-size: 12px;
+	font-size: 14px;
 	width: 550px;
 	height: auto;
-	max-height: 56px;
+	max-height: 40px;
 	overflow: hidden;
 	transition: .3s ease;
 }
@@ -269,21 +274,34 @@
 	padding: 0 !important;
 }
 
-#user-labs div {
+#user-labs div > div {
 	padding: 0 !important;
+	padding-right: 10px !important;
+	border-bottom: 1px solid lightgrey;
+}
+
+#user-labs div div {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 60px;
+}
+
+#user-labs span {
+	color: grey;
 }
 
 #user-labs a {
 	border-bottom: 1px solid lightgrey;
-	display: block;
+	display: inline-block;
 	padding: 20px 15px;
-	text-align: center;
+	text-align: left;
+	font-size: 110%;
 }
 
 #user-labs a:last-of-type {
 	border-bottom: none;
 }
-
 
 #user-classes {
 	position: relative;

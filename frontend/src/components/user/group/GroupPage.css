@@ -94,20 +94,22 @@
 .group-person-overlay {
 	position: absolute;
 	left: 0;
-	top: 100%;
+	top: 0;
+	opacity: 0;
 	background-color: var(--primary);
 	width: 100%;
 	height: 100%;
 	z-index: 20;
 	color: var(--white);
 	overflow: hidden;
-	opacity: 0.8;
-	transition: 0.3s ease;
+	transition: 0.2s ease;
+	cursor: pointer;
 }
 
 .group-person:hover .group-person-overlay {
-	top: 0;
-	transition: 0.3s ease;
+	/*top: 0;*/
+	opacity: 0.8;
+	transition: 0.2s ease;
 }
 
 .group-person-overlay span {

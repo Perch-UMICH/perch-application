@@ -79,10 +79,10 @@
 .group-project-description {
 	margin-left: 20px;
 	margin-top: 4px;
-	font-size: 12px;
+	font-size: 14px;
 	width: 550px;
 	height: auto;
-	max-height: 56px;
+	max-height: 60px;
 	overflow: hidden;
 	transition: .3s ease;
 }

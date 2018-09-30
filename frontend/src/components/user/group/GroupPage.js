@@ -8,7 +8,7 @@ import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {EditAdmins} from './GroupEditors'
 import BasicButton from '../../utilities/buttons/BasicButton'
-import {permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
+import {deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
         getLabPreferences, isStudent, isLab, getLabMembers, createApplication, addMembersToLab} from '../../../helper.js'
 import Editor from '../../utilities/Editor'
 // import $ from 'jquery'
@@ -64,24 +64,25 @@ class GroupPage extends Component {
           let members_raw = [];
           console.log(resp);
           resp.data.faculty.map((person) => {
+            console.log('hello', person)
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
           resp.data.students.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson src={person.data.profilepic_path || '/img/akira.jpg'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
@@ -141,6 +142,10 @@ class GroupPage extends Component {
           <div className='row'>
             <h5 className='col s12'>Modify Admins</h5>
             {this.state.admins_raw.map(e => <AdminView lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
+          </div>
+          <div className='row'>
+            <h5 className='col s12'>Delete Page</h5>
+            <BasicButton msg='delete page' superClick={r => deleteLab(this.state.lab_id)}/>
           </div>
         </EditModal>
 
@@ -219,9 +224,11 @@ const GroupPerson = (props) => {
 	return(
 		<div className='group-person'>
 			<img src={props.src} />
-			<div className='group-person-overlay'>
-				<span>{props.children}</span>
-			</div>
+			<a href={props.link}>
+        <div className='group-person-overlay'>
+  				<span>{props.children}</span>
+  			</div>
+      </a>
 		</div>
 
 	);
