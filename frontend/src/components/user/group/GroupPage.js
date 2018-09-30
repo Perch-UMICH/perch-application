@@ -164,7 +164,7 @@ class GroupPage extends Component {
 
 
 				<div id='group-page-column-L'>
-					<Administrators admin_acces={this.state.admin_access} people={this.state.lab_admins}/>
+					<Administrators admin_access={this.state.admin_access} people={this.state.lab_admins}/>
 					<Members admin_access={this.state.admin_access} people={this.state.lab_members}/>
 				</div>
 				<div id='group-page-column-R'>
@@ -195,7 +195,7 @@ const Administrators = (props) => {
 			<div className='group-photos'>
 				{props.people}
 			</div>
-      {this.admin_access && <Editor superClick={() => openModal('edit-admins')}/>}
+      {props.admin_access && <Editor superClick={() => openModal('edit-admins')}/>}
 		</div>
 	)
 }
