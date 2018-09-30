@@ -60,7 +60,7 @@ class GroupPage extends Component {
       getLabMembers(this.state.lab_id).then((resp) => {
           let admins = [];
           let members = [];
-          let admins_raw = [];
+          var admins_raw = [];
           let members_raw = [];
           console.log(resp);
           resp.data.faculty.map((person) => {
@@ -85,9 +85,9 @@ class GroupPage extends Component {
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
-          this.setState({lab_admins: admins, lab_members: members, admins_raw: admins_raw, members_raw: members_raw});
-      });
-
+          let priveleges = this.hasPermissions(admins_raw)
+          this.setState({lab_admins: admins, lab_members: members, admins_raw: admins_raw, members_raw: members_raw, admin_access: priveleges});
+      })
   }
 
   // Update the new position from modal, to be submitted by createPosition
@@ -117,7 +117,15 @@ class GroupPage extends Component {
 
   handleEditMembers() {
     let id = document.getElementById('new-member').value
-    addMembersToLab(145, [id], [3]).then(r=>console.log(r))
+    addMembersToLab(this.state.lab_id, [id], [3]).then(r=>console.log(r))
+  }
+
+  hasPermissions(admins) {
+    let user_id = getCurrentUserId()
+    for (let i = 0; i < admins.length; i++) 
+      if (admins[i][1] == user_id)
+        return true
+    return false
   }
 
 	render() {
@@ -132,7 +140,7 @@ class GroupPage extends Component {
           title='Edit Admins'>
           <div className='row'>
             <h5 className='col s12'>Modify Admins</h5>
-            {this.state.admins_raw.map(e => <AdminView name={e[0]} id={e[1]}/>)}
+            {this.state.admins_raw.map(e => <AdminView lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
           </div>
         </EditModal>
 
@@ -150,14 +158,14 @@ class GroupPage extends Component {
           </div>
           <div className='row'>
             <h5 className='col s12'>Modify Users</h5>
-            {this.state.members_raw.map(e => <MemberView name={e[0]} id={e[1]}/>)}
+            {this.state.members_raw.map(e => <MemberView lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
           </div>
         </EditModal>
 
 
 				<div id='group-page-column-L'>
-					<Administrators people={this.state.lab_admins}/>
-					<Members people={this.state.lab_members}/>
+					<Administrators admin_acces={this.state.admin_access} people={this.state.lab_admins}/>
+					<Members admin_access={this.state.admin_access} people={this.state.lab_members}/>
 				</div>
 				<div id='group-page-column-R'>
             <QuickInfo department='MISSING'/>
@@ -187,7 +195,7 @@ const Administrators = (props) => {
 			<div className='group-photos'>
 				{props.people}
 			</div>
-      <Editor superClick={() => openModal('edit-admins')}/>
+      {this.admin_access && <Editor superClick={() => openModal('edit-admins')}/>}
 		</div>
 	)
 }
@@ -199,7 +207,7 @@ const Members = (props) => {
 			<div className='group-photos'>
 				{props.people}
 			</div>
-      <Editor superClick={() => openModal('edit-members')}/>
+      {props.admin_access && <Editor superClick={() => openModal('edit-members')}/>}
 		</div>
 	)
 }
@@ -253,12 +261,12 @@ class AdminView extends Component {
 
   removeMember() {
     alert(this.props.id)
-    removeMembersFromLab(145, [this.props.id]).then(r => this.setState())
+    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r => this.setState())
   }
 
   removeAdmin() {
-    removeMembersFromLab(145, [this.props.id])
-      .then(r => addMembersToLab(145, [this.props.id], [3]))
+    removeMembersFromLab(this.props.lab_id, [this.props.id])
+      .then(r => addMembersToLab(this.props.lab_id, [this.props.id], [3]))
   }
 
   render(props) {
@@ -275,13 +283,12 @@ class AdminView extends Component {
 class MemberView extends Component {
 
   removeMember() {
-    alert(this.props.id)
-    removeMembersFromLab(145, [this.props.id]).then(r => this.setState())
+    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r => this.setState())
   }
 
   makeAdmin() {
-    removeMembersFromLab(145, [this.props.id])
-      .then(r => addMembersToLab(145, [this.props.id], [2]))
+    removeMembersFromLab(this.props.lab_id, [this.props.id])
+      .then(r => addMembersToLab(this.props.lab_id, [this.props.id], [2]))
   }
 
   render(props) {
