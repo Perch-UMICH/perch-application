@@ -30,7 +30,7 @@ body {
 }
 
 .perch-story-block img {
-	height: 100px;	
+	height: 100px;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);

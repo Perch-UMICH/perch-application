@@ -3,6 +3,7 @@ import ErrorPage from '../../utilities/ErrorPage'
 import EditModal from '../../utilities/modals/EditModal'
 import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
+import ExpanderIcons from '../../utilities/ExpanderIcons'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {permissionCheck, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
@@ -106,7 +107,7 @@ class GroupPage extends Component {
 				</div>
 				<div id='group-page-column-R'>
                     <QuickInfo department='MISSING'/>
-                    <ContactInfo email='MISSING' phone='MISSING' location='MISSING'/>
+                    <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
                 </div>
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description='NULL'/>
@@ -184,8 +185,8 @@ const ContactInfo = (props) => {
         <div id='group-contact-info'>
             <h1>Contact Info</h1>
             <div className='group-info-box'>
-                <div className='group-info-box-content'><b>Email</b> <a href={`mailto:${props.email}`}> NULL</a></div>
-                <div className='group-info-box-content'><b>Phone</b> NULL </div>
+                <div className='group-info-box-content'><b>Email</b> <a href={`mailto:${props.email}`}>{props.email}</a></div>
+                <div className='group-info-box-content'><b>Phone</b> {props.phone} </div>
                 <div className='group-info-box-content'><b>Office</b> {props.location}</div>
             </div>
         </div>

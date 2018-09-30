@@ -4,6 +4,7 @@ import BasicButton from '../../utilities/buttons/BasicButton';
 import ResetEmailModal from '../../utilities/modals/ResetEmailModal';
 import ResetPasswordModal from '../../utilities/modals/ResetPasswordModal';
 import DeleteUserModal from '../../utilities/modals/DeleteUserModal';
+import DotLoader from '../../utilities/animations/DotLoader';
 import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateStudent, getStudentFromUser, updateUser, isStudent, isLab} from '../../../helper.js'
 import './Settings.css';
 import $ from 'jquery';
@@ -17,6 +18,7 @@ class Settings extends Component {
 			name: "",
 			email: "",
 			user_type: "",
+			loading: true,
 		};
 		this.openEmailModal = this.openEmailModal.bind(this);
 		this.openPasswordModal = this.openPasswordModal.bind(this);
@@ -33,6 +35,7 @@ class Settings extends Component {
 						name: resp.data.name,
 						email: resp.data.email,
 						user_type: resp.data.is_student ? "Student" : "Faculty",
+						loading: false,
 					}
 				);
 				if (resp.data.is_student) {
@@ -43,8 +46,6 @@ class Settings extends Component {
 			});
 		}
 	}
-
-
 
 	resetEmail(email) {
 		updateUser(getCurrentUserId(), null, email, $('#new_password').val(), isStudent(), isLab()).then(resp => {
@@ -107,9 +108,15 @@ class Settings extends Component {
 						</div>
 						<div className='container user-information'>
 							<b>Current User Information</b> <br/>
-							Name: {this.state.name} <br/>
-							Email: {this.state.email} <br/>
-							User Type: {this.state.user_type} <br/>
+							{this.state.loading ?
+								<DotLoader />
+								:
+								<div>
+									Name: {this.state.name} <br/>
+									Email: {this.state.email} <br/>
+									User Type: {this.state.user_type} <br/>
+								</div>
+							}
 						</div>
 					</div>
 				</div>
