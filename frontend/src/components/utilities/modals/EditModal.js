@@ -23,8 +23,8 @@ import './EditModal.css'
 class EditModal extends Component {
 
 	handleClose(event) {
-    document.getElementById(this.props.id).classList.remove('activated');
-    document.getElementById(`${this.props.id}-backdrop`).classList.remove('activated');
+	    document.getElementById(this.props.id).classList.remove('activated');
+	    document.getElementById(`${this.props.id}-backdrop`).classList.remove('activated');
 	}
 
 	render() {
@@ -44,8 +44,8 @@ class EditModal extends Component {
 					<h1>{this.props.title}</h1>
 			 		<div className={contentCSS}>
 						{this.props.children}
-          </div>
-          <div className="modal-footer">
+          			</div>
+		          	<div className="modal-footer">
 				     	<BasicButton superClick={this.handleClose.bind(this)} msg='close' />
 				     	<BasicButton
 								superClick={() => {
@@ -54,7 +54,7 @@ class EditModal extends Component {
 									}
 									this.handleClose();}}
 								msg={this.props.actionName ? this.props.actionName : "save"} />
-				  </div>
+				  	</div>
 			 	</div>
 			</div>
 		);

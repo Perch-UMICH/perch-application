@@ -265,13 +265,10 @@
 }
 
 /* Labs */
-#user-labs {
-	padding: 0 !important;
-}
-
 #user-labs div {
 	border-bottom: 1px solid lightgrey;
 	display: block;
+	padding: 15px 0px;
 	text-align: center;
 }
 
@@ -282,10 +279,6 @@
 .user-labs-delete {
 	position: absolute;
 	right: 5px;
-}
-
-.user-labs-name {
-	 padding: 10px 0px;
 }
 
 

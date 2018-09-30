@@ -53,6 +53,22 @@ class UserTest extends React.Component {
     }
 
     componentDidMount() {
+        let lab_id = 0
+
+        // H.createLab({}).then(r => lab_id = )
+        H.createLab({name: 'shlabaadaba'}).then(r => lab_id = r.data.id)
+        .then(r => H.getLab(lab_id))
+        .then(r => console.log(r))
+        .then(r => H.getLabMembers(lab_id))
+        .then(r=>console.log(r))
+        .then(r=>H.getLab(lab_id))
+        // .then(r=>console.log(r))
+        // .then(r=>H.updateLab(140, {name: 'babab'}))
+        // .then(r=>H.getLab(140))
+        // .then(r=>console.log(r))
+        // .then(r=>H.addMembersToLab(140, [145],[3]))
+        // .then(r=>H.getLab(140))
+        // .then(r=>console.log(r))
         // H.uploadUserFile(f).then(r=> console.log(r))
         // H.getUserFile('profile_pic').then(r => console.log(r))
 
