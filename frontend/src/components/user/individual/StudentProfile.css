@@ -270,18 +270,22 @@
 }
 
 #user-labs div {
-	padding: 0 !important;
-}
-
-#user-labs a {
 	border-bottom: 1px solid lightgrey;
 	display: block;
-	padding: 20px 15px;
 	text-align: center;
 }
 
-#user-labs a:last-of-type {
+#user-labs div:last-of-type {
 	border-bottom: none;
+}
+
+.user-labs-delete {
+	position: absolute;
+	right: 5px;
+}
+
+.user-labs-name {
+	 padding: 10px 0px;
 }
 
 
