@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import EditModal from './modals/EditModal'
-import CreateLab from '../user/CreateLab'
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId, createLab/*getFacultyLabs*/} from '../../helper.js'
+import CreateLab, {modalCreateLab, modalUpdateLab} from '../user/CreateLab'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId /*getFacultyLabs*/} from '../../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -9,9 +9,9 @@ class NavBar extends Component {
 		super(props);
 		this.state = {
 			is_student: false,
+			lab: {},
+			lab_id: 0,
 		};
-		this.labRef = React.createRef();
-		console.log("ANY LAB REF??", this.labRef)
 	}
 
 	componentDidMount() {
@@ -36,8 +36,13 @@ class NavBar extends Component {
 	}
 
 	getModalAction() {
-		console.log("THIS.labRef", this.labRef);
-		this.labRef.current.createLab();
+		modalCreateLab(this.state.lab);
+	}
+
+	updateLabState(name, value) {
+		let lab = this.state.lab;
+		lab[name] = value;
+		this.setState(lab);
 	}
 
 	render() {
@@ -66,7 +71,7 @@ class NavBar extends Component {
 			<div className="navbar-fixed">
 					<EditModal id={`create-lab`} wide={true} actionName="create"
 						title={`Create New Lab`} modalAction={this.getModalAction.bind(this)}>
-						<CreateLab ref={this.labRef} />
+						<CreateLab updateLabState={this.updateLabState.bind(this)}/>
 					</EditModal>
 			    <nav>
 			      <div className="nav-wrapper">

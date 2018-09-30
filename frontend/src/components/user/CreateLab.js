@@ -3,20 +3,44 @@ import AppQuestionTab from './AppQuestionTab';
 import { getLabPosition, getLab, getPositionApplication, getCurrentUserId, createApplication, createLab, updateLab, addMembersToLab, getCurrentFacultyId, getAllLabData, getAllLabs, isFaculty } from '../../helper.js';
 import './CreateLab.css';
 
+export var modalCreateLab = (lab) => {
+	if (isFaculty()) {
+		console.log("Attempting to create lab ...");
+		console.log(lab);
+		createLab(getCurrentFacultyId(), lab).then(r => {
+			console.log(r);
+			alert("lab created!!!");
+		})
+	}
+}
+
+export var modalUpdateLab = (lab) => {
+	if (isFaculty()) {
+		console.log("Attempting to update lab ...");
+		console.log(lab);
+		addMembersToLab([getCurrentUserId()], [1]).then(r => {
+			updateLab(lab.id, lab).then(r => {
+				console.log(r);
+				alert("lab updated!!!");
+			})
+		})
+	}
+}
+
 class CreateLab extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id: "",
 			lab: {
-				name: "neat_lab2",
-				description: "neat_lab2",
-				publications: "neat_lab2",
-				url: "neat_lab2",
-				location: "neat_lab2",
-				contact_phone: "neat_lab2",
-				contact_email: "neat_lab2",
-				labpic_path: "neat_lab2",
+				name: "",
+				description: "",
+				publications: "",
+				url: "",
+				location: "",
+				contact_phone: "",
+				contact_email: "",
+				labpic_path: "",
+				id: "",
 			}
 		};
 	}
@@ -27,32 +51,13 @@ class CreateLab extends Component {
 		}
 	}
 
-	createNewLab() {
-		if (isFaculty()) {
-			console.log("Attempting to create lab ...");
-			createLab(getCurrentFacultyId(), this.state.lab).then(r => {
-				console.log(r);
-				alert("lab created!!!");
-			})
-		}
-	}
-
-	updateLab() {
-		if (isFaculty()) {
-			console.log("Attempting to create lab ...");
-			addMembersToLab([getCurrentUserId()], [1]).then(r => {
-				updateLab(this.state.id, this.state.lab).then(r => {
-					console.log(r);
-					alert("lab updated!!!");
-				})
-			})
-		}
-	}
-
 	alterObj(e) {
 		let lab = this.state.lab;
 		lab[e.target.name] = e.target.value;
 		this.setState(lab);
+		if (this.props.updateLabState) {
+			this.props.updateLabState(e.target.name, e.target.value);
+		}
 	}
 
 	componentDidMount() {
@@ -80,10 +85,10 @@ class CreateLab extends Component {
 				<input type='text' name='contact_email' value={this.state.lab.contact_email} onChange={(e) => this.alterObj(e)}/>
 				<b>LabPic Path</b>
 				<input type='text' name='labpic_path' value={this.state.lab.labpic_path} onChange={(e) => this.alterObj(e)}/>
-				<br/><button onClick={this.createNewLab.bind(this)}>CREATE A NEW LAB!</button><br/><br/>
-				<br/><button onClick={this.updateLab.bind(this)}>Update Lab! (Be sure to include the correct id below)</button><br/>
+				{/*<br/><button onClick={this.modalCreateLab.bind(this)}>CREATE A NEW LAB!</button><br/><br/>*/}
+				{/*<br/><button onClick={this.modalUpdateLab.bind(this)}>Update Lab! (Be sure to include the correct id below)</button><br/>*/}
 				<b>Lab ID: (for updating labs)</b>
-				<input type='text' name='id' value={this.state.id} onChange={(e) => this.setState({id: e.target.value})}/>
+				<input type='text' name='id' value={this.state.lab.id} onChange={(e) => this.alterObj(e)}/>
 			</div>
 		);
 	}
