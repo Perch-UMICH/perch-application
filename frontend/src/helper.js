@@ -129,6 +129,27 @@ export function loginUser(email, password) {
         });
 }
 
+export function loginUserIdp(email, idp, accessToken) {
+    sessionStorage.clear();
+
+    // Login
+    console.log('logging in ' + email + ' via ' + idp);
+
+    return axios.post('oauth/token', {
+        "client_id": 1,
+        "grant_type": "idp",
+        "idp": idp,
+        "idpToken": accessToken,
+        "register": false,
+    })
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        return error_handle(error);
+    })
+}
+
 export function logoutCurrentUser() {
     // Clear all user cookies
     //   cookie.remove('perch_api_key');

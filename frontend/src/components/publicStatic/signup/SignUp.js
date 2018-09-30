@@ -5,7 +5,7 @@
 import React, {Component} from 'react';
 import GoogleLogin from './GoogleLogin.js';
 import GoogleLogout from './GoogleLogout.js';
-import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../../../helper.js';
+import {registerUser, createStudent, getCurrentUserId, loginUser, loginUserIdp, getStudentFromUser} from '../../../helper.js';
 import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ getAllFaculties } from '../../../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
@@ -70,22 +70,7 @@ class SignUp extends Component {
 
 	handleGoogleSuccessResponse = (response) => {
 		console.log(response.accessToken);
-		let data = {
-			"idp": "google",
-			"client_id": "0",
-			"idpToken": response.accessToken,
-			"register": "false",
-		};
-		fetch( {
-			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json; charset=utf-8;",
-			},
-			body: JSON.stringify(data),
-		}).then(response => response.json());
+		loginUserIdp("blah", "google", response.accessToken);
 	}
 
 	handleGoogleFailureResponse = (response) => {
