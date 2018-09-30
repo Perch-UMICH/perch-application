@@ -264,6 +264,27 @@
 	border-bottom: none;
 }
 
+/* Labs */
+#user-labs {
+	padding: 0 !important;
+}
+
+#user-labs div {
+	padding: 0 !important;
+}
+
+#user-labs a {
+	border-bottom: 1px solid lightgrey;
+	display: block;
+	padding: 20px 15px;
+	text-align: center;
+}
+
+#user-labs a:last-of-type {
+	border-bottom: none;
+}
+
+
 #user-classes {
 	position: relative;
 	display: block;
