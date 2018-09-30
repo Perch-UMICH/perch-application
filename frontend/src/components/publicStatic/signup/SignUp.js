@@ -1,7 +1,10 @@
+/* These are Google Login objects that need to be declared */
 /* global gapi */
 /* global initClient */
 /* global updateSigninStatus */
 import React, {Component} from 'react';
+import GoogleLogin from './GoogleLogin.js';
+import GoogleLogout from './GoogleLogout.js';
 import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../../../helper.js';
 import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ getAllFaculties } from '../../../helper.js'
 import './SignUp.css';
@@ -65,33 +68,35 @@ class SignUp extends Component {
 		}
 	}
 
-	// Google authentication functions
-	handleClientLoad() {
-	    // Loads the client library and the auth2 library together for efficiency.
-	    // Loading the auth2 library is optional here since `gapi.client.init` function will load
-	    // it if not already loaded. Loading it upfront can save one network request.
-	    gapi.load('client:auth2', initClient);
+	handleGoogleSuccessResponse = (response) => {
+		console.log(response.accessToken);
+		let data = {
+			"idp": "google",
+			"client_id": "0",
+			"idpToken": response.accessToken,
+			"register": "false",
+		};
+		fetch( {
+			method: "POST",
+			mode: "cors",
+			cache: "no-cache",
+			credentials: "same-origin",
+			headers: {
+				"Content-Type": "application/json; charset=utf-8;",
+			},
+			body: JSON.stringify(data),
+		}).then(response => response.json());
 	}
 
-	initClient() {
-	    // Initialize the client with API key and People API, and initialize OAuth with an
-	    // OAuth 2.0 client ID and scopes (space delimited string) to request access.
-	    gapi.client.init({
-	        apiKey: 'YOUR_API_KEY',
-	        discoveryDocs: ["https://people.googleapis.com/$discovery/rest?version=v1"],
-	        clientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
-	        scope: 'profile'
-	    }).then(function () {
-	        // Listen for sign-in state changes.
-	        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-	        // Handle the initial sign-in state.
-	        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-	    });
+	handleGoogleFailureResponse = (response) => {
+		console.log("Google login failed");
 	}
 
-	onSignIn(googleUser) {
-	  var id_token = googleUser.getAuthResponse().id_token;
+	signOut = () => {
+		var auth2 = gapi.auth2.getAuthInstance();
+    	auth2.signOut().then(function () {
+      		console.log('User signed out.');
+    	});
 	}
 
 	render() {
@@ -125,7 +130,13 @@ class SignUp extends Component {
 		            </div>
 		            <br />
 		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} >deawkwardize</button>
-	  				<div className="g-signin2" data-onsuccess="this.onSignIn"></div>
+	  				<GoogleLogin 
+	  					clientId="426880385373-gttrdhuk9b4g3cuhh95g0nhhnkbt38ek.apps.googleusercontent.com"
+	  					buttonText="Google Login"
+	  					onSuccess={this.handleGoogleSuccessResponse}
+	  					onFailure={this.handleGoogleFailureResponse}
+	  				/>
+	  				<a href='#' onClick={this.signOut}>Sign Out</a>
 	  			</form>
 		);
 	}
