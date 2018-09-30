@@ -28,6 +28,7 @@ import StudentOnboarding from './components/user/individual/StudentOnboarding';
 import FacultyOnboarding from './components/user/individual/FacultyOnboarding';
 import Help from './components/publicStatic/help/Help';
 import Join from './components/publicStatic/join/Join';
+import CreateLab from './components/user/CreateLab';
 import Challenge from './components/publicStatic/join/Challenge';
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
@@ -75,6 +76,7 @@ class Router extends Component {
 							<Route path='/join' component= { Join } />
 							<Route path='/test' component={ UserTest } />
 							<Route path='/challenge' component={ Challenge } />
+							<Route path='/create-lab' component={ CreateLab } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>

@@ -86,19 +86,26 @@ class StudentProfile extends Component {
 		if (this.state.user.classes) 
 			this.state.user.classes.map(c => class_arr.push(c.name))
 		// update profile picture
-		if (this.state.user.img) {
+		if (this.state.updated_user.img) {
+			console.log(this.state.updated_user.img)
 			let formData = new FormData();
-			formData.append('file', this.state.user.img);
-			uploadUserFile(formData, 'profile_pic');
+			formData.append('file', this.state.updated_user.img);
+			let to_return = {
+	            formData: formData,
+	            type: 'profile_pic'
+	        }
+			uploadUserFile(to_return, 'profile_pic')
+				.then(r => console.log(r))
+				.catch(e => console.log(e))
 		}
 		// update name, school, general handler
-		updateStudent(name, null, null, null, null, null, null, null, [], [])
+		updateStudent({first_name: name})
 			.then(r => addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, [this.state.user.major]))
 			.then((resp) => this.generalHandler());
 	}
 
 	sendLinks() {
-		updateStudent(null, null, null, null, null, primeExternalLink(this.state.updated_user.linkedin_link), primeExternalLink(this.state.updated_user.website_link), null, [], [])
+		updateStudent({linkedin_link: primeExternalLink(this.state.updated_user.linkedin_link), website_link: primeExternalLink(this.state.updated_user.website_link)})
 			.then(r => this.generalHandler());
 	}
 
@@ -112,12 +119,12 @@ class StudentProfile extends Component {
 	}
 
 	sendContactInfo() {
-		updateStudent(null, null, this.state.updated_user.contact_email, this.state.updated_user.contact_phone, null, null, null, null, [], [])
+		updateStudent({contact_email: this.state.updated_user.contact_email, contact_phone: this.state.updated_user.contact_phone})
 			.then(r => this.generalHandler());
 	}
 
 	sendBio() {
-		updateStudent(null, null, null, null, this.state.updated_user.bio, null, null, null,  [], [])
+		updateStudent({bio: this.state.updated_user.bio})
 			.then(r => this.generalHandler());
 	}
 
@@ -184,7 +191,10 @@ class StudentProfile extends Component {
 	// Handles data for page
 	generalHandler() {
 			let id = this.retrieveSlug();
-			getStudentFromUser(id).then((resp) => {
+			var user = {}
+			getStudentFromUser(id)
+			.then((resp) => {
+				console.log(resp)
 				var class_arr = [],
 					major = "",
 					gpa = "",
@@ -205,8 +215,9 @@ class StudentProfile extends Component {
 						university = eduExp.university.name;
 				}
 
-				var user = {
+				user = {
 					name: resp.data.first_name,
+					user_id: resp.data.user_id,
 					gpa,
 					major,
 					year,
@@ -227,14 +238,25 @@ class StudentProfile extends Component {
 					student: true,
 					s_id: resp.data.id,
 				}
+				// var updated_user = deepCopy(user);
+		  //       this.setState({
+				// 	user, updated_user
+				// });
+			})
+			.then(r => getUserFile('profile_pic', user.user_id))
+			.then(r => {
+				user.img = r.data.file.url,
+				console.log(user.img)
+			})
+			.catch(e => console.log(e))
+			.then(r => {
 				var updated_user = deepCopy(user);
-		        this.setState({
-					user, updated_user
-				});
+				this.setState({user, updated_user});
 			})
-			getUserFile('profile_pic').then(resp => {
-				console.log("RESP!!!", resp);
-			})
+			// getUserFile('profile_pic').then(resp => {
+			// 	console.log('trying to get profile pic')
+			// 	// console.log("RESP!!!", resp);
+			// })
 	}
 
 	// Retrives slug from url
@@ -250,6 +272,11 @@ class StudentProfile extends Component {
 
 	// Beginning point for data handling
 	componentDidMount() {
+		// getUserFile('profile_pic')
+		// .then(r=>{
+		// 	console.log(r)
+		// })
+		// .catch(e => console.log(e))
 		this.generalHandler();
 	}
 
@@ -346,13 +373,12 @@ class StudentProfile extends Component {
 	 						<img id='user-quickview-img' src={this.state.user.img ? this.state.user.img : '/img/rodriguez.jpg'}/>
 	 					</div>
 	 					<div style={{position: 'relative'}}>
-		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
+		 					<img id='user-quickview-coverimage' src='https://www.idcwonline.com.au/WebRoot/ecshared01/Shops/shsh11971/543D/EABA/662D/F139/1B09/AC10/0040/8D0F/cards_single_lightblue.png' />
 		 					<div id='user-quickview-footer'>
 								{this.state.user.university}
 							</div>
 		 					<div id='user-quickview-name'>{this.state.user.name}</div>
 	 					</div>
-	 					{console.log(this.state.user)}
 	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>
 	 					<div style={{backgroundColor: 'white', position: 'absolute', top: '0', right: '0', width: '45px', height: '40px', borderRadius: '10px'}}><Editor superClick={() => this.openModal('quickview-edit')}/></div>
 	 				</div>

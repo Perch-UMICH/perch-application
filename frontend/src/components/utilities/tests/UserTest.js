@@ -29,10 +29,32 @@ class UserTest extends React.Component {
 
             ++completed;
             this.setState(toReturn);
-        });
+        }).catch(e => {
+            return e
+        })
+    }
+
+    handleFile(e) {
+        e.preventDefault()
+        let input = document.getElementById('file-input').files[0]
+        let f = new FormData()
+        f.append('file', input)
+        let to_return = {
+            formData: f,
+            type: 'profile_pic'
+        }
+        console.log(to_return)
+        H.uploadUserFile(to_return).then(r=> console.log(r))
+    }
+
+    getFile() {
+        H.getUserFile('profile_pic').then(r=>console.log(r.data.file.url))
+        
     }
 
     componentDidMount() {
+        // H.uploadUserFile(f).then(r=> console.log(r))
+        // H.getUserFile('profile_pic').then(r => console.log(r))
 
         // All axios requests are asynchronous, so you need to use the ".then" method to catch the eventual
         // return of the data.
@@ -60,77 +82,79 @@ class UserTest extends React.Component {
         // //this.testFactory(H.getCurrentUserId, [])
         // //this.testFactory(H.isLoggedIn, [])
 
-        this.testFactory(H.getAllStudents, [])
-        this.testFactory(H.getStudent, [1])
-        this.testFactory(H.getStudentSkills, [1])
-        this.testFactory(H.getStudentTags, [1])
 
-        // //Faculty Tests
-        this.testFactory(H.getAllFaculties, [])
-        this.testFactory(H.getFaculty, [1])
-        this.testFactory(H.createFaculty, [10, {
-                                                first_name: 'Akira',
-                                                last_name: 'Nishii',
-                                                title: 'MD, PhD',
-                                                contact_email: 'anishii@osu.edu'
-                                            }])
 
-        this.testFactory(H.updateFaculty, [1, {
-                                                first_name: 'Akira',
-                                                last_name: 'Nishii',
-                                                title: 'MD, PhD',
-                                                contact_email: 'anishii@osu.edu'
-                                            }])
+        // this.testFactory(H.getAllStudents, [])
+        // this.testFactory(H.getStudent, [1])
+        // this.testFactory(H.getStudentSkills, [1])
+        // this.testFactory(H.getStudentTags, [1])
 
-        // //Lab Tests
-        // //this.testFactory(H.getAllLabs, [])
-        this.testFactory(H.getLab, [5])
-        // //Should return no data with all parameters set to false
-        // this.testFactory(H.getAllLabData, [false, false, false, false, false, false])
-        this.testFactory(H.getLabData, [10, true, true, true, true, true, true])
-        this.testFactory(H.createLab, [1, {
-                                            name: 'Nishii Lab',
-                                            location: '1800 Chemistry',
-                                            description: 'We do cool stuff',
-                                            url: 'perchresearch.com',
-                                            contact_email: 'anishii@umich.edu'
-                                        }])
-        this.testFactory(H.updateLab, [1, {
-                                            name: 'Nishii Lab',
-                                            location: '1800 Chemistry',
-                                            description: 'We do cool stuff',
-                                            url: 'perchresearch.com',
-                                            contact_phone: 'phone',
-                                            contact_email: 'anishii@umich.edu'
-                                        }])
-        this.testFactory(H.getLabSkills, [10])
-        this.testFactory(H.getLabTags, [10])
-        this.testFactory(H.getLabMembers, [10])
-        this.testFactory(H.getAllLabPositions, [10])
-        this.testFactory(H.getLabPosition, [1,1])
-        this.testFactory(H.getLabPositionApplicants, [16])
+        // // //Faculty Tests
+        // this.testFactory(H.getAllFaculties, [])
+        // this.testFactory(H.getFaculty, [1])
+        // this.testFactory(H.createFaculty, [10, {
+        //                                         first_name: 'Akira',
+        //                                         last_name: 'Nishii',
+        //                                         title: 'MD, PhD',
+        //                                         contact_email: 'anishii@osu.edu'
+        //                                     }])
 
-        // Application Tests
-        this.testFactory(H.createApplicationResponse, [['good answer', 'extra good answer']])
-        this.testFactory(H.updateApplicationResponse, [1, ['gooder answer', 'extra gooder answer']])
-        this.testFactory(H.submitApplicationResponse, [1])
-        //this.testFactory(H.deleteApplicationResponse, [1])
+        // this.testFactory(H.updateFaculty, [1, {
+        //                                         first_name: 'Akira',
+        //                                         last_name: 'Nishii',
+        //                                         title: 'MD, PhD',
+        //                                         contact_email: 'anishii@osu.edu'
+        //                                     }])
 
-        // //Meta Data
-        this.testFactory(H.getAllSkills, [])
-        this.testFactory(H.getSkill, [1])
-        this.testFactory(H.createSkill, ['Typing', 'Fast and accurate keyboard wizardry'])
-        this.testFactory(H.searchMatchingSkills, ['Typ'])
-        this.testFactory(H.getAllTags, [])
-        this.testFactory(H.getTag, [1])
-        this.testFactory(H.createTag, ['Nuclear Physics', 'Actually, most of the explosions are on the particle scale'])
-        this.testFactory(H.searchMatchingTags, ['nucl'])
+        // // //Lab Tests
+        // // //this.testFactory(H.getAllLabs, [])
+        // this.testFactory(H.getLab, [5])
+        // // //Should return no data with all parameters set to false
+        // // this.testFactory(H.getAllLabData, [false, false, false, false, false, false])
+        // this.testFactory(H.getLabData, [10, true, true, true, true, true, true])
+        // this.testFactory(H.createLab, [1, {
+        //                                     name: 'Nishii Lab',
+        //                                     location: '1800 Chemistry',
+        //                                     description: 'We do cool stuff',
+        //                                     url: 'perchresearch.com',
+        //                                     contact_email: 'anishii@umich.edu'
+        //                                 }])
+        // this.testFactory(H.updateLab, [1, {
+        //                                     name: 'Nishii Lab',
+        //                                     location: '1800 Chemistry',
+        //                                     description: 'We do cool stuff',
+        //                                     url: 'perchresearch.com',
+        //                                     contact_phone: 'phone',
+        //                                     contact_email: 'anishii@umich.edu'
+        //                                 }])
+        // this.testFactory(H.getLabSkills, [10])
+        // this.testFactory(H.getLabTags, [10])
+        // this.testFactory(H.getLabMembers, [10])
+        // this.testFactory(H.getAllLabPositions, [10])
+        // this.testFactory(H.getLabPosition, [1,1])
+        // this.testFactory(H.getLabPositionApplicants, [16])
 
-        // //Et al.
-        this.testFactory(H.submitUserFeedback, [1, 'perchresearch.com', 'Testing -Caleb'])
-        this.testFactory(H.getSearchData, [])
-        this.testFactory(H.labSearch, [ [], [], [], [], []])
-        this.testFactory(H.getSearchResults, [[1,2,3,4]])
+        // // Application Tests
+        // this.testFactory(H.createApplicationResponse, [['good answer', 'extra good answer']])
+        // this.testFactory(H.updateApplicationResponse, [1, ['gooder answer', 'extra gooder answer']])
+        // this.testFactory(H.submitApplicationResponse, [1])
+        // //this.testFactory(H.deleteApplicationResponse, [1])
+
+        // // //Meta Data
+        // this.testFactory(H.getAllSkills, [])
+        // this.testFactory(H.getSkill, [1])
+        // this.testFactory(H.createSkill, ['Typing', 'Fast and accurate keyboard wizardry'])
+        // this.testFactory(H.searchMatchingSkills, ['Typ'])
+        // this.testFactory(H.getAllTags, [])
+        // this.testFactory(H.getTag, [1])
+        // this.testFactory(H.createTag, ['Nuclear Physics', 'Actually, most of the explosions are on the particle scale'])
+        // this.testFactory(H.searchMatchingTags, ['nucl'])
+
+        // // //Et al.
+        // this.testFactory(H.submitUserFeedback, [1, 'perchresearch.com', 'Testing -Caleb'])
+        // this.testFactory(H.getSearchData, [])
+        // this.testFactory(H.labSearch, [ [], [], [], [], []])
+        // this.testFactory(H.getSearchResults, [[1,2,3,4]])
 
 
     }
@@ -141,6 +165,11 @@ class UserTest extends React.Component {
                 <h1>Tests Completed/Total: {completed}/{queued}</h1>
                 <h1>Bad Status Codes</h1>
                 {this.state.errors.map(item => item)}
+                <form onSubmit={this.handleFile.bind(this)}>
+                    <input type='file' id='file-input'/>
+                    <input type='submit'/>
+                </form>
+                <div onClick={this.getFile.bind(this)}>getFile</div>
 
                 <h1>Student Tests</h1>
                 <h2>getAllUsers</h2>

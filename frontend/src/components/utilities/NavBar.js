@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId,/*getFacultyLabs*/} from '../../helper.js'
+import EditModal from './modals/EditModal'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId /*getFacultyLabs*/} from '../../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -7,6 +8,8 @@ class NavBar extends Component {
 		super(props);
 		this.state = {
 			is_student: false,
+			lab: {},
+			lab_id: 0,
 		};
 	}
 
@@ -29,7 +32,7 @@ class NavBar extends Component {
 		if (isLoggedIn()) {
 			var navItems = <div>
 				<li><a className="nav-item" href={this.state.prof_dest}>PROFILE</a></li>
-			    {isStudent() && <li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>}
+			    {<li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>}
 			    {isStudent() && <li><a className="nav-item" href="/dashboard">YOUR PROJECTS</a></li>}
 			    <li><a className="nav-item" href="/help">HELP</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
@@ -41,7 +44,7 @@ class NavBar extends Component {
 				<li><a className="nav-item" href="/about">ABOUT</a></li>
 				{/*<li><a className="nav-item" href="/help">DEMO</a></li>*/}
 				<li><a className="nav-item" href="/join">JOIN THE TEAM</a></li>
-			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
+			  <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}
 
