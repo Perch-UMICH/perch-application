@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId,/*getFacultyLabs*/} from '../../helper.js'
+import EditModal from './modals/EditModal'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId /*getFacultyLabs*/} from '../../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -7,6 +8,8 @@ class NavBar extends Component {
 		super(props);
 		this.state = {
 			is_student: false,
+			lab: {},
+			lab_id: 0,
 		};
 	}
 
@@ -42,7 +45,7 @@ class NavBar extends Component {
 				<li><a className="nav-item" href="/about">ABOUT</a></li>
 				{/*<li><a className="nav-item" href="/help">DEMO</a></li>*/}
 				<li><a className="nav-item" href="/join">JOIN THE TEAM</a></li>
-			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
+			  <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}
 

@@ -10,9 +10,6 @@ import {getFilters} from '../../data/filterData';
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
 const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Lab Skills'];
 
-
-
-
 class LabSearch extends Component {
 	constructor(props) {
 		super(props);
@@ -231,7 +228,7 @@ class LabSearch extends Component {
 											<li key={subFilt.slug}>
 												<input type="checkbox"
 													className="checkbox-white filled-in"
-                                                    onClick={() => this.handleFilterClick(type, filt.slug)}
+                          onClick={() => this.handleFilterClick(type, filt.slug)}
 													id={subFilt.slug}/>
 												<label
 													className="filter-checkbox-label"

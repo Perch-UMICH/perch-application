@@ -241,8 +241,8 @@ const ContactInfo = (props) => {
         <div id='group-contact-info'>
             <h1>Contact Info</h1>
             <div className='group-info-box'>
-                <div className='group-info-box-content'><b>Email</b> <a href={`mailto:${props.email}`}> NULL</a></div>
-                <div className='group-info-box-content'><b>Phone</b> NULL </div>
+                <div className='group-info-box-content'><b>Email</b> <a href={`mailto:${props.email}`}>{props.email}</a></div>
+                <div className='group-info-box-content'><b>Phone</b> {props.phone} </div>
                 <div className='group-info-box-content'><b>Office</b> {props.location}</div>
             </div>
         </div>

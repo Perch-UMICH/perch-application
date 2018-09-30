@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {permissionCheck, getLab, createLab, isLoggedIn, getCurrentUserId, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
+import {permissionCheck, getLab, createLab, isLoggedIn, getCurrentUserId, getUserLabs, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
+import DotLoader from '../../utilities/animations/DotLoader'
+import CreateLab, {modalCreateLab, modalUpdateLab} from '../CreateLab'
 import {EditContact, EditExperience, EditQuickview, EditLinks} from '../individual/StudentEditors'
 import { TwitterTimelineEmbed} from 'react-twitter-embed';
 import BasicButton from '../../utilities/buttons/BasicButton'
@@ -22,8 +24,10 @@ class ProfPage extends Component {
 			skills: [],
 			positions: [],
 			contact_info: [],
+			labs: [],
 			user_id: getCurrentUserId(),
 			no_lab: false,
+			loading_labs: true,
 			dest: '/edit-external-links',
 		};
 	}
@@ -34,6 +38,18 @@ class ProfPage extends Component {
 			document.getElementById(id).classList.add('activated');
 			document.getElementById(`${id}-backdrop`).classList.add('activated');
 		}
+	}
+
+	getModalAction() {
+		modalCreateLab(this.state.lab, (id) => {
+			window.location = "/prof-page/" + id;
+		});
+	}
+
+	updateLabState(name, value) {
+		let lab = this.state.lab;
+		lab[name] = value;
+		this.setState(lab);
 	}
 
 	componentWillMount() {
@@ -59,6 +75,10 @@ class ProfPage extends Component {
 				this.setState({user_type: "user"});
 			else if (isFaculty())
 				this.setState({user_type: "faculty"});
+
+			getUserLabs(this.state.user_id).then(r => {
+				this.setState({labs: r.data, loading_labs: false});
+			})
 
 			var lab_id = window.location.pathname.split('/')[2];
 			getLab(lab_id).then((resp) => {
@@ -160,6 +180,10 @@ class ProfPage extends Component {
 							<textarea id='lab-create-description' placeholder='we do cool stuff' />
 						</div>
 					</EditModal>
+					<EditModal id={`create-lab`} wide={true} actionName="create"
+						title={`Create New Lab`} modalAction={this.getModalAction.bind(this)}>
+						<CreateLab updateLabState={this.updateLabState.bind(this)}/>
+					</EditModal>
 		 			<div id='user-column-L'>
 		 				{/*<div className='join-lab' onClick={r => this.openModal('join-lab-modal')}>
 							<div>Join A Lab</div>
@@ -189,6 +213,15 @@ class ProfPage extends Component {
 		 						<a>Lab Resources</a>
 		 					</div>
 		 					<Editor superClick={() => this.openModal('link-edit')}/>
+		 				</div>
+						<div id='user-labs'>
+		 					<h1>Labs</h1>
+		 					<div>
+		 						{this.state.labs.map(labAssoc => {
+									return <a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
+								})}
+		 					</div>
+		 					<Editor superClick={() => this.openModal('create-lab')} add={true}/>
 		 				</div>
 		 			</div>
 		 			<div id='user-column-R'>
@@ -221,9 +254,9 @@ class ProfPage extends Component {
 		 			</div>
 	 			</div>
 			)
-		// }
+		}
 	}
-}
+
 
 
 class UserClasses extends Component {

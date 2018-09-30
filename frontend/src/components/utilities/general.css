@@ -81,9 +81,9 @@
 	--border-radius-R: 4px;
 
 	/* Animation Variables */
-	/* Flap Speed for Rodriguez Loader */
 	--flap-speed: 0.5s;
-	--dot-speed: 1.5s;
+	--dot-speed: 1s;
+	--loader-transition: linear;
 }
 
 ::selection {
