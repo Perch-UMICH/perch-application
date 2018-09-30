@@ -6,7 +6,7 @@ import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
 import DotLoader from '../../utilities/animations/DotLoader'
-import CreateLab, {modalCreateLab, modalUpdateLab} from '../CreateLab'
+import CreateLab, {modalCreateLab, modalUpdateLab, modalDeleteLab} from '../CreateLab'
 import {EditContact, EditExperience, EditQuickview, EditLinks} from '../individual/StudentEditors'
 import { TwitterTimelineEmbed} from 'react-twitter-embed';
 import BasicButton from '../../utilities/buttons/BasicButton'
@@ -25,6 +25,8 @@ class ProfPage extends Component {
 			positions: [],
 			contact_info: [],
 			labs: [],
+			lab: {},
+			selected_lab: {},
 			user_id: getCurrentUserId(),
 			no_lab: false,
 			loading_labs: true,
@@ -40,16 +42,17 @@ class ProfPage extends Component {
 		}
 	}
 
-	getModalAction() {
-		modalCreateLab(this.state.lab, (id) => {
-			window.location = "/prof-page/" + id;
-		});
+	getModalAction(create) {
+		if (create)
+			modalCreateLab(this.state.lab, (id) => { window.location = "/prof-page/" + id});
+		else
+			modalDeleteLab(this.state.selected_lab, this.loadLabs.bind(this));
 	}
 
 	updateLabState(name, value) {
 		let lab = this.state.lab;
 		lab[name] = value;
-		this.setState(lab);
+		this.setState({lab});
 	}
 
 	componentWillMount() {
@@ -67,6 +70,12 @@ class ProfPage extends Component {
 		getUser(getCurrentUserId()).then(r => console.log(r))
 	}
 
+	loadLabs() {
+		getUserLabs(this.state.user_id).then(r => {
+			this.setState({labs: r.data, loading_labs: false});
+		})
+	}
+
 	componentDidMount() {
 		console.log(getCurrentUserId());
 		if (isLoggedIn()) {
@@ -76,10 +85,7 @@ class ProfPage extends Component {
 			else if (isFaculty())
 				this.setState({user_type: "faculty"});
 
-			getUserLabs(this.state.user_id).then(r => {
-				console.log(r)
-				this.setState({labs: r.data, loading_labs: false});
-			})
+			this.loadLabs();
 
 			var lab_id = window.location.pathname.split('/')[2];
 			getLab(lab_id).then((resp) => {
@@ -182,8 +188,12 @@ class ProfPage extends Component {
 						</div>
 					</EditModal>
 					<EditModal id={`create-lab`} wide={true} actionName="create"
-						title={`Create New Lab`} modalAction={this.getModalAction.bind(this)}>
+						title={`Create New Lab`} modalAction={() => this.getModalAction(true)}>
 						<CreateLab updateLabState={this.updateLabState.bind(this)}/>
+					</EditModal>
+					<EditModal id="delete-lab" title={`Delete ${this.state.selected_lab.name}`} actionName="Delete Lab" slim={true}
+						modalAction={() => this.getModalAction(false)}>
+					 	<p>Are you sure you want to delete the lab {this.state.selected_lab.name}? This action cannot be undone.</p>
 					</EditModal>
 		 			<div id='user-column-L'>
 		 				{/*<div className='join-lab' onClick={r => this.openModal('join-lab-modal')}>
@@ -215,15 +225,6 @@ class ProfPage extends Component {
 		 					</div>
 		 					<Editor superClick={() => this.openModal('link-edit')}/>
 		 				</div>
-						<div id='user-labs'>
-		 					<h1>Labs</h1>
-		 					<div>
-		 						{this.state.labs.map(labAssoc => {
-									return <a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
-								})}
-		 					</div>
-		 					<Editor superClick={() => this.openModal('create-lab')} add={true}/>
-		 				</div>
 		 			</div>
 		 			<div id='user-column-R'>
 	 				<TwitterTimelineEmbed
@@ -241,6 +242,20 @@ class ProfPage extends Component {
 		 					<div id='user-quickview-footer'>University of Michigan</div>
 		 					<div id='user-quickview-name'>{this.state.name}</div>
 		 					<Editor superClick={() => this.openModal('quickview-edit')}/>
+		 				</div>
+						<div id='user-labs'>
+		 					<h1>Labs</h1>
+	 						{ this.state.loading_labs ? "Loading Labs ..." :
+								this.state.labs.map(labAssoc => {
+								return <div key={labAssoc.lab.id}>
+										<a className="user-labs-name" href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
+										<a onClick={() => this.setState({selected_lab: labAssoc.lab}, ()=>{this.openModal('delete-lab')})}
+											className="user-labs-delete">
+											<i className="material-icons">delete</i>
+										</a>
+									</div>
+							})}
+		 					<Editor superClick={() => this.openModal('create-lab')} add={true}/>
 		 				</div>
 		 				<div>
 		 					<h1>Work Experience</h1>

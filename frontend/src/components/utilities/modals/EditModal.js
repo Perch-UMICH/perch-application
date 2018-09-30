@@ -29,7 +29,14 @@ class EditModal extends Component {
 
 	render() {
 		var contentCSS = this.props.noPadding ? "modal-content modal-no-padding" : "modal-content";
-		var bodyCSS = this.props.wide ? "modal modal-fixed-footer wide-modal" : "modal modal-fixed-footer display-modal";
+		var bodyCSS = "modal modal-fixed-footer display-modal"
+		if (this.props.wide)
+			bodyCSS = "modal modal-fixed-footer wide-modal"
+		if (this.props.medium)
+			bodyCSS = "modal modal-fixed-footer medium-modal"
+		if (this.props.slim)
+			bodyCSS = "modal modal-fixed-footer slim-modal"
+
 		return(
 			<div>
 				<div className="modal-backdrop" id={`${this.props.id}-backdrop`} />
