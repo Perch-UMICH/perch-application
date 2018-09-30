@@ -730,55 +730,6 @@ export function removeWorkExperiencesFromStudent(work_experience_ids) {
         })
 }
 
-//
-
-// export function getStudentSchoolCourses(student_id) {
-//     console.log('Getting student school courses');
-//     return axios.get('api/students/' + student_id + '/courses/school')
-//         .then(response => {
-//             console.log(response.data.message);
-//             return response.data.result;
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//             return [];
-//         })
-// }
-//
-// export function addSchoolCoursesToStudent(student_id, course_ids) {
-//     console.log('Adding school courses to student');
-//
-//     let payload = {
-//         course_ids: course_ids
-//     };
-//     return axios.post('api/students/' + student_id + '/courses/school', payload)
-//         .then(response => {
-//             console.log(response.data.message);
-//             return response.data.result;
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//             return [];
-//         })
-// }
-//
-// export function removeSchoolCoursesFromStudent(student_id, course_ids) {
-//     console.log('Removing school courses from student');
-//
-//     let payload = {
-//         _method: 'PUT',
-//         course_ids: course_ids
-//     };
-//     return axios.post('api/students/' + student_id + '/courses/school', payload)
-//         .then(response => {
-//             console.log(response.data.message);
-//             return response.data.result;
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//             return [];
-//         })
-// }
 
 // FACULTY //
 
@@ -790,7 +741,6 @@ export function removeWorkExperiencesFromStudent(work_experience_ids) {
 // last_name - (string)
 // contact_email - (string) contact email address
 // title - (string) title of position in university (e.g. PI, assistant prof, grad student)
-
 
 export function getAllFaculties() {
     console.log('Getting all faculty');
@@ -1144,6 +1094,20 @@ export function removeTagsFromLab(lab_id, tag_ids, position_id) {
 //  2: Admin - admin of lab; may edit lab page, create/accept applications, add/remove members, etc.
 //  3: Member - normal lab member
 
+// Gets groups that a user is a part of
+// PUBLIC
+export function getGroupMemberships(user_id) {
+    return axios.get('users/' + user_id + '/labs')
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
+// Gets members that belong to a group
+// PUBLIC
 export function getLabMembers(lab_id) {
     console.log('Getting lab members');
     return axios.get('api/labs/' + lab_id + '/members')
@@ -1156,7 +1120,7 @@ export function getLabMembers(lab_id) {
 }
 
 // Order of role_ids should correspond with order of user_ids (same size)
-// RESTRICTED: lab_id
+// RESTRICTED: authenticated faculty member + lab owner
 export function addMembersToLab(user_ids, role_ids) {
     console.log('Adding members to lab');
 
@@ -1175,7 +1139,7 @@ export function addMembersToLab(user_ids, role_ids) {
         })
 }
 
-// RESTRICTED: lab_id
+// RESTRICTED: authenticated faculty member + lab owner
 export function removeMembersFromLab(user_ids) {
     console.log('Removing members from lab');
 
