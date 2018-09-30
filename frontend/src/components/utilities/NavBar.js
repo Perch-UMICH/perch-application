@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId,/*getFacultyLabs*/} from '../../helper.js'
+import EditModal from './modals/EditModal'
+import CreateLab, {modalCreateLab, modalUpdateLab} from '../user/CreateLab'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId /*getFacultyLabs*/} from '../../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -7,6 +9,8 @@ class NavBar extends Component {
 		super(props);
 		this.state = {
 			is_student: false,
+			lab: {},
+			lab_id: 0,
 		};
 	}
 
@@ -24,6 +28,23 @@ class NavBar extends Component {
 		}
 	}
 
+	openModal(id) {
+		if (document.getElementById(id)) {
+			document.getElementById(id).classList.add('activated');
+			document.getElementById(`${id}-backdrop`).classList.add('activated');
+		}
+	}
+
+	getModalAction() {
+		modalCreateLab(this.state.lab);
+	}
+
+	updateLabState(name, value) {
+		let lab = this.state.lab;
+		lab[name] = value;
+		this.setState(lab);
+	}
+
 	render() {
 
 		if (isLoggedIn()) {
@@ -34,6 +55,7 @@ class NavBar extends Component {
 			    <li><a className="nav-item" href="/help">HELP</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
+					{isFaculty() && <li><a className="nav-item contact-nav" onClick={() => this.openModal('create-lab')}>Create Lab</a></li>}
 			</div>
 		}
 		else {
@@ -41,12 +63,16 @@ class NavBar extends Component {
 				<li><a className="nav-item" href="/about">ABOUT</a></li>
 				{/*<li><a className="nav-item" href="/help">DEMO</a></li>*/}
 				<li><a className="nav-item" href="/join">JOIN THE TEAM</a></li>
-			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
+			  <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}
 
 		return(
 			<div className="navbar-fixed">
+					<EditModal id={`create-lab`} wide={true} actionName="create"
+						title={`Create New Lab`} modalAction={this.getModalAction.bind(this)}>
+						<CreateLab updateLabState={this.updateLabState.bind(this)}/>
+					</EditModal>
 			    <nav>
 			      <div className="nav-wrapper">
 			        <a href="#" data-activates="mobile-demo" className="right button-collapse hide-on-large-only"><i id="hamburger" className="material-icons">menu</i></a>
