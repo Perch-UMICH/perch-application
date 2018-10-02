@@ -215,24 +215,27 @@ class GroupPage extends Component {
 
 // Our Admin Panel on Group Page. Uses GroupPerson components
 const Administrators = (props) => {
+  let content = <div className='group-photos'>{props.people}</div>
+  if (props.people.length == 0)
+    content = <div className="group-default-text">No Current Admin</div>
 	return(
 		<div id='group-admins'>
 			<h1>Admins</h1>
-			<div className='group-photos'>
-				{props.people}
-			</div>
+			{content}
       {props.admin_access && <Editor superClick={() => openModal('edit-admins')}/>}
 		</div>
 	)
 }
 
 const Members = (props) => {
+  // If there are no lab members, set default message.
+  let content = <div className='group-photos'>{props.people}</div>
+  if (props.people.length == 0)
+    content = <div className="group-default-text">No Current Members</div>
 	return(
 		<div id='group-members'>
 			<h1>Members</h1>
-			<div className='group-photos'>
-				{props.people}
-			</div>
+			{content}
       {props.admin_access && <Editor superClick={() => openModal('edit-members')}/>}
 		</div>
 	)
