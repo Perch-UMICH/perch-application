@@ -43,21 +43,8 @@ class GroupPage extends Component {
         }
     }
 
-    componentWillMount() {
-      getAllLabPositions(this.state.lab_id).then((resp) => {
-          let positions = [];
-          console.log(resp);
-          resp.data.map((pos, index) => {
-              positions.push(<GroupProject key={`${index}-p`} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
-                              time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
-          })
-          this.setState({lab_positions: positions});
-      });
-
-      getLab(this.state.lab_id).then((resp) => {
-          this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
-      });
-
+    // Refresh page to display initial & updated lab members
+    loadLabMembers() {
       getLabMembers(this.state.lab_id).then((resp) => {
           let admins = [];
           let members = [];
@@ -65,7 +52,6 @@ class GroupPage extends Component {
           let members_raw = [];
           console.log(resp);
           resp.data.faculty.map((person) => {
-            console.log('hello', person)
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
                   admins.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
@@ -90,6 +76,24 @@ class GroupPage extends Component {
           let priveleges = this.hasPermissions(admins_raw)
           this.setState({lab_admins: admins, lab_members: members, admins_raw: admins_raw, members_raw: members_raw, admin_access: priveleges});
       })
+    }
+
+    componentWillMount() {
+      getAllLabPositions(this.state.lab_id).then((resp) => {
+          let positions = [];
+          console.log(resp);
+          resp.data.map((pos, index) => {
+              positions.push(<GroupProject key={`${index}-p`} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
+                              time_commit={pos.min_time_commitment} gpa='MISSING' year='MISSING' urop={pos.is_urop_project}/>);
+          })
+          this.setState({lab_positions: positions});
+      });
+
+      getLab(this.state.lab_id).then((resp) => {
+          this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
+      });
+
+      this.loadLabMembers();
   }
 
   // Update the new position from modal, to be submitted by createPosition
@@ -125,7 +129,11 @@ class GroupPage extends Component {
 
   handleEditMembers() {
     let id = document.getElementById('new-member').value
-    addMembersToLab(this.state.lab_id, [id], [3]).then(r=>console.log(r))
+    // check if user is not already the lab admin.
+    addMembersToLab(this.state.lab_id, [id], [3]).then(r=> {
+      console.log(r);
+      this.loadLabMembers();
+    })
   }
 
   hasPermissions(admins) {
@@ -155,7 +163,8 @@ class GroupPage extends Component {
           title='Edit Admins'>
           <div className='row'>
             <h5 className='col s12'>Modify Admins</h5>
-            {this.state.admins_raw.map(e => <AdminView lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
+            {this.state.admins_raw.map(e => <AdminView reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
+              lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
           </div>
           <div className='row'>
             <h5 className='col s12'>Delete Page</h5>
@@ -176,7 +185,8 @@ class GroupPage extends Component {
           </div>
           <div className='row'>
             <h5 className='col s12'>Modify Users</h5>
-            {this.state.members_raw.map(e => <MemberView lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
+            {this.state.members_raw.map(e => <MemberView reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
+              lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
           </div>
         </EditModal>
 
@@ -279,12 +289,13 @@ class AdminView extends Component {
 
   removeMember() {
     alert(this.props.id)
-    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r => this.setState())
+    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r => this.props.reloadMembersAndAdmin())
   }
 
   removeAdmin() {
     removeMembersFromLab(this.props.lab_id, [this.props.id])
-      .then(r => addMembersToLab(this.props.lab_id, [this.props.id], [3]))
+      .then(r => addMembersToLab(this.props.lab_id, [this.props.id], [3])
+      .then(r2 => this.props.reloadMembersAndAdmin()))
   }
 
   render(props) {
@@ -301,15 +312,16 @@ class AdminView extends Component {
 class MemberView extends Component {
 
   removeMember() {
-    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r => this.setState())
+    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r => this.props.reloadMembersAndAdmin())
   }
 
   makeAdmin() {
     removeMembersFromLab(this.props.lab_id, [this.props.id])
-      .then(r => addMembersToLab(this.props.lab_id, [this.props.id], [2]))
+      .then(r => addMembersToLab(this.props.lab_id, [this.props.id], [2])
+      .then(r2 => this.props.reloadMembersAndAdmin()))
   }
 
-  render(props) {
+  render() {
     return(
       <div id={this.props.name} className='member-view col s3'>
         <span>{this.props.name}</span>
