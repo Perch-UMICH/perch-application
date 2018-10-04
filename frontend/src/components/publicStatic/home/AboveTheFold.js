@@ -47,11 +47,9 @@ class AboveTheFold extends Component {
 			  		{/*</div>*/}
 
 			  		<div className='col s12 m5 atf-height valign-wrapper'>
-			  			{<SignUp />}
+			  			{/*<SignUp />*/}
 
-						{/*<div className='temp-signup'><a href='/join'>We're looking for people <u>to join the team!</u></a></div>
-						<div className='temp-signup-sub'><b>Applications due 9/30</b></div>
-						<br /><div className='temp-signup-sub'>Signup coming in 2018</div>*/}
+						<div className='temp-signup'><a href='/join'>We're looking for people <u>to join the team!</u></a></div>
 			  		</div>
 
 			  </div>
