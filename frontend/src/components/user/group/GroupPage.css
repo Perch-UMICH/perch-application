@@ -72,6 +72,10 @@
 	background-color: var(--dark-blue);
 }
 
+.group-default-text {
+	padding: 20px;
+}
+
 #group-admins:hover {
 	box-shadow: var(--grey-shadow);
 	transition: 0.2s ease;
