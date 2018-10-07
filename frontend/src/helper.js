@@ -1345,10 +1345,9 @@ export function updateLabPosition(lab_id, position_id, position) {
 }
 
 // RESTRICTED: authenticated faculty member + lab admin
-export function deleteLabPosition(position_ids) {
+export function deleteLabPosition(lab_id, position_ids) {
     console.log('Deleting positions');
-
-    let lab_id = sessionStorage.getItem('lab_id');
+    
     let payload = {
         position_ids: position_ids
     };
