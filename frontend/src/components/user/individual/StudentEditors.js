@@ -413,6 +413,7 @@ export class EditQuickview extends Component {
 			scale: 1.5,
 			name: props.user && props.user.name ? props.user.name : '',
 			university: props.user && props.user.university ? props.user.university : "",
+			crop: {}
 		}
 	}
 
@@ -502,7 +503,9 @@ export class EditQuickview extends Component {
 					        color={[0, 0, 0, 0.2]}
 					        scale={this.state.scale}
 					        rotate={this.state.rotate}
-					        className='grabbable'/>
+					        className='grabbable'
+					        onPositionChange={crop => this.setState(crop)}/>
+
 					</Dropzone>
 					<i>Drag and drop image</i>
 					<div id='prof-pic-editors'>

@@ -19,7 +19,7 @@ class ProfPage extends Component {
 			lab_name: "",
 			yes: ['spots open', 'undergrads', 'credit'],
 			no: ['paid', 'seniors', 'freshmen'],
-			img_src: 'https://static1.squarespace.com/static/54693b1ee4b07c8a3da7b6d0/58df54aa1b10e31ed44dab4b/58df54ab6b8f5b410f59d285/1491031900534/Leap-Systems-2016-Headshots-By-Lamonte-G-Photography-IMG_1871-Edit.jpg',
+			img_src: 'https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png',
 			labels: [],
 			skills: [],
 			positions: [],
@@ -240,10 +240,10 @@ class ProfPage extends Component {
 	 			<div id='user-profile-column-C'>
 	 				<div id='user-quickview'>
 	 					<div id='user-quickview-img-container'>
- 							<img id='user-quickview-img' src='http://i.imgur.com/Qz9T4SC.jpg'/>
+ 							<img id='user-quickview-img' src='https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png'/>
  						</div>
-	 					<img id='user-quickview-coverimage' src='https://images.pexels.com/photos/242236/pexels-photo-242236.jpeg?auto=compress&cs=tinysrgb&h=350' />
-	 					<div id='user-quickview-footer'>University of Michigan</div>
+	 					{/*<img id='user-quickview-coverimage' src='https://images.pexels.com/photos/242236/pexels-photo-242236.jpeg?auto=compress&cs=tinysrgb&h=350' />
+	 					<div id='user-quickview-footer'>University of Michigan</div>*/}
 	 					<div id='user-quickview-name'>{this.state.name}</div>
 	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 	 				</div>
@@ -261,7 +261,7 @@ class ProfPage extends Component {
 	 					</div>
 	 					<Editor superClick={() => this.openModal('create-lab-modal')} add={true}/>
 	 				</div>
-					<div id='user-labs'>
+					{/*<div id='user-labs'>
 	 					<h1>Labs</h1>
  						{ this.state.loading_labs ? "Loading Labs ..." :
 							this.state.labs.map(labAssoc => {
@@ -274,7 +274,7 @@ class ProfPage extends Component {
 								</div>
 						})}
 	 					<Editor superClick={() => this.openModal('create-lab')} add={true}/>
-	 				</div>
+	 				</div>*/}
 	 				<div>
 	 					<h1>Work Experience</h1>
 	 					<UserWorkExperience title="Manhattan Project" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
