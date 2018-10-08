@@ -1,5 +1,11 @@
+/* These are Google Login objects that need to be declared */
+/* global gapi */
+/* global initClient */
+/* global updateSigninStatus */
 import React, {Component} from 'react';
-import {registerUser, createStudent, getCurrentUserId, loginUser, getStudentFromUser} from '../../../helper.js';
+import GoogleLogin from './GoogleLogin.js';
+import GoogleLogout from './GoogleLogout.js';
+import {registerUser, createStudent, getCurrentUserId, loginUser, loginUserIdp, getStudentFromUser} from '../../../helper.js';
 import {getAllUsers, getStudent, getAllLabs, deleteUser, getAllStudents, createFaculty, createLab, addMembersToLab, /*addLabToFaculty*/ getAllFaculties } from '../../../helper.js'
 import './SignUp.css';
 class SignUp extends Component {
@@ -62,6 +68,22 @@ class SignUp extends Component {
 		}
 	}
 
+	handleGoogleSuccessResponse = (response) => {
+		console.log(response.accessToken);
+		loginUserIdp("blah", "google", response.accessToken);
+	}
+
+	handleGoogleFailureResponse = (response) => {
+		console.log("Google login failed");
+	}
+
+	signOut = () => {
+		var auth2 = gapi.auth2.getAuthInstance();
+    	auth2.signOut().then(function () {
+      		console.log('User signed out.');
+    	});
+	}
+
 	render() {
 		return (
 				<form className='container left-align new-signup-container' onSubmit={this.generalHandler.bind(this)}>
@@ -69,30 +91,37 @@ class SignUp extends Component {
 	  				<a href='login' ><div className='new-signup-sub-header'>or <span className='link-color'>login</span> if you have an account</div></a>
 	  				<div className='row'>
 	  					<div className="input-field col s6">
-		                	<input id="first_name" type="text" required autofocus="autofocus"/>
+		                	<input id="first_name" type="text" required autoFocus="autofocus"/>
 		                	<label htmlFor="first_name">First name</label>
 		            	</div>
 		            	<div className="input-field col s6">
-			                <input id="last_name" type="text" required autofocus="autofocus"/>
+			                <input id="last_name" type="text" required autoFocus="autofocus"/>
 			                <label htmlFor="last_name">Last name</label>
 			            </div>
 	  				</div>
 	  				<div className="input-field">
-		                <input id="email" type="email" required autofocus="autofocus"/>
+		                <input id="email" type="email" required autoFocus="autofocus"/>
 		                <label htmlFor="email">Email</label>
 		            </div>
 		            <div className="input-field">
-		                <input id="password" type="password" required autofocus="autofocus"/>
+		                <input id="password" type="password" required autoFocus="autofocus"/>
 		                <label htmlFor="password">Password</label>
 		            </div>
 		            <div className='center-align'>
-		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required autofocus="autofocus"/>
+		            	<input className="radio" name="user_type" type="radio" id="faculty" value="faculty" required autoFocus="autofocus"/>
 		              	<label className='new-signup-radio' htmlFor="faculty">Faculty</label>
-		              	<input className="radio" name="user_type" type="radio" id="student" value="student" required autofocus="autofocus"/>
+		              	<input className="radio" name="user_type" type="radio" id="student" value="student" required autoFocus="autofocus"/>
 		              	<label className='new-signup-radio' htmlFor="student">Student</label>
 		            </div>
 		            <br />
 		            <button className="btn waves-effect waves-blue waves-light basic-btn" style={{width: '100%', textTransform: 'lowercase', height: '50px'}} >deawkwardize</button>
+	  				<GoogleLogin 
+	  					clientId="426880385373-gttrdhuk9b4g3cuhh95g0nhhnkbt38ek.apps.googleusercontent.com"
+	  					buttonText="Google Login"
+	  					onSuccess={this.handleGoogleSuccessResponse}
+	  					onFailure={this.handleGoogleFailureResponse}
+	  				/>
+	  				<a href='#' onClick={this.signOut}>Sign Out</a>
 	  			</form>
 		);
 	}
