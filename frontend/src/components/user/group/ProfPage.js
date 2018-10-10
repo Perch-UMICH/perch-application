@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {permissionCheck, getLab, createLab, isLoggedIn, getCurrentUserId, getUserLabs, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
+import {updateFaculty, permissionCheck, getLab, createLab, isLoggedIn, getCurrentFacultyId, getCurrentUserId, getUserLabs, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -31,6 +31,7 @@ class ProfPage extends Component {
 			no_lab: false,
 			loading_labs: true,
 			dest: '/edit-external-links',
+			updated_user: {},
 		};
 	}
 
@@ -64,6 +65,23 @@ class ProfPage extends Component {
 		})
 	}
 
+	sendContactInfo() {
+		// updateUser()
+		console.log('Sending to backend', this.state.updated_user)
+		// updateFaculty(getCurrentFacultyId(), this.state.updated_user)
+		updateFaculty(getCurrentFacultyId(), this.state.updated_user)
+		.then(r=>console.log(r))
+	}
+
+	// this just updates the state object, not the backend
+	updateUser(field, newValue) {
+	    var newState = this.state;
+	    newState.updated_user[field] = newValue;
+		if (field === 'classes')
+			newState.classes = newValue;
+	    this.setState(newState, () => console.log("updated", field, newValue));
+  	}
+
 	componentDidMount() {
 		if (isLoggedIn()) {
 			// check if user or faculty for viewing positions
@@ -74,14 +92,14 @@ class ProfPage extends Component {
 
 			var prof_id = window.location.pathname.split('/')[2];
 			getFaculty(prof_id).then((r) => {
+				console.log('fFFFFFac object')
 				console.log(r)
 				r = r.data
 				this.setState({
-					name: r.first_name + " " + r.last_name,
+					name: r.first_name,
 					contact_email: r.contact_email,
 					contact_phone: r.contact_phone,
 					user_id: r.user_id,
-
 				})
 			})
 			.then(r => getUserLabs(this.state.user_id))
@@ -89,6 +107,7 @@ class ProfPage extends Component {
 				console.log(r)
 				this.setState({labs: r.data, loading_labs: false});
 			})
+			.catch(e=>alert('ERRRROR'))
 
 			this.loadLabs();
 
@@ -153,8 +172,8 @@ class ProfPage extends Component {
 		// } else {
 		return (
 			<div id='user-content-body'>
-				<EditModal id="contact-edit" title="Edit Contact Info">
-					<EditContact />
+				<EditModal id="contact-edit" title="Edit Contact Info" modalAction={this.sendContactInfo.bind(this)}>
+					<EditContact modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="link-edit" title="Edit Links">
 					<EditLinks prof/>
@@ -168,8 +187,8 @@ class ProfPage extends Component {
 				<EditModal id="bio-edit" title="Edit Bio">
 					<textarea placeholder='As a youngster on Tattooine, I always wanted to become a star-pilot ...'></textarea>
 				</EditModal>
-				<EditModal id="quickview-edit" title="Edit Quickview Info">
-					<EditQuickview img='/img/headshots/bcoppola.jpg'/>
+				<EditModal id="quickview-edit" title="Edit Quickview Info" modalAction={this.sendContactInfo.bind(this)}>
+					<EditQuickview img='/img/headshots/bcoppola.jpg' modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				{/*<EditModal id="join-lab-modal" title="Join A Lab">
 					<input type='text' placeholder=''></input>

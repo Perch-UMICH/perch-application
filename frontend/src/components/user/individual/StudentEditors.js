@@ -474,7 +474,7 @@ export class EditQuickview extends Component {
 				 	onChange={(e) => {
 						this.setState({name: e.target.value})
 						if (this.props.updateUser) {
-							this.props.updateUser("name", e.target.value)}
+							this.props.updateUser("first_name", e.target.value)}
 					}}/>
    			<label htmlFor='profile-name' className="active" >Name</label>
    		</div>
