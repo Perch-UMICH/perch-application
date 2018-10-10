@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
-import ErrorPage from '../../utilities/ErrorPage'
 import EditModal from '../../utilities/modals/EditModal'
 import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
-import ExpanderIcons from '../../utilities/ExpanderIcons'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {modalUpdateLab} from '../CreateLab'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {EditAdmins} from './GroupEditors'
 import BasicButton from '../../utilities/buttons/BasicButton'
-import {deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions,
-        getLabPreferences, isStudent, isLab, getLabMembers, createApplication, addMembersToLab} from '../../../helper.js'
+import {deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, createLabPosition,
+        getLabPreferences, isStudent, isLab, getLabMembers, createApplication, addMembersToLab, getCurrentLabId} from '../../../helper.js'
 import Editor from '../../utilities/Editor'
 // import $ from 'jquery'
 // import M from 'materialize-css'
@@ -40,6 +38,7 @@ class GroupPage extends Component {
             updated_lab: {},
             members_raw: [],
             admins_raw: [],
+            app_questions: [],
         }
     }
 
@@ -114,10 +113,17 @@ class GroupPage extends Component {
   createPosition() {
     let new_pos = this.state.new_pos;
     alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
-    // createLabPosition(new_pos.title, new_pos.description, new_pos.time_commitment, new_pos.open_slots).then(resp => {
+    createLabPosition(this.state.lab_id, new_pos).then(resp => {
     //   // hopefully get position_id from resp
-    //   // createApplication({pos_id, new_pos.questions})
-    // });
+        console.log("CREATED POSITION!!! resp: ", resp);
+        let application = {
+          position_id: resp.id,
+          questions: this.state.app_questions
+        }
+        createApplication(this.state.lab_id, application).then(resp2 => {
+          console.log("CREATED QUESTIONS FOR POSITION!", resp2)
+        });
+    });
   }
 
   openModal(id) {
@@ -150,7 +156,7 @@ class GroupPage extends Component {
         {/* Editors (default hidden) */}
         <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="create"
           title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
-          <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} />
+          <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
         </EditModal>
         <EditModal id={`edit-name`} wide={true} actionName="update" medium={true}
           title={`Update Name & Description`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
