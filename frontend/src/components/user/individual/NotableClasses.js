@@ -9,9 +9,9 @@ import './NotableClasses.css';
 class NotableClasses extends Component {
 	constructor(props) {
 		super(props);
-		var class_arr = props.user && props.user.classes ? props.user.classes : [{ id: 'c_0', text: '' }]
+		var class_arr = props.user && props.user.classes ? props.user.classes : [{ id: 'c_0', name: '' }]
 		this.state = {
-			gpa: props.user && props.user.gpa ? props.user.gpa : '4.0',
+			gpa: props.user && props.user.gpa ? props.user.gpa : '3.7',
 			year: props.user && props.user.year ? props.user.year : '',
 			major: props.user && props.user.major ? props.user.major : '',
 			student_id: getCurrentStudentId(),
@@ -38,14 +38,14 @@ class NotableClasses extends Component {
 							for (var i = 0; i < class_str_arr.length; ++i) {
 								var class_item = {
 									id: `c_${index}`,
-									text: class_str_arr[i],
+									name: class_str_arr[i],
 								}
 								class_arr.push(class_item);
 								++index;
 							}
 							this.setState(
 								{
-									gpa: resp.data.gpa ? resp.data.gpa : 4.0,
+									gpa: resp.data.gpa ? resp.data.gpa : 3.7,
 									major: resp.data.major ? resp.data.major : "",
 									year: resp.data.year ? resp.data.year : "",
 									classes: class_str_arr,
@@ -74,14 +74,6 @@ class NotableClasses extends Component {
 		}
   }
 
-	componentWillReceiveProps(props) {
-		/*var newState = this.state;
-		newState.gpa = props.user && props.user.gpa ? props.user.gpa : '4.0';
-		newState.year = props.user && props.user.year ? props.user.year : '';
-		newState.major = props.user && props.user.major ? props.user.major : '';
-		this.setState(newState);*/
-	}
-
 	updateGPA(event) {
 		this.setState({ gpa: event.target.value });
 		if (this.props.updateUser) {
@@ -108,9 +100,9 @@ class NotableClasses extends Component {
 		if (temp_year) {
 			year = temp_year;
 		}
-		var classString = this.state.class_arr[0].text;;
+		var classString = this.state.class_arr[0].namw;;
 		for (var i = 1; i < this.state.class_arr.length; ++i) {
-			classString += '|' + this.state.class_arr[i].text;
+			classString += '|' + this.state.class_arr[i].name;
 		}
 	}
 
@@ -130,11 +122,11 @@ class NotableClasses extends Component {
 		if (this.props.showAllEducation) {
 			schoolSection =
 				<div className='input-field'>
-					<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
+					<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.university}
 						onChange={(e) => {
 							if (this.props.updateUser) {
-								this.props.updateUser("school", e.target.value)}
-							this.setState({school: e.target.value})
+								this.props.updateUser("university", e.target.value)}
+							this.setState({university: e.target.value})
 						}}/>
 					<label htmlFor='profile-school' className="active" >School</label>
 				</div>
@@ -152,7 +144,7 @@ class NotableClasses extends Component {
 					<div className='input-field col s4'>
 						<div className='notable-classes-label left-align'>GPA</div>
 						<input type='number' step="0.1"
-							placeholder='4.0' value={this.state.gpa}
+							placeholder='3.7' value={this.state.gpa}
 							onChange={event => this.updateGPA(event)} />
 					</div>
 					<div className='input-field col s4'>

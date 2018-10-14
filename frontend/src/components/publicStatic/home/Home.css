@@ -2,3 +2,7 @@ body {
 	background-color: var(--e-grey);
   	background-size: 100% auto;
 }
+
+hr {
+	opacity: 0.5;
+}

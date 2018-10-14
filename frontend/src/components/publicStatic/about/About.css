@@ -11,6 +11,12 @@
 	margin-top: 6px;
 	position: relative;
 	display: block;
+	background-color: white;
+	min-height: 100vh;
+}
+
+.about-body {
+	background-color: white;
 }
 
 .about-nav {
@@ -36,8 +42,5 @@
 }
 
 .about-header {
-	text-align: left;
-	font-weight: bold;
 	font-size: 20px;
-	
 }

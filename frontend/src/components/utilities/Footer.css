@@ -9,17 +9,14 @@
 	margin-top: 0;
 	border-top: 1px solid lightgrey;
 	margin-top: 20px;
-	/*display: none;*/
+	display: none;
 }
 
 .footer-column {
 	width: 200px;
 	display: inline-block;
 	position: relative;
-	/*height: 200px;*/
-	/*float: left;*/
 	text-align: left;
-	/*margin: auto;*/
 }
 
 .footer-header {

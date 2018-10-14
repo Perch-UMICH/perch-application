@@ -1,0 +1,51 @@
+.rodriguez-wrapper {
+  width: 100%;
+  padding-left: 50%;
+}
+
+.rodriguez-container {
+  position: relative;
+  width: 200px;
+  transform: translateX(-50%);
+  padding-bottom: 20px;
+}
+
+.armless-body {
+  position: absolute;
+  z-index: 0;
+  left: 0px;
+}
+
+.left-arm {
+  position: absolute;
+  z-index: 10;
+  left: -9px;
+  top: 44px;
+  animation: flap_left_arm var(--flap-speed) infinite linear;
+  -moz-animation: flap_left_arm var(--flap-speed) infinite linear;
+  -webkit-animation: flap_left_arm var(--flap-speed) infinite linear;
+  -o-animation: flap_left_arm var(--flap-speed) infinite linear;
+}
+
+.right-arm {
+  position: absolute;
+  z-index: 10;
+  left: 97px;
+  top: 42px;
+  animation: flap_right_arm var(--flap-speed) infinite linear;
+  -moz-animation: flap_right_arm var(--flap-speed) infinite linear;
+  -webkit-animation: flap_right_arm var(--flap-speed) infinite linear;
+  -o-animation: flap_right_arm var(--flap-speed) infinite linear;
+}
+
+@keyframes flap_left_arm {
+  0% { transform: rotate(-12deg)}
+  50% { transform: rotate(12deg)}
+  100% { transform: rotate(-12deg) }
+}
+
+@keyframes flap_right_arm {
+  0% { transform: rotate(12deg)}
+  50% { transform: rotate(-12deg)}
+  100% { transform: rotate(12deg) }
+}

@@ -7,12 +7,12 @@
 }
 
 .setting-col {
-	color: var(--white);
+	color: var(--primary);
 	position: relative;
 }
 
 .setting-icon {
 	position: relative;
-	margin-top: 10px;
+	margin: 10px 0px;
 	margin-left: 44%;
 }

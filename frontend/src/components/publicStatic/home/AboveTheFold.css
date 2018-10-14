@@ -1,3 +1,20 @@
+
+.temp-signup {
+	font-weight: normal;
+	font-size: 30px;
+	margin: auto auto;
+	margin-top: calc(50vh - 50px);
+	transform: translateY(-50%);
+	margin-left: 10px;
+}
+
+.temp-signup-sub {
+	font-weight: normal;
+	font-size: 20px;
+	color: grey;
+	margin-left: 10px;
+}
+
 .letter-spacer {
 	letter-spacing: 1px;
 }
@@ -32,7 +49,7 @@
 	}
 
 	.atf-height {
-		height: 92vh;
+		height: calc(100vh - 50px);
 	}
 }
 

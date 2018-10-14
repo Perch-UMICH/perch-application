@@ -1,3 +1,7 @@
+.create-pos-container {
+	padding: 0px 20px;
+}
+
 #addQuestion {
 	float: right;
 	margin-right: 2px;
@@ -55,6 +59,12 @@
 }
 
 .create-position-row {
+	padding-top: 30px;
+	margin-left: -0.75rem;
 	margin-bottom: 0px;
 	padding-bottom: 0px;
+}
+
+.create-position-row-input {
+	margin-left: -0.75rem;
 }

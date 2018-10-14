@@ -11,7 +11,8 @@
 	--purple: #800080; /*CSS purple*/
     --error-yellow: #FFEA7B;
     --sunset-orange: #EF5350;
-    --red: #FF0000; /*CSS red*/
+	--red: #FF0000; /*CSS red*/
+	--dark-red: rgb(216, 16, 16); /*CSS red*/
 
     /*THEMES*/
     /*Blue*/
@@ -30,22 +31,18 @@
 	/*--primary: #ff913d;
 	--active: #73f0f4;
 	--highlight: #efbc4c;*/
-	/*Purple*/
-	/*--primary: #2f9395;
-	--active: #f7d909;
-	--highlight: #F16a43;*/
-	/*--highlight: #bababa;*/
 	/*Green*/
 	/*--primary: #547a82;
 	--active: #a2d4ab;
 	--highlight: #a2d4ab;*/
-	
+
 
 	/*Shades of grey are all that I see...*/
 	--white: #FFF; /*CSS white*/
 	--e-grey: #EEE;
 	--d-grey: #DDD;
 	--d-three-grey: #D3D3D3; /*CSS lightgrey*/
+	--e-eight-grey: #e8e8e8;
 	--b-grey: #BBB;
 	--eighty-grey: #808080; /*CSS grey*/
     --seventy-five-grey: #757575;
@@ -62,26 +59,31 @@
 	--shift-down: 30px;
 
 	/* Subteam Colors for Perchiodic Table */
-	--t0-color: #919191;
-	--t1-color: #5FC9FC;
-	--t2-color: #D4CE75;
-	--t3-color: #204AD9;
-	--t4-color: #ff9400;
-	--t5-color: #8155E2;
-	--t6-color: #4bbc3a;
-	--t7-color: #28e5ff;
-	--t8-color: #ff516b;
-	--t9-color: #FFCD3D;
-	--t10-color: #41f483;
-	--t11-color: #4bbc3a;
-	--t12-color: #41f483;
+	--t0-color: #A0A0A0;
+	--t1-color: #E5A2B5;
+	--t2-color: #29B6F6;
+	--t3-color: #DD5656;
+	--t4-color: #96B971;
+	--t5-color: #EDA53D;
+	--t6-color: #E7DE64;
+	--t7-color: #C3AACB;
+	--t8-color: #0277BD;
+	--t9-color: #8ED2C5;
+	--t10-color: #575757;
 
 	/* Border radius */
 	--border-radius-small: 20px;
 	--border-radius-large: 40px;
-	--border-radius-C: 0 var(--border-radius-small) 0 var(--border-radius-large);
-	--border-radius-L: 0 0 0 var(--border-radius-large);
-	--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;
+	/*--border-radius-C: 0 var(--border-radius-small) 0 var(--border-radius-large);*/
+	--border-radius-C: 4px;
+	--border-radius-L: 4px;
+	/*--border-radius-R: 0 var(--border-radius-small) var(--border-radius-large) 0;*/
+	--border-radius-R: 4px;
+
+	/* Animation Variables */
+	--flap-speed: 0.5s;
+	--dot-speed: 1s;
+	--loader-transition: linear;
 }
 
 ::selection {
@@ -136,7 +138,6 @@
 .gen-input:focus {
   border-bottom: 1px solid var(--active) !important;
   box-shadow: 0 1px 0 0 var(--active);
-  color: white !important;
 }
 
 .interest-editor {
@@ -162,10 +163,9 @@
 }
 
 body {
-	/*font-family: montserrat;*/
 	letter-spacing: 0.5px;
 	font-family: 'Raleway', sans-serif;
-	background-color: #e8e8e8 !important;
+	background-color: var(--e-eight-grey) !important;
 }
 
 .link-color {
@@ -221,14 +221,15 @@ ul.dropdown-content.select-dropdown li:not(.disabled) span {
 }
 
 h1 {
-	background-color: var(--primary);
+	/*background-color: var(--primary);*/
 	padding: 10px;
-	color: var(--lightish-blue);
+	color: darkgrey;
+	border-left: 5px solid var(--primary);
 	text-align: left;
-	padding-left: 20px;
+	padding-left: 15px;
 	text-transform: uppercase;
-	letter-spacing: 3px;
-	font-size: 16px;
+	letter-spacing: 1px;
+	font-size: 24px;
 	margin: 0;
 	font-weight: bolder;
 }
@@ -255,4 +256,12 @@ input:focus + label {
 
 .grabbable:active {
 	cursor: grabbing;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+{
+  -webkit-box-shadow: 0 0 0px 1000px none inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

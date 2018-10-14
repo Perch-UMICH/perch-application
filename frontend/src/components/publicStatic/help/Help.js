@@ -25,7 +25,7 @@ class Help extends Component {
 	render() {
 		return(
 			  <div id='help'>
-			  	<div className='about-header'>We got your back</div>
+			  	<div className='about-header'>We got <b>your</b> back</div>
 			  	<div id='help-video-wrapper'>
 			  		<video src={`/vids/${this.state.vid}`} controls/>
 			  	</div>

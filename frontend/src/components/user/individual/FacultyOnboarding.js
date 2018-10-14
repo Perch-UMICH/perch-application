@@ -13,6 +13,7 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
+import {getCurrentFacultyId, updateFaculty} from '../../../helper.js'
 
 class FacultyOnboarding extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class FacultyOnboarding extends Component {
   }
 
   redirect() {
-    window.location = '/prof/1';
+    window.location = `/prof/${getCurrentFacultyId()}`;
   }
 
   updateUser(field, newValue) {
@@ -48,9 +49,14 @@ class FacultyOnboarding extends Component {
     this.setState(newState);
   }
 
+  sendUpdate() {
+    console.log(this.state.user);
+    updateFaculty(getCurrentFacultyId(), this.state.user).then(r => console.log(r))
+  }
+
 	render() {
     var backBtn = <BasicButton msg='back' superClick={() => this.setState({curStep: this.state.curStep - 1})}/>;
-    var nextBtn = <BasicButton msg='next' superClick={() => this.setState({curStep: this.state.curStep + 1})}/>;
+    var nextBtn = <BasicButton msg='next' superClick={() => {this.setState({curStep: this.state.curStep + 1}); this.sendUpdate()}}/>;
     var stepToRender = this.state.steps[this.state.curStep];
     if (this.state.curStep === 0) {
       backBtn = null;

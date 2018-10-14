@@ -1,0 +1,67 @@
+.dot-loader-wrapper {
+  width: 100%;
+  padding-left: 50%;
+  z-index: 1000;
+}
+
+.dot-loader-container {
+  position: relative;
+  width: 90px;
+  transform: translateX(-50%);
+  padding-bottom: 20px;
+}
+
+.dot {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 40px;
+  background-color: var(--primary);
+  margin-right: 10px;
+  border: 2px solid var(--b-grey);
+}
+
+.dot-one {
+  animation: dot_one var(--dot-speed) infinite var(--loader-transition);
+  -moz-animation: dot_one var(--dot-speed) infinite var(--loader-transition);
+  -webkit-animation: dot_one var(--dot-speed) infinite var(--loader-transition);
+  -o-animation: dot_one var(--dot-speed) infinite var(--loader-transition);
+}
+
+.dot-two {
+  animation: dot_two var(--dot-speed) infinite var(--loader-transition);
+  -moz-animation: dot_two var(--dot-speed) infinite var(--loader-transition);
+  -webkit-animation: dot_two var(--dot-speed) infinite var(--loader-transition);
+  -o-animation: dot_two var(--dot-speed) infinite var(--loader-transition);
+}
+
+.dot-three {
+  animation: dot_three var(--dot-speed) infinite var(--loader-transition);
+  -moz-animation: dot_three var(--dot-speed) infinite var(--loader-transition);
+  -webkit-animation: dot_three var(--dot-speed) infinite var(--loader-transition);
+  -o-animation: dot_three var(--dot-speed) infinite var(--loader-transition);
+}
+
+@keyframes dot_one {
+  0% { background-color: var(--white)}
+  25% { background-color: var(--primary)}
+  50% { background-color: var(--white)}
+  75% { background-color: var(--white)}
+  100% { background-color: var(--white)}
+}
+
+@keyframes dot_two {
+  0% { background-color: var(--white)}
+  25% { background-color: var(--white)}
+  50% { background-color: var(--primary)}
+  75% { background-color: var(--white)}
+  100% { background-color: var(--white)}
+}
+
+@keyframes dot_three {
+  0% { background-color: var(--white)}
+  25% { background-color: var(--white)}
+  50% { background-color: var(--white)}
+  75% { background-color: var(--primary)}
+  100% { background-color: var(--white)}
+}

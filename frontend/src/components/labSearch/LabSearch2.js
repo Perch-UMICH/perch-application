@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import './LabSearch2.css';
 import ExpanderIcons from '../utilities/ExpanderIcons'
+import DotLoader from '../utilities/animations/DotLoader'
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';
-import {getAllLabs, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
+import {isStudent, getAllLabs, getSearchResults, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
 import {getFilters} from '../../data/filterData';
-
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
 const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Lab Skills'];
 
@@ -20,17 +20,13 @@ class LabSearch extends Component {
 		filterTypes.map(type => {
 			filts[type] = {};
 			parentFilts[type] = [];
-			// getFilters(type).map(filt => {
-			// 	if (!filt.isSubFilt) {
-			// 		parentFilts[type].push(filt);
-			// 	}
-			//   filts[type][filt.slug] = filt;
-			// })
 		})
 
 		this.state = {
 			filts,
 			parentFilts,
+			next: [],
+			ids_to_show: [],
             all_labs: [],
             areas: [],
             departments: [],
@@ -38,24 +34,60 @@ class LabSearch extends Component {
             skills: [],
 			s_id: '',
             search: '',
+            lab_list: [],
+			loading: true,
+			limit: 15,
 		}
 	}
 
-    componentWillMount() {
-        getAllLabs().then((resp) => {
-            var newState = this.state;
-            var all_labs = resp.data
-            //console.log(resp);
-            for (var key in all_labs) {
-                let lab = all_labs[key].data;
-                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
-            }
+	moreLabs() {
+		let positions = this.state.next,
+    		limit = this.state.limit,
+    		newState = {
+    			all_labs: this.state.all_labs,
+    		}
 
-            this.setState(newState);
-        });
+		if (positions.length > limit)
+			newState.next = positions.slice(limit)
+
+    	getSearchResults(positions.slice(0,limit)).then(r => {
+    		let all_labs = r.data.results
+    		for (var key in all_labs) {
+                let lab = all_labs[key];
+                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+            }
+        	newState.loading = false;
+        	this.setState(newState);
+    	})
+	}
+
+    componentWillMount() {
+    	let newState = {
+    		all_labs: [],
+    	}
+
+    	labSearch([],[],[],[],"")
+	    	.then(r => {
+	    		let positions = r.data.results
+	    		console.log('hwoh', positions)
+	    		let limit = this.state.limit
+	    		if (positions.length > limit)
+	    			newState.next = positions.slice(limit)
+	    		return getSearchResults(positions.slice(0,limit))
+	    	})
+	    	.then(r => {
+	    		let all_labs = r.data.results
+	    		for (var key in all_labs) {
+	                let lab = all_labs[key];
+	                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+	            }
+	        	newState.loading = false;
+            	this.setState(newState);
+	    	})
+
 
         getSearchData().then((resp) => {
-            //console.log(resp);
+            console.log(resp);
             let new_filts = this.state.filts;
             let new_parentFilts = this.state.parentFilts;
 
@@ -80,8 +112,7 @@ class LabSearch extends Component {
             });
 
             this.setState({filts: new_filts, parentFilts: new_parentFilts});
-            //console.log(this.state.filts);
-            //console.log(this.state.parentFilts);
+
         });
 
     }
@@ -94,6 +125,12 @@ class LabSearch extends Component {
 		this.expand("departments");
 		let search = document.getElementById('lab-srch-input')
 		search.addEventListener('keyup', this.updateSearch.bind(this))
+		if (isStudent()) {
+			getStudentFromUser(getCurrentUserId()).then((resp) => {
+				this.setState({lab_list: resp.data.position_list})
+			})
+		}
+
 	}
 
 	handleFilterClick(filterType, slug) {
@@ -134,36 +171,45 @@ class LabSearch extends Component {
             }
 		}
 		this.setState(newState);
+		this.executeSearch({key: 'Enter'})
 	}
 
 	closeModifiers() {
 		document.getElementById('lab-search-box').classList.add('hide');
 	}
 
-    updateSearch(event) {
-    	// event.preventDefault()
-    	// if (event.keyCode == 13) {
-    		//alert(event.keyCode)
-        	this.setState({search: event.target.value})
-        // }
-    }
+  updateSearch(event) {
+  	// event.preventDefault()
+  	// if (event.keyCode == 13) {
+  		//alert(event.keyCode)
+      	this.setState({search: event.target.value})
+      // }
+  }
 
-    executeSearch(event) {
-        if (event.key === 'Enter') {
-            labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search).then((resp) => {
-                var newState = this.state;
-                var all_search_labs = resp.data.results;
-                newState.all_labs = [];
-      
-                resp.data.results.map((lab) => {
-                    console.log(lab);
-                    newState.all_labs.push(<LabSearchItem name={lab.name} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
-                })
-
-                this.setState(newState);
-            })
-        }
-    }
+  executeSearch(event) {
+		if (event.key === 'Enter') {
+			this.setState({loading: true}, () => {
+				var newState = this.state;
+				console.log('LOOK')
+				console.log(this.state.departments)
+	       		labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search)
+	       			.then((r) => {
+				        newState.all_labs = [];
+			            let positions = r.data.results || r.data
+			    		let limit = this.state.limit
+			    		newState.next = positions.slice(limit)
+			    		return getSearchResults(positions.slice(0,limit))
+      				})
+      				.then((r) => {
+      					var all_search_labs = r.data.results;
+      					console.log(all_search_labs)
+      					all_search_labs.map(lab => newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>))
+      					newState.loading = false;
+		          		this.setState(newState);
+      				})
+		})
+	}
+  }
 
 	render() {
 		var filterContentArr = [];
@@ -183,7 +229,7 @@ class LabSearch extends Component {
 											<li key={subFilt.slug}>
 												<input type="checkbox"
 													className="checkbox-white filled-in"
-                                                    onClick={() => this.handleFilterClick(type, filt.slug)}
+                          onClick={() => this.handleFilterClick(type, filt.slug)}
 													id={subFilt.slug}/>
 												<label
 													className="filter-checkbox-label"
@@ -232,6 +278,19 @@ class LabSearch extends Component {
 					{filterContent}</div>);
 		})
 
+	var labSearchContent =
+     <div id='lab-srch-results'>
+          {this.state.all_labs}
+     </div>
+
+	var showMoreButton =
+     <div id='lab-srch-more' onClick={this.moreLabs.bind(this)}>Mo' labs, mo' problems</div>
+
+	if (this.state.loading) {
+		labSearchContent = <DotLoader />
+		showMoreButton = null;
+	}
+
 	var searchSideBar =
 		<div className="search-sidebar">
 			{filterTypes.map((type, idx) => {
@@ -247,16 +306,15 @@ class LabSearch extends Component {
 		</div>
 		return (
 			<div className='lab-srch-2'>
+
                <div className='lab-srch-mods'>
                    {searchSideBar}
                </div>
                <div className='lab-srch-body'>
                    <input id='lab-srch-input' type='text' placeholder='keywords' onKeyPress={event => this.executeSearch(event)}/>
-                   <div id='lab-srch-result-summary'>Projects 1-{this.state.all_labs.length} ({this.state.all_labs.length} total) {/*page 1 of 40*/} for <b>{this.state.search}</b></div>
-                   <div id='lab-srch-results'>
-                        {this.state.all_labs}
-                   </div>
-                   <div id='lab-srch-more' onClick={()=>{alert('load em')}}>Mo' labs, mo' problems</div>
+									 <div id='lab-srch-result-summary'>Projects 1-{this.state.all_labs.length} ({this.state.all_labs.length} total) {/*page 1 of 40*/} for <b>{this.state.search}</b></div>
+                   	{labSearchContent}
+					{this.state.next.length > 0 && showMoreButton}
                </div>
 			</div>
 		);

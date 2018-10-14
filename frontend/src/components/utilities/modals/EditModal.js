@@ -23,20 +23,30 @@ import './EditModal.css'
 class EditModal extends Component {
 
 	handleClose(event) {
-    document.getElementById(this.props.id).classList.remove('activated');
-    document.getElementById("greyBackdrop").classList.remove('activated');
+	    document.getElementById(this.props.id).classList.remove('activated');
+	    document.getElementById(`${this.props.id}-backdrop`).classList.remove('activated');
 	}
 
 	render() {
 		var contentCSS = this.props.noPadding ? "modal-content modal-no-padding" : "modal-content";
+		var bodyCSS = "modal modal-fixed-footer display-modal"
+		if (this.props.wide)
+			bodyCSS = "modal modal-fixed-footer wide-modal"
+		if (this.props.medium)
+			bodyCSS = "modal modal-fixed-footer medium-modal"
+		if (this.props.slim)
+			bodyCSS = "modal modal-fixed-footer slim-modal"
+
 		return(
 			<div>
-				<div id={this.props.id} className="modal modal-fixed-footer display-modal">
+				<div className="modal-backdrop" id={`${this.props.id}-backdrop`} />
+				<div id={this.props.id} className={bodyCSS}>
 					<h1>{this.props.title}</h1>
 			 		<div className={contentCSS}>
 						{this.props.children}
-          </div>
-          <div className="modal-footer">
+          			</div>
+		          	<div className="modal-footer">
+					  	{this.props.deleteFunc && <BasicButton superClick={() => {this.props.deleteFunc(); this.handleClose()}} delete={true} msg='delete' />}
 				     	<BasicButton superClick={this.handleClose.bind(this)} msg='close' />
 				     	<BasicButton
 								superClick={() => {
@@ -45,7 +55,7 @@ class EditModal extends Component {
 									}
 									this.handleClose();}}
 								msg={this.props.actionName ? this.props.actionName : "save"} />
-				  </div>
+				  	</div>
 			 	</div>
 			</div>
 		);

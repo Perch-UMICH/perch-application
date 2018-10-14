@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {getStudent, isLoggedIn, getCurrentUserId, getCurrentStudentId,
-				addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent,
-				removeWorkExperiencesFromStudent, createAndAddEduExperiencesToStudent,
-				addWorkExperiencesToStudent, addSkillsToStudent, verifyLogin, getStudentFromUser,
-				getStudentTags, getStudentSkills, getUser, updateStudent, deepCopy} from '../../../helper.js'
+import {getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkillsFromStudent,
+		removeWorkExperiencesFromStudent, addEduExperienceToStudent, updateEduExperienceOfStudent,
+		addWorkExperienceToStudent, addSkillsToStudent, getStudentFromUser,
+		getStudentTags, getStudentSkills, updateStudent, deepCopy, primeExternalLink,
+		uploadUserFile, getUserFile, exists} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -13,8 +13,6 @@ import NotableClasses from './NotableClasses'
 import PickYourInterests from './PickYourInterests'
 import {TwitterTimelineEmbed} from 'react-twitter-embed';
 import './StudentProfile.css';
-
-var FontAwesome = require('react-fontawesome');
 
 class StudentProfile extends Component {
 	constructor(props) {
@@ -26,6 +24,7 @@ class StudentProfile extends Component {
 			major: "",
 			year: "",
 			bio: "",
+			university: "",
 			contact_email: "",
 			contact_phone: "",
 			classes: [],
@@ -33,242 +32,222 @@ class StudentProfile extends Component {
 			linkedin: "",
 			skills: [],
 			interests: [],
+			work_experiences: [],
+			edu_experiences: [],
 			resume: "",
 			student: true,
 			s_id: "",
 			work_experiences: [],
 		}
-		var updated_user = deepCopy(user);
 		this.state = {
-			img_src: '/img/meha.jpg',
-			endorsements: [
-				{
-					name: 'Dr. Ed Einstein',
-					url: '/prof-page'
-				},
-				{
-					name: 'Dr. Mary Poppins',
-					url: 'prof-page'
-				},
-			],
-			classes: [],
-			not_student: false,
-			tempskills: [{name: 'python'}, {name: 'javascript'}, {name: 'HTML 5'}, {name: 'CSS 3'}, {name: 'C++'}, {name: 'Splunk'}, {name: 'matLab'}],
-			tempinterests: [{name: 'Computer Science'}, {name: 'Computer Security'}, {name: 'Software Development'}, {name: 'Management'}, {name: 'Design'}],
-			user,
-			updated_user,
-			prevField: "",
+			user, 
+			updated_user: deepCopy(user),
 		}
 	}
 
+	// this just updates the state object, not the backend
 	updateUser(field, newValue) {
-    var newState = this.state;
-    newState.updated_user[field] = newValue;
-		if (field === 'classes') {
+	    var newState = this.state;
+	    newState.updated_user[field] = newValue;
+		if (field === 'classes')
 			newState.classes = newValue;
-		}
-    this.setState(newState, () => {
-		});
-  }
+	    this.setState(newState, () => console.log("updated", field, newValue));
+	  }
 
-	sendUpdate() {
-		var updated_user = this.state.updated_user;
-		var nameArr = updated_user && updated_user.name ? updated_user.name.split(' ') : [];
-    var first_name = nameArr[0] ? nameArr[0]: "";
-    var last_name = nameArr[1] ? nameArr[1] : "";
-		// need school,
-		var classes = "";
-		var class_arr = [];
-		if (updated_user.classes) {
-			updated_user.classes.map(c => {
-				classes += c.text + ',';
-				class_arr.push(c.text);
-			})
-		}
-		createAndAddEduExperiencesToStudent(class_arr).then();
-		updateStudent(first_name, last_name, updated_user.contact_email, updated_user.year, updated_user.bio, updated_user.major, updated_user.gpa, updated_user.classes, updated_user.experiences, updated_user.linkedin_link, updated_user.website_link)
-		.then(r => {
-			this.generalHandler();
-		});
-	}
-
+  	// sends work experiences to the backend
 	sendExperiences() {
-		console.log("WORK EXP??", this.state.updated_user.work_experiences)
 		if (this.state.updated_user.work_experiences) {
 			var idsToRemove = [];
-			if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
-				this.state.user.work_experiences.map(exp => {
-					idsToRemove.push(exp.id);
+			if (exists(this.state.user.work_experiences)) 
+				this.state.user.work_experiences.map(exp => idsToRemove.push(exp.id))
+			removeWorkExperiencesFromStudent(idsToRemove)
+				.then(r => {
+					if (exists(this.state.updated_user.work_experiences)) 
+						this.state.updated_user.work_experiences.map(exp => addWorkExperienceToStudent(exp).then(r => this.generalHandler()))
 				})
-			}
-			removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-				addWorkExperiencesToStudent(this.state.updated_user.work_experiences).then(r => {
-					this.generalHandler();
-				});
-			})
 		}
-		/*
-		updateStudent(null, null, null, null, null, null, null, this.state.updated_user.experiences, null, null)
-		.then(r => {
-			this.generalHandler();
-		});*/
 	}
 
-	sendClasses() {
-		var classes = "";
-		var class_arr = [];
-		if (this.state.updated_user.classes) {
-			this.state.updated_user.classes.map(c => {
-				classes += c.text + ',';
-				class_arr.push(c.text);
+	sendEduExp(edu_exp) {
+		if (this.state.user.edu_experiences.length)
+			updateEduExperienceOfStudent(this.state.user.edu_experiences[0].id, edu_exp).then((resp) => {
+				console.log("CLASSES RESP!!!", resp)
+				this.generalHandler() })
+		else 
+			addEduExperienceToStudent(edu_exp).then((resp) => {
+				console.log("CLASSES RESP!!!", resp)
+				this.generalHandler();
 			})
+	}
+
+	// send classes to the backend
+	sendClasses() {
+		let class_arr = [];
+		if (exists(this.state.updated_user.classes))
+			this.state.updated_user.classes.map(c => class_arr.push(c.name))
+
+		let edu_exp = {
+			university_name: this.state.user.university,
+			start_date: 'Start',
+			end_date: 'End',
+			current: true,
+			class_experience_names: class_arr,
+			major_names: [this.state.user.major],
 		}
-		console.log("CLASS ARR")
-		//(university_name, start_date, end_date, current, class_experience_names, major_names)
-		createAndAddEduExperiencesToStudent("Cool university", "start date", "end-date", true, "soph", "9.9", class_arr, this.state.updated_user.major).then(r => {
-			console.log("experience update resp", r);
-			this.generalHandler();
-		});
+		this.sendEduExp(edu_exp);
 	}
 
 	sendHeaderInfo() {
-		var nameArr = this.state.updated_user && this.state.updated_user.name ? this.state.updated_user.name.split(' ') : [];
-    var first_name = nameArr[0] ? nameArr[0]: "";
-    var last_name = nameArr[1] ? nameArr[1] : "";
-		updateStudent(first_name, last_name, null, null, null, null, null, null, null)
-		.then(r => {
-			this.generalHandler();
-		});
+	    var name = this.state.updated_user.name
+	    // build class array
+		var class_arr = [];
+		if (this.state.user.classes) 
+			this.state.user.classes.map(c => class_arr.push(c.name))
+		// update profile picture
+		if (this.state.updated_user.img) {
+			console.log(this.state.updated_user.img)
+			let formData = new FormData();
+			formData.append('file', this.state.updated_user.img);
+			let to_return = {
+	            formData: formData,
+	            type: 'profile_pic'
+	        }
+			uploadUserFile(to_return, 'profile_pic')
+				.then(r => console.log(r))
+				.catch(e => console.log(e))
+		}
+		// update name, school, general handler
+		updateStudent({first_name: name})
+			.then(r => addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, [this.state.user.major]))
+			.then((resp) => this.generalHandler());
 	}
 
 	sendLinks() {
-		updateStudent(null, null, null, null, null, this.state.updated_user.linkedin_link, this.state.updated_user.website_link, null, null, null)
-		.then(r => {
-			this.generalHandler();
-		});
+		updateStudent({linkedin_link: primeExternalLink(this.state.updated_user.linkedin_link), website_link: primeExternalLink(this.state.updated_user.website_link)})
+			.then(r => this.generalHandler());
 	}
 
 	sendAcademicInfo() {
-		updateStudent(null, null, null, this.state.updated_user.year, null, this.state.updated_user.major, this.state.updated_user.gpa, null, null, null)
-		.then(r => {
-			this.generalHandler();
-		});
+		var major_arr = [this.state.updated_user.major];
+		var class_arr = [];
+		if (this.state.user.classes) 
+			this.state.user.classes.map(c => class_arr.push(c.name))
+		let edu_exp = {
+			university_name: this.state.user.university || 'University of Michigan',
+			start_date: 'Start',
+			end_date: 'End',
+			current: true,
+			class_experience_names: class_arr || [],
+			major_names: [this.state.user.major],
+		}
+		this.sendEduExp(edu_exp);
 	}
 
 	sendContactInfo() {
-		updateStudent(null, null, this.state.updated_user.contact_email, null, null, null, null, null, null, null)
-		.then(r => {
-			console.log("update response", r);
-			this.generalHandler();
-		});
+		updateStudent({contact_email: this.state.updated_user.contact_email, contact_phone: this.state.updated_user.contact_phone})
+			.then(r => this.generalHandler());
 	}
 
 	sendBio() {
-		updateStudent(null, null, null, null, null, this.state.updated_user.bio, null, null, null, null, null)
-		.then(r => {
-			this.generalHandler();
-		});
+		updateStudent({bio: this.state.updated_user.bio})
+			.then(r => this.generalHandler());
 	}
 
 	updateTags() {
-		var skillIds = [];
-		var intIds = [];
-		var updated_user = this.state.updated_user;
-		var skill_match = {};
-		var int_match = {};
-		var skill_diff = [];
-		var int_diff = [];
-		if (updated_user.skills && updated_user.skills.length) {
+		var skillIds = [],
+			intIds = [],
+			updated_user = this.state.updated_user,
+			skill_match = {},
+			int_match = {},
+			skill_diff = [],
+			int_diff = [];
+
+		if (exists(updated_user.skills)) {
 			updated_user.skills.map(skill => {
 				skillIds.push(skill.id);
 				skill_match[skill.id] = true;
 			})
 		}
-		if (updated_user.interests && updated_user.interests.length) {
+		if (exists(updated_user.interests)) {
 			updated_user.interests.map(interest => {
 				intIds.push(interest.id);
 				int_match[interest.id] = true;
 			})
 		}
-		if (this.state.user.skills && this.state.user.skills.length) {
+		if (exists(this.state.user.skills)) {
 			this.state.user.skills.map(skill => {
-				if (!skill_match[skill.id]) {
+				if (!skill_match[skill.id]) 
 					skill_diff.push(skill.id);
-				}
 			})
 		}
-		if (this.state.user.interests && this.state.user.interests.length) {
+		if (exists(this.state.user.interests)) {
 			this.state.user.interests.map(interest => {
-				if (!int_match[interest.id]) {
+				if (!int_match[interest.id]) 
 					int_diff.push(interest.id);
-				}
 			})
 		}
-		addTagsToStudent(intIds).then(r => {
-			addSkillsToStudent(skillIds).then(r => {
-				removeTagsFromStudent(int_diff).then(r => {
-					removeSkillsFromStudent(skill_diff).then(r => {
-						this.generalHandler();
-					})
-				})
-			});
-		});
+		addTagsToStudent(intIds)
+			.then(r => addSkillsToStudent(skillIds))
+			.then(r => removeTagsFromStudent(int_diff))
+			.then(r => removeSkillsFromStudent(skill_diff))
+			.then(r => this.generalHandler())
 	}
 
-	updateExperience() {
-		console.log("WORK EXP??", this.state.updated_ser.work_experiences)
-		if (this.state.updated_user.work_experiences) {
-			var idsToRemove = [];
-			if (this.state.user.work_experiences && this.state.user.work_experiences.length) {
-				this.state.user.work_experiences.map(exp => {
-					idsToRemove.push(exp.id);
-				})
-			}
-			removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-				addWorkExperiencesToStudent(this.state.updated_user.work_experiences).then(r => {
-					this.generalHandler();
-				});
-			})
-		}
-	}
-
-	// Handles retrieving skilsl and tags
+	// Handles retrieving skills and tags
 	retrieveTags() {
-		var newState = this.state;
-		var skills = [];
-		var interests = [];
+		var newState = this.state,
+			skills = [],
+			interests = []
+
 		getStudentSkills(getCurrentStudentId())
-		.then(skillsResp => {
-			if (skillsResp.data) {
-				newState.user.skills = skillsResp.data
-			}
-			getStudentTags(getCurrentStudentId())
+			.then(skillsResp => {
+				if (skillsResp.data)
+					newState.user.skills = skillsResp.data
+			})
+
+		getStudentTags(getCurrentStudentId())
 			.then(tagsResp => {
-				if (tagsResp.data) {
+				if (tagsResp.data) 
 					newState.user.interests = tagsResp.data
-				}
 				this.setState(newState);
-				});
-		});
+			})
 	}
 
 	// Handles data for page
 	generalHandler() {
 			let id = this.retrieveSlug();
-			getStudentFromUser(id).then((resp) => {
-				var class_arr = [];
-				if (resp.data && resp.data.classes) {
-					resp.data.classes.split(',').map((name, index) => {
-						class_arr.push({name, index});
-					})
+			var user = {}
+			getStudentFromUser(id)
+			.then((resp) => {
+				console.log(resp)
+				var class_arr = [],
+					major = "",
+					gpa = "",
+					year = "",
+					university = ""
+
+				if (exists(resp.data.edu_experiences)) {
+					var eduExp = resp.data.edu_experiences.slice(-1)[0];
+					if (exists(eduExp.majors))
+						major = eduExp.majors[0] || "";
+					if (exists(eduExp.classes))
+						class_arr = eduExp.classes;
+					if (exists(eduExp.gpa))
+						gpa = eduExp.gpa;
+					if (exists(eduExp.year))
+						year = eduExp.year;
+					if (exists(eduExp.university))
+						university = eduExp.university.name;
 				}
-				console.log("GENERAL HANDLER", resp);
-				var user = {
-					name: `${resp.data.first_name} ${resp.data.last_name}`,
-					gpa: resp.data.gpa,
-					major: resp.data.major,
-					year: resp.data.year,
-					bio: resp.data.bio,
+
+				user = {
+					name: resp.data.first_name,
+					user_id: resp.data.user_id,
+					gpa,
+					major,
+					year,
+					university,
+					bio: resp.data.bio || "",
 					contact_email: resp.data.contact_email,
 					contact_phone: resp.data.contact_phone,
 					classes: class_arr,
@@ -277,17 +256,32 @@ class StudentProfile extends Component {
 					linkedin_link: resp.data.linkedin_link,
 					website_link: resp.data.website_link,
 					resume: resp.data.resume_path,
-					skills: resp.data.skills ? resp.data.skills : [],
-					interests: resp.data.tags ? resp.data.tags : [],
+					skills: resp.data.skills || [],
+					interests: resp.data.tags || [],
+					work_experiences: resp.data.work_experiences,
+					edu_experiences: resp.data.edu_experiences,
 					student: true,
 					s_id: resp.data.id,
-					work_experiences: [],
 				}
-				var updated_user = deepCopy(user);
-        this.setState({
-					user, updated_user
-				});
+				// var updated_user = deepCopy(user);
+		  //       this.setState({
+				// 	user, updated_user
+				// });
 			})
+			.then(r => getUserFile('profile_pic', user.user_id))
+			.then(r => {
+				user.img = r.data.file.url,
+				console.log(user.img)
+			})
+			.catch(e => console.log(e))
+			.then(r => {
+				var updated_user = deepCopy(user);
+				this.setState({user, updated_user});
+			})
+			// getUserFile('profile_pic').then(resp => {
+			// 	console.log('trying to get profile pic')
+			// 	// console.log("RESP!!!", resp);
+			// })
 	}
 
 	// Retrives slug from url
@@ -303,6 +297,11 @@ class StudentProfile extends Component {
 
 	// Beginning point for data handling
 	componentDidMount() {
+		// getUserFile('profile_pic')
+		// .then(r=>{
+		// 	console.log(r)
+		// })
+		// .catch(e => console.log(e))
 		this.generalHandler();
 	}
 
@@ -310,22 +309,22 @@ class StudentProfile extends Component {
 	openModal(id) {
 		if (document.getElementById(id)) {
 			document.getElementById(id).classList.add('activated');
-			document.getElementById("greyBackdrop").classList.add('activated');
+			document.getElementById(`${id}-backdrop`).classList.add('activated');
 		}
 	}
 
 	render() {
 		var linkedinLink, resumeLink = null;
-		if (this.state.user.linkedin_link) {
+		if (exists(this.state.user.linkedin_link)) {
 			linkedinLink = this.state.user.linkedin_link;
 		}
-		if (this.state.user.resume_path) {
+		if (exists(this.state.user.resume_path)) {
 			resumeLink = this.state.user.resume_path;
 		}
-		else if (this.state.user.website_link) {
+		else if (exists(this.state.user.website_link)) {
 			resumeLink = this.state.user.website_link;
 		}
-		else if (this.state.user.resume) {
+		else if (exists(this.state.user.resume)) {
 			resumeLink = this.state.user.resume;
 		}
 		if (!true) {//(!isLoggedIn()) {
@@ -335,7 +334,6 @@ class StudentProfile extends Component {
 		} else {
 	 	return (
 	 		<div id='user-content-body'>
-				<div id="greyBackdrop" className="modal-backdrop"></div>
 				<EditModal id="skills-interests-edit" title="Edit Skills and Interests" modalAction={this.updateTags.bind(this)} noPadding={true}>
 					<PickYourInterests modalEdit={true} editorOnly={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal >
@@ -351,8 +349,8 @@ class StudentProfile extends Component {
 				<EditModal id="work-edit" title="Edit Work Info" modalAction={this.sendExperiences.bind(this)}>
 					<EditExperience type="work" modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				<EditModal id="education-edit" title="Edit Education Info" modalAction={this.sendClasses.bind(this)}>
-					<EditClasses modalEdit={true} updateUser={this.updateUser.bind(this)}/>
+				<EditModal id="education-edit" title="Edit Classes" modalAction={this.sendClasses.bind(this)}>
+					<EditClasses modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="bio-edit" title="Edit Bio" modalAction={this.sendBio.bind(this)}>
 					<EditBio modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
@@ -390,7 +388,7 @@ class StudentProfile extends Component {
 	 			<div id='user-column-R'>
 	 				<TwitterTimelineEmbed
 					  sourceType="profile"
-					  screenName="UROPumich"
+					  screenName="UMichResearch"
 					  options={{height: 'calc(100vh - 200px)'}}
 					/>
 	 			</div>
@@ -400,14 +398,14 @@ class StudentProfile extends Component {
 	 						<img id='user-quickview-img' src={this.state.user.img ? this.state.user.img : '/img/rodriguez.jpg'}/>
 	 					</div>
 	 					<div style={{position: 'relative'}}>
-		 					<img id='user-quickview-coverimage' src='https://d1w9csuen3k837.cloudfront.net/Pictures/1120xAny/0/8/1/135081_Index-and-hero---A-picture-is-worth-a-thousand-word.jpg' />
+		 					{/*<img id='user-quickview-coverimage' src='https://www.idcwonline.com.au/WebRoot/ecshared01/Shops/shsh11971/543D/EABA/662D/F139/1B09/AC10/0040/8D0F/cards_single_lightblue.png' />
 		 					<div id='user-quickview-footer'>
-								{this.state.user.school}
-							</div>
+								{this.state.user.university}
+							</div>*/}
 		 					<div id='user-quickview-name'>{this.state.user.name}</div>
 	 					</div>
 	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>
-	 					<div style={{backgroundColor: 'white', position: 'absolute', top: '0', right: '0', width: '45px', height: '40px', borderRadius: '10px'}}><Editor superClick={() => this.openModal('quickview-edit')}/></div>
+	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 	 				</div>
 	 				<div id='user-bio'>
 	 					<h1>Bio</h1>
@@ -419,11 +417,13 @@ class StudentProfile extends Component {
 	 					<UserWorkExperience expObjs={this.state.user.work_experiences}/>
 	 					<Editor superClick={() => this.openModal('work-edit')}/>
 	 				</div>
+					{/* Removing classes b/c they don't feel particularly relevant...
 	 				<div id='user-education'>
-	 					<h1>Education</h1>
-	 					<UserEducation expObj={this.state.classes}/>
+	 					<h1>Classes</h1>
+	 					<UserEducation classes={this.state.user.classes}/>
 	 					<Editor superClick={() => this.openModal('education-edit')}/>
 	 				</div>
+					*/}
 	 			</div>
 			</div>
 
@@ -431,6 +431,7 @@ class StudentProfile extends Component {
 	 }
 	}
 }
+
 
 
 class StudentClasses extends Component {
@@ -494,8 +495,19 @@ class UserWorkExperience extends Component {
 class UserEducation extends Component {
 	constructor(props) {
 		super(props)
+		var classes = [];
+		if (exists(props.classes)) {
+			classes: props.classes;
+		}
 		this.state = {
 			showExpander: false,
+			classes
+		}
+	}
+
+	componentWillReceiveProps(props) {
+		if (exists(props.classes)) {
+			this.setState({classes: props.classes})
 		}
 	}
 
@@ -506,8 +518,8 @@ class UserEducation extends Component {
 	render() {
 		return(
 			<div className='user-classes'>
-				{this.props.expObj.map(classObj => {
-					return(<div>{classObj.text}</div>)
+				{this.state.classes.map(classObj => {
+					return(<div key={classObj.id}>{classObj.name}</div>)
 				})}
 			</div>
 		)
@@ -522,8 +534,8 @@ class UserBio extends Component {
 		}
 	}
 
-	componentDidMount() {
-		if (this.props.children.length >= 380)
+	componentWillReceiveProps() {
+		// if (this.props.children.length >= 280)
 			this.setState({showExpander: true})
 	}
 
@@ -545,7 +557,7 @@ class SkillsInterests extends Component {
 	openModal(id) {
 		if (document.getElementById(id)) {
 			document.getElementById(id).classList.add('activated');
-			document.getElementById("greyBackdrop").classList.add('activated');
+			document.getElementById(`${id}-backdrop`).classList.add('activated');
 		}
 	}
 

@@ -1,0 +1,60 @@
+/*Join.css*/
+
+.join-content {
+	padding: 40px 100px;
+	width: 100%;
+	position: absolute;
+	margin: auto auto;
+	height: auto;
+	background-color: white;
+}
+
+.join-header {
+	font-size: 60px;
+	text-transform: uppercase;
+	font-weight: 400;
+	width: 700px;
+	margin-left: 16px;
+	/*margin: auto auto;*/
+	color: var(--primary);
+	/*text-align: center;*/
+}
+
+.join-sub-header {
+	color: grey;
+	text-align: left;
+	padding: 16px;
+	font-size: 25px;
+}
+
+.join-position {
+	padding: 15px;
+	margin: 20px 0px;
+	border-bottom: 1px solid lightgrey;
+	width: auto;
+}
+
+.join-position-title {
+	color: var(--primary);
+	font-weight: bolder;
+	text-align: left;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.join-position-sub-title {
+	color: var(--primary);
+	text-align: left;
+	font-size: 18px;
+}
+
+.join-position-list {
+	margin: 2px;
+	padding: 0px;
+}
+
+.join-position-list-item {
+	font-size: 16px;
+	color: var(--six-grey);
+	margin-left: 25px;
+}

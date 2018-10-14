@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, /*getFacultyLabs*/} from '../../helper.js'
+import EditModal from './modals/EditModal'
+import {isLoggedIn, logoutCurrentUser, getCurrentUserId, getUser, getFacultyFromUser, getCurrentLabId, isStudent, isLab, isFaculty, getCurrentFacultyId /*getFacultyLabs*/} from '../../helper.js'
 import './NavBar.css'
 
 class NavBar extends Component {
@@ -7,19 +8,21 @@ class NavBar extends Component {
 		super(props);
 		this.state = {
 			is_student: false,
+			lab: {},
+			lab_id: 0,
 		};
 	}
 
 	componentDidMount() {
 		if (isStudent()) {
-			this.setState({ 
-				is_student: true, 
+			this.setState({
+				is_student: true,
 				prof_dest: `/student-profile/${getCurrentUserId()}`,
 			});
-		} else if (isLab()) {
-			this.setState({ 
-				is_student: false, 
-				prof_dest: `/prof-page/${getCurrentLabId()}`,
+		} else if (isFaculty()) {
+			this.setState({
+				is_student: false,
+				prof_dest: `/prof/${getCurrentFacultyId()}`,
 			});
 		}
 	}
@@ -29,8 +32,9 @@ class NavBar extends Component {
 		if (isLoggedIn()) {
 			var navItems = <div>
 				<li><a className="nav-item" href={this.state.prof_dest}>PROFILE</a></li>
-			    <li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>
-			    <li><a className="nav-item" href="/dashboard">SAVED</a></li>
+			    {<li><a className="nav-item" href="/lab-match">PROJECTBOOK</a></li>}
+			    {isStudent() && <li><a className="nav-item" href="/dashboard">YOUR PROJECTS</a></li>}
+			    {isFaculty() && <li><a className="nav-item" href="/dashboard">YOUR LABS</a></li>}
 			    <li><a className="nav-item" href="/help">HELP</a></li>
 			    <li><a className="nav-item" href="/settings">SETTINGS</a></li>
 			    <li><a className="nav-item" onClick={logoutCurrentUser} href="/">LOGOUT</a></li>
@@ -39,8 +43,9 @@ class NavBar extends Component {
 		else {
 			var navItems = <div>
 				<li><a className="nav-item" href="/about">ABOUT</a></li>
-				<li><a className="nav-item" href="/help">DEMO</a></li>
-			    <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
+				{/*<li><a className="nav-item" href="/help">DEMO</a></li>*/}
+				<li><a className="nav-item" href="/join">JOIN THE TEAM</a></li>
+			  <li><a className="nav-item contact-nav" href="/login">LOGIN</a></li>
 			</div>
 		}
 
@@ -50,9 +55,9 @@ class NavBar extends Component {
 			      <div className="nav-wrapper">
 			        <a href="#" data-activates="mobile-demo" className="right button-collapse hide-on-large-only"><i id="hamburger" className="material-icons">menu</i></a>
 			      <ul id="nav-mobile" className="right hide-on-med-and-down">
-			  
+
 			        {navItems}
-		
+
 			      </ul>
 			        <ul className="left hide-on-small-only">
 			        {!isLoggedIn() &&
@@ -72,7 +77,7 @@ class NavBar extends Component {
 			        </ul>
 			      </div>
 			      <div className='right'>
-			      
+
 			      </div>
 			    </nav>
 
@@ -80,6 +85,6 @@ class NavBar extends Component {
 		);
 	}
 }
-	
+
 
 export default NavBar;

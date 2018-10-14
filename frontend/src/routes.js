@@ -26,12 +26,15 @@ import GroupPage from './components/user/group/GroupPage';
 import LabDashboard from './components/labSearch/LabDashboard';
 import StudentOnboarding from './components/user/individual/StudentOnboarding';
 import FacultyOnboarding from './components/user/individual/FacultyOnboarding';
-import Help from './components/publicStatic/help/Help'
+import Help from './components/publicStatic/help/Help';
+import Join from './components/publicStatic/join/Join';
+import CreateLab from './components/user/CreateLab';
+import Challenge from './components/publicStatic/join/Challenge';
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
 
-import UserTest from './UserTest';
+import UserTest from './components/utilities/tests/UserTest';
 
 class Router extends Component {
 	render() {
@@ -52,7 +55,7 @@ class Router extends Component {
 							<Route path='/lab-match' component={ LabMatch }/>
 							<Route path='/prof-page' component={ GroupPage }/>
 							<Route path='/prof/:profSlug' component={ ProfPage }/>
-							<Route path='/apply/:labSlug' component={ Apply } />
+							<Route path='/apply/:labId' component={ Apply } />
 							<Route path='/create-position' component={ CreatePosition } />
 							<Route path='/view-applicants' component={ ViewApplicants } />
 							<Route path='/view-applicants/:posId' component={ ViewApplicants } />
@@ -70,7 +73,10 @@ class Router extends Component {
 							<Route path='/student-onboarding' component={ StudentOnboarding } />
 							<Route path='/faculty-onboarding' component={ FacultyOnboarding } />
 							<Route path='/help' component={ Help } />
+							<Route path='/join' component= { Join } />
 							<Route path='/test' component={ UserTest } />
+							<Route path='/challenge' component={ Challenge } />
+							<Route path='/create-lab' component={ CreateLab } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>

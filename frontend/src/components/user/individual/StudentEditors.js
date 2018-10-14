@@ -27,7 +27,10 @@ export class EditLinks extends Component {
 		this.state = { linkedin_link, resume, website_link	}
 	}
 
-	componentDidUpdate(props) {
+	componentWillReceiveProps(props) {
+		var resume = "";
+		var linkedin_link = "";
+		var website_link = "";
 		if (props.user) {
 			if (props.user.website_link) {
 				resume = props.user.website_link;
@@ -117,23 +120,30 @@ export class EditContact extends Component {
 			if (props.user.contact_email) {
 				this.setState({contact_email: props.user.contact_email})
 			}
-			if (props.user.phone) {
+			if (props.user.contact_phone) {
 				this.setState({contact_phone: props.user.contact_phone})
 			}
 		}
 	}
 
 	render() {
+		var emailSection =
+			<div className='input-field'>
+				<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.contact_email}
+				onChange={(e) => {
+					if (this.props.updateUser) {
+						this.props.updateUser("contact_email", e.target.value); }
+					this.setState({contact_email: e.target.value})}}/>
+				<label htmlFor='email' className="active">Email</label>
+			</div>
+
+		if (this.props.noEmail) {
+			emailSection = null;
+		}
+
 		return(
 			<form id='edit-contact-info'>
-				<div className='input-field'>
-					<input id='email' type='email' placeholder='bearb@umich.edu' value={this.state.contact_email}
-					onChange={(e) => {
-						if (this.props.updateUser) {
-							this.props.updateUser("contact_email", e.target.value); }
-						this.setState({contact_email: e.target.value})}}/>
-					<label htmlFor='email' className="active">Email</label>
-				</div>
+				{emailSection}
 				<div className='input-field'>
 					<input type='text' id='phone-number' placeholder='815-262-4141' value={this.state.contact_phone}
 					onChange={(e) => {
@@ -157,7 +167,6 @@ export class EditBio extends Component {
 	}
 
 	componentWillReceiveProps(props) {
-		console.log("bioooo", props)
 		if (props.user && props.user.bio) {
 			this.setState({bio: props.user.bio})
 		}
@@ -187,7 +196,7 @@ export class EditClasses extends Component {
 		this.addClass = this.addClass.bind(this)
 		this.alterClass = this.alterClass.bind(this)
 		this.removeClass = this.removeClass.bind(this)
-		var class_arr = props.user && props.user.classes ? props.user.classes : [{ id: 'c_0', text: '' }]
+		var class_arr = props.user && props.user.classes  && props.user.classes.length ? props.user.classes : [{ id: 'c_0', name: '' }]
 		this.state = {
 			class_arr,
 		}
@@ -199,7 +208,7 @@ export class EditClasses extends Component {
 		var newClassText = '';
 		var newClass = {
 			"id": newClassID,
-			"text": newClassText
+			"name": newClassText
 		};
 		var newCIndex = this.state.c_index + 1;
 		var updated_classes = this.state.class_arr.concat([newClass]);
@@ -215,7 +224,7 @@ export class EditClasses extends Component {
 	alterClass(event, class_id) {
 		var temp_classes = this.state.class_arr;
 		var index = temp_classes.findIndex(item => item.id === class_id);
-		temp_classes[index].text = event.target.value;
+		temp_classes[index].name = event.target.value;
 		this.setState({
 			class_arr: temp_classes,
 		});
@@ -245,7 +254,7 @@ export class EditClasses extends Component {
 					return (
 						<div className="row" key={c.id}>
 							<div className="input-field col s11">
-								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.text} onChange={(e) => this.alterClass(e, c.id)}/>
+								<input id='title' type='text' name="title" placeholder="Class Name (e.g. EECS 281)" value={c.name} onChange={(e) => this.alterClass(e, c.id)}/>
 							</div>
 							<div className="col s1">
 								<a id={c.id} onClick={() => this.removeClass(c.id)}><i className="material-icons remove-class">clear</i></a>
@@ -356,8 +365,7 @@ export class EditExperience extends Component {
 
 	render() {
 		var experiences = [];
-		for (var i = 0; i < this.state.objs.length; ++i) {
-			var obj = this.state.objs[i];
+		this.state.objs.map(obj => {
 			experiences.push(
 				<div key={obj.id}>
 					<div className="row">
@@ -383,7 +391,7 @@ export class EditExperience extends Component {
 					</div>
 					<div className="edit-experience-hr" />
 				</div>)
-		}
+		})
 
 		return(
 			<form id='edit-experience'>
@@ -399,28 +407,24 @@ export class EditExperience extends Component {
 export class EditQuickview extends Component {
 	constructor(props) {
 		super(props)
-		var name = "";
-		if (props.user) {
-			if (props.user.first_name) {
-				name = props.user.first_name + " ";
-			}
-			if (props.user.last_name) {
-				name += props.user.last_name
-			}
-		}
 		this.state = {
 			image: props.user && props.user.img ? props.user.img : props.img,
 			rotate: 0,
 			scale: 1.5,
-			name,
-			school: props.user && props.user.school ? props.user.school : "",
+			name: props.user && props.user.name ? props.user.name : '',
+			university: props.user && props.user.university ? props.user.university : "",
+			crop: {}
 		}
 	}
 
 	componentWillReceiveProps(props) {
+		var name = "";
 		if (props.user) {
-			if (props.user.school) {
-				this.setState({school: props.user.school})
+			if (props.user.name) {
+				this.setState({name: props.user.name})
+			}
+			if (props.user.university) {
+				this.setState({university: props.user.university})
 			}
 			if (props.user.img) {
 				this.setState({image: props.user.img})
@@ -452,23 +456,35 @@ export class EditQuickview extends Component {
 		})
 	}
 
-	componentDidUpdate() {
-	}
-
 	render() {
 		var schoolSection =
 			<div className='input-field'>
-				<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.school}
+				<input id='profile-school' type='text' placeholder='Hogwarts' value={this.state.university}
 					onChange={(e) => {
 						if (this.props.updateUser) {
-							this.props.updateUser("school", e.target.value)}
-						this.setState({school: e.target.value})
+							this.props.updateUser("university", e.target.value)}
+						this.setState({university: e.target.value})
 					}}/>
 				<label htmlFor='profile-school' className="active" >School</label>
 			</div>
 
+		var nameSection =
+			<div className='input-field'>
+   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' value={this.state.name}
+				 	onChange={(e) => {
+						this.setState({name: e.target.value})
+						if (this.props.updateUser) {
+							this.props.updateUser("first_name", e.target.value)}
+					}}/>
+   			<label htmlFor='profile-name' className="active" >Name</label>
+   		</div>
+
 		if (this.props.showNoSchool) {
 			schoolSection = null;
+			nameSection =
+			<div className="onboarding-text">
+			Add a profile photo and edit using the slider and rotate tool below.
+			<br/><br/>Or, by default, stick with our friendly mascot, Rodriguez!</div>
 		}
 
 		return(
@@ -487,7 +503,9 @@ export class EditQuickview extends Component {
 					        color={[0, 0, 0, 0.2]}
 					        scale={this.state.scale}
 					        rotate={this.state.rotate}
-					        className='grabbable'/>
+					        className='grabbable'
+					        onPositionChange={crop => this.setState(crop)}/>
+
 					</Dropzone>
 					<i>Drag and drop image</i>
 					<div id='prof-pic-editors'>
@@ -499,15 +517,7 @@ export class EditQuickview extends Component {
 					 <br/><br/>
 			    </div>
 			   	<div id='quickview-editor-R'>
-			   		<div className='input-field'>
-			   			<input id='profile-name' type='text' placeholder='Rodriguez Happypants' value={this.state.name}
-							 	onChange={(e) => {
-									this.setState({name: e.target.value})
-									if (this.props.updateUser) {
-										this.props.updateUser("name", e.target.value)}
-								}}/>
-			   			<label htmlFor='profile-name' className="active" >Name</label>
-			   		</div>
+			   		{nameSection}
 			   		{schoolSection}
 			   	</div>
 			</div>

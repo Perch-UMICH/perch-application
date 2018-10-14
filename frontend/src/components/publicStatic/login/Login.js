@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
-import {isLoggedIn, loginUser, getCurrentUserId, isStudent, isLab, isFaculty, getCurrentLabId} from '../../../helper.js';
+import {isLoggedIn, loginUser, getCurrentUserId, isStudent, isLab, isFaculty, getCurrentLabId, getCurrentFacultyId} from '../../../helper.js';
 import alertify from 'alertify.js';
 import iziToast from 'izitoast';
 
@@ -16,8 +16,8 @@ class Login extends Component {
 			if (resp) {
 				if (isStudent()) 
 					window.location.href = `/student-profile/${getCurrentUserId()}`;
-				else if (isLab()) 
-					window.location.href = `/prof-page/${getCurrentLabId()}`;
+				else if (isFaculty()) 
+					window.location.href = `/prof/${getCurrentFacultyId()}`;
 			}
 			else {
 				// alertify.error("Incorrect Username and Password");
@@ -33,7 +33,6 @@ class Login extends Component {
 			}
 		});
 	}
-
 
 	render() {
 		return (
