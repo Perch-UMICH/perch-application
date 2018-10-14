@@ -101,7 +101,7 @@ class StudentProfile extends Component {
 		// update name, school, general handler
 		updateStudent({first_name: name})
 			.then(r => addEduExperienceToStudent(this.state.updated_user.university,'start','end', true, this.state.user.year, this.state.user.gpa, class_arr, [this.state.user.major]))
-			.then((resp) => this.generalHandler());
+			.then(this.generalHandler);
 	}
 
 	sendLinks() {
