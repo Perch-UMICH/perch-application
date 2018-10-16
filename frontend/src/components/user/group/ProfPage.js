@@ -159,6 +159,7 @@ class ProfPage extends Component {
 			.then(r => {
 				console.log('created lab')
 				console.log(r)
+				this.loadLabs();
 			})
 	}
 
@@ -209,6 +210,7 @@ class ProfPage extends Component {
 					<div className='input-field'>
 						<textarea id='lab-create-description' placeholder='we do cool stuff' />
 					</div>
+					<br/><br/>
 				</EditModal>
 				<EditModal id={`create-lab`} wide={true} actionName="create"
 					title={`Create New Lab`} modalAction={() => this.getModalAction(true)}>
