@@ -1,18 +1,21 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import Apply from '../../user/Apply'
 import EditModal from '../../utilities/modals/EditModal'
+import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
-import {createApplicationResponse, isFaculty} from '../../../helper.js'
+import {createApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition} from '../../../helper.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
 	constructor(props) {
-			super(props)
-			this.state = {
-				question_resps: [],
-			}
+		super(props)
+		this.state = {
+			question_resps: [],
+			app_questions: [],
+			new_pos: { min_time_commitment: 10 },
+		}
 	}
 
 	// Grab the description and add expand
@@ -27,10 +30,37 @@ export class GroupProject extends Component {
 		}
 	}
 
+	// Send updated position & application to server
+	updatePosition() {
+		updateLabPosition(this.props.lab_id, this.props.pos_id, this.state.new_pos).then(resp => {
+			// TODO: send updated application
+
+			if (this.props.updatePositions)
+				this.props.updatePositions();
+		})
+	}
+
+	// Delete position and application from server
+	deletePosition() {
+		deleteLabPosition(this.props.lab_id, [this.props.pos_id]).then(resp => {
+			// TODO: Delete application
+
+			if (this.props.updatePositions)
+				this.props.updatePositions();
+		})
+	}
+
 	// updates application from question responses to be ready for submittal
 	updateApplication = (question_resps) => {
 		this.setState({question_resps});
 	}
+
+	// Update the new position from modal, to be submitted by updatePostion
+	updateNewPosState(name, value) {
+		let newState = this.state;
+		newState.new_pos[name] = value;
+		this.setState(newState);
+	  }
 
 	// Update this function with backend functionality to save application
 	// You can access the response under 'this.state.question_resps'
@@ -43,13 +73,34 @@ export class GroupProject extends Component {
 		});
 	}
 
+	isAdmin() {
+		let i = 0;
+		let admins = this.props.admins || []
+		for (i = 0; i < admins.length; i++) {
+			if (admins[i][1] === parseInt(getCurrentUserId(), 10)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	renderModal() {
-		return(
-			<EditModal id={`${this.props.id}-apply`} wide={true} actionName="submit"
-				title={`Apply To ${this.props.title}`} modalAction={this.submitApplication}>
-				<Apply updateQuestions={this.updateApplication} description={this.state.description}/>
-			</EditModal>
-		)
+		// If not owner of lab (use-case, student), render application modal.
+		let edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="submit"
+							title={`Apply To ${this.props.title}`} modalAction={this.submitApplication}>
+							<Apply updateQuestions={this.updateApplication} lab_id={this.props.lab_id} pos_id={this.props.pos_id} description={this.state.description}/>
+						</EditModal>
+		// If owner of lab, show edit position modal.
+		let cur_pos = {
+			
+		}
+		if (this.isAdmin()) {
+			edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="update" deleteFunc={this.deletePosition.bind(this)}
+							title={`Edit ${this.props.title}`} modalAction={this.updatePosition.bind(this)}>
+							<CreatePosition edit={true} new_pos={this.props.cur_pos} updateNewPosState={this.updateNewPosState.bind(this)} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
+						</EditModal>
+		}
+		return edit_modal
 	}
 
 	renderProjectName() {
@@ -75,9 +126,9 @@ export class GroupProject extends Component {
 				<div>{this.props.description}</div>
 				{/* Edited for now since we don't have much
 					<div className='group-project-requirements-header'>Minimum Requirements</div>*/}
-				<GroupProjectRequirement title='Time commitment' value={this.props.time_commit}/>
+				<GroupProjectRequirement title='Time commitment' value={`${this.props.time_commit} hrs/week`}/>
 				{/*Edited For now since not in back end
-				<GroupProjectRequirement title='GPA' value={this.props.gpa}/>
+				<GroupProjectRequirement title='GPA' value={this.props.gpa} />
 				<GroupProjectRequirement title='Year' value={this.props.year}/>
 				<GroupProjectRequirement value="MISSING"/>
 				*/}
@@ -89,9 +140,12 @@ export class GroupProject extends Component {
 	}
 
 	renderApply() {
+		let project_action = <div className='group-project-apply' onClick={() => this.openModal(`${this.props.pos_id}-apply`)}>Apply</div>
+		if (this.isAdmin()) 
+			project_action = <Editor superClick={() => this.openModal(`${this.props.pos_id}-apply`)}/>
 		return(
 			<div>
-				<div className='group-project-apply' onClick={() => this.openModal(`${this.props.id}-apply`)}>Apply</div>
+				{project_action}
 				{this.props.spots && <div className='group-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>}
 			</div>
 		)
