@@ -36,7 +36,7 @@ class LabSearch extends Component {
             search: '',
             lab_list: [],
 			loading: true,
-			limit: 15,
+			limit: 3,
 		}
 	}
 
@@ -74,11 +74,15 @@ class LabSearch extends Component {
     	labSearch([],[],[],[],"")
 	    	.then(r => {
 	    		let positions = r.data.results
-	    		console.log('hwoh', positions)
 	    		let limit = this.state.limit
 	    		if (positions.length > limit)
 	    			newState.next = positions.slice(limit)
-	    		return getSearchResults(positions.slice(0,limit))
+
+	    		let actual_positions = []
+				positions.slice(0,limit).map(a=> {
+					actual_positions = actual_positions.concat(a.projects)
+				})
+	    		return getSearchResults(actual_positions)
 	    	})
 	    	.then(r => {
 	    		let all_labs = r.data.results
@@ -224,8 +228,6 @@ class LabSearch extends Component {
 		if (event.key === 'Enter') {
 			this.setState({loading: true}, () => {
 				var newState = this.state;
-				console.log('LOOK')
-				console.log(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search)
 	       		labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search)
 	       			.then((r) => {
 				        newState.all_labs = [];
@@ -351,7 +353,7 @@ class LabSearch extends Component {
                </div>
                <div className='lab-srch-body'>
                    <input id='lab-srch-input' type='text' placeholder='keywords' onKeyPress={event => this.executeSearch(event)}/>
-									 <div id='lab-srch-result-summary'>Projects 1-{this.state.all_labs.length} ({this.state.all_labs.length} total) {/*page 1 of 40*/} for <b>{this.state.search}</b></div>
+									 <div id='lab-srch-result-summary'>Groups 1-{this.state.all_labs.length} ({this.state.all_labs.length + this.state.next.length} total) {/*page 1 of 40*/} for <b>{this.state.search}</b></div>
                    	{labSearchContent}
 					{this.state.next.length > 0 && showMoreButton}
                </div>
