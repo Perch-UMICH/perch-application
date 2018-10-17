@@ -11,7 +11,6 @@ body {
 }
 
 .perch-story-container {
-	padding: 40px 100px;
 	width: 1200px;
 	position: relative;
 	margin: auto auto;
@@ -76,6 +75,7 @@ body {
 	width: 100%;
 	height: 230px;
 	position: relative;
+	margin-bottom: 100px;
 }
 
 .perch-story-row-img {
@@ -92,20 +92,22 @@ body {
 }
 
 .perch-story-text {
-	font-size: 20px;
+	font-size: 24px;
 	color: var(--seventy-five-grey);
 	padding: 0px 20px;
-	text-align: center;
+	text-align: left;
 }
 
 .perch-story-text.centered {
 	width: 100%;
 	margin-top: 30px;
-	padding: 10px 50px;
+	padding: 10px 20px;
+	text-align: left;
 }
 
 .perch-story-text.long {
 	transform: translateY(-25%);
+	text-align: left;
 }
 
 .perch-story-text .extra-highlight {
