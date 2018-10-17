@@ -1,7 +1,5 @@
 body {
 	background-color: white !important;
-	margin: -100px -500px;
-	padding: 100px 500px;
 	padding-bottom: 0px;
 }
 
@@ -15,6 +13,10 @@ body {
 	position: relative;
 	margin: auto auto;
 	margin-top: 20px;
+}
+
+.perch-story-row:hover {
+	/*border: 1px solid red !important;*/
 }
 
 .perch-story-header {
@@ -101,7 +103,6 @@ body {
 .perch-story-text.centered {
 	width: 100%;
 	margin-top: 30px;
-	padding: 10px 20px;
 	text-align: left;
 }
 

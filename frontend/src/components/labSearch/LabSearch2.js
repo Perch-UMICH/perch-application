@@ -50,7 +50,12 @@ class LabSearch extends Component {
 		if (positions.length > limit)
 			newState.next = positions.slice(limit)
 
-    	getSearchResults(positions.slice(0,limit)).then(r => {
+		let actual_positions = []
+		positions.slice(0,limit).map(a=> {
+			actual_positions = actual_positions.concat(a.projects)
+		})
+
+    	getSearchResults(actual_positions).then(r => {
     		let all_labs = r.data.results
     		for (var key in all_labs) {
                 let lab = all_labs[key];
@@ -186,21 +191,55 @@ class LabSearch extends Component {
       // }
   }
 
+
+
+  /*
+	
+	Here's my search data, send to Akshay wiht labsearch
+
+	Akshay sends back a list of objects, { which have a labid, and its relevant projets }
+
+	Then I save everything after my slice
+
+	And then I ask you for everything before that slice
+	
+	and then i save what i should as kfor later
+
+
+
+
+	LabSearch
+
+	[
+		[proj1, proj2],     // lab 4
+		[proj19, proj20],   // lab 20
+	]
+
+
+  */
+
+
+
   executeSearch(event) {
 		if (event.key === 'Enter') {
 			this.setState({loading: true}, () => {
 				var newState = this.state;
 				console.log('LOOK')
-				console.log(this.state.departments)
+				console.log(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search)
 	       		labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search)
 	       			.then((r) => {
 				        newState.all_labs = [];
 			            let positions = r.data.results || r.data
 			    		let limit = this.state.limit
 			    		newState.next = positions.slice(limit)
-			    		return getSearchResults(positions.slice(0,limit))
+			    		let actual_positions = []
+			    		positions.slice(0,limit).map(a=> {
+			    			actual_positions = actual_positions.concat(a.projects)
+			    		})
+			    		return getSearchResults(actual_positions)
       				})
       				.then((r) => {
+      					console.log('getsearchresults', r)
       					var all_search_labs = r.data.results;
       					console.log(all_search_labs)
       					all_search_labs.map(lab => newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>))
