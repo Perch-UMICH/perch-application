@@ -5,7 +5,7 @@ import Apply from '../../user/Apply'
 import EditModal from '../../utilities/modals/EditModal'
 import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
-import {createApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition} from '../../../helper.js'
+import {createApplicationResponse, isFaculty, getCurrentUserId, updateApplication, updateLabPosition, deleteLabPosition, getLabPositionApplicants} from '../../../helper.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
@@ -34,6 +34,14 @@ export class GroupProject extends Component {
 	updatePosition() {
 		updateLabPosition(this.props.lab_id, this.props.pos_id, this.state.new_pos).then(resp => {
 			// TODO: send updated application
+			let questions = []
+			if (this.state.app_questions) 
+				this.state.app_questions.map(q => questions.push(q.text))
+			let application = {
+				position_id: this.props.pos_id,
+				questions,
+			}
+			updateApplication(this.props.lab_id, application);
 
 			if (this.props.updatePositions)
 				this.props.updatePositions();
@@ -64,11 +72,14 @@ export class GroupProject extends Component {
 
 	// Update this function with backend functionality to save application
 	// You can access the response under 'this.state.question_resps'
-	submitApplication = () => {
+	submitApplication() {
+		console.log("SUBMIT !!!")
 		createApplicationResponse(this.state.question_resps).then(resp => {
 			if (resp.data) {
 				// get some info from resp when working
-
+				console.log(
+					"resp!!!!!", resp
+				)
 			}
 		});
 	}
@@ -87,7 +98,7 @@ export class GroupProject extends Component {
 	renderModal() {
 		// If not owner of lab (use-case, student), render application modal.
 		let edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="submit"
-							title={`Apply To ${this.props.title}`} modalAction={this.submitApplication}>
+							title={`Apply To ${this.props.title}`} modalAction={this.submitApplication.bind(this)}>
 							<Apply updateQuestions={this.updateApplication} lab_id={this.props.lab_id} pos_id={this.props.pos_id} description={this.state.description}/>
 						</EditModal>
 		// If owner of lab, show edit position modal.
@@ -114,6 +125,21 @@ export class GroupProject extends Component {
 		)
 	}
 
+	// Display number of applicants and modal to show applicants
+	renderApplicantCTA() {
+		getLabPositionApplicants(this.props.lab_id, this.props.pos_id).then(resp => {
+			console.log("APPLICANTS!!!", resp);
+			var numApplicants = 2;
+			return (
+				<a>
+				<div className="group-project-applicant-cta">
+					{numApplicants} Applicants.
+				</div>
+				</a>
+			)
+		})
+	}
+
 	renderKeywords() {
 		return(
 			<div className='group-project-keywords'>{this.props.keywords}</div>
@@ -122,7 +148,7 @@ export class GroupProject extends Component {
 
 	renderDescription() {
 		return(
-			<div id={`group-project-description-${this.props.title}`} className='group-project-description'>
+			<div id={`group-project-description-${this.props.title}`} className='group-project-description expand'>
 				<div>{this.props.description}</div>
 				{/* Edited for now since we don't have much
 					<div className='group-project-requirements-header'>Minimum Requirements</div>*/}
@@ -134,7 +160,7 @@ export class GroupProject extends Component {
 				*/}
 				{/* Edited for now ssince we don't have much
 				<div className='group-project-requirements-header'>Skills</div>*/}
-				<GroupProjectRequirement value="MISSING"/>
+				{/*<GroupProjectRequirement value="MISSING"/>*/}
 			</div>
 		)
 	}
@@ -156,10 +182,11 @@ export class GroupProject extends Component {
 			<div id={`group-project-${this.props.title}`} className='group-project'>
 				{this.renderModal()}
 				{this.renderProjectName()}
-				{this.renderKeywords()}
+				{/*this.renderKeywords()*/}
 				{this.renderDescription()}
 				{this.renderApply()}
-				<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>
+				{this.renderApplicantCTA()}
+				{/*<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>*/}
 			</div>
 		)
 	}
