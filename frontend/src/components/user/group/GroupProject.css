@@ -87,6 +87,11 @@
 	transition: .3s ease;
 }
 
+.group-project-applicant-cta {
+	padding: 10px;
+	background-color: aliceblue;
+}
+
 #group-project-container {
 	width: 100%;
 	background-color: var(--white);
