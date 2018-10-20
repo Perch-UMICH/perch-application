@@ -201,10 +201,11 @@ class GroupPage extends Component {
 				<div id='group-page-column-L'>
 					<Administrators admin_access={this.state.admin_access} people={this.state.lab_admins}/>
 					<Members admin_access={this.state.admin_access} people={this.state.lab_members}/>
+          <QuickInfo department='MISSING'/>
+            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
 				</div>
 				<div id='group-page-column-R'>
-            <QuickInfo department='MISSING'/>
-            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
+            
         </div>
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} superClick={() => this.openModal('edit-name')}/>

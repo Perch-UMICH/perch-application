@@ -36,7 +36,7 @@ class LabSearch extends Component {
             search: '',
             lab_list: [],
 			loading: true,
-			limit: 3,
+			limit: 5,
 		}
 	}
 
@@ -54,9 +54,10 @@ class LabSearch extends Component {
 		positions.slice(0,limit).map(a=> {
 			actual_positions = actual_positions.concat(a.projects)
 		})
-
+		console.log('more-labs',actual_positions)
     	getSearchResults(actual_positions).then(r => {
     		let all_labs = r.data.results
+    		console.log('more results', all_labs)
     		for (var key in all_labs) {
                 let lab = all_labs[key];
                 newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);

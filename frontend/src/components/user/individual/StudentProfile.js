@@ -398,10 +398,6 @@ class StudentProfile extends Component {
 	 						<img id='user-quickview-img' src={this.state.user.img ? this.state.user.img : '/img/rodriguez.jpg'}/>
 	 					</div>
 	 					<div style={{position: 'relative'}}>
-		 					{/*<img id='user-quickview-coverimage' src='https://www.idcwonline.com.au/WebRoot/ecshared01/Shops/shsh11971/543D/EABA/662D/F139/1B09/AC10/0040/8D0F/cards_single_lightblue.png' />
-		 					<div id='user-quickview-footer'>
-								{this.state.user.university}
-							</div>*/}
 		 					<div id='user-quickview-name'>{this.state.user.name}</div>
 	 					</div>
 	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>
