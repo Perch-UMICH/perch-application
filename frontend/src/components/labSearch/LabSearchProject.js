@@ -62,7 +62,8 @@ class LabSearchProject extends Component {
     removeProject = () => {
         removeFromStudentPositionList([this.props.id])
         this.toggleAdder()
-        this.props.updateProjects(this.props.id)
+        if (this.props.project_id)
+            this.props.updateProjects(this.props.project_id)
     }
 
     toggleAdder = () => {

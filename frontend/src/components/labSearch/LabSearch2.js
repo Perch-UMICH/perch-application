@@ -55,7 +55,7 @@ class LabSearch extends Component {
     		console.log('more results', all_labs)
     		for (var key in all_labs) {
                 let lab = all_labs[key];
-                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.projects}/>);
             }
         	newState.loading = false;
         	this.setState(newState);
@@ -77,15 +77,15 @@ class LabSearch extends Component {
 	    		return getSearchResults(positions.slice(0,limit))
 	    	})
 	    	.then(r => {
+	    		console.log('r', r)
 	    		let all_labs = r.data.results
 	    		for (var key in all_labs) {
 	                let lab = all_labs[key];
-	                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+	                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.projects}/>);
 	            }
 	        	newState.loading = false;
             	this.setState(newState);
 	    	})
-
 
         getSearchData().then((resp) => {
             console.log(resp);
@@ -222,24 +222,23 @@ class LabSearch extends Component {
 				var newState = this.state;
 	       		labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search)
 	       			.then((r) => {
+	       				console.log('look', r)
 				        newState.all_labs = [];
 			            let positions = r.data.results || r.data
 			    		let limit = this.state.limit
 			    		newState.next = positions.slice(limit)
-			    		let actual_positions = []
-			    		positions.slice(0,limit).map(a=> {
-			    			actual_positions = actual_positions.concat(a.projects)
-			    		})
-			    		return getSearchResults(actual_positions)
+			    		
+			    		return getSearchResults(positions.slice(0,limit))
       				})
       				.then((r) => {
       					console.log('getsearchresults', r)
       					var all_search_labs = r.data.results;
       					console.log(all_search_labs)
-      					all_search_labs.map(lab => newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>))
+      					all_search_labs.map(lab => newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.projects}/>))
       					newState.loading = false;
 		          		this.setState(newState);
       				})
+      				.catch(e => alert('errror'))
 		})
 	}
   }

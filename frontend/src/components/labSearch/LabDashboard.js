@@ -43,7 +43,7 @@ class LabDashboard extends Component {
 
 	updateProjects(id) {
 		let position_list = this.state.position_list
-		position_list = position_list.filter((value)=> value.lab_id !== id)
+		position_list = position_list.filter((value)=> value.id !== id)
 		this.state.position_list = position_list
 		this.setState(this.state)
 	}
@@ -63,7 +63,7 @@ class LabDashboard extends Component {
 		         				return(
 			           			<div key={`position-${index}`} className='lab-dashboard-item'>
 			           				{/*<a className='lab-dashboard-lab-name'>{position.lab.name}</a>*/}
-			           				<LabSearchProject key={position.id} id={position.lab_id} title={position.title} facultyOwned={facultyOwned} spots='MISSING' saved='true' description={position.description} urop={position.is_urop_project} updateProjects={this.updateProjects.bind(this)}/>
+			           				<LabSearchProject key={position.id} id={position.lab_id} project_id={position.id} title={position.title} facultyOwned={facultyOwned} spots='MISSING' saved='true' description={position.description} urop={position.is_urop_project} updateProjects={this.updateProjects.bind(this)}/>
 			           			</div>
 		           			)
 		         		})}
