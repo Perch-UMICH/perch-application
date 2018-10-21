@@ -93,7 +93,9 @@
 .lab-srch-project-apply {
 	position: absolute;
 	top: 15px;
-	right: 0;
+	right: 0px;
+	/*top: 35px;
+	right: -5px;*/
 	width: 75px;
 	height: 40px;
 	line-height: 40px;
@@ -120,8 +122,10 @@
 
 .lab-srch-project-adder {
 	position: absolute;
+	/*top: 80px;
+	right: -5px;*/
 	top: 60px;
-	right: 0;
+	right: 0px;
 	padding: 0 10px;
 	background-color: var(--highlight);
 }

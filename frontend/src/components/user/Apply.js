@@ -8,7 +8,8 @@ class Apply extends Component {
 		super(props);
 		this.state = {
 			questions: [],
-			applyHelpText: "To apply, fill out the questions below & click submit. A lab contact will reach out to you if it seems like a good match!",
+			applyHelpText: "Please fill out the questions below & submit. A lab contact will reach out if it seems like a good match!",
+			applyHelpText: "Let the lab get to know you! It's like tinder... but a lab",
 		};
 	}
 
@@ -46,7 +47,6 @@ class Apply extends Component {
 			<div className="apply-wrapper">
 				<div className="apply-descriptor"><b>Position Description: </b>{this.state.pos_description}</div>
 				<div className="apply-descriptor"><b>Time Commitment: </b>{this.state.time_comm}</div>
-				<div className="apply-help-text">{this.state.applyHelpText}</div>
 				<AppQuestionTab updateQuestions={this.updateQuestions.bind(this)} questions={(this.state.questions && this.state.questions.length) ? this.state.questions : []} />
 			</div>
 		);

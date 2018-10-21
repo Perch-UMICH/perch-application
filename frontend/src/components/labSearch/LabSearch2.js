@@ -50,12 +50,7 @@ class LabSearch extends Component {
 		if (positions.length > limit)
 			newState.next = positions.slice(limit)
 
-		let actual_positions = []
-		positions.slice(0,limit).map(a=> {
-			actual_positions = actual_positions.concat(a.projects)
-		})
-		console.log('more-labs',actual_positions)
-    	getSearchResults(actual_positions).then(r => {
+    	getSearchResults(positions.slice(0,limit)).then(r => {
     		let all_labs = r.data.results
     		console.log('more results', all_labs)
     		for (var key in all_labs) {
@@ -79,11 +74,7 @@ class LabSearch extends Component {
 	    		if (positions.length > limit)
 	    			newState.next = positions.slice(limit)
 
-	    		let actual_positions = []
-				positions.slice(0,limit).map(a=> {
-					actual_positions = actual_positions.concat(a.projects)
-				})
-	    		return getSearchResults(actual_positions)
+	    		return getSearchResults(positions.slice(0,limit))
 	    	})
 	    	.then(r => {
 	    		let all_labs = r.data.results

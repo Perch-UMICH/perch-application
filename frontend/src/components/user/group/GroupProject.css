@@ -3,7 +3,7 @@
 	border-bottom: 1px solid var(--d-three-grey);
 	position: relative;
 	padding-bottom: 25px;
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 
 .group-project-name-container {

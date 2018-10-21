@@ -186,7 +186,7 @@ export class GroupProject extends Component {
 				{this.renderDescription()}
 				{this.renderApply()}
 				{this.renderApplicantCTA()}
-				{/*<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>*/}
+				{<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>}
 			</div>
 		)
 	}
