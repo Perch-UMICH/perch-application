@@ -362,7 +362,6 @@ class StudentProfile extends Component {
 	 				<div>
 	 					<h1>Academics</h1>
 	 					<div>
-	 						<div><b>GPA</b> {this.state.user.gpa}</div>
 							<div><b>Major</b> {this.state.user.major}</div>
 	 						<div><b>Year</b> {this.state.user.year}</div>
 	 					</div>
