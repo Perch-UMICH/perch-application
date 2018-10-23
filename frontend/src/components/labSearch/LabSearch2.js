@@ -8,7 +8,7 @@ import '../user/individual/PickYourInterests.css';
 import {isStudent, getAllLabs, getSearchResults, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
 import {getFilters} from '../../data/filterData';
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
-const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Lab Skills'];
+const filterFriendlyNames = ['Departments', 'Research Areas', 'Hours', 'Lab Skills'];
 
 class LabSearch extends Component {
 	constructor(props) {
@@ -261,7 +261,7 @@ class LabSearch extends Component {
 											<li key={subFilt.slug}>
 												<input type="checkbox"
 													className="checkbox-white filled-in"
-                          onClick={() => this.handleFilterClick(type, filt.slug)}
+                          							onClick={() => this.handleFilterClick(type, filt.slug)}
 													id={subFilt.slug}/>
 												<label
 													className="filter-checkbox-label"
@@ -306,8 +306,7 @@ class LabSearch extends Component {
 					})}
 				</ul>
 
-				filterContentArr.push(<div className="search-filter-content-wrapper">
-					{filterContent}</div>);
+				filterContentArr.push(<div className="search-filter-content-wrapper">{filterContent}</div>);
 		})
 
 	var labSearchContent =
@@ -315,8 +314,7 @@ class LabSearch extends Component {
           {this.state.all_labs}
      </div>
 
-	var showMoreButton =
-     <div id='lab-srch-more' onClick={this.moreLabs.bind(this)}>Mo' labs, mo' problems</div>
+	var showMoreButton = <div id='lab-srch-more' onClick={this.moreLabs.bind(this)}>Mo' labs, mo' problems</div>
 
 	if (this.state.loading) {
 		labSearchContent = <DotLoader />

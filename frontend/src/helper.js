@@ -607,6 +607,7 @@ export function removeTagsFromStudent(tag_ids) {
 // RESTRICTED: student_id
 // NOTE: lab_ids must be an array of integer ids
 export function addToStudentPositionList(position_ids) {
+    console.log('in_func', position_ids)
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
         position_ids: position_ids

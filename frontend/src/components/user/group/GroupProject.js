@@ -5,7 +5,7 @@ import Apply from '../../user/Apply'
 import EditModal from '../../utilities/modals/EditModal'
 import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
-import {createApplicationResponse, isFaculty, getCurrentUserId, updateLabPositionApplication, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses} from '../../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, isFaculty, getCurrentUserId, updateLabPositionApplication, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses} from '../../../helper.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
@@ -15,7 +15,19 @@ export class GroupProject extends Component {
 			question_resps: [],
 			app_questions: [],
 			new_pos: { min_time_commitment: 10 },
+			added: false,
 		}
+	}
+
+	componentDidMount() {
+		let saved = false
+		console.log('savedADFASDF',this.props.saved_labs)
+          for (let item in this.props.saved_labs) {
+          	console.log('item', item)
+              if (item.id == this.props.pos_id)
+                  saved = true
+          }
+		this.setState({added: saved})
 	}
 
 	// Grab the description and add expand
@@ -47,6 +59,10 @@ export class GroupProject extends Component {
 				this.props.updatePositions();
 		})
 	}
+
+	toggleAdder = () => {
+        this.setState({added: !this.state.added})
+    }
 
 	// Delete position and application from server
 	deletePosition() {
@@ -148,7 +164,7 @@ export class GroupProject extends Component {
 
 	renderDescription() {
 		return(
-			<div id={`group-project-description-${this.props.title}`} className='group-project-description expand'>
+			<div id={`group-project-description-${this.props.title}`} className='group-project-description'>
 				<div>{this.props.description}</div>
 				{/* Edited for now since we don't have much
 					<div className='group-project-requirements-header'>Minimum Requirements</div>*/}
@@ -177,7 +193,39 @@ export class GroupProject extends Component {
 		)
 	}
 
+	saveProject = () => {
+        console.log(this.props.lab_id, this.props.pos_id)
+        addToStudentPositionList([this.props.pos_id])
+        this.toggleAdder()
+    }
+
+    removeProject = () => {
+        console.log(this.props.lab_id, this.props.pos_id)
+        removeFromStudentPositionList([this.props.pos_id])
+        this.toggleAdder()
+    }
+
+	renderSave() {
+		// let saved = false
+		// console.log('saved!!',this.props.saved_labs)
+  //         for (let item in this.props.saved_labs) {
+  //         	console.log('item!!!', item)
+  //             if (item.id == this.props.pos_id)
+  //                 saved = true
+  //         }
+		// this.setState({added: saved})
+		var saveRemoveButton =
+	      <div>
+	        {!this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.saveProject}>save</div>}
+	        {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.removeProject}>remove</div>}
+	      </div>
+
+	   	return saveRemoveButton
+
+	}
+
 	render() {
+
 		return(
 			<div id={`group-project-${this.props.title}`} className='group-project'>
 				{this.renderModal()}
@@ -185,6 +233,7 @@ export class GroupProject extends Component {
 				{/*this.renderKeywords()*/}
 				{this.renderDescription()}
 				{this.renderApply()}
+				{this.renderSave()}
 				{this.renderApplicantCTA()}
 				{<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>}
 			</div>

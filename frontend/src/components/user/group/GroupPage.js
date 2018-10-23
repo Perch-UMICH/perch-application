@@ -7,7 +7,7 @@ import {modalUpdateLab} from '../CreateLab'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {EditAdmins} from './GroupEditors'
 import BasicButton from '../../utilities/buttons/BasicButton'
-import {deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, createLabPosition,
+import {getStudentFromUser, deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, createLabPosition,
     isStudent, isLab, getLabMembers, createLabPositionApplication, addMembersToLab, getCurrentLabId} from '../../../helper.js'
 import Editor from '../../utilities/Editor'
 // import $ from 'jquery'
@@ -39,6 +39,7 @@ class GroupPage extends Component {
             members_raw: [],
             admins_raw: [],
             app_questions: [],
+            user_saved_labs: [],
         }
     }
 
@@ -49,26 +50,25 @@ class GroupPage extends Component {
           let members = [];
           var admins_raw = [];
           let members_raw = [];
-          console.log(resp);
           resp.data.faculty.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
           resp.data.students.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
@@ -84,13 +84,18 @@ class GroupPage extends Component {
       });
     }
 
-    componentWillMount() {
+    componentDidMount() {
       this.loadLabPositions();
 
-      getLab(this.state.lab_id).then((resp) => {
+      getLab(this.state.lab_id)
+      .then((resp) => {
           this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
-      });
-
+      })
+      .then(r=>getStudentFromUser(getCurrentUserId())
+      .then((r) => {
+        console.log('AHHH', r)
+        this.setState({user_saved_labs: r.data.position_list})
+      }))
       this.loadLabMembers();
   }
 
@@ -211,7 +216,7 @@ class GroupPage extends Component {
 					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} superClick={() => this.openModal('edit-name')}/>
 					<GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
             {this.state.lab_positions.map((pos, index) => {
-              return(<GroupProject key={`${index}-p`} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
+              return(<GroupProject key={`${index}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
                         time_commit={pos.min_time_commitment} admins={this.state.admins_raw} gpa='MISSING' year='MISSING' urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>);
             })}
 					</GroupProjectContainer>

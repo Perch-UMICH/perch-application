@@ -3,7 +3,7 @@ import {getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkil
 		removeWorkExperiencesFromStudent, addEduExperienceToStudent, updateEduExperienceOfStudent,
 		addWorkExperienceToStudent, addSkillsToStudent, getStudentFromUser,
 		getStudentTags, getStudentSkills, updateStudent, deepCopy, primeExternalLink,
-		uploadUserFile, getUserFile, exists} from '../../../helper.js'
+		uploadUserFile, getUserFile, exists, isLoggedIn} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -327,7 +327,7 @@ class StudentProfile extends Component {
 		else if (exists(this.state.user.resume)) {
 			resumeLink = this.state.user.resume;
 		}
-		if (!true) {//(!isLoggedIn()) {
+		if (!isLoggedIn()) {
 			return <ErrorPage />
 		} else if (this.state.not_student) {
 			return <ErrorPage fourofour="true" />

@@ -105,7 +105,7 @@
 /* Quickview */
 #user-quickview {
 	transition: 0.2s ease;
-	height: 130px;
+	min-height: 130px;
 	background-color: var(--primary);
 	/*height: 90px;*/
 }
