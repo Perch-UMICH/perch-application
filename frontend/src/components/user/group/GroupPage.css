@@ -134,7 +134,8 @@
     border: 1px solid var(--d-three-grey);
     overflow: scroll;
     margin-bottom: 15px;
-    text-overflow: word-break;
+	text-overflow: word-break;
+	position: relative;
 }
 
 #group-quick-info {

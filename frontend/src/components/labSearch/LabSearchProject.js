@@ -9,9 +9,10 @@ class LabSearchProject extends Component {
         super(props)
         this.state = {
             added: this.props.saved,
-            description: this.props.description,
+            position: this.props.position || {},
             question_resps: [],
         }
+        console.log("POSITION", this.state.position);
     }
 
     componentDidMount() {
@@ -34,7 +35,6 @@ class LabSearchProject extends Component {
     // Update this function with backend functionality to save application
     // You can access the response under 'this.state.question_resps'
     submitApplication = () => {
-        console.log("SUBMIT !!!", this.state.question_resps)
         let resps = []
         if (this.state.question_resps) 
             this.state.question_resps.map(q => resps.push(q.response))
@@ -43,15 +43,18 @@ class LabSearchProject extends Component {
             position_id: this.props.id,
             responses: resps,
         }
+        console.log("APPLICATION TO SUBMIT!!!", application)
 
 		createApplicationResponse(application).then(resp => {
 			if (resp.data) {
 				// get some info from resp when working
-				console.log(
-					"resp!!!!!", resp
-				)
+                console.log("resp!!!!!", resp)
+                console.log("appl!!!!!", application)
+
+                // Then submit the application.
+                // submitApplicationResponse(application_response_id)
 			}
-		});
+        });
     }
 
     saveProject = () => {
@@ -69,15 +72,17 @@ class LabSearchProject extends Component {
     }
 
     formatTitle = () => {
-        if (this.props.description.length > 270) {
+        let newPos = this.state.position;
+        if (newPos.description && newPos.description.length > 270) {
             this.setState({overflowDescription: true})
         }
-        this.setState({description: this.props.description.slice(0,270)})
+        newPos.description = newPos.description.slice(0,270);
+        this.setState({position: newPos})
     }
 
 	render() {
     var applyButton =
-      <div className='lab-srch-project-apply lab-srch-project-action-label'><a onClick={() => this.openModal(`${this.props.id}-apply`)}>Apply</a></div>
+      <div className='lab-srch-project-apply lab-srch-project-action-label'><a onClick={() => this.openModal(`${this.state.position.id}-apply`)}>Apply</a></div>
 
     var saveRemoveButton =
       <div>
@@ -93,17 +98,17 @@ class LabSearchProject extends Component {
 
 		return (
             <div className='lab-srch-project'>
-                <EditModal id={`${this.props.id}-apply`} wide={true} actionName="submit"
-                  title={`Apply To ${this.props.title}`} modalAction={this.submitApplication}>
-                  <Apply updateQuestions={this.updateApplication} description={this.state.description}/>
+                <EditModal id={`${this.state.position.id}-apply`} wide={true} actionName="submit"
+                  title={`Apply To ${this.state.position.title}`} modalAction={this.submitApplication}>
+                  <Apply updateQuestions={this.updateApplication} position={this.state.position}/>
                 </EditModal>
                 <div className='lab-srch-project-title-container'>
-                    <a className='truncate lab-srch-project-title' href={`prof-page/${this.props.id}`}>{this.props.title}</a>
+                    <a className='truncate lab-srch-project-title' href={`prof-page/${this.props.id}`}>{this.state.position.title}</a>
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                 </div>
-                <div className='lab-srch-project-description'>{this.state.description} <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span></div>
+                <div className='lab-srch-project-description'>{this.state.position.description} <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span></div>
                 {applyButton}
-                <div className='lab-srch-project-openings'><b>{this.props.spots}</b> {this.props.spots - 1 ? "spots" : "spot"}</div>
+                <div className='lab-srch-project-openings'><b>{this.state.position.spots}</b> {this.state.position.spots - 1 ? "spots" : "spot"}</div>
                 {saveRemoveButton}
             </div>
 

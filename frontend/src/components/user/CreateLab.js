@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
-import { getLabPosition, getLab, getPositionApplication, getCurrentUserId, createApplication, createLab, updateLab, deleteLab, addMembersToLab, getCurrentFacultyId, getAllLabData, getAllLabs, isFaculty } from '../../helper.js';
+import { createLab, updateLab, deleteLab, addMembersToLab, getCurrentFacultyId, getAllLabData, getAllLabs, isFaculty } from '../../helper.js';
 import './CreateLab.css';
 
 export let modalCreateLab = (lab, callback) => {

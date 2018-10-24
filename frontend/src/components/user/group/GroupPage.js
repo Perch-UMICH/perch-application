@@ -49,7 +49,6 @@ class GroupPage extends Component {
           let members = [];
           var admins_raw = [];
           let members_raw = [];
-          console.log(resp);
           resp.data.faculty.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
@@ -121,7 +120,7 @@ class GroupPage extends Component {
           position_id: resp.data.id,
           questions,
         }
-        createApplication(this.state.lab_id, application);
+        createApplication(this.state.lab_id, application).then(resp2 => {console.log("APP!!!", resp2)});
         this.loadLabPositions();
         this.setState({new_pos: { min_time_commitment: 10 }})
     });
@@ -166,6 +165,15 @@ class GroupPage extends Component {
           <b>New Description</b>
           <input type='text' name='description' value={this.state.updated_lab.description} onChange={(e) => this.updateLabState(e)}/>
         </EditModal>
+        <EditModal id={`edit-contact`} wide={true} actionName="update" medium={true}
+          title={`Update Contact Info`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
+          <b>New Email</b>
+          <input type='text' name='contact_email' value={this.state.updated_lab.contact_email} onChange={(e) => this.updateLabState(e)}/>
+          <b>New Phone</b>
+          <input type='text' name='contact_phone' value={this.state.updated_lab.contact_phone} onChange={(e) => this.updateLabState(e)}/>
+          <b>New Office Location</b>
+          <input type='text' name='location' value={this.state.updated_lab.location} onChange={(e) => this.updateLabState(e)}/>
+        </EditModal>
         <EditModal id='edit-admins' wide={true}
           title='Edit Admins'>
           <div className='row'>
@@ -203,8 +211,8 @@ class GroupPage extends Component {
 					<Members admin_access={this.state.admin_access} people={this.state.lab_members}/>
 				</div>
 				<div id='group-page-column-R'>
-            <QuickInfo department='MISSING'/>
-            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
+            <QuickInfo department='MISSING' admin_access={this.state.admin_access}/>
+            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location} admin_access={this.state.admin_access}/>
         </div>
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} superClick={() => this.openModal('edit-name')}/>
@@ -278,8 +286,8 @@ const QuickInfo = (props) => {
                 <div className='group-info-box-content'>University of Michigan</div>
                 <div className='group-info-box-heading'>DEPARTMENTS</div>
                 <div className='group-info-box-content'>{props.department}</div>
-                <div className='group-info-box-heading'>RESEARCH AREAS</div>
-                <div className='group-info-box-content'>MISSING</div>
+                {/*<div className='group-info-box-heading'>RESEARCH AREAS</div>
+                <div className='group-info-box-content'>MISSING</div>*/}
             </div>
         </div>
     )
@@ -288,12 +296,13 @@ const QuickInfo = (props) => {
 const ContactInfo = (props) => {
     return(
         <div id='group-contact-info'>
-            <h1>Contact Info</h1>
+            <h1>Contact</h1>
             <div className='group-info-box'>
                 <div className='group-info-box-content'><b>Email</b> <a href={`mailto:${props.email}`}>{props.email}</a></div>
                 <div className='group-info-box-content'><b>Phone</b> {props.phone} </div>
                 <div className='group-info-box-content'><b>Office</b> {props.location}</div>
             </div>
+            {props.admin_access && <Editor superClick={() => openModal('edit-contact')}/>}
         </div>
     )
 }

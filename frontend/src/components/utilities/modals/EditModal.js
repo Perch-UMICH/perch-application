@@ -41,7 +41,7 @@ class EditModal extends Component {
 			<div>
 				<div className="modal-backdrop" id={`${this.props.id}-backdrop`} />
 				<div id={this.props.id} className={bodyCSS}>
-					<h1>{this.props.title}</h1>
+					<h1 className="modal-header">{this.props.title}</h1>
 			 		<div className={contentCSS}>
 						{this.props.children}
           			</div>

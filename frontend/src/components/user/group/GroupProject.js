@@ -14,8 +14,31 @@ export class GroupProject extends Component {
 		this.state = {
 			question_resps: [],
 			app_questions: [],
+			applicants: [
+				{
+					name: "Joe Schmo",
+					major: "Quickology",
+					resps: [
+						{
+							question: "Why do you want to work here?",
+							response: "Becuase I do",
+						},
+						{
+							question: "What is the meaning of life?",
+							response: "Jump in puddles",
+						}
+					]
+				}
+			],
 			new_pos: { min_time_commitment: 10 },
 		}
+	}
+
+	componentDidMount() {
+		getLabPositionApplicants(this.props.lab_id, this.props.pos_id).then(resp => {
+			console.log("APPLICANTS!!!", resp);
+			// this.setState({applicants: ___}) TODO: change this to depend on resp once we can get applicants to successfully apply
+		})
 	}
 
 	// Grab the description and add expand
@@ -41,7 +64,7 @@ export class GroupProject extends Component {
 				position_id: this.props.pos_id,
 				questions,
 			}
-			updateApplication(this.props.lab_id, application);
+			updateApplication(this.props.lab_id, application).then(resp2 => {console.log("APP UPDATED!!!", resp2)});
 
 			if (this.props.updatePositions)
 				this.props.updatePositions();
@@ -102,9 +125,6 @@ export class GroupProject extends Component {
 							<Apply updateQuestions={this.updateApplication} lab_id={this.props.lab_id} pos_id={this.props.pos_id} description={this.state.description}/>
 						</EditModal>
 		// If owner of lab, show edit position modal.
-		let cur_pos = {
-			
-		}
 		if (this.isAdmin()) {
 			edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="update" deleteFunc={this.deletePosition.bind(this)}
 							title={`Edit ${this.props.title}`} modalAction={this.updatePosition.bind(this)}>
@@ -112,6 +132,14 @@ export class GroupProject extends Component {
 						</EditModal>
 		}
 		return edit_modal
+	}
+
+	renderApplicantModal() {
+		// Show current applicants to lab
+		return <EditModal id={`${this.props.pos_id}-applicants`} wide={true} actionName="submit"
+					title={`Applicants to ${this.props.title}`} modalAction={this.submitApplication.bind(this)}>
+					<Apply updateQuestions={this.updateApplication} lab_id={this.props.lab_id} pos_id={this.props.pos_id} description={this.state.description}/>
+				</EditModal>
 	}
 
 	renderProjectName() {
@@ -127,17 +155,13 @@ export class GroupProject extends Component {
 
 	// Display number of applicants and modal to show applicants
 	renderApplicantCTA() {
-		getLabPositionApplicants(this.props.lab_id, this.props.pos_id).then(resp => {
-			console.log("APPLICANTS!!!", resp);
-			var numApplicants = 2;
-			return (
-				<a>
-				<div className="group-project-applicant-cta">
-					{numApplicants} Applicants.
-				</div>
-				</a>
-			)
-		})
+		return (
+			<a onClick={() => this.openModal(`${this.props.pos_id}-applicants`)}>
+			<div className="group-project-applicant-cta">
+				{this.state.applicants.length} Applicants - View Responses
+			</div>
+			</a>
+		)
 	}
 
 	renderKeywords() {
@@ -181,6 +205,7 @@ export class GroupProject extends Component {
 		return(
 			<div id={`group-project-${this.props.title}`} className='group-project'>
 				{this.renderModal()}
+				{this.renderApplicantModal()}
 				{this.renderProjectName()}
 				{/*this.renderKeywords()*/}
 				{this.renderDescription()}
