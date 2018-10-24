@@ -329,6 +329,11 @@ export function getUserLabs(user_id) {
 // file:
 // formData - (formData object)
 // type - (string)
+// IF IMAGE ALSO INCLUDE
+// x - (int) from top left of image
+// y - (int) from top left of image
+// width - (int)
+// height - (int)
 
 // RESTRICTED: user_id
 // Possible types:
@@ -348,6 +353,13 @@ export function uploadUserFile(file) {
     }
 
     let user_id = sessionStorage.getItem('user_id');
+
+    if (file.type == 'profile_pic') {
+        file.formData.append('x', file.x);
+        file.formData.append('y', file.y);
+        file.formData.append('width', file.width);
+        file.formData.append('height', file.height);
+    }
 
     return axios.post('api/users/' + user_id + '/' + file.type,
         file.formData,
