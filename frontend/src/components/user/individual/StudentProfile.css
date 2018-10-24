@@ -64,6 +64,7 @@
 #user-column-L > div {
 	border-bottom: 1px dotted lightgrey;
 	margin-bottom: 5px;
+	position: relative;
 }
 
 /* This is so the header is not padded */

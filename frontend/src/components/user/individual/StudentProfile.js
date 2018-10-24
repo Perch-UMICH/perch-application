@@ -401,6 +401,10 @@ class StudentProfile extends Component {
 	 					</div>
 	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>
 	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
+	 					<div style={{position: 'relative'}}> 
+	 						<UserBio>{this.state.user.bio}</UserBio>
+	 						<Editor superClick={() => this.openModal('bio-edit')}/>
+	 					</div>
 	 				</div>
 	 				<div id='user-bio'>
 	 					<h1>Bio</h1>
