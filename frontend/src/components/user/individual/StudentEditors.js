@@ -413,7 +413,9 @@ export class EditQuickview extends Component {
 			scale: 1.5,
 			name: props.user && props.user.name ? props.user.name : '',
 			university: props.user && props.user.university ? props.user.university : "",
-			crop: {}
+			x: 0.5,
+			y: 0.5,
+			rotate: 0,
 		}
 	}
 
@@ -430,6 +432,10 @@ export class EditQuickview extends Component {
 				this.setState({image: props.user.img})
 			}
 		}
+	}
+
+	componentDidUpdate() {
+		console.log(this.state.x, this.state.y, this.state.rotate)
 	}
 
 	handleDrop = dropped => {
@@ -454,6 +460,16 @@ export class EditQuickview extends Component {
 				this.props.updateUser("img_rotate", this.state.rotate);
 			}
 		})
+	}
+
+	handleMove = (crop) => {
+		this.setState(crop)
+		this.props.updateUser("crop", {	
+									x: this.state.x, 
+									y: this.state.y,
+									rotate: this.state.rotate
+								})
+
 	}
 
 	render() {
@@ -505,7 +521,7 @@ export class EditQuickview extends Component {
 					        rotate={this.state.rotate}
 					        borderRadius={100}
 					        className='grabbable'
-					        onPositionChange={crop => this.setState(crop)}/>
+					        onPositionChange={this.handleMove}/>
 
 					</Dropzone>
 					<i>Drag and drop image</i>

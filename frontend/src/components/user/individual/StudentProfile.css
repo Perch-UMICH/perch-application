@@ -131,13 +131,13 @@
 	border-bottom: 1px solid white;
 	position: relative;
 	background-color: var(--highlight);
-	border-radius: 200px;
+	border-radius: 50px;
 	overflow: hidden;
 	/*border-bottom: 2px solid lightgrey;*/
 }
 
 #user-quickview-img-container {
-	height: 100px;
+	height: 99px;
 	position: absolute;
 	top: 15px;
 	left: 15px;
@@ -147,7 +147,7 @@
 	border-right: 1px solid lightgrey;
 	border-left: 1px solid lightgrey;
 	border-bottom: 1px solid lightgrey;
-	border-radius: 200px;
+	border-radius: 50px;
 	overflow: hidden;
 }
 
@@ -277,6 +277,7 @@
 	overflow: hidden;
 	padding-bottom: 25px;
 	padding-top: 5px;
+	padding-right: 10px;
 }
 
 .user-bio-content {
@@ -386,7 +387,6 @@
 }
 
 #user-skills-interests {
-	padding-bottom: 10px;
 	padding-left: 20px;
 	padding-right: 30px;
 	padding-top: 5px;

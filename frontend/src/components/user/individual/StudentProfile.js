@@ -38,6 +38,11 @@ class StudentProfile extends Component {
 			student: true,
 			s_id: "",
 			work_experiences: [],
+			crop: {
+				x: 0.5,
+				y: 0.5,
+				rotate: 0,
+			}
 		}
 		this.state = {
 			user, 
@@ -405,11 +410,6 @@ class StudentProfile extends Component {
 	 						<UserBio>{this.state.user.bio}</UserBio>
 	 						<Editor superClick={() => this.openModal('bio-edit')}/>
 	 					</div>
-	 				</div>
-	 				<div id='user-bio'>
-	 					<h1>Bio</h1>
-	 					<UserBio>{this.state.user.bio}</UserBio>
-	 					<Editor superClick={() => this.openModal('bio-edit')}/>
 	 				</div>
 	 				<div>
 	 					<h1>Experience</h1>
