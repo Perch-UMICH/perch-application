@@ -38,6 +38,11 @@ class StudentProfile extends Component {
 			student: true,
 			s_id: "",
 			work_experiences: [],
+			crop: {
+				x: 0.5,
+				y: 0.5,
+				rotate: 0,
+			}
 		}
 		this.state = {
 			user, 
@@ -401,11 +406,10 @@ class StudentProfile extends Component {
 	 					</div>
 	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>
 	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
-	 				</div>
-	 				<div id='user-bio'>
-	 					<h1>Bio</h1>
-	 					<UserBio>{this.state.user.bio}</UserBio>
-	 					<Editor superClick={() => this.openModal('bio-edit')}/>
+	 					<div style={{position: 'relative'}}> 
+	 						<UserBio>{this.state.user.bio}</UserBio>
+	 						<Editor superClick={() => this.openModal('bio-edit')}/>
+	 					</div>
 	 				</div>
 	 				<div>
 	 					<h1>Experience</h1>
