@@ -357,8 +357,7 @@ export function uploadUserFile(file) {
     if (file.type == 'profile_pic') {
         file.formData.append('x', file.x);
         file.formData.append('y', file.y);
-        file.formData.append('width', file.width);
-        file.formData.append('height', file.height);
+        file.formData.append('scale', file.scale);
     }
 
     return axios.post('api/users/' + user_id + '/' + file.type,
