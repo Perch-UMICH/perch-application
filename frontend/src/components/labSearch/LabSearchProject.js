@@ -58,13 +58,16 @@ class LabSearchProject extends Component {
     }
 
     saveProject = () => {
-        addToStudentPositionList([this.props.id])
+        console.log(this.props.id, this.props.project_id)
+        addToStudentPositionList([this.props.project_id])
         this.toggleAdder()
     }
 
     removeProject = () => {
-        removeFromStudentPositionList([this.props.id])
+        console.log(this.props.id, this.props.project_id)
+        removeFromStudentPositionList([this.props.project_id])
         this.toggleAdder()
+        this.props.updateProjects(this.props.project_id)
     }
 
     toggleAdder = () => {

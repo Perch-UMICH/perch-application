@@ -607,6 +607,7 @@ export function removeTagsFromStudent(tag_ids) {
 // RESTRICTED: student_id
 // NOTE: lab_ids must be an array of integer ids
 export function addToStudentPositionList(position_ids) {
+    console.log('in_func', position_ids)
     let student_id = sessionStorage.getItem('student_id');
     let payload = {
         position_ids: position_ids
@@ -1388,20 +1389,20 @@ export function deleteLabPosition(lab_id, position_ids) {
 // position_id - (integer)
 // questions - (array of strings)
 
-// export function getApplicationFromPosition(position_id) {
-//     console.log('Getting application');
-//
-//     return axios.get('api/positions/' + position_id + '/application')
-//         .then(response => {
-//             return respond(response.status, response.data);
-//         })
-//         .catch(error => {
-//             return error_handle(error);
-//         })
-// }
+export function getLabPositionApplication(lab_id, position_id) {
+    console.log('Getting application');
+
+    return axios.get('api/labs/' + lab_id + '/position/' + position_id + '/application')
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
 
 // RESTRICTED: authenticated faculty member + lab owner
-export function createApplication(lab_id, application) {
+export function createLabPositionApplication(lab_id, application) {
     console.log('Creating application');
 
     // let lab_id = sessionStorage.getItem('lab_id');
@@ -1421,15 +1422,8 @@ export function createApplication(lab_id, application) {
 }
 
 // RESTRICTED: authenticated faculty member + lab owner
-export function updateApplication(lab_id, application) {
+export function updateLabPositionApplication(lab_id, application) {
     console.log('Creating application');
-
-    // let lab_id = sessionStorage.getItem('lab_id');
-
-    // let payload = {
-    //     position_id: position_id,
-    //     questions: questions
-    // };
 
     return axios.post('api/labs/' + lab_id + '/applications/update', application)
         .then(response => {
@@ -1441,13 +1435,11 @@ export function updateApplication(lab_id, application) {
 }
 
 // Gets ApplicationResponses to a particular position
-// RESTRICTED: lab_id
-export function getLabPositionApplicants(lab_id, position_id) {
-
-    // let lab_id = sessionStorage.getItem('lab_id');
+// RESTRICTED: authenticated faculty member + lab owner
+export function getLabPositionApplicationResponses(lab_id, position_id) {
 
     console.log('Getting application responses');
-    return axios.post('api/labs/' + lab_id + '/positions/responses', {position_id})
+    return axios.get('api/labs/' + lab_id + '/positions/' + position_id + '/application/responses')
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1463,8 +1455,13 @@ export function getLabPositionApplicants(lab_id, position_id) {
 // responses - (array of strings)
 // NOTE: 'create' allows a student to start an application, but it must be 'submitted' for the lab to see
 
-// RESTRICTED: student_id
+
 export function createApplicationResponse(application_response) {
+    return createStudentApplicationResponse(application_response);
+}
+
+// RESTRICTED: student_id
+export function createStudentApplicationResponse(application_response) {
     console.log('Creating application response');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -1485,7 +1482,7 @@ export function createApplicationResponse(application_response) {
 }
 
 // RESTRICTED: student_id
-export function updateApplicationResponse(application_response_id, application_response) {
+export function updateStudentApplicationResponse(application_response_id, application_response) {
     console.log('Updating application response');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -1505,7 +1502,7 @@ export function updateApplicationResponse(application_response_id, application_r
 }
 
 // RESTRICTED: student_id
-export function submitApplicationResponse(application_response_id) {
+export function submitStudentApplicationResponse(application_response_id) {
     console.log('Submitting application response');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -1515,7 +1512,7 @@ export function submitApplicationResponse(application_response_id) {
         application_response_id: application_response_id
     };
 
-    return axios.post('api/students/' + student_id + '/responses/update', payload)
+    return axios.post('api/students/' + student_id + '/responses/submit', payload)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1525,7 +1522,7 @@ export function submitApplicationResponse(application_response_id) {
 }
 
 // RESTRICTED: student_id
-export function deleteApplicationResponse(application_response_id) {
+export function deleteStudentApplicationResponse(application_response_id) {
     console.log('Deleting application response');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -1546,7 +1543,7 @@ export function deleteApplicationResponse(application_response_id) {
 
 // Gets responses that haven't yet been submitted (in progress)
 // RESTRICTED: student_id
-export function getStudentPendingResponses() {
+export function getStudentApplicationResponsePending() {
     console.log('Getting application response');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -1621,10 +1618,10 @@ export function labSearch(areas, skills, commitments, departments, keyword) {
         })
 }
 
-// Retrieves position data based on ids from labSearch
-export function getSearchResults(position_ids) {
+// Retrieves position data based on results from labSearch
+export function getSearchResults(search_results) {
     let payload = {
-        position_ids: position_ids
+        search_results: search_results
     };
 
     return axios.post('api/search/results', payload)

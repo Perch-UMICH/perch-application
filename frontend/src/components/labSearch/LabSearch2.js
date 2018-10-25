@@ -8,7 +8,7 @@ import '../user/individual/PickYourInterests.css';
 import {isStudent, getAllLabs, getSearchResults, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
 import {getFilters} from '../../data/filterData';
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
-const filterFriendlyNames = ['Departments', 'Research Areas', 'Minimum Requirements', 'Lab Skills'];
+const filterFriendlyNames = ['Departments', 'Research Areas', 'Hours', 'Lab Skills'];
 
 class LabSearch extends Component {
 	constructor(props) {
@@ -36,7 +36,7 @@ class LabSearch extends Component {
             search: '',
             lab_list: [],
 			loading: true,
-			limit: 3,
+			limit: 5,
 		}
 	}
 
@@ -50,16 +50,12 @@ class LabSearch extends Component {
 		if (positions.length > limit)
 			newState.next = positions.slice(limit)
 
-		let actual_positions = []
-		positions.slice(0,limit).map(a=> {
-			actual_positions = actual_positions.concat(a.projects)
-		})
-
-    	getSearchResults(actual_positions).then(r => {
+    	getSearchResults(positions.slice(0,limit)).then(r => {
     		let all_labs = r.data.results
+    		console.log('more results', all_labs)
     		for (var key in all_labs) {
                 let lab = all_labs[key];
-                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.projects}/>);
             }
         	newState.loading = false;
         	this.setState(newState);
@@ -78,22 +74,18 @@ class LabSearch extends Component {
 	    		if (positions.length > limit)
 	    			newState.next = positions.slice(limit)
 
-	    		let actual_positions = []
-				positions.slice(0,limit).map(a=> {
-					actual_positions = actual_positions.concat(a.projects)
-				})
-	    		return getSearchResults(actual_positions)
+	    		return getSearchResults(positions.slice(0,limit))
 	    	})
 	    	.then(r => {
+	    		console.log('r', r)
 	    		let all_labs = r.data.results
 	    		for (var key in all_labs) {
 	                let lab = all_labs[key];
-	                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>);
+	                newState.all_labs.push(<LabSearchItem key={lab.id} id={lab.id} saved_labs={this.state.lab_list} name={lab.name} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.projects}/>);
 	            }
 	        	newState.loading = false;
             	this.setState(newState);
 	    	})
-
 
         getSearchData().then((resp) => {
             console.log(resp);
@@ -230,24 +222,23 @@ class LabSearch extends Component {
 				var newState = this.state;
 	       		labSearch(this.state.areas, this.state.skills, this.state.commitments, this.state.departments, this.state.search)
 	       			.then((r) => {
+	       				console.log('look', r)
 				        newState.all_labs = [];
 			            let positions = r.data.results || r.data
 			    		let limit = this.state.limit
 			    		newState.next = positions.slice(limit)
-			    		let actual_positions = []
-			    		positions.slice(0,limit).map(a=> {
-			    			actual_positions = actual_positions.concat(a.projects)
-			    		})
-			    		return getSearchResults(actual_positions)
+			    		
+			    		return getSearchResults(positions.slice(0,limit))
       				})
       				.then((r) => {
       					console.log('getsearchresults', r)
       					var all_search_labs = r.data.results;
       					console.log(all_search_labs)
-      					all_search_labs.map(lab => newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.positions}/>))
+      					all_search_labs.map(lab => newState.all_labs.push(<LabSearchItem name={lab.name} saved_labs={this.state.lab_list} key={lab.id} id={lab.id} dept='MISSING' rsrch='MISSING' img='/img/headshots/salektiar.jpg' description='NULL' positions={lab.projects}/>))
       					newState.loading = false;
 		          		this.setState(newState);
       				})
+      				.catch(e => alert('errror'))
 		})
 	}
   }
@@ -270,7 +261,7 @@ class LabSearch extends Component {
 											<li key={subFilt.slug}>
 												<input type="checkbox"
 													className="checkbox-white filled-in"
-                          onClick={() => this.handleFilterClick(type, filt.slug)}
+                          							onClick={() => this.handleFilterClick(type, filt.slug)}
 													id={subFilt.slug}/>
 												<label
 													className="filter-checkbox-label"
@@ -315,8 +306,7 @@ class LabSearch extends Component {
 					})}
 				</ul>
 
-				filterContentArr.push(<div className="search-filter-content-wrapper">
-					{filterContent}</div>);
+				filterContentArr.push(<div className="search-filter-content-wrapper">{filterContent}</div>);
 		})
 
 	var labSearchContent =
@@ -324,8 +314,7 @@ class LabSearch extends Component {
           {this.state.all_labs}
      </div>
 
-	var showMoreButton =
-     <div id='lab-srch-more' onClick={this.moreLabs.bind(this)}>Mo' labs, mo' problems</div>
+	var showMoreButton = <div id='lab-srch-more' onClick={this.moreLabs.bind(this)}>Mo' labs, mo' problems</div>
 
 	if (this.state.loading) {
 		labSearchContent = <DotLoader />

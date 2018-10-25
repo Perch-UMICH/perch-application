@@ -3,7 +3,7 @@ import {getCurrentStudentId, addTagsToStudent, removeTagsFromStudent, removeSkil
 		removeWorkExperiencesFromStudent, addEduExperienceToStudent, updateEduExperienceOfStudent,
 		addWorkExperienceToStudent, addSkillsToStudent, getStudentFromUser,
 		getStudentTags, getStudentSkills, updateStudent, deepCopy, primeExternalLink,
-		uploadUserFile, getUserFile, exists} from '../../../helper.js'
+		uploadUserFile, getUserFile, exists, isLoggedIn} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -327,7 +327,7 @@ class StudentProfile extends Component {
 		else if (exists(this.state.user.resume)) {
 			resumeLink = this.state.user.resume;
 		}
-		if (!true) {//(!isLoggedIn()) {
+		if (!isLoggedIn()) {
 			return <ErrorPage />
 		} else if (this.state.not_student) {
 			return <ErrorPage fourofour="true" />
@@ -362,7 +362,6 @@ class StudentProfile extends Component {
 	 				<div>
 	 					<h1>Academics</h1>
 	 					<div>
-	 						<div><b>GPA</b> {this.state.user.gpa}</div>
 							<div><b>Major</b> {this.state.user.major}</div>
 	 						<div><b>Year</b> {this.state.user.year}</div>
 	 					</div>
@@ -398,10 +397,6 @@ class StudentProfile extends Component {
 	 						<img id='user-quickview-img' src={this.state.user.img ? this.state.user.img : '/img/rodriguez.jpg'}/>
 	 					</div>
 	 					<div style={{position: 'relative'}}>
-		 					{/*<img id='user-quickview-coverimage' src='https://www.idcwonline.com.au/WebRoot/ecshared01/Shops/shsh11971/543D/EABA/662D/F139/1B09/AC10/0040/8D0F/cards_single_lightblue.png' />
-		 					<div id='user-quickview-footer'>
-								{this.state.user.university}
-							</div>*/}
 		 					<div id='user-quickview-name'>{this.state.user.name}</div>
 	 					</div>
 	 					<SkillsInterests skills={this.state.user.skills} interests={this.state.user.interests}/>

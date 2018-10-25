@@ -3,7 +3,7 @@
 	border-bottom: 1px solid var(--d-three-grey);
 	position: relative;
 	padding-bottom: 25px;
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 
 .group-project-name-container {
@@ -80,7 +80,7 @@
 	margin-left: 20px;
 	margin-top: 4px;
 	font-size: 14px;
-	width: 550px;
+	width: 820px;
 	height: auto;
 	max-height: 60px;
 	overflow: hidden;
@@ -88,8 +88,24 @@
 }
 
 .group-project-applicant-cta {
-	padding: 10px;
-	background-color: aliceblue;
+	position: absolute;
+	top: 45px;
+	right: 0;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-color: var(--primary);
+	color: var(--white);
+	cursor: pointer;
+	border-radius: 20px 0 0 20px;
+	transition: 0.2s ease;
+	padding: 0px 10px;
+	padding-left: 15px;
+}
+
+.group-project-applicant-cta:hover {
+	background-color: var(--active);
+	transition: 0.2s ease;
 }
 
 #group-project-container {

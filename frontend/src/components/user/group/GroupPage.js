@@ -7,8 +7,8 @@ import {modalUpdateLab} from '../CreateLab'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import {EditAdmins} from './GroupEditors'
 import BasicButton from '../../utilities/buttons/BasicButton'
-import {deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, createLabPosition,
-        getLabPreferences, isStudent, isLab, getLabMembers, createApplication, addMembersToLab, getCurrentLabId} from '../../../helper.js'
+import {getStudentFromUser, deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, createLabPosition,
+    isStudent, isLab, getLabMembers, createLabPositionApplication, addMembersToLab, getCurrentLabId} from '../../../helper.js'
 import Editor from '../../utilities/Editor'
 // import $ from 'jquery'
 // import M from 'materialize-css'
@@ -39,6 +39,7 @@ class GroupPage extends Component {
             members_raw: [],
             admins_raw: [],
             app_questions: [],
+            user_saved_labs: [],
         }
     }
 
@@ -52,22 +53,22 @@ class GroupPage extends Component {
           resp.data.faculty.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
           resp.data.students.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'http://i.imgur.com/Qz9T4SC.jpg'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
@@ -83,13 +84,18 @@ class GroupPage extends Component {
       });
     }
 
-    componentWillMount() {
+    componentDidMount() {
       this.loadLabPositions();
-
-      getLab(this.state.lab_id).then((resp) => {
+      getLab(this.state.lab_id)
+      .then((resp) => {
           this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
-      });
-
+      })
+      .then(r=>getStudentFromUser(getCurrentUserId())
+      .then((r) => {
+        /*
+        console.log('AHHH', r)
+        this.setState({user_saved_labs: r.data.position_list})*/
+      }))
       this.loadLabMembers();
   }
 
@@ -120,7 +126,7 @@ class GroupPage extends Component {
           position_id: resp.data.id,
           questions,
         }
-        createApplication(this.state.lab_id, application).then(resp2 => {console.log("APP!!!", resp2)});
+        createLabPositionApplication(this.state.lab_id, application).then(resp2 => {console.log("APP!!!", resp2)});
         this.loadLabPositions();
         this.setState({new_pos: { min_time_commitment: 10 }})
     });
@@ -191,7 +197,7 @@ class GroupPage extends Component {
           <div className='row'>
             <h5>Add a new member</h5>
             <div className='input-field col s10'>
-              <input id='new-member' type='number' placeholder='#' />
+              <input id='new-member' type='number' placeholder='#' value=""/>
               <label htmlFor='email' className="active">User ID</label>
             </div>
             <div className='col s2'>
@@ -209,16 +215,17 @@ class GroupPage extends Component {
 				<div id='group-page-column-L'>
 					<Administrators admin_access={this.state.admin_access} people={this.state.lab_admins}/>
 					<Members admin_access={this.state.admin_access} people={this.state.lab_members}/>
+          <QuickInfo department='MISSING'/>
+            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
 				</div>
 				<div id='group-page-column-R'>
-            <QuickInfo department='MISSING' admin_access={this.state.admin_access}/>
-            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location} admin_access={this.state.admin_access}/>
+            
         </div>
 				<div id='group-page-main'>
 					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} superClick={() => this.openModal('edit-name')}/>
 					<GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
             {this.state.lab_positions.map((pos, index) => {
-              return(<GroupProject key={`${index}-p`} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
+              return(<GroupProject key={`${index}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
                         time_commit={pos.min_time_commitment} admins={this.state.admins_raw} gpa='MISSING' year='MISSING' urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>);
             })}
 					</GroupProjectContainer>

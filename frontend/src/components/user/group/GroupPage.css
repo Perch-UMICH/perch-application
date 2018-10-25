@@ -29,7 +29,8 @@
 
 #group-page-main {
 	position: absolute;
-	width: 660px;
+	/*width: 660px;*/
+	width: calc(1200px - 260px);
 	height: 1000px;
 	left: 250px;
 	margin: 0 20px;
@@ -90,9 +91,8 @@
 
 .group-person img {
 	width: 100%;
-/*	width: calc(100% - 6px);*/
 	display: block;
-	border: 1px solid white;
+	/*border-right: 1px solid lightgrey;*/
 }
 
 .group-person-overlay {
