@@ -52,18 +52,18 @@ class LabDashboard extends Component {
 		var facultyOwned = isFaculty();
 		const boxOneTitle = isStudent() ? "Saved Projects" : "Your Projects";
 		const boxTwoTitle = isStudent() ? "Projects You've Applied To" : "Applicants To Your Projects";
-
+		console.log('AHHH', this.state.position_list);
 		return (
 			<div className='shift-down' style={{minHeight: '70vh'}}>
 				<div className='lab-dashboard'>
 						<h1 className='lab-dashboard-title'>{boxOneTitle}</h1>
 		         	<div className='lab-dashboard-container'>
-		         		{
+		         		{	
 		         			this.state.position_list.map((position, index) => {
 		         				return(
 			           			<div key={`position-${index}`} className='lab-dashboard-item'>
 			           				{/*<a className='lab-dashboard-lab-name'>{position.lab.name}</a>*/}
-			           				<LabSearchProject key={position.id} id={position.lab_id} project_id={position.id} title={position.title} facultyOwned={facultyOwned} spots='MISSING' saved='true' description={position.description} urop={position.is_urop_project} updateProjects={this.updateProjects.bind(this)}/>
+			           				<LabSearchProject position={position} facultyOwned={facultyOwned} spots='MISSING' saved='true' updateProjects={this.updateProjects.bind(this)}/>
 			           			</div>
 		           			)
 		         		})}

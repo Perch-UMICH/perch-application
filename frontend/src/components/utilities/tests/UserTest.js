@@ -46,7 +46,11 @@ class UserTest extends React.Component {
         f.append('file', input)
         let to_return = {
             formData: f,
-            type: 'profile_pic'
+            type: 'profile_pic',
+            x: .5,
+            y: .5,
+            width: 10,
+            height: 10,
         }
         console.log(to_return)
         H.uploadUserFile(to_return).then(r=> console.log(r))

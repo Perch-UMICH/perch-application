@@ -52,16 +52,15 @@ class LabSearchProject extends Component {
     }
 
     saveProject = () => {
-        console.log(this.props.id, this.props.project_id)
-        addToStudentPositionList([this.props.project_id])
+        addToStudentPositionList([this.props.position.id])
         this.toggleAdder()
     }
 
     removeProject = () => {
-        console.log(this.props.id, this.props.project_id)
-        removeFromStudentPositionList([this.props.project_id])
+        console.log('look here', this.props.position)
+        removeFromStudentPositionList([this.props.position.id])
         this.toggleAdder()
-        this.props.updateProjects(this.props.project_id)
+        this.props.updateProjects(this.props.position.id)
     }
 
     toggleAdder = () => {
@@ -72,8 +71,8 @@ class LabSearchProject extends Component {
         let newPos = this.state.position;
         if (newPos.description && newPos.description.length > 270) {
             this.setState({overflowDescription: true})
+            newPos.description = newPos.description.slice(0,270);
         }
-        newPos.description = newPos.description.slice(0,270);
         this.setState({position: newPos})
     }
 
