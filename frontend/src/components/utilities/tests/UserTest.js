@@ -41,18 +41,22 @@ class UserTest extends React.Component {
 
     handleFile(e) {
         e.preventDefault()
+
         let input = document.getElementById('file-input').files[0]
         let f = new FormData()
+
         f.append('file', input)
+
         let to_return = {
             formData: f,
             type: 'profile_pic',
-            x: .5,
+            x: .34,
             y: .5,
-            width: 10,
-            height: 10,
+            scale: 3.9,
         }
+
         console.log(to_return)
+
         H.uploadUserFile(to_return).then(r=> console.log(r))
     }
 
@@ -195,13 +199,17 @@ class UserTest extends React.Component {
         return(
             <div id='test'>
                 <h1>Tests Completed/Total: {completed}/{queued}</h1>
+
                 <h1>Bad Status Codes</h1>
                 {this.state.errors.map(item => item)}
+
                 <form onSubmit={this.handleFile.bind(this)}>
                     <input type='file' id='file-input'/>
                     <input type='submit'/>
                 </form>
+
                 <div onClick={this.getFile.bind(this)}>getFile</div>
+
                 <ReactCrop src={this.state.img} crop={this.state.crop} onChange={this.onChange.bind(this)}/>
                 
                 <h1>Student Tests</h1>

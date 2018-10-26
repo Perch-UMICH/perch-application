@@ -103,20 +103,28 @@ class StudentProfile extends Component {
 	}
 
 	sendHeaderInfo() {
+		var updated_user = this.state.updated_user
+		var user = this.state.user
 	    var name = this.state.updated_user.name
+	    console.log('IN HEADEr', updated_user)
 	    // build class array
 		var class_arr = [];
-		if (this.state.user.classes) 
-			this.state.user.classes.map(c => class_arr.push(c.name))
+		if (user.classes) 
+			class_arr = user.classes.map(c => c.name)
+
 		// update profile picture
-		if (this.state.updated_user.img) {
-			console.log(this.state.updated_user.img)
+		if (updated_user.img) {
 			let formData = new FormData();
-			formData.append('file', this.state.updated_user.img);
+			formData.append('file', updated_user.img);
+
 			let to_return = {
 	            formData: formData,
-	            type: 'profile_pic'
+	            type: 'profile_pic',
+	            x: updated_user.crop.x,
+	            y: updated_user.crop.y,
+	            scale: 4,
 	        }
+
 			uploadUserFile(to_return, 'profile_pic')
 				.then(r => console.log(r))
 				.catch(e => console.log(e))

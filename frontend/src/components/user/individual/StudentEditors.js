@@ -447,10 +447,18 @@ export class EditQuickview extends Component {
 
 	handleSlider = e => {
 		this.setState({
-			scale: e.target.value
+			scale: parseFloat(e.target.value, 10)
 		})
+
+
 		if (this.props.updateUser) {
-			this.props.updateUser("img_scale", e.target.value);
+
+			this.props.updateUser("crop", {
+				x: this.state.x, 
+				y: this.state.y,
+				rotate: this.state.rotate,
+				scale: e.target.value,
+			});
 		}
 	}
 
@@ -467,7 +475,8 @@ export class EditQuickview extends Component {
 		this.props.updateUser("crop", {	
 									x: this.state.x, 
 									y: this.state.y,
-									rotate: this.state.rotate
+									rotate: this.state.rotate,
+									scale: this.state.scale,
 								})
 
 	}
