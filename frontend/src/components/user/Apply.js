@@ -23,7 +23,7 @@ class Apply extends Component {
 		this.setState({
 			pos_description: this.state.position.description || "No description provided.",
 			time_comm: this.state.position.min_time_commitment || "No minimum time provided.",
-			min_qual: this.state.position.min_qual || "No minimum qualifications provided.",
+			min_qual: this.state.position.min_qual,
 			questions: [ // currently using default two questions, could make position-specific
 				{
 					id: 1,
@@ -44,7 +44,7 @@ class Apply extends Component {
 			<div className="apply-wrapper">
 				<div className="apply-descriptor"><b>Position Description: </b>{this.state.pos_description}</div>
 				<div className="apply-descriptor"><b>Time Commitment: </b>{this.state.time_comm} hours per week</div>
-				<div className="apply-descriptor"><b>Minimum Qualifications: </b>{this.state.min_qual}</div>
+				{this.state.min_qual && <div className="apply-descriptor"><b>Minimum Qualifications: </b>{this.state.min_qual}</div>}
 				<AppQuestionTab updateQuestions={this.updateQuestions.bind(this)} questions={(this.state.questions && this.state.questions.length) ? this.state.questions : []} />
 			</div>
 		);
