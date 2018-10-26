@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import UpdateContact from '../maintenance/UpdateContact'
 import {EditContainerOnboarding, EditContact} from './StudentEditors.js'
+import './EnterContact.css'
 
 class EnterContact extends Component {
 	constructor(props) {

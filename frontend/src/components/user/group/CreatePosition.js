@@ -13,10 +13,10 @@ class CreatePosition extends Component {
 			contact_email: '',
 			contact_phone: '',
 		}
-		if (props.new_pos) {
-			console.log("NEW POS!", props.new_pos)
+		if (props.new_pos)
 			new_pos = props.new_pos;
-		}
+		
+
 		this.state = {
 			lab_name: "",
 			createGenHelpText: "Create a new group project! First, fill out some quick project information.",

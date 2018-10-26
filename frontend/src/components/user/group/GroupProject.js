@@ -21,18 +21,24 @@ export class GroupProject extends Component {
 		}
 	}
 
-	componentDidMount() {
-		getLabPositionApplicationResponses(this.props.lab_id, this.props.pos_id).then(resp => {
-			if (resp.data && resp.data.length) 
-				this.setState({applicants: resp.data})
-		})
+	componentWillReceiveProps(props) {
 		let saved = false
-          for (let item in this.props.saved_labs) {
-          	console.log('item', item)
-              if (item.id == this.props.pos_id)
-                  saved = true
-          }
+	    for (let item in props.saved_labs) {
+	        if (props.saved_labs[item].id === this.props.pos_id) {
+	        	saved = true
+	        }
+        }
 		this.setState({added: saved})
+	}
+
+	componentDidMount() {
+		if (isFaculty()) {
+			getLabPositionApplicationResponses(this.props.lab_id, this.props.pos_id)
+				.then(resp => {
+					if (resp.data && resp.data.length) 
+						this.setState({applicants: resp.data})
+				})
+		}
 	}
 
 	// Grab the description and add expand
@@ -49,20 +55,21 @@ export class GroupProject extends Component {
 
 	// Send updated position & application to server
 	updatePosition() {
-		updateLabPosition(this.props.lab_id, this.props.pos_id, this.state.new_pos).then(resp => {
-			// TODO: send updated application
-			let questions = []
-			if (this.state.app_questions) 
-				this.state.app_questions.map(q => questions.push(q.text))
-			let application = {
-				position_id: this.props.pos_id,
-				questions,
-			}
-            updateLabPositionApplication(this.props.lab_id, application).then(resp2 => {console.log("APP UPDATED!!!", resp2)});;
+		updateLabPosition(this.props.lab_id, this.props.pos_id, this.state.new_pos)
+			.then(resp => {
+				// TODO: send updated application
+				let questions = []
+				if (this.state.app_questions) 
+					this.state.app_questions.map(q => questions.push(q.text))
+				let application = {
+					position_id: this.props.pos_id,
+					questions,
+				}
+	            updateLabPositionApplication(this.props.lab_id, application).then(resp2 => {console.log("APP UPDATED!!!", resp2)});;
 
-			if (this.props.updatePositions)
-				this.props.updatePositions();
-		})
+				if (this.props.updatePositions)
+					this.props.updatePositions();
+			})
 	}
 
 	toggleAdder = () => {
@@ -94,19 +101,25 @@ export class GroupProject extends Component {
 	// Update this function with backend functionality to save application
 	// You can access the response under 'this.state.question_resps'
 	submitApplication() {
-		let resps = []
-		if (this.state.question_resps) 
-			this.state.question_resps.map(q => resps.push(q.response))
+		let question_resps = this.state.question_resps,
+			resps = []
+
+		if (question_resps) 
+			resps = question_resps.map(q => q.response)
+
 		let application = {
 			position_id: this.props.pos_id,
 			responses: resps,
 		}
+
 		createApplicationResponse(application).then(resp => {
 			if (resp.data) {
 				// get some info from resp when working
-				submitStudentApplicationResponse(resp.data.id).then(r => {
-					alert("Application Successfully Submitted!")
-				});
+				submitStudentApplicationResponse(resp.data.id)
+					.then(r => {
+						alert("Application Successfully Submitted!")
+					})
+					.catch(e=>alert('Error in create application response'))
 			}
 		});
 	}
@@ -214,13 +227,11 @@ export class GroupProject extends Component {
 	}
 
 	saveProject = () => {
-        console.log(this.props.lab_id, this.props.pos_id)
         addToStudentPositionList([this.props.pos_id])
         this.toggleAdder()
     }
 
     removeProject = () => {
-        console.log(this.props.lab_id, this.props.pos_id)
         removeFromStudentPositionList([this.props.pos_id])
         this.toggleAdder()
     }
@@ -256,7 +267,7 @@ export class GroupProject extends Component {
 				{this.renderApply()}
 				{this.isAdmin() || this.renderSave()}
 				{this.renderApplicantCTA()}
-				{<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>}
+				<ExpanderIcons id={`group-project-description-${this.props.title}`} classBase='group-project' action={this.expand.bind(this)}/>
 			</div>
 		)
 	}

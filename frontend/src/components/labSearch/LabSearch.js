@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './LabSearch2.css';
+import './LabSearch.css';
 import ExpanderIcons from '../utilities/ExpanderIcons'
 import DotLoader from '../utilities/animations/DotLoader'
 import LabSearchItem from './LabSearchItem';

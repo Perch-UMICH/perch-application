@@ -4,7 +4,6 @@
 	width: 100%;
 	margin-bottom: 5px;
 	position: relative;
-	/*border-radius: 0 20px 0 40px;*/
 	transition: .2s ease;
 }
 
@@ -16,16 +15,6 @@
 .lab-srch-project:last-of-type {
 	margin-bottom: 0;
 }
-
-/*.lab-srch-project:after {
-	content: 'PROJECT';
-	position: absolute;
-	left: -50px;
-	top: 30%;
-	color: grey;
-	transform: rotate(-90deg);
-	font-size: 14px;
-}*/
 
 
 .lab-srch-project-title-container {
@@ -94,8 +83,6 @@
 	position: absolute;
 	top: 15px;
 	right: 0px;
-	/*top: 35px;
-	right: -5px;*/
 	width: 75px;
 	height: 40px;
 	line-height: 40px;
@@ -122,8 +109,6 @@
 
 .lab-srch-project-adder {
 	position: absolute;
-	/*top: 80px;
-	right: -5px;*/
 	top: 60px;
 	right: 0px;
 	padding: 0 10px;

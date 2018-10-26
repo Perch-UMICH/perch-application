@@ -5,7 +5,6 @@ import './Apply.css';
 class Apply extends Component {
 	constructor(props) {
 		super(props);
-		console.log("POSITION!", this.props.position)
 		this.state = {
 			questions: [],
 			position: this.props.position || {},

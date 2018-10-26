@@ -1,22 +1,14 @@
 import React, {Component} from 'react';
-import LabSearch2 from './LabSearch2';
-import LabList from './LabList';
+import LabSearch from './LabSearch';
 import {getAllLabs, getLabTags, isLoggedIn} from '../../helper.js'
 import ErrorPage from '../utilities/ErrorPage'
 
-class LabMatch extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			labs: [],
-		}
-	}
-
+class LabMaster extends Component {
 	render() {
 		if (isLoggedIn()) {
 			return (
 				<div className='shift-down'>
-					<LabSearch2 />
+					<LabSearch />
 				</div>
 			);
 		}
@@ -26,4 +18,4 @@ class LabMatch extends Component {
 	}
 }
 
-export default LabMatch;
+export default LabMaster;

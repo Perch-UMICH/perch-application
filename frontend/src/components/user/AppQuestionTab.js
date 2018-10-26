@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ModalButton from '../utilities/buttons/ModalButton';
 import './AppQuestionTab.css';
 
 class AppQuestionTab extends Component {

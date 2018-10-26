@@ -34,21 +34,24 @@ class LabSearchProject extends Component {
     // You can access the response under 'this.state.question_resps'
     submitApplication = () => {
         let resps = []
-        if (this.state.question_resps) 
-            this.state.question_resps.map(q => resps.push(q.response))
 
-            let application = {
+        if (this.state.question_resps) 
+            resps = this.state.question_resps.map(q => q.response)
+
+        console.log('submit app',resps)
+
+        let application = {
             student_id: getCurrentStudentId(),
             position_id: this.state.position.id,
             responses: resps,
         }
 
-		createApplicationResponse(application).then(resp => {
-			if (resp.data)
-                submitStudentApplicationResponse(resp.data.id).then(r => {
-					alert("Application Successfully Submitted!")
-				});
-        });
+		createApplicationResponse(application)
+            .then(resp => {
+    			if (resp.data) 
+                    submitStudentApplicationResponse(resp.data.id)
+            })
+            .catch(e=> alert('error in create application response'))
     }
 
     saveProject = () => {
@@ -76,9 +79,19 @@ class LabSearchProject extends Component {
         this.setState({position: newPos})
     }
 
+    renderModals() {
+        return (
+            <EditModal id={`${this.state.position.id}-apply`} wide={true} actionName="submit" title={`Apply To ${this.state.position.title}`} modalAction={this.submitApplication}>
+              <Apply updateQuestions={this.updateApplication} position={this.state.position}/>
+            </EditModal>
+        )
+    }
+
 	render() {
     var applyButton =
-      <div className='lab-srch-project-apply lab-srch-project-action-label'><a onClick={() => this.openModal(`${this.state.position.id}-apply`)}>Apply</a></div>
+      <div className='lab-srch-project-apply lab-srch-project-action-label'>
+        <a onClick={() => this.openModal(`${this.state.position.id}-apply`)}>Apply</a>
+      </div>
 
     var saveRemoveButton =
       <div>
@@ -93,19 +106,24 @@ class LabSearchProject extends Component {
     }
 
 		return (
-            <div className='lab-srch-project'>
-                <EditModal id={`${this.state.position.id}-apply`} wide={true} actionName="submit"
-                  title={`Apply To ${this.state.position.title}`} modalAction={this.submitApplication}>
-                  <Apply updateQuestions={this.updateApplication} position={this.state.position}/>
-                </EditModal>
+            <div key={this.props.position.id} className='lab-srch-project'>
+
+                {this.renderModals()}
+
                 <div className='lab-srch-project-title-container'>
                     <a className='truncate lab-srch-project-title' href={`prof-page/${this.props.id}`}>{this.state.position.title}</a>
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                 </div>
-                <div className='lab-srch-project-description'>{this.state.position.description} <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span></div>
-                {applyButton}
+
+                <div className='lab-srch-project-description'>{this.state.position.description} 
+                    <span className={this.state.overflowDescription ? 'ellipsis' : 'hide'}>...</span>
+                </div>
+
                 <div className='lab-srch-project-openings'><b>{this.state.position.spots}</b> {this.state.position.spots - 1 ? "spots" : "spot"}</div>
+                
+                {applyButton}
                 {saveRemoveButton}
+                
             </div>
 
 		);

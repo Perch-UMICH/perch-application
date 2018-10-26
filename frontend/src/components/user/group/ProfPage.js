@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {updateFaculty, permissionCheck, getLab, createLab, isLoggedIn, getCurrentFacultyId, getCurrentUserId, getUserLabs, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
-import ExtLinkBox from '../ExtLinkBox'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
@@ -169,16 +168,9 @@ class ProfPage extends Component {
 			})
 	}
 
-	render() {
-		var apply_dest = '/apply/' + window.location.pathname.split('/')[2];
-		// TODO TEMPORARILY COMMENTED OUT UNTIL INTEGRATED WITH BACKEND
-		// if (!isLoggedIn()) {
-		// 	return <ErrorPage />
-		// } else if (this.state.no_lab) {
-		// 	return <ErrorPage fourofour="true" />
-		// } else {
-		return (
-			<div id='user-content-body'>
+	renderModals() {
+		return(
+			<div>
 				<EditModal id="contact-edit" title="Edit Contact Info" modalAction={this.sendContactInfo.bind(this)}>
 					<EditContact modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
@@ -197,9 +189,6 @@ class ProfPage extends Component {
 				<EditModal id="quickview-edit" title="Edit Quickview Info" modalAction={this.sendContactInfo.bind(this)}>
 					<EditQuickview img='/img/headshots/bcoppola.jpg' modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
-				{/*<EditModal id="join-lab-modal" title="Join A Lab">
-					<input type='text' placeholder=''></input>
-				</EditModal>*/}
 				<EditModal id="create-lab-modal" title="Create A Lab" modalAction={r=>this.handleLabCreation()}>
 					<div className='input-field'>
 						<input id='lab-create-name' type='text' placeholder='Smooth Jazz Lab' />
@@ -226,19 +215,33 @@ class ProfPage extends Component {
 					modalAction={() => this.getModalAction(false)}>
 				 	<p>Are you sure you want to delete the lab {this.state.selected_lab.name}? This action cannot be undone.</p>
 				</EditModal>
+			</div>
+		)
+	}
+
+	render() {
+		var apply_dest = '/apply/' + window.location.pathname.split('/')[2];
+		// TODO TEMPORARILY COMMENTED OUT UNTIL INTEGRATED WITH BACKEND
+		// if (!isLoggedIn()) {
+		// 	return <ErrorPage />
+		// } else if (this.state.no_lab) {
+		// 	return <ErrorPage fourofour="true" />
+		// } else {
+		return (
+			<div id='user-content-body'>
+				{this.renderModals()}
 	 			<div id='user-column-L'>
-	 				{/*<div className='join-lab' onClick={r => this.openModal('join-lab-modal')}>
-						<div>Join A Lab</div>
-					</div>*/}
 					<div className='join-lab' onClick={r => this.openModal('create-lab-modal')}>
 						<div>Create A Lab</div>
 					</div>
+
 	 				<div>
 	 					<h1>Quick Info</h1>
 	 					<div>
 	 						Extraordinary Alchemist
 	 					</div>
 	 				</div>
+
 	 				<div>
 	 					<h1>Contact Info</h1>
 	 					<div>
@@ -247,6 +250,7 @@ class ProfPage extends Component {
 	 					</div>
 	 					<Editor superClick={() => this.openModal('contact-edit')}/>
 	 				</div>
+
 	 				{/*<div id='user-links'>
 	 					<h1>Links</h1>
 	 					<div>
@@ -256,53 +260,44 @@ class ProfPage extends Component {
 	 					</div>
 	 					<Editor superClick={() => this.openModal('link-edit')}/>
 	 				</div>*/}
+
 	 			</div>
-	 			<div id='user-column-R'>
- 				
- 			</div>
+
 	 			<div id='user-column-Dashboard'>
+
 	 				<div id='user-quickview'>
 	 					<div id='user-quickview-img-container'>
  							<img id='user-quickview-img' src='https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png'/>
  						</div>
-	 					{/*<img id='user-quickview-coverimage' src='https://images.pexels.com/photos/242236/pexels-photo-242236.jpeg?auto=compress&cs=tinysrgb&h=350' />
-	 					<div id='user-quickview-footer'>University of Michigan</div>*/}
+
 	 					<div id='user-quickview-name'>{this.state.name}</div>
+
 	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
 	 				</div>
 
 	 				<div id='user-labs'>
 	 					<h1>Labs</h1>
+
 	 					<div>
 	 						{ this.state.loading_labs ? 
 							<div className="loading-pad"><i>Loading Labs ...</i></div>
 							: this.state.labs.map(labAssoc => {
-	 							console.log(labAssoc)
-								return (<div>
-									<a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
-									<span>{labAssoc.lab.description}</span>
+								return (
+									<div>
+										<a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
+										<span>{labAssoc.lab.description}</span>
 									</div>)
 							})}
 	 					</div>
+
 	 					<Editor superClick={() => this.openModal('create-lab-modal')} add={true}/>
 	 				</div>
-					{/*<div id='user-labs'>
-	 					<h1>Labs</h1>
- 						{ this.state.loading_labs ? "Loading Labs ..." :
-							this.state.labs.map(labAssoc => {
-							return <div key={labAssoc.lab.id}>
-									<a className="user-labs-name" href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>
-									<a onClick={() => this.setState({selected_lab: labAssoc.lab}, ()=>{this.openModal('delete-lab')})}
-										className="user-labs-delete">
-										<i className="material-icons">delete</i>
-									</a>
-								</div>
-						})}
-	 					<Editor superClick={() => this.openModal('create-lab')} add={true}/>
-	 				</div>*/}
+
 	 				<div>
 	 					<h1>Work Experience</h1>
+
 	 					<UserWorkExperience title="Manhattan Project" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
+	 					
 	 					<Editor superClick={() => this.openModal('work-edit')}/>
 	 				</div>
 	 			</div>

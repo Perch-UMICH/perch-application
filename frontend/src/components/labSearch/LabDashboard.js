@@ -42,29 +42,30 @@ class LabDashboard extends Component {
 	}
 
 	updateProjects(id) {
-		let position_list = this.state.position_list
+		let new_state = this.state
+		console.log(`Removing ${id} from `, this.state.position_list)
+		let position_list = new_state.position_list
 		position_list = position_list.filter((value)=> value.id !== id)
-		this.state.position_list = position_list
-		this.setState(this.state)
+		new_state.position_list = position_list
+		this.setState(new_state)
 	}
 
 	render() {
 		var facultyOwned = isFaculty();
 		const boxOneTitle = isStudent() ? "Saved Projects" : "Your Projects";
 		const boxTwoTitle = isStudent() ? "Projects You've Applied To" : "Applicants To Your Projects";
-		console.log('AHHH', this.state.position_list);
+		let position_list = this.state.position_list
 		return (
 			<div className='shift-down' style={{minHeight: '70vh'}}>
 				<div className='lab-dashboard'>
-						<h1 className='lab-dashboard-title'>{boxOneTitle}</h1>
+					<h1 className='lab-dashboard-title'>{boxOneTitle}</h1>
 		         	<div className='lab-dashboard-container'>
 		         		{	
-		         			this.state.position_list.map((position, index) => {
+		         			position_list.map((position, index) => {
 		         				return(
-			           			<div key={`position-${index}`} className='lab-dashboard-item'>
-			           				{/*<a className='lab-dashboard-lab-name'>{position.lab.name}</a>*/}
-			           				<LabSearchProject position={position} facultyOwned={facultyOwned} spots='MISSING' saved='true' updateProjects={this.updateProjects.bind(this)}/>
-			           			</div>
+				           			<div key={`position-${position.id}`} className='lab-dashboard-item'>
+				           				<LabSearchProject position={position} facultyOwned={facultyOwned} updateProjects={this.updateProjects.bind(this)}/>
+				           			</div>
 		           			)
 		         		})}
 		      		</div>

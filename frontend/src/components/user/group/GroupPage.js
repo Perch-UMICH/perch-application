@@ -5,7 +5,6 @@ import CreatePosition from './CreatePosition'
 import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {modalUpdateLab} from '../CreateLab'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
-import {EditAdmins} from './GroupEditors'
 import BasicButton from '../../utilities/buttons/BasicButton'
 import {getStudentFromUser, deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, createLabPosition,
     isStudent, isLab, getLabMembers, createLabPositionApplication, addMembersToLab, getCurrentLabId} from '../../../helper.js'
@@ -46,10 +45,11 @@ class GroupPage extends Component {
     // Refresh page to display initial & updated lab members
     loadLabMembers() {
       getLabMembers(this.state.lab_id).then((resp) => {
-          let admins = [];
-          let members = [];
-          var admins_raw = [];
-          let members_raw = [];
+          let admins = [],
+            members = [],
+            admins_raw = [],
+            members_raw = [];
+
           resp.data.faculty.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
@@ -61,6 +61,7 @@ class GroupPage extends Component {
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
+
           resp.data.students.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
@@ -72,7 +73,9 @@ class GroupPage extends Component {
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
+
           let priveleges = this.hasPermissions(admins_raw)
+
           this.setState({lab_admins: admins, lab_members: members, admins_raw: admins_raw, members_raw: members_raw, admin_access: priveleges});
       })
     }
@@ -87,15 +90,17 @@ class GroupPage extends Component {
     componentDidMount() {
       this.loadLabPositions();
       getLab(this.state.lab_id)
-      .then((resp) => {
-          this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
-      })
-      .then(r=>getStudentFromUser(getCurrentUserId())
-      .then((r) => {
-        /*
-        console.log('AHHH', r)
-        this.setState({user_saved_labs: r.data.position_list})*/
-      }))
+        .then((resp) => {
+            this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
+        })
+
+      if (isStudent()) {
+        getStudentFromUser(getCurrentUserId())
+        .then((r) => {
+          this.setState({user_saved_labs: r.data.position_list})
+        })
+      }
+
       this.loadLabMembers();
   }
 
@@ -126,7 +131,7 @@ class GroupPage extends Component {
           position_id: resp.data.id,
           questions,
         }
-        createLabPositionApplication(this.state.lab_id, application).then(resp2 => {console.log("APP!!!", resp2)});
+        createLabPositionApplication(this.state.lab_id, application)
         this.loadLabPositions();
         this.setState({new_pos: { min_time_commitment: 10 }})
     });
@@ -143,7 +148,6 @@ class GroupPage extends Component {
     let id = document.getElementById('new-member').value
     // check if user is not already the lab admin.
     addMembersToLab(this.state.lab_id, [id], [3]).then(r=> {
-      console.log(r);
       this.loadLabMembers();
     })
   }
@@ -156,21 +160,20 @@ class GroupPage extends Component {
     return false
   }
 
-	render() {
-		return(
-			<div id='group-page'>
-        {/* Editors (default hidden) */}
-        <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="create"
-          title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
+  renderModals() {
+    return (
+      <div>
+        <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="create" title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
           <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} new_pos={this.state.new_pos} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
         </EditModal>
-        <EditModal id={`edit-name`} wide={true} actionName="update" medium={true}
-          title={`Update Name & Description`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
+
+        <EditModal id={`edit-name`} wide={true} actionName="update" medium={true} title={`Update Name & Description`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
           <b>New Name</b>
           <input type='text' name='name' value={this.state.updated_lab.name} onChange={(e) => this.updateLabState(e)}/>
           <b>New Description</b>
           <input type='text' name='description' value={this.state.updated_lab.description} onChange={(e) => this.updateLabState(e)}/>
         </EditModal>
+
         <EditModal id={`edit-contact`} wide={true} actionName="update" medium={true}
           title={`Update Contact Info`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
           <b>New Email</b>
@@ -180,6 +183,7 @@ class GroupPage extends Component {
           <b>New Office Location</b>
           <input type='text' name='location' value={this.state.updated_lab.location} onChange={(e) => this.updateLabState(e)}/>
         </EditModal>
+
         <EditModal id='edit-admins' wide={true}
           title='Edit Admins'>
           <div className='row'>
@@ -192,6 +196,7 @@ class GroupPage extends Component {
             <BasicButton msg='delete page' superClick={r => deleteLab(this.state.lab_id)}/>
           </div>
         </EditModal>
+
         <EditModal id='edit-members' wide={true}
           title='Edit Members'>
           <div className='row'>
@@ -211,32 +216,63 @@ class GroupPage extends Component {
           </div>
         </EditModal>
 
-          {/* Main Page Content */}
+      </div>
+    )
+  }
+
+	render() {
+    let lab_positions = this.state.lab_positions
+		return(
+			<div id='group-page'>
+        {this.renderModals()}
+
 				<div id='group-page-column-L'>
+
 					<Administrators admin_access={this.state.admin_access} people={this.state.lab_admins}/>
+
 					<Members admin_access={this.state.admin_access} people={this.state.lab_members}/>
+
           <QuickInfo department='MISSING'/>
-            <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
-				</div>
-				<div id='group-page-column-R'>
-            
+
+          <ContactInfo email={this.state.lab_data.contact_email} phone={this.state.lab_data.contact_phone} location={this.state.lab_data.location}/>
+				
         </div>
+
 				<div id='group-page-main'>
+
 					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} superClick={() => this.openModal('edit-name')}/>
-					<GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
-            {this.state.lab_positions.map((pos, index) => {
-              return(<GroupProject key={`${index}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} keywords='MISSING' description={pos.description}
-                        time_commit={pos.min_time_commitment} admins={this.state.admins_raw} gpa='MISSING' year='MISSING' urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>);
-            })}
+					
+          <GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
+            {lab_positions.map((pos, index) => <GroupProject key={`${pos.id}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} description={pos.description}time_commit={pos.min_time_commitment} admins={this.state.admins_raw} year='MISSING' urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>)}
 					</GroupProjectContainer>
+
 					<GroupPublicationsContainer>
 						<GroupPublication title={this.state.lab_data.publications}/>
 					</GroupPublicationsContainer>
+
 				</div>
 			</div>
 		)
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Our Admin Panel on Group Page. Uses GroupPerson components
 const Administrators = (props) => {
