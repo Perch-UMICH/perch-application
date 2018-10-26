@@ -48,13 +48,13 @@ class EditModal extends Component {
 		          	<div className="modal-footer">
 					  	{this.props.deleteFunc && <BasicButton superClick={() => {this.props.deleteFunc(); this.handleClose()}} delete={true} msg='delete' />}
 				     	<BasicButton superClick={this.handleClose.bind(this)} msg='close' />
-				     	<BasicButton
+				     	{this.props.noAction ? null : <BasicButton
 								superClick={() => {
 									if (this.props.modalAction) {
 										this.props.modalAction();
 									}
 									this.handleClose();}}
-								msg={this.props.actionName ? this.props.actionName : "save"} />
+								msg={this.props.actionName ? this.props.actionName : "save"} />}
 				  	</div>
 			 	</div>
 			</div>

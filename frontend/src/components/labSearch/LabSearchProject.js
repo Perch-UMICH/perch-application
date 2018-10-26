@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Apply from '../user/Apply'
 import EditModal from '../utilities/modals/EditModal'
-import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, getCurrentStudentId} from '../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, getCurrentStudentId, submitStudentApplicationResponse} from '../../helper.js'
 import './LabSearchProject.css';
 
 class LabSearchProject extends Component {
@@ -12,7 +12,6 @@ class LabSearchProject extends Component {
             position: this.props.position || {},
             question_resps: [],
         }
-        console.log("POSITION", this.state.position);
     }
 
     componentDidMount() {
@@ -20,7 +19,6 @@ class LabSearchProject extends Component {
     }
 
     openModal(id) {
-      console.log("CLICKING OPEN ?")
   		if (document.getElementById(id)) {
   			document.getElementById(id).classList.add('activated');
         document.getElementById(`${id}-backdrop`).classList.add('activated');
@@ -43,17 +41,12 @@ class LabSearchProject extends Component {
             position_id: this.props.id,
             responses: resps,
         }
-        console.log("APPLICATION TO SUBMIT!!!", application)
 
 		createApplicationResponse(application).then(resp => {
-			if (resp.data) {
-				// get some info from resp when working
-                console.log("resp!!!!!", resp)
-                console.log("appl!!!!!", application)
-
-                // Then submit the application.
-                // submitApplicationResponse(application_response_id)
-			}
+			if (resp.data)
+                submitStudentApplicationResponse(resp.data.id).then(r => {
+					alert("Application Successfully Submitted!")
+				});
         });
     }
 

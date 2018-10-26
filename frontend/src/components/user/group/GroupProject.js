@@ -23,10 +23,10 @@ export class GroupProject extends Component {
 
 	componentDidMount() {
 		getLabPositionApplicationResponses(this.props.lab_id, this.props.pos_id).then(resp => {
-			this.setState({applicants: resp.data})
+			if (resp.data && resp.data.length) 
+				this.setState({applicants: resp.data})
 		})
 		let saved = false
-		console.log('savedADFASDF',this.props.saved_labs)
           for (let item in this.props.saved_labs) {
           	console.log('item', item)
               if (item.id == this.props.pos_id)
@@ -94,7 +94,6 @@ export class GroupProject extends Component {
 	// Update this function with backend functionality to save application
 	// You can access the response under 'this.state.question_resps'
 	submitApplication() {
-		console.log("SUBMIT !!!", this.state.question_resps)
 		let resps = []
 		if (this.state.question_resps) 
 			this.state.question_resps.map(q => resps.push(q.response))
@@ -105,10 +104,7 @@ export class GroupProject extends Component {
 		createApplicationResponse(application).then(resp => {
 			if (resp.data) {
 				// get some info from resp when working
-				console.log(
-					"resp!!!!!", resp
-				)
-				submitStudentApplicationResponse(resp.data.id).then(r2=> {console.log("DID IT???", r2)})
+				submitStudentApplicationResponse(resp.data.id);
 			}
 		});
 	}
@@ -126,7 +122,6 @@ export class GroupProject extends Component {
 
 	renderModal() {
 		// If not owner of lab (use-case, student), render application modal.
-		console.log("CUR POS", this.props.cur_pos)
 		let edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="submit"
 							title={`Apply To ${this.props.title}`} modalAction={this.submitApplication.bind(this)}>
 							<Apply updateQuestions={this.updateApplication} lab_id={this.props.lab_id} pos_id={this.props.pos_id} position={this.props.cur_pos}/>
@@ -143,10 +138,9 @@ export class GroupProject extends Component {
 
 	renderApplicantModal() {
 		// Show current applicants to lab
-		console.log("APPLICANTS???", this.state.applicants);
-		return <EditModal id={`${this.props.pos_id}-applicants`} wide={true} actionName="submit"
-					title={`Applicants to ${this.props.title}`} modalAction={this.submitApplication.bind(this)}>
-					<Applicants applicants={this.state.applicants}/>
+		return <EditModal id={`${this.props.pos_id}-applicants`} wide={true} noAction={true}
+					title={`Applicants to ${this.props.title}`} >
+					<Applicants applicants={this.state.applicants} pos_id={this.props.pos_id} lab_id={this.props.lab_id}/>
 				</EditModal>
 	}
 
@@ -165,7 +159,15 @@ export class GroupProject extends Component {
 	renderApplicantCTA() {
 		if (!this.isAdmin())
 			return;
-		let project_action = <div className='group-project-applicant-cta' onClick={() => this.openModal(`${this.props.pos_id}-applicants`)}>View {this.state.applicants.length} Applicants</div>
+		let view_app_text = "No Applicants"
+		let view_app_css = 'group-project-applicant-cta'
+		if (!this.state.applicants.length || this.state.applicants.length == 0)
+			view_app_css = 'group-project-no-applicants'
+		else if (this.state.applicants.length == 1) 
+			view_app_text = "View 1 Applicant"
+		else if (this.state.applicants.length > 1)
+			view_app_text = "View " + this.state.applicants.length + " Applicants"
+		let project_action = <div className={view_app_css} onClick={() => this.openModal(`${this.props.pos_id}-applicants`)}>{view_app_text}</div>
 		return project_action;
 	}
 
