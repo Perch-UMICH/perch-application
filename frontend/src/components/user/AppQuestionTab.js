@@ -33,7 +33,7 @@ class AppQuestionTab extends Component {
 	render() {
 		return (
 			<div className="app-question-tab" id="appQuestionTab">
-				<h1 className='app-question-tab-header'>Let the lab get to know you</h1>
+				<h1 className='app-question-tab-header'>Let the lab get to know you:</h1>
 				<div className='app-question-tab-body'>
 					<form className='file-field'>
 					    {this.props.questions.map((question, index) => {
