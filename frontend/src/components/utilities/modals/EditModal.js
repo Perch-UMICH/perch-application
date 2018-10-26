@@ -41,20 +41,20 @@ class EditModal extends Component {
 			<div>
 				<div className="modal-backdrop" id={`${this.props.id}-backdrop`} />
 				<div id={this.props.id} className={bodyCSS}>
-					<h1>{this.props.title}</h1>
+					<h1 className="modal-header">{this.props.title}</h1>
 			 		<div className={contentCSS}>
 						{this.props.children}
           			</div>
 		          	<div className="modal-footer">
 					  	{this.props.deleteFunc && <BasicButton superClick={() => {this.props.deleteFunc(); this.handleClose()}} delete={true} msg='delete' />}
 				     	<BasicButton superClick={this.handleClose.bind(this)} msg='close' />
-				     	<BasicButton
+				     	{this.props.noAction ? null : <BasicButton
 								superClick={() => {
 									if (this.props.modalAction) {
 										this.props.modalAction();
 									}
 									this.handleClose();}}
-								msg={this.props.actionName ? this.props.actionName : "save"} />
+								msg={this.props.actionName ? this.props.actionName : "save"} />}
 				  	</div>
 			 	</div>
 			</div>

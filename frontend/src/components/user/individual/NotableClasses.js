@@ -26,7 +26,10 @@ class NotableClasses extends Component {
 		var id = getCurrentUserId();
 		if (id) {
 			getStudentFromUser(id).then( r => {
-				this.setState({student_id: r.data.id, user_id: id}, () => {
+				let s_id = 0;
+				if (r.data)
+					s_id = r.data.id
+				this.setState({student_id: s_id, user_id: id}, () => {
 					getStudent(this.state.student_id).then((resp) => {
 						if (resp.data) {
 							var class_arr = [];

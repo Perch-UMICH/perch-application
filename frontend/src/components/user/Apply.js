@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
-import { getLabPosition, getLab, createApplication } from '../../helper.js';
 import './Apply.css';
 
 class Apply extends Component {
 	constructor(props) {
 		super(props);
+		console.log("POSITION!", this.props.position)
 		this.state = {
 			questions: [],
-			applyHelpText: "Please fill out the questions below & submit. A lab contact will reach out if it seems like a good match!",
+			position: this.props.position || {},
 			applyHelpText: "Let the lab get to know you! It's like tinder... but a lab",
 		};
 	}
@@ -20,13 +20,10 @@ class Apply extends Component {
 	}
 
 	componentDidMount() {
-		// set state from passed-in position information (some currently defaulted)
-		/*getApplicationFromPosition(this.props.pos_id).then(resp2 => {
-			console.log("app from pos!!!", resp2)
-		})*/
 		this.setState({
-			pos_description: this.props.description ? this.props.description : "You do interesting work.",
-			time_comm: "5-10 hours", // TODO: receive & set actual time commitment
+			pos_description: this.state.position.description || "No description provided.",
+			time_comm: this.state.position.min_time_commitment || "No minimum time provided.",
+			min_qual: this.state.position.min_qual || "No minimum qualifications provided.",
 			questions: [ // currently using default two questions, could make position-specific
 				{
 					id: 1,
@@ -46,7 +43,8 @@ class Apply extends Component {
 		return (
 			<div className="apply-wrapper">
 				<div className="apply-descriptor"><b>Position Description: </b>{this.state.pos_description}</div>
-				<div className="apply-descriptor"><b>Time Commitment: </b>{this.state.time_comm}</div>
+				<div className="apply-descriptor"><b>Time Commitment: </b>{this.state.time_comm} hours per week</div>
+				<div className="apply-descriptor"><b>Minimum Qualifications: </b>{this.state.min_qual}</div>
 				<AppQuestionTab updateQuestions={this.updateQuestions.bind(this)} questions={(this.state.questions && this.state.questions.length) ? this.state.questions : []} />
 			</div>
 		);

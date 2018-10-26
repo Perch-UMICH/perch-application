@@ -65,12 +65,36 @@ class ProfPage extends Component {
 		})
 	}
 
+	loadFaculty() {
+		var prof_id = window.location.pathname.split('/')[2];
+		getFaculty(prof_id).then((r) => {
+			console.log('fFFFFFac object')
+			console.log(r)
+			r = r.data
+			this.setState({
+				name: r.first_name,
+				contact_email: r.contact_email,
+				contact_phone: r.contact_phone,
+				user_id: r.user_id,
+			})
+		})
+		.then(r => getUserLabs(this.state.user_id))
+		.then(r => {
+			console.log(r)
+			this.setState({labs: r.data, loading_labs: false});
+		})
+		.catch(e=>alert('ERRRROR'))
+	}
+
 	sendContactInfo() {
 		// updateUser()
 		console.log('Sending to backend', this.state.updated_user)
 		// updateFaculty(getCurrentFacultyId(), this.state.updated_user)
 		updateFaculty(getCurrentFacultyId(), this.state.updated_user)
-		.then(r=>console.log(r))
+		.then(r=>{
+			console.log(r)
+			this.loadFaculty();
+		})
 	}
 
 	// this just updates the state object, not the backend
@@ -89,26 +113,8 @@ class ProfPage extends Component {
 				this.setState({user_type: "user"});
 			else if (isFaculty())
 				this.setState({user_type: "faculty"});
-
-			var prof_id = window.location.pathname.split('/')[2];
-			getFaculty(prof_id).then((r) => {
-				console.log('fFFFFFac object')
-				console.log(r)
-				r = r.data
-				this.setState({
-					name: r.first_name,
-					contact_email: r.contact_email,
-					contact_phone: r.contact_phone,
-					user_id: r.user_id,
-				})
-			})
-			.then(r => getUserLabs(this.state.user_id))
-			.then(r => {
-				console.log(r)
-				this.setState({labs: r.data, loading_labs: false});
-			})
-			.catch(e=>alert('ERRRROR'))
-
+			
+			this.loadFaculty();
 			this.loadLabs();
 
 			var lab_id = window.location.pathname.split('/')[2];
@@ -268,7 +274,9 @@ class ProfPage extends Component {
 	 				<div id='user-labs'>
 	 					<h1>Labs</h1>
 	 					<div>
-	 						{this.state.labs.map(labAssoc => {
+	 						{ this.state.loading_labs ? 
+							<div className="loading-pad"><i>Loading Labs ...</i></div>
+							: this.state.labs.map(labAssoc => {
 	 							console.log(labAssoc)
 								return (<div>
 									<a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>{labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}</a>

@@ -86,15 +86,15 @@ class GroupPage extends Component {
 
     componentDidMount() {
       this.loadLabPositions();
-
       getLab(this.state.lab_id)
       .then((resp) => {
           this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
       })
       .then(r=>getStudentFromUser(getCurrentUserId())
       .then((r) => {
+        /*
         console.log('AHHH', r)
-        this.setState({user_saved_labs: r.data.position_list})
+        this.setState({user_saved_labs: r.data.position_list})*/
       }))
       this.loadLabMembers();
   }
@@ -126,7 +126,7 @@ class GroupPage extends Component {
           position_id: resp.data.id,
           questions,
         }
-        createLabPositionApplication(this.state.lab_id, application);
+        createLabPositionApplication(this.state.lab_id, application).then(resp2 => {console.log("APP!!!", resp2)});
         this.loadLabPositions();
         this.setState({new_pos: { min_time_commitment: 10 }})
     });
@@ -171,6 +171,15 @@ class GroupPage extends Component {
           <b>New Description</b>
           <input type='text' name='description' value={this.state.updated_lab.description} onChange={(e) => this.updateLabState(e)}/>
         </EditModal>
+        <EditModal id={`edit-contact`} wide={true} actionName="update" medium={true}
+          title={`Update Contact Info`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
+          <b>New Email</b>
+          <input type='text' name='contact_email' value={this.state.updated_lab.contact_email} onChange={(e) => this.updateLabState(e)}/>
+          <b>New Phone</b>
+          <input type='text' name='contact_phone' value={this.state.updated_lab.contact_phone} onChange={(e) => this.updateLabState(e)}/>
+          <b>New Office Location</b>
+          <input type='text' name='location' value={this.state.updated_lab.location} onChange={(e) => this.updateLabState(e)}/>
+        </EditModal>
         <EditModal id='edit-admins' wide={true}
           title='Edit Admins'>
           <div className='row'>
@@ -188,7 +197,7 @@ class GroupPage extends Component {
           <div className='row'>
             <h5>Add a new member</h5>
             <div className='input-field col s10'>
-              <input id='new-member' type='number' placeholder='#' />
+              <input id='new-member' type='number' placeholder='#' value=""/>
               <label htmlFor='email' className="active">User ID</label>
             </div>
             <div className='col s2'>
@@ -284,8 +293,8 @@ const QuickInfo = (props) => {
                 <div className='group-info-box-content'>University of Michigan</div>
                 <div className='group-info-box-heading'>DEPARTMENTS</div>
                 <div className='group-info-box-content'>{props.department}</div>
-                <div className='group-info-box-heading'>RESEARCH AREAS</div>
-                <div className='group-info-box-content'>MISSING</div>
+                {/*<div className='group-info-box-heading'>RESEARCH AREAS</div>
+                <div className='group-info-box-content'>MISSING</div>*/}
             </div>
         </div>
     )
@@ -294,12 +303,13 @@ const QuickInfo = (props) => {
 const ContactInfo = (props) => {
     return(
         <div id='group-contact-info'>
-            <h1>Contact Info</h1>
+            <h1>Contact</h1>
             <div className='group-info-box'>
                 <div className='group-info-box-content'><b>Email</b> <a href={`mailto:${props.email}`}>{props.email}</a></div>
                 <div className='group-info-box-content'><b>Phone</b> {props.phone} </div>
                 <div className='group-info-box-content'><b>Office</b> {props.location}</div>
             </div>
+            {props.admin_access && <Editor superClick={() => openModal('edit-contact')}/>}
         </div>
     )
 }

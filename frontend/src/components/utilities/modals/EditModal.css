@@ -102,6 +102,11 @@
 	text-align: left;
 }
 
+.modal-header {
+	padding-bottom: 5px;
+	box-shadow: 0 2px 2px rgba(0,0,0,.08);
+}
+
 .modal-no-padding {
 	padding: 0px !important;
 	margin: 0px !important;

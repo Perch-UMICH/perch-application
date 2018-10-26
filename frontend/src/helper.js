@@ -1523,7 +1523,7 @@ export function submitStudentApplicationResponse(application_response_id) {
         application_response_id: application_response_id
     };
 
-    return axios.post('api/students/' + student_id + '/responses/update', payload)
+    return axios.post('api/students/' + student_id + '/responses/submit', payload)
         .then(response => {
             return respond(response.status, response.data);
         })

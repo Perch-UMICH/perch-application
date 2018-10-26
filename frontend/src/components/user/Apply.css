@@ -3,8 +3,14 @@
 }
 
 .apply-help-text {
+<<<<<<< HEAD
+  margin: 20px auto;
+  margin-bottom: 30px;
+  border-left: 5px solid var(--primary);
+=======
   margin: 0px auto;
   margin-top: 15px;
+>>>>>>> 73a1c9607c0c60724e4b0ad3184a2b385824cc46
   text-align: left;
   opacity: 0.6;
 }
