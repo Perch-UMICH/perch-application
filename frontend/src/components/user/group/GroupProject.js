@@ -104,7 +104,9 @@ export class GroupProject extends Component {
 		createApplicationResponse(application).then(resp => {
 			if (resp.data) {
 				// get some info from resp when working
-				submitStudentApplicationResponse(resp.data.id);
+				submitStudentApplicationResponse(resp.data.id).then(r => {
+					alert("Application Successfully Submitted!")
+				});
 			}
 		});
 	}
