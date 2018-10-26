@@ -36,9 +36,10 @@ class LabSearchProject extends Component {
         let resps = []
         if (this.state.question_resps) 
             this.state.question_resps.map(q => resps.push(q.response))
-        let application = {
+
+            let application = {
             student_id: getCurrentStudentId(),
-            position_id: this.props.id,
+            position_id: this.state.position.id,
             responses: resps,
         }
 

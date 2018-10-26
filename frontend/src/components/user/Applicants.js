@@ -75,7 +75,7 @@ const ApplicantContainer = (props) => {
         <div className='applicant-wrapper'>
             {project_action}
             <div className="applicant-name">{props.name}</div>
-            <div className="applicant-descriptor"><i>Applied on {app.created_at}</i></div>
+            <div className="applicant-descriptor"><i>Applied on {app.created_at && app.created_at.length && app.created_at.split(' ')[0]}</i></div>
             {props.app_questions.map((q, index) => {
                 return (
                     <div key={index} className="app-response-container">

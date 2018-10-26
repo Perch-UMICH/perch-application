@@ -163,13 +163,16 @@ export class GroupProject extends Component {
 			return;
 		let view_app_text = "No Applicants"
 		let view_app_css = 'group-project-applicant-cta'
-		if (!this.state.applicants.length || this.state.applicants.length == 0)
+		let openFunc = () => this.openModal(`${this.props.pos_id}-applicants`)
+		if (!this.state.applicants.length || this.state.applicants.length == 0) {
 			view_app_css = 'group-project-no-applicants'
+			openFunc = () => {}
+		}
 		else if (this.state.applicants.length == 1) 
 			view_app_text = "View 1 Applicant"
 		else if (this.state.applicants.length > 1)
 			view_app_text = "View " + this.state.applicants.length + " Applicants"
-		let project_action = <div className={view_app_css} onClick={() => this.openModal(`${this.props.pos_id}-applicants`)}>{view_app_text}</div>
+		let project_action = <div className={view_app_css} onClick={openFunc}>{view_app_text}</div>
 		return project_action;
 	}
 
