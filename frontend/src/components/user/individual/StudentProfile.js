@@ -18,7 +18,7 @@ class StudentProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.openModal = this.openModal.bind(this);
-		var user = {
+		let user = {
 			name: "",
 			gpa: "",
 			major: "",
@@ -38,6 +38,7 @@ class StudentProfile extends Component {
 			student: true,
 			s_id: "",
 			work_experiences: [],
+			'yoo': 'hi',
 			crop: {
 				x: 0.5,
 				y: 0.5,
@@ -49,6 +50,7 @@ class StudentProfile extends Component {
 			user, 
 			updated_user: deepCopy(user),
 		}
+		console.log('constructor', this.state)
 	}
 
 	// this just updates the state object, not the backend
@@ -57,7 +59,10 @@ class StudentProfile extends Component {
 	    newState.updated_user[field] = newValue;
 		if (field === 'classes')
 			newState.classes = newValue;
-	    this.setState(newState, () => console.log("updated", field, newValue));
+	    this.setState(newState, () => {
+	    	console.log("updated", field, newValue)
+	    	console.log('updated state', this.state)
+	    });
 	  }
 
   	// sends work experiences to the backend
@@ -117,7 +122,7 @@ class StudentProfile extends Component {
 		if (updated_user.img) {
 			let formData = new FormData();
 			formData.append('file', updated_user.img);
-			console.log('updated USER', this.state.updated_user)
+			console.log('updated USER', this.state)
 			let to_return = {
 	            formData: formData,
 	            type: 'profile_pic',
@@ -233,7 +238,7 @@ class StudentProfile extends Component {
 			var user = {}
 			getStudentFromUser(id)
 			.then((resp) => {
-				console.log(resp)
+				console.log('GENERAL HANDLER',resp)
 				var class_arr = [],
 					major = "",
 					gpa = "",
@@ -311,11 +316,6 @@ class StudentProfile extends Component {
 
 	// Beginning point for data handling
 	componentDidMount() {
-		// getUserFile('profile_pic')
-		// .then(r=>{
-		// 	console.log(r)
-		// })
-		// .catch(e => console.log(e))
 		this.generalHandler();
 	}
 
@@ -370,7 +370,8 @@ class StudentProfile extends Component {
 					<EditBio modalEdit={true} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 				<EditModal id="quickview-edit" title="Edit Quickview Info" modalAction={this.sendHeaderInfo.bind(this)}>
-					<EditQuickview modalEdit={true} img='/img/rodriguez.jpg' user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
+					{console.log('in modal', this.state.user)}
+					<EditQuickview modalEdit={true} img={this.state.user.img} user={this.state.updated_user} updateUser={this.updateUser.bind(this)}/>
 				</EditModal>
 	 			<div id='user-column-L'>
 	 				<div>

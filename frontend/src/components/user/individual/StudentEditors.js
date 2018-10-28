@@ -407,8 +407,9 @@ export class EditExperience extends Component {
 export class EditQuickview extends Component {
 	constructor(props) {
 		super(props)
+		console.log('quickivew',props)
 		this.state = {
-			image: props.user && props.user.img ? props.user.img : props.img,
+			image: props.img,
 			rotate: 0,
 			scale: 1.0,
 			name: props.user && props.user.name ? props.user.name : '',
@@ -428,9 +429,22 @@ export class EditQuickview extends Component {
 			if (props.user.university) {
 				this.setState({university: props.user.university})
 			}
-			if (props.user.img) {
-				this.setState({image: props.user.img})
+			if (props.user.img || props.img) {
+				this.setState({image: props.user.img || props.img})
 			}
+		}
+		console.log("in quickview", this.state)
+	}
+
+	componentDidMount() {
+		if (this.props.updateUser) {
+			console.log("CROP YOURSELF", this.state)
+			this.props.updateUser("crop", {
+				x: this.state.x, 
+				y: this.state.y,
+				rotate: this.state.rotate,
+				scale: this.state.scale,
+			});
 		}
 	}
 
@@ -515,6 +529,7 @@ export class EditQuickview extends Component {
 		return(
 			<div className="quickview-editor-container">
 				<div id='quickview-editor-L'>
+				{console.log('in dropzone', this.state)}
 					<Dropzone
 				        onDrop={this.handleDrop}
 				        disableClick
