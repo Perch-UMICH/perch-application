@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {updateFaculty, permissionCheck, getLab, createLab, isLoggedIn, getCurrentFacultyId, getCurrentUserId, getUserLabs, getUser, getFaculty, getFacultyFromUser, getAllLabPositions, getLabPositions, isStudent, isLab, isFaculty} from '../../../helper.js'
-import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/EditModal'
-import DotLoader from '../../utilities/animations/DotLoader'
 import CreateLab, {modalCreateLab, modalUpdateLab, modalDeleteLab} from '../CreateLab'
 import {EditContact, EditExperience, EditQuickview, EditLinks} from '../individual/StudentEditors'
 import { TwitterTimelineEmbed} from 'react-twitter-embed';
@@ -67,7 +65,6 @@ class ProfPage extends Component {
 	loadFaculty() {
 		var prof_id = window.location.pathname.split('/')[2];
 		getFaculty(prof_id).then((r) => {
-			console.log('fFFFFFac object')
 			console.log(r)
 			r = r.data
 			this.setState({
@@ -110,8 +107,12 @@ class ProfPage extends Component {
 			// check if user or faculty for viewing positions
 			if (isStudent())
 				this.setState({user_type: "user"});
-			else if (isFaculty())
-				this.setState({user_type: "faculty"});
+			else if (isFaculty()) {
+				let isOwner = false;
+				if (getCurrentFacultyId() == window.location.pathname.split('/')[2])
+					isOwner = true
+				this.setState({user_type: "faculty", isOwner});
+			}
 			
 			this.loadFaculty();
 			this.loadLabs();
@@ -169,6 +170,8 @@ class ProfPage extends Component {
 	}
 
 	renderModals() {
+		if (!this.state.isOwner)
+			return;
 		return(
 			<div>
 				<EditModal id="contact-edit" title="Edit Contact Info" modalAction={this.sendContactInfo.bind(this)}>
@@ -227,14 +230,23 @@ class ProfPage extends Component {
 		// } else if (this.state.no_lab) {
 		// 	return <ErrorPage fourofour="true" />
 		// } else {
+		let createLabCTA, contactEdit, quickviewEdit, createLabEdit, workEdit = null;
+
+		if (this.state.isOwner) {
+			createLabCTA = <div className='join-lab' onClick={r => this.openModal('create-lab-modal')}>
+					<div>Create A Lab</div>
+				</div>
+			contactEdit = <Editor superClick={() => this.openModal('contact-edit')}/>
+			quickviewEdit = <Editor superClick={() => this.openModal('quickview-edit')}/>
+			createLabEdit = <Editor superClick={() => this.openModal('create-lab-modal')} add={true}/>
+			workEdit = <Editor superClick={() => this.openModal('work-edit')}/>
+		}
+
 		return (
 			<div id='user-content-body'>
 				{this.renderModals()}
 	 			<div id='user-column-L'>
-					<div className='join-lab' onClick={r => this.openModal('create-lab-modal')}>
-						<div>Create A Lab</div>
-					</div>
-
+					{createLabCTA}
 	 				<div>
 	 					<h1>Quick Info</h1>
 	 					<div>
@@ -248,7 +260,7 @@ class ProfPage extends Component {
 	 						<div id='user-email'><b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>{this.state.contact_email}</a></div>
 	 						<div><b>Phone</b>{this.state.contact_phone}</div>
 	 					</div>
-	 					<Editor superClick={() => this.openModal('contact-edit')}/>
+	 					{contactEdit}
 	 				</div>
 
 	 				{/*<div id='user-links'>
@@ -269,10 +281,8 @@ class ProfPage extends Component {
 	 					<div id='user-quickview-img-container'>
  							<img id='user-quickview-img' src='https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png'/>
  						</div>
-
 	 					<div id='user-quickview-name'>{this.state.name}</div>
-
-	 					<Editor superClick={() => this.openModal('quickview-edit')}/>
+						{quickviewEdit}
 	 				</div>
 
 	 				<div id='user-labs'>
@@ -289,16 +299,12 @@ class ProfPage extends Component {
 									</div>)
 							})}
 	 					</div>
-
-	 					<Editor superClick={() => this.openModal('create-lab-modal')} add={true}/>
+						{createLabEdit}
 	 				</div>
-
 	 				<div>
 	 					<h1>Work Experience</h1>
-
 	 					<UserWorkExperience title="Manhattan Project" description="Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room." startTime='August 2017' endTime='Present'/>
-	 					
-	 					<Editor superClick={() => this.openModal('work-edit')}/>
+	 					{workEdit}
 	 				</div>
 	 			</div>
  			</div>

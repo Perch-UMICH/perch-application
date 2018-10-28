@@ -34,7 +34,13 @@ class GroupPage extends Component {
             lab_admins: [],
             lab_members: [],
             new_pos: { min_time_commitment: 10 },
-            updated_lab: {},
+            updated_lab: {
+              contact_email: "",
+              contact_phone: "",
+              location: "",
+              name: "",
+              description: ""
+            },
             members_raw: [],
             admins_raw: [],
             app_questions: [],
@@ -49,6 +55,8 @@ class GroupPage extends Component {
             members = [],
             admins_raw = [],
             members_raw = [];
+
+          console.log("RESPPPPP!!! LAB", resp)
 
           resp.data.faculty.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
@@ -92,6 +100,17 @@ class GroupPage extends Component {
       this.loadLabPositions();
       getLab(this.state.lab_id)
         .then((resp) => {
+            let updated_lab = resp.data.data
+            if (!updated_lab.contact_email)
+              updated_lab["contact_email"] = ""
+            if (!updated_lab.contact_phone)
+              updated_lab["contact_phone"] = ""
+            if (!updated_lab.location)
+              updated_lab["location"] = ""
+            if (!updated_lab.name)
+              updated_lab["name"] = ""
+            if (!updated_lab.description)
+              updated_lab["description"] = ""
             this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
         })
 
@@ -122,7 +141,7 @@ class GroupPage extends Component {
   // create position and position application, call from create position modal
   createPosition() {
     let new_pos = this.state.new_pos;
-    alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
+    // alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
     createLabPosition(this.state.lab_id, new_pos).then(resp => {
     //   // hopefully get position_id from resp
         let questions = []
