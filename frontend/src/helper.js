@@ -1678,6 +1678,11 @@ export function deepCopy(object) {
     return output;
 }
 
+export function updateUrlQuery(query, value) {
+    let new_query = "?" + query + "=" + value
+    window.history.pushState(null, null, new_query);
+}
+
 // Check if external link contains 'http:' or 'https:'; if not, add.
 export function primeExternalLink(url) {
     if (url && typeof url === 'string') {

@@ -53,11 +53,11 @@ class GroupPage extends Component {
           resp.data.faculty.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson key={person.data.user_id} link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson key={person.data.user_id} link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
@@ -65,11 +65,11 @@ class GroupPage extends Component {
           resp.data.students.map((person) => {
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                  admins.push(<GroupPerson key={person.data.user_id} link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   admins_raw.push([fullname, person.data.user_id]);
               }
               else {
-                  members.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                  members.push(<GroupPerson key={person.data.user_id} link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
                   members_raw.push([fullname, person.data.user_id]);
               }
           })
@@ -188,7 +188,7 @@ class GroupPage extends Component {
           title='Edit Admins'>
           <div className='row'>
             <h5 className='col s12'>Modify Admins</h5>
-            {this.state.admins_raw.map(e => <AdminView reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
+            {this.state.admins_raw.map(e => <AdminView key={e[1]} reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
               lab_id={this.state.lab_id} name={e[0]} id={e[1]}/>)}
           </div>
           <div className='row'>
