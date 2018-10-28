@@ -6,7 +6,7 @@ import Applicants from '../../user/Applicants'
 import EditModal from '../../utilities/modals/EditModal'
 import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
-import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, isFaculty, getCurrentUserId, updateLabPositionApplication, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, submitStudentApplicationResponse} from '../../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, isFaculty, getCurrentUserId, updateLabPositionApplication, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, getLabPositionApplication, submitStudentApplicationResponse} from '../../../helper.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
@@ -113,7 +113,7 @@ export class GroupProject extends Component {
 		}
 
 		createApplicationResponse(application).then(resp => {
-			if (resp.data) {
+			if (resp.data && resp.data.id) {
 				// get some info from resp when working
 				submitStudentApplicationResponse(resp.data.id)
 					.then(r => {
@@ -137,12 +137,15 @@ export class GroupProject extends Component {
 
 	renderModal() {
 		// If not owner of lab (use-case, student), render application modal.
-		let edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="submit"
+		let edit_modal = ""
+		if (!this.isAdmin()) {
+			edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="submit"
 							title={`Apply To ${this.props.title}`} modalAction={this.submitApplication.bind(this)}>
 							<Apply updateQuestions={this.updateApplication} lab_id={this.props.lab_id} pos_id={this.props.pos_id} position={this.props.cur_pos}/>
 						</EditModal>
+		}
 		// If owner of lab, show edit position modal.
-		if (this.isAdmin()) {
+		else {
 			edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="update" deleteFunc={this.deletePosition.bind(this)}
 							title={`Edit ${this.props.title}`} modalAction={this.updatePosition.bind(this)}>
 							<CreatePosition edit={true} new_pos={this.props.cur_pos} updateNewPosState={this.updateNewPosState.bind(this)} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
@@ -152,6 +155,8 @@ export class GroupProject extends Component {
 	}
 
 	renderApplicantModal() {
+		if (!this.isAdmin())
+			return;
 		// Show current applicants to lab
 		return <EditModal id={`${this.props.pos_id}-applicants`} wide={true} noAction={true}
 					title={`Applicants to ${this.props.title}`} >
