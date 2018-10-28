@@ -101,16 +101,11 @@ class GroupPage extends Component {
       getLab(this.state.lab_id)
         .then((resp) => {
             let updated_lab = resp.data.data
-            if (!updated_lab.contact_email)
-              updated_lab["contact_email"] = ""
-            if (!updated_lab.contact_phone)
-              updated_lab["contact_phone"] = ""
-            if (!updated_lab.location)
-              updated_lab["location"] = ""
-            if (!updated_lab.name)
-              updated_lab["name"] = ""
-            if (!updated_lab.description)
-              updated_lab["description"] = ""
+            updated_lab["contact_email"] = updated_lab["contact_email"] || ""
+            updated_lab["contact_phone"] = updated_lab["contact_phone"] || ""
+            updated_lab["location"] = updated_lab["location"] || ""
+            updated_lab["name"] = updated_lab["name"] || ""
+            updated_lab["description"] = updated_lab["description"] || ""
             this.setState({lab_data: resp.data.data, updated_lab: resp.data.data});
         })
 
