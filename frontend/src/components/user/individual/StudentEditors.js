@@ -410,7 +410,7 @@ export class EditQuickview extends Component {
 		this.state = {
 			image: props.user && props.user.img ? props.user.img : props.img,
 			rotate: 0,
-			scale: 1.5,
+			scale: 1.0,
 			name: props.user && props.user.name ? props.user.name : '',
 			university: props.user && props.user.university ? props.user.university : "",
 			x: 0.5,
@@ -536,7 +536,7 @@ export class EditQuickview extends Component {
 					<i>Drag and drop image</i>
 					<div id='prof-pic-editors'>
 				     	<div className='range-field'>
-				     		<input type="range" id="profile-pic-range" min="1" max="5" step='0.1' defaultValue='1.5' onChange={this.handleSlider}/>
+				     		<input type="range" id="profile-pic-range" min="1" max="5" step='0.1' defaultValue='1' onChange={this.handleSlider}/>
 				    	</div>
 				    	<i id='rotate-icon' className='material-icons' onClick={this.handleRotate}>rotate_90_degrees_ccw</i>
 				   </div>

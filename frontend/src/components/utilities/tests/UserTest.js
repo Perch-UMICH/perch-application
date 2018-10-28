@@ -50,9 +50,10 @@ class UserTest extends React.Component {
         let to_return = {
             formData: f,
             type: 'profile_pic',
-            x: .34,
+            x: .5,
             y: .5,
-            scale: 3.9,
+            scale: 1,
+            rotate: 0,
         }
 
         console.log(to_return)

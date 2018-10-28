@@ -63,6 +63,7 @@ class GroupPage extends Component {
           })
 
           resp.data.students.map((person) => {
+              console.log("PERSON", person)
               let fullname = person.data.first_name + ' ' + person.data.last_name;
               if ((person.role === 1) || (person.role === 2)) {
                   admins.push(<GroupPerson link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
@@ -202,7 +203,7 @@ class GroupPage extends Component {
           <div className='row'>
             <h5>Add a new member</h5>
             <div className='input-field col s10'>
-              <input id='new-member' type='number' placeholder='#' value=""/>
+              <input id='new-member' type='number' placeholder='#'/>
               <label htmlFor='email' className="active">User ID</label>
             </div>
             <div className='col s2'>

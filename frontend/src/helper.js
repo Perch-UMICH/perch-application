@@ -1652,20 +1652,12 @@ export function permissionCheck() {
     return checkLab || checkStudent;
 }
 
-//// CHANGED BY BENJI
-
 export function returnToProfile() {
     if (isStudent())
         window.location = `/student-profile/${getCurrentUserId()}`;
     else if (isLab())
         window.location = `/prof-page/${getCurrentLabId()}`;
 }
-
-// export function exists(item) {
-//     return item ? true : false;
-// }
-
-/// CHANGED BY EMI
 
 // Create a deep copy of any array/object
 export function deepCopy(object) {
@@ -1688,7 +1680,6 @@ export function primeExternalLink(url) {
     }
 }
 
-// TODO ADDED BY BENJI
 export function exists(input) {
     let type = typeof input
     if (!input)
