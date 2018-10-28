@@ -80,7 +80,7 @@ const ApplicantContainer = (props) => {
                 return (
                     <div key={index} className="app-response-container">
                         <div className="app-question-text"><b>{q.text}</b></div>
-                        <div className="app-response-text">{app.answers[index].response}</div>
+                        <div className="app-response-text">{app.answers[index] && app.answers[index].response}</div>
                     </div>
                 )
             })}
