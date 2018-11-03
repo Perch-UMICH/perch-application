@@ -1325,6 +1325,8 @@ export function searchMatchingTags(query) {
 //  contact_email - (string)
 //  contact_phone - (string)
 //  location - (string)
+//  application - (object)
+//      questions - (string, array)
 
 export function getAllLabPositions(lab_id) {
     console.log('Getting all lab positions');
@@ -1366,9 +1368,7 @@ export function createLabPosition(lab_id, position) {
 export function updateLabPosition(lab_id, position_id, position) {
     console.log('Updating position');
 
-    position.position_id = position_id;
-
-    return axios.post('api/labs/' + lab_id + '/positions/update', position)
+    return axios.post('api/labs/' + lab_id + '/positions/' + position_id + '/update', position)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1378,14 +1378,10 @@ export function updateLabPosition(lab_id, position_id, position) {
 }
 
 // RESTRICTED: authenticated faculty member + lab admin
-export function deleteLabPosition(lab_id, position_ids) {
-    console.log('Deleting positions');
-    
-    let payload = {
-        position_ids: position_ids
-    };
+export function deleteLabPosition(lab_id, position_id) {
+    console.log('Deleting position');
 
-    return axios.post('api/labs/' + lab_id + '/positions/delete', payload)
+    return axios.post('api/labs/' + lab_id + '/positions/' + position_id + '/delete')
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1394,63 +1390,63 @@ export function deleteLabPosition(lab_id, position_ids) {
         })
 }
 
-// Applications
-// Application of questions attached to an open lab position
-// Object which contains:
-// position_id - (integer)
-// questions - (array of strings)
-
-export function getLabPositionApplication(lab_id, position_id) {
-    console.log('Getting application');
-
-    return axios.get('api/labs/' + lab_id + '/position/' + position_id + '/application')
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-// RESTRICTED: authenticated faculty member + lab owner
-export function createLabPositionApplication(lab_id, application) {
-    console.log('Creating application');
-
-    // let lab_id = sessionStorage.getItem('lab_id');
-
-    // let payload = {
-    //     position_id: position_id,
-    //     questions: questions
-    // };
-
-    return axios.post('api/labs/' + lab_id + '/applications', application)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
-
-// RESTRICTED: authenticated faculty member + lab owner
-export function updateLabPositionApplication(lab_id, application) {
-    console.log('Creating application');
-
-    return axios.post('api/labs/' + lab_id + '/applications/update', application)
-        .then(response => {
-            return respond(response.status, response.data);
-        })
-        .catch(error => {
-            return error_handle(error);
-        })
-}
+// // Applications
+// // Application of questions attached to an open lab position
+// // Object which contains:
+// // position_id - (integer)
+// // questions - (array of strings)
+//
+// export function getLabPositionApplication(lab_id, position_id) {
+//     console.log('Getting application');
+//
+//     return axios.get('api/labs/' + lab_id + '/position/' + position_id + '/application')
+//         .then(response => {
+//             return respond(response.status, response.data);
+//         })
+//         .catch(error => {
+//             return error_handle(error);
+//         })
+// }
+//
+// // RESTRICTED: authenticated faculty member + lab owner
+// export function createLabPositionApplication(lab_id, application) {
+//     console.log('Creating application');
+//
+//     // let lab_id = sessionStorage.getItem('lab_id');
+//
+//     // let payload = {
+//     //     position_id: position_id,
+//     //     questions: questions
+//     // };
+//
+//     return axios.post('api/labs/' + lab_id + '/applications', application)
+//         .then(response => {
+//             return respond(response.status, response.data);
+//         })
+//         .catch(error => {
+//             return error_handle(error);
+//         })
+// }
+//
+// // RESTRICTED: authenticated faculty member + lab owner
+// export function updateLabPositionApplication(lab_id, application) {
+//     console.log('Creating application');
+//
+//     return axios.post('api/labs/' + lab_id + '/applications/update', application)
+//         .then(response => {
+//             return respond(response.status, response.data);
+//         })
+//         .catch(error => {
+//             return error_handle(error);
+//         })
+// }
 
 // Gets ApplicationResponses to a particular position
 // RESTRICTED: authenticated faculty member + lab owner
 export function getLabPositionApplicationResponses(lab_id, position_id) {
 
     console.log('Getting application responses');
-    return axios.get('api/labs/' + lab_id + '/positions/' + position_id + '/application/responses')
+    return axios.get('api/labs/' + lab_id + '/positions/' + position_id + '/responses')
         .then(response => {
             return respond(response.status, response.data);
         })
