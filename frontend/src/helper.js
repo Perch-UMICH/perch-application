@@ -1342,7 +1342,7 @@ export function getAllLabPositions(lab_id) {
 export function getLabPosition(lab_id, position_id) {
     console.log('Getting position');
 
-    return axios.get('api/labs/' + lab_id + '/position/' + position_id)
+    return axios.get('api/labs/' + lab_id + '/positions/' + position_id)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1548,9 +1548,9 @@ export function deleteStudentApplicationResponse(application_response_id) {
         })
 }
 
-// Gets responses that haven't yet been submitted (in progress)
 // RESTRICTED: student_id
-export function getStudentApplicationResponsePending() {
+// TODO
+export function getStudentApplicationResponses() {
     console.log('Getting application response');
 
     let student_id = sessionStorage.getItem('student_id');
@@ -1566,6 +1566,25 @@ export function getStudentApplicationResponsePending() {
             return error_handle(error);
         })
 }
+
+// // Gets responses that haven't yet been submitted (in progress)
+// // RESTRICTED: student_id
+// export function getStudentApplicationResponsePending() {
+//     console.log('Getting application response');
+//
+//     let student_id = sessionStorage.getItem('student_id');
+//     let payload = {
+//         student_id: student_id
+//     };
+//
+//     return axios.get('api/students/' + student_id + '/responses', payload)
+//         .then(response => {
+//             return respond(response.status, response.data);
+//         })
+//         .catch(error => {
+//             return error_handle(error);
+//         })
+// }
 
 // MISC //
 
