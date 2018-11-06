@@ -1457,29 +1457,24 @@ export function getLabPositionApplicationResponses(lab_id, position_id) {
 
 // Application Responses
 // Response to an application for a position, created by a student
-// Object with contains:
-// position_id
-// responses - (array of strings)
+// Object that contains:
+    // responses - (array of objects)
+        // number - (integer) corresponds with question number, 0 indexed
+        // answer - (string)
 // NOTE: 'create' allows a student to start an application, but it must be 'submitted' for the lab to see
+// NOTE: student user can only apply to a position once, and can then update that application therafter, or delete it
 
 
 export function createApplicationResponse(application_response) {
     return createStudentApplicationResponse(application_response);
 }
 
-// RESTRICTED: student_id
-export function createStudentApplicationResponse(application_response) {
+// RESTRICTED: user must be a student
+// position_id = position being applied to
+export function createStudentApplicationResponse(student_id, position_id, application_response) {
     console.log('Creating application response');
 
-    let student_id = sessionStorage.getItem('student_id');
-
-    // let payload = {
-    //     student_id: student_id,
-    //     position_id: position_id,
-    //     responses: responses
-    // };
-
-    return axios.post('api/students/' + student_id + '/responses', application_response)
+    return axios.post('api/students/' + student_id + '/applications/' + position_id, application_response)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1488,18 +1483,11 @@ export function createStudentApplicationResponse(application_response) {
         })
 }
 
-// RESTRICTED: student_id
-export function updateStudentApplicationResponse(application_response_id, application_response) {
+// RESTRICTED: user must be a student
+export function updateStudentApplicationResponse(student_id, position_id, application_response) {
     console.log('Updating application response');
 
-    let student_id = sessionStorage.getItem('student_id');
-
-    let payload = {
-        application_response_id: application_response_id,
-        application_response: application_response
-    };
-
-    return axios.post('api/students/' + student_id + '/responses/update', payload)
+    return axios.post('api/students/' + student_id + '/applications/' + position_id + '/update', application_response)
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1508,18 +1496,11 @@ export function updateStudentApplicationResponse(application_response_id, applic
         })
 }
 
-// RESTRICTED: student_id
-export function submitStudentApplicationResponse(application_response_id) {
+// RESTRICTED: user must be a student
+export function submitStudentApplicationResponse(student_id, position_id) {
     console.log('Submitting application response');
 
-    let student_id = sessionStorage.getItem('student_id');
-
-    let payload = {
-        student_id: student_id,
-        application_response_id: application_response_id
-    };
-
-    return axios.post('api/students/' + student_id + '/responses/submit', payload)
+    return axios.post('api/students/' + student_id + '/applications/' + position_id + '/submit')
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1528,18 +1509,11 @@ export function submitStudentApplicationResponse(application_response_id) {
         })
 }
 
-// RESTRICTED: student_id
-export function deleteStudentApplicationResponse(application_response_id) {
+// RESTRICTED: user must be a student
+export function deleteStudentApplicationResponse(student_id, position_id) {
     console.log('Deleting application response');
 
-    let student_id = sessionStorage.getItem('student_id');
-
-    let payload = {
-        student_id: student_id,
-        application_response_id: application_response_id
-    };
-
-    return axios.post('api/students/' + student_id + '/responses/delete', payload)
+    return axios.post('api/students/' + student_id + '/applications/' + position_id + '/delete')
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1548,17 +1522,12 @@ export function deleteStudentApplicationResponse(application_response_id) {
         })
 }
 
-// RESTRICTED: student_id
-// TODO
-export function getStudentApplicationResponses() {
+// RESTRICTED: user must be a student
+// Get all of a student's responses (submitted or otherwise)
+export function getAllStudentApplicationResponses(student_id, position_id) {
     console.log('Getting application response');
 
-    let student_id = sessionStorage.getItem('student_id');
-    let payload = {
-        student_id: student_id
-    };
-
-    return axios.get('api/students/' + student_id + '/responses', payload)
+    return axios.get('api/students/' + student_id + '/applications')
         .then(response => {
             return respond(response.status, response.data);
         })
@@ -1566,6 +1535,21 @@ export function getStudentApplicationResponses() {
             return error_handle(error);
         })
 }
+
+// RESTRICTED: user must be a student
+// Get response specific to position
+export function getStudentApplicationResponse(student_id, position_id) {
+    console.log('Getting application response');
+
+    return axios.get('api/students/' + student_id + '/applications/' + position_id)
+        .then(response => {
+            return respond(response.status, response.data);
+        })
+        .catch(error => {
+            return error_handle(error);
+        })
+}
+
 
 // // Gets responses that haven't yet been submitted (in progress)
 // // RESTRICTED: student_id
