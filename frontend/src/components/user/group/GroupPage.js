@@ -6,8 +6,8 @@ import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {modalUpdateLab} from '../CreateLab'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import BasicButton from '../../utilities/buttons/BasicButton'
-import {getStudentFromUser, deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getFacultyFromUser, getAllLabPositions, createLabPosition,
-    isStudent, isLab, getLabMembers, createLabPositionApplication, addMembersToLab, getCurrentLabId} from '../../../helper.js'
+import {getStudentFromUser, deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getAllLabPositions, createLabPosition,
+    isStudent, isLab, getLabMembers, addMembersToLab, getFacultyFromUser} from '../../../helper.js'
 import Editor from '../../utilities/Editor'
 // import $ from 'jquery'
 // import M from 'materialize-css'
@@ -50,42 +50,61 @@ class GroupPage extends Component {
 
     // Refresh page to display initial & updated lab members
     loadLabMembers() {
+      console.log("RESPPPPP!!! 1 LAB")
       getLabMembers(this.state.lab_id).then((resp) => {
-          let admins = [],
-            members = [],
-            admins_raw = [],
-            members_raw = [];
 
           console.log("RESPPPPP!!! LAB", resp)
 
           resp.data.faculty.map((person) => {
-              let fullname = person.data.first_name + ' ' + person.data.last_name;
-              if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson key={person.data.user_id} link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
-                  admins_raw.push([fullname, person.data.user_id]);
+              // Render full-name (need to get from either 'name' field or first_name + last_name since inconsistent)
+              let fullname = person.data.name || ""
+              if (fullname == "") {
+                if (person.data.first_name)
+                  fullname = person.data.first_name
+                if (person.data.last_name)
+                  fullname += " " + person.data.last_name
               }
-              else {
-                  members.push(<GroupPerson key={person.data.user_id} link={`/prof/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
-                  members_raw.push([fullname, person.data.user_id]);
-              }
+
+              getFacultyFromUser(person.data.id).then(r => {
+                let newState = this.state;
+                let link = r.data ? '/prof/' + r.data.id : ""
+                if ((person.role === 1) || (person.role === 2)) {
+                  newState.lab_admins.push(<GroupPerson key={person.data.user_id} link={link} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                  newState.admins_raw.push([fullname, person.data.user_id]);
+                }
+                else {
+                    newState.members.push(<GroupPerson key={person.data.user_id} link={link} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                    newState.members_raw.push([fullname, person.data.user_id]);
+                }
+                newState.admin_access = this.hasPermissions(newState.admins_raw);
+                this.setState(newState);
+              })
           })
 
           resp.data.students.map((person) => {
-              console.log("PERSON", person)
-              let fullname = person.data.first_name + ' ' + person.data.last_name;
-              if ((person.role === 1) || (person.role === 2)) {
-                  admins.push(<GroupPerson key={person.data.user_id} link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
-                  admins_raw.push([fullname, person.data.user_id]);
+              let fullname = person.data.name || ""
+              if (fullname == "") {
+                if (person.data.first_name)
+                  fullname = person.data.first_name
+                if (person.data.last_name)
+                  fullname += " " + person.data.last_name
               }
-              else {
-                  members.push(<GroupPerson key={person.data.user_id} link={`/student-profile/${person.data.id}`} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
-                  members_raw.push([fullname, person.data.user_id]);
-              }
+
+              getStudentFromUser(person.data.id).then(r => {
+                let newState = this.state;
+                let link = r.data ? '/student-profile/' + r.data.id : ""
+                if ((person.role === 1) || (person.role === 2)) {
+                  newState.lab_admins.push(<GroupPerson key={person.data.user_id} link={link} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                  newState.admins_raw.push([fullname, person.data.user_id]);
+                }
+                else {
+                    newState.lab_members.push(<GroupPerson key={person.data.user_id} link={link} src={person.data.profilepic_path || 'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'}>{fullname}</GroupPerson>);
+                    newState.members_raw.push([fullname, person.data.user_id]);
+                }
+                newState.admin_access = this.hasPermissions(newState.admins_raw);
+                this.setState(newState);
+              })
           })
-
-          let priveleges = this.hasPermissions(admins_raw)
-
-          this.setState({lab_admins: admins, lab_members: members, admins_raw: admins_raw, members_raw: members_raw, admin_access: priveleges});
       })
     }
 
@@ -115,7 +134,6 @@ class GroupPage extends Component {
           this.setState({user_saved_labs: r.data.position_list})
         })
       }
-
       this.loadLabMembers();
   }
 
@@ -136,17 +154,12 @@ class GroupPage extends Component {
   // create position and position application, call from create position modal
   createPosition() {
     let new_pos = this.state.new_pos;
+    let questions = []
+    if (this.state.app_questions) 
+      this.state.app_questions.map(q => questions.push(q.text))
+    new_pos.application = {questions};
     // alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
     createLabPosition(this.state.lab_id, new_pos).then(resp => {
-    //   // hopefully get position_id from resp
-        let questions = []
-        if (this.state.app_questions) 
-          this.state.app_questions.map(q => questions.push(q.text))
-        let application = {
-          position_id: resp.data.id,
-          questions,
-        }
-        createLabPositionApplication(this.state.lab_id, application)
         this.loadLabPositions();
         this.setState({new_pos: { min_time_commitment: 10 }})
     });
@@ -237,6 +250,7 @@ class GroupPage extends Component {
 
 	render() {
     let lab_positions = this.state.lab_positions
+    console.log("LAB ADMINS??", this.state.lab_admins)
 		return(
 			<div id='group-page'>
         {this.renderModals()}
@@ -258,7 +272,7 @@ class GroupPage extends Component {
 					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} superClick={() => this.openModal('edit-name')}/>
 					
           <GroupProjectContainer addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
-            {lab_positions.map((pos, index) => <GroupProject key={`${pos.id}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} description={pos.description}time_commit={pos.min_time_commitment} admins={this.state.admins_raw} year='MISSING' urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>)}
+            {lab_positions.map(pos => <GroupProject key={`${pos.id}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} description={pos.description} time_commit={pos.min_time_commitment} admins={this.state.admins_raw} year='MISSING' urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>)}
 					</GroupProjectContainer>
 
 					<GroupPublicationsContainer>
@@ -270,22 +284,6 @@ class GroupPage extends Component {
 		)
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -321,16 +319,30 @@ const Members = (props) => {
 // Takes src for image
 // Takes whatever is in its angle brackets for its name
 const GroupPerson = (props) => {
+  console.log("PerSON IN GROUPPERSON FORM?", props);
+  let link = ''
+  if (props.faculty) {
+    getFacultyFromUser(props.user_id).then(r => {
+      if (r.data)
+        link = '/prof/' + r.data.id
+    })
+  }
+  else {
+    getStudentFromUser(props.user_id).then(r => {
+      if (r.data)
+        link = '/prof/' + r.data.id
+    })
+  }
+
 	return(
 		<div className='group-person'>
 			<img src={props.src} />
-			<a href={props.link}>
+			<a href={link}>
         <div className='group-person-overlay'>
   				<span>{props.children}</span>
   			</div>
       </a>
 		</div>
-
 	);
 }
 
@@ -380,7 +392,7 @@ class AdminView extends Component {
 
   render(props) {
     return(
-      <div id={this.props.name} className='member-view col s3'>
+      <div key={`${this.props.id}-adm`} id={this.props.name} className='member-view col s3'>
         <span>{this.props.name}</span>
         <div onClick={this.removeMember.bind(this)}>remove</div>
         <div onClick={this.removeAdmin.bind(this)}>remove admin priveleges</div>
@@ -403,7 +415,7 @@ class MemberView extends Component {
 
   render() {
     return(
-      <div id={this.props.name} className='member-view col s3'>
+      <div key={`${this.props.id}-mem`} id={this.props.name} className='member-view col s3'>
         <span>{this.props.name}</span>
         <div onClick={this.removeMember.bind(this)}>remove</div>
         <div onClick={this.makeAdmin.bind(this)}>make admin</div>

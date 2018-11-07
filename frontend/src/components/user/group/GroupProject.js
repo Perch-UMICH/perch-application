@@ -6,7 +6,7 @@ import Applicants from '../../user/Applicants'
 import EditModal from '../../utilities/modals/EditModal'
 import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
-import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, isFaculty, getCurrentUserId, updateLabPositionApplication, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, getLabPositionApplication, submitStudentApplicationResponse} from '../../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, submitStudentApplicationResponse} from '../../../helper.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
@@ -55,18 +55,13 @@ export class GroupProject extends Component {
 
 	// Send updated position & application to server
 	updatePosition() {
-		updateLabPosition(this.props.lab_id, this.props.pos_id, this.state.new_pos)
+		let updated_pos = this.state.new_pos;
+		let questions = []
+		if (this.state.app_questions) 
+			this.state.app_questions.map(q => questions.push(q.text))
+		updated_pos.application = {questions};
+		updateLabPosition(this.props.lab_id, this.props.pos_id, updated_pos)
 			.then(resp => {
-				// TODO: send updated application
-				let questions = []
-				if (this.state.app_questions) 
-					this.state.app_questions.map(q => questions.push(q.text))
-				let application = {
-					position_id: this.props.pos_id,
-					questions,
-				}
-	            updateLabPositionApplication(this.props.lab_id, application).then(resp2 => {console.log("APP UPDATED!!!", resp2)});;
-
 				if (this.props.updatePositions)
 					this.props.updatePositions();
 			})
@@ -103,9 +98,15 @@ export class GroupProject extends Component {
 	submitApplication() {
 		let question_resps = this.state.question_resps,
 			resps = []
+		/*
+		let resps = []
+		if (this.state.question_resps) 
+			this.state.question_resps.map(r => resps.push(r.response))*/
 
 		if (question_resps) 
 			resps = question_resps.map(q => q.response)
+
+		console.log("QUESTION RESPS??", resps)
 
 		let application = {
 			position_id: this.props.pos_id,

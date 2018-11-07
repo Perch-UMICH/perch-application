@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
 import './Apply.css';
+import { getLabPosition } from '../../helper';
 
 class Apply extends Component {
 	constructor(props) {
 		super(props);
+		let position = this.props.position || {}
 		this.state = {
-			questions: [],
-			position: this.props.position || {},
+			questions: position.questions || [],
+			position,
 			applyHelpText: "Let the lab get to know you! It's like tinder... but a lab",
 		};
 	}
@@ -19,23 +21,29 @@ class Apply extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({
-			pos_description: this.state.position.description || "No description provided.",
-			time_comm: this.state.position.min_time_commitment || "No minimum time provided.",
-			min_qual: this.state.position.min_qual,
-			questions: [ // currently using default two questions, could make position-specific
-				{
-					id: 1,
-					question: "Why are you interested in this project?",
-					response: "",
-				},
-				{
-					id: 2,
-					question: "What makes you a good fit to work in our lab?",
-					response: "",
-				},
-			]
-		});
+		let questions = [ // currently using default two questions, could make position-specific
+			{
+				id: 1,
+				question: "Why are you interested in this project?",
+				response: "",
+			},
+			{
+				id: 2,
+				question: "What makes you a good fit to work in our lab?",
+				response: "",
+			},
+		];
+		getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
+			if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
+				questions = resp.data.application.questions;
+			}
+			this.setState({
+				pos_description: this.state.position.description || "No description provided.",
+				time_comm: this.state.position.min_time_commitment || "No minimum time provided.",
+				min_qual: this.state.position.min_qual,
+				questions
+			});
+		})
 	}
 
 	render() {
