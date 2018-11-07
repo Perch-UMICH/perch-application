@@ -9,7 +9,7 @@ Faculty: (an idea)
 */
 
 import React, {Component} from 'react';
-import {getStudent, getLabPositionApplication, getLabPositionApplicationResponses} from '../../helper.js'
+import {getStudent, getLabPositionApplicationResponses} from '../../helper.js'
 import './Applicants.css'
 
 class Applicants extends Component {
@@ -33,9 +33,6 @@ class Applicants extends Component {
     }
 
 	componentDidMount() {
-		getLabPositionApplication(this.props.lab_id, this.props.pos_id).then(resp => {
-            console.log("application qs", resp)
-        })
         getLabPositionApplicationResponses(this.props.lab_id, this.props.pos_id).then(resp => {
 			if (resp.data && resp.data.length) {
                 this.setState({applicants: resp.data})
