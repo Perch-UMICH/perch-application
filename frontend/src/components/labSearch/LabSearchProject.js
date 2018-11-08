@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Apply from '../user/Apply'
 import EditModal from '../utilities/modals/EditModal'
-import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, getCurrentStudentId, submitStudentApplicationResponse} from '../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList, getStudentApplicationResponse, createStudentApplicationResponse, getCurrentStudentId, submitStudentApplicationResponse} from '../../helper.js'
 import './LabSearchProject.css';
 
 class LabSearchProject extends Component {
@@ -11,11 +11,15 @@ class LabSearchProject extends Component {
             added: this.props.saved,
             position: this.props.position || {},
             question_resps: [],
+            submitted: false,
         }
     }
 
     componentDidMount() {
         this.formatTitle()
+        getStudentApplicationResponse(getCurrentStudentId(), this.state.position.id).then(resp => {
+            this.setState({submitted: true})
+        })
     }
 
     openModal(id) {
@@ -30,29 +34,28 @@ class LabSearchProject extends Component {
       this.setState({question_resps});
     }
 
-    // Update this function with backend functionality to save application
-    // You can access the response under 'this.state.question_resps'
-    submitApplication = () => {
-        let resps = []
+    submitApplication() {
+		let question_resps = this.state.question_resps,
+			resps = []
 
-        if (this.state.question_resps) 
-            resps = this.state.question_resps.map(q => q.response)
+		if (question_resps) 
+			resps = question_resps.map(q => { return {number: q.number, answer: q.answer}})
 
-        console.log('submit app',resps)
+		let application = {
+			position_id: this.props.position_id,
+			responses: resps,
+		}
 
-        let application = {
-            student_id: getCurrentStudentId(),
-            position_id: this.state.position.id,
-            responses: resps,
-        }
-
-		createApplicationResponse(application)
-            .then(resp => {
-    			if (resp.data) 
-                    submitStudentApplicationResponse(resp.data.id)
-            })
-            .catch(e=> alert('error in create application response'))
-    }
+		createStudentApplicationResponse(getCurrentStudentId(), this.state.position.id, application).then((resp) => {
+			if (resp.data && resp.data.id) {
+				submitStudentApplicationResponse(getCurrentStudentId(), this.state.position.id)
+					.then(r => {
+						alert("Application Successfully Submitted!")
+					})
+					.catch(e=>alert('Error in create application response'))
+			}
+		})
+	}
 
     saveProject = () => {
         addToStudentPositionList([this.props.position.id])
@@ -60,7 +63,6 @@ class LabSearchProject extends Component {
     }
 
     removeProject = () => {
-        console.log('look here', this.props.position)
         removeFromStudentPositionList([this.props.position.id])
         this.toggleAdder()
         this.props.updateProjects(this.props.position.id)
@@ -81,8 +83,8 @@ class LabSearchProject extends Component {
 
     renderModals() {
         return (
-            <EditModal id={`${this.state.position.id}-apply`} wide={true} actionName="submit" title={`Apply To ${this.state.position.title}`} modalAction={this.submitApplication}>
-              <Apply updateQuestions={this.updateApplication} position={this.state.position}/>
+            <EditModal id={`${this.state.position.id}-apply`} wide={true} actionName="submit" title={`Apply To ${this.state.position.title}`} modalAction={this.submitApplication.bind(this)}>
+                <Apply updateQuestions={this.updateApplication} position={this.state.position} pos_id={this.state.position.id} lab_id={this.props.id} />
             </EditModal>
         )
     }
@@ -100,13 +102,13 @@ class LabSearchProject extends Component {
       </div>
 
     // if the user is viewing this project on their lab dashboard page in the 'applied' section, don't show the 'apply' and 'save' buttons
-    if (this.props.applied) {
-      applyButton = null;
+    if (this.props.applied || this.state.submitted) {
+      applyButton = <div className='group-project-no-applicants' >Application Submitted</div>;
       saveRemoveButton = null;
     }
 
 		return (
-            <div key={this.props.position.id} className='lab-srch-project'>
+            <div key={this.props.position_id} className='lab-srch-project'>
 
                 {this.renderModals()}
 

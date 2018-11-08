@@ -1524,7 +1524,7 @@ export function deleteStudentApplicationResponse(student_id, position_id) {
 
 // RESTRICTED: user must be a student
 // Get all of a student's responses (submitted or otherwise)
-export function getAllStudentApplicationResponses(student_id, position_id) {
+export function getAllStudentApplicationResponses(student_id) {
     console.log('Getting application response');
 
     return axios.get('api/students/' + student_id + '/applications')

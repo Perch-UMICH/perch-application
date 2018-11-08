@@ -23,14 +23,14 @@ class Apply extends Component {
 	componentDidMount() {
 		let questions = [ // currently using default two questions, could make position-specific
 			{
-				id: 1,
+				number: 1,
 				question: "Why are you interested in this project?",
-				response: "",
+				answer: "",
 			},
 			{
-				id: 2,
+				number: 2,
 				question: "What makes you a good fit to work in our lab?",
-				response: "",
+				answer: "",
 			},
 		];
 		getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {

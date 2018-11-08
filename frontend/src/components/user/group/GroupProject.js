@@ -6,7 +6,7 @@ import Applicants from '../../user/Applicants'
 import EditModal from '../../utilities/modals/EditModal'
 import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
-import {addToStudentPositionList, removeFromStudentPositionList, createApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, submitStudentApplicationResponse} from '../../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList, getLabPosition, getStudentApplicationResponse, createStudentApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, submitStudentApplicationResponse, getCurrentStudentId} from '../../../helper.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {
@@ -18,6 +18,7 @@ export class GroupProject extends Component {
 			applicants: [],
 			new_pos: { min_time_commitment: 10 },
 			added: false,
+			submitted: false,
 		}
 	}
 
@@ -32,12 +33,24 @@ export class GroupProject extends Component {
 	}
 
 	componentDidMount() {
+		getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
+			let orig_questions = null;
+			if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
+				orig_questions = resp.data.application.questions;
+			}
+			this.setState({orig_questions});
+		})
 		if (isFaculty()) {
 			getLabPositionApplicationResponses(this.props.lab_id, this.props.pos_id)
 				.then(resp => {
 					if (resp.data && resp.data.length) 
 						this.setState({applicants: resp.data})
 				})
+		}
+		else {
+			getStudentApplicationResponse(getCurrentStudentId(), this.props.pos_id).then(resp => {
+				this.setState({submitted: true})
+			})
 		}
 	}
 
@@ -55,11 +68,19 @@ export class GroupProject extends Component {
 
 	// Send updated position & application to server
 	updatePosition() {
-		let updated_pos = this.state.new_pos;
-		let questions = []
-		if (this.state.app_questions) 
-			this.state.app_questions.map(q => questions.push(q.text))
-		updated_pos.application = {questions};
+		let new_pos = this.state.new_pos;
+		let old_pos = this.props.cur_pos;
+		let updated_pos = { // Will likely be able to reduce this to just passing in new_pos on backend confirmation.
+			min_time_commitment: new_pos.min_time_commitment || old_pos.min_time_commitment,
+			contact_email: new_pos.contact_email || old_pos.contact_email,
+			contact_phone: new_pos.contact_phone || old_pos.contact_phone,
+			description: new_pos.description || old_pos.description,
+			location: new_pos.location || old_pos.location,
+			title: new_pos.title || old_pos.title,
+			duties: "",
+			min_qual: "",
+		};
+		updated_pos.application = {questions: this.state.app_questions};
 		updateLabPosition(this.props.lab_id, this.props.pos_id, updated_pos)
 			.then(resp => {
 				if (this.props.updatePositions)
@@ -98,31 +119,24 @@ export class GroupProject extends Component {
 	submitApplication() {
 		let question_resps = this.state.question_resps,
 			resps = []
-		/*
-		let resps = []
-		if (this.state.question_resps) 
-			this.state.question_resps.map(r => resps.push(r.response))*/
 
 		if (question_resps) 
-			resps = question_resps.map(q => q.response)
-
-		console.log("QUESTION RESPS??", resps)
+			resps = question_resps.map(q => { return {number: q.number, answer: q.answer}})
 
 		let application = {
 			position_id: this.props.pos_id,
 			responses: resps,
 		}
 
-		createApplicationResponse(application).then(resp => {
+		createStudentApplicationResponse(getCurrentStudentId(), this.props.pos_id, application).then((resp) => {
 			if (resp.data && resp.data.id) {
-				// get some info from resp when working
-				submitStudentApplicationResponse(resp.data.id)
+				submitStudentApplicationResponse(getCurrentStudentId(), this.props.pos_id)
 					.then(r => {
 						alert("Application Successfully Submitted!")
 					})
 					.catch(e=>alert('Error in create application response'))
 			}
-		});
+		})
 	}
 
 	isAdmin() {
@@ -224,6 +238,8 @@ export class GroupProject extends Component {
 		let project_action = <div className='group-project-apply' onClick={() => this.openModal(`${this.props.pos_id}-apply`)}>Apply</div>
 		if (this.isAdmin()) 
 			project_action = <Editor superClick={() => this.openModal(`${this.props.pos_id}-apply`)}/>
+		if (this.state.submitted) 
+			project_action = <div className='group-project-no-applicants' >Application Submitted</div>;
 		return(
 			<div>
 				{project_action}
@@ -256,6 +272,9 @@ export class GroupProject extends Component {
 	        {!this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.saveProject}>save</div>}
 	        {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.removeProject}>remove</div>}
 	      </div>
+		if (this.state.submitted) {
+			saveRemoveButton = null;
+		}
 
 	   	return saveRemoveButton
 
@@ -280,7 +299,7 @@ export class GroupProject extends Component {
 }
 
 export const GroupProjectContainer = (props) => {
-	let editor = isFaculty() ? <Editor superClick={props.addFunction} add={true}/> : null
+	let editor = props.admin_access ? <Editor superClick={props.addFunction} add={true}/> : null
 	let content = <div>{props.children}</div>
 	if (props.children.length == 0)
 		content = <div className="group-default-text">No Current Projects</div>

@@ -15,18 +15,7 @@ import './Applicants.css'
 class Applicants extends Component {
 	constructor(props) {
         super(props)
-        console.log("APPLICANTS!?!?", this.props.applicants)
 		this.state = {
-            app_questions: [
-                {
-					id: 1,
-					text: "Why are you interested in this project?",
-				},
-				{
-					id: 2,
-					text: "What makes you a good fit to work in our lab?",
-				},
-            ],
             applicants: [],
             namesMap: {}
 		}
@@ -51,11 +40,11 @@ class Applicants extends Component {
 
 	render() {
 		return (
-            <div classname="applicants-container">
+            <div className="applicants-container">
                 {
                     this.state.applicants.map((app, index) => {
                         return(
-                            <ApplicantContainer key={index} application={app} app_questions={this.state.app_questions} name={this.state.namesMap[app.student_id]}/>
+                            <ApplicantContainer key={index} application={app} name={this.state.namesMap[app.student_id]}/>
                         )
                 })}
                 <br/><br/>
@@ -73,11 +62,11 @@ const ApplicantContainer = (props) => {
             {project_action}
             <div className="applicant-name">{props.name}</div>
             <div className="applicant-descriptor"><i>Applied on {app.created_at && app.created_at.length && app.created_at.split(' ')[0]}</i></div>
-            {props.app_questions.map((q, index) => {
+            {app.answers.map((a) => {
                 return (
-                    <div key={index} className="app-response-container">
-                        <div className="app-question-text"><b>{q.text}</b></div>
-                        <div className="app-response-text">{app.answers[index] && app.answers[index].response}</div>
+                    <div key={a.number} className="app-response-container">
+                        <div className="app-question-text"><b>{a.question}</b></div>
+                        <div className="app-response-text">{a.answer}</div>
                     </div>
                 )
             })}

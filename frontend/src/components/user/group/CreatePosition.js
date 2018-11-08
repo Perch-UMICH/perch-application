@@ -21,17 +21,17 @@ class CreatePosition extends Component {
 			lab_name: "",
 			createGenHelpText: "Create a new group project! First, fill out some quick project information.",
 			createAppQuestionsHelpText: "Next, add or edit questions you'd like to see answered by applicants to your lab.",
-			editGenHelpText: "Edit .",
+			editGenHelpText: "Edit project by updating information below.",
 			editAppQuestionsHelpText: "Next, add or edit questions you'd like to see answered by applicants to your lab.",
 			positionName: '',
 			questions: [
 				{
-					"id": "q_0",
-					"text": "Why are you interested in this project?"
+					"number": 0,
+					"question": "Why are you interested in this project?"
 				},
 				{
-					"id": "q_1",
-					"text": "What makes you a good fit to work in our lab?"
+					"number": 1,
+					"question": "What makes you a good fit to work in our lab?"
 				},
 			],
 			lowerHours: 8,
@@ -56,8 +56,8 @@ class CreatePosition extends Component {
 
 	addQuestion() {
 		var newQuestion = {
-			"id": "q_" + this.state.q_index,
-			"text": ''
+			"number": this.state.q_index,
+			"question": ''
 		};
 		var newQIndex = this.state.q_index + 1;
 		var updated_questions = this.state.questions.concat([newQuestion]);
@@ -71,8 +71,8 @@ class CreatePosition extends Component {
 
 	alterQuestion(event, question_id) {
 		var temp_questions = this.state.questions;
-		var index = temp_questions.findIndex(item => item.id === question_id);
-		temp_questions[index].text = event.target.value;
+		var index = temp_questions.findIndex(item => item.number === question_id);
+		temp_questions[index].question = event.target.value;
 		this.setState({ questions: temp_questions });
 		if (this.props.updateAppQuestions)
 			this.props.updateAppQuestions(temp_questions)
@@ -81,7 +81,7 @@ class CreatePosition extends Component {
 	removeQuestion(question_id) {
 		this.setState((prevState) => {
 			var temp_questions = prevState.questions;
-			var removeIndex = temp_questions.map(function(item) { return item.id; }).indexOf(question_id);
+			var removeIndex = temp_questions.map(function(item) { return item.number; }).indexOf(question_id);
 			temp_questions.splice(removeIndex, 1);
 			if (this.props.updateAppQuestions)
 				this.props.updateAppQuestions(temp_questions)
@@ -123,12 +123,12 @@ class CreatePosition extends Component {
 						<h2 className="apply-question-label application"><b>Project Application Questions</b></h2>
 						    {this.state.questions.map((question) => {
 								return (
-									<div key={`${question.id}-q`} className="row">
+									<div key={`${question.number}-q`} className="row">
 										<div className="col s11">
-											<textarea id={question.id} type="text" className="textarea-experience" value={question.text} rows='3' onChange={event => this.alterQuestion(event, question.id)} required></textarea>
+											<textarea id={`${question.number}-input-id`} type="text" className="textarea-experience" value={question.question} rows='3' onChange={event => this.alterQuestion(event, question.number)} required></textarea>
 										</div>
 										<div className="col s1">
-											<a id={question.id} className="remove-question" onClick={() => this.removeQuestion(question.id)}><i className="material-icons interest-editor opacity-1">clear</i></a>
+											<a id={`${question.number}-id`} className="remove-question" onClick={() => this.removeQuestion(question.number)}><i className="material-icons interest-editor opacity-1">clear</i></a>
 										</div>
 									</div>);
 							})}

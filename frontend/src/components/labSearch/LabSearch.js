@@ -5,7 +5,7 @@ import DotLoader from '../utilities/animations/DotLoader'
 import LabSearchItem from './LabSearchItem';
 
 import '../user/individual/PickYourInterests.css';
-import {isStudent, getAllLabs, getSearchResults, getLabTags, isLoggedIn, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
+import {isStudent, getAllLabs, getSearchResults, getLabTags, getAllStudentApplicationResponses, getCurrentUserId, getStudentFromUser, getAllSkills, getAllTags, getStudentSkills, getStudentTags, getUser, getSearchData, labSearch} from '../../helper.js'
 import {getFilters} from '../../data/filterData';
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills'];
 const filterFriendlyNames = ['Organizations', 'Research Areas', 'Hours', 'Lab Skills'];
@@ -65,7 +65,14 @@ class LabSearch extends Component {
     componentWillMount() {
     	let newState = {
     		all_labs: [],
-    	}
+		}
+		
+		if (isStudent()) {
+			/* TODO: Will use in future to prevent many-loads, but currently non-functional.
+			getAllStudentApplicationResponses(getCurrentUserId()).then(r => {
+				console.log("R!!!", r);
+			}) */
+		}
 
     	labSearch([],[],[],[],"")
 	    	.then(r => {
