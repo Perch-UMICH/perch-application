@@ -205,7 +205,9 @@ class GroupPage extends Component {
   createPosition () {
     let new_pos = this.state.new_pos
     let questions = []
-    if (this.state.app_questions) { this.state.app_questions.map(q => questions.push(q.text)) }
+    if (this.state.app_questions) {
+      this.state.app_questions.map(q => questions.push(q.text))
+    }
     new_pos.application = { questions }
     // alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
     createLabPosition(this.state.lab_id, new_pos).then(resp => {
@@ -231,7 +233,9 @@ class GroupPage extends Component {
 
   hasPermissions (admins) {
     let user_id = getCurrentUserId()
-    for (let i = 0; i < admins.length; i++) { if (admins[i][1] == user_id) return true }
+    for (let i = 0; i < admins.length; i++) {
+      if (admins[i][1] == user_id) return true
+    }
     return false
   }
 
@@ -440,7 +444,9 @@ class GroupPage extends Component {
 // Our Admin Panel on Group Page. Uses GroupPerson components
 const Administrators = props => {
   let content = <div className='group-photos'>{props.people}</div>
-  if (props.people.length == 0) { content = <div className='group-default-text'>No Current Admin</div> }
+  if (props.people.length == 0) {
+    content = <div className='group-default-text'>No Current Admin</div>
+  }
   return (
     <div id='group-admins'>
       <h1>Admins</h1>
@@ -454,7 +460,9 @@ const Administrators = props => {
 const Members = props => {
   // If there are no lab members, set default message.
   let content = <div className='group-photos'>{props.people}</div>
-  if (props.people.length == 0) { content = <div className='group-default-text'>No Current Members</div> }
+  if (props.people.length == 0) {
+    content = <div className='group-default-text'>No Current Members</div>
+  }
   return (
     <div id='group-members'>
       <h1>Members</h1>

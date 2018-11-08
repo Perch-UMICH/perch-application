@@ -547,8 +547,8 @@ export class EditQuickview extends Component {
   }
 
   componentWillReceiveProps (props) {
-	var name = ''
-	
+    var name = ''
+
     if (props.user) {
       this.setState({
         name: props.user.name,
@@ -636,7 +636,6 @@ export class EditQuickview extends Component {
           placeholder='Rodriguez Happypants'
           value={this.state.name}
           onChange={e => {
-			
             this.setState({ name: e.target.value })
             if (this.props.updateUser) {
               this.props.updateUser('name', e.target.value)
@@ -705,7 +704,7 @@ export class EditQuickview extends Component {
         </div>
         <div id='quickview-editor-R'>
           {nameSection}
-          {/*schoolSection*/}
+          {/* schoolSection */}
         </div>
       </div>
     )

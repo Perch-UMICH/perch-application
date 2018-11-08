@@ -71,7 +71,7 @@ class StudentProfile extends Component {
     this.state = {
       user,
       updated_user: deepCopy(user)
-	}
+    }
   }
 
   // this just updates the state object, not the backend
@@ -155,7 +155,7 @@ class StudentProfile extends Component {
 
           let formData = new FormData()
           formData.append('file', updated_user.img)
-		
+
           let to_return = {
             formData: formData,
             type: 'profile_pic',
