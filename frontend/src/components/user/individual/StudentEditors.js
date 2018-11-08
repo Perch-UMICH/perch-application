@@ -659,7 +659,6 @@ export class EditQuickview extends Component {
     return (
       <div className='quickview-editor-container'>
         <div id='quickview-editor-L'>
-          {}
           <Dropzone
             onDrop={this.handleDrop}
             disableClick
@@ -692,13 +691,13 @@ export class EditQuickview extends Component {
                 onChange={this.handleSlider}
               />
             </div>
-            <i
+            {/*<i
               id='rotate-icon'
               className='material-icons'
               onClick={this.handleRotate}
             >
               rotate_90_degrees_ccw
-            </i>
+            </i>*/}
           </div>
           <br /><br />
         </div>
