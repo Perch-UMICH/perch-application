@@ -17,9 +17,9 @@ class LabSearchProject extends Component {
 
     componentDidMount() {
         this.formatTitle()
-        getStudentApplicationResponse(getCurrentStudentId(), this.state.position.id).then(resp => {
+        /*getStudentApplicationResponse(getCurrentStudentId(), this.state.position.id).then(resp => {
             this.setState({submitted: true})
-        })
+        })*/
     }
 
     openModal(id) {
