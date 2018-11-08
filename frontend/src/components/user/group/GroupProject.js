@@ -133,6 +133,7 @@ export class GroupProject extends Component {
 				submitStudentApplicationResponse(getCurrentStudentId(), this.props.pos_id)
 					.then(r => {
 						alert("Application Successfully Submitted!")
+						this.setState({submitted: true})
 					})
 					.catch(e=>alert('Error in create application response'))
 			}

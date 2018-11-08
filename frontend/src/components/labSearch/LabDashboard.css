@@ -48,7 +48,7 @@
 .lab-dashboard-item:hover div.lab-srch-project .lab-srch-project-action-label {
 	opacity: 1 !important;
 	transform: translateY(20px);
-	right: -5px;
+	right: 0px;
 	transition: 0.1s ease;
 	/*display: block;*/
 }

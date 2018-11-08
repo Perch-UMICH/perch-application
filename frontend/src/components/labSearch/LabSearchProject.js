@@ -50,7 +50,8 @@ class LabSearchProject extends Component {
 			if (resp.data && resp.data.id) {
 				submitStudentApplicationResponse(getCurrentStudentId(), this.state.position.id)
 					.then(r => {
-						alert("Application Successfully Submitted!")
+                        alert("Application Successfully Submitted!")
+                        this.setState({submitted: true})
 					})
 					.catch(e=>alert('Error in create application response'))
 			}
