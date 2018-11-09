@@ -114,7 +114,7 @@ class LabSearchProject extends Component {
                 {this.renderModals()}
 
                 <div className='lab-srch-project-title-container'>
-                    <a className='truncate lab-srch-project-title' href={`prof-page/${this.props.id}`}>{this.state.position.title}</a>
+                    <a className='truncate lab-srch-project-title' href={`prof-page/${this.props.position.lab_id}`} target="_blank">{this.state.position.title}</a>
                     {this.props.urop && <span className='lab-srch-project-tag'>UROP</span>}
                 </div>
 
