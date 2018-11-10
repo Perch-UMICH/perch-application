@@ -6,7 +6,7 @@ import {GroupPublicationsContainer, GroupPublication} from './GroupPublications'
 import {modalUpdateLab} from '../CreateLab'
 import {GroupProject, GroupProjectContainer} from './GroupProject'
 import BasicButton from '../../utilities/buttons/BasicButton'
-import {getStudentFromUser, deleteLab, permissionCheck, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getAllLabPositions, createLabPosition,
+import {getStudentFromUser, deleteLab, getAllStudentApplicationResponses, removeMembersFromLab, getLab, isLoggedIn, getCurrentUserId, getUser, getAllLabPositions, createLabPosition,
     isStudent, isLab, getLabMembers, addMembersToLab, getFacultyFromUser} from '../../../helper.js'
 import Editor from '../../utilities/Editor'
 // import $ from 'jquery'
@@ -33,7 +33,15 @@ class GroupPage extends Component {
             lab_data: {},
             lab_admins: [],
             lab_members: [],
-            new_pos: { min_time_commitment: 10 },
+            new_pos: {
+              title: '',
+              description: '',
+              duties: '',
+              min_qual: '',
+              min_time_commitment: 10,
+              contact_email: '',
+              contact_phone: '',
+            },
             updated_lab: {
               contact_email: "",
               contact_phone: "",
@@ -109,9 +117,18 @@ class GroupPage extends Component {
 
     loadLabPositions() {
       getAllLabPositions(this.state.lab_id).then((resp) => {
-          let positions = resp.data || [];
-          this.setState({lab_positions: positions});
+          this.setState({lab_positions: resp.data || []});
       });
+    }
+    
+    loadPositionsApplied() {
+      // Get all positions that the student has submitted applications to:
+      if (isStudent()) {
+        getAllStudentApplicationResponses(getCurrentUserId()).then(resp => {
+          let positions_applied = resp.data.map((app) => {return app.position_id});
+          this.setState({positions_applied});
+        })
+      }
     }
 
     componentDidMount() {
@@ -134,7 +151,9 @@ class GroupPage extends Component {
         })
       }
       this.loadLabMembers();
+      this.loadPositionsApplied();
   }
+
 
   // Update the new position from modal, to be submitted by createPosition
   updateNewPosState(name, value) {
@@ -153,7 +172,8 @@ class GroupPage extends Component {
   // create position and position application, call from create position modal
   createPosition() {
     let new_pos = this.state.new_pos;
-    new_pos.application = {questions: this.state.app_questions};
+    let questions = this.state.app_questions.map(q => {return {question: q.question}});
+    new_pos.application = {questions};
     // alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
     createLabPosition(this.state.lab_id, new_pos).then(resp => {
         this.loadLabPositions();
@@ -189,7 +209,7 @@ class GroupPage extends Component {
     return (
       <div>
         <EditModal id={`${this.state.lab_id}-create-position`} wide={true} actionName="create" title={`Create New Project`} modalAction={this.createPosition.bind(this)}>
-          <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} new_pos={this.state.new_pos} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
+          <CreatePosition updateNewPosState={this.updateNewPosState.bind(this)} new_pos={this.state.new_pos} app_questions={this.state.app_questions} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
         </EditModal>
 
         <EditModal id={`edit-name`} wide={true} actionName="update" medium={true} title={`Update Name & Description`} modalAction={() => modalUpdateLab(this.state.updated_lab, () => getLab(this.state.lab_id))}>
@@ -268,7 +288,7 @@ class GroupPage extends Component {
 					<GroupQuickview title={this.state.lab_data.name} description={this.state.lab_data.description} admin_access={this.state.admin_access} superClick={() => this.openModal('edit-name')}/>
 					
           <GroupProjectContainer admin_access={this.state.admin_access} addFunction={() => this.openModal(`${this.state.lab_id}-create-position`)}>
-            {lab_positions.map(pos => <GroupProject key={`${pos.id}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} description={pos.description} time_commit={pos.min_time_commitment} admins={this.state.admins_raw} year='MISSING' urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>)}
+            {lab_positions.map(pos => <GroupProject key={`${pos.id}-p`} saved_labs={this.state.user_saved_labs} lab_id={this.state.lab_id} pos_id={pos.id} cur_pos={pos} title={pos.title} spots={pos.open_slots} description={pos.description} time_commit={pos.min_time_commitment} admins={this.state.admins_raw} year='MISSING' positions_applied={this.state.positions_applied} urop={pos.is_urop_project} updatePositions={this.loadLabPositions.bind(this)}/>)}
 					</GroupProjectContainer>
 
 					<GroupPublicationsContainer>

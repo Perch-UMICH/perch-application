@@ -124,6 +124,22 @@
 	padding-left: 15px;
 }
 
+.group-project-application-submitted {
+	position: absolute;
+    top: 35px;
+    right: 0;
+	text-align: center;
+	line-height: none !important;
+    background-color: var(--b-grey);
+    color: var(--white);
+    border-radius: 30px 0 0 30px;
+    -webkit-transition: 0.2s ease;
+    -o-transition: 0.2s ease;
+    transition: 0.2s ease;
+    padding: 8px;
+    padding-left: 15px;
+}
+
 #group-project-container {
 	width: 100%;
 	background-color: var(--white);

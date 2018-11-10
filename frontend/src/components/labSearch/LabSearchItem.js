@@ -7,6 +7,7 @@ class LabSearchItem extends Component {
   constructor (props) {
     super(props)
     this.expandProjects = this.expandProjects.bind(this)
+    this.comparePosIds.bind(this)
     this.default_pics = [
       'batman',
       'boba',
@@ -23,6 +24,17 @@ class LabSearchItem extends Component {
 
   componentDidMount () {
     // console.log(this.props.saved_labs)
+  }
+
+  comparePosIds(pos_ids) {
+    console.log("!", pos_ids, this.state.position_id)
+    if (pos_ids && pos_ids.length) {
+      pos_ids.map(pos => {
+        if (pos == this.state.position.id) {
+          this.setState({submitted: true}) 
+        }
+      })
+    }
   }
 
   expandProjects () {
@@ -53,6 +65,15 @@ class LabSearchItem extends Component {
     this.props.positions.map(position => {
       let urop = position.is_urop_project
       let saved = false
+      let submitted = false
+      console.log("POSITIONS APPLIED???", this.props.positions_applied)
+      let pos_ids = this.props.positions_applied
+      if (pos_ids && pos_ids.length) {
+        pos_ids.map(pos => {
+          console.log("SUBMITTED??", pos, position.id, (pos == position.id))
+          if (pos == position.id) submitted = true
+        })
+      }
       for (var item in this.props.saved_labs) {
         if (position.id == this.props.saved_labs[item].id) saved = true
       }
@@ -66,6 +87,7 @@ class LabSearchItem extends Component {
           title={position.title}
           spots='MISSING'
           description={position.description}
+          submitted={submitted}
           updateProjects={r => r}
           urop
         />

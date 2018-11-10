@@ -10,7 +10,9 @@ import {
   getCurrentUserId,
   getStudentFromUser,
   getSearchData,
-  labSearch
+  labSearch,
+  getAllStudentApplicationResponses,
+  
 } from '../../helper.js'
 
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills']
@@ -25,6 +27,7 @@ class LabSearch extends Component {
   constructor (props) {
     super(props)
     this.handleFilterClick = this.handleFilterClick.bind(this)
+    this.loadApplicationSubmitted = this.loadApplicationSubmitted.bind(this)
 
     var filts = {}
     var parentFilts = {}
@@ -76,6 +79,7 @@ class LabSearch extends Component {
             img='/img/headshots/salektiar.jpg'
             description='NULL'
             positions={lab.projects}
+            positions_applied={this.state.positions_applied}
           />
         )
       }
@@ -111,6 +115,7 @@ class LabSearch extends Component {
               rsrch='MISSING'
               img='/img/headshots/salektiar.jpg'
               description='NULL'
+              positions_applied={this.state.positions_applied}
               positions={lab.projects}
             />
           )
@@ -166,7 +171,16 @@ class LabSearch extends Component {
       getStudentFromUser(getCurrentUserId()).then(resp => {
         this.setState({ lab_list: resp.data.position_list })
       })
+      this.loadApplicationSubmitted()
     }
+  }
+
+  loadApplicationSubmitted() {
+    // Get all positions that the student has submitted applications to
+    getAllStudentApplicationResponses(getCurrentUserId()).then(resp => {
+      let positions_applied = resp.data.map((app) => {return app.position_id});
+      this.setState({positions_applied});
+    })
   }
 
   handleFilterClick (filterType, slug) {
@@ -277,6 +291,7 @@ class LabSearch extends Component {
                   img='/img/headshots/salektiar.jpg'
                   description='NULL'
                   positions={lab.projects}
+                  positions_applied={this.state.positions_applied}
                 />
               )
             )

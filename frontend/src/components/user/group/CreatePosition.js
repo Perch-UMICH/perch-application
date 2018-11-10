@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {getLabPosition} from '../../../helper.js'
 import './CreatePosition.css';
 
 class CreatePosition extends Component {
@@ -13,10 +14,21 @@ class CreatePosition extends Component {
 			contact_email: '',
 			contact_phone: '',
 		}
+		let questions = [
+			{
+				"number": 0,
+				"question": "Why are you interested in this project?"
+			},
+			{
+				"number": 1,
+				"question": "What makes you a good fit to work in our lab?"
+			},
+		]
+		if (props.app_questions && props.app_questions.length) 
+			questions = props.app_questions
 		if (props.new_pos)
-			new_pos = props.new_pos;
+			new_pos = props.new_pos
 		
-
 		this.state = {
 			lab_name: "",
 			createGenHelpText: "Create a new group project! First, fill out some quick project information.",
@@ -24,26 +36,26 @@ class CreatePosition extends Component {
 			editGenHelpText: "Edit project by updating information below.",
 			editAppQuestionsHelpText: "Next, add or edit questions you'd like to see answered by applicants to your lab.",
 			positionName: '',
-			questions: [
-				{
-					"number": 0,
-					"question": "Why are you interested in this project?"
-				},
-				{
-					"number": 1,
-					"question": "What makes you a good fit to work in our lab?"
-				},
-			],
 			lowerHours: 8,
 			upperHours: 10,
 			numSlots: 1,
 			q_index: 0,
 			new_pos,
+			questions,
 			modal_info: {},
 		};
 		this.state.modal_info.questions = this.state.questions;
 		this.state.q_index = this.state.questions.length;
 		this.alterQuestion = this.alterQuestion.bind(this);
+	}
+
+	componentDidMount() {
+		if (!this.props.edit) return
+		getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
+			if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
+				this.setState({questions: resp.data.application.questions});
+			}
+		})
 	}
 	
 	// send position updates to parent

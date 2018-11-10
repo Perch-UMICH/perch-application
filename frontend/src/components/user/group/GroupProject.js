@@ -47,9 +47,21 @@ export class GroupProject extends Component {
 						this.setState({applicants: resp.data})
 				})
 		}
-		else {
-			getStudentApplicationResponse(getCurrentStudentId(), this.props.pos_id).then(resp => {
-				this.setState({submitted: true})
+		else { // If student, check against positions_applied prop to see if already submitted an application for position
+			let pos_ids = this.props.positions_applied
+			if (pos_ids && pos_ids.length) {
+				pos_ids.map(pos => {
+					if (pos == this.props.pos_id) this.setState({submitted: true})
+				})
+			}
+		}
+	}
+
+	componentWillReceiveProps(props) {
+		let pos_ids = props.positions_applied
+		if (pos_ids && pos_ids.length) {
+			pos_ids.map(pos => {
+				if (pos == props.pos_id) this.setState({submitted: true})
 			})
 		}
 	}
@@ -164,7 +176,7 @@ export class GroupProject extends Component {
 		else {
 			edit_modal = <EditModal id={`${this.props.pos_id}-apply`} wide={true} actionName="update" deleteFunc={this.deletePosition.bind(this)}
 							title={`Edit ${this.props.title}`} modalAction={this.updatePosition.bind(this)}>
-							<CreatePosition edit={true} new_pos={this.props.cur_pos} updateNewPosState={this.updateNewPosState.bind(this)} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
+							<CreatePosition edit={true} pos_id={this.props.pos_id} lab_id={this.props.lab_id} new_pos={this.props.cur_pos} updateNewPosState={this.updateNewPosState.bind(this)} updateAppQuestions={(app_questions) => this.setState({app_questions})} />
 						</EditModal>
 		}
 		return edit_modal
@@ -240,7 +252,7 @@ export class GroupProject extends Component {
 		if (this.isAdmin()) 
 			project_action = <Editor superClick={() => this.openModal(`${this.props.pos_id}-apply`)}/>
 		if (this.state.submitted) 
-			project_action = <div className='group-project-no-applicants' >Application Submitted</div>;
+			project_action = <div className='group-project-application-submitted' >Application<br/>Submitted</div>;
 		return(
 			<div>
 				{project_action}
