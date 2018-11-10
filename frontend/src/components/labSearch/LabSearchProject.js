@@ -11,15 +11,17 @@ class LabSearchProject extends Component {
             added: this.props.saved,
             position: this.props.position || {},
             question_resps: [],
-            submitted: false,
+            submitted: this.props.submitted,
         }
     }
 
     componentDidMount() {
         this.formatTitle()
-        /*getStudentApplicationResponse(getCurrentStudentId(), this.state.position.id).then(resp => {
-            this.setState({submitted: true})
-        })*/
+    }
+
+    componentWillReceiveProps(props) {
+        if (props.submitted)
+            this.setState({submitted: props.submitted})
     }
 
     openModal(id) {
@@ -52,6 +54,8 @@ class LabSearchProject extends Component {
 					.then(r => {
                         alert("Application Successfully Submitted!")
                         this.setState({submitted: true})
+                        if (this.props.loadSubmitted)
+                            this.props.loadSubmitted()
 					})
 					.catch(e=>alert('Error in create application response'))
 			}
@@ -104,7 +108,7 @@ class LabSearchProject extends Component {
 
     // if the user is viewing this project on their lab dashboard page in the 'applied' section, don't show the 'apply' and 'save' buttons
     if (this.props.applied || this.state.submitted) {
-      applyButton = <div className='group-project-no-applicants' >Application Submitted</div>;
+      applyButton = <div className='group-project-application-submitted' >Application<br/>Submitted</div>;
       saveRemoveButton = null;
     }
 
