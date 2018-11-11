@@ -15,7 +15,8 @@ import {
   getStudentFromUser,
   getFacultyFromUser,
   isStudent,
-  isFaculty
+  isFaculty,
+  getAllStudentApplicationResponses
 } from '../../helper.js'
 import './LabDashboard.css'
 
@@ -37,6 +38,10 @@ class LabDashboard extends Component {
           position_list: resp.data.position_list,
           applied_list: resp.data.position_list // TODO: SET TO APPLIED LIST ONCE APPLICABLE
         })
+      })
+      getAllStudentApplicationResponses(getCurrentUserId()).then(resp => {
+        let positions_applied = resp.data.map((app) => {return app.position_id});
+        this.setState({positions_applied});
       })
     } else if (isFaculty()) {
       // if faculty, show existing projects (allow to edit?) and applicants.
@@ -68,6 +73,13 @@ class LabDashboard extends Component {
           <h1 className='lab-dashboard-title'>{boxOneTitle}</h1>
           <div className='lab-dashboard-container'>
             {position_list.map((position, index) => {
+              let submitted = false
+              let pos_ids = this.state.positions_applied
+              if (pos_ids && pos_ids.length) {
+                pos_ids.map(pos => {
+                  if (pos == position.id) submitted = true
+                })
+              }
               return (
                 <div
                   key={`position-${position.id}`}
@@ -76,6 +88,8 @@ class LabDashboard extends Component {
                   <LabSearchProject
                     position={position}
                     facultyOwned={facultyOwned}
+                    id={position.lab_id}
+                    submitted={submitted}
                     updateProjects={this.updateProjects.bind(this)}
                   />
                 </div>

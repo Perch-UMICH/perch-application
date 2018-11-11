@@ -27,7 +27,6 @@ class LabSearchItem extends Component {
   }
 
   comparePosIds(pos_ids) {
-    console.log("!", pos_ids, this.state.position_id)
     if (pos_ids && pos_ids.length) {
       pos_ids.map(pos => {
         if (pos == this.state.position.id) {
@@ -66,11 +65,9 @@ class LabSearchItem extends Component {
       let urop = position.is_urop_project
       let saved = false
       let submitted = false
-      console.log("POSITIONS APPLIED???", this.props.positions_applied)
       let pos_ids = this.props.positions_applied
       if (pos_ids && pos_ids.length) {
         pos_ids.map(pos => {
-          console.log("SUBMITTED??", pos, position.id, (pos == position.id))
           if (pos == position.id) submitted = true
         })
       }
