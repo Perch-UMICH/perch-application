@@ -1718,3 +1718,33 @@ export function exists (input) {
   if (type == 'object' && !input.length) return false
   return true
 }
+
+// Check if valid date
+export function validDateChange (new_val) {
+    let ret_obj = {
+        success: false,
+        new_val: new_val,
+    };
+    if (new_val.match(/[a-zA-Z!@#$&()\\-`.+,\"]/i)) { // if contains alpha/special characters, reject
+        return ret_obj
+    }
+    let num_slash = (new_val.match(/[/]/g) || []).length;
+    if (num_slash > 1) // if contains more than one /, reject
+        return ret_obj
+    if (num_slash == 1) {
+        let split_val = new_val.split('/')
+        if (split_val[0].length > 2) 
+            return ret_obj
+        if (split_val[1].length > 2)
+             return ret_obj
+    }
+    if (num_slash == 0) {
+        if (new_val.length > 2)
+            return ret_obj
+    }
+    if (new_val.length == 2 && !(new_val.match(/[/]/i)))
+        new_val += '/'
+    ret_obj['success'] = true
+    ret_obj['new_val'] = new_val
+    return ret_obj
+}

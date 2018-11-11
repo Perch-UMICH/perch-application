@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BasicButton from '../../utilities/buttons/BasicButton'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
-import { deepCopy } from '../../../helper.js'
+import { deepCopy, validDateChange } from '../../../helper.js'
 import './StudentEditors.css'
 
 export class EditLinks extends Component {
@@ -412,7 +412,15 @@ export class EditExperience extends Component {
   alterObj (event, id) {
     var temp_objs = this.state.objs
     var index = temp_objs.findIndex(item => item.id === id)
-    temp_objs[index][event.target.name] = event.target.value
+    var new_val = event.target.value
+    if ((event.target.name == 'start_date' || event.target.name == 'end_date')
+        && (temp_objs[index][event.target.name].length < event.target.value.length)) {
+        let ret_obj = validDateChange(new_val)
+        if (!ret_obj.success)
+          return
+        new_val = ret_obj.new_val
+    }
+    temp_objs[index][event.target.name] = new_val
     this.setState({
       objs: temp_objs
     })
@@ -472,12 +480,12 @@ export class EditExperience extends Component {
                   id='start_date'
                   type='text'
                   name='start_date'
-                  placeholder='August 2017'
+                  placeholder='08/17'
                   value={obj.start_date}
                   onChange={e => this.alterObj(e, obj.id)}
                 />
                 <label htmlFor='start_date' className='active'>
-                  Start Date
+                  Start Date <i>[mm/yy]</i>
                 </label>
               </div>
               <div className='input-field col s5'>
@@ -485,11 +493,11 @@ export class EditExperience extends Component {
                   id='end_date'
                   type='text'
                   name='end_date'
-                  placeholder='April 2018'
+                  placeholder='06/18'
                   value={obj.end_date}
                   onChange={e => this.alterObj(e, obj.id)}
                 />
-                <label htmlFor='end_date' className='active'>End Date</label>
+                <label htmlFor='end_date' className='active'>End Date <i>[mm/yy]</i></label>
               </div>
               <textarea
                 id={obj.id}
