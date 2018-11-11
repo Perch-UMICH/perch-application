@@ -59,10 +59,10 @@ class LabSearch extends Component {
       newState = {
         all_labs: this.state.all_labs
       }
-    
+
     // 2. if the number of positions is greater than the limit, we take off the limit num of positions
     newState.next = positions.slice(limit)
-   
+
     // 3. We grab the results from the first limit of labs available
     getSearchResults(positions.slice(0, limit)).then(r => {
       let all_labs = r.data.results

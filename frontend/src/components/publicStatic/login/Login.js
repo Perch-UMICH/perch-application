@@ -1,58 +1,80 @@
 import React, { Component } from 'react'
 import './Login.css'
 import {
-  isLoggedIn,
   loginUser,
   getCurrentUserId,
   isStudent,
-  isLab,
   isFaculty,
-  getCurrentLabId,
   getCurrentFacultyId
 } from '../../../helper.js'
 import alertify from 'alertify.js'
 import iziToast from 'izitoast'
 
 class Login extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      email: '',
+      password: ''
+    }
+    
+  }
   handleLogin (event) {
     event.preventDefault()
-    let email = document.getElementById('email').value
-    let password = document.getElementById('password').value
 
-    loginUser(email, password).then(resp => {
-      console.log(resp)
-      if (resp) {
-        if (isStudent()) { window.location.href = `/student-profile/${getCurrentUserId()}` } else if (isFaculty()) { window.location.href = `/prof/${getCurrentFacultyId()}` }
-      } else {
-        // alertify.error("Incorrect Username and Password");
+    let email = this.state.email
+    let password = this.state.password
+
+    loginUser(email, password)
+      .then(
+        resp =>
+          (window.location.href = isStudent()
+            ? `/student-profile/${getCurrentUserId()}`
+            : `/prof/${getCurrentFacultyId()}`)
+      )
+      .catch(e => 
         iziToast.show({
           title: 'Error',
-          titleColor: 'white',
-          messageColor: 'white',
+          titleColor: 'black',
+          messageColor: 'black',
           message: 'Incorrect Username or Password',
           color: 'red',
           position: 'bottomLeft',
-          progressBarColor: 'white'
+          progressBarColor: 'white',
+          timeout: '5000',
+          class: 'toast-custom'
         })
-      }
-    })
+      )
   }
 
   render () {
     return (
       <div className='login-container valign-wrapper'>
-        <form className='container login shadow' onSubmit={this.handleLogin}>
+        <form
+          className='container login shadow'
+          onSubmit={this.handleLogin.bind(this)}
+        >
           <div className='new-signup-header center-align'>LOG IN</div>
           <div className='input-field'>
-            <input id='email' type='email' required autofocus='autofocus' />
+            <input
+              id='email'
+              type='email'
+              required
+              autofocus='autofocus'
+              value={this.state.email}
+              onChange={e => this.setState({ email: e.target.value })}
+            />
             <label htmlFor='email'>Email</label>
           </div>
           <div className='input-field'>
             <input
+              onChange={e => this.setState({ password: e.target.value })}
               id='password'
               type='password'
               required
               autofocus='autofocus'
+              value={this.state.password}
             />
             <label htmlFor='password'>Password</label>
           </div>
