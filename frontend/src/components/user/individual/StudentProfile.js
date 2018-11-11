@@ -592,7 +592,8 @@ class UserWorkExperience extends Component {
 
   render () {
     var expObjs = this.props.expObjs ? this.props.expObjs : []
-    return expObjs.map((expObj, index) => {
+
+    let experiences = expObjs.map((expObj, index) => {
       return (
         <div
           key={`user-work-${index}`}
@@ -617,44 +618,51 @@ class UserWorkExperience extends Component {
         </div>
       )
     })
-  }
-}
 
-class UserEducation extends Component {
-  constructor (props) {
-    super(props)
-    var classes = []
-    if (exists(props.classes)) {
-      classes: props.classes
-    }
-    this.state = {
-      showExpander: false,
-      classes
-    }
-  }
-
-  componentWillReceiveProps (props) {
-    if (exists(props.classes)) {
-      this.setState({ classes: props.classes })
-    }
-  }
-
-  expand () {
-    document
-      .getElementById(`user-education-description-${this.props.title}`)
-      .classList.toggle('expand')
-  }
-
-  render () {
     return (
-      <div className='user-classes'>
-        {this.state.classes.map(classObj => {
-          return <div key={classObj.id}>{classObj.name}</div>
-        })}
+      <div className='user-work-experience-container'>
+        {experiences}
+        {!experiences.length && <div style={{padding: "10px 20px", color: "lightgrey"}}>Show off what you've done, or we'll say you've been stealing candy from toddlers</div>}
       </div>
     )
   }
 }
+
+// class UserEducation extends Component {
+//   constructor (props) {
+//     super(props)
+//     var classes = []
+//     if (exists(props.classes)) {
+//       classes: props.classes
+//     }
+//     this.state = {
+//       showExpander: false,
+//       classes
+//     }
+//   }
+
+//   componentWillReceiveProps (props) {
+//     if (exists(props.classes)) {
+//       this.setState({ classes: props.classes })
+//     }
+//   }
+
+//   expand () {
+//     document
+//       .getElementById(`user-education-description-${this.props.title}`)
+//       .classList.toggle('expand')
+//   }
+
+//   render () {
+//     return (
+//       <div className='user-classes'>
+//         {this.state.classes.map(classObj => {
+//           return <div key={classObj.id}>{classObj.name}</div>
+//         })}
+//       </div>
+//     )
+//   }
+// }
 
 class UserBio extends Component {
   constructor (props) {
@@ -677,7 +685,12 @@ class UserBio extends Component {
     return (
       <div id='user-bio' className='user-bio'>
         <div id='user-bio-content' className='user-bio-content'>
-          {this.props.children}{' '}
+          {!this.props.children.length &&
+            <div style={{ color: 'lightgrey' }}>
+              Help Wikipedia out, tell us about yourself before you become famous
+            </div>}
+          {this.props.children}
+
         </div>
         {this.state.showExpander &&
           <ExpanderIcons id={`user-bio`} action={this.expand.bind(this)} />}
@@ -701,7 +714,7 @@ class SkillsInterests extends Component {
         {!this.props.interests.length &&
           !this.props.skills.length &&
           <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
-            Pick some skills and interests
+            What are you into? or we'll say you love walking behind slow people
           </div>}
         {this.props.interests.map((item, index) => (
           <Bubble key={`${index}-int`} type='interest'>{item.name}</Bubble>
