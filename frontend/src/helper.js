@@ -345,8 +345,7 @@ export function getUserLabs (user_id) {
 // IF IMAGE ALSO INCLUDE
 // x - (int) from top left of image
 // y - (int) from top left of image
-// width - (int)
-// height - (int)
+// scale - (int)
 
 // RESTRICTED: user_id
 // Possible types:
@@ -1336,7 +1335,6 @@ export function searchMatchingTags (query) {
 }
 
 // LAB POSITIONS //
-// OBSOLETE FOR NOW SINCE WE'RE PRELOADING UROP POSITIONS
 
 // Positions
 // Open projects/positions in a lab
@@ -1349,7 +1347,8 @@ export function searchMatchingTags (query) {
 //  contact_phone - (string)
 //  location - (string)
 //  application - (object)
-//      questions - (string, array)
+//      questions - (object, array)
+//          question - (string)
 
 export function getAllLabPositions (lab_id) {
   return axios
@@ -1412,57 +1411,6 @@ export function deleteLabPosition (lab_id, position_id) {
     })
 }
 
-// // Applications
-// // Application of questions attached to an open lab position
-// // Object which contains:
-// // position_id - (integer)
-// // questions - (array of strings)
-//
-// export function getLabPositionApplication(lab_id, position_id) {
-//
-//
-//     return axios.get('api/labs/' + lab_id + '/position/' + position_id + '/application')
-//         .then(response => {
-//             return respond(response.status, response.data);
-//         })
-//         .catch(error => {
-//             return error_handle(error);
-//         })
-// }
-//
-// // RESTRICTED: authenticated faculty member + lab owner
-// export function createLabPositionApplication(lab_id, application) {
-//
-//
-//     // let lab_id = sessionStorage.getItem('lab_id');
-//
-//     // let payload = {
-//     //     position_id: position_id,
-//     //     questions: questions
-//     // };
-//
-//     return axios.post('api/labs/' + lab_id + '/applications', application)
-//         .then(response => {
-//             return respond(response.status, response.data);
-//         })
-//         .catch(error => {
-//             return error_handle(error);
-//         })
-// }
-//
-// // RESTRICTED: authenticated faculty member + lab owner
-// export function updateLabPositionApplication(lab_id, application) {
-//
-//
-//     return axios.post('api/labs/' + lab_id + '/applications/update', application)
-//         .then(response => {
-//             return respond(response.status, response.data);
-//         })
-//         .catch(error => {
-//             return error_handle(error);
-//         })
-// }
-
 // Gets ApplicationResponses to a particular position
 // RESTRICTED: authenticated faculty member + lab owner
 export function getLabPositionApplicationResponses (lab_id, position_id) {
@@ -1480,10 +1428,9 @@ export function getLabPositionApplicationResponses (lab_id, position_id) {
 // Response to an application for a position, created by a student
 // Object that contains:
 // responses - (array of objects)
-// number - (integer) corresponds with question number, 0 indexed
-// answer - (string)
-// NOTE: 'create' allows a student to start an application, but it must be 'submitted' for the lab to see
-// NOTE: student user can only apply to a position once, and can then update that application therafter, or delete it
+//      question - (string)
+//      answer - (string)
+
 
 export function createApplicationResponse (application_response) {
   return createStudentApplicationResponse(application_response)
@@ -1717,4 +1664,47 @@ export function exists (input) {
   if (!input) return false
   if (type == 'object' && !input.length) return false
   return true
+}
+
+// Check if valid date
+export function validDateChange (new_val) {
+    let ret_obj = {
+        success: false,
+        new_val: new_val,
+    };
+    if (new_val.match(/[a-zA-Z!@#$&()\\-`.+,\"]/i)) { // if contains alpha/special characters, reject
+        return ret_obj
+    }
+    let num_slash = (new_val.match(/[/]/g) || []).length;
+    if (num_slash > 1) // if contains more than one /, reject
+        return ret_obj
+    if (num_slash == 1) {
+        let split_val = new_val.split('/')
+        if (split_val[0].length > 2) 
+            return ret_obj
+        if (split_val[1].length > 2)
+             return ret_obj
+    }
+    if (num_slash == 0) {
+        if (new_val.length > 2)
+            return ret_obj
+    }
+    if (new_val.length == 2 && !(new_val.match(/[/]/i)))
+        new_val += '/'
+    ret_obj['success'] = true
+    ret_obj['new_val'] = new_val
+    return ret_obj
+}
+
+// Check if valid phone number
+export function validPhoneChange (new_val) {
+    if (new_val.match(/[a-zA-Z!@#$?|<>%^&()\\`.,\"]/i)) { // if contains alpha/special characters, reject
+        return false
+    }
+    let num_hyph = (new_val.match(/[-]/g) || []).length;
+    if (num_hyph > 3) // if contains more than one /, reject
+        return false
+    if (new_val.length > 15)
+        return false
+    return true
 }
