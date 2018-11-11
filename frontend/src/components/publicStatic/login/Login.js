@@ -4,10 +4,8 @@ import {
   loginUser,
   getCurrentUserId,
   isStudent,
-  isFaculty,
   getCurrentFacultyId
 } from '../../../helper.js'
-import alertify from 'alertify.js'
 import iziToast from 'izitoast'
 
 class Login extends Component {
@@ -18,14 +16,16 @@ class Login extends Component {
       email: '',
       password: ''
     }
-    
   }
+
+  // called when user tries to login
   handleLogin (event) {
     event.preventDefault()
 
     let email = this.state.email
     let password = this.state.password
 
+    // 1. Login user
     loginUser(email, password)
       .then(
         resp =>
@@ -33,7 +33,9 @@ class Login extends Component {
             ? `/student-profile/${getCurrentUserId()}`
             : `/prof/${getCurrentFacultyId()}`)
       )
-      .catch(e => 
+
+      // 2. or show Error message
+      .catch(e =>
         iziToast.show({
           title: 'Error',
           titleColor: 'black',
@@ -55,7 +57,9 @@ class Login extends Component {
           className='container login shadow'
           onSubmit={this.handleLogin.bind(this)}
         >
+
           <div className='new-signup-header center-align'>LOG IN</div>
+
           <div className='input-field'>
             <input
               id='email'
@@ -67,6 +71,7 @@ class Login extends Component {
             />
             <label htmlFor='email'>Email</label>
           </div>
+
           <div className='input-field'>
             <input
               onChange={e => this.setState({ password: e.target.value })}
@@ -78,12 +83,15 @@ class Login extends Component {
             />
             <label htmlFor='password'>Password</label>
           </div>
+
           <br />
+
           <button
             className='btn waves-effect waves-blue waves-light basic-btn'
             style={{ width: '100%', height: '50px' }}
             name='action'
           >
+
             <i className='material-icons'>lock_open</i>
           </button>
         </form>
