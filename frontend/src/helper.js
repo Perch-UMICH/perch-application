@@ -1748,3 +1748,16 @@ export function validDateChange (new_val) {
     ret_obj['new_val'] = new_val
     return ret_obj
 }
+
+// Check if valid phone number
+export function validPhoneChange (new_val) {
+    if (new_val.match(/[a-zA-Z!@#$&()\\`.,\"]/i)) { // if contains alpha/special characters, reject
+        return false
+    }
+    let num_hyph = (new_val.match(/[-]/g) || []).length;
+    if (num_hyph > 3) // if contains more than one /, reject
+        return false
+    if (new_val.length > 15)
+        return false
+    return true
+}

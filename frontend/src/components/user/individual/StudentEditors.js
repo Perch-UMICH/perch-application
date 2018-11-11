@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BasicButton from '../../utilities/buttons/BasicButton'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
-import { deepCopy, validDateChange } from '../../../helper.js'
+import { deepCopy, validDateChange, validPhoneChange } from '../../../helper.js'
 import './StudentEditors.css'
 
 export class EditLinks extends Component {
@@ -177,9 +177,10 @@ export class EditContact extends Component {
             placeholder='815-262-4141'
             value={this.state.contact_phone}
             onChange={e => {
-              if (this.props.updateUser) {
+              if (!validPhoneChange(e.target.value))
+                return
+              if (this.props.updateUser)
                 this.props.updateUser('contact_phone', e.target.value)
-              }
               this.setState({ contact_phone: e.target.value })
             }}
           />
