@@ -1751,7 +1751,7 @@ export function validDateChange (new_val) {
 
 // Check if valid phone number
 export function validPhoneChange (new_val) {
-    if (new_val.match(/[a-zA-Z!@#$&()\\`.,\"]/i)) { // if contains alpha/special characters, reject
+    if (new_val.match(/[a-zA-Z!@#$?|<>%^&()\\`.,\"]/i)) { // if contains alpha/special characters, reject
         return false
     }
     let num_hyph = (new_val.match(/[-]/g) || []).length;
