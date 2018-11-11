@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getLabPosition} from '../../../helper.js'
+import {getLabPosition, validPhoneChange} from '../../../helper.js'
 import './CreatePosition.css';
 
 class CreatePosition extends Component {
@@ -61,6 +61,10 @@ class CreatePosition extends Component {
 	// send position updates to parent
 	updateNewPosState(event) {
 		let new_pos = this.state.new_pos;
+		if (event.target.name == 'contact_phone') {
+			if (!validPhoneChange(event.target.value))
+				return
+		}
 		new_pos[event.target.name] = event.target.value;
 		if (this.props.updateNewPosState)
 			this.props.updateNewPosState(event.target.name, event.target.value)
