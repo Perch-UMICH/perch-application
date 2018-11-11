@@ -1,26 +1,12 @@
 import React, { Component } from 'react'
-import { parse } from 'query-string'
-import BasicButton from '../../utilities/buttons/BasicButton'
 import BubbleChoice from '../../utilities/BubbleChoice'
-import Bubble from '../../utilities/Bubble'
 import { EditContainerOnboarding } from './StudentEditors'
 import {
-  getStudent,
-  getStudentTags,
   getCurrentStudentId,
-  getStudentSkills,
-  getLab,
-  addSkillsToLab,
   syncTagsToStudent,
   syncSkillsToStudent,
-  addTagsToLab,
-  addSkillsToStudent,
-  addTagsToStudent,
-  getAllSkills,
-  getAllTags,
   getCurrentUserId,
   getCurrentLabId,
-  getStudentFromUser,
   isStudent,
   isLab,
   syncSkillsToLab,
@@ -75,17 +61,7 @@ class PickYourInterests extends Component {
     }
   }
 
-  getInterests () {
-    // not good rn
-    // getStudentTags(this.state.s_id).then(r => this.setState({display_info: {interests: r}}))
-  }
-
-  getSkills () {
-    // getStudentSkills(this.state.s_id).then(r => this.setState({display_info: {interests: r}}))
-  }
-
   componentDidMount () {
-    var header_txt, placeholder_txt, dest = ''
     var url_arr = this.state.url_arr
     var isLab = false // isLab();
     var isStudent = true // isStudent();
@@ -166,16 +142,14 @@ class PickYourInterests extends Component {
     var item_ids = this.state.bubble_array.map(item => {
       return item.id
     })
-    console.log(item_ids)
+
     if (isLab()) {
       if (this.state.display_info.req_type === 'skills') {
         syncSkillsToLab(this.state.l_id, item_ids).then(resp => {
-          console.log(resp)
           this.redirect()
         })
       } else {
         syncTagsToLab(this.state.l_id, item_ids).then(resp => {
-          console.log(resp)
           this.redirect()
         })
       }
@@ -183,16 +157,14 @@ class PickYourInterests extends Component {
       if (this.state.display_info.req_type === 'skills') {
         // alert('skillz')
         syncSkillsToStudent(this.state.s_id, item_ids).then(resp => {
-          console.log(resp)
           this.redirect()
         })
       } else {
         // alert('interestz')
         // alert(this.state.display_info.req_type)
         syncTagsToStudent(this.state.s_id, item_ids).then(resp => {
-          console.log(resp)
           this.redirect()
-          // getStudentTags(this.state.s_id).then(r=>console.log(r))
+          // getStudentTags(this.state.s_id).then(r=>
         })
       }
     }

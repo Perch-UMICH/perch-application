@@ -698,9 +698,15 @@ class SkillsInterests extends Component {
     return (
       <div id='user-skills-interests'>
         <Editor superClick={() => this.openModal('skills-interests-edit')} />
+        {!this.props.interests.length &&
+          !this.props.skills.length &&
+          <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
+            Pick some skills and interests
+          </div>}
         {this.props.interests.map((item, index) => (
           <Bubble key={`${index}-int`} type='interest'>{item.name}</Bubble>
         ))}
+
         {this.props.skills.map((item, index) => (
           <Bubble key={`${index}-skill`} type='skill'>{item.name}</Bubble>
         ))}
