@@ -11,8 +11,7 @@ import {
   getStudentFromUser,
   getSearchData,
   labSearch,
-  getAllStudentApplicationResponses,
-  
+  getAllStudentApplicationResponses
 } from '../../helper.js'
 
 const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills']
@@ -28,7 +27,6 @@ class LabSearch extends Component {
     super(props)
     this.handleFilterClick = this.handleFilterClick.bind(this)
     this.loadApplicationSubmitted = this.loadApplicationSubmitted.bind(this)
-
     var filts = {}
     var parentFilts = {}
     filterTypes.map(type => {
@@ -55,14 +53,17 @@ class LabSearch extends Component {
   }
 
   moreLabs () {
+    // 1. grabs the positions from the next up labs
     let positions = this.state.next,
       limit = this.state.limit,
       newState = {
         all_labs: this.state.all_labs
       }
-
-    if (positions.length > limit) newState.next = positions.slice(limit)
-
+    
+    // 2. if the number of positions is greater than the limit, we take off the limit num of positions
+    newState.next = positions.slice(limit)
+   
+    // 3. We grab the results from the first limit of labs available
     getSearchResults(positions.slice(0, limit)).then(r => {
       let all_labs = r.data.results
 
@@ -175,11 +176,13 @@ class LabSearch extends Component {
     }
   }
 
-  loadApplicationSubmitted() {
+  loadApplicationSubmitted () {
     // Get all positions that the student has submitted applications to
     getAllStudentApplicationResponses(getCurrentUserId()).then(resp => {
-      let positions_applied = resp.data.map((app) => {return app.position_id});
-      this.setState({positions_applied});
+      let positions_applied = resp.data.map(app => {
+        return app.position_id
+      })
+      this.setState({ positions_applied })
     })
   }
 
@@ -332,7 +335,7 @@ class LabSearch extends Component {
                           className='filter-checkbox-label'
                           for={subFilt.slug}
                         >
-                        {subFilt.friendlyName}
+                          {subFilt.friendlyName}
                         </label>
                       </li>
                     )
