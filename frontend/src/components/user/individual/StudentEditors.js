@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import BasicButton from '../../utilities/buttons/BasicButton'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
+import Cleave from 'cleave.js/react'
+import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n';
 import { deepCopy, validDateChange, validPhoneChange } from '../../../helper.js'
 import './StudentEditors.css'
 
@@ -147,10 +149,21 @@ export class EditContact extends Component {
   render () {
     var emailSection = (
       <div className='input-field'>
-        <input
+        {/* <input
           id='email'
           type='email'
           placeholder='bearb@umich.edu'
+          value={this.state.contact_email}
+          onChange={e => {
+            if (this.props.updateUser) {
+              this.props.updateUser('contact_email', e.target.value)
+            }
+            this.setState({ contact_email: e.target.value })
+          }}
+        /> */}
+        <Cleave
+          placeholder='john-doe@umich.edu'
+          options={{email: true}}
           value={this.state.contact_email}
           onChange={e => {
             if (this.props.updateUser) {
@@ -171,19 +184,20 @@ export class EditContact extends Component {
       <form id='edit-contact-info'>
         {emailSection}
         <div className='input-field'>
-          <input
-            type='text'
-            id='phone-number'
-            placeholder='815-262-4141'
-            value={this.state.contact_phone}
-            onChange={e => {
-              if (!validPhoneChange(e.target.value))
-                return
-              if (this.props.updateUser)
+          <Cleave
+          placeholder='1 234 456 8989'
+          options={{phone: true, phoneRegionCode: 'US'}}
+          value={this.state.contact_phone}
+          onChange={e => {
+              if (this.props.updateUser) {
                 this.props.updateUser('contact_phone', e.target.value)
+              }
               this.setState({ contact_phone: e.target.value })
-            }}
-          />
+            }
+          }
+          
+          // onChange={e => alert(e.target.value)}
+        />
           <label htmlFor='phone-number' className='active'>Phone</label>
         </div>
       </form>
