@@ -41,7 +41,7 @@ class LabSearchProject extends Component {
 			resps = []
 
 		if (question_resps) 
-			resps = question_resps.map(q => { return {number: q.number, answer: q.answer}})
+			resps = question_resps.map(q => { return {question: q.question, answer: q.answer}})
 
 		let application = {
 			position_id: this.props.position_id,

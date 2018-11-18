@@ -92,7 +92,9 @@ export class GroupProject extends Component {
 			duties: "",
 			min_qual: "",
 		};
-		updated_pos.application = {questions: this.state.app_questions};
+		let questions = this.state.app_questions.map(q => {return {question: q.question}});
+		updated_pos.application = {questions};
+		console.log("UPDATED POS!!!", updated_pos)
 		updateLabPosition(this.props.lab_id, this.props.pos_id, updated_pos)
 			.then(resp => {
 				if (this.props.updatePositions)
@@ -133,7 +135,7 @@ export class GroupProject extends Component {
 			resps = []
 
 		if (question_resps) 
-			resps = question_resps.map(q => { return {number: q.number, answer: q.answer}})
+			resps = question_resps.map(q => { return {question: q.question, answer: q.answer}})
 
 		let application = {
 			position_id: this.props.pos_id,

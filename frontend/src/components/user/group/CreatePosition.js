@@ -53,7 +53,7 @@ class CreatePosition extends Component {
 		if (!this.props.edit) return
 		getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
 			if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
-				this.setState({questions: resp.data.application.questions});
+				this.setState({questions: resp.data.application.questions, q_index: resp.data.application.questions.length});
 			}
 		})
 	}
@@ -106,6 +106,7 @@ class CreatePosition extends Component {
 	}
 
 	render() {
+		console.log("QUESTIONS", this.state.questions)
 		return (
 			<div className='center-align'>
 					<form className='file-field'>
