@@ -4,11 +4,10 @@ import {
   createLab,
   updateLab,
   deleteLab,
-  addMembersToLab,
   getCurrentFacultyId,
-  getAllLabData,
   getAllLabs,
-  isFaculty
+  isFaculty,
+  validPhoneChange
 } from '../../helper.js'
 import './CreateLab.css'
 
@@ -63,7 +62,11 @@ class CreateLab extends Component {
   }
 
   alterObj (e) {
-    let lab = this.state.lab
+	let lab = this.state.lab
+	if (e.taget.name == 'contact_phone') {
+		if (!validPhoneChange(e.target.value))
+			return
+	}
     lab[e.target.name] = e.target.value
     this.setState({ lab })
     if (this.props.updateLabState) {

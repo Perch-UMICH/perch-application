@@ -174,6 +174,7 @@ class GroupPage extends Component {
     let new_pos = this.state.new_pos;
     let questions = this.state.app_questions.map(q => {return {question: q.question}});
     new_pos.application = {questions};
+    console.log("NEW POS!!!", new_pos);
     // alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
     createLabPosition(this.state.lab_id, new_pos).then(resp => {
         this.loadLabPositions();
