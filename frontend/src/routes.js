@@ -28,6 +28,7 @@ import Help from './components/publicStatic/help/Help';
 import Join from './components/publicStatic/join/Join';
 import CreateLab from './components/user/CreateLab';
 import Challenge from './components/publicStatic/join/Challenge';
+import Nothing from './components/utilities/tests/Nothing';
 import './components/utilities/TapTarget.css';
 import './components/utilities/general.css';
 
@@ -72,6 +73,7 @@ class Router extends Component {
 							<Route path='/test' component={ UserTest } />
 							<Route path='/challenge' component={ Challenge } />
 							<Route path='/create-lab' component={ CreateLab } />
+							<Route path='/nothing' component={ Nothing } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
