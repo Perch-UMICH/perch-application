@@ -32,16 +32,14 @@ class LabDashboard extends Component {
   componentDidMount () {
     // if student, show saved projects & applications
     if (isStudent()) {
-      getStudentFromUser(getCurrentUserId()).then(resp => {
+      getStudentFromUser(getCurrentUserId()).then(({ data }) => {
         this.setState({
-          position_list: resp.data.position_list,
-          applied_list: resp.data.position_list // TODO: SET TO APPLIED LIST ONCE APPLICABLE
+          position_list: data.position_list,
+          applied_list: data.position_list // TODO: SET TO APPLIED LIST ONCE APPLICABLE
         })
       })
-      getAllStudentApplicationResponses(getCurrentUserId()).then(resp => {
-        let positions_applied = resp.data.map(app => {
-          return app.position_id
-        })
+      getAllStudentApplicationResponses(getCurrentUserId()).then(({ data }) => {
+        let positions_applied = data.map(app => app.position_id)
         this.setState({ positions_applied })
       })
     } else if (isFaculty()) {
@@ -98,7 +96,6 @@ class LabDashboard extends Component {
             {this.getPositionsJSX()}
           </div>
         </div>
-
       </div>
     )
   }
