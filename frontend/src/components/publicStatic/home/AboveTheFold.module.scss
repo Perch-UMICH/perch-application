@@ -1,0 +1,53 @@
+.tempSignup {
+  font-weight: normal;
+  font-size: 30px;
+  margin: auto auto;
+  padding: 0px 80px;
+  text-align: center;
+  margin-top: calc(50vh - 50px);
+  transform: translateY(-50%);
+}
+
+.tempSignupSub {
+  font-weight: normal;
+  font-size: 20px;
+  color: grey;
+  margin-left: 10px;
+}
+
+.movingText {
+  background-color: var(--primary);
+}
+
+.header {
+  font-size: 40px;
+  letter-spacing: 2px;
+}
+
+.headerBig {
+  font-weight: bold;
+  font-size: 65px;
+  letter-spacing: 2px;
+}
+
+.text {
+  letter-spacing: 2px;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 200%;
+  color: var(--e-grey);
+}
+
+.atf {
+  color: var(--white);
+  margin-bottom: -20px;
+  background-color: var(--highlight);
+  background-color: white;
+  background-size: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .11);
+  z-index: 10;
+  position: relative;
+  >div {
+    height: calc(100vh - 50px);
+  }
+}

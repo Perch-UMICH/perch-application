@@ -1,8 +1,6 @@
 .login {
 	width: 400px;
-	/*background-image: url(../assets/background-white.png);*/
 	background-color: var(--white);
-	/*height: 400px;*/
 	padding: 40px;
 }
 

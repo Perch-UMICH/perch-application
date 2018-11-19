@@ -22,22 +22,20 @@ class PerchStory extends Component {
           <img src='/assets/research.svg' className='perch-story-row-img' />
           <div className='perch-story-text perch-story-row-text'>
             Getting
-            {' '}
-            <b>research experience</b>
-            {' '}
-            is important in academia and industry. Research,
-            {' '}
-            <b>heck yeah!</b>
+
+            <b> research experience</b>
+
+            <span> is important in academia and industry. Research,</span>
+            <b> heck yeah!</b>
           </div>
         </div>
         <div className='perch-story-row'>
           <div className='perch-story-text perch-story-row-text long'>
-            {' '}
             However,
-            {' '}
-            <b>finding a lab can stink</b>
-            , with lab pages scattered across the deep, dark abyss of University department web pages, leading to
-            {' '}
+            <b> finding a lab can stink</b>
+            <span>
+              , with lab pages scattered across the deep, dark abyss of University department web pages, leading to
+            </span>
             <b>poor matches, confused students, & frustrated PIs.</b>
           </div>
 

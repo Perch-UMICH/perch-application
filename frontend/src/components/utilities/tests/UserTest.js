@@ -5,7 +5,7 @@ import React from 'react'
 import * as H from '../../../helper.js'
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import './tests.css'
+// import './tests.css'
 
 var queued = 0;
 var completed = 0;
