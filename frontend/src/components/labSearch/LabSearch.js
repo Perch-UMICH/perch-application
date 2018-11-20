@@ -3,7 +3,7 @@ import './LabSearch.css'
 import ExpanderIcons from '../utilities/ExpanderIcons'
 import DotLoader from '../utilities/animations/DotLoader'
 import LabSearchItem from './LabSearchItem'
-import '../user/individual/PickYourInterests.css'
+
 import {
   isStudent,
   getSearchResults,
