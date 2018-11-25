@@ -340,6 +340,7 @@ export function getUserLabs (user_id) {
 // USER FILES //
 
 // file:
+// user_id -> (integer)
 // formData - (formData object)
 // type - (string)
 // IF IMAGE ALSO INCLUDE
@@ -347,10 +348,11 @@ export function getUserLabs (user_id) {
 // y - (int) from top left of image
 // scale - (int)
 
-// RESTRICTED: user_id
+// RESTRICTED: authenticated user
 // Possible types:
 // 'resume'
 // 'profile_pic'
+// 'lab_pic'
 // NOTE: you should pass in a FormData object with the file appended, for example
 // let formData = new FormData();
 // formData.append('file', fileInputElement.files[0])
@@ -363,16 +365,14 @@ export function uploadUserFile (file) {
     return
   }
 
-  let user_id = sessionStorage.getItem('user_id')
-
-  if (file.type == 'profile_pic') {
-    file.formData.append('x', file.x)
-    file.formData.append('y', file.y)
-    file.formData.append('scale', file.scale)
-  }
+    if (file.type == 'profile_pic') {
+        file.formData.append('x', ((file.x) ? file.x : 0.5))
+        file.formData.append('y', ((file.y) ? file.y : 0.5))
+        file.formData.append('scale', ((file.scale) ? file.scale : 1))
+    }
 
   return axios
-    .post('api/users/' + user_id + '/' + file.type, file.formData, {
+    .post('api/users/' + file.user_id + '/' + file.type, file.formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -386,27 +386,80 @@ export function uploadUserFile (file) {
 }
 
 export function getUserFile (type, user_id) {
-  if (type !== 'resume' && type !== 'profile_pic') {
-    return
-  }
+    if (type !== 'resume' && type !== 'profile_pic') {
+        return
+    }
 
-  if (!user_id) {
-    user_id = sessionStorage.getItem('user_id')
-  } else {
-  }
-  let payload = {
-    _method: 'PUT',
-    user_id: user_id
-  }
-  return axios
-    .post('api/users/' + user_id + '/' + type, payload)
-    .then(response => {
-      return respond(response.status, response.data)
-    })
-    .catch(error => {
-      return error_handle(error)
-    })
+    if (!user_id) {
+        user_id = sessionStorage.getItem('user_id')
+    } else {
+    }
+    return axios
+        .get('api/users/' + user_id + '/' + type)
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
 }
+
+// LAB FILES //
+
+// file:
+// lab_id - (integer)
+// formData - (formData object)
+// type - (string)
+// IF IMAGE ALSO INCLUDE
+// x - (int) from top left of image
+// y - (int) from top left of image
+// scale - (int)
+
+// RESTRICTED: authenticated user + admin of lab
+// Possible types:
+// 'lab_pic'
+// 'lab_doc'
+
+export function uploadLabFile (file) {
+    if (file.type !== 'lab_pic' && file.type !== 'lab_doc') {
+        return
+    }
+
+    if (file.type == 'lab_pic') {
+        file.formData.append('x', ((file.x) ? file.x : 0.5))
+        file.formData.append('y', ((file.y) ? file.y : 0.5))
+        file.formData.append('scale', ((file.scale) ? file.scale : 1))
+    }
+
+    return axios
+        .post('api/labs/' + file.lab_id + '/files/' + file.type, file.formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
+export function getLabFile (type, lab_id) {
+    if (type !== 'lab_pic' && type !== 'lab_doc') {
+        return
+    }
+
+    return axios
+        .get('api/labs/' + lab_id + '/files/' + type)
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
 
 // STUDENTS //
 
