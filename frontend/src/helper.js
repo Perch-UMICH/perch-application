@@ -337,75 +337,163 @@ export function getUserLabs (user_id) {
     })
 }
 
-// USER FILES //
+// FILES //
 
-// file:
-// formData - (formData object)
-// type - (string)
-// IF IMAGE ALSO INCLUDE
-// x - (int) from top left of image
-// y - (int) from top left of image
-// scale - (int)
-
-// RESTRICTED: user_id
-// Possible types:
-// 'resume'
-// 'profile_pic'
 // NOTE: you should pass in a FormData object with the file appended, for example
 // let formData = new FormData();
 // formData.append('file', fileInputElement.files[0])
 // uploadUserFile(formData, 'resume');
-
 // Can currently only hold one of each file type per account
 // Uploading a new file overwrites the old one of same type
-export function uploadUserFile (file) {
-  if (file.type !== 'resume' && file.type !== 'profile_pic') {
-    return
-  }
+// use the delete function if user doesn't want a file anymore
 
-  let user_id = sessionStorage.getItem('user_id')
 
-  if (file.type == 'profile_pic') {
-    file.formData.append('x', file.x)
-    file.formData.append('y', file.y)
-    file.formData.append('scale', file.scale)
-  }
+// profile_pic_file:
+// user_id - (integer)
+// formData - (formData object) (must be an image type file)
+// x - (int) from top left of image
+// y - (int) from top left of image
+// scale - (int)
 
-  return axios
-    .post('api/users/' + user_id + '/' + file.type, file.formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    .then(response => {
-      return respond(response.status, response.data)
-    })
-    .catch(error => {
-      return error_handle(error)
-    })
+// RESTRICTED: authenticated user
+export function uploadUserProfilePic (profile_pic_file) {
+    profile_pic_file.formData.append('x', ((profile_pic_file.x) ? profile_pic_file.x : 0.5))
+    profile_pic_file.formData.append('y', ((profile_pic_file.y) ? profile_pic_file.y : 0.5))
+    profile_pic_file.formData.append('scale', ((profile_pic_file.scale) ? profile_pic_file.scale : 1))
+
+    return axios
+        .post('api/users/' + profile_pic_file.user_id + '/files/profile_pic', profile_pic_file.formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
 }
 
-export function getUserFile (type, user_id) {
-  if (type !== 'resume' && type !== 'profile_pic') {
-    return
-  }
+// RESTRICTED: authenticated user
+export function getUserProfilePic (user_id) {
+    return axios
+        .get('api/users/' + user_id + '/files/profile_pic')
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
 
-  if (!user_id) {
-    user_id = sessionStorage.getItem('user_id')
-  } else {
-  }
-  let payload = {
-    _method: 'PUT',
-    user_id: user_id
-  }
-  return axios
-    .post('api/users/' + user_id + '/' + type, payload)
-    .then(response => {
-      return respond(response.status, response.data)
-    })
-    .catch(error => {
-      return error_handle(error)
-    })
+// RESTRICTED: authenticated user
+export function deleteUserProfilePic (user_id) {
+    return axios
+        .delete('api/users/' + user_id + '/files/profile_pic')
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
+// resume_file:
+// user_id - (integer)
+// formData - (formData object) (must be a doc/pdf type file)
+
+// RESTRICTED: authenticated user
+export function uploadUserResume (resume_file) {
+
+    return axios
+        .post('api/users/' + resume_file.user_id + '/files/resume', resume_file.formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
+// RESTRICTED: authenticated user
+export function getUserResume (user_id) {
+    return axios
+        .get('api/users/' + user_id + '/files/resume')
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
+// RESTRICTED: authenticated user
+export function deleteUserResume (user_id) {
+    return axios
+        .delete('api/users/' + user_id + '/files/resume')
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
+// lab_pic_file:
+// user_id - (integer)
+// formData - (formData object) (must be a img type file)
+// x - (int) from top left of image
+// y - (int) from top left of image
+// scale - (int)
+
+// RESTRICTED: authenticated user, lab admin
+export function uploadLabPic (lab_pic_file) {
+
+    lab_pic_file.formData.append('x', ((lab_pic_file.x) ? lab_pic_file.x : 0.5))
+    lab_pic_file.formData.append('y', ((lab_pic_file.y) ? lab_pic_file.y : 0.5))
+    lab_pic_file.formData.append('scale', ((lab_pic_file.scale) ? lab_pic_file.scale : 1))
+
+    return axios
+        .post('api/labs/' + lab_pic_file.lab_id + '/files/lab_pic', lab_pic_file.formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
+// RESTRICTED: authenticated user, lab admin
+export function getLabPic (lab_id) {
+    return axios
+        .get('api/labs/' + lab_id + '/files/lab_pic')
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
+
+// RESTRICTED: authenticated user, lab admin
+export function deleteLabPic (lab_id) {
+    return axios
+        .delete('api/labs/' + lab_id + '/files/lab_pic')
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
 }
 
 // STUDENTS //
