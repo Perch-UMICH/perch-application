@@ -72,7 +72,7 @@ class About extends Component {
 			<div className="about center-align">
 				<div className="about-nav">
 					<div className='about-button about-active' onClick={() => this.showStory()}>Perch Story</div>
-					<div className='about-button' onClick={() => this.showTeam()}>Team</div>
+					<div className='about-button' onClick={() => this.showTeam()}>The Perch Team</div>
 					<div className='about-button' onClick={() => this.showTimeline()}>Timeline</div>
 				</div>
 				<div id='about-body' className='about-body'></div>

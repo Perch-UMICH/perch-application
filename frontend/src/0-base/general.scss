@@ -19,23 +19,6 @@
     --primary: #0277BD;
     --active: #29B6F6;
     --highlight: lightblue;
-    /*Purple*/
-	/*--primary: #6c5b7b;
-	--active: #c06c84;
-	--highlight: #ffdfd3;*/
-	/*Teal*/
-	/*--primary: #2b7a78;
-	--active: #3aafa9;
-	--highlight: #def2f1;*/
-	/*Orange and Blue*/
-	/*--primary: #ff913d;
-	--active: #73f0f4;
-	--highlight: #efbc4c;*/
-	/*Green*/
-	/*--primary: #547a82;
-	--active: #a2d4ab;
-	--highlight: #a2d4ab;*/
-
 
 	/*Shades of grey are all that I see...*/
 	--white: #FFF; /*CSS white*/
@@ -86,32 +69,19 @@
 	--loader-transition: linear;
 }
 
+// custom highlights
 ::selection {
 	background-color: var(--active);
 	color: white;
 }
 
+// gets rid of font bug
 * {
 	font-variant-ligatures: none;
 }
 
-.active-blue-bg {
-	background-color: var(--active);
-	transition: 0.2s ease;
-}
-
-.active-blue {
-	color: var(--active) !important;
-	color: var(--active) !important;
-	transition: 0.2s ease;
-}
-
 .shift-down {
 	margin-top: 40px;
-}
-
-.ddd-bg {
-	background-color: var(--d-grey);
 }
 
 .dark-blue-bg {
@@ -144,11 +114,6 @@
 	opacity: 0;
 	transition: ease .2s;
 }
-
-/*.tab-container:hover .interest-editor {
-	opacity: 1;
-	transition: ease .2s;
-}*/
 
 .opacity-1 {
 	opacity: 1 !important;

@@ -1,23 +1,26 @@
-.lab-srch-project {
+.project {
 	height: 110px;
 	background-color: var(--white);
 	width: 100%;
-	margin-bottom: 5px;
 	position: relative;
 	transition: .2s ease;
 }
 
-.lab-srch-project:hover {
+.project:not(:last-of-type) {
+	border-bottom: 3px dotted lightgray;
+}
+
+.project:hover {
 	box-shadow: var(--grey-shadow);
 	transition: .2s ease;
 }
 
-.lab-srch-project:last-of-type {
+.project:last-of-type {
 	margin-bottom: 0;
 }
 
 
-.lab-srch-project-title-container {
+.title_container {
 	font-size: 18px;
 	position: absolute;
 	top: 10px;
@@ -27,17 +30,18 @@
 	cursor: pointer;
 }
 
-.lab-srch-project-title {
-	max-width: 500px;
+.title {
+	max-width: 620px;
 	display: inline-block;
+	font-size: 20px !important;
 }
 
-.lab-srch-project-title:hover {
+.title:hover {
 	color: var(--active);
 	transition: 0.2s ease;
 }
 
-.lab-srch-project-tag {
+.project_tag {
 	/*background-color: var(--purple);*/
 	border: 1px solid var(--purple);
 	color: var(--purple);
@@ -52,18 +56,18 @@
 	float: right;
 }
 
-.lab-srch-project-description {
+.project_description {
 	position: absolute;
 	left: 30px;
 	top: 40px;
 	font-size: 12px;
-	width: 550px;
+	width: 680px;
 	max-height: 55px;
 	overflow: hidden;
 	hyphens: auto;
 }
 
-.lab-srch-project-action-label {
+.project_action_label {
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
@@ -74,12 +78,12 @@
 	transition: 0.2s ease;
 }
 
-.lab-srch-project-action-label:hover {
+.project_action_label:hover {
 	background-color: var(--active);
 	transition: 0.2s ease;
 }
 
-.lab-srch-project-apply {
+.project_apply {
 	position: absolute;
 	top: 15px;
 	right: 0px;
@@ -94,11 +98,11 @@
 	transition: 0.2s ease;
 }
 
-.lab-srch-project-apply > a {
+.project_apply > a {
 	color: var(--white) !important;
 }
 
-.lab-srch-project-openings {
+.project_openings {
 	color: var(--black);
 	position: absolute;
 	top: 35px;
@@ -107,7 +111,7 @@
 	display: none;
 }
 
-.lab-srch-project-adder {
+.project_adder {
 	position: absolute;
 	top: 60px;
 	right: 0px;

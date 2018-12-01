@@ -31,17 +31,13 @@ class AboveTheFold extends Component {
         <div className={`col s12 m7 ${movingText} valign-wrapper`}>
           <div className='container center-align'>
             <div className={`${header} left-align`}>
-              deawkwardizing <br /><span id='changer' />
+              de-awkward-izing <br /><span id='changer' />
             </div>
             <div className={`${text} left-align`}>
-              Perch's centralized matching system helps you find the best lab or lab assistant, while Perch Certifications streamlines basic skills training
+              You can find labs here
             </div>
           </div>
         </div>
-
-        {/* <div className='hide-on-med-and-up center-align' style={{marginBottom: '20px'}}> */}
-        {/* <BasicButton dest='sign-up' msg='sign up'/><BasicButton dest='login' msg='log in'/> */}
-        {/* </div> */}
 
         <div className='col s12 m5 valign-wrapper'>
           {/* <SignUp /> */}

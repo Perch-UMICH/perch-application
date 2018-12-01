@@ -26,11 +26,11 @@ class LabSearchItem extends Component {
     // console.log(this.props.saved_labs)
   }
 
-  comparePosIds(pos_ids) {
+  comparePosIds (pos_ids) {
     if (pos_ids && pos_ids.length) {
       pos_ids.map(pos => {
         if (pos == this.state.position.id) {
-          this.setState({submitted: true}) 
+          this.setState({ submitted: true })
         }
       })
     }
@@ -90,52 +90,16 @@ class LabSearchItem extends Component {
         />
       )
     })
+
+    let {name, id, dept, rsrch, description, positions} = this.props
     return (
       <div className='lab-srch-item-container'>
-        <div id={`lab_srch_item_${this.props.name}`} className='lab-srch-item'>
-          <img
-            src={`/img/default/${this.pic}.jpg`}
-            className='lab-srch-item-pic'
-          />
-          <div>
-            {' '}
-            <a
-              className='lab-srch-item-name'
-              href={`prof-page/${this.props.id}`}
-            >
-              {this.props.name}
-            </a>
-          </div>
-          <div className='lab-srch-item-depts'>
-            <b>Departments:</b> {this.props.dept}
-          </div>
-          <div className='lab-srch-item-rsrch'>
-            <b>Research Areas:</b> {this.props.rsrch}
-          </div>
-          {this.props.description != 'NULL' &&
-            <div className='lab-srch-item-description'>
-              <b>Description</b> {this.props.description}
-            </div>}
-          <div
-            id={`lab-srch-item-num-projects_${this.props.name}`}
-            className='lab-srch-item-num-projects'
-            onClick={this.expandProjects}
-          >
-            <b>{this.props.positions.length}</b>
-            {' '}
-            {this.props.positions.length - 1 ? 'Projects' : 'Project'}
-          </div>
-          <ExpanderIcons
-            id={`lab-srch-item_${this.props.name}`}
-            action={this.expandProjects}
-          />
-        </div>
-
         <div
-          id={`lab_srch_expansion_${this.props.name}`}
-          className='lab-srch-item-expansion hide-projects'
+          id={`lab_srch_expansion_${name}`}
+          className='lab-srch-item-expansion'
         >
           {all_projects}
+          <f className="lab-srch-name">The Orthopedics Research Group</f>
         </div>
       </div>
     )
