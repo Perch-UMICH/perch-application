@@ -102,6 +102,10 @@
 	text-align: left;
 }
 
+.modal-content > div {
+	height: 100%;
+}
+
 .modal-header {
 	padding-bottom: 5px;
 	border-bottom: 1px dotted lightgrey;

@@ -40,12 +40,9 @@ class AboveTheFold extends Component {
         </div>
 
         <div className='col s12 m5 valign-wrapper'>
-          {/* <SignUp /> */}
 
           <div className={tempSignup}>
-            <a href='/join'>
-              We're looking for people <u>to join the team!</u>
-            </a>
+            <SignUp />
           </div>
         </div>
 

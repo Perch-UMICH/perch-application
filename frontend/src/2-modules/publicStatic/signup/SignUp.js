@@ -24,7 +24,9 @@ class SignUp extends Component {
       password: '',
       email: '',
       type: ''
-    }
+		}
+		
+		this.generalHandler = this.generalHandler.bind(this)
   }
 
   generalHandler (event) {
@@ -79,7 +81,7 @@ class SignUp extends Component {
     return (
       <form
         className='left-align signup-container'
-        onSubmit={this.generalHandler.bind(this)}
+        onSubmit={this.generalHandler}
       >
         <div className='new-signup-header'>Sign Up for Free</div>
         <a href='login'>
@@ -175,9 +177,6 @@ class SignUp extends Component {
           onFailure={this.handleGoogleFailureResponse}
 					className='google-login btn waves-effect basic-btn'
         />
-        {/* <a href='#' onClick={this.signOut}>
-          Sign Out
-        </a> */}
       </form>
     )
   }

@@ -55,27 +55,9 @@ class StudentOnboarding extends Component {
   }
 
   componentDidMount () {
-
+    /* Get student information and prefill form */
     getStudentFromUser(getCurrentUserId())
-      .then(r => {
-        var user = r.data
-        var skills = []
-        var interests = []
-        var id = getCurrentStudentId()
-
-        getStudentSkills(id)
-        .then(skillsResp => skills = skillsResp.data)
-        .then(() => getStudentTags(id))
-        .then(tagsResp => {
-          getUser(id).then(r => {
-            user.contact_email = r.data.email
-            interests = tagsResp.data
-            user.skills = skills
-            user.interests = interests
-            this.setState({ user })
-          })
-        })
-      })
+      .then(({ data }) => this.setState({user: data}))
   }
 
   sendUpdate (redirect) {
@@ -98,19 +80,20 @@ class StudentOnboarding extends Component {
       gpa: user.gpa || 4.0,
       classes: user.classes || [],
       skills: user.skills || [],
-      interests: user.interests || []
+      interests: user.tags || []
     }
-    
+
     updateStudent(s)
       .then(r => console.log('updated student', r))
       .then(r => {
-        getStudentFromUser(getCurrentUserId()).then(r => {
-        if (redirect) {
-          window.location = '/student-profile/' + getCurrentUserId()
-        }
+        getStudentFromUser(getCurrentUserId())
+          .then(r => {
+            if (redirect) {
+              window.location = '/student-profile/' + getCurrentUserId()
+            }
+          })
+          .catch(e => alert('ERROR'))
       })
-      .catch(e => alert("ERROR"))
-    })
   }
 
   sendAcademicInfo () {
@@ -145,8 +128,8 @@ class StudentOnboarding extends Component {
         skillIds.push(skill.id)
       })
     }
-    if (this.state.user.interests && this.state.user.interests.length) {
-      this.state.user.interests.map(interest => {
+    if (this.state.user.tags && this.state.user.tags.length) {
+      this.state.user.tags.map(interest => {
         intIds.push(interest.id)
       })
     }
@@ -210,7 +193,8 @@ class StudentOnboarding extends Component {
             updateUser={this.updateUser.bind(this)}
           />
         ],
-        text: "Welcome to Perch! We'll begin by gathering some information about you to set up your profile. \nDon't worry about perfection - you can edit these fields afterwards at any time."
+        text:
+          "Welcome to Perch! We'll begin by gathering some information about you to set up your profile. \nDon't worry about perfection - you can edit these fields afterwards at any time."
       },
       1: {
         comp: (
@@ -219,7 +203,8 @@ class StudentOnboarding extends Component {
             updateUser={this.updateUser.bind(this)}
           />
         ),
-        text: 'Search skills and interests that apply to you, and click on the bubbles to add them to your profile.'
+        text:
+          'Search skills and interests that apply to you, and click on the bubbles to add them to your profile.'
       },
       // 2: {
       //   comp: '',
@@ -232,7 +217,8 @@ class StudentOnboarding extends Component {
             updateUser={this.updateUser.bind(this)}
           />
         ),
-        text: 'Enter any relevant lab or work experience and a short description of your contributions.'
+        text:
+          'Enter any relevant lab or work experience and a short description of your contributions.'
       },
       3: {
         comp: (
@@ -241,7 +227,8 @@ class StudentOnboarding extends Component {
             updateUser={this.updateUser.bind(this)}
           />
         ),
-        text: 'Enter a short description to describe yourself research interests and experience.' // add word limit
+        text:
+          'Enter a short description to describe yourself research interests and experience.' // add word limit
       }
     }
     var stepToRender = steps[this.state.curStep]

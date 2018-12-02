@@ -6,40 +6,29 @@ import { deepCopy, exists } from '../../../helper.js'
 class PickYourInterests extends Component {
   constructor (props) {
     super(props)
-    let { interests, skills } = props.user
-
     this.state = {
       bubble_array: [],
-      interests: interests ? deepCopy(interests) : [],
-      skills: skills ? deepCopy(skills) : []
+      tags: [],
+      skills: []
     }
-
     this.updateBubbleChoice = this.updateBubbleChoice.bind(this)
   }
 
   componentWillReceiveProps (props) {
-    if (props.user) {
-      let { interests, skills } = props.user
-      if (exists(interests)) {
-        this.setState({ interests: deepCopy(interests) })
-      }
-      if (exists(skills)) {
-        this.setState({ skills: deepCopy(skills) })
-      }
-    }
+    let { tags, skills } = props.user
+    this.setState({ tags, skills })
   }
 
-  updateBubbleChoice (choices, skills) {
+  updateBubbleChoice (bubble_array, skills) {
     let updateUser = this.props.updateUser
-    this.setState({ bubble_array: choices })
     if (updateUser) {
-      var type = skills ? 'skills' : 'interests'
-      updateUser(type, choices)
+      let type = skills ? 'skills' : 'tags'
+      updateUser(type, bubble_array)
     }
   }
 
   render () {
-    let { interests, skills } = this.state
+    let { tags, skills } = this.state
     let editorOnly = this.props.editorOnly
 
     var skillsDisplayInfo = {
@@ -50,7 +39,7 @@ class PickYourInterests extends Component {
     var interestsDisplayInfo = {
       placeholder_txt: 'search interests',
       header_txt: 'your interests',
-      interests: interests
+      interests: tags
     }
 
     var bubblePickers = (

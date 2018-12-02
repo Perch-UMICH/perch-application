@@ -18,7 +18,8 @@ import {
   uploadUserProfilePic,
   getUserProfilePic,
   exists,
-  isLoggedIn
+  isLoggedIn,
+  getCurrentUserId,
 } from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -54,7 +55,7 @@ class StudentProfile extends Component {
       experience: [],
       linkedin: '',
       skills: [],
-      interests: [],
+      tags: [],
       work_experiences: [],
       edu_experiences: [],
       resume: '',
@@ -161,7 +162,8 @@ class StudentProfile extends Component {
             type: 'profile_pic',
             x: updated_user.crop.x,
             y: updated_user.crop.y,
-            scale: updated_user.crop.scale
+            scale: updated_user.crop.scale,
+            user_id: getCurrentUserId(),
           }
 
           return uploadUserProfilePic(to_return)
@@ -223,8 +225,8 @@ class StudentProfile extends Component {
         skill_match[skill.id] = true
       })
     }
-    if (exists(updated_user.interests)) {
-      updated_user.interests.map(interest => {
+    if (exists(updated_user.tags)) {
+      updated_user.tags.map(interest => {
         intIds.push(interest.id)
         int_match[interest.id] = true
       })
@@ -234,8 +236,8 @@ class StudentProfile extends Component {
         if (!skill_match[skill.id]) skill_diff.push(skill.id)
       })
     }
-    if (exists(this.state.user.interests)) {
-      this.state.user.interests.map(interest => {
+    if (exists(this.state.user.tags)) {
+      this.state.user.tags.map(interest => {
         if (!int_match[interest.id]) int_diff.push(interest.id)
       })
     }
@@ -248,15 +250,14 @@ class StudentProfile extends Component {
 
   // Handles retrieving skills and tags
   retrieveTags () {
-    var newState = this.state, skills = [], interests = []
 
     getStudentSkills(getCurrentStudentId()).then(skillsResp => {
-      if (skillsResp.data) newState.user.skills = skillsResp.data
+      if (skillsResp.data) this.state.user.skills = skillsResp.data
     })
 
     getStudentTags(getCurrentStudentId()).then(tagsResp => {
-      if (tagsResp.data) newState.user.interests = tagsResp.data
-      this.setState(newState)
+      if (tagsResp.data) this.state.user.tags = tagsResp.data
+      this.setState(this.state)
     })
   }
 
@@ -276,11 +277,10 @@ class StudentProfile extends Component {
           if (exists(eduExp.year)) year = eduExp.year
           if (exists(eduExp.university)) university = eduExp.university.name
         }
-
+        console.log("in student profile", resp.data)
         user = {
           name: resp.data.first_name,
           user_id: resp.data.user_id,
-          gpa,
           major,
           year,
           university,
@@ -294,29 +294,22 @@ class StudentProfile extends Component {
           website_link: resp.data.website_link,
           resume: resp.data.resume_path,
           skills: resp.data.skills || [],
-          interests: resp.data.tags || [],
+          tags: resp.data.tags || [],
           work_experiences: resp.data.work_experiences,
           edu_experiences: resp.data.edu_experiences,
           student: true,
           s_id: resp.data.id
         }
-        // var updated_user = deepCopy(user);
-        //       this.setState({
-        // 	user, updated_user
-        // });
       })
       .then(r => getUserProfilePic(user.user_id))
+      .catch(e => console.log("PIC ERROR",e))
       .then(r => {
-        user.img = r.data.file.url
+        if (r.data) user.img = r.data.url
       })
       .then(r => {
         var updated_user = deepCopy(user)
         this.setState({ user, updated_user })
       })
-    // getUserFile('profile_pic').then(resp => {
-    //
-    // 	//
-    // })
   }
 
   // Retrives slug from url
@@ -439,6 +432,7 @@ class StudentProfile extends Component {
   }
 
   render () {
+    console.log(this.state.user)
     var linkedinLink, resumeLink = null
     let user = this.state.user
     if (exists(user.linkedin_link)) {
@@ -520,7 +514,7 @@ class StudentProfile extends Component {
               </div>
               <SkillsInterests
                 skills={user.skills}
-                interests={user.interests}
+                interests={user.tags}
               />
               <Editor superClick={() => this.openModal('quickview-edit')} />
               <div style={{ position: 'relative' }}>

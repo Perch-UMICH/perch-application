@@ -53,6 +53,10 @@ class LabSearch extends Component {
     }
   }
 
+  componentDidUpdate() {
+    console.log(this.state.all_labs)
+  }
+
   moreLabs () {
     // 1. grabs the positions from the next up labs
     let positions = this.state.next
@@ -65,28 +69,30 @@ class LabSearch extends Component {
     newState.next = positions.slice(limit)
 
     // 3. We grab the results from the first limit of labs available
-    getSearchResults(positions.slice(0, limit)).then(r => {
-      let all_labs = r.data.results
-      let { lab_list, positions_applied } = this.state
+    getSearchResults(positions.slice(0, limit))
+      .then(r => {
+        let new_labs = r.data.results
+        let { lab_list, positions_applied } = this.state
 
-      for (var key in all_labs) {
-        let lab = all_labs[key]
-        let { id, name, projects } = lab
+        console.log(new_labs)
+        for (var key in new_labs) {
+          let lab = new_labs[key]
+          let { id, name, projects } = lab
 
-        newState.all_labs.push(
-          <LabSearchItem
-            key={id}
-            id={id}
-            saved_labs={lab_list}
-            name={name}
-            positions={projects}
-            positions_applied={positions_applied}
-          />
-        )
-      }
-      newState.loading = false
-      this.setState(newState)
-    })
+          newState.all_labs.push(
+            <LabSearchItem
+              key={id}
+              id={id}
+              saved_labs={lab_list}
+              name={name}
+              positions={projects}
+              positions_applied={positions_applied}
+            />
+          )
+        }
+        newState.loading = false
+        this.setState(newState)
+      })
   }
 
   componentWillMount () {
@@ -437,11 +443,11 @@ function SearchBody ({
         Groups 1-{labs_shown} ({total_labs} total) for <b>{search}</b>
       </aside>
       <main>
-      {!loading && all_labs}
+      {!loading && all_labs.map(r=>r)}
       {loading && <DotLoader/>}
       </main>
       {labs_left > 0 && (
-        <button id='lab-srch-more' onClick={moreLabs}>
+        <button id='lab-srch-more' onClick={moreLabs.bind(this)}>
           Mo' labs, mo' problems
         </button>
       )}
