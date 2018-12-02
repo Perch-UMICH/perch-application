@@ -374,6 +374,27 @@ export function uploadUserProfilePic (profile_pic_file) {
             return error_handle(error)
         })
 }
+// edited_profile_pic_file:
+// user_id - (integer)
+// x - (int) from top left of image
+// y - (int) from top left of image
+// scale - (int)
+
+// RESTRICTED: authenticated user
+export function editUserProfilePic (edited_profile_pic_file) {
+    edited_profile_pic_file.x = ((edited_profile_pic_file.x) ? edited_profile_pic_file.x : 0.5)
+    edited_profile_pic_file.y = ((edited_profile_pic_file.y) ? edited_profile_pic_file.y : 0.5)
+    edited_profile_pic_file.scale = ((edited_profile_pic_file.scale) ? edited_profile_pic_file.scale : 1)
+
+    return axios
+        .post('api/users/' + edited_profile_pic_file.user_id + '/files/profile_pic/edit', edited_profile_pic_file)
+        .then(response => {
+            return respond(response.status, response.data)
+        })
+        .catch(error => {
+            return error_handle(error)
+        })
+}
 
 // RESTRICTED: authenticated user
 export function getUserProfilePic (user_id) {
