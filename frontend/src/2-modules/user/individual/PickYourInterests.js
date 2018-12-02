@@ -6,7 +6,7 @@ import { deepCopy, exists } from '../../../helper.js'
 class PickYourInterests extends Component {
   constructor (props) {
     super(props)
-    let {interests, skills} = props.user
+    let { interests, skills } = props.user
 
     this.state = {
       bubble_array: [],
@@ -27,10 +27,6 @@ class PickYourInterests extends Component {
         this.setState({ skills: deepCopy(skills) })
       }
     }
-  }
-
-  redirect () {
-    window.location = this.state.dest
   }
 
   updateBubbleChoice (choices, skills) {
@@ -76,16 +72,13 @@ class PickYourInterests extends Component {
 
     if (editorOnly) {
       return bubblePickers
+    } else {
+      return (
+        <EditContainerOnboarding title='Skills and Interests'>
+          {bubblePickers}
+        </EditContainerOnboarding>
+      )
     }
-
-    return (
-      <EditContainerOnboarding
-        title='Skills and Interests'
-        redirect={this.redirect.bind(this)}
-      >
-        {bubblePickers}
-      </EditContainerOnboarding>
-    )
   }
 }
 

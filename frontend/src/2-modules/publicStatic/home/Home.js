@@ -6,7 +6,7 @@ function Home () {
   return (
     <div>
       <AboveTheFold />
-      <PerchStory page='main' />
+      {/* <PerchStory page='main' /> */}
     </div>
   )
 }

@@ -3,7 +3,7 @@
   position: relative;
   top: 0;
   margin: 20px auto;
-  width: 1000px;
+  width: 800px;
   border: 1px solid #ccc;
   background-color: white;
 }
@@ -16,20 +16,20 @@
   &:last-of-type {
     margin-bottom: -10px;
   }
-  .lab-srch-project {
+  .project {
     border-top: 1px solid lightgrey;
     margin-bottom: 10px;
     min-height: 150px;
     background-color: #f8f8f8;
-    .lab-srch-project-description {
+    .project_description {
       font-size: 14px;
       min-height: 140px;
       top: 45px;
     }
-    .lab-srch-project-title {
+    .project_title {
       font-size: 24px;
     }
-    .lab-srch-project-action-label {
+    .project_action_label {
       opacity: 0 !important;
     }
     .group-project-application-submitted {
@@ -41,9 +41,9 @@
   &:hover {
     margin-bottom: -10px;
     transition: 0.2s;
-    .lab-srch-project {
+    .project {
       background-color: white;
-      .lab-srch-project-action-label {
+      .project_action_label {
         opacity: 1 !important;
         transform: translateY(20px);
         right: 0px;

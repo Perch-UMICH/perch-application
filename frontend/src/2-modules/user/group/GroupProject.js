@@ -284,8 +284,8 @@ export class GroupProject extends Component {
 		// this.setState({added: saved})
 		var saveRemoveButton =
 	      <div>
-	        {!this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.saveProject}>save</div>}
-	        {this.state.added && <div className='lab-srch-project-adder lab-srch-project-action-label' onClick={this.removeProject}>remove</div>}
+	        {!this.state.added && <div className='project_adder project_action_label' onClick={this.saveProject}>save</div>}
+	        {this.state.added && <div className='project_adder project_action_label' onClick={this.removeProject}>remove</div>}
 	      </div>
 		if (this.state.submitted) {
 			saveRemoveButton = null;
