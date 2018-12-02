@@ -672,10 +672,15 @@ export class EditQuickview extends Component {
     if (this.props.showNoSchool) {
       schoolSection = null
       nameSection = (
-        <div className='onboarding-text'>
-          Add a profile photo and edit using the slider and rotate tool below.
-          <br /><br />Or, by default, stick with our friendly mascot, Rodriguez!
+        <div>
+          <div className='onboarding-text'>
+            Add a profile photo and edit using the slider and rotate tool below
+          </div>
+          <div className='onboarding-text'>
+          Or, by default, stick with our friendly mascot, Rodriguez!
+          </div>
         </div>
+
       )
     }
 

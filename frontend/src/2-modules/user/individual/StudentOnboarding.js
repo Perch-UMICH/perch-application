@@ -32,7 +32,7 @@ import {
   addEduExperienceToStudent,
   primeExternalLink
 } from '../../../helper.js'
-import './StudentOnboarding.css'
+import './StudentOnboarding.scss'
 
 class StudentOnboarding extends Component {
   constructor (props) {
@@ -41,9 +41,10 @@ class StudentOnboarding extends Component {
     this.updateTags = this.updateTags.bind(this)
     this.updateExperience = this.updateExperience.bind(this)
     this.sendAcademicInfo = this.sendAcademicInfo.bind(this)
+
     this.state = {
       curStep: 0,
-      numSteps: 5,
+      numSteps: 4,
       user: {
         gpa: 3.7,
         year: 'None Selected',
@@ -54,29 +55,27 @@ class StudentOnboarding extends Component {
   }
 
   componentDidMount () {
-    getStudentFromUser(getCurrentUserId()).then(r => {
-      var user = r.data
-      var skills = []
-      var interests = []
-      getStudentSkills(getCurrentStudentId()).then(skillsResp => {
-        if (skillsResp.data) {
-          skills = skillsResp.data
-        }
-        getStudentTags(getCurrentStudentId()).then(tagsResp => {
-          getUser(getCurrentUserId()).then(r => {
-            if (r.data) {
-              user.contact_email = r.data.email
-            }
-            if (tagsResp.data) {
-              interests = tagsResp.data
-            }
+
+    getStudentFromUser(getCurrentUserId())
+      .then(r => {
+        var user = r.data
+        var skills = []
+        var interests = []
+        var id = getCurrentStudentId()
+
+        getStudentSkills(id)
+        .then(skillsResp => skills = skillsResp.data)
+        .then(() => getStudentTags(id))
+        .then(tagsResp => {
+          getUser(id).then(r => {
+            user.contact_email = r.data.email
+            interests = tagsResp.data
             user.skills = skills
             user.interests = interests
             this.setState({ user })
           })
         })
       })
-    })
   }
 
   sendUpdate (redirect) {
@@ -101,14 +100,16 @@ class StudentOnboarding extends Component {
       skills: user.skills || [],
       interests: user.interests || []
     }
-    // updateStudent(first_name, last_name, contact_email, contact_phone, bio, linkedin_link, website_link, is_urop_student, skill_ids, tag_ids)
-    // updateStudent(first_name, last_name, s.contact_email, s.contact_phone, s.bio, linkedin_link, website_link, true, [], [])
-    updateStudent(s).then(r => console.log('updated student', r)).then(r => {
-      getStudentFromUser(getCurrentUserId()).then(r => {
+    
+    updateStudent(s)
+      .then(r => console.log('updated student', r))
+      .then(r => {
+        getStudentFromUser(getCurrentUserId()).then(r => {
         if (redirect) {
           window.location = '/student-profile/' + getCurrentUserId()
         }
       })
+      .catch(e => alert("ERROR"))
     })
   }
 
@@ -220,11 +221,11 @@ class StudentOnboarding extends Component {
         ),
         text: 'Search skills and interests that apply to you, and click on the bubbles to add them to your profile.'
       },
+      // 2: {
+      //   comp: '',
+      //   text: 'Enter your school and your GPA, major (or intended major), class year, and relevant classes for this school.'
+      // },
       2: {
-        comp: '',
-        text: 'Enter your school and your GPA, major (or intended major), class year, and relevant classes for this school.'
-      },
-      3: {
         comp: (
           <Experience
             user={this.state.user}
@@ -233,7 +234,7 @@ class StudentOnboarding extends Component {
         ),
         text: 'Enter any relevant lab or work experience and a short description of your contributions.'
       },
-      4: {
+      3: {
         comp: (
           <EnterBio
             user={this.state.user}
@@ -266,19 +267,19 @@ class StudentOnboarding extends Component {
         />
       )
     }
+    // if (this.state.curStep === 2) {
+    //   css = 'visible-yes'
+    //   nextBtn = (
+    //     <BasicButton
+    //       msg='next'
+    //       superClick={() => {
+    //         this.setState({ curStep: this.state.curStep + 1 })
+    //         this.sendAcademicInfo()
+    //       }}
+    //     />
+    //   )
+    // }
     if (this.state.curStep === 2) {
-      css = 'visible-yes'
-      nextBtn = (
-        <BasicButton
-          msg='next'
-          superClick={() => {
-            this.setState({ curStep: this.state.curStep + 1 })
-            this.sendAcademicInfo()
-          }}
-        />
-      )
-    }
-    if (this.state.curStep === 3) {
       nextBtn = (
         <BasicButton
           msg='next'

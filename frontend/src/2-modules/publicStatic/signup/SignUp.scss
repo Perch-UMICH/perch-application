@@ -26,10 +26,18 @@
 	box-shadow: none;
 }
 
-.new-signup-container {
-	/*border: 1px solid red;*/
+.signup-container {
 	color: var(--eighty-grey);
-	padding: 20px;
+	padding: 80px;
+	padding-bottom: 0px;
+	background-color: white;
+}
+
+.google-login {
+	width: calc(100% + 2*80px);
+	height: 80px;
+	margin: 0 -80px;
+	background-color: lightcoral;
 }
 
 .new-signup-header {

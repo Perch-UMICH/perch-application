@@ -12,9 +12,10 @@ import './NotableClasses.css'
 class NotableClasses extends Component {
   constructor (props) {
     super(props)
-    var class_arr = props.user && props.user.classes
-      ? props.user.classes
-      : [{ id: 'c_0', name: '' }]
+    var class_arr =
+      props.user && props.user.classes
+        ? props.user.classes
+        : [{ id: 'c_0', name: '' }]
     this.state = {
       gpa: props.user && props.user.gpa ? props.user.gpa : '3.7',
       year: props.user && props.user.year ? props.user.year : '',
@@ -147,7 +148,9 @@ class NotableClasses extends Component {
               this.setState({ university: e.target.value })
             }}
           />
-          <label htmlFor='profile-school' className='active'>School</label>
+          <label htmlFor='profile-school' className='active'>
+            School
+          </label>
         </div>
       )
 

@@ -15,8 +15,8 @@ import {
   updateStudent,
   deepCopy,
   primeExternalLink,
-  uploadUserFile,
-  getUserFile,
+  uploadUserProfilePic,
+  getUserProfilePic,
   exists,
   isLoggedIn
 } from '../../../helper.js'
@@ -164,7 +164,7 @@ class StudentProfile extends Component {
             scale: updated_user.crop.scale
           }
 
-          return uploadUserFile(to_return, 'profile_pic')
+          return uploadUserProfilePic(to_return)
         }
       })
       .catch(e => console.log('profile pic bug'))
@@ -305,7 +305,7 @@ class StudentProfile extends Component {
         // 	user, updated_user
         // });
       })
-      .then(r => getUserFile('profile_pic', user.user_id))
+      .then(r => getUserProfilePic(user.user_id))
       .then(r => {
         user.img = r.data.file.url
       })

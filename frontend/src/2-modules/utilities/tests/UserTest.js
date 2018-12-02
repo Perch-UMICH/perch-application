@@ -49,35 +49,34 @@ class UserTest extends React.Component {
 
         let to_return = {
             formData: f,
-            type: 'profile_pic',
             x: .5,
             y: .5,
             scale: 1,
-            rotate: 0,
+            user_id: parseInt(H.getCurrentUserId()),
         }
 
         console.log(to_return)
 
-        H.uploadUserFile(to_return).then(r=> console.log(r))
+        H.uploadUserProfilePic(to_return).then(r=> console.log(r))
     }
 
     getFile() {
-        H.getUserFile('profile_pic').then(r=> {
+        H.getUserProfilePic(H.getCurrentUserId()).then(r=> {
             console.log(r.data.file.url)
             this.setState({img: r.data.file.url})
         })  
     }
 
     componentDidMount() {
-        let lab_id = 0
+        // let lab_id = 0
 
-        // H.createLab({}).then(r => lab_id = )
-        H.createLab({name: 'shlabaadaba'}).then(r => lab_id = r.data.id)
-        .then(r => H.getLab(lab_id))
-        .then(r => console.log(r))
-        .then(r => H.getLabMembers(lab_id))
-        .then(r=>console.log(r))
-        .then(r=>H.getLab(lab_id))
+        // // H.createLab({}).then(r => lab_id = )
+        // H.createLab({name: 'shlabaadaba'}).then(r => lab_id = r.data.id)
+        // .then(r => H.getLab(lab_id))
+        // .then(r => console.log(r))
+        // .then(r => H.getLabMembers(lab_id))
+        // .then(r=>console.log(r))
+        // .then(r=>H.getLab(lab_id))
         // .then(r=>console.log(r))
         // .then(r=>H.updateLab(140, {name: 'babab'}))
         // .then(r=>H.getLab(140))
@@ -213,7 +212,7 @@ class UserTest extends React.Component {
 
                 <ReactCrop src={this.state.img} crop={this.state.crop} onChange={this.onChange.bind(this)}/>
                 
-                <h1>Student Tests</h1>
+                {/* <h1>Student Tests</h1>
                 <h2>getAllUsers</h2>
                 <pre>{this.state.getAllUsers}</pre>
                 <h2>registerUser</h2>
@@ -309,7 +308,7 @@ class UserTest extends React.Component {
                 <h2>labSearch</h2>
                 <pre>{this.state.labSearch}</pre>
                 <h2>getSearchResults</h2>
-                <pre>{this.state.getSearchResults}</pre>
+                <pre>{this.state.getSearchResults}</pre> */}
 
             </div>
         )

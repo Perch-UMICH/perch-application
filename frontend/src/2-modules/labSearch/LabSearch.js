@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import './LabSearch.css'
+import './LabSearch.scss'
 import ExpanderIcons from '../utilities/ExpanderIcons'
 import DotLoader from '../utilities/animations/DotLoader'
 import LabSearchItem from './LabSearchItem'
+import InfiniteScroll from 'react-infinite-scroller'
 
 import {
   isStudent,
@@ -14,10 +15,10 @@ import {
   getAllStudentApplicationResponses
 } from '../../helper.js'
 
-const filterTypes = ['departments', 'researchAreas', 'minReqs', 'lab-skills']
+const filterTypes = ['researchAreas', 'departments', 'minReqs', 'lab-skills']
 const filterFriendlyNames = [
-  'Organizations',
   'Research Areas',
+  'Organizations',
   'Hours',
   'Lab Skills'
 ]
@@ -54,11 +55,11 @@ class LabSearch extends Component {
 
   moreLabs () {
     // 1. grabs the positions from the next up labs
-    let positions = this.state.next,
-      limit = this.state.limit,
-      newState = {
-        all_labs: this.state.all_labs
-      }
+    let positions = this.state.next
+    let limit = this.state.limit
+    let newState = {
+      all_labs: this.state.all_labs
+    }
 
     // 2. if the number of positions is greater than the limit, we take off the limit num of positions
     newState.next = positions.slice(limit)
@@ -66,21 +67,20 @@ class LabSearch extends Component {
     // 3. We grab the results from the first limit of labs available
     getSearchResults(positions.slice(0, limit)).then(r => {
       let all_labs = r.data.results
+      let { lab_list, positions_applied } = this.state
 
       for (var key in all_labs) {
         let lab = all_labs[key]
+        let { id, name, projects } = lab
+
         newState.all_labs.push(
           <LabSearchItem
-            key={lab.id}
-            id={lab.id}
-            saved_labs={this.state.lab_list}
-            name={lab.name}
-            dept='MISSING'
-            rsrch='MISSING'
-            img='/img/headshots/salektiar.jpg'
-            description='NULL'
-            positions={lab.projects}
-            positions_applied={this.state.positions_applied}
+            key={id}
+            id={id}
+            saved_labs={lab_list}
+            name={name}
+            positions={projects}
+            positions_applied={positions_applied}
           />
         )
       }
@@ -165,9 +165,7 @@ class LabSearch extends Component {
   }
 
   componentDidMount () {
-    this.expand('departments')
-    let search = document.getElementById('lab-srch-input')
-    search.addEventListener('keyup', this.updateSearch.bind(this))
+    this.expand('researchAreas')
     if (isStudent()) {
       getStudentFromUser(getCurrentUserId()).then(resp => {
         this.setState({ lab_list: resp.data.position_list })
@@ -261,16 +259,11 @@ class LabSearch extends Component {
   */
 
   executeSearch (event) {
+    let { areas, skills, commitments, departments, search } = this.state
     if (event.key === 'Enter') {
       this.setState({ loading: true }, () => {
         var newState = this.state
-        labSearch(
-          this.state.areas,
-          this.state.skills,
-          this.state.commitments,
-          this.state.departments,
-          this.state.search
-        )
+        labSearch(areas, skills, commitments, departments, search)
           .then(r => {
             newState.all_labs = []
             let positions = r.data.results || r.data
@@ -306,7 +299,7 @@ class LabSearch extends Component {
     }
   }
 
-  render () {
+  filterStuff () {
     var filterContentArr = []
     filterTypes.map(type => {
       var filterContent = (
@@ -328,7 +321,8 @@ class LabSearch extends Component {
                           type='checkbox'
                           className='checkbox-white filled-in'
                           onClick={() =>
-                            this.handleFilterClick(type, filt.slug)}
+                            this.handleFilterClick(type, filt.slug)
+                          }
                           id={subFilt.slug}
                         />
                         <label
@@ -389,28 +383,83 @@ class LabSearch extends Component {
         <div className='search-filter-content-wrapper'>{filterContent}</div>
       )
     })
+    return filterContentArr
+  }
 
-    var labSearchContent = (
-      <div id='lab-srch-results'>
-        {this.state.all_labs}
+  render () {
+    var filterContentArr = this.filterStuff()
+
+    return (
+      <div className='search_shell'>
+        <SearchSideBar
+          filterTypes={filterTypes}
+          filterFriendlyNames={filterFriendlyNames}
+          filterContentArr={filterContentArr}
+          expand={this.expand.bind(this)}
+        />
+        <SearchBody
+          all_labs={this.state.all_labs}
+          next={this.state.next}
+          search={this.state.search}
+          executeSearch={this.executeSearch.bind(this)}
+          moreLabs={this.moreLabs.bind(this)}
+          updateSearch={this.updateSearch.bind(this)}
+          loading={this.state.loading}
+        />
       </div>
     )
+  }
+}
 
-    var showMoreButton = (
-      <div id='lab-srch-more' onClick={this.moreLabs.bind(this)}>
-        Mo' labs, mo' problems
-      </div>
-    )
+function SearchBody ({
+  all_labs,
+  next,
+  search,
+  executeSearch,
+  moreLabs,
+  updateSearch,
+  loading
+}) {
+  let labs_shown = all_labs.length
 
-    if (this.state.loading) {
-      labSearchContent = <DotLoader />
-      showMoreButton = null
-    }
+  let labs_left = next.length
 
-    var searchSideBar = (
-      <div className='search-sidebar'>
-        {filterTypes.map((type, idx) => {
-          return (
+  let total_labs = labs_shown + labs_left
+  return (
+    <div id='search_results'>
+      <input
+        onKeyUp={updateSearch}
+        type='text'
+        placeholder='keywords'
+        onKeyPress={executeSearch}
+      />
+      <aside>
+        Groups 1-{labs_shown} ({total_labs} total) for <b>{search}</b>
+      </aside>
+      <main>
+      {!loading && all_labs}
+      {loading && <DotLoader/>}
+      </main>
+      {labs_left > 0 && (
+        <button id='lab-srch-more' onClick={moreLabs}>
+          Mo' labs, mo' problems
+        </button>
+      )}
+    </div>
+  )
+}
+
+function SearchSideBar ({
+  filterTypes,
+  filterFriendlyNames,
+  filterContentArr,
+  expand
+}) {
+  return (
+    <aside className='search-sidebar'>
+      {filterTypes.map((type, idx) => {
+        return (
+          <div className='filter_type'>
             <div
               key={`${type}-filter`}
               id={`${type}-filter`}
@@ -422,53 +471,18 @@ class LabSearch extends Component {
               <ExpanderIcons
                 id={`${type}-filter`}
                 classBase='search-filter-container'
-                action={() => {
-                  this.expand(type)
-                }}
-                preClick={type === 'departments'}
+                action={() => expand(type)}
+                preClick={type === 'researchAreas'}
                 filterDropdown
               />
               <hr className='filter-hr' />
               {filterContentArr[idx]}
             </div>
-          )
-        })}
-      </div>
-    )
-    return (
-      <div className='lab-srch-2'>
-
-        <div className='lab-srch-mods'>
-          {searchSideBar}
-        </div>
-        <div className='lab-srch-body'>
-          <input
-            id='lab-srch-input'
-            type='text'
-            placeholder='keywords'
-            onKeyPress={event => this.executeSearch(event)}
-          />
-          <div id='lab-srch-result-summary'>
-            Groups 1-
-            {this.state.all_labs.length}
-            {' '}
-            (
-            {this.state.all_labs.length + this.state.next.length}
-            {' '}
-            total)
-            {' '}
-            {/* page 1 of 40 */}
-            {' '}
-            for
-            {' '}
-            <b>{this.state.search}</b>
           </div>
-          {labSearchContent}
-          {this.state.next.length > 0 && showMoreButton}
-        </div>
-      </div>
-    )
-  }
+        )
+      })}
+    </aside>
+  )
 }
 
 export default LabSearch
