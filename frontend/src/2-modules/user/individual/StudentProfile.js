@@ -616,7 +616,7 @@ class UserWorkExperience extends Component {
     return (
       <div className='user-work-experience-container'>
         {experiences}
-        {!experiences.length && <div style={{padding: "10px 20px", color: "lightgrey"}}>Show off what you've done, or we'll say you're a freelance netflix watcher</div>}
+        {!experiences.length && <div style={{padding: "10px 20px", color: "lightgrey"}}>Freelance netflix reviewer</div>}
       </div>
     )
   }
@@ -681,7 +681,7 @@ class UserBio extends Component {
         <div id='user-bio-content' className='user-bio-content'>
           {!this.props.children.length &&
             <div style={{ color: 'lightgrey' }}>
-              Help Wikipedia out, tell us about yourself before you become famous
+              Superstar, worldwide phenomenon
             </div>}
           {this.props.children}
 
@@ -708,7 +708,7 @@ class SkillsInterests extends Component {
         {!this.props.interests.length &&
           !this.props.skills.length &&
           <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
-            What are you into? or we'll say you love waitng in lines
+            Big nickelback fan
           </div>}
         {this.props.interests.map((item, index) => (
           <Bubble key={`${index}-int`} type='interest'>{item.name}</Bubble>
