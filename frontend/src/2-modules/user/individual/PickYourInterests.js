@@ -49,13 +49,13 @@ class PickYourInterests extends Component {
           ref='bubble_choice'
           skills
           display_info={skillsDisplayInfo}
-          callbackSkills={this.updateBubbleChoice}
+          passChosen={this.updateBubbleChoice}
         />
         <BubbleChoice
           ref='bubble_choice'
           skills={false}
           display_info={interestsDisplayInfo}
-          callbackSkills={this.updateBubbleChoice}
+          passChosen={this.updateBubbleChoice}
         />
       </div>
     )
