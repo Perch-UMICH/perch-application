@@ -6,10 +6,11 @@ import { deepCopy, exists } from '../../../helper.js'
 class PickYourInterests extends Component {
   constructor (props) {
     super(props)
+    let { tags, skills } = props.user
     this.state = {
       bubble_array: [],
-      tags: [],
-      skills: []
+      tags: tags,
+      skills: skills
     }
     this.updateBubbleChoice = this.updateBubbleChoice.bind(this)
   }
@@ -48,13 +49,13 @@ class PickYourInterests extends Component {
           ref='bubble_choice'
           skills
           display_info={skillsDisplayInfo}
-          callbackSkills={this.updateBubbleChoice}
+          passChosen={this.updateBubbleChoice}
         />
         <BubbleChoice
           ref='bubble_choice'
           skills={false}
           display_info={interestsDisplayInfo}
-          callbackSkills={this.updateBubbleChoice}
+          passChosen={this.updateBubbleChoice}
         />
       </div>
     )

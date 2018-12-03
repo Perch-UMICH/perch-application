@@ -46,7 +46,6 @@ class StudentOnboarding extends Component {
       curStep: 0,
       numSteps: 4,
       user: {
-        gpa: 3.7,
         year: 'None Selected',
         classes: [],
         bio: ''
@@ -56,44 +55,23 @@ class StudentOnboarding extends Component {
 
   componentDidMount () {
     /* Get student information and prefill form */
-    getStudentFromUser(getCurrentUserId())
-      .then(({ data }) => this.setState({user: data}))
+    getStudentFromUser(getCurrentUserId()).then(({ data }) =>
+      this.setState({ user: data })
+    )
   }
 
   sendUpdate (redirect) {
+    /* updates student object every time user presses next or back */
     var user = this.state.user
-    var nameArr = user && user.name ? user.name.split(' ') : []
-    var first_name = nameArr[0] || ''
-    var last_name = nameArr[1] || ''
-    var linkedin_link = user.linkedin_link
+    user.linkedin_link = user.linkedin_link
       ? primeExternalLink(user.linkedin_link)
       : ''
-    var website_link = user.website_link
-      ? primeExternalLink(user.website_link)
-      : ''
-    var s = {
-      contact_email: user.contact_email || '',
-      contact_phone: user.contact_phone || '',
-      year: user.year || '',
-      bio: user.bio || '',
-      major: user.major || '',
-      gpa: user.gpa || 4.0,
-      classes: user.classes || [],
-      skills: user.skills || [],
-      interests: user.tags || []
-    }
 
-    updateStudent(s)
-      .then(r => console.log('updated student', r))
+    updateStudent(user)
       .then(r => {
-        getStudentFromUser(getCurrentUserId())
-          .then(r => {
-            if (redirect) {
-              window.location = '/student-profile/' + getCurrentUserId()
-            }
-          })
-          .catch(e => alert('ERROR'))
+        if (redirect) window.location = '/student-profile/' + getCurrentUserId()
       })
+      .catch(e => alert('ERROR'))
   }
 
   sendAcademicInfo () {
@@ -121,21 +99,17 @@ class StudentOnboarding extends Component {
   }
 
   updateTags () {
-    var skillIds = []
-    var intIds = []
-    if (this.state.user.skills && this.state.user.skills.length) {
-      this.state.user.skills.map(skill => {
-        skillIds.push(skill.id)
-      })
+    let { skills, tags } = this.state.user
+
+    if (skills.length) {
+      skills = skills.map(skill => skill.id)
+      addSkillsToStudent(skills)
     }
-    if (this.state.user.tags && this.state.user.tags.length) {
-      this.state.user.tags.map(interest => {
-        intIds.push(interest.id)
-      })
+    
+    if (tags.length) {
+      tags = tags.map(interest => interest.id)
+      addTagsToStudent(tags)
     }
-    addTagsToStudent(intIds).then(r => {
-      addSkillsToStudent(skillIds).then(r => {})
-    })
   }
 
   updateExperience () {
