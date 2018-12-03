@@ -77,7 +77,10 @@ export function verifyLogin () {
     })
 }
 
-export function registerUser (name, email, password, password_confirmation) {
+export function registerUser (name,
+                              email,
+                              password,
+                              password_confirmation) {
   return axios
     .post('api/register', {
       name,
@@ -1815,3 +1818,27 @@ export function validPhoneChange (new_val) {
   if (new_val.length > 15) return false
   return true
 }
+
+// NEW USER OBJECT:
+
+// username - (string)
+// email - (string)
+// password - (string)
+// password_confirmation - (string)
+// university - (string)
+
+// Either a student or faculty object:
+
+// student = {
+//  first_name
+//  last_name
+//  year
+//  major
+//  }
+
+// faculty = {
+//  first_name
+//  last_name
+//  department
+//  title/role
+// }
