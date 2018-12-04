@@ -3,7 +3,7 @@ import BasicButton from '../../utilities/buttons/BasicButton'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import Cleave from 'cleave.js/react'
-import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n';
+import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n'
 import { deepCopy, validDateChange, validPhoneChange } from '../../../helper.js'
 import './StudentEditors.scss'
 import iziToast from 'izitoast'
@@ -67,7 +67,9 @@ export class EditLinks extends Component {
               this.setState({ linkedin_link: e.target.value })
             }}
           />
-          <label htmlFor='linkedin_link' className='active'>Linkedin</label>
+          <label htmlFor='linkedin_link' className='active'>
+            Linkedin
+          </label>
         </div>
         {/* <div className='input-field'>
 					<input type='text' id='resume' placeholder='super-cool-resume.pdf' value={this.state.resume}
@@ -77,7 +79,7 @@ export class EditLinks extends Component {
 						this.setState({resume: e.target.value})}}/>
 					<label htmlFor='resume' className="active" >Resume</label>
 				</div> */}
-        {this.props.prof &&
+        {this.props.prof && (
           <div className='input-field'>
             <input
               type='text'
@@ -94,7 +96,8 @@ export class EditLinks extends Component {
             <label htmlFor='lab-materials' className='active'>
               Lab Materials
             </label>
-          </div>}
+          </div>
+        )}
       </div>
     )
   }
@@ -102,7 +105,9 @@ export class EditLinks extends Component {
 
 // Example
 export const Test = () => (
-  <EditContainer title='Experience Info'><EditContact /></EditContainer>
+  <EditContainer title='Experience Info'>
+    <EditContact />
+  </EditContainer>
 )
 
 // Generic container for when needed as standalone component
@@ -128,12 +133,10 @@ export class EditContact extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      contact_email: props.user && props.user.contact_email
-        ? props.user.contact_email
-        : '',
-      contact_phone: props.user && props.user.contact_phone
-        ? props.user.contact_phone
-        : ''
+      contact_email:
+        props.user && props.user.contact_email ? props.user.contact_email : '',
+      contact_phone:
+        props.user && props.user.contact_phone ? props.user.contact_phone : ''
     }
   }
 
@@ -165,7 +168,7 @@ export class EditContact extends Component {
         /> */}
         <Cleave
           placeholder='john-doe@umich.edu'
-          options={{email: true}}
+          options={{ email: true }}
           value={this.state.contact_email}
           onChange={e => {
             if (this.props.updateUser) {
@@ -174,7 +177,9 @@ export class EditContact extends Component {
             this.setState({ contact_email: e.target.value })
           }}
         />
-        <label htmlFor='email' className='active'>Email</label>
+        <label htmlFor='email' className='active'>
+          Email
+        </label>
       </div>
     )
 
@@ -187,20 +192,21 @@ export class EditContact extends Component {
         {emailSection}
         <div className='input-field'>
           <Cleave
-          placeholder='1 234 456 8989'
-          options={{phone: true, phoneRegionCode: 'US'}}
-          value={this.state.contact_phone}
-          onChange={e => {
+            placeholder='1 234 456 8989'
+            options={{ phone: true, phoneRegionCode: 'US' }}
+            value={this.state.contact_phone}
+            onChange={e => {
               if (this.props.updateUser) {
                 this.props.updateUser('contact_phone', e.target.value)
               }
               this.setState({ contact_phone: e.target.value })
-            }
-          }
-          
-          // onChange={e => alert(e.target.value)}
-        />
-          <label htmlFor='phone-number' className='active'>Phone</label>
+            }}
+
+            // onChange={e => alert(e.target.value)}
+          />
+          <label htmlFor='phone-number' className='active'>
+            Phone
+          </label>
         </div>
       </form>
     )
@@ -249,11 +255,10 @@ export class EditClasses extends Component {
     this.addClass = this.addClass.bind(this)
     this.alterClass = this.alterClass.bind(this)
     this.removeClass = this.removeClass.bind(this)
-    var class_arr = props.user &&
-      props.user.classes &&
-      props.user.classes.length
-      ? props.user.classes
-      : [{ id: 'c_0', name: '' }]
+    var class_arr =
+      props.user && props.user.classes && props.user.classes.length
+        ? props.user.classes
+        : [{ id: 'c_0', name: '' }]
     this.state = {
       class_arr
     }
@@ -331,7 +336,8 @@ export class EditClasses extends Component {
               </div>
             </div>
           )
-        })} <br />
+        })}{' '}
+        <br />
         <div className='add-obj-icon-container'>
           <a onClick={this.addClass.bind(this)}>
             <i className='material-icons add-obj-icon'>add</i>
@@ -348,12 +354,12 @@ export class EditExperience extends Component {
   constructor (props) {
     super(props)
     var titleText = props.type === 'work' ? 'Title' : 'School Name'
-    var titlePlacehold = props.type === 'work'
-      ? "Dr. Labby's Lab"
-      : 'University of Michigan'
-    var textPlacehold = props.type === 'work'
-      ? 'Decribe your role'
-      : 'Undergraduate Degree in Biology ...'
+    var titlePlacehold =
+      props.type === 'work' ? "Dr. Labby's Lab" : 'University of Michigan'
+    var textPlacehold =
+      props.type === 'work'
+        ? 'Decribe your role'
+        : 'Undergraduate Degree in Biology ...'
     var initObjs = [
       {
         id: 'o_0',
@@ -384,7 +390,7 @@ export class EditExperience extends Component {
       titleText,
       titlePlacehold,
       textPlacehold,
-      show_toast: true,
+      show_toast: true
     }
     this.state.index = this.state.objs.length
   }
@@ -403,12 +409,13 @@ export class EditExperience extends Component {
     }
   }
 
-  showToast() {
-    warn_toast.message = "Please enter a valid numeric date (e.g. Sept 2018 = 09/18)."
-    warn_toast.onClosing = () => this.setState({show_toast: true})
+  showToast () {
+    warn_toast.message =
+      'Please enter a valid numeric date (e.g. Sept 2018 = 09/18).'
+    warn_toast.onClosing = () => this.setState({ show_toast: true })
 
     if (this.state.show_toast) {
-      this.setState({show_toast: false}, () => {
+      this.setState({ show_toast: false }, () => {
         iziToast.show(warn_toast)
       })
     }
@@ -442,14 +449,16 @@ export class EditExperience extends Component {
     var temp_objs = this.state.objs
     var index = temp_objs.findIndex(item => item.id === id)
     var new_val = event.target.value
-    if ((event.target.name == 'start_date' || event.target.name == 'end_date')
-        && (temp_objs[index][event.target.name].length < event.target.value.length)) {
-        let ret_obj = validDateChange(new_val)
-        if (!ret_obj.success) {
-          this.showToast()
-          return
-        }
-        new_val = ret_obj.new_val
+    if (
+      (event.target.name == 'start_date' || event.target.name == 'end_date') &&
+      temp_objs[index][event.target.name].length < event.target.value.length
+    ) {
+      let ret_obj = validDateChange(new_val)
+      if (!ret_obj.success) {
+        this.showToast()
+        return
+      }
+      new_val = ret_obj.new_val
     }
     temp_objs[index][event.target.name] = new_val
     this.setState({
@@ -528,7 +537,9 @@ export class EditExperience extends Component {
                   value={obj.end_date || ''}
                   onChange={e => this.alterObj(e, obj.id)}
                 />
-                <label htmlFor='end_date' className='active'>End Date <i>[mm/yy]</i></label>
+                <label htmlFor='end_date' className='active'>
+                  End Date <i>[mm/yy]</i>
+                </label>
               </div>
               <textarea
                 id={obj.id}
@@ -570,65 +581,70 @@ export class EditExperience extends Component {
 export class EditQuickview extends Component {
   constructor (props) {
     super(props)
+    let { img, user } = props
 
     this.state = {
-      image: props.img,
-      rotate: 0,
+      image: img,
       scale: 1.0,
       name: '',
-      university: props.user && props.user.university
-        ? props.user.university
-        : '',
+      university: user && user.university ? user.university : '',
       x: 0.5,
-      y: 0.5,
-      rotate: 0
+      y: 0.5
     }
   }
 
-  componentWillReceiveProps (props) {
-    if (props.user) {
-      this.setState({
-        name: props.user.name,
-        university: props.user.university,
-        image: props.user.img || props.img
-      })
-    }
+  componentWillReceiveProps ({ user, img }) {
+    this.setState({
+      name: user.name,
+      university: user.university,
+      image: user.img || img
+    })
   }
 
   componentDidMount () {
-    if (this.props.updateUser) {
-      this.props.updateUser('crop', {
-        x: this.state.x,
-        y: this.state.y,
-        scale: this.state.scale
-      })
-    }
+    // initializes user's crop
+    this.props.updateUser('crop', {
+      x: this.state.x,
+      y: this.state.y,
+      scale: this.state.scale
+    })
   }
 
   handleDrop = dropped => {
-    this.setState({ image: dropped[0] })
-    if (this.props.updateUser) {
-      this.props.updateUser('img', dropped[0])
-    }
+    let new_image = dropped[0]
+    let { updateUser } = this.props
+
+    // updates this component
+    this.setState({ image: new_image })
+
+    // updates parent
+    updateUser('img', new_image)
   }
 
   handleSlider = e => {
-    this.setState({
-      scale: parseFloat(e.target.value, 10)
-    })
+    let slider_value = parseFloat(e.target.value, 10)
+    let { x, y } = this.state
+    let { updateUser } = this.props
 
-    if (this.props.updateUser) {
-      this.props.updateUser('crop', {
-        x: this.state.x,
-        y: this.state.y,
-        scale: e.target.value
-      })
-    }
+    // updates this component
+    this.setState({ scale: slider_value })
+
+    // updates the parent
+    updateUser('crop', {
+      x: x,
+      y: y,
+      scale: slider_value
+    })
   }
 
   handleMove = crop => {
+    let { updateUser } = this.props
+
+    // updates this component
     this.setState(crop)
-    this.props.updateUser('crop', {
+
+    // updates parent
+    updateUser('crop', {
       x: this.state.x,
       y: this.state.y,
       scale: this.state.scale
@@ -644,18 +660,18 @@ export class EditQuickview extends Component {
           placeholder='Hogwarts'
           value={this.state.university}
           onChange={e => {
-            if (this.props.updateUser) {
-              this.props.updateUser('university', e.target.value)
-            }
+            this.props.updateUser('university', e.target.value)
             this.setState({ university: e.target.value })
           }}
         />
-        <label htmlFor='profile-school' className='active'>School</label>
+        <label htmlFor='profile-school' className='active'>
+          School
+        </label>
       </div>
     )
 
     var nameSection = (
-      <div id="quickview-editor-R" className='input-field'>
+      <div id='quickview-editor-R' className='input-field'>
         <input
           id='profile-name'
           type='text'
@@ -663,27 +679,26 @@ export class EditQuickview extends Component {
           value={this.state.name}
           onChange={e => {
             this.setState({ name: e.target.value })
-            if (this.props.updateUser) {
-              this.props.updateUser('name', e.target.value)
-            }
+            this.props.updateUser('name', e.target.value)
           }}
         />
-        <label htmlFor='profile-name' className='active'>Name</label>
+        <label htmlFor='profile-name' className='active'>
+          Name
+        </label>
       </div>
     )
 
     if (this.props.showNoSchool) {
       schoolSection = null
       nameSection = (
-        <div style={{display: 'none'}}>
+        <div style={{ display: 'none' }}>
           <div className='onboarding-text'>
             Add a profile photo and edit using the slider tool
           </div>
           <div className='onboarding-text'>
-          Or, stick with our friendly mascot, Rodriguez!
+            Or, stick with our friendly mascot, Rodriguez!
           </div>
         </div>
-
       )
     }
 
@@ -702,7 +717,6 @@ export class EditQuickview extends Component {
               border={20}
               color={[0, 0, 0, 0.2]}
               scale={this.state.scale}
-              rotate={this.state.rotate}
               borderRadius={100}
               className='grabbable'
               onPositionChange={this.handleMove}
@@ -722,7 +736,6 @@ export class EditQuickview extends Component {
               />
             </div>
           </div>
-          <br /><br />
         </div>
         {nameSection}
       </div>
