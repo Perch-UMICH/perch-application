@@ -71,32 +71,30 @@ class StudentProfile extends Component {
     }
     this.state = {
       user,
-      updated_user: deepCopy(user)
+      updated_user: deepCopy(user),
     }
   }
 
   // this just updates the state object, not the backend
   updateUser (field, newValue) {
-    this.state.updated_user[field] = newValue
-    if (field === 'classes') this.state.classes = newValue
-    this.setState(this.state)
+    let updated_user = this.state.updated_user
+    updated_user[field] = newValue
+    if (field === 'classes') this.setState({classes: newValue})
+    else this.setState({updated_user})
   }
 
   // sends work experiences to the backend
   sendExperiences () {
-    if (this.state.updated_user.work_experiences) {
-      var idsToRemove = []
-      if (exists(this.state.user.work_experiences)) {
-        this.state.user.work_experiences.map(exp => idsToRemove.push(exp.id))
-      }
-      removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-        if (exists(this.state.updated_user.work_experiences)) {
-          this.state.updated_user.work_experiences.map(exp =>
-            addWorkExperienceToStudent(exp).then(r => this.generalHandler())
-          )
-        }
-      })
+    var idsToRemove = []
+    if (exists(this.state.user.work_experiences)) {
+      this.state.user.work_experiences.map(exp => idsToRemove.push(exp.id))
     }
+    removeWorkExperiencesFromStudent(idsToRemove).then(r => {
+      let exps = this.state.updated_user.work_experiences || []
+      if (exps.length)
+        exps.map(exp => addWorkExperienceToStudent(exp).then(r => this.generalHandler()))
+      else this.generalHandler()
+    })
   }
 
   sendEduExp (edu_exp) {
@@ -307,8 +305,9 @@ class StudentProfile extends Component {
         if (r.data) user.img = r.data.url
       })
       .then(r => {
-        var updated_user = deepCopy(user)
-        this.setState({ user, updated_user })
+        let owner = (user.user_id == getCurrentUserId())
+        let updated_user = deepCopy(user)
+        this.setState({ user, updated_user, owner })
       })
   }
 
@@ -477,7 +476,7 @@ class StudentProfile extends Component {
                   <b>Phone</b> {user.contact_phone}
                 </div>
               </div>
-              <Editor superClick={() => this.openModal('contact-edit')} />
+              <Editor permissions={this.state.owner} superClick={() => this.openModal('contact-edit')} />
             </div>
             <div id='user-links'>
               <h1>Links</h1>
@@ -491,7 +490,7 @@ class StudentProfile extends Component {
                 </a>
                 {/* <a target="_blank" href={resumeLink} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a> */}
               </div>
-              <Editor superClick={() => this.openModal('link-edit')} />
+              <Editor permissions={this.state.owner} superClick={() => this.openModal('link-edit')} />
             </div>
           </div>
           <div id='user-column-R'>
@@ -513,19 +512,20 @@ class StudentProfile extends Component {
                 <div id='user-quickview-name'>{user.name}</div>
               </div>
               <SkillsInterests
+                owner={this.state.owner}
                 skills={user.skills}
                 interests={user.tags}
               />
-              <Editor superClick={() => this.openModal('quickview-edit')} />
+              <Editor permissions={this.state.owner} superClick={() => this.openModal('quickview-edit')} />
               <div style={{ position: 'relative' }}>
                 <UserBio>{user.bio}</UserBio>
-                <Editor superClick={() => this.openModal('bio-edit')} />
+                <Editor permissions={this.state.owner} superClick={() => this.openModal('bio-edit')} />
               </div>
             </div>
             <div>
               <h1>Experience</h1>
               <UserWorkExperience expObjs={user.work_experiences} />
-              <Editor superClick={() => this.openModal('work-edit')} />
+              <Editor permissions={this.state.owner} superClick={() => this.openModal('work-edit')} />
             </div>
           </div>
         </div>
@@ -704,7 +704,7 @@ class SkillsInterests extends Component {
   render () {
     return (
       <div id='user-skills-interests'>
-        <Editor superClick={() => this.openModal('skills-interests-edit')} />
+        <Editor permissions={this.props.owner} superClick={() => this.openModal('skills-interests-edit')} />
         {!this.props.interests.length &&
           !this.props.skills.length &&
           <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
