@@ -155,7 +155,7 @@ export function loginUserIdp (email, idp, accessToken) {
       idpToken: accessToken,
       register: false
     })
-    .then(response => {})
+    .then(response => console.log(response))
     .catch(error => {
       return error_handle(error)
     })

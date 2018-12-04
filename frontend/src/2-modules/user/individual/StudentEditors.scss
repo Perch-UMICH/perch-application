@@ -1,15 +1,14 @@
 #edit-container {
-	width: 800px;
-	margin: auto auto;
-	/*min-height: 550px;*/
-	margin-bottom: 20px;
 	text-align: center;
 	border-radius: var(--border-radius-C);
+	&:last-of-type {
+		border-bottom: none;
+	}
+	max-width: 800px;
 }
 
 /* For the form */
 #edit-container > form {
-	border: 1px solid lightgrey;
 	background-color: white;
 	padding: 20px;
 }
@@ -118,7 +117,7 @@ input[type=range]::-ms-thumb {
 	position: absolute;
 	left: 300px;
 	top: 20px;
-	width: calc(100% - 390px);
+	width: calc(100% - 330px);
 	overflow: scroll;
 }
 

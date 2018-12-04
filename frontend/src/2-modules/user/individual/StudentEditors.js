@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone'
 import Cleave from 'cleave.js/react'
 import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n';
 import { deepCopy, validDateChange, validPhoneChange } from '../../../helper.js'
-import './StudentEditors.css'
+import './StudentEditors.scss'
 
 export class EditLinks extends Component {
   constructor (props) {
@@ -570,8 +570,6 @@ export class EditQuickview extends Component {
   }
 
   componentWillReceiveProps (props) {
-    var name = ''
-
     if (props.user) {
       this.setState({
         name: props.user.name,
@@ -586,7 +584,6 @@ export class EditQuickview extends Component {
       this.props.updateUser('crop', {
         x: this.state.x,
         y: this.state.y,
-        rotate: this.state.rotate,
         scale: this.state.scale
       })
     }
@@ -608,18 +605,9 @@ export class EditQuickview extends Component {
       this.props.updateUser('crop', {
         x: this.state.x,
         y: this.state.y,
-        rotate: this.state.rotate,
         scale: e.target.value
       })
     }
-  }
-
-  handleRotate = () => {
-    this.setState({ rotate: this.state.rotate - 90 }, () => {
-      if (this.props.updateUser) {
-        this.props.updateUser('img_rotate', this.state.rotate)
-      }
-    })
   }
 
   handleMove = crop => {
@@ -627,7 +615,6 @@ export class EditQuickview extends Component {
     this.props.updateUser('crop', {
       x: this.state.x,
       y: this.state.y,
-      rotate: this.state.rotate,
       scale: this.state.scale
     })
   }
@@ -672,12 +659,12 @@ export class EditQuickview extends Component {
     if (this.props.showNoSchool) {
       schoolSection = null
       nameSection = (
-        <div>
+        <div style={{display: 'none'}}>
           <div className='onboarding-text'>
-            Add a profile photo and edit using the slider and rotate tool below
+            Add a profile photo and edit using the slider tool
           </div>
           <div className='onboarding-text'>
-          Or, by default, stick with our friendly mascot, Rodriguez!
+          Or, stick with our friendly mascot, Rodriguez!
           </div>
         </div>
 
@@ -704,7 +691,6 @@ export class EditQuickview extends Component {
               className='grabbable'
               onPositionChange={this.handleMove}
             />
-
           </Dropzone>
           <i>Drag and drop image</i>
           <div id='prof-pic-editors'>
@@ -719,19 +705,8 @@ export class EditQuickview extends Component {
                 onChange={this.handleSlider}
               />
             </div>
-            {/*<i
-              id='rotate-icon'
-              className='material-icons'
-              onClick={this.handleRotate}
-            >
-              rotate_90_degrees_ccw
-            </i>*/}
           </div>
           <br /><br />
-        </div>
-        <div id='quickview-editor-R'>
-          {nameSection}
-          {/* schoolSection */}
         </div>
       </div>
     )

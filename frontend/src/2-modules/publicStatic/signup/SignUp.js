@@ -61,7 +61,7 @@ class SignUp extends Component {
   }
 
   handleGoogleSuccessResponse = response => {
-    console.log(response.accessToken)
+    alert(response.accessToken)
     loginUserIdp('blah', 'google', response.accessToken)
   }
 

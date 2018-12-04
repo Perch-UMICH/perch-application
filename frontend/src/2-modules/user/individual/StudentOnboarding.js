@@ -3,7 +3,7 @@ import BasicButton from '../../utilities/buttons/BasicButton'
 import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import $ from 'jquery'
-import './StudentEditors.css'
+import './StudentEditors.scss'
 import { EditContact } from './StudentEditors'
 import ProgressIndicator from '../../utilities/ProgressIndicator'
 import EnterContact from './EnterContact'
@@ -15,16 +15,8 @@ import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
 import {
-  getStudent,
-  isLoggedIn,
-  isStudent,
-  getCurrentStudentId,
   getCurrentUserId,
-  verifyLogin,
   getStudentFromUser,
-  getStudentTags,
-  getStudentSkills,
-  getUser,
   updateStudent,
   addSkillsToStudent,
   addTagsToStudent,
@@ -150,25 +142,33 @@ class StudentOnboarding extends Component {
         }}
       />
     )
+
+    var firstPage = <div id='first-page'>
+      <UploadImage
+        showContact
+        user={this.state.user}
+        updateUser={this.updateUser.bind(this)}
+      />
+      <div>
+        <EnterContact
+          user={this.state.user}
+          updateUser={this.updateUser.bind(this)}
+        />
+        <Links
+          user={this.state.user}
+          updateUser={this.updateUser.bind(this)}
+        />
+      </div>
+      
+    </div>
+
     var steps = {
       0: {
         comp: [
-          <UploadImage
-            showContact
-            user={this.state.user}
-            updateUser={this.updateUser.bind(this)}
-          />,
-          <EnterContact
-            user={this.state.user}
-            updateUser={this.updateUser.bind(this)}
-          />,
-          <Links
-            user={this.state.user}
-            updateUser={this.updateUser.bind(this)}
-          />
+          firstPage
         ],
         text:
-          "Welcome to Perch! We'll begin by gathering some information about you to set up your profile. \nDon't worry about perfection - you can edit these fields afterwards at any time."
+          "Welcome to Perch! We'll begin by gathering some information about you to set up your profile."
       },
       1: {
         comp: (
@@ -263,15 +263,17 @@ class StudentOnboarding extends Component {
     )
     return (
       <div className='onboarding-container'>
-        <ProgressIndicator
-          steps={this.state.numSteps}
-          curStep={this.state.curStep}
-        />
-        <div className='onboarding-text'>{stepToRender.text}</div>
-        {dropDown}
-        {stepToRender.comp}
-        {backBtn}
-        {nextBtn}
+        <div>
+          <ProgressIndicator
+            steps={this.state.numSteps}
+            curStep={this.state.curStep}
+          />
+          <div className='onboarding-text'>{stepToRender.text}</div>
+          {dropDown}
+          {stepToRender.comp}
+          {backBtn}
+          {nextBtn}
+        </div>
       </div>
     )
   }
