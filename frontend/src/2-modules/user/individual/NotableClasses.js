@@ -194,6 +194,7 @@ class NotableClasses extends Component {
               className='year-selector'
               id='year_select'
               value={this.state.year}
+              onChange={() => {}}>
             >
               <option className='year-selector-item' value='' disabled>
                 Choose your year

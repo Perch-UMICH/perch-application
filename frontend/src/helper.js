@@ -77,7 +77,10 @@ export function verifyLogin () {
     })
 }
 
-export function registerUser (name, email, password, password_confirmation) {
+export function registerUser (name,
+                              email,
+                              password,
+                              password_confirmation) {
   return axios
     .post('api/register', {
       name,
@@ -1776,6 +1779,7 @@ export function exists (input) {
 
 // Check if valid date
 export function validDateChange (new_val) {
+
   let ret_obj = {
     success: false,
     new_val: new_val
@@ -1790,11 +1794,11 @@ export function validDateChange (new_val) {
   ) { return ret_obj }
   if (num_slash == 1) {
     let split_val = new_val.split('/')
-    if (split_val[0].length > 2) return ret_obj
-    if (split_val[1].length > 2) return ret_obj
+    if (split_val[0].length > 2 || (split_val[1].length > 2)) return ret_obj // Too many digits
   }
   if (num_slash == 0) {
     if (new_val.length > 2) return ret_obj
+    if (new_val > 12) return ret_obj // Invalid month
   }
   if (new_val.length == 2 && !new_val.match(/[/]/i)) new_val += '/'
   ret_obj['success'] = true
@@ -1815,3 +1819,27 @@ export function validPhoneChange (new_val) {
   if (new_val.length > 15) return false
   return true
 }
+
+// NEW USER OBJECT:
+
+// username - (string)
+// email - (string)
+// password - (string)
+// password_confirmation - (string)
+// university - (string)
+
+// Either a student or faculty object:
+
+// student = {
+//  first_name
+//  last_name
+//  year
+//  major
+//  }
+
+// faculty = {
+//  first_name
+//  last_name
+//  department
+//  title/role
+// }

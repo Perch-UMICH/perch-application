@@ -19,7 +19,6 @@ Modal for profile edit components; usage:
 import React, { Component } from 'react'
 import BasicButton from '../buttons/BasicButton'
 import './EditModal.css'
-import iziToast from 'izitoast';
 
 class EditModal extends Component {
   handleClose (event) {

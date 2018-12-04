@@ -10,6 +10,8 @@ import {
   getStudentTags
 } from '../../helper.js'
 import '../user/individual/PickYourInterests.scss'
+import { warn_toast } from '../../data/toastData.js'
+import iziToast from 'izitoast'
 
 class BubbleChoice extends Component {
   constructor (props) {
@@ -17,7 +19,8 @@ class BubbleChoice extends Component {
     this.state = {
       options_full: [], // Full options to choose from.
       options: [], // Filtered options.
-      chosen: [] // Student choices.
+      chosen: [], // Student choices.
+      search_val: ''
     }
     this.passChosen.bind(this)
   }
@@ -42,8 +45,8 @@ class BubbleChoice extends Component {
   }
 
   clickAdd (b) {
-		let {options, chosen} = this.state
     // Remove bubble from options and add to chosen.
+		let {options, chosen} = this.state
     let b_idx = options
       .map(o => {
         return o.id
@@ -72,6 +75,7 @@ class BubbleChoice extends Component {
 
     this.setState({ options, chosen })
     this.passChosen(chosen)
+    this.filterList()
   }
 
   clickCustomAdd () {
@@ -79,15 +83,30 @@ class BubbleChoice extends Component {
     let createBubble = this.props.skills ? createSkill : createTag
     let options_full = this.state.options_full
     let chosen = this.state.chosen
+    let new_name = this.state.search_val.toLowerCase()
+    let existing, already_chosen = null
 
-    // Can uncomment on backend update - returns 'Error: skill of this name already exists' for any value
-    // createBubble(this.state.search_val || "", "").then(r => {
-    // 	console.log("r",r)
-    // 	options_full.push(r.data)
-    // 	chosen.push(r.data)
-    // 	this.setState({options_full, options})
-    // 	this.passChosen(chosen)
-    // })
+    // Check if already exists in options or has been chosen.
+    if (!new_name || new_name == 0) return
+    options_full.map(o => { 
+      if (o.name.toLowerCase() == new_name) 
+          existing = o })
+    chosen.map(c => { 
+      if (c.name.toLowerCase() == new_name) 
+          already_chosen = true })
+
+    if (already_chosen) return
+    if (existing) {
+      this.clickAdd(existing)
+      return }
+
+    createBubble(new_name, '').then(r => {
+      options_full.push(r.data)
+    	chosen.push(r.data)
+    	this.setState({options_full, chosen})
+      this.passChosen(chosen)
+      this.filterList()
+    })
   }
 
   passChosen (chosen) {
@@ -96,7 +115,11 @@ class BubbleChoice extends Component {
     if (passChosen) passChosen(chosen, skills)
   }
 
-  filterList (e) {
+  updateSearch(e) {
+    this.setState({ search_val: e.target.value }, this.filterList.bind(this))
+  }
+
+  filterList () {
     // Using search box, filter options.
     let options = this.state.options_full.filter(o => {
       let matches_search =
@@ -104,7 +127,7 @@ class BubbleChoice extends Component {
           .toLowerCase()
           .replace(/[^a-zA-Z0-9]+/g, '-')
           .search(
-            e.target.value.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-')
+            this.state.search_val.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-')
           ) !== -1
       return (
         matches_search &&
@@ -115,7 +138,7 @@ class BubbleChoice extends Component {
           .indexOf(o.id) == -1
       )
     })
-    this.setState({ options, search_val: e.target.value })
+    this.setState({ options })
   }
 
   render () {
@@ -125,12 +148,13 @@ class BubbleChoice extends Component {
     return (
       <div className='bbl-container'>
         <div className='bbl-section'>
-          {/* <div className="interest-custom-add" onClick={this.clickCustomAdd.bind(this)}>+ custom</div> */}
+          <div className="bbl-custom-add" onClick={this.clickCustomAdd.bind(this)}>+ custom</div>
           <input
             className='bbl-search'
             type='text'
             placeholder={placeholder}
-            onChange={this.filterList.bind(this)}
+            value={this.state.search_val}
+            onChange={this.updateSearch.bind(this)}
           />
           <div className='bbl-body'>
             {this.state.options.map((o, idx) => {

@@ -77,6 +77,7 @@ class LabDashboard extends Component {
             facultyOwned={facultyOwned}
             id={position.lab_id}
             submitted={submitted}
+            saved={true}
             updateProjects={this.updateProjects.bind(this)}
           />
         </div>
