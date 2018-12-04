@@ -115,13 +115,13 @@ class ProfPage extends Component {
   componentDidMount () {
     if (isLoggedIn()) {
       // check if user or faculty for viewing positions
+      let owner = false
       if (isStudent()) this.setState({ user_type: 'user' })
       else if (isFaculty()) {
-        let isOwner = false
         if (getCurrentFacultyId() == window.location.pathname.split('/')[2]) {
-          isOwner = true
+          owner = true
         }
-        this.setState({ user_type: 'faculty', isOwner })
+        this.setState({ user_type: 'faculty', owner })
       }
 
       this.loadFaculty()
@@ -148,7 +148,7 @@ class ProfPage extends Component {
             contact_info: contact_info,
             lab_summary: resp.data.description,
             labels: resp.tags,
-            skills: resp.skills
+            skills: resp.skills,
             // img_src: resp.data.labpic_path, ADD BACK IN TO SHOW IMAGE ONCE ON SAME SERVER!
           })
         } else {
@@ -176,7 +176,7 @@ class ProfPage extends Component {
   }
 
   renderModals () {
-    if (!this.state.isOwner) return
+    if (!this.state.owner) return
     return (
       <div>
         <EditModal
@@ -301,7 +301,7 @@ class ProfPage extends Component {
         createLabEdit,
         workEdit = null
 
-      if (this.state.isOwner) {
+      if (this.state.owner) {
         createLabCTA = (
           <div
             className='join-lab'
@@ -311,15 +311,15 @@ class ProfPage extends Component {
           </div>
         )
         contactEdit = (
-          <Editor superClick={() => this.openModal('contact-edit')} />
+          <Editor permissions superClick={() => this.openModal('contact-edit')} />
         )
         quickviewEdit = (
-          <Editor superClick={() => this.openModal('quickview-edit')} />
+          <Editor permissions superClick={() => this.openModal('quickview-edit')} />
         )
         createLabEdit = (
-          <Editor superClick={() => this.openModal('create-lab-modal')} add />
+          <Editor permissions superClick={() => this.openModal('create-lab-modal')} add />
         )
-        workEdit = <Editor superClick={() => this.openModal('work-edit')} />
+        workEdit = <Editor permissions superClick={() => this.openModal('work-edit')} />
       }
 
       return (

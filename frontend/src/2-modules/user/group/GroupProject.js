@@ -252,7 +252,7 @@ export class GroupProject extends Component {
 	renderApply() {
 		let project_action = <div className='group-project-apply' onClick={() => this.openModal(`${this.props.pos_id}-apply`)}>Apply</div>
 		if (this.isAdmin()) 
-			project_action = <Editor superClick={() => this.openModal(`${this.props.pos_id}-apply`)}/>
+			project_action = <Editor permissions superClick={() => this.openModal(`${this.props.pos_id}-apply`)}/>
 		if (this.state.submitted) 
 			project_action = <div className='group-project-application-submitted' >Application<br/>Submitted</div>;
 		return(
@@ -314,7 +314,7 @@ export class GroupProject extends Component {
 }
 
 export const GroupProjectContainer = (props) => {
-	let editor = props.admin_access ? <Editor superClick={props.addFunction} add={true}/> : null
+	let editor = props.admin_access ? <Editor permissions superClick={props.addFunction} add={true}/> : null
 	let content = <div>{props.children}</div>
 	if (props.children.length == 0)
 		content = <div className="group-default-text">No Current Projects</div>
