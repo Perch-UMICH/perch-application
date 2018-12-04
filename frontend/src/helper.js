@@ -1471,7 +1471,7 @@ export function createTag (name, description) {
   }
 
   return axios
-    .post('api/skills/', payload)
+    .post('api/tags/', payload)
     .then(response => {
       return respond(response.status, response.data)
     })
