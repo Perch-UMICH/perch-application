@@ -6,6 +6,8 @@ import Cleave from 'cleave.js/react'
 import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n';
 import { deepCopy, validDateChange, validPhoneChange } from '../../../helper.js'
 import './StudentEditors.css'
+import iziToast from 'izitoast'
+import { warn_toast } from '../../../data/toastData.js'
 
 export class EditLinks extends Component {
   constructor (props) {
@@ -381,7 +383,8 @@ export class EditExperience extends Component {
       objs: initObjs,
       titleText,
       titlePlacehold,
-      textPlacehold
+      textPlacehold,
+      show_toast: true,
     }
     this.state.index = this.state.objs.length
   }
@@ -397,6 +400,17 @@ export class EditExperience extends Component {
       ) {
         this.setState({ objs: deepCopy(nextProps.user.work_experiences) })
       }
+    }
+  }
+
+  showToast() {
+    warn_toast.message = "Please enter a valid numeric date (e.g. Sept 2018 = 09/18)."
+    warn_toast.onClosing = () => this.setState({show_toast: true})
+
+    if (this.state.show_toast) {
+      this.setState({show_toast: false}, () => {
+        iziToast.show(warn_toast)
+      })
     }
   }
 
@@ -431,8 +445,10 @@ export class EditExperience extends Component {
     if ((event.target.name == 'start_date' || event.target.name == 'end_date')
         && (temp_objs[index][event.target.name].length < event.target.value.length)) {
         let ret_obj = validDateChange(new_val)
-        if (!ret_obj.success)
+        if (!ret_obj.success) {
+          this.showToast()
           return
+        }
         new_val = ret_obj.new_val
     }
     temp_objs[index][event.target.name] = new_val
@@ -483,7 +499,7 @@ export class EditExperience extends Component {
                   type='text'
                   name='title'
                   placeholder={this.state.titlePlacehold}
-                  value={obj.title}
+                  value={obj.title || ''}
                   onChange={e => this.alterObj(e, obj.id)}
                 />
                 <label htmlFor='title' className='active'>
@@ -496,7 +512,7 @@ export class EditExperience extends Component {
                   type='text'
                   name='start_date'
                   placeholder='08/17'
-                  value={obj.start_date}
+                  value={obj.start_date || ''}
                   onChange={e => this.alterObj(e, obj.id)}
                 />
                 <label htmlFor='start_date' className='active'>
@@ -509,7 +525,7 @@ export class EditExperience extends Component {
                   type='text'
                   name='end_date'
                   placeholder='06/18'
-                  value={obj.end_date}
+                  value={obj.end_date || ''}
                   onChange={e => this.alterObj(e, obj.id)}
                 />
                 <label htmlFor='end_date' className='active'>End Date <i>[mm/yy]</i></label>
@@ -520,7 +536,7 @@ export class EditExperience extends Component {
                 placeholder={this.state.textPlacehold}
                 className='textarea-experience'
                 name='description'
-                value={obj.description}
+                value={obj.description || ''}
                 onChange={e => this.alterObj(e, obj.id)}
                 required
               />

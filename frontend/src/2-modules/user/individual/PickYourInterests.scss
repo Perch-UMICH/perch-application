@@ -26,7 +26,8 @@
 
 .bbl-section {
 	margin: 0px !important;
-	padding: 0px !important;
+	padding: 0px;
+	padding-bottom: 40px;
 	background-color: var(--e-grey);
 	height: 100%;
 }

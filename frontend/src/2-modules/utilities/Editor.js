@@ -16,6 +16,8 @@ class Editor extends Component {
 	}
 
 	render() {
+		if (!this.props.permissions) return null;
+
 		var icon = <i className="fas fa-pencil-alt"></i>
 		if (this.props.add) {
 			icon = <i className="material-icons">add</i>

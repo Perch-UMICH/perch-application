@@ -1776,6 +1776,7 @@ export function exists (input) {
 
 // Check if valid date
 export function validDateChange (new_val) {
+
   let ret_obj = {
     success: false,
     new_val: new_val
@@ -1790,11 +1791,11 @@ export function validDateChange (new_val) {
   ) { return ret_obj }
   if (num_slash == 1) {
     let split_val = new_val.split('/')
-    if (split_val[0].length > 2) return ret_obj
-    if (split_val[1].length > 2) return ret_obj
+    if (split_val[0].length > 2 || (split_val[1].length > 2)) return ret_obj // Too many digits
   }
   if (num_slash == 0) {
     if (new_val.length > 2) return ret_obj
+    if (new_val > 12) return ret_obj // Invalid month
   }
   if (new_val.length == 2 && !new_val.match(/[/]/i)) new_val += '/'
   ret_obj['success'] = true
