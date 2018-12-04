@@ -655,7 +655,7 @@ export class EditQuickview extends Component {
     )
 
     var nameSection = (
-      <div className='input-field'>
+      <div id="quickview-editor-R" className='input-field'>
         <input
           id='profile-name'
           type='text'
@@ -724,6 +724,7 @@ export class EditQuickview extends Component {
           </div>
           <br /><br />
         </div>
+        {nameSection}
       </div>
     )
   }

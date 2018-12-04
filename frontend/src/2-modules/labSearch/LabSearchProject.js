@@ -66,7 +66,6 @@ class LabSearchProject extends Component {
           this.state.position.id
         )
           .then(r => {
-            alert('Application Successfully Submitted!')
             this.setState({ submitted: true })
             if (this.props.loadSubmitted) this.props.loadSubmitted()
           })

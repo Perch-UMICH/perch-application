@@ -22,7 +22,8 @@ import {
   addTagsToStudent,
   addWorkExperienceToStudent,
   addEduExperienceToStudent,
-  primeExternalLink
+  primeExternalLink,
+  uploadUserProfilePic
 } from '../../../helper.js'
 import './StudentOnboarding.scss'
 
@@ -62,6 +63,33 @@ class StudentOnboarding extends Component {
     updateStudent(user)
       .then(r => {
         if (redirect) window.location = '/student-profile/' + getCurrentUserId()
+      })
+      .then(r => {
+        // update profile picture
+        if (user.img) {
+          if (!user.crop) {
+            user.crop = {
+              x: 0.5,
+              y: 0.5,
+              rotate: 0,
+              scale: 1
+            }
+          }
+
+          let formData = new FormData()
+          formData.append('file', user.img)
+
+          let to_return = {
+            formData: formData,
+            type: 'profile_pic',
+            x: user.crop.x,
+            y: user.crop.y,
+            scale: user.crop.scale,
+            user_id: getCurrentUserId(),
+          }
+
+          return uploadUserProfilePic(to_return)
+        }
       })
       .catch(e => alert('ERROR'))
   }

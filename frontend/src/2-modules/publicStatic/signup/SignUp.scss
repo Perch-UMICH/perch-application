@@ -28,9 +28,7 @@
 
 .signup-container {
 	color: var(--eighty-grey);
-	padding: 80px;
-	padding-top: 40px;
-	padding-bottom: 0px;
+	padding: 70px;
 	background-color: white;
 }
 
@@ -44,12 +42,13 @@
 .new-signup-header {
 	font-size: 25px;
 	margin-bottom: 0px;
+	padding-left: 10px;
 	letter-spacing: 1px;
 	color: var(--active);
-	/*font-weight: bold;*/
 }
 
 .new-signup-sub-header {
+	padding-left: 10px;
 	font-size: 14px;
 	margin-bottom: 0px;
 	letter-spacing: 1px;

@@ -106,8 +106,6 @@ export function loginUser (email, password) {
 
   // Login
 
-  //
-
   return axios
     .post('api/login', {
       email,
@@ -148,7 +146,7 @@ export function loginUser (email, password) {
 export function loginUserIdp (email, idp, accessToken) {
   sessionStorage.clear()
 
-  // Login
+  // Login 
 
   return axios
     .post('oauth/token', {
@@ -156,9 +154,56 @@ export function loginUserIdp (email, idp, accessToken) {
       grant_type: 'idp',
       idp: idp,
       idpToken: accessToken,
-      register: false
+      register: false,
+      client_secret: "",
     })
     .then(response => console.log(response))
+    .catch(error => {
+      return error_handle(error)
+    })
+}
+
+export function signupUserIdp (email, idp, accessToken) {
+  sessionStorage.clear()
+
+  // Login 
+
+  return axios
+    .post('oauth/token', {
+      client_id: 1,
+      grant_type: 'idp',
+      idp: idp,
+      idpToken: accessToken,
+      register: true,
+      client_secret: "",
+    })
+    // .then(response => {
+    //   sessionStorage.setItem('token', accessToken)
+    //   axios.defaults.headers.common['Authorization'] =
+    //     'Bearer ' + sessionStorage.getItem('token')
+    //   sessionStorage.setItem('user_id', response.data.result.user.id)
+    //   if (response.data.result.user.is_student) {
+    //     // Save student id
+    //     sessionStorage.setItem(
+    //       'student_id',
+    //       response.data.result.user.student.id
+    //     )
+    //     // sessionStorage.setItem('faculty_id', null);
+    //   }
+    //   if (response.data.result.user.is_faculty) {
+    //     // sessionStorage.setItem('student_id', null);
+    //     sessionStorage.setItem(
+    //       'faculty_id',
+    //       response.data.result.user.faculty.id
+    //     ) // EMI HAS CHANGED THIS! FROM HERE TILL...
+    //     // sessionStorage.setItem('lab_id', response.data.result.user.labs[0].id);
+    //     // getUserLabs(response.data.result.user.id).then(resp => {
+    //     //
+    //     //     // sessionStorage.setItem('lab_id', somethin_good);
+    //     // }); // ... HERE!
+    //   }
+    //   return respond(response.status, response.data)
+    // })
     .catch(error => {
       return error_handle(error)
     })

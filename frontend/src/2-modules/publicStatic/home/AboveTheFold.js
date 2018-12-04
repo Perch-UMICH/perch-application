@@ -34,7 +34,7 @@ class AboveTheFold extends Component {
               de-awkward-izing <br /><span id='changer' />
             </div>
             <div className={`${text} left-align`}>
-              You can find labs here
+              You can find Michigan labs here
             </div>
           </div>
         </div>

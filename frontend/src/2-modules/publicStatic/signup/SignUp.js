@@ -11,6 +11,7 @@ import {
   getCurrentUserId,
   loginUser,
   loginUserIdp,
+  signupUserIdp,
   createFaculty
 } from '../../../helper.js'
 import './SignUp.scss'
@@ -61,8 +62,8 @@ class SignUp extends Component {
   }
 
   handleGoogleSuccessResponse = response => {
-    alert(response.accessToken)
-    loginUserIdp('blah', 'google', response.accessToken)
+    console.log(response)
+    signupUserIdp('blah', 'google', response.tokenId)
   }
 
   handleGoogleFailureResponse = response => {
@@ -113,7 +114,7 @@ class SignUp extends Component {
             <label htmlFor='last_name'>Last name</label>
           </div>
         </div>
-        <div className='input-field'>
+        <div className='input-field col s12'>
           <input
             id='email'
             type='email'
@@ -124,7 +125,7 @@ class SignUp extends Component {
           />
           <label htmlFor='email'>Email</label>
         </div>
-        <div className='input-field'>
+        <div className='input-field col s12'>
           <input
             id='password'
             type='password'
@@ -166,17 +167,17 @@ class SignUp extends Component {
         <br />
         <button
           className='btn waves-effect waves-blue basic-btn'
-          style={{ width: 'calc(100% + 2 * 80px)', margin: "0 -80px", height: '80px' }}
+          style={{ width: 'calc(100%)', height: '80px' }}
         >
           Make an account
         </button>
-        <GoogleLogin
+        {/* <GoogleLogin
           clientId='426880385373-gttrdhuk9b4g3cuhh95g0nhhnkbt38ek.apps.googleusercontent.com'
-          buttonText='Google login'
+          buttonText='Google Signup'
           onSuccess={this.handleGoogleSuccessResponse}
           onFailure={this.handleGoogleFailureResponse}
 					className='google-login btn waves-effect basic-btn'
-        />
+        /> */}
       </form>
     )
   }

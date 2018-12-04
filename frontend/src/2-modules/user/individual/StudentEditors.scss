@@ -100,9 +100,8 @@ input[type=range]::-ms-thumb {
 }
 
 #quickview-editor-L {
-	position: absolute;
-	left: 30px;
-	top: 20px;
+	float: left;
+	margin-left: 20px;
 }
 
 /* Drag and Drop instruction */
@@ -110,15 +109,16 @@ input[type=range]::-ms-thumb {
 	font-size: 14px;
 	display: block;
 	text-align: center;
-	margin-bottom: 0;
 }
 
 #quickview-editor-R {
-	position: absolute;
-	left: 300px;
-	top: 20px;
-	width: calc(100% - 330px);
-	overflow: scroll;
+	float: left;
+	// position: absolute;
+	// left: 300px;
+	// top: 20px;
+	// width: calc(100% - 330px);
+	// overflow: scroll;
+	margin-left: 2em;
 }
 
 #rotate-icon {
