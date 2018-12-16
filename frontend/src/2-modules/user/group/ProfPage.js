@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import {
   updateFaculty,
-  getLab,
   createLab,
   isLoggedIn,
   getCurrentFacultyId,
   getUserLabs,
   getFaculty,
-  getAllLabPositions,
   isStudent,
   isFaculty
 } from '../../../helper.js'
@@ -28,21 +26,12 @@ class ProfPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      lab_name: '',
-      yes: ['spots open', 'undergrads', 'credit'],
-      no: ['paid', 'seniors', 'freshmen'],
-      img_src: 'https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png',
-      labels: [],
-      skills: [],
-      positions: [],
-      contact_info: [],
       labs: [],
       user_id: null,
       lab: {},
       selected_lab: {},
       no_lab: false,
       loading_labs: true,
-      dest: '/edit-external-links',
       updated_user: {}
     }
   }
@@ -55,124 +44,100 @@ class ProfPage extends Component {
     }
   }
 
+  // either creates or deletes lab
   getModalAction (create) {
+    let { lab, selected_lab } = this.state
+    let loadLabs = this.loadLabs.bind(this)
+
     if (create) {
-      modalCreateLab(this.state.lab, id => {
-        window.location = '/prof-page/' + id
-      })
-    } else modalDeleteLab(this.state.selected_lab, this.loadLabs.bind(this))
+      modalCreateLab(lab, id => (window.location = '/prof-page/' + id))
+    } else modalDeleteLab(selected_lab, loadLabs)
   }
 
+  // not sure what this does
   updateLabState (name, value) {
     let lab = this.state.lab
     lab[name] = value
     this.setState({ lab })
   }
 
-  componentWillMount () {}
-
+  // loads the labs a user is a part of
   loadLabs () {
-    getUserLabs(this.state.user_id).then(r => {
+    let { user_id } = this.state
+    getUserLabs(user_id).then(r => {
       this.setState({ labs: r.data, loading_labs: false })
     })
   }
 
+  // loads the faculty name, email, phone, id, and labs its in
   loadFaculty () {
-    var prof_id = window.location.pathname.split('/')[2]
+    let prof_id = window.location.pathname.split('/')[2]
+    // set initial faculty info
     getFaculty(prof_id)
       .then(r => {
-        r = r.data
+        let { first_name, contact_email, contact_phone, user_id } = r.data
         this.setState({
-          name: r.first_name,
-          contact_email: r.contact_email,
-          contact_phone: r.contact_phone,
-          user_id: r.user_id
+          name: first_name,
+          contact_email: contact_email,
+          contact_phone: contact_phone,
+          user_id: user_id
         })
       })
+      // grab the labs the user is in or manages
       .then(r => getUserLabs(this.state.user_id))
-      .then(r => {
-        this.setState({ labs: r.data, loading_labs: false })
-      })
-      .catch(e => alert('ERRRROR'))
+      .then(r => this.setState({ labs: r.data, loading_labs: false }))
+      .catch(e => console.log('Error in load faculty somewhere'))
   }
 
+  // not sure what this does
   sendContactInfo () {
-    // updateUser()
-    // updateFaculty(getCurrentFacultyId(), this.state.updated_user)
     updateFaculty(getCurrentFacultyId(), this.state.updated_user).then(r => {
       this.loadFaculty()
     })
   }
 
   // this just updates the state object, not the backend
+  // generic updater for passing through to children
   updateUser (field, newValue) {
-    var newState = this.state
-    newState.updated_user[field] = newValue
-    if (field === 'classes') newState.classes = newValue
-    this.setState(newState)
+    this.state.updated_user[field] = newValue
+    if (field === 'classes') this.state.classes = newValue
+    this.setState(this.state)
   }
 
+  // loads data and checks ownership of page
   componentDidMount () {
     if (isLoggedIn()) {
-      // check if user or faculty for viewing positions
+      // loads the faculty info and the labs they're a part of
+      this.loadFaculty()
+      this.loadLabs()
+      let user_id = window.location.pathname.split('/')[2]
+
+      // check if user, faculty, or faculty that owns this page
       let owner = false
       if (isStudent()) this.setState({ user_type: 'user' })
       else if (isFaculty()) {
-        if (getCurrentFacultyId() == window.location.pathname.split('/')[2]) {
-          owner = true
-        }
+        console.log(getCurrentFacultyId(), user_id)
+        if (getCurrentFacultyId() == user_id) owner = true
         this.setState({ user_type: 'faculty', owner })
       }
-
-      this.loadFaculty()
-      this.loadLabs()
-
-      var lab_id = window.location.pathname.split('/')[2]
-      getLab(lab_id).then(resp => {
-        if (resp.data) {
-          getAllLabPositions(lab_id).then(positions => {
-            this.setState({ positions: positions })
-          })
-          var contact_info = []
-          if (resp.data.location) {
-            contact_info.push({ label: 'location', value: resp.data.location })
-          }
-          if (resp.data.contact_email) {
-            contact_info.push({
-              label: 'email',
-              value: resp.data.contact_email
-            })
-          }
-          this.setState({
-            lab_name: resp.data.name,
-            contact_info: contact_info,
-            lab_summary: resp.data.description,
-            labels: resp.tags,
-            skills: resp.skills,
-            // img_src: resp.data.labpic_path, ADD BACK IN TO SHOW IMAGE ONCE ON SAME SERVER!
-          })
-        } else {
-          this.setState({ no_lab: true })
-        }
-      })
     }
   }
 
+  // creates lab in the backend
   handleLabCreation () {
-    let name = document.getElementById('lab-create-name').value
-    let email = document.getElementById('lab-create-email').value
-    let phone = document.getElementById('lab-create-phone').value
-    let description = document.getElementById('lab-create-description').value
+    let {
+      new_lab_name,
+      new_lab_email,
+      new_lab_phone,
+      new_lab_description
+    } = this.state
     let lab = {
-      name: name,
-      email: email,
-      phone: phone,
-      description: description
+      name: new_lab_name,
+      email: new_lab_email,
+      phone: new_lab_phone,
+      description: new_lab_description
     }
-
-    createLab(lab).then(r => {
-      this.loadLabs()
-    })
+    createLab(lab).then(r => this.loadLabs())
   }
 
   renderModals () {
@@ -231,34 +196,51 @@ class ProfPage extends Component {
           <div className='input-field'>
             <input
               id='lab-create-name'
+              value={this.state.lab_create_name}
               type='text'
               placeholder='Smooth Jazz Lab'
+              onChange={e => this.setState({ new_lab_name: e.target.value })}
             />
-            <label htmlFor='name' className='active'>Lab Name</label>
+            <label htmlFor='name' className='active'>
+              Lab Name
+            </label>
           </div>
           <div className='input-field'>
             <input
               id='lab-create-email'
+              value={this.state.lab_create_email}
               type='email'
               placeholder='lab@labemail.com'
+              onChange={e => this.setState({ new_lab_email: e.target.value })}
             />
-            <label htmlFor='email' className='active'>Email</label>
+            <label htmlFor='email' className='active'>
+              Email
+            </label>
           </div>
           <div className='input-field'>
             <input
               id='lab-create-phone'
+              value={this.state.lab_create_phone}
               type='text'
               placeholder='123-456-7890'
+              onChange={e => this.setState({ new_lab_phone: e.target.value })}
             />
-            <label htmlFor='phone' className='active'>Phone</label>
+            <label htmlFor='phone' className='active'>
+              Phone
+            </label>
           </div>
           <div className='input-field'>
             <textarea
               id='lab-create-description'
+              value={this.state.lab_create_description}
               placeholder='we do cool stuff'
+              onChange={e =>
+                this.setState({ new_lab_description: e.target.value })
+              }
             />
           </div>
-          <br /><br />
+          <br />
+          <br />
         </EditModal>
         <EditModal
           id={`create-lab`}
@@ -277,10 +259,8 @@ class ProfPage extends Component {
           modalAction={() => this.getModalAction(false)}
         >
           <p>
-            Are you sure you want to delete the lab
-            {' '}
-            {this.state.selected_lab.name}
-            ? This action cannot be undone.
+            Are you sure you want to delete the lab{' '}
+            {this.state.selected_lab.name}? This action cannot be undone.
           </p>
         </EditModal>
       </div>
@@ -288,156 +268,165 @@ class ProfPage extends Component {
   }
 
   render () {
-    var apply_dest = '/apply/' + window.location.pathname.split('/')[2]
-
-		if (!isLoggedIn()) {
+    if (!isLoggedIn()) {
       return <ErrorPage />
     } else if (this.state.no_lab) {
       return <ErrorPage fourofour='true' />
     } else {
-      let createLabCTA,
-        contactEdit,
-        quickviewEdit,
-        createLabEdit,
-        workEdit = null
-
-      if (this.state.owner) {
+      let createLabCTA, contactEdit, quickviewEdit, createLabEdit, workEdit
+      let {
+        owner,
+        contact_email,
+        contact_phone,
+        name,
+        loading_labs,
+        labs
+      } = this.state
+      let openModal = this.openModal
+      console.log('owner', owner)
+      if (owner) {
         createLabCTA = (
           <div
             className='join-lab'
-            onClick={r => this.openModal('create-lab-modal')}
+            onClick={r => openModal('create-lab-modal')}
           >
             <div>Create A Lab</div>
           </div>
         )
         contactEdit = (
-          <Editor permissions superClick={() => this.openModal('contact-edit')} />
+          <Editor permissions superClick={() => openModal('contact-edit')} />
         )
         quickviewEdit = (
-          <Editor permissions superClick={() => this.openModal('quickview-edit')} />
+          <Editor permissions superClick={() => openModal('quickview-edit')} />
         )
         createLabEdit = (
-          <Editor permissions superClick={() => this.openModal('create-lab-modal')} add />
+          <Editor
+            permissions
+            superClick={() => openModal('create-lab-modal')}
+            add
+          />
         )
-        workEdit = <Editor permissions superClick={() => this.openModal('work-edit')} />
+        workEdit = (
+          <Editor permissions superClick={() => openModal('work-edit')} />
+        )
       }
 
       return (
         <div id='user-content-body'>
           {this.renderModals()}
-          <div id='user-column-L'>
-            {createLabCTA}
-            <div>
-              <h1>Quick Info</h1>
-              <div>
-                Extraordinary Alchemist
-              </div>
-            </div>
-
-            <div>
-              <h1>Contact Info</h1>
-              <div>
-                <div id='user-email'>
-                  <b>Email</b>
-                  {' '}
-                  <a href={`mailto:${'bearb@umich.edu'}`}>
-                    {this.state.contact_email}
-                  </a>
-                </div>
-                <div><b>Phone</b>{this.state.contact_phone}</div>
-              </div>
-              {contactEdit}
-            </div>
-
-            {/* <div id='user-links'>
-	 					<h1>Links</h1>
-	 					<div>
-	 						<a>LinkedIn</a>
-	 						<a>Website</a>
-	 						<a>Lab Resources</a>
-	 					</div>
-	 					<Editor superClick={() => this.openModal('link-edit')}/>
-	 				</div> */}
-
-          </div>
-
-          <div id='user-column-Dashboard'>
-            <div id='user-quickview'>
-              <div id='user-quickview-img-container'>
-                <img
-                  id='user-quickview-img'
-                  src='https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png'
-                />
-              </div>
-              <div id='user-quickview-name'>{this.state.name}</div>
-              {quickviewEdit}
-            </div>
-
-            <div id='user-labs'>
-              <h1>Labs</h1>
-
-              <div>
-                {this.state.loading_labs
-                  ? <div className='loading-pad'><i>Loading Labs ...</i></div>
-                  : this.state.labs.map(labAssoc => {
-                    return (
-                      <div>
-                        <a
-                          key={labAssoc.lab.id}
-                          href={`/prof-page/${labAssoc.lab.id}`}
-                          >
-                          {labAssoc.lab.name ||
-                              `No Name, id:${labAssoc.lab.id}`}
-                        </a>
-                        <span>{labAssoc.lab.description}</span>
-                      </div>
-                    )
-                  })}
-              </div>
-              {createLabEdit}
-            </div>
-            <div>
-              <h1>Work Experience</h1>
-              <UserWorkExperience
-                title='Manhattan Project'
-                description='Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room.'
-                startTime='August 2017'
-                endTime='Present'
-              />
-              {workEdit}
-            </div>
-          </div>
+          <SideBar
+            email={contact_email}
+            phone={contact_phone}
+            createLabCTA={createLabCTA}
+            editor={contactEdit}
+          />
+          <Dashboard
+            name={name}
+            quickviewEdit={quickviewEdit}
+            loading_labs={loading_labs}
+            labs={labs}
+            createLabEdit={createLabEdit}
+            workEdit={workEdit}
+          />
         </div>
       )
     }
   }
 }
 
-class UserClasses extends Component {
-  expand () {
-    let elem = document.getElementById('user-classes-expander')
-    elem.innerHTML = elem.innerHTML === 'expand_more'
-      ? 'expand_less'
-      : 'expand_more'
-    document.getElementById('user-classes').classList.toggle('active-blue')
-    document.getElementById('user-classes-list').classList.toggle('expand')
-  }
+function Dashboard ({
+  name,
+  quickviewEdit,
+  loading_labs,
+  labs,
+  createLabEdit,
+  workEdit
+}) {
+  return (
+    <div id='user-column-Dashboard'>
+      <Quickview name={name} editor={quickviewEdit} />
+      <Labs loading={loading_labs} labs={labs} editor={createLabEdit} />
+      <WorkExperience editor={workEdit} />
+    </div>
+  )
+}
 
-  render () {
-    return (
-      <div id='user-classes'>
-        <span onClick={this.expand.bind(this)}>
-          Notable Classes
-          <i className='material-icons' id='user-classes-expander'>
-            expand_more
-          </i>
-        </span>
-        <div id='user-classes-list'>
-          {this.props.list.map(item => <div>{item}</div>)}
-        </div>
+function WorkExperience({editor}) {
+  return (
+    <div>
+      <h1>Work Experience</h1>
+      <UserWorkExperience
+        title='Manhattan Project'
+        description='Did some pretty cool stuff, including but not limited to: sleeping in the acetone bath, juggling vials, playing russian hydrochloric acid roulette, spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room. spontaneous macarena, salsa making in the vacuum room.'
+        startTime='August 2017'
+        endTime='Present'
+      />
+      {editor}
+    </div>
+  )
+}
+
+function Labs ({ loading, labs, editor }) {
+  return (
+    <div id='user-labs'>
+      <h1>Labs</h1>
+      <div>
+        {loading ? (
+          <i className='loading-pad'>Loading Labs ...</i>
+        ) : (
+          labs.map(labAssoc => {
+            return (
+              <div>
+                <a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>
+                  {labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}
+                </a>
+                <span>{labAssoc.lab.description}</span>
+              </div>
+            )
+          })
+        )}
       </div>
-    )
-  }
+      {editor}
+    </div>
+  )
+}
+
+function Quickview ({ name, editor }) {
+  return (
+    <div id='user-quickview'>
+      <div id='user-quickview-img-container'>
+        <img
+          id='user-quickview-img'
+          src='https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png'
+        />
+      </div>
+      <div id='user-quickview-name'>{name}</div>
+      {editor}
+    </div>
+  )
+}
+function SideBar ({ createLabCTA, email, phone, editor }) {
+  return (
+    <div id='user-column-L'>
+      {createLabCTA}
+      <div>
+        <h1>Quick Info</h1>
+        <div>Extraordinary Alchemist</div>
+      </div>
+      <div>
+        <h1>Contact Info</h1>
+        <div>
+          <div id='user-email'>
+            <b>Email</b> <a href={`mailto:${'bearb@umich.edu'}`}>{email}</a>
+          </div>
+          <div>
+            <b>Phone</b> {phone}
+          </div>
+        </div>
+        {editor}
+      </div>
+    </div>
+  )
 }
 
 class UserWorkExperience extends Component {
@@ -467,20 +456,6 @@ class UserWorkExperience extends Component {
           id={`user-work-${this.props.title}`}
           action={this.expand.bind(this)}
         />
-      </div>
-    )
-  }
-}
-
-class JoinLab extends Component {
-  handleClick () {
-    alert('hello')
-  }
-
-  render () {
-    return (
-      <div id='join-lab' onClick={r => this.openModal('join-lab-modal')}>
-        <div>Join A Lab</div>
       </div>
     )
   }

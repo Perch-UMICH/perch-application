@@ -126,8 +126,9 @@
 
 .group-project-application-submitted {
 	position: absolute;
-    top: 35px;
-    right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+  right: 0;
 	text-align: center;
 	line-height: none !important;
     background-color: var(--b-grey);
@@ -136,8 +137,9 @@
     -webkit-transition: 0.2s ease;
     -o-transition: 0.2s ease;
     transition: 0.2s ease;
-    padding: 8px;
-    padding-left: 15px;
+		padding: .5em;
+		padding-right: 4px;
+    padding-left: 1em;
 }
 
 #group-project-container {

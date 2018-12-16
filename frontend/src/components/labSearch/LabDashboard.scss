@@ -33,7 +33,6 @@
       opacity: 0 !important;
     }
     .group-project-application-submitted {
-      transform: translateY(20px);
       transition: 0.1s ease;
     }
   }
@@ -45,7 +44,7 @@
       background-color: white;
       .lab-srch-project-action-label {
         opacity: 1 !important;
-        transform: translateY(20px);
+        transform: translateY(-50%);
         right: 0px;
         transition: 0.1s ease;
       }

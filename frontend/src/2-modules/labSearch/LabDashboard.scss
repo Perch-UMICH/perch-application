@@ -19,7 +19,7 @@
   .project {
     border-top: 1px solid lightgrey;
     margin-bottom: 10px;
-    min-height: 150px;
+    min-height: 142px;
     background-color: #f8f8f8;
     .project_description {
       font-size: 14px;
@@ -33,7 +33,7 @@
       opacity: 0 !important;
     }
     .group-project-application-submitted {
-      transform: translateY(20px);
+      transform: translateY(-50%);
       transition: 0.1s ease;
     }
   }
@@ -45,7 +45,7 @@
       background-color: white;
       .project_action_label {
         opacity: 1 !important;
-        transform: translateY(20px);
+        transform: translateY(50%);
         right: 0px;
         transition: 0.1s ease;
       }

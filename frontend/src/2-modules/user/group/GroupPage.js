@@ -25,8 +25,6 @@ import {
   getFacultyFromUser
 } from '../../../helper.js'
 import Editor from '../../utilities/Editor'
-// import $ from 'jquery'
-// import M from 'materialize-css'
 
 import './GroupPage.css'
 
