@@ -7,7 +7,9 @@ import {
   getUserLabs,
   getFaculty,
   isStudent,
-  isFaculty
+  isFaculty,
+  getUserProfilePic,
+  uploadUserProfilePic,
 } from '../../../helper.js'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -22,17 +24,30 @@ import {
 } from '../individual/StudentEditors'
 import './ProfPage.css'
 
+
+/* 
+
+Each faculty page has a specific <user id>, <email>, <img>, <phone number>, and <list of labs>
+that they are a part of.
+
+loading_labs is active while the labs are loading, and no_lab indicates this lab does not exist
+selected lab is exclusively used for deleting a lab, but might not be necessary if we don't delete
+on this page
+
+*/
+
 class ProfPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
       labs: [],
       user_id: null,
-      lab: {},
+      contact_email: "",
+      contact_phone: "",
+      image: "https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png",
       selected_lab: {},
       no_lab: false,
       loading_labs: true,
-      updated_user: {}
     }
   }
 
@@ -48,17 +63,9 @@ class ProfPage extends Component {
   getModalAction (create) {
     let { lab, selected_lab } = this.state
     let loadLabs = this.loadLabs.bind(this)
-
     if (create) {
       modalCreateLab(lab, id => (window.location = '/prof-page/' + id))
     } else modalDeleteLab(selected_lab, loadLabs)
-  }
-
-  // not sure what this does
-  updateLabState (name, value) {
-    let lab = this.state.lab
-    lab[name] = value
-    this.setState({ lab })
   }
 
   // loads the labs a user is a part of
@@ -83,24 +90,54 @@ class ProfPage extends Component {
           user_id: user_id
         })
       })
+      // grabs profile picture if one exists, otherwise the default image
+      .then(r => getUserProfilePic(this.state.user_id))
+      .then(r => this.setState({image: r.data.url || this.state.image}))
       // grab the labs the user is in or manages
       .then(r => getUserLabs(this.state.user_id))
       .then(r => this.setState({ labs: r.data, loading_labs: false }))
       .catch(e => console.log('Error in load faculty somewhere'))
   }
 
-  // not sure what this does
+  // sends sends email and phone number to backend
   sendContactInfo () {
-    updateFaculty(getCurrentFacultyId(), this.state.updated_user).then(r => {
+    let { contact_email, contact_phone } = this.state
+    let contact_info = { contact_email, contact_phone }
+    updateFaculty(getCurrentFacultyId(), contact_info).then(r =>
       this.loadFaculty()
-    })
+    )
+  }
+
+  // updates image and name
+  // img is an image object that only appears if a new image was added
+  // image is the normal url we use for src in the img html tag
+  sendQuickviewInfo () {
+    let { img, crop, user_id } = this.state
+    let imageInfo = new FormData()
+    imageInfo.append('file', img)
+
+    let to_return = {
+      formData: imageInfo,
+      type: 'profile_pic',
+      x: crop.x,
+      y: crop.y,
+      scale: crop.scale,
+      user_id: user_id,
+    }
+    
+    if (img) {
+      uploadUserProfilePic(to_return)
+        .then(r => this.setState({ image: r.data.url }))
+        .catch(console.log("error"))
+    }
+    
   }
 
   // this just updates the state object, not the backend
   // generic updater for passing through to children
   updateUser (field, newValue) {
-    this.state.updated_user[field] = newValue
-    if (field === 'classes') this.state.classes = newValue
+    console.log('updating prof user', field, newValue)
+    this.state[field] = newValue
     this.setState(this.state)
   }
 
@@ -116,7 +153,6 @@ class ProfPage extends Component {
       let owner = false
       if (isStudent()) this.setState({ user_type: 'user' })
       else if (isFaculty()) {
-        console.log(getCurrentFacultyId(), user_id)
         if (getCurrentFacultyId() == user_id) owner = true
         this.setState({ user_type: 'faculty', owner })
       }
@@ -151,7 +187,7 @@ class ProfPage extends Component {
         >
           <EditContact
             modalEdit
-            user={this.state.updated_user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -163,7 +199,7 @@ class ProfPage extends Component {
           <EditLinks
             prof
             modalEdit
-            user={this.state.updated_user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -179,12 +215,12 @@ class ProfPage extends Component {
         <EditModal
           id='quickview-edit'
           title='Edit Quickview Info'
-          modalAction={this.sendContactInfo.bind(this)}
+          modalAction={this.sendQuickviewInfo.bind(this)}
         >
           <EditQuickview
-            img='/img/headshots/bcoppola.jpg'
+            img={this.state.image}
             modalEdit
-            user={this.state.updated_user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -249,7 +285,7 @@ class ProfPage extends Component {
           title={`Create New Lab`}
           modalAction={() => this.getModalAction(true)}
         >
-          <CreateLab updateLabState={this.updateLabState.bind(this)} />
+          <CreateLab />
         </EditModal>
         <EditModal
           id='delete-lab'
@@ -273,19 +309,21 @@ class ProfPage extends Component {
     } else if (this.state.no_lab) {
       return <ErrorPage fourofour='true' />
     } else {
-      let createLabCTA, contactEdit, quickviewEdit, createLabEdit, workEdit
+      let createLabButton, contactEdit, quickviewEdit, createLabEdit, workEdit
       let {
         owner,
         contact_email,
         contact_phone,
         name,
         loading_labs,
-        labs
+        labs,
+        image
       } = this.state
+
+      console.log('lab', this.state.lab)
       let openModal = this.openModal
-      console.log('owner', owner)
       if (owner) {
-        createLabCTA = (
+        createLabButton = (
           <div
             className='join-lab'
             onClick={r => openModal('create-lab-modal')}
@@ -317,7 +355,7 @@ class ProfPage extends Component {
           <SideBar
             email={contact_email}
             phone={contact_phone}
-            createLabCTA={createLabCTA}
+            createLabButton={createLabButton}
             editor={contactEdit}
           />
           <Dashboard
@@ -327,6 +365,7 @@ class ProfPage extends Component {
             labs={labs}
             createLabEdit={createLabEdit}
             workEdit={workEdit}
+            img={image}
           />
         </div>
       )
@@ -340,18 +379,19 @@ function Dashboard ({
   loading_labs,
   labs,
   createLabEdit,
-  workEdit
+  workEdit,
+  img
 }) {
   return (
     <div id='user-column-Dashboard'>
-      <Quickview name={name} editor={quickviewEdit} />
+      <Quickview name={name} editor={quickviewEdit} img={img} />
       <Labs loading={loading_labs} labs={labs} editor={createLabEdit} />
       <WorkExperience editor={workEdit} />
     </div>
   )
 }
 
-function WorkExperience({editor}) {
+function WorkExperience ({ editor }) {
   return (
     <div>
       <h1>Work Experience</h1>
@@ -375,12 +415,13 @@ function Labs ({ loading, labs, editor }) {
           <i className='loading-pad'>Loading Labs ...</i>
         ) : (
           labs.map(labAssoc => {
+            let { id, name, description } = labAssoc.lab
             return (
               <div>
-                <a key={labAssoc.lab.id} href={`/prof-page/${labAssoc.lab.id}`}>
-                  {labAssoc.lab.name || `No Name, id:${labAssoc.lab.id}`}
+                <a key={id} href={`/prof-page/${id}`}>
+                  {name || `No Name, id:${id}`}
                 </a>
-                <span>{labAssoc.lab.description}</span>
+                <span>{description}</span>
               </div>
             )
           })
@@ -391,13 +432,13 @@ function Labs ({ loading, labs, editor }) {
   )
 }
 
-function Quickview ({ name, editor }) {
+function Quickview ({ name, editor, img }) {
   return (
     <div id='user-quickview'>
       <div id='user-quickview-img-container'>
         <img
           id='user-quickview-img'
-          src='https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png'
+          src={img}
         />
       </div>
       <div id='user-quickview-name'>{name}</div>
@@ -405,10 +446,10 @@ function Quickview ({ name, editor }) {
     </div>
   )
 }
-function SideBar ({ createLabCTA, email, phone, editor }) {
+function SideBar ({ createLabButton, email, phone, editor }) {
   return (
     <div id='user-column-L'>
-      {createLabCTA}
+      {createLabButton}
       <div>
         <h1>Quick Info</h1>
         <div>Extraordinary Alchemist</div>

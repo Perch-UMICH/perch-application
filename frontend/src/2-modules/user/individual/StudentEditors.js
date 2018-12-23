@@ -587,7 +587,6 @@ export class EditQuickview extends Component {
       image: img,
       scale: 1.0,
       name: '',
-      university: user && user.university ? user.university : '',
       x: 0.5,
       y: 0.5
     }
@@ -596,7 +595,6 @@ export class EditQuickview extends Component {
   componentWillReceiveProps ({ user, img }) {
     this.setState({
       name: user.name,
-      university: user.university,
       image: user.img || img
     })
   }
