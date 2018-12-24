@@ -9,7 +9,7 @@ import {
   isStudent,
   isFaculty,
   getUserProfilePic,
-  uploadUserProfilePic,
+  uploadUserProfilePic
 } from '../../../helper.js'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
@@ -24,8 +24,15 @@ import {
 } from '../individual/StudentEditors'
 import './ProfPage.css'
 
+// Handles opening of component editing modals
+function openModal (id) {
+  if (document.getElementById(id)) {
+    document.getElementById(id).classList.add('activated')
+    document.getElementById(`${id}-backdrop`).classList.add('activated')
+  }
+}
 
-/* 
+/*
 
 Each faculty page has a specific <user id>, <email>, <img>, <phone number>, and <list of labs>
 that they are a part of.
@@ -42,20 +49,23 @@ class ProfPage extends Component {
     this.state = {
       labs: [],
       user_id: null,
-      contact_email: "",
-      contact_phone: "",
-      image: "https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png",
+      prof_id: null,
+      contact_email: '',
+      contact_phone: '',
+      image:
+        'https://homewoodfamilyaz.org/wp-content/uploads/2017/04/square_profile_pic_male.png',
       selected_lab: {},
       no_lab: false,
-      loading_labs: true,
+      loading_labs: true
     }
   }
 
-  // Handles opening of component editing modals
-  openModal (id) {
-    if (document.getElementById(id)) {
-      document.getElementById(id).classList.add('activated')
-      document.getElementById(`${id}-backdrop`).classList.add('activated')
+  // loads the faculty info, the labs they're a part of, and permissions
+  componentDidMount () {
+    if (isLoggedIn()) {
+      this.loadFaculty()
+      this.loadLabs()
+      this.determinePermissions()
     }
   }
 
@@ -63,9 +73,12 @@ class ProfPage extends Component {
   getModalAction (create) {
     let { lab, selected_lab } = this.state
     let loadLabs = this.loadLabs.bind(this)
+
     if (create) {
-      modalCreateLab(lab, id => (window.location = '/prof-page/' + id))
-    } else modalDeleteLab(selected_lab, loadLabs)
+      modalCreateLab(lab, id => (window.location = `/prof-page/${id}`))
+    } else {
+      modalDeleteLab(selected_lab, loadLabs)
+    }
   }
 
   // loads the labs a user is a part of
@@ -87,15 +100,20 @@ class ProfPage extends Component {
           name: first_name,
           contact_email: contact_email,
           contact_phone: contact_phone,
-          user_id: user_id
+          user_id: user_id,
+          prof_id: prof_id
         })
       })
-      // grabs profile picture if one exists, otherwise the default image
-      .then(r => getUserProfilePic(this.state.user_id))
-      .then(r => this.setState({image: r.data.url || this.state.image}))
-      // grab the labs the user is in or manages
-      .then(r => getUserLabs(this.state.user_id))
-      .then(r => this.setState({ labs: r.data, loading_labs: false }))
+      // grabs profile picture and labs asynchronously
+      .then(r => {
+        let { user_id, image } = this.state
+        getUserProfilePic(user_id).then(r =>
+          this.setState({ image: r.data.url || image })
+        )
+        getUserLabs(user_id).then(r =>
+          this.setState({ labs: r.data, loading_labs: false })
+        )
+      })
       .catch(e => console.log('Error in load faculty somewhere'))
   }
 
@@ -115,47 +133,38 @@ class ProfPage extends Component {
     let { img, crop, user_id } = this.state
     let imageInfo = new FormData()
     imageInfo.append('file', img)
-
     let to_return = {
       formData: imageInfo,
       type: 'profile_pic',
       x: crop.x,
       y: crop.y,
       scale: crop.scale,
-      user_id: user_id,
+      user_id: user_id
     }
-    
+
     if (img) {
       uploadUserProfilePic(to_return)
         .then(r => this.setState({ image: r.data.url }))
-        .catch(console.log("error"))
+        .catch(console.log('error'))
     }
-    
+    updateFaculty(this.state.prof_id, { first_name: this.state.name })
   }
 
   // this just updates the state object, not the backend
   // generic updater for passing through to children
   updateUser (field, newValue) {
-    console.log('updating prof user', field, newValue)
     this.state[field] = newValue
     this.setState(this.state)
   }
 
-  // loads data and checks ownership of page
-  componentDidMount () {
-    if (isLoggedIn()) {
-      // loads the faculty info and the labs they're a part of
-      this.loadFaculty()
-      this.loadLabs()
-      let user_id = window.location.pathname.split('/')[2]
-
-      // check if user, faculty, or faculty that owns this page
-      let owner = false
-      if (isStudent()) this.setState({ user_type: 'user' })
-      else if (isFaculty()) {
-        if (getCurrentFacultyId() == user_id) owner = true
-        this.setState({ user_type: 'faculty', owner })
-      }
+  // determins if person viewing page is owner of the page
+  determinePermissions () {
+    let user_id = window.location.pathname.split('/')[2]
+    let owner = false
+    if (isStudent()) this.setState({ user_type: 'user' })
+    else if (isFaculty()) {
+      if (getCurrentFacultyId() == user_id) owner = true
+      this.setState({ user_type: 'faculty', owner })
     }
   }
 
@@ -309,7 +318,6 @@ class ProfPage extends Component {
     } else if (this.state.no_lab) {
       return <ErrorPage fourofour='true' />
     } else {
-      let createLabButton, contactEdit, quickviewEdit, createLabEdit, workEdit
       let {
         owner,
         contact_email,
@@ -320,52 +328,16 @@ class ProfPage extends Component {
         image
       } = this.state
 
-      console.log('lab', this.state.lab)
-      let openModal = this.openModal
-      if (owner) {
-        createLabButton = (
-          <div
-            className='join-lab'
-            onClick={r => openModal('create-lab-modal')}
-          >
-            <div>Create A Lab</div>
-          </div>
-        )
-        contactEdit = (
-          <Editor permissions superClick={() => openModal('contact-edit')} />
-        )
-        quickviewEdit = (
-          <Editor permissions superClick={() => openModal('quickview-edit')} />
-        )
-        createLabEdit = (
-          <Editor
-            permissions
-            superClick={() => openModal('create-lab-modal')}
-            add
-          />
-        )
-        workEdit = (
-          <Editor permissions superClick={() => openModal('work-edit')} />
-        )
-      }
-
       return (
         <div id='user-content-body'>
           {this.renderModals()}
-          <SideBar
-            email={contact_email}
-            phone={contact_phone}
-            createLabButton={createLabButton}
-            editor={contactEdit}
-          />
+          <SideBar email={contact_email} phone={contact_phone} owner={owner} />
           <Dashboard
             name={name}
-            quickviewEdit={quickviewEdit}
             loading_labs={loading_labs}
             labs={labs}
-            createLabEdit={createLabEdit}
-            workEdit={workEdit}
             img={image}
+            owner={owner}
           />
         </div>
       )
@@ -373,25 +345,17 @@ class ProfPage extends Component {
   }
 }
 
-function Dashboard ({
-  name,
-  quickviewEdit,
-  loading_labs,
-  labs,
-  createLabEdit,
-  workEdit,
-  img
-}) {
+function Dashboard ({ name, loading_labs, labs, img, owner }) {
   return (
     <div id='user-column-Dashboard'>
-      <Quickview name={name} editor={quickviewEdit} img={img} />
-      <Labs loading={loading_labs} labs={labs} editor={createLabEdit} />
-      <WorkExperience editor={workEdit} />
+      <Quickview name={name} img={img} owner={owner} />
+      <Labs loading={loading_labs} labs={labs} owner={owner} />
+      <WorkExperience owner={owner} />
     </div>
   )
 }
 
-function WorkExperience ({ editor }) {
+function WorkExperience ({ owner }) {
   return (
     <div>
       <h1>Work Experience</h1>
@@ -401,12 +365,14 @@ function WorkExperience ({ editor }) {
         startTime='August 2017'
         endTime='Present'
       />
-      {editor}
+      {owner && (
+        <Editor permissions superClick={() => openModal(`work-edit`)} />
+      )}
     </div>
   )
 }
 
-function Labs ({ loading, labs, editor }) {
+function Labs ({ loading, labs, owner }) {
   return (
     <div id='user-labs'>
       <h1>Labs</h1>
@@ -427,29 +393,37 @@ function Labs ({ loading, labs, editor }) {
           })
         )}
       </div>
-      {editor}
+      {owner && (
+        <Editor
+          permissions
+          superClick={() => openModal('create-lab-modal')}
+          add
+        />
+      )}
     </div>
   )
 }
 
-function Quickview ({ name, editor, img }) {
+function Quickview ({ name, img, owner }) {
   return (
     <div id='user-quickview'>
       <div id='user-quickview-img-container'>
-        <img
-          id='user-quickview-img'
-          src={img}
-        />
+        <img id='user-quickview-img' src={img} />
       </div>
       <div id='user-quickview-name'>{name}</div>
-      {editor}
+      {owner && (
+        <Editor permissions superClick={() => openModal(`quickview-edit`)} />
+      )}
     </div>
   )
 }
-function SideBar ({ createLabButton, email, phone, editor }) {
+
+function SideBar ({ email, phone, owner }) {
   return (
     <div id='user-column-L'>
-      {createLabButton}
+      <div className='join-lab' onClick={r => openModal('create-lab-modal')}>
+        <div>Create A Lab</div>
+      </div>
       <div>
         <h1>Quick Info</h1>
         <div>Extraordinary Alchemist</div>
@@ -464,7 +438,9 @@ function SideBar ({ createLabButton, email, phone, editor }) {
             <b>Phone</b> {phone}
           </div>
         </div>
-        {editor}
+        {owner && (
+          <Editor permissions superClick={() => openModal('contact-edit')} />
+        )}
       </div>
     </div>
   )

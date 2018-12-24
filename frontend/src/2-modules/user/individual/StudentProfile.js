@@ -19,7 +19,7 @@ import {
   getUserProfilePic,
   exists,
   isLoggedIn,
-  getCurrentUserId,
+  getCurrentUserId
 } from '../../../helper.js'
 import ErrorPage from '../../utilities/ErrorPage'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
@@ -61,7 +61,6 @@ class StudentProfile extends Component {
       resume: '',
       student: true,
       s_id: '',
-      yoo: 'hi',
       crop: {
         x: 0.5,
         y: 0.5,
@@ -70,17 +69,15 @@ class StudentProfile extends Component {
       }
     }
     this.state = {
-      user,
-      updated_user: deepCopy(user),
+      user
     }
   }
 
   // this just updates the state object, not the backend
   updateUser (field, newValue) {
-    let updated_user = this.state.updated_user
-    updated_user[field] = newValue
-    if (field === 'classes') this.setState({classes: newValue})
-    else this.setState({updated_user})
+    let user = this.state.user
+    user[field] = newValue
+    this.setState({ user })
   }
 
   // sends work experiences to the backend
@@ -90,10 +87,12 @@ class StudentProfile extends Component {
       this.state.user.work_experiences.map(exp => idsToRemove.push(exp.id))
     }
     removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-      let exps = this.state.updated_user.work_experiences || []
-      if (exps.length)
-        exps.map(exp => addWorkExperienceToStudent(exp).then(r => this.generalHandler()))
-      else this.generalHandler()
+      let exps = this.state.user.work_experiences || []
+      if (exps.length) {
+        exps.map(exp =>
+          addWorkExperienceToStudent(exp).then(r => this.generalHandler())
+        )
+      } else this.generalHandler()
     })
   }
 
@@ -115,8 +114,8 @@ class StudentProfile extends Component {
   // send classes to the backend
   sendClasses () {
     let class_arr = []
-    if (exists(this.state.updated_user.classes)) {
-      this.state.updated_user.classes.map(c => class_arr.push(c.name))
+    if (exists(this.state.user.classes)) {
+      this.state.user.classes.map(c => class_arr.push(c.name))
     }
 
     let edu_exp = {
@@ -131,9 +130,8 @@ class StudentProfile extends Component {
   }
 
   sendHeaderInfo () {
-    var updated_user = this.state.updated_user
     var user = this.state.user
-    var name = this.state.updated_user.name
+    var name = this.state.user.name
     // build class array
     var class_arr = []
     if (user.classes) class_arr = user.classes.map(c => c.name)
@@ -142,9 +140,9 @@ class StudentProfile extends Component {
     updateStudent({ first_name: name })
       .then(r => {
         // update profile picture
-        if (updated_user.img) {
-          if (!updated_user.crop) {
-            updated_user.crop = {
+        if (user.img) {
+          if (!user.crop) {
+            user.crop = {
               x: 0.5,
               y: 0.5,
               rotate: 0,
@@ -153,15 +151,15 @@ class StudentProfile extends Component {
           }
 
           let formData = new FormData()
-          formData.append('file', updated_user.img)
+          formData.append('file', user.img)
 
           let to_return = {
             formData: formData,
             type: 'profile_pic',
-            x: updated_user.crop.x,
-            y: updated_user.crop.y,
-            scale: updated_user.crop.scale,
-            user_id: getCurrentUserId(),
+            x: user.crop.x,
+            y: user.crop.y,
+            scale: user.crop.scale,
+            user_id: getCurrentUserId()
           }
 
           return uploadUserProfilePic(to_return)
@@ -173,13 +171,13 @@ class StudentProfile extends Component {
 
   sendLinks () {
     updateStudent({
-      linkedin_link: primeExternalLink(this.state.updated_user.linkedin_link),
-      website_link: primeExternalLink(this.state.updated_user.website_link)
+      linkedin_link: primeExternalLink(this.state.user.linkedin_link),
+      website_link: primeExternalLink(this.state.user.website_link)
     }).then(r => this.generalHandler())
   }
 
   sendAcademicInfo () {
-    var major_arr = [this.state.updated_user.major]
+    var major_arr = [this.state.user.major]
     var class_arr = []
     if (this.state.user.classes) {
       this.state.user.classes.map(c => class_arr.push(c.name))
@@ -197,34 +195,34 @@ class StudentProfile extends Component {
 
   sendContactInfo () {
     updateStudent({
-      contact_email: this.state.updated_user.contact_email,
-      contact_phone: this.state.updated_user.contact_phone
+      contact_email: this.state.user.contact_email,
+      contact_phone: this.state.user.contact_phone
     }).then(r => this.generalHandler())
   }
 
   sendBio () {
-    updateStudent({ bio: this.state.updated_user.bio }).then(r =>
+    updateStudent({ bio: this.state.user.bio }).then(r =>
       this.generalHandler()
     )
   }
 
   updateTags () {
-    var skillIds = [],
-      intIds = [],
-      updated_user = this.state.updated_user,
-      skill_match = {},
-      int_match = {},
-      skill_diff = [],
-      int_diff = []
+    var skillIds = []
+    var intIds = []
+    var user = this.state.user
+    var skill_match = {}
+    var int_match = {}
+    var skill_diff = []
+    var int_diff = []
 
-    if (exists(updated_user.skills)) {
-      updated_user.skills.map(skill => {
+    if (exists(user.skills)) {
+      user.skills.map(skill => {
         skillIds.push(skill.id)
         skill_match[skill.id] = true
       })
     }
-    if (exists(updated_user.tags)) {
-      updated_user.tags.map(interest => {
+    if (exists(user.tags)) {
+      user.tags.map(interest => {
         intIds.push(interest.id)
         int_match[interest.id] = true
       })
@@ -239,16 +237,16 @@ class StudentProfile extends Component {
         if (!int_match[interest.id]) int_diff.push(interest.id)
       })
     }
+    console.log(int_diff, skill_diff)
     addTagsToStudent(intIds)
-      .then(r => addSkillsToStudent(skillIds))
-      .then(r => removeTagsFromStudent(int_diff))
-      .then(r => removeSkillsFromStudent(skill_diff))
-      .then(r => this.generalHandler())
+    .then(r => addSkillsToStudent(skillIds))
+    .then( r=> removeTagsFromStudent(int_diff))
+    .then( r => removeSkillsFromStudent(skill_diff))
+    .then(r => this.generalHandler())
   }
 
   // Handles retrieving skills and tags
   retrieveTags () {
-
     getStudentSkills(getCurrentStudentId()).then(skillsResp => {
       if (skillsResp.data) this.state.user.skills = skillsResp.data
     })
@@ -265,7 +263,15 @@ class StudentProfile extends Component {
     var user = {}
     getStudentFromUser(id)
       .then(resp => {
-        var class_arr = [], major = '', gpa = '', year = '', university = ''
+        var class_arr = []
+
+        var major = ''
+
+        var gpa = ''
+
+        var year = ''
+
+        var university = ''
 
         if (exists(resp.data.edu_experiences)) {
           var eduExp = resp.data.edu_experiences.slice(-1)[0]
@@ -275,7 +281,7 @@ class StudentProfile extends Component {
           if (exists(eduExp.year)) year = eduExp.year
           if (exists(eduExp.university)) university = eduExp.university.name
         }
-        console.log("in student profile", resp.data)
+        console.log('in student profile', resp.data)
         user = {
           name: resp.data.first_name,
           user_id: resp.data.user_id,
@@ -300,14 +306,13 @@ class StudentProfile extends Component {
         }
       })
       .then(r => getUserProfilePic(user.user_id))
-      .catch(e => console.log("PIC ERROR",e))
+      .catch(e => console.log('PIC ERROR', e))
       .then(r => {
         if (r.data) user.img = r.data.url
       })
       .then(r => {
-        let owner = (user.user_id == getCurrentUserId())
-        let updated_user = deepCopy(user)
-        this.setState({ user, updated_user, owner })
+        let owner = user.user_id == getCurrentUserId()
+        this.setState({ user, owner })
       })
   }
 
@@ -347,7 +352,7 @@ class StudentProfile extends Component {
           <PickYourInterests
             modalEdit
             editorOnly
-            user={this.state.updated_user}
+            user={this.state.user}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -358,7 +363,7 @@ class StudentProfile extends Component {
         >
           <EditContact
             modalEdit
-            user={this.state.updated_user}
+            user={this.state.user}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -369,7 +374,7 @@ class StudentProfile extends Component {
         >
           <EditLinks
             modalEdit
-            user={this.state.updated_user}
+            user={this.state.user}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -388,7 +393,7 @@ class StudentProfile extends Component {
           <EditExperience
             type='work'
             modalEdit
-            user={this.state.updated_user}
+            user={this.state.user}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -399,7 +404,7 @@ class StudentProfile extends Component {
         >
           <EditClasses
             modalEdit
-            user={this.state.updated_user}
+            user={this.state.user}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -410,7 +415,7 @@ class StudentProfile extends Component {
         >
           <EditBio
             modalEdit
-            user={this.state.updated_user}
+            user={this.state.user}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -422,7 +427,7 @@ class StudentProfile extends Component {
           <EditQuickview
             modalEdit
             img={this.state.user.img}
-            user={this.state.updated_user}
+            user={this.state.user}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -432,7 +437,9 @@ class StudentProfile extends Component {
 
   render () {
     console.log(this.state.user)
-    var linkedinLink, resumeLink = null
+    var linkedinLink
+
+    var resumeLink = null
     let user = this.state.user
     if (exists(user.linkedin_link)) {
       linkedinLink = user.linkedin_link
@@ -453,16 +460,6 @@ class StudentProfile extends Component {
         <div id='user-content-body'>
           {this.renderModals()}
           <div id='user-column-L'>
-            {/* commented out since we don't use it right now
-			<div>
-              <h1>Academics</h1>
-              <div>
-                <div><b>Major</b> {user.major}</div>
-                <div><b>Year</b> {user.year}</div>
-              </div>
-              <Editor superClick={() => this.openModal('academics-edit')} />
-            </div>}
-			*/}
             <div>
               <h1>Contact</h1>
               <div>
@@ -476,7 +473,10 @@ class StudentProfile extends Component {
                   <b>Phone</b> {user.contact_phone}
                 </div>
               </div>
-              <Editor permissions={this.state.owner} superClick={() => this.openModal('contact-edit')} />
+              <Editor
+                permissions={this.state.owner}
+                superClick={() => this.openModal('contact-edit')}
+              />
             </div>
             <div id='user-links'>
               <h1>Links</h1>
@@ -490,7 +490,10 @@ class StudentProfile extends Component {
                 </a>
                 {/* <a target="_blank" href={resumeLink} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a> */}
               </div>
-              <Editor permissions={this.state.owner} superClick={() => this.openModal('link-edit')} />
+              <Editor
+                permissions={this.state.owner}
+                superClick={() => this.openModal('link-edit')}
+              />
             </div>
           </div>
           <div id='user-column-R'>
@@ -516,16 +519,25 @@ class StudentProfile extends Component {
                 skills={user.skills}
                 interests={user.tags}
               />
-              <Editor permissions={this.state.owner} superClick={() => this.openModal('quickview-edit')} />
+              <Editor
+                permissions={this.state.owner}
+                superClick={() => this.openModal('quickview-edit')}
+              />
               <div style={{ position: 'relative' }}>
                 <UserBio>{user.bio}</UserBio>
-                <Editor permissions={this.state.owner} superClick={() => this.openModal('bio-edit')} />
+                <Editor
+                  permissions={this.state.owner}
+                  superClick={() => this.openModal('bio-edit')}
+                />
               </div>
             </div>
             <div>
               <h1>Experience</h1>
               <UserWorkExperience expObjs={user.work_experiences} />
-              <Editor permissions={this.state.owner} superClick={() => this.openModal('work-edit')} />
+              <Editor
+                permissions={this.state.owner}
+                superClick={() => this.openModal('work-edit')}
+              />
             </div>
           </div>
         </div>
@@ -537,9 +549,8 @@ class StudentProfile extends Component {
 class StudentClasses extends Component {
   expand () {
     let elem = document.getElementById('user-classes-expander')
-    elem.innerHTML = elem.innerHTML === 'expand_more'
-      ? 'expand_less'
-      : 'expand_more'
+    elem.innerHTML =
+      elem.innerHTML === 'expand_more' ? 'expand_less' : 'expand_more'
     document.getElementById('user-classes').classList.toggle('active-blue')
     document.getElementById('user-classes-list').classList.toggle('expand')
   }
@@ -604,11 +615,12 @@ class UserWorkExperience extends Component {
           >
             {expObj.description}
           </div>
-          {this.state.showExpander &&
+          {this.state.showExpander && (
             <ExpanderIcons
               id={`user-work-${'title'}`}
               action={this.expand.bind(this)}
-            />}
+            />
+          )}
         </div>
       )
     })
@@ -616,7 +628,11 @@ class UserWorkExperience extends Component {
     return (
       <div className='user-work-experience-container'>
         {experiences}
-        {!experiences.length && <div style={{padding: "10px 20px", color: "lightgrey"}}>Freelance netflix reviewer</div>}
+        {!experiences.length && (
+          <div style={{ padding: '10px 20px', color: 'lightgrey' }}>
+            Freelance netflix reviewer
+          </div>
+        )}
       </div>
     )
   }
@@ -679,15 +695,16 @@ class UserBio extends Component {
     return (
       <div id='user-bio' className='user-bio'>
         <div id='user-bio-content' className='user-bio-content'>
-          {!this.props.children.length &&
+          {!this.props.children.length && (
             <div style={{ color: 'lightgrey' }}>
               Superstar, worldwide phenomenon
-            </div>}
+            </div>
+          )}
           {this.props.children}
-
         </div>
-        {this.state.showExpander &&
-          <ExpanderIcons id={`user-bio`} action={this.expand.bind(this)} />}
+        {this.state.showExpander && (
+          <ExpanderIcons id={`user-bio`} action={this.expand.bind(this)} />
+        )}
       </div>
     )
   }
@@ -704,18 +721,25 @@ class SkillsInterests extends Component {
   render () {
     return (
       <div id='user-skills-interests'>
-        <Editor permissions={this.props.owner} superClick={() => this.openModal('skills-interests-edit')} />
-        {!this.props.interests.length &&
-          !this.props.skills.length &&
+        <Editor
+          permissions={this.props.owner}
+          superClick={() => this.openModal('skills-interests-edit')}
+        />
+        {!this.props.interests.length && !this.props.skills.length && (
           <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
             Big nickelback fan
-          </div>}
+          </div>
+        )}
         {this.props.interests.map((item, index) => (
-          <Bubble key={`${index}-int`} type='interest'>{item.name}</Bubble>
+          <Bubble key={`${index}-int`} type='interest'>
+            {item.name}
+          </Bubble>
         ))}
 
         {this.props.skills.map((item, index) => (
-          <Bubble key={`${index}-skill`} type='skill'>{item.name}</Bubble>
+          <Bubble key={`${index}-skill`} type='skill'>
+            {item.name}
+          </Bubble>
         ))}
       </div>
     )
