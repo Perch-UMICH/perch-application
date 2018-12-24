@@ -122,7 +122,6 @@ class StudentProfile extends Component {
       user.crop = {
         x: 0.5,
         y: 0.5,
-        rotate: 0,
         scale: 1
       }
     }
@@ -160,14 +159,16 @@ class StudentProfile extends Component {
   }
 
   sendContactInfo () {
-    updateStudent({
-      contact_email: this.state.contact_email,
-      contact_phone: this.state.contact_phone
-    }).then(r => this.generalHandler())
+    let { contact_email, contact_phone } = this.state
+    updateStudent({ contact_email, contact_phone }).then(r =>
+      this.generalHandler()
+    )
   }
 
-  sendBio = () =>
-    updateStudent({ bio: this.state.bio }).then(r => this.generalHandler())
+  sendBio = () => {
+    let { bio } = this.state
+    updateStudent({ bio }).then(r => this.generalHandler())
+  }
 
   // BROKEN
   updateTags () {
@@ -294,7 +295,7 @@ class StudentProfile extends Component {
         <div id='user-content-body'>
           {this.renderModals()}
           <LeftPanel user={user} />
-          <MainPanel user={user}/>
+          <MainPanel user={user} />
           <RightPanel />
         </div>
       )
@@ -302,15 +303,12 @@ class StudentProfile extends Component {
   }
 }
 
-function MainPanel({user}) {
+function MainPanel ({ user }) {
   return (
     <div id='user-profile-column-C'>
       <div id='user-quickview'>
         <div id='user-quickview-img-container'>
-          <img
-            id='user-quickview-img'
-            src={user.img || '/img/rodriguez.jpg'}
-          />
+          <img id='user-quickview-img' src={user.img || '/img/rodriguez.jpg'} />
         </div>
         <div style={{ position: 'relative' }}>
           <div id='user-quickview-name'>{user.name}</div>
@@ -347,7 +345,7 @@ function MainPanel({user}) {
 function LeftPanel ({ user }) {
   return (
     <div id='user-column-L'>
-      <ContactTab user={user}/>
+      <ContactTab user={user} />
       <LinkTab user={user} />
     </div>
   )
@@ -365,7 +363,7 @@ function RightPanel () {
   )
 }
 
-function LinkTab({user}) {
+function LinkTab ({ user }) {
   return (
     <div id='user-links'>
       <h1>Links</h1>
@@ -386,7 +384,7 @@ function LinkTab({user}) {
   )
 }
 
-function ContactTab({user}) {
+function ContactTab ({ user }) {
   return (
     <div>
       <h1>Contact</h1>
@@ -507,41 +505,33 @@ class UserBio extends Component {
   }
 }
 
-class SkillsInterests extends Component {
-  openModal (id) {
-    if (document.getElementById(id)) {
-      document.getElementById(id).classList.add('activated')
-      document.getElementById(`${id}-backdrop`).classList.add('activated')
-    }
-  }
+function SkillsInterests ({owner, interests, skills}) {
+  return (
+    <div id='user-skills-interests'>
+      <Editor
+        permissions={owner}
+        superClick={() => openModal('skills-interests-edit')}
+      />
+      {!interests.length && !skills.length && (
+        <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
+          Big nickelback fan
+        </div>
+      )}
+      {interests.map((item, index) => (
+        <Bubble key={`${index}-int`} type='interest'>
+          {item.name}
+        </Bubble>
+      ))}
 
-  render () {
-    return (
-      <div id='user-skills-interests'>
-        <Editor
-          permissions={this.props.owner}
-          superClick={() => openModal('skills-interests-edit')}
-        />
-        {!this.props.interests.length && !this.props.skills.length && (
-          <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
-            Big nickelback fan
-          </div>
-        )}
-        {this.props.interests.map((item, index) => (
-          <Bubble key={`${index}-int`} type='interest'>
-            {item.name}
-          </Bubble>
-        ))}
-
-        {this.props.skills.map((item, index) => (
-          <Bubble key={`${index}-skill`} type='skill'>
-            {item.name}
-          </Bubble>
-        ))}
-      </div>
-    )
-  }
+      {skills.map((item, index) => (
+        <Bubble key={`${index}-skill`} type='skill'>
+          {item.name}
+        </Bubble>
+      ))}
+    </div>
+  )
 }
+
 
 class Bubble extends Component {
   render () {
