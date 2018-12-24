@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
 import {
-  getCurrentStudentId,
   addTagsToStudent,
   removeTagsFromStudent,
   removeSkillsFromStudent,
   removeWorkExperiencesFromStudent,
-  addEduExperienceToStudent,
-  updateEduExperienceOfStudent,
   addWorkExperienceToStudent,
   addSkillsToStudent,
   getStudentFromUser,
-  getStudentTags,
-  getStudentSkills,
   updateStudent,
-  deepCopy,
   primeExternalLink,
   uploadUserProfilePic,
   getUserProfilePic,
@@ -30,64 +24,89 @@ import {
   EditExperience,
   EditQuickview,
   EditLinks,
-  EditBio,
-  EditClasses
+  EditBio
 } from './StudentEditors'
-import NotableClasses from './NotableClasses'
 import PickYourInterests from './PickYourInterests'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import './StudentProfile.css'
 
+// Handles opening of component editing modals
+function openModal (id) {
+  if (document.getElementById(id)) {
+    document.getElementById(id).classList.add('activated')
+    document.getElementById(`${id}-backdrop`).classList.add('activated')
+  }
+}
+
 class StudentProfile extends Component {
   constructor (props) {
     super(props)
-    this.openModal = this.openModal.bind(this)
-    let user = {
+    this.state = {
       name: '',
-      gpa: '',
-      major: '',
-      year: '',
       bio: '',
-      university: '',
       contact_email: '',
       contact_phone: '',
       classes: [],
       experience: [],
-      linkedin: '',
       skills: [],
       tags: [],
       work_experiences: [],
-      edu_experiences: [],
-      resume: '',
-      student: true,
-      s_id: '',
       crop: {
         x: 0.5,
         y: 0.5,
-        rotate: 0,
         scale: 1
-      }
+      },
+      owner: false,
+      student: true,
+      s_id: '',
+      img: ''
     }
-    this.state = {
-      user
-    }
+  }
+
+  // Beginning point for data handling
+  componentDidMount () {
+    this.generalHandler()
+  }
+
+  // Handles data for page
+  generalHandler () {
+    let id = window.location.pathname.split('/')[2]
+    let user = {}
+    // set intitial student data and ownership
+    getStudentFromUser(id).then(({ data }) => {
+      user = data
+      user.student = true
+      user.name = user.first_name
+      user.owner = user.user_id == getCurrentUserId()
+      this.setState(user)
+    })
+    // set picture
+    getUserProfilePic(id)
+      .catch(e => console.log('PIC ERROR', e))
+      .then(r => {
+        user.img = r.data.url || 'default image'
+        this.setState(user)
+      })
   }
 
   // this just updates the state object, not the backend
   updateUser (field, newValue) {
-    let user = this.state.user
-    user[field] = newValue
-    this.setState({ user })
+    this.state[field] = newValue
+    this.setState(this.state)
   }
 
   // sends work experiences to the backend
+  // BROKEN, should keep track of work_experiences that are deleted rather than brute forcing
   sendExperiences () {
-    var idsToRemove = []
-    if (exists(this.state.user.work_experiences)) {
-      this.state.user.work_experiences.map(exp => idsToRemove.push(exp.id))
+    let { work_experiences } = this.state
+    let idsToRemove = []
+
+    if (exists(work_experiences)) {
+      idsToRemove = work_experiences.map(exp => exp.id)
     }
+
     removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-      let exps = this.state.user.work_experiences || []
+      let exps = this.state.work_experiences || []
       if (exps.length) {
         exps.map(exp =>
           addWorkExperienceToStudent(exp).then(r => this.generalHandler())
@@ -96,120 +115,65 @@ class StudentProfile extends Component {
     })
   }
 
-  sendEduExp (edu_exp) {
-    if (this.state.user.edu_experiences.length) {
-      updateEduExperienceOfStudent(
-        this.state.user.edu_experiences[0].id,
-        edu_exp
-      ).then(resp => {
-        this.generalHandler()
-      })
-    } else {
-      addEduExperienceToStudent(edu_exp).then(resp => {
-        this.generalHandler()
-      })
+  // backend needs a specially formatted object to send to backend for images
+  getImageData (user) {
+    // default crop
+    if (!user.crop) {
+      user.crop = {
+        x: 0.5,
+        y: 0.5,
+        rotate: 0,
+        scale: 1
+      }
     }
+    let formData = new FormData()
+    formData.append('file', user.img)
+    let to_return = {
+      formData: formData,
+      type: 'profile_pic',
+      x: user.crop.x,
+      y: user.crop.y,
+      scale: user.crop.scale,
+      user_id: getCurrentUserId()
+    }
+    return to_return
   }
 
-  // send classes to the backend
-  sendClasses () {
-    let class_arr = []
-    if (exists(this.state.user.classes)) {
-      this.state.user.classes.map(c => class_arr.push(c.name))
-    }
-
-    let edu_exp = {
-      university_name: this.state.user.university,
-      start_date: 'Start',
-      end_date: 'End',
-      current: true,
-      class_experience_names: class_arr,
-      major_names: [this.state.user.major]
-    }
-    this.sendEduExp(edu_exp)
-  }
-
+  /* MODAL FUNCTIONS */
   sendHeaderInfo () {
-    var user = this.state.user
-    var name = this.state.user.name
-    // build class array
-    var class_arr = []
-    if (user.classes) class_arr = user.classes.map(c => c.name)
-
-    // update name, school, general handler
-    updateStudent({ first_name: name })
-      .then(r => {
-        // update profile picture
-        if (user.img) {
-          if (!user.crop) {
-            user.crop = {
-              x: 0.5,
-              y: 0.5,
-              rotate: 0,
-              scale: 1
-            }
-          }
-
-          let formData = new FormData()
-          formData.append('file', user.img)
-
-          let to_return = {
-            formData: formData,
-            type: 'profile_pic',
-            x: user.crop.x,
-            y: user.crop.y,
-            scale: user.crop.scale,
-            user_id: getCurrentUserId()
-          }
-
-          return uploadUserProfilePic(to_return)
-        }
-      })
-      .catch(e => console.log('profile pic bug'))
-      .then(resp => this.generalHandler())
+    var user = this.state
+    // update name
+    updateStudent({ first_name: user.name })
+    // update profile picture and refresh image
+    if (user.img) {
+      uploadUserProfilePic(this.getImageData(user))
+        .catch(e => console.log('profile pic bug'))
+        .then(r => this.generalHandler())
+    }
   }
 
   sendLinks () {
     updateStudent({
-      linkedin_link: primeExternalLink(this.state.user.linkedin_link),
-      website_link: primeExternalLink(this.state.user.website_link)
+      linkedin_link: primeExternalLink(this.state.linkedin_link),
+      website_link: primeExternalLink(this.state.website_link)
     }).then(r => this.generalHandler())
-  }
-
-  sendAcademicInfo () {
-    var major_arr = [this.state.user.major]
-    var class_arr = []
-    if (this.state.user.classes) {
-      this.state.user.classes.map(c => class_arr.push(c.name))
-    }
-    let edu_exp = {
-      university_name: this.state.user.university || 'University of Michigan',
-      start_date: 'Start',
-      end_date: 'End',
-      current: true,
-      class_experience_names: class_arr || [],
-      major_names: [this.state.user.major]
-    }
-    this.sendEduExp(edu_exp)
   }
 
   sendContactInfo () {
     updateStudent({
-      contact_email: this.state.user.contact_email,
-      contact_phone: this.state.user.contact_phone
+      contact_email: this.state.contact_email,
+      contact_phone: this.state.contact_phone
     }).then(r => this.generalHandler())
   }
 
-  sendBio () {
-    updateStudent({ bio: this.state.user.bio }).then(r =>
-      this.generalHandler()
-    )
-  }
+  sendBio = () =>
+    updateStudent({ bio: this.state.bio }).then(r => this.generalHandler())
 
+  // BROKEN
   updateTags () {
     var skillIds = []
     var intIds = []
-    var user = this.state.user
+    var user = this.state
     var skill_match = {}
     var int_match = {}
     var skill_diff = []
@@ -227,117 +191,22 @@ class StudentProfile extends Component {
         int_match[interest.id] = true
       })
     }
-    if (exists(this.state.user.skills)) {
-      this.state.user.skills.map(skill => {
+    if (exists(this.state.skills)) {
+      this.state.skills.map(skill => {
         if (!skill_match[skill.id]) skill_diff.push(skill.id)
       })
     }
-    if (exists(this.state.user.tags)) {
-      this.state.user.tags.map(interest => {
+    if (exists(this.state.tags)) {
+      this.state.tags.map(interest => {
         if (!int_match[interest.id]) int_diff.push(interest.id)
       })
     }
     console.log(int_diff, skill_diff)
     addTagsToStudent(intIds)
-    .then(r => addSkillsToStudent(skillIds))
-    .then( r=> removeTagsFromStudent(int_diff))
-    .then( r => removeSkillsFromStudent(skill_diff))
-    .then(r => this.generalHandler())
-  }
-
-  // Handles retrieving skills and tags
-  retrieveTags () {
-    getStudentSkills(getCurrentStudentId()).then(skillsResp => {
-      if (skillsResp.data) this.state.user.skills = skillsResp.data
-    })
-
-    getStudentTags(getCurrentStudentId()).then(tagsResp => {
-      if (tagsResp.data) this.state.user.tags = tagsResp.data
-      this.setState(this.state)
-    })
-  }
-
-  // Handles data for page
-  generalHandler () {
-    let id = this.retrieveSlug()
-    var user = {}
-    getStudentFromUser(id)
-      .then(resp => {
-        var class_arr = []
-
-        var major = ''
-
-        var gpa = ''
-
-        var year = ''
-
-        var university = ''
-
-        if (exists(resp.data.edu_experiences)) {
-          var eduExp = resp.data.edu_experiences.slice(-1)[0]
-          if (exists(eduExp.majors)) major = eduExp.majors[0] || ''
-          if (exists(eduExp.classes)) class_arr = eduExp.classes
-          if (exists(eduExp.gpa)) gpa = eduExp.gpa
-          if (exists(eduExp.year)) year = eduExp.year
-          if (exists(eduExp.university)) university = eduExp.university.name
-        }
-        console.log('in student profile', resp.data)
-        user = {
-          name: resp.data.first_name,
-          user_id: resp.data.user_id,
-          major,
-          year,
-          university,
-          bio: resp.data.bio || '',
-          contact_email: resp.data.contact_email,
-          contact_phone: resp.data.contact_phone,
-          classes: class_arr,
-          experience: resp.data.experiences,
-          linkedin: resp.data.linkedin,
-          linkedin_link: resp.data.linkedin_link,
-          website_link: resp.data.website_link,
-          resume: resp.data.resume_path,
-          skills: resp.data.skills || [],
-          tags: resp.data.tags || [],
-          work_experiences: resp.data.work_experiences,
-          edu_experiences: resp.data.edu_experiences,
-          student: true,
-          s_id: resp.data.id
-        }
-      })
-      .then(r => getUserProfilePic(user.user_id))
-      .catch(e => console.log('PIC ERROR', e))
-      .then(r => {
-        if (r.data) user.img = r.data.url
-      })
-      .then(r => {
-        let owner = user.user_id == getCurrentUserId()
-        this.setState({ user, owner })
-      })
-  }
-
-  // Retrives slug from url
-  retrieveSlug () {
-    return window.location.pathname.split('/')[2]
-  }
-
-  // Set's student ID into state for future use
-  setStudentId (r) {
-    this.setState({ s_id: r.result.id })
-    return this
-  }
-
-  // Beginning point for data handling
-  componentDidMount () {
-    this.generalHandler()
-  }
-
-  // Handles opening of component editing modals
-  openModal (id) {
-    if (document.getElementById(id)) {
-      document.getElementById(id).classList.add('activated')
-      document.getElementById(`${id}-backdrop`).classList.add('activated')
-    }
+      .then(r => addSkillsToStudent(skillIds))
+      .then(r => removeTagsFromStudent(int_diff))
+      .then(r => removeSkillsFromStudent(skill_diff))
+      .then(r => this.generalHandler())
   }
 
   renderModals () {
@@ -352,7 +221,7 @@ class StudentProfile extends Component {
           <PickYourInterests
             modalEdit
             editorOnly
-            user={this.state.user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -363,7 +232,7 @@ class StudentProfile extends Component {
         >
           <EditContact
             modalEdit
-            user={this.state.user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -374,16 +243,9 @@ class StudentProfile extends Component {
         >
           <EditLinks
             modalEdit
-            user={this.state.user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
-        </EditModal>
-        <EditModal
-          id='academics-edit'
-          title='Edit Academic Info'
-          modalAction={this.sendAcademicInfo.bind(this)}
-        >
-          <NotableClasses modalEdit updateUser={this.updateUser.bind(this)} />
         </EditModal>
         <EditModal
           id='work-edit'
@@ -393,18 +255,7 @@ class StudentProfile extends Component {
           <EditExperience
             type='work'
             modalEdit
-            user={this.state.user}
-            updateUser={this.updateUser.bind(this)}
-          />
-        </EditModal>
-        <EditModal
-          id='education-edit'
-          title='Edit Classes'
-          modalAction={this.sendClasses.bind(this)}
-        >
-          <EditClasses
-            modalEdit
-            user={this.state.user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -415,7 +266,7 @@ class StudentProfile extends Component {
         >
           <EditBio
             modalEdit
-            user={this.state.user}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -426,8 +277,8 @@ class StudentProfile extends Component {
         >
           <EditQuickview
             modalEdit
-            img={this.state.user.img}
-            user={this.state.user}
+            img={this.state.img}
+            user={this.state}
             updateUser={this.updateUser.bind(this)}
           />
         </EditModal>
@@ -436,142 +287,124 @@ class StudentProfile extends Component {
   }
 
   render () {
-    console.log(this.state.user)
-    var linkedinLink
-
-    var resumeLink = null
-    let user = this.state.user
-    if (exists(user.linkedin_link)) {
-      linkedinLink = user.linkedin_link
-    }
-    if (exists(user.resume_path)) {
-      resumeLink = user.resume_path
-    } else if (exists(user.website_link)) {
-      resumeLink = user.website_link
-    } else if (exists(user.resume)) {
-      resumeLink = user.resume
-    }
-    if (!isLoggedIn()) {
-      return <ErrorPage />
-    } else if (this.state.not_student) {
-      return <ErrorPage fourofour='true' />
-    } else {
+    let user = this.state
+    if (!isLoggedIn()) return <ErrorPage />
+    else {
       return (
         <div id='user-content-body'>
           {this.renderModals()}
-          <div id='user-column-L'>
-            <div>
-              <h1>Contact</h1>
-              <div>
-                <div id='user-email'>
-                  <b>Email </b>
-                  <a href={`mailto:${user.contact_email}`}>
-                    {user.contact_email}
-                  </a>
-                </div>
-                <div id='user-phone'>
-                  <b>Phone</b> {user.contact_phone}
-                </div>
-              </div>
-              <Editor
-                permissions={this.state.owner}
-                superClick={() => this.openModal('contact-edit')}
-              />
-            </div>
-            <div id='user-links'>
-              <h1>Links</h1>
-              <div>
-                <a
-                  target='_blank'
-                  href={linkedinLink}
-                  style={{ textAlign: 'left', textDecoration: 'underline' }}
-                >
-                  LinkedIn
-                </a>
-                {/* <a target="_blank" href={resumeLink} style={{textAlign: 'left', textDecoration: 'underline'}}>Resume</a> */}
-              </div>
-              <Editor
-                permissions={this.state.owner}
-                superClick={() => this.openModal('link-edit')}
-              />
-            </div>
-          </div>
-          <div id='user-column-R'>
-            <TwitterTimelineEmbed
-              sourceType='profile'
-              screenName='UMichResearch'
-              options={{ height: 'calc(100vh - 200px)' }}
-            />
-          </div>
-          <div id='user-profile-column-C'>
-            <div id='user-quickview'>
-              <div id='user-quickview-img-container'>
-                <img
-                  id='user-quickview-img'
-                  src={this.state.user.img ? user.img : '/img/rodriguez.jpg'}
-                />
-              </div>
-              <div style={{ position: 'relative' }}>
-                <div id='user-quickview-name'>{user.name}</div>
-              </div>
-              <SkillsInterests
-                owner={this.state.owner}
-                skills={user.skills}
-                interests={user.tags}
-              />
-              <Editor
-                permissions={this.state.owner}
-                superClick={() => this.openModal('quickview-edit')}
-              />
-              <div style={{ position: 'relative' }}>
-                <UserBio>{user.bio}</UserBio>
-                <Editor
-                  permissions={this.state.owner}
-                  superClick={() => this.openModal('bio-edit')}
-                />
-              </div>
-            </div>
-            <div>
-              <h1>Experience</h1>
-              <UserWorkExperience expObjs={user.work_experiences} />
-              <Editor
-                permissions={this.state.owner}
-                superClick={() => this.openModal('work-edit')}
-              />
-            </div>
-          </div>
+          <LeftPanel user={user} />
+          <MainPanel user={user}/>
+          <RightPanel />
         </div>
       )
     }
   }
 }
 
-class StudentClasses extends Component {
-  expand () {
-    let elem = document.getElementById('user-classes-expander')
-    elem.innerHTML =
-      elem.innerHTML === 'expand_more' ? 'expand_less' : 'expand_more'
-    document.getElementById('user-classes').classList.toggle('active-blue')
-    document.getElementById('user-classes-list').classList.toggle('expand')
-  }
-
-  render () {
-    return (
-      <div id='user-classes'>
-        <span onClick={this.expand.bind(this)}>
-          Notable Classes
-          <i className='material-icons' id='user-classes-expander'>
-            expand_more
-          </i>
-        </span>
-        <div id='user-classes-list'>
-          {this.props.list.map((item, index) => (
-            <div key={index}>{item.name}</div>
-          ))}
+function MainPanel({user}) {
+  return (
+    <div id='user-profile-column-C'>
+      <div id='user-quickview'>
+        <div id='user-quickview-img-container'>
+          <img
+            id='user-quickview-img'
+            src={user.img || '/img/rodriguez.jpg'}
+          />
+        </div>
+        <div style={{ position: 'relative' }}>
+          <div id='user-quickview-name'>{user.name}</div>
+        </div>
+        <SkillsInterests
+          owner={user.owner}
+          skills={user.skills}
+          interests={user.tags}
+        />
+        <Editor
+          permissions={user.owner}
+          superClick={() => openModal('quickview-edit')}
+        />
+        <div style={{ position: 'relative' }}>
+          <UserBio>{user.bio}</UserBio>
+          <Editor
+            permissions={user.owner}
+            superClick={() => openModal('bio-edit')}
+          />
         </div>
       </div>
-    )
-  }
+      <div>
+        <h1>Experience</h1>
+        <UserWorkExperience expObjs={user.work_experiences} />
+        <Editor
+          permissions={user.owner}
+          superClick={() => openModal('work-edit')}
+        />
+      </div>
+    </div>
+  )
+}
+
+function LeftPanel ({ user }) {
+  return (
+    <div id='user-column-L'>
+      <ContactTab user={user}/>
+      <LinkTab user={user} />
+    </div>
+  )
+}
+
+function RightPanel () {
+  return (
+    <div id='user-column-R'>
+      <TwitterTimelineEmbed
+        sourceType='profile'
+        screenName='UMichResearch'
+        options={{ height: 'calc(100vh - 200px)' }}
+      />
+    </div>
+  )
+}
+
+function LinkTab({user}) {
+  return (
+    <div id='user-links'>
+      <h1>Links</h1>
+      <div>
+        <a
+          target='_blank'
+          href={user.linkedinLink}
+          style={{ textAlign: 'left', textDecoration: 'underline' }}
+        >
+          LinkedIn
+        </a>
+      </div>
+      <Editor
+        permissions={user.owner}
+        superClick={() => openModal('link-edit')}
+      />
+    </div>
+  )
+}
+
+function ContactTab({user}) {
+  return (
+    <div>
+      <h1>Contact</h1>
+      <div>
+        <div id='user-email'>
+          <b>Email </b>
+          <a href={`mailto:${user.contact_email}`}>{user.contact_email}</a>
+        </div>
+        <div id='user-phone'>
+          <b>Phone</b> {user.contact_phone}
+        </div>
+      </div>
+      <Editor
+        permissions={user.owner}
+        superClick={() => openModal('contact-edit')}
+      />
+    </div>
+  )
 }
 
 class UserWorkExperience extends Component {
@@ -638,42 +471,6 @@ class UserWorkExperience extends Component {
   }
 }
 
-// class UserEducation extends Component {
-//   constructor (props) {
-//     super(props)
-//     var classes = []
-//     if (exists(props.classes)) {
-//       classes: props.classes
-//     }
-//     this.state = {
-//       showExpander: false,
-//       classes
-//     }
-//   }
-
-//   componentWillReceiveProps (props) {
-//     if (exists(props.classes)) {
-//       this.setState({ classes: props.classes })
-//     }
-//   }
-
-//   expand () {
-//     document
-//       .getElementById(`user-education-description-${this.props.title}`)
-//       .classList.toggle('expand')
-//   }
-
-//   render () {
-//     return (
-//       <div className='user-classes'>
-//         {this.state.classes.map(classObj => {
-//           return <div key={classObj.id}>{classObj.name}</div>
-//         })}
-//       </div>
-//     )
-//   }
-// }
-
 class UserBio extends Component {
   constructor (props) {
     super(props)
@@ -683,7 +480,7 @@ class UserBio extends Component {
   }
 
   componentWillReceiveProps () {
-    // if (this.props.children.length >= 280)
+    // if (this.props.children.length >= 20)
     this.setState({ showExpander: true })
   }
 
@@ -723,7 +520,7 @@ class SkillsInterests extends Component {
       <div id='user-skills-interests'>
         <Editor
           permissions={this.props.owner}
-          superClick={() => this.openModal('skills-interests-edit')}
+          superClick={() => openModal('skills-interests-edit')}
         />
         {!this.props.interests.length && !this.props.skills.length && (
           <div style={{ color: 'lightgrey', paddingTop: '10px' }}>
