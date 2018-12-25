@@ -8,7 +8,6 @@ import {
   addSkillsToStudent,
   getStudentFromUser,
   updateStudent,
-  primeExternalLink,
   uploadUserProfilePic,
   getUserProfilePic,
   exists,
@@ -65,57 +64,51 @@ class StudentProfile extends Component {
 
   // Beginning point for data handling
   componentDidMount () {
-    this.generalHandler()
+    let id = window.location.pathname.split('/')[2]
+    this.retrieveStudent(id)
+    this.retrieveProfilePicture(id)
   }
 
   // Handles data for page
   generalHandler () {
-    let id = window.location.pathname.split('/')[2]
-    let user = {}
-    // set intitial student data and ownership
+    alert('deprecated')
+  }
+
+  // set intitial student data and ownership
+  retrieveStudent(id) {
     getStudentFromUser(id).then(({ data }) => {
-      user = data
-      user.student = true
-      user.name = user.first_name
-      user.owner = user.user_id == getCurrentUserId()
-      this.setState(user)
+      data.student = true
+      data.name = data.first_name
+      data.owner = data.user_id == getCurrentUserId()
+      this.setState(data)
     })
-    // set picture
-    getUserProfilePic(id)
-      .catch(e => console.log('PIC ERROR', e))
-      .then(r => {
-        user.img = r.data.url || 'default image'
-        this.setState(user)
-      })
   }
 
   // this just updates the state object, not the backend
+  // used by modals to keep the state object up to date
+  // eliminates the need to re-query the backend after updates
   updateUser (field, newValue) {
     this.state[field] = newValue
     this.setState(this.state)
   }
 
-  // sends work experiences to the backend
-  // BROKEN, should keep track of work_experiences that are deleted rather than brute forcing
-  sendExperiences () {
-    let { work_experiences } = this.state
-    let idsToRemove = []
 
-    if (exists(work_experiences)) {
-      idsToRemove = work_experiences.map(exp => exp.id)
-    }
+  /*******************/
+  /* IMAGE FUNCTIONS */
+  /*******************/
 
-    removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-      let exps = this.state.work_experiences || []
-      if (exps.length) {
-        exps.map(exp =>
-          addWorkExperienceToStudent(exp).then(r => this.generalHandler())
-        )
-      } else this.generalHandler()
-    })
+  // grab picture from backend
+  retrieveProfilePicture (id) {
+    getUserProfilePic(id)
+      .catch(e => console.log('PIC ERROR', e))
+      .then(r => {
+        this.state.img = r.data.url || 'default image'
+        this.setState(this.state)
+      })
   }
 
   // backend needs a specially formatted object to send to backend for images
+  // probably will be deprecated in the new node backend
   getImageData (user) {
     // default crop
     if (!user.crop) {
@@ -138,36 +131,57 @@ class StudentProfile extends Component {
     return to_return
   }
 
+  /*******************/
   /* MODAL FUNCTIONS */
+  /*******************/
+
+  // updates name and profile picture
   sendHeaderInfo () {
     var user = this.state
-    // update name
     updateStudent({ first_name: user.name })
-    // update profile picture and refresh image
     if (user.img) {
       uploadUserProfilePic(this.getImageData(user))
         .catch(e => console.log('profile pic bug'))
-        .then(r => this.generalHandler())
+        .then(r => this.retrieveProfilePicture())
     }
   }
 
+  // sends links to backend
   sendLinks () {
-    updateStudent({
-      linkedin_link: primeExternalLink(this.state.linkedin_link),
-      website_link: primeExternalLink(this.state.website_link)
-    }).then(r => this.generalHandler())
+    let { linkedin_link, website_link } = this.state
+    updateStudent({ linkedin_link, website_link })
   }
 
+  // sends email and phone to backend
   sendContactInfo () {
     let { contact_email, contact_phone } = this.state
-    updateStudent({ contact_email, contact_phone }).then(r =>
-      this.generalHandler()
-    )
+    updateStudent({ contact_email, contact_phone })
   }
 
+  // sends bio to backend
   sendBio = () => {
     let { bio } = this.state
-    updateStudent({ bio }).then(r => this.generalHandler())
+    updateStudent({ bio })
+  }
+
+  // sends work experiences to the backend
+  // BROKEN, should keep track of work_experiences that are deleted rather than brute forcing
+  sendExperiences () {
+    let { work_experiences } = this.state
+    let idsToRemove = []
+
+    if (exists(work_experiences)) {
+      idsToRemove = work_experiences.map(exp => exp.id)
+    }
+
+    removeWorkExperiencesFromStudent(idsToRemove).then(r => {
+      let exps = this.state.work_experiences || []
+      if (exps.length) {
+        exps.map(exp =>
+          addWorkExperienceToStudent(exp).then(r => this.generalHandler())
+        )
+      } else this.generalHandler()
+    })
   }
 
   // BROKEN
@@ -370,7 +384,7 @@ function LinkTab ({ user }) {
       <div>
         <a
           target='_blank'
-          href={user.linkedinLink}
+          href={user.linkedin_link}
           style={{ textAlign: 'left', textDecoration: 'underline' }}
         >
           LinkedIn
@@ -505,7 +519,7 @@ class UserBio extends Component {
   }
 }
 
-function SkillsInterests ({owner, interests, skills}) {
+function SkillsInterests ({ owner, interests, skills }) {
   return (
     <div id='user-skills-interests'>
       <Editor
@@ -531,7 +545,6 @@ function SkillsInterests ({owner, interests, skills}) {
     </div>
   )
 }
-
 
 class Bubble extends Component {
   render () {
