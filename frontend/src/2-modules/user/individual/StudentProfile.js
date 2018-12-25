@@ -1,16 +1,9 @@
 import React, { Component } from 'react'
 import {
-  addTagsToStudent,
-  removeTagsFromStudent,
-  removeSkillsFromStudent,
-  removeWorkExperiencesFromStudent,
-  addWorkExperienceToStudent,
-  addSkillsToStudent,
   getStudentFromUser,
   updateStudent,
   uploadUserProfilePic,
   getUserProfilePic,
-  exists,
   isLoggedIn,
   getCurrentUserId
 } from '../../../helper.js'
@@ -69,13 +62,8 @@ class StudentProfile extends Component {
     this.retrieveProfilePicture(id)
   }
 
-  // Handles data for page
-  generalHandler () {
-    alert('deprecated')
-  }
-
   // set intitial student data and ownership
-  retrieveStudent(id) {
+  retrieveStudent (id) {
     getStudentFromUser(id).then(({ data }) => {
       data.student = true
       data.name = data.first_name
@@ -91,7 +79,6 @@ class StudentProfile extends Component {
     this.state[field] = newValue
     this.setState(this.state)
   }
-
 
   /*******************/
   /* IMAGE FUNCTIONS */
@@ -166,62 +153,21 @@ class StudentProfile extends Component {
 
   // sends work experiences to the backend
   // BROKEN, should keep track of work_experiences that are deleted rather than brute forcing
+  // ask akshay for a sync function
   sendExperiences () {
-    let { work_experiences } = this.state
-    let idsToRemove = []
-
-    if (exists(work_experiences)) {
-      idsToRemove = work_experiences.map(exp => exp.id)
-    }
-
-    removeWorkExperiencesFromStudent(idsToRemove).then(r => {
-      let exps = this.state.work_experiences || []
-      if (exps.length) {
-        exps.map(exp =>
-          addWorkExperienceToStudent(exp).then(r => this.generalHandler())
-        )
-      } else this.generalHandler()
-    })
-  }
-
-  // BROKEN
-  updateTags () {
-    var skillIds = []
-    var intIds = []
-    var user = this.state
-    var skill_match = {}
-    var int_match = {}
-    var skill_diff = []
-    var int_diff = []
-
-    if (exists(user.skills)) {
-      user.skills.map(skill => {
-        skillIds.push(skill.id)
-        skill_match[skill.id] = true
-      })
-    }
-    if (exists(user.tags)) {
-      user.tags.map(interest => {
-        intIds.push(interest.id)
-        int_match[interest.id] = true
-      })
-    }
-    if (exists(this.state.skills)) {
-      this.state.skills.map(skill => {
-        if (!skill_match[skill.id]) skill_diff.push(skill.id)
-      })
-    }
-    if (exists(this.state.tags)) {
-      this.state.tags.map(interest => {
-        if (!int_match[interest.id]) int_diff.push(interest.id)
-      })
-    }
-    console.log(int_diff, skill_diff)
-    addTagsToStudent(intIds)
-      .then(r => addSkillsToStudent(skillIds))
-      .then(r => removeTagsFromStudent(int_diff))
-      .then(r => removeSkillsFromStudent(skill_diff))
-      .then(r => this.generalHandler())
+    // let { work_experiences } = this.state
+    // let idsToRemove = []
+    // if (exists(work_experiences)) {
+    //   idsToRemove = work_experiences.map(exp => exp.id)
+    // }
+    // removeWorkExperiencesFromStudent(idsToRemove).then(r => {
+    //   let exps = this.state.work_experiences || []
+    //   if (exps.length) {
+    //     exps.map(exp =>
+    //       addWorkExperienceToStudent(exp).then(r => this.generalHandler())
+    //     )
+    //   } else this.generalHandler()
+    // })
   }
 
   renderModals () {
@@ -230,7 +176,6 @@ class StudentProfile extends Component {
         <EditModal
           id='skills-interests-edit'
           title='Edit Skills and Interests'
-          modalAction={this.updateTags.bind(this)}
           noPadding
         >
           <PickYourInterests

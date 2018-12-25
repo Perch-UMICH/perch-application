@@ -1,31 +1,33 @@
 import React, { Component } from 'react'
 import BubbleChoice from '../../utilities/BubbleChoice'
 import { EditContainerOnboarding } from './StudentEditors'
-import { deepCopy, exists } from '../../../helper.js'
+import { syncSkillsToStudent, syncTagsToStudent } from '../../../helper'
 
 class PickYourInterests extends Component {
   constructor (props) {
     super(props)
-    let { tags, skills } = props.user
+    let user = props.user
     this.state = {
       bubble_array: [],
-      tags: tags,
-      skills: skills
+      tags: user.tags,
+      skills: user.skills
     }
     this.updateBubbleChoice = this.updateBubbleChoice.bind(this)
   }
 
+  // retrieves skills and tag arrays from parent state
   componentWillReceiveProps (props) {
     let { tags, skills } = props.user
     this.setState({ tags, skills })
   }
 
-  updateBubbleChoice (bubble_array, skills) {
-    let updateUser = this.props.updateUser
-    if (updateUser) {
-      let type = skills ? 'skills' : 'tags'
-      updateUser(type, bubble_array)
-    }
+  // updates skill or tag attribute in parent state object and backend
+  updateBubbleChoice (bubble_array, skills_flag) {
+    let type = skills_flag ? 'skills' : 'tags'
+    let bubble_ids = bubble_array.map(r => r.id)
+    if (type == 'skills') syncSkillsToStudent(bubble_ids)
+    else syncTagsToStudent(bubble_ids)
+    this.props.updateUser(type, bubble_array)
   }
 
   render () {

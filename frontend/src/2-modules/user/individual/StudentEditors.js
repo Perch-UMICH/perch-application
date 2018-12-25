@@ -71,14 +71,6 @@ export class EditLinks extends Component {
             Linkedin
           </label>
         </div>
-        {/* <div className='input-field'>
-					<input type='text' id='resume' placeholder='super-cool-resume.pdf' value={this.state.resume}
-					onChange={(e) => {
-						if (this.props.updateUser) {
-							this.props.updateUser("resume", e.target.value); }
-						this.setState({resume: e.target.value})}}/>
-					<label htmlFor='resume' className="active" >Resume</label>
-				</div> */}
         {this.props.prof && (
           <div className='input-field'>
             <input
@@ -124,7 +116,6 @@ export let EditContainerOnboarding = props => (
   <div id='edit-container'>
     <h1>Add {props.title}</h1>
     {props.children}
-    {/* <BasicButton msg='next' superClick={props.redirect}/> */}
   </div>
 )
 
