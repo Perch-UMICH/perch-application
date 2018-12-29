@@ -118,10 +118,6 @@ class LabSearch extends Component {
               id={lab.id}
               saved_labs={this.state.lab_list}
               name={lab.name}
-              dept='MISSING'
-              rsrch='MISSING'
-              img='/img/headshots/salektiar.jpg'
-              description='NULL'
               positions_applied={this.state.positions_applied}
               positions={lab.projects}
             />
@@ -236,11 +232,7 @@ class LabSearch extends Component {
   }
 
   updateSearch (event) {
-    // event.preventDefault()
-    // if (event.keyCode == 13) {
-    // alert(event.keyCode)
     this.setState({ search: event.target.value })
-    // }
   }
 
   /*

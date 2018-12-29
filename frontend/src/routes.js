@@ -6,7 +6,7 @@ import SignUpPage from './2-modules/publicStatic/signup/SignUpPage';
 import ConfirmEmail from './2-modules/user/maintenance/ConfirmEmail';
 import About from './2-modules/publicStatic/about/About';
 import Login from './2-modules/publicStatic/login/Login';
-import StudentProfile from './2-modules/user/individual/StudentProfile';
+import StudentProfileContainer from './2-modules/user/individual/student/StudentProfileContainer';
 import LabMaster from './2-modules/labSearch/LabMaster.js';
 import ProfPage from './2-modules/user/group/ProfPage';
 import Apply from './2-modules/user/Apply';
@@ -49,8 +49,8 @@ class Router extends Component {
 							<Route path='/login' component={ Login } />
 							<Route path='/sign-up' component={ SignUpPage } />
 							<Route path='/confirm-email' component={ ConfirmEmail } />
-							<Route path='/student-profile' component={ StudentProfile } />
-							<Route path='/student-profile/:studentSlug' component={ StudentProfile } />
+							<Route path='/student-profile' component={ StudentProfileContainer } />
+							<Route path='/student-profile/:studentSlug' component={ StudentProfileContainer } />
 							<Route path='/lab-match' component={ LabMaster }/>
 							<Route path='/prof-page' component={ GroupPage }/>
 							<Route path='/prof/:profSlug' component={ ProfPage }/>

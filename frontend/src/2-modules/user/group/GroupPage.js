@@ -56,13 +56,6 @@ class GroupPage extends Component {
         contact_email: '',
         contact_phone: ''
       },
-      updated_lab: {
-        contact_email: '',
-        contact_phone: '',
-        location: '',
-        name: '',
-        description: ''
-      },
       members_raw: [],
       admins_raw: [],
       app_questions: [],
@@ -70,103 +63,89 @@ class GroupPage extends Component {
     }
   }
 
-  // Refresh page to display initial & updated lab members
-  loadLabMembers () {
-    let {lab_id} = this.state
-
-    getLabMembers(lab_id)
-      .then(resp => {
-        resp.data.faculty.map(person => {
-          // Render full-name (need to get from either 'name' field or first_name + last_name since inconsistent)
-          let fullname = person.data.name || ''
-          if (fullname == '') {
-            if (person.data.first_name) fullname = person.data.first_name
-            if (person.data.last_name) fullname += ' ' + person.data.last_name
-          }
-
-          getFacultyFromUser(person.data.id).then(r => {
-            let newState = this.state
-            let link = r.data ? '/prof/' + r.data.id : ''
-            if (person.role === 1 || person.role === 2) {
-              newState.lab_admins.push(
-                <GroupPerson
-                  key={person.data.id}
-                  link={link}
-                  src={
-                    person.data.profilepic_path ||
-                    'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'
-                  }
-                >
-                  {fullname}
-                </GroupPerson>
-              )
-              newState.admins_raw.push([fullname, person.data.id])
-            } else {
-              newState.lab_members.push(
-                <GroupPerson
-                  key={person.data.id}
-                  link={link}
-                  src={
-                    person.data.profilepic_path ||
-                    'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'
-                  }
-                >
-                  {fullname}
-                </GroupPerson>
-              )
-              newState.members_raw.push([fullname, person.data.id])
-            }
-            newState.admin_access = this.hasPermissions(newState.admins_raw)
-            this.setState(newState)
-          })
-        })
-
-      resp.data.students.map(person => {
-        if (person && person.data) {
-          let fullname = person.data.name || ''
-          if (fullname == '') {
-            if (person.data.first_name) fullname = person.data.first_name
-            if (person.data.last_name) fullname += ' ' + person.data.last_name
-          }
-
-          getStudentFromUser(person.data.id).then(r => {
-            let newState = this.state
-            let link = r.data ? '/student-profile/' + r.data.id : ''
-            if (person.role === 1 || person.role === 2) {
-              newState.lab_admins.push(
-                <GroupPerson
-                  key={person.data.user_id}
-                  link={link}
-                  src={
-                    person.data.profilepic_path ||
-                    'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'
-                  }
-                >
-                  {fullname}
-                </GroupPerson>
-              )
-              newState.admins_raw.push([fullname, person.data.id])
-            } else {
-              newState.lab_members.push(
-                <GroupPerson
-                  key={person.data.user_id}
-                  link={link}
-                  src={
-                    person.data.profilepic_path ||
-                    'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'
-                  }
-                >
-                  {fullname}
-                </GroupPerson>
-              )
-              newState.members_raw.push([fullname, person.data.id])
-            }
-            newState.admin_access = this.hasPermissions(newState.admins_raw)
-            this.setState(newState)
-          })
-        }
+  // loads positions, members,
+  // which positions the current user has applied-to / saved and general lab data
+  componentDidMount () {
+    this.loadLabData()
+    this.loadLabPositions()
+    this.loadLabMembers()
+    this.loadPositionsApplied()
+    if (isStudent()) {
+      getStudentFromUser(getCurrentUserId()).then(r => {
+        this.setState({ user_saved_labs: r.data.position_list })
       })
+    }
+  }
+
+  // initial grab of lab descriptors
+  loadLabData () {
+    getLab(this.state.lab_id).then(resp => {
+      this.setState({ lab_data: resp.data.data })
     })
+  }
+
+  /*************************/
+  /* LAB MEMBER AND ADMIN  */
+  /*************************/
+
+  // loads the members and admins for the group
+  loadLabMembers () {
+    let { lab_id, admins_raw } = this.state
+    getLabMembers(lab_id).then(r => {
+      this.addMembers(r.data.faculty)
+      this.addMembers(r.data.students)
+      this.state.admin_access = this.currentUserHasPermissions(admins_raw)
+    })
+  }
+
+  // adds student members as either admins or members
+  // the getFacultyFromUser only is used to gra b their link. Should remove
+  addMembers (members) {
+    members.map(person => {
+      let link = 'https://google.com?q=need link in data'
+      this.isAdmin(person.role)
+        ? this.addAsAdmin(person, link)
+        : this.addAsMember(person, link)
+      this.setState(this.state)
+    })
+  }
+
+  // admin level is only level 1 and 2
+  isAdmin (role) {
+    if (role <= 2) return true
+    else return false
+  }
+
+  addAsAdmin (person, link) {
+    this.state.lab_admins.push(
+      <GroupPerson
+        key={person.data.user_id}
+        link={link}
+        src={
+          person.data.profilepic_path ||
+          'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'
+        }
+      >
+        {person.data.name}
+      </GroupPerson>
+    )
+    this.state.admins_raw.push([person.data.name, person.data.id])
+  }
+
+  addAsMember (person, link) {
+    this.state.lab_members.push(
+      <GroupPerson
+        key={person.data.user_id}
+        link={link}
+        src={
+          person.data.profilepic_path ||
+          'https://catking.in/wp-content/uploads/2017/02/default-profile-1.png'
+        }
+      >
+        {person.data.name}
+      </GroupPerson>
+    )
+    this.state.members_raw.push([person.data.name, person.data.id])
   }
 
   loadLabPositions () {
@@ -175,63 +154,37 @@ class GroupPage extends Component {
     })
   }
 
+  // Get all positions that the student has submitted applications to:
   loadPositionsApplied () {
-    // Get all positions that the student has submitted applications to:
     if (isStudent()) {
-      getAllStudentApplicationResponses(getCurrentUserId()).then(resp => {
-        let positions_applied = resp.data.map(app => {
-          return app.position_id
-        })
+      getAllStudentApplicationResponses(getCurrentUserId()).then(r => {
+        let positions_applied = r.data.map(app => app.position_id)
         this.setState({ positions_applied })
       })
     }
   }
 
-  componentDidMount () {
-    this.loadLabPositions()
-    getLab(this.state.lab_id).then(resp => {
-      let updated_lab = resp.data.data
-      updated_lab['contact_email'] = updated_lab['contact_email'] || ''
-      updated_lab['contact_phone'] = updated_lab['contact_phone'] || ''
-      updated_lab['location'] = updated_lab['location'] || ''
-      updated_lab['name'] = updated_lab['name'] || ''
-      updated_lab['description'] = updated_lab['description'] || ''
-      this.setState({ lab_data: resp.data.data, updated_lab: resp.data.data })
-    })
-
-    if (isStudent()) {
-      getStudentFromUser(getCurrentUserId()).then(r => {
-        this.setState({ user_saved_labs: r.data.position_list })
-      })
-    }
-    this.loadLabMembers()
-    this.loadPositionsApplied()
-  }
-
   // Update the new position from modal, to be submitted by createPosition
   updateNewPosState (name, value) {
-    let newState = this.state
-    newState.new_pos[name] = value
-    this.setState(newState)
+    this.state.new_pos[name] = value
+    this.setState(this.state)
   }
 
   // Update the revisionist lab from modal, to be submitted by createPosition
   updateLabState (e) {
-    let updated_lab = this.state.updated_lab
-    updated_lab[e.target.name] = e.target.value
-    this.setState({ updated_lab })
+    let { lab_data } = this.state
+    lab_data[e.target.name] = e.target.value
+    this.setState({ lab_data })
   }
 
   // create position and position application, call from create position modal
   createPosition () {
-    let new_pos = this.state.new_pos
-    let questions = this.state.app_questions.map(q => {
+    let { new_pos, app_questions, lab_id } = this.state
+    let questions = app_questions.map(q => {
       return { question: q.question }
     })
     new_pos.application = { questions }
-    console.log('NEW POS!!!', new_pos)
-    // alert(`attempting position create ${new_pos.title} ${new_pos.description} ${new_pos.time_commitment} ${new_pos.open_slots}`);
-    createLabPosition(this.state.lab_id, new_pos).then(resp => {
+    createLabPosition(lab_id, new_pos).then(resp => {
       this.loadLabPositions()
       this.setState({ new_pos: { min_time_commitment: 10 } })
     })
@@ -252,7 +205,7 @@ class GroupPage extends Component {
     })
   }
 
-  hasPermissions (admins) {
+  currentUserHasPermissions (admins) {
     let user_id = getCurrentUserId()
     for (let i = 0; i < admins.length; i++) {
       if (admins[i][1] == user_id) return true
@@ -287,7 +240,7 @@ class GroupPage extends Component {
           medium
           title={`Update Name & Description`}
           modalAction={() =>
-            modalUpdateLab(this.state.updated_lab, () =>
+            modalUpdateLab(this.state.lab_data, () =>
               getLab(this.state.lab_id)
             )
           }
@@ -296,14 +249,14 @@ class GroupPage extends Component {
           <input
             type='text'
             name='name'
-            value={this.state.updated_lab.name}
+            value={this.state.lab_data.name}
             onChange={e => this.updateLabState(e)}
           />
           <b>New Description</b>
           <input
             type='text'
             name='description'
-            value={this.state.updated_lab.description}
+            value={this.state.lab_data.description}
             onChange={e => this.updateLabState(e)}
           />
         </EditModal>
@@ -315,7 +268,7 @@ class GroupPage extends Component {
           medium
           title={`Update Contact Info`}
           modalAction={() =>
-            modalUpdateLab(this.state.updated_lab, () =>
+            modalUpdateLab(this.state.lab_data, () =>
               getLab(this.state.lab_id)
             )
           }
@@ -324,21 +277,21 @@ class GroupPage extends Component {
           <input
             type='text'
             name='contact_email'
-            value={this.state.updated_lab.contact_email}
+            value={this.state.lab_data.contact_email}
             onChange={e => this.updateLabState(e)}
           />
           <b>New Phone</b>
           <input
             type='text'
             name='contact_phone'
-            value={this.state.updated_lab.contact_phone}
+            value={this.state.lab_data.contact_phone}
             onChange={e => this.updateLabState(e)}
           />
           <b>New Office Location</b>
           <input
             type='text'
             name='location'
-            value={this.state.updated_lab.location}
+            value={this.state.lab_data.location}
             onChange={e => this.updateLabState(e)}
           />
         </EditModal>
@@ -470,16 +423,16 @@ class GroupPage extends Component {
 }
 
 // Our Admin Panel on Group Page. Uses GroupPerson components
-const Administrators = ({people, admin_access}) => {
+const Administrators = ({ people, admin_access }) => {
   let content = <div className='group-photos'>{people}</div>
-  if (people.length == 0) { content = <div className='group-default-text'>No Current Admin</div> }
+  if (people.length == 0) {
+    content = <div className='group-default-text'>No Current Admin</div>
+  }
   return (
     <div id='group-admins'>
       <h1>Admins</h1>
       {content}
-      {admin_access && (
-        <Editor superClick={() => openModal('edit-admins')} />
-      )}
+      {admin_access && <Editor superClick={() => openModal('edit-admins')} />}
     </div>
   )
 }
@@ -487,7 +440,9 @@ const Administrators = ({people, admin_access}) => {
 const Members = props => {
   // If there are no lab members, set default message.
   let content = <div className='group-photos'>{props.people}</div>
-  if (props.people.length == 0) { content = <div className='group-default-text'>No Current Members</div> }
+  if (props.people.length == 0) {
+    content = <div className='group-default-text'>No Current Members</div>
+  }
   return (
     <div id='group-members'>
       <h1>Members</h1>

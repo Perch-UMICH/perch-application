@@ -1888,3 +1888,13 @@ export function validPhoneChange (new_val) {
 //  department
 //  title/role
 // }
+
+
+// Handles opening of component editing modals
+// added by benji
+export function openModal (id) {
+  if (document.getElementById(id)) {
+    document.getElementById(id).classList.add('activated')
+    document.getElementById(`${id}-backdrop`).classList.add('activated')
+  }
+}

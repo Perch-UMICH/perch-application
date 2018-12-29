@@ -10,8 +10,6 @@ import {
   getStudentTags
 } from '../../helper.js'
 import '../user/individual/PickYourInterests.scss'
-import { warn_toast } from '../../data/toastData.js'
-import iziToast from 'izitoast'
 
 class BubbleChoice extends Component {
   constructor (props) {
