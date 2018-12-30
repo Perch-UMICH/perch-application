@@ -29,6 +29,7 @@ import Join from './2-modules/publicStatic/join/Join';
 import CreateLab from './2-modules/user/CreateLab';
 import Challenge from './2-modules/publicStatic/join/Challenge';
 import Nothing from './2-modules/utilities/tests/Nothing';
+import Dashboard from './2-modules/user/individual/dashboard/dashboard'
 import './2-modules/utilities/TapTarget.css';
 import './0-base/general.scss';
 
@@ -74,6 +75,7 @@ class Router extends Component {
 							<Route path='/challenge' component={ Challenge } />
 							<Route path='/create-lab' component={ CreateLab } />
 							<Route path='/nothing' component={ Nothing } />
+							<Route path='/hypercontrol' component={ Dashboard } />
 							<Route path='/' component={ Home } />
 						</Switch>
 					</div>

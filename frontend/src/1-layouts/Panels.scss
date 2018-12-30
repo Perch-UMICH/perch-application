@@ -1,0 +1,35 @@
+#canvas {
+  margin: auto auto;
+  width: 1200px;
+  margin-top: 5px;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas: 
+    "header header  header  header  header"
+    "left   main    main    main    right";
+}
+
+.panel {
+  
+}
+
+.left-panel {
+  grid-area: left;
+  background-color: red;
+}
+
+.main-panel {
+  grid-area: main;
+  background-color: blue;
+}
+
+.right-panel {
+  grid-area: right;
+  background-color: green;
+}
+
+.header-panel {
+  grid-area: header;
+  background-color: purple;
+}
