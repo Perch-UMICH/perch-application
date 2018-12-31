@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import NavBar from './2-modules/utilities/NavBar';
+import NavBarContainer from './2-modules/publicStatic/navbar/NavBarContainer';
 import Home from './2-modules/publicStatic/home/Home';
-import SignUpPage from './2-modules/publicStatic/signup/SignUpPage';
+import SignUp from './2-modules/publicStatic/signup/SignUp';
 import ConfirmEmail from './2-modules/user/maintenance/ConfirmEmail';
 import About from './2-modules/publicStatic/about/About';
 import Login from './2-modules/publicStatic/login/Login';
+import Logout from './2-modules/publicStatic/login/Logout';
 import StudentProfileContainer from './2-modules/user/individual/student/StudentProfileContainer';
 import LabMaster from './2-modules/labSearch/LabMaster.js';
 import ProfPage from './2-modules/user/group/ProfPage';
@@ -41,14 +42,15 @@ class Router extends Component {
 		return(
 			<BrowserRouter>
 				<div>
-					<NavBar />
-					<div>
+					<NavBarContainer />
+					<div style={{minHeight: '100vh', paddingTop: '50px', overflow: 'hidden'}}>
 						<Switch>
 							<Route path='/home' component={ Home } />
 							<Route path='/about' component={ About } />
 							<Route path='/about/:tab' component={ About } />
-							<Route path='/login' component={ Login } />
-							<Route path='/sign-up' component={ SignUpPage } />
+							<Route path='/login' component={ Login } /> 
+							<Route path='/logout' component={ Logout } /> 
+							<Route path='/sign-up' component={ SignUp } />
 							<Route path='/confirm-email' component={ ConfirmEmail } />
 							<Route path='/student-profile' component={ StudentProfileContainer } />
 							<Route path='/student-profile/:studentSlug' component={ StudentProfileContainer } />

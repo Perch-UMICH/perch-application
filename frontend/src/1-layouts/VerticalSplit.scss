@@ -1,0 +1,16 @@
+#vertical-split {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 
+  "left right";
+}
+
+#split-left {
+  grid-area: left;
+  position: relative;
+}
+
+#split-right {
+  grid-area: right;
+  position: relative;
+}

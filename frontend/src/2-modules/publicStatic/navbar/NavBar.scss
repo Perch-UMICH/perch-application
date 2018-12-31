@@ -1,0 +1,36 @@
+$nav-height: 40px;
+
+body {
+    margin: 0;
+}
+
+.nav-logo {
+    height: $nav-height;
+    float: left !important;
+    >img {
+        height: $nav-height;
+    }
+}
+
+.nav-item {
+    display: inline-block;
+    color: white;
+    line-height: $nav-height;
+    margin-right: 1em;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+nav {
+    background-color: var(--primary);
+    height: $nav-height;
+    margin: 0;
+    padding: 1em;
+    position: fixed;
+    z-index: 1000;
+    width: calc(100vw - 2em);
+
+    >div {
+        float: right;
+    }
+}

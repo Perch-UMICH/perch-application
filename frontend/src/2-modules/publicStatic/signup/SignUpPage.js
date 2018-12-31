@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SignUp from './SignUp'
+import Presentation from './Presentation'
 import './SignUpPage.css'
 class SignUpPage extends Component {
 	

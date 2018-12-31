@@ -1,61 +1,22 @@
-[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
-  background-color: var(--active);
-  border-color:var(--active);
-}
-
-#first_name:focus + label, #last_name:focus + label, #email:focus + label, #password:focus + label, #password_retype:focus + label, #name:focus + label {
-  color: var(--active);
-}
-
-#first_name:focus, #last_name:focus, #email:focus, #password:focus, #password_retype:focus, #name:focus{
-  border-bottom: 1px solid var(--active);
-  box-shadow: 0 1px 0 0 var(--active);
-}
-
-.min-margin {
-	margin-bottom: 5px;
-}
-
-.submit-btn {
-	background-color: var(--primary);
-	box-shadow: none;
-}
-
-.submit-btn:hover {
-	background-color: var(--seafoam-blue) ;
-	box-shadow: none;
-}
-
 .signup-container {
-	color: var(--eighty-grey);
-	padding: 70px;
-	background-color: white;
+	color: rgb(21, 38, 54);
+	.signup-header {
+		font-size: 30px;
+		margin-bottom: 0.5em;
+	}
 }
 
-.google-login {
-	width: calc(100% + 2*80px);
-	height: 80px;
-	margin: 0 -80px;
-	background-color: lightcoral;
-}
+// .google-login {
+// 	width: calc(100% + 2*80px);
+// 	height: 80px;
+// 	margin: 0 -80px;
+// 	background-color: lightcoral;
+// }
 
-.new-signup-header {
-	font-size: 25px;
-	margin-bottom: 0px;
-	padding-left: 10px;
-	letter-spacing: 1px;
-	color: var(--active);
-}
-
-.new-signup-sub-header {
-	padding-left: 10px;
-	font-size: 14px;
-	margin-bottom: 0px;
-	letter-spacing: 1px;
-	/*text-transform: lowercase;*/
-	color: var(--b-grey);
-}
-
-.new-signup-radio {
-	margin-right: 20px;
-}
+// .signup-header {
+// 	font-size: 30px;
+// 	// margin-bottom: 0px;
+// 	// padding-left: 10px;
+// 	// letter-spacing: 1px;
+// 	// color: var(--active);
+// }

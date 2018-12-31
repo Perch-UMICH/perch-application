@@ -1,17 +1,20 @@
 #canvas {
-  margin: auto auto;
-  width: 1200px;
-  margin-top: 5px;
   display: grid;
-  grid-template-rows: auto;
-  grid-template-columns: repeat(5, 1fr);
+  
+  // Desktop View
   grid-template-areas: 
     "header header  header  header  header"
     "left   main    main    main    right";
-}
 
-.panel {
-  
+  // Mobile view
+  @media (max-width: 600px){
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "header"
+      "main"
+      "left"
+      "right";
+    }
 }
 
 .left-panel {

@@ -1,0 +1,60 @@
+$background-color: rgb(245, 248, 250);
+$font-color: rgb(21, 38, 54);
+
+// meant for two inputs
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  .input {
+    display: inline-block;
+    width: calc(50% - 1em);
+  }
+}
+
+input {
+  margin: 0.5em 0;
+  font-size: 20px;
+  outline: none;
+  border: none;
+  width: calc(100% - 2em);
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// text, email ,password
+input[type='text'], input[type='email'], input[type='password'] {
+  color: $font-color;
+  background-color: $background-color;
+  padding: 1em;
+  border-bottom: 3px solid $background-color;
+  transition: 0.2s ease;
+  &:focus {
+    border-color: var(--active) !important;
+    transition: 0.2s ease;
+  }
+}
+
+// Radio
+input[type='radio'] {
+  margin-right: 1em;
+}
+
+input[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
+  background-color: var(--active);
+  border-color:var(--active);
+}
+
+// Submit
+input[type='submit'] {
+  background-color: var(--primary);
+  padding: 1em;
+  margin: 1em 0;
+  color: white;
+  width: 100%;
+  transition: 0.2s ease;
+  &:hover {
+    background-color: var(--active);
+    transition: 0.2s ease;
+  }
+}

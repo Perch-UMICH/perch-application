@@ -1,6 +1,11 @@
 import React from 'react'
 import './Panels.scss'
 
+/*
+  Used for Profile layout
+*/
+
+// parent wrapper around panels
 export function Canvas(props) {
   return <div id='canvas'>{props.children}</div>
 }

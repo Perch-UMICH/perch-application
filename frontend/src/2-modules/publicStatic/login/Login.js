@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Floater from '../../../1-layouts/Floater'
 import './Login.css'
 import {
   loginUser,
@@ -6,6 +7,12 @@ import {
   isStudent,
   getCurrentFacultyId
 } from '../../../helper.js'
+
+import {
+  TextInput,
+  SubmitInput,
+} from '../../../3-utils/Inputs'
+
 import iziToast from 'izitoast'
 
 class Login extends Component {
@@ -16,6 +23,8 @@ class Login extends Component {
       email: '',
       password: ''
     }
+
+    this.updateState = this.updateState.bind(this)
   }
 
   // called when user tries to login
@@ -50,52 +59,33 @@ class Login extends Component {
       )
   }
 
+  updateState(key, value) {
+    this.state[key] = value
+    this.setState(this.state)
+  }
+
   render () {
     return (
-      <div className='login-container valign-wrapper'>
-        <form
-          className='container login shadow'
-          onSubmit={this.handleLogin.bind(this)}
-        >
+      <Floater>
+        <div className='login shadow' >
 
-          <div className='new-signup-header center-align'>LOG IN</div>
+          <h1>LogIn</h1>
+          <TextInput
+            type='email'
+            name='email'
+            label='Email'
+            updateParent={this.updateState}
+          />
 
-          <div className='input-field'>
-            <input
-              id='email'
-              type='email'
-              required
-              autofocus='autofocus'
-              value={this.state.email}
-              onChange={e => this.setState({ email: e.target.value })}
-            />
-            <label htmlFor='email'>Email</label>
-          </div>
-
-          <div className='input-field'>
-            <input
-              onChange={e => this.setState({ password: e.target.value })}
-              id='password'
-              type='password'
-              required
-              autofocus='autofocus'
-              value={this.state.password}
-            />
-            <label htmlFor='password'>Password</label>
-          </div>
-
-          <br />
-
-          <button
-            className='btn waves-effect waves-blue waves-light basic-btn'
-            style={{ width: '100%', height: '50px' }}
-            name='action'
-          >
-
-            <i className='material-icons'>lock_open</i>
-          </button>
-        </form>
-      </div>
+          <TextInput
+            type='password'
+            name='password'
+            label='Password'
+            updateParent={this.updateState}
+          />
+          <SubmitInput onClick={this.handleLogin.bind(this)}>Login</SubmitInput>
+        </div>
+      </Floater>
     )
   }
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import BasicButton from '../../utilities/buttons/BasicButton'
 import SignUp from '../signup/SignUp'
 import Typed from 'typed.js'
 import {
@@ -10,7 +9,31 @@ import {
   tempSignup
 } from './AboveTheFold.module.scss'
 
-class AboveTheFold extends Component {
+import {
+  VerticalSplit,
+  SplitLeft,
+  SplitRight
+} from '../../../1-layouts/VerticalSplit'
+import Floater from '../../../1-layouts/Floater'
+
+function AboveTheFold () {
+  return (
+    <div className={atf}>
+      <VerticalSplit>
+        <SplitLeft>
+          <MovingTitle />
+        </SplitLeft>
+        <SplitRight>
+          <Floater>
+            <SignUp />
+          </Floater>
+        </SplitRight>
+      </VerticalSplit>
+    </div>
+  )
+}
+
+class MovingTitle extends Component {
   componentDidMount () {
     var options = {
       strings: [
@@ -22,30 +45,18 @@ class AboveTheFold extends Component {
       ],
       typeSpeed: 75
     }
-    var typed = new Typed('#changer', options)
+    let typed = new Typed('#changer', options)
   }
-
   render () {
     return (
-      <div className={`${atf} row`}>
-        <div className={`col s12 m7 ${movingText} valign-wrapper`}>
-          <div className='container center-align'>
-            <div className={`${header} left-align`}>
-              de-awkward-izing <br /><span id='changer' />
-            </div>
-            <div className={`${text} left-align`}>
-              You can find Michigan labs here
-            </div>
+      <div className={movingText}>
+        <Floater>
+          <div className={header}>
+            de-awkward-izing <br />
+            <span id='changer' />
           </div>
-        </div>
-
-        <div className='col s12 m5 valign-wrapper'>
-
-          <div className={tempSignup}>
-            <SignUp />
-          </div>
-        </div>
-
+          <div className={text}>Your one stop shop for research labs</div>
+        </Floater>
       </div>
     )
   }
