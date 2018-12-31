@@ -8,7 +8,6 @@ import { isNumber } from 'util';
 
 // parent wrapper around panels
 export function Canvas(props) {
-  console.log("props.panel_num", props.panels)
   return <div id={`canvas-${props.panels}`}>{props.children}</div>
 }
 
