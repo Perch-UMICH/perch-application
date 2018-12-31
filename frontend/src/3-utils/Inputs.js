@@ -11,7 +11,6 @@ export function InputRow (props) {
   return <div className='input-row'>{props.children}</div>
 }
 
-
 /*
   Updates the parent state with the name as the key
   Handles Input and Label
@@ -47,7 +46,6 @@ export function SubmitInput (props) {
     <div className='input'>
       <input
         type='submit'
-        onChange={e => props.onClick}
         onClick={props.onClick}
         value={props.children}
       />

@@ -49,8 +49,8 @@ input[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + lab
 input[type='submit'] {
   background-color: var(--primary);
   padding: 1em;
-  margin: 1em 0;
   color: white;
+  border-bottom: 3px solid currentColor;
   width: 100%;
   transition: 0.2s ease;
   &:hover {

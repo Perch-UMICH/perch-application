@@ -17,7 +17,8 @@ class LabSearchProject extends Component {
       added: this.props.saved,
       position: this.props.position || {},
       question_resps: [],
-      submitted: this.props.submitted
+      submitted: this.props.submitted,
+      overflowDescription: false,
     }
   }
 
@@ -94,9 +95,9 @@ class LabSearchProject extends Component {
 
   formatTitle = () => {
     let newPos = this.state.position
-    if (newPos.description && newPos.description.length > 270) {
+    if (newPos.description && newPos.description.length > 400) {
       this.setState({ overflowDescription: true })
-      newPos.description = newPos.description.slice(0, 270)
+      newPos.description = newPos.description.slice(0, 400)
     }
     this.setState({ position: newPos })
   }

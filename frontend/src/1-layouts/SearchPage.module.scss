@@ -1,0 +1,41 @@
+#canvas {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 1em;
+  padding: 0 1em 1em 1em; // Desktop View
+  grid-template-areas: 
+    "left main main main main"; // mobile view
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "main"
+  }
+}
+
+// high level grid
+#leftPanel {
+  grid-area: left;
+  background-color: red; // mobile view
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+#mainPanel {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 
+    "search" 
+    "results"
+}
+
+// main's sub grid
+#searchPanel {
+  grid-area: search;
+}
+
+#resultsPanel {
+  grid-area: results;
+}

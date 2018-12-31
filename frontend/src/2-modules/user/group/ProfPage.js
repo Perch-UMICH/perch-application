@@ -345,12 +345,12 @@ class ProfPage extends Component {
   }
 }
 
-function Dashboard ({ name, loading_labs, labs, img, owner }) {
+function Dashboard (props) {
   return (
     <div id='user-column-Dashboard'>
-      <Quickview name={name} img={img} owner={owner} />
-      <Labs loading={loading_labs} labs={labs} owner={owner} />
-      <WorkExperience owner={owner} />
+      <Quickview {...props} />
+      <Labs {...props} />
+      <WorkExperience {...props} />
     </div>
   )
 }

@@ -1,7 +1,16 @@
 #search-bar {
-  height: 150px;
-  background-color: purple;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  padding: 1em 0;
+}
+
+#search-input {
+  width: 80%;
+  float: left;
+  max-width: calc(100% - 100px);
+}
+
+#search-submit {
+  float: right;
+  width: 20%;
+  min-width: 100px;
 }

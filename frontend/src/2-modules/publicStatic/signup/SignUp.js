@@ -32,7 +32,6 @@ class SignUp extends Component {
   }
 
   registerLoginCreate (event) {
-    event.preventDefault()
     let { email, password, first_name, last_name } = this.state
     registerUser(`${first_name} ${last_name}`, email, password, password)
       .catch(e => console.log('Register Error'))

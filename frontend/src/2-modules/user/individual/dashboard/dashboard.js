@@ -15,18 +15,15 @@ export default function Dashboard(props) {
       <HeaderPanel>
         <SearchBar />
       </HeaderPanel>
-
       <LeftPanel>
         <Projects />
         <Groups />
         <SavedProjects />
       </LeftPanel>
-
       <MainPanel>
         <RecommendedProjects />
         <RecommendedBlogs />
       </MainPanel>
-
       <RightPanel>
         <Resources />
       </RightPanel>
