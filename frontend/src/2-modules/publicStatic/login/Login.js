@@ -68,7 +68,6 @@ class Login extends Component {
     return (
       <Floater>
         <div className='login shadow' >
-
           <h1>LogIn</h1>
           <TextInput
             type='email'
@@ -76,7 +75,6 @@ class Login extends Component {
             label='Email'
             updateParent={this.updateState}
           />
-
           <TextInput
             type='password'
             name='password'
