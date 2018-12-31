@@ -1,5 +1,6 @@
 import React from 'react'
 import './Panels.scss'
+import { isNumber } from 'util';
 
 /*
   Used for Profile layout
@@ -7,7 +8,8 @@ import './Panels.scss'
 
 // parent wrapper around panels
 export function Canvas(props) {
-  return <div id='canvas'>{props.children}</div>
+  console.log("props.panel_num", props.panels)
+  return <div id={`canvas-${props.panels}`}>{props.children}</div>
 }
 
 export function LeftPanel(props) {
