@@ -31,6 +31,12 @@ class LabSearch extends Component {
       usersAppliedProjects: [], // projects a user has already applied for
       savedProjects: [], // list of user's saved projets,
       numLabsToShowOnMore: 10,
+      filters: {
+        departments: [],
+        timeCommitment: [],
+        fields: [],
+        skills: [],
+      },
 
     }
     this.updateState = this.updateState.bind(this)
@@ -53,6 +59,7 @@ class LabSearch extends Component {
     this.executeSearch()
     this.loadSubmittedApplications()
     this.loadSavedProjects()
+    this.loadFilters()
   }
 
 /*
@@ -107,6 +114,21 @@ class LabSearch extends Component {
 /*
   FILTER FUNCTIONS
 */
+
+  // loads the four filter types into this.state.filters
+  loadFilters() {
+    getSearchData().then( r => {
+      this.setState({
+        filters: {
+          departments: r.data.available_departments,
+          fields: r.data.available_areas,
+          timeCommitment: r.data.all_commitments,
+          skills: r.data.available_skills,
+        }
+      })
+    })
+  }
+
 
   // constructor (props) {
   //   super(props)

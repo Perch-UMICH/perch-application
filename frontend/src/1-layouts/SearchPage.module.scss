@@ -16,7 +16,8 @@
 // high level grid
 #leftPanel {
   grid-area: left;
-  background-color: red; // mobile view
+  background-color: white;
+  // mobile view
   @media (max-width: 600px) {
     display: none;
   }

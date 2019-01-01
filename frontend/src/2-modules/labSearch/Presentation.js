@@ -13,21 +13,23 @@ import {
 import SearchBar from '../user/individual/dashboard/SearchBar'
 
 export default function (props) {
+  let {filters, ...search} = props
+
   return (
     <Canvas>
 
       <LeftPanel>
-        <Filters />
+        <Filters {...filters}/>
       </LeftPanel>
 
       <MainPanel>
 
         <SearchPanel>
-          <SearchBar {...props}/>
+          <SearchBar {...search}/>
         </SearchPanel>
 
         <ResultsPanel>
-          <Results {...props}/>
+          <Results {...search}/>
         </ResultsPanel>
 
       </MainPanel>
