@@ -3,6 +3,15 @@
   grid-template-columns: repeat(2, 1fr);
   grid-template-areas: 
   "left right";
+
+  // Mobile
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 100vh;
+    grid-template-areas: 
+      "left"
+      "right";
+  }
 }
 
 #split-left {

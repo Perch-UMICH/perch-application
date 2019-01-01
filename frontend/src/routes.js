@@ -43,7 +43,7 @@ class Router extends Component {
 			<BrowserRouter>
 				<div>
 					<NavBarContainer />
-					<div style={{minHeight: '100vh', paddingTop: '50px', overflow: 'hidden'}}>
+					<div style={{minHeight: '100vh', paddingTop: '50px'}}>
 						<Switch>
 							<Route path='/home' component={ Home } />
 							<Route path='/about' component={ About } />

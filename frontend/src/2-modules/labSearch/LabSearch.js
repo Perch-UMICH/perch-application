@@ -30,7 +30,8 @@ class LabSearch extends Component {
       nextLabIds: [], // a bunch of objects with ids to be turned into labData
       usersAppliedProjects: [], // projects a user has already applied for
       savedProjects: [], // list of user's saved projets,
-      numLabsToShowOnMore: 10
+      numLabsToShowOnMore: 10,
+
     }
     this.updateState = this.updateState.bind(this)
     this.executeSearch = this.executeSearch.bind(this)
@@ -53,6 +54,10 @@ class LabSearch extends Component {
     this.loadSubmittedApplications()
     this.loadSavedProjects()
   }
+
+/*
+  SEARCH FUNCTIONS
+*/
 
   /*
     Executes search
@@ -98,6 +103,10 @@ class LabSearch extends Component {
         this.setState(this.state)
       })
   }
+
+/*
+  FILTER FUNCTIONS
+*/
 
   // constructor (props) {
   //   super(props)
