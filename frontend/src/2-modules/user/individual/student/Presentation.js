@@ -1,25 +1,26 @@
 import React from 'react'
 import { isLoggedIn } from '../../../../helper'
 import ErrorPage from '../../../utilities/ErrorPage'
-// import LeftPanel from './LeftPanel'
-// import MainPanel from './MainPanel'
-// import RightPanel from './RightPanel'
-
-import {LeftPanel, MainPanel, RightPanel, Canvas} from '../../../../1-layouts/Panels' 
+import ContactTab from './ContactTab.js'
+import LinkTab from './LinkTab.js'
+import QuickView from './QuickView.js'
+import Experiences from './Experiences.js'
+import {LeftPanel, MainPanel, Canvas} from '../../../../1-layouts/Panels' 
 import './StudentProfile.css'
 
 function StudentProfile (props) {
   if (!isLoggedIn()) return <ErrorPage />
   else {
     return (
-      <Canvas>
-        {/* {props.modals} */}
+      <Canvas panels={2}>
+        <LeftPanel>
+          <ContactTab {...props} />
+          <LinkTab />
+        </LeftPanel>
 
-     
-
-        {/* <LeftPanel {...props} />
-        <MainPanel {...props} />
-        <RightPanel /> */}
+        <MainPanel>
+          <QuickView {...props} />
+        </MainPanel>
       </Canvas>
     )
   }

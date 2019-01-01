@@ -1,38 +1,53 @@
 #canvas {
-  display: grid;
-  
-  // Desktop View
-  grid-template-areas: 
-    "header header  header  header  header"
-    "left   main    main    main    right";
 
-  // Mobile view
-  @media (max-width: 600px){
-    grid-template-columns: 1fr;
+  // 3 Panel Desktop View ('canvas-3')
+  &-3 {
     grid-template-areas: 
-      "header"
-      "main"
-      "left"
-      "right";
+      "header header  header  header  header"
+      "left   main    main    main    right";
+  }
+
+  // 2 Panel Desktop View ('canvas-2')
+  &-2 {
+    grid-template-areas: 
+      "header header"
+      "left   main  ";
+
+    grid-template-columns: 1fr 3fr;
+  }
+
+  &-3, &-2 {
+    display: grid;
+
+    // Mobile view
+    @media (max-width: 600px){
+      grid-template-columns: 1fr;
+      grid-template-areas: 
+        "header"
+        "main"
+        "left"
+        "right";
     }
+  }
 }
+
 
 .left-panel {
   grid-area: left;
-  background-color: red;
+  background-color: rgb(194, 194, 194);
 }
 
 .main-panel {
   grid-area: main;
-  background-color: blue;
+  background-color: rgb(202, 202, 202);
 }
 
 .right-panel {
   grid-area: right;
-  background-color: green;
+  background-color: rgb(83, 83, 83);
 }
 
 .header-panel {
   grid-area: header;
-  background-color: purple;
+  background-color: rgb(43, 43, 43);
 }
