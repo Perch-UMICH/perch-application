@@ -93,7 +93,7 @@ class LabSearchItem extends Component {
 
     let {name, id, dept, rsrch, description, positions} = this.props
     return (
-      <div className='lab-srch-item-container shadow'>
+      <div className='lab-srch-item-container'>
         <div
           id={`lab_srch_expansion_${name}`}
           className='lab-srch-item-expansion'
