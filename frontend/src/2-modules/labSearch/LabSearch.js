@@ -134,7 +134,7 @@ class LabSearch extends Component {
     let { activeFilters } = this.state
     if (checked) activeFilters[type].push(filter)
     else activeFilters[type] = activeFilters[type].filter(r => r !== filter)
-    this.setState({ activeFilters })
+    this.setState({ activeFilters }, this.executeSearch)
   }
 
   render () {
