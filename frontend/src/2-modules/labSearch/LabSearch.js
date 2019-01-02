@@ -12,14 +12,6 @@ import {
   getAllStudentApplicationResponses
 } from '../../helper.js'
 
-const filterTypes = ['researchAreas', 'departments', 'minReqs', 'lab-skills']
-const filterFriendlyNames = [
-  'Research Areas',
-  'Organizations',
-  'Hours',
-  'Lab Skills'
-]
-
 class LabSearch extends Component {
   constructor (props) {
     super(props)

@@ -1,13 +1,15 @@
 #canvas {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr 4fr;
   grid-column-gap: 1em;
-  padding: 0 1em 1em 1em; // Desktop View
+  padding: 2em; 
+  padding-top: 0;
   grid-template-areas: 
-    "left main main main main"; // mobile view
-
+    "left main";
+  
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
+    // mobile view
     grid-template-areas: 
       "main"
   }
@@ -16,7 +18,6 @@
 // high level grid
 #leftPanel {
   grid-area: left;
-  background-color: white;
   // mobile view
   @media (max-width: 600px) {
     display: none;
@@ -27,6 +28,7 @@
   grid-area: main;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: 120px auto;
   grid-template-areas: 
     "search" 
     "results"

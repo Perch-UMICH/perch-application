@@ -11,12 +11,17 @@ $font-color: rgb(21, 38, 54);
   }
 }
 
+.input {
+  input {
+    width: calc(100% - 2em);
+  }
+}
+
 input {
   margin: 0.5em 0;
   font-size: 20px;
   outline: none;
   border: none;
-  width: calc(100% - 2em);
   &:hover {
     cursor: pointer;
   }
@@ -58,3 +63,69 @@ input[type='submit'] {
     transition: 0.2s ease;
   }
 }
+
+// Check
+.checkbox {
+  display: grid;
+  grid-template-columns: 40px auto;
+  grid-template-areas: 
+    "checkbox label";
+
+  .label {
+    grid-area: label;
+  }
+}
+
+.checkbox-container {
+  grid-area: checkbox;
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  // overlays input over the checkmark
+  input {
+    position: absolute;
+    left: 0px;
+    top: -10px;
+    opacity: 0;
+    z-index: 1;
+    height: 27px;
+    width: 27px;
+    // change background and show mark if checked
+    &:checked ~ .checkmark {
+      background-color: #2196F3 !important;
+      &:after {
+        display: block;
+      }
+    }
+    
+  }
+  .checkmark {
+    position: absolute;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+  &:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+}
+
+

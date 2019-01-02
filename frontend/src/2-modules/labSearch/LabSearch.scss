@@ -9,6 +9,24 @@
 	grid-column-start: 2;
 }
 
+.filters {
+	position: relative;
+	h1 {
+		background-color: white;
+	}
+	>div {
+		background-color: white;
+		border-radius: 4px;
+		margin-bottom: 1em;
+		padding: 1em;
+		border: 1px solid lightgrey;
+	}
+	.options {
+		max-height: 200px;
+		overflow: scroll;
+	}
+}
+
 
 .search-filter-container {
 	background-color: var(--white);

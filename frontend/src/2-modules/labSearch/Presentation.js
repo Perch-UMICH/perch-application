@@ -23,7 +23,6 @@ export default function (props) {
       </LeftPanel>
 
       <MainPanel>
-
         <SearchPanel>
           <SearchBar {...search}/>
         </SearchPanel>
@@ -31,7 +30,6 @@ export default function (props) {
         <ResultsPanel>
           <Results {...search}/>
         </ResultsPanel>
-
       </MainPanel>
       
     </Canvas>

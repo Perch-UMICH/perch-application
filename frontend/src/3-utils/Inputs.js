@@ -18,7 +18,7 @@ export function InputRow (props) {
 export function TextInput (props) {
   return (
     <div className='input'>
-      <input
+      <input 
         type={props.type}
         placeholder={props.label}
         onChange={e => props.updateParent(props.name, e.target.value)}
@@ -50,5 +50,20 @@ export function SubmitInput (props) {
         value={props.children}
       />
     </div>
+  )
+}
+
+export function CheckboxInput (props) {
+  return (
+    <p className='checkbox'>
+      <div className='checkbox-container'>
+        <input 
+          type='checkbox'
+          onClick={props.onClick}
+        />
+        <span class="checkmark"></span>
+      </div>
+      <div className='label'>{props.children}</div>
+    </p>
   )
 }
