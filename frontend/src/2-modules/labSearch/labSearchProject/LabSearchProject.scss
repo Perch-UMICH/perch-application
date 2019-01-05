@@ -1,5 +1,4 @@
 .project {
-	max-height: 160px;
 	background-color: var(--white);
 	width: calc(100%-2em);
 	position: relative;
@@ -40,7 +39,6 @@
 }
 
 .project_tag {
-	/*background-color: var(--purple);*/
 	border: 1px solid var(--purple);
 	color: var(--purple);
 	border-radius: 10px;
@@ -55,10 +53,7 @@
 
 .project_description {
 	font-size: 16px;
-	max-width: calc(100% - 100px);
-	// width: 680px;
-	max-height: 55px;
-	overflow: hidden;
+	max-width: calc(100% - 150px);
 	hyphens: auto;
 }
 
@@ -69,7 +64,6 @@
 	background-color: var(--primary);
 	color: var(--white) !important;
 	cursor: pointer;
-	border-radius: 20px 0 0 20px;
 	transition: 0.2s ease;
 }
 
@@ -89,7 +83,6 @@
 	background-color: var(--primary);
 	color: var(--white) !important;
 	cursor: pointer;
-	border-radius: 20px 0 0 20px;
 	transition: 0.2s ease;
 }
 

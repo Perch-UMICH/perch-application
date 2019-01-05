@@ -9,7 +9,7 @@ Faculty: (an idea)
 */
 
 import React, { Component } from 'react'
-import LabSearchProject from './LabSearchProject'
+import LabSearchProject from './labSearchProject/Presentation'
 import {
   getCurrentUserId,
   getStudentFromUser,

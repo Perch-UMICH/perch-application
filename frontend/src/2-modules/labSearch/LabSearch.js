@@ -22,10 +22,10 @@ class LabSearch extends Component {
       savedProjects: [], // list of user's saved projets,
       numLabsToShowOnMore: 10,
       filters: {
-        departments: [],
-        timeCommitment: [],
         fields: [],
-        skills: []
+        departments: [],
+        skills: [],
+        timeCommitment: [],
       },
       activeFilters: {
         fields: [],
@@ -120,10 +120,10 @@ class LabSearch extends Component {
     getSearchData().then(({ data }) => {
       this.setState({
         filters: {
-          departments: data.available_departments,
           fields: data.available_areas,
+          departments: data.available_departments,
+          skills: data.available_skills,
           timeCommitment: data.all_commitments,
-          skills: data.available_skills
         }
       })
     })
