@@ -1,13 +1,13 @@
 #canvas {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 250px auto;
   grid-column-gap: 1em;
   padding: 2em; 
   padding-top: 0;
   grid-template-areas: 
     "left main";
   
-  @media (max-width: 600px) {
+  @media (max-width: 800px) {
     grid-template-columns: 1fr;
     // mobile view
     grid-template-areas: 
@@ -19,7 +19,7 @@
 #leftPanel {
   grid-area: left;
   // mobile view
-  @media (max-width: 600px) {
+  @media (max-width: 800px) {
     display: none;
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Description ({ children }) {
-  const characterLimit = 500
+  let characterLimit = window.innerWidth > 800 ? 400 : 100
   let overflow = false
   if (children.length > characterLimit) {
     children = children.slice(0, characterLimit)

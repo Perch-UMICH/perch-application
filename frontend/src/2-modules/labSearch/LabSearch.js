@@ -23,15 +23,15 @@ class LabSearch extends Component {
       numLabsToShowOnMore: 10,
       filters: {
         fields: [],
-        departments: [],
+        depts: [],
         skills: [],
-        timeCommitment: []
+        time: []
       },
       activeFilters: {
         fields: [],
         skills: [],
-        timeCommitment: [],
-        departments: []
+        time: [],
+        depts: []
       }
     }
     this.updateState = this.updateState.bind(this)
@@ -123,9 +123,9 @@ class LabSearch extends Component {
       this.setState({
         filters: {
           fields: data.available_areas,
-          departments: data.available_departments,
+          depts: data.available_departments,
           skills: data.available_skills,
-          timeCommitment: data.all_commitments
+          time: data.all_commitments
         }
       })
     })
