@@ -9,7 +9,7 @@ Faculty: (an idea)
 */
 
 import React, { Component } from 'react'
-import LabSearchProject from './labSearchProject/Presentation'
+import Project from './labProjects/project/Project'
 import {
   getCurrentUserId,
   getStudentFromUser,
@@ -24,30 +24,25 @@ class LabDashboard extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      position_list: [],
-      applied_list: []
+      savedProjects: [],
+      applied_list: [],
+      positions_applied: []
     }
   }
 
   componentDidMount () {
     // if student, show saved projects & applications
-    if (isStudent()) {
-      getStudentFromUser(getCurrentUserId()).then(({ data }) => {
-        this.setState({
-          position_list: data.position_list,
-          applied_list: data.position_list // TODO: SET TO APPLIED LIST ONCE APPLICABLE
-        })
+    getStudentFromUser(getCurrentUserId()).then(({ data }) => {
+      this.setState({
+        savedProjects: data.position_list,
+        applied_list: data.position_list // TODO: SET TO APPLIED LIST ONCE APPLICABLE
       })
-      getAllStudentApplicationResponses(getCurrentUserId()).then(({ data }) => {
-        let positions_applied = data.map(app => app.position_id)
-        this.setState({ positions_applied })
-      })
-    } else if (isFaculty()) {
-      // if faculty, show existing projects (allow to edit?) and applicants.
-      getFacultyFromUser(getCurrentUserId()).then(resp => {
-        // TODO: set existing projects & applicants.
-      })
-    }
+    })
+
+    getAllStudentApplicationResponses(getCurrentUserId()).then(({ data }) => {
+      let positions_applied = data.map(app => app.position_id)
+      this.setState({ positions_applied }, r=>console.log('state',this.state))
+    })
   }
 
   updateProjects (id) {
@@ -58,43 +53,19 @@ class LabDashboard extends Component {
     this.setState(new_state)
   }
 
-  getPositionsJSX () {
-    let positions_applied = this.state.positions_applied
-    var facultyOwned = isFaculty()
-    let position_list = this.state.position_list
-    let position_jsx = position_list.map(position => {
-      let submitted = false
-      let pos_ids = positions_applied
-      if (pos_ids && pos_ids.length) {
-        pos_ids.map(pos => {
-          if (pos == position.id) submitted = true
-        })
-      }
-      return (
-        <div key={`position-${position.id}`} className='item'>
-          <LabSearchProject
-            position={position}
-            facultyOwned={facultyOwned}
-            id={position.lab_id}
-            submitted={submitted}
-            saved={true}
-            updateProjects={this.updateProjects.bind(this)}
-          />
-        </div>
-      )
-    })
-
-    return position_jsx
-  }
-
   render () {
-    const boxOneTitle = isStudent() ? 'Saved Projects' : 'Your Projects'
     return (
       <div className='shift-down'>
         <div className='dashboard'>
-          <h1 className='title'>{boxOneTitle}</h1>
-          <div>
-            {this.getPositionsJSX()}
+          <div className='projectContainer'>
+            {this.state.savedProjects.map(project => (
+              <Project
+                project={project}
+                userSavedProjects={this.state.savedProjects.map(r => r.id)}
+                userAppliedProjects={this.state.positions_applied}
+                updateProjects={this.updateProjects.bind(this)}
+              />
+            ))}
           </div>
         </div>
       </div>

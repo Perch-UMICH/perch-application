@@ -25,7 +25,7 @@ class LabSearch extends Component {
         fields: [],
         departments: [],
         skills: [],
-        timeCommitment: [],
+        timeCommitment: []
       },
       activeFilters: {
         fields: [],
@@ -59,7 +59,7 @@ class LabSearch extends Component {
     this.loadFilters()
   }
 
-/*
+  /*
   SEARCH FUNCTIONS
 */
 
@@ -94,8 +94,10 @@ class LabSearch extends Component {
 
   // Get all Projects the user has saved
   loadSavedProjects () {
-    getStudentFromUser(getCurrentUserId()).then(r => {
-      this.setState({ savedProjects: r.data.position_list })
+    getStudentFromUser(getCurrentUserId()).then(({ data }) => {
+      this.setState({
+        savedProjects: data.position_list.map(project => project.id)
+      })
     })
   }
 
@@ -111,7 +113,7 @@ class LabSearch extends Component {
     })
   }
 
-/*
+  /*
   FILTER FUNCTIONS
 */
 
@@ -123,7 +125,7 @@ class LabSearch extends Component {
           fields: data.available_areas,
           departments: data.available_departments,
           skills: data.available_skills,
-          timeCommitment: data.all_commitments,
+          timeCommitment: data.all_commitments
         }
       })
     })
