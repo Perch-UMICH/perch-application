@@ -14,7 +14,6 @@ export default function(props) {
 				{/* <div id="modalBackdrop"></div> */}
 				<Floater>
           <div className='settings shadow'>
-            <h1>Settings</h1>
             <SubmitInput onClick={props.openEmailModal}>reset email</SubmitInput>
             <SubmitInput onClick={props.openPasswordModal}>reset password</SubmitInput>
             <SubmitInput onClick={props.openDeleteModal}>delete account</SubmitInput>
