@@ -13,6 +13,7 @@
     --sunset-orange: #EF5350;
 	--red: #FF0000; /*CSS red*/
 	--dark-red: rgb(216, 16, 16); /*CSS red*/
+	--green: #8bc34a;
 
     /*THEMES*/
     /*Blue*/
@@ -71,7 +72,7 @@
 
 // custom highlights
 ::selection {
-	background-color: var(--active);
+	background-color: lightgreen;
 	color: white;
 }
 

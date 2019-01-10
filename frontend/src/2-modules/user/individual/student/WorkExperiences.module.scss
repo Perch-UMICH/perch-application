@@ -1,0 +1,26 @@
+.workExperiences {
+  position: relative;
+  margin-right: 1em;
+  margin-bottom: 1em;
+  border-radius: 16px;
+  overflow: hidden;
+  >* {
+    padding-left: 1em;
+  }
+  .title {
+    background-color: var(--primary);
+    color: white;
+    font-size: 20px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+  .body {
+    border: 1px solid lightgrey;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding-bottom: 1em;
+    >* {
+      padding-top: 0.8em;
+    }
+  }
+}

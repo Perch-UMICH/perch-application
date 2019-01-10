@@ -1,6 +1,6 @@
 import React from 'react'
 import SkillsInterests from './SkillsInterests'
-import UserBio from './UserBio'
+import UserBio from './Bio'
 import Header from './Header'
 
 export default function QuickView(props) {

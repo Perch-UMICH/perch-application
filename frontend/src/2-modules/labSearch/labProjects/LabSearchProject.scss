@@ -150,8 +150,8 @@
 .submitted {
 	height: 100%;
 	top: 0;
-	background-color: #8bc34a;
+	background-color: var(--green);
 	&:hover {
-		background-color: #8bc34a;
+		background-color: var(--green);
 	}
 }

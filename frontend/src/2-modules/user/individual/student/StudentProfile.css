@@ -385,12 +385,9 @@
  }
 
  #user-skills-interests {
-   padding-left: 20px;
-   padding-right: 40px;
    padding-top: 5px;
    position: relative;
-   min-height: 40px;
-   /* border-bottom: 1px dotted lightgrey; */
+   margin-bottom: 30px;
  }
 
  .skill,
@@ -407,8 +404,12 @@
  }
 
  .skill {
-   border-color: lightgrey;
+    background-color: var(--active);
+    color: white;
+    padding: 0.5em;
+    border-radius: 20px;
    transition: 0.2s ease;
+   font-size: 14px;
  }
 
  /*
@@ -419,9 +420,12 @@
 }*/
 
  .interest {
-   border-color: grey;
-   border-color: var(--primary);
+   background-color: lightgreen;
+   color: white;
+   padding: 0.5em;
+   border-radius: 20px;
    transition: 0.2s ease;
+   font-size: 14px;
  }
 
  /*.interest:hover {

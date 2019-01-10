@@ -1,0 +1,16 @@
+.name {
+  font-size: 70px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--active);
+}
+
+.header {
+  color: slategray;
+  font-size: 30px;
+  position: relative;
+
+  b {
+    color: var(--primary);
+  }
+}

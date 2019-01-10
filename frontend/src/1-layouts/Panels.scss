@@ -1,5 +1,4 @@
 #canvas {
-
   // 3 Panel Desktop View ('canvas-3')
   &-3 {
     grid-template-areas: 
@@ -9,8 +8,7 @@
 
   // 2 Panel Desktop View ('canvas-2')
   &-2 {
-    max-width: 1100px;
-    margin: 0px auto;
+    background-color: white;
     grid-template-areas: 
       "header header"
       "left   main  ";
@@ -26,8 +24,8 @@
       grid-template-columns: 1fr;
       grid-template-areas: 
         "header"
-        "main"
         "left"
+        "main"
         "right";
     }
   }
@@ -36,10 +34,14 @@
 
 .left-panel {
   grid-area: left;
+  padding-left: 40px;
+  padding-top: 20px;
 }
 
 .main-panel {
   grid-area: main;
+  padding: 60px;
+  height: 100vh;
 }
 
 .right-panel {

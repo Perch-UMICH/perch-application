@@ -18,60 +18,79 @@ Modal for profile edit components; usage:
 
 import React, { Component } from 'react'
 import BasicButton from '../buttons/BasicButton'
-import './EditModal.css'
+import Floater from '../../../1-layouts/Floater'
+// import './EditModal.css'
+import styles from './Modal.module.scss'
 
 class EditModal extends Component {
-  handleClose (event) {
-    document.getElementById(this.props.id).classList.remove('activated')
-    document
-      .getElementById(`${this.props.id}-backdrop`)
-      .classList.remove('activated')
-  }
 
   render () {
     var contentCSS = this.props.noPadding
       ? 'modal-content modal-no-padding'
       : 'modal-content'
     var bodyCSS = 'modal modal-fixed-footer display-modal'
-    if (this.props.wide) bodyCSS = 'modal modal-fixed-footer wide-modal'
-    if (this.props.medium) bodyCSS = 'modal modal-fixed-footer medium-modal'
-    if (this.props.slim) bodyCSS = 'modal modal-fixed-footer slim-modal'
+    // if (this.props.wide) bodyCSS = 'modal modal-fixed-footer wide-modal'
+    // if (this.props.medium) bodyCSS = 'modal modal-fixed-footer medium-modal'
+    // if (this.props.slim) bodyCSS = 'modal modal-fixed-footer slim-modal'
+    let css
+    if (this.props.showModal) css = `${styles.modal}`
+    else css = `${styles.modal} ${styles.closed}`
 
     return (
-      <div>
-        <div className='modal-backdrop' id={`${this.props.id}-backdrop`} />
-          <div id={this.props.id} className={bodyCSS}>
-            <h1 className='modal-header'>{this.props.title}</h1>
-            <div className={contentCSS}>
-              {this.props.children}
-            </div>
-            <div className='modal-footer'>
-              {this.props.deleteFunc &&
-                <BasicButton
-                  superClick={() => {
-                    this.props.deleteFunc()
-                    this.handleClose()
-                  }}
-                  delete
-                  msg='delete'
-                />}
-              <BasicButton superClick={this.handleClose.bind(this)} msg='close' />
-              {this.props.noAction
-                ? null
-                : <BasicButton
-                  superClick={() => {
-                    if (this.props.modalAction) {
-                      this.props.modalAction()
-                    }
-                    this.handleClose()
-                  }}
-                  msg={this.props.actionName ? this.props.actionName : 'save'}
-                  />}
-            </div>
+      <div className={css}>
+        <Floater>
+          <div id={this.props.id} className={styles.content}>
+            <Header>{this.props.title}</Header>
+            <Content className={contentCSS}>{this.props.children}</Content>
+            <Footer {...this.props} handleClose={this.props.closeModal} />
           </div>
+        </Floater>
       </div>
     )
   }
+}
+
+function Header ({ children }) {
+  return <h1 className='modal-header'>{children}</h1>
+}
+
+function Content ({ className, children }) {
+  return <div className={className}>{children}</div>
+}
+
+function Footer ({
+  deleteFunc,
+  noAction,
+  handleClose,
+  modalAction,
+  actionName
+}) {
+  return (
+    <div className={styles.footer}>
+      {deleteFunc && (
+        <BasicButton
+          superClick={() => {
+            this.props.deleteFunc()
+            this.handleClose()
+          }}
+          delete
+          msg='delete'
+        />
+      )}
+      <BasicButton superClick={handleClose.bind(this)} msg='close' />
+      {noAction ? null : (
+        <BasicButton
+          superClick={() => {
+            if (modalAction) {
+              modalAction()
+            }
+            handleClose()
+          }}
+          msg={actionName || 'save'}
+        />
+      )}
+    </div>
+  )
 }
 
 export default EditModal

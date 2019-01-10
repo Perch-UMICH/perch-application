@@ -18,9 +18,11 @@ export default function (props) {
           userAppliedProjects={props.usersAppliedProjects}
         />
       ))}
-      <SubmitInput onClick={props.loadMoreLabs}>
-        Mo' Labs Mo' Problems
-      </SubmitInput>
+      {props.nextLabIds.length > 0 && 
+        <SubmitInput onClick={props.loadMoreLabs}>
+          Mo' Labs Mo' Problems
+        </SubmitInput>
+      }
     </div>
   )
 }

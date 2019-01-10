@@ -1,0 +1,35 @@
+.modal {
+  background-color: rgba(0,0,0,0.8);
+  position: fixed;
+  top: 60px;
+  left: 0;
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  opacity: 1;
+  transition: 0.2s ease;
+}
+
+.closed {
+  opacity: 0;
+  z-index: -1;
+  transition: 0.2s ease;
+}
+
+.content {
+  max-width: 800px;
+  max-height: 400px;
+  overflow: scroll;
+  background-color: white;
+  padding: 2em;
+  border-radius: 16px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(rgba(0,0,0,0), white, white);
+  width: calc(100% - 2em);
+  padding: 1em;
+}

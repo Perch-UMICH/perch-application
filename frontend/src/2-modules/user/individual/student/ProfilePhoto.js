@@ -1,11 +1,10 @@
 import React from 'react'
-import Editor from '../../../utilities/Editor'
-import { openModal } from '../../../../helper'
+import styles from './ProfilePhoto.module.scss'
 
 export default function ProfilePhoto ({img}) {
   return (
-    <div id='user-quickview-img-container'>
-      <img id='user-quickview-img' src={img || '/img/rodriguez.jpg'} />
+    <div className={styles.photo}>
+      <img className='shadow' src={img || '/img/rodriguez.jpg'} />
     </div>
   )
 }
