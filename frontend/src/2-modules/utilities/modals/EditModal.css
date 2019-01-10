@@ -1,17 +1,24 @@
+.modal-wrapper {
+	width: 500%;
+	margin-left: -200%;
+	background-color:#aaa;
+	padding: 20px;
+}
+
 .modal{
 	position: fixed;
-	top: 30%;
+	top: 50%;
+  left: 50%;
+	transform: translate(-50%, -10%);
+	background-color: white;
 	z-index: 1000;
 	visibility: hidden;
-	border-radius: var(--border-radius-C);
-	display: block !important;
-	width: 60%;
 	max-height: 70%;
-	margin: auto;
-	overflow-y: auto;
+	width: 60%;
 	opacity: 0;
 	transition: all 0.4s ease;
-	overflow: hidden;
+	overflow: scroll;
+	border-radius: var(--border-radius-C);
 }
 
 .modal.display-modal {
