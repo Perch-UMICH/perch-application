@@ -4,8 +4,8 @@ import { openModal } from '../../../../helper'
 
 export default function ContactTab ({contact_email, contact_phone, owner}) {
   return (
-    <div>
-      <h1>Contact</h1>
+    <div className='user-contact'>
+      <h3>Contact</h3>
       <div>
         <div id='user-email'>
           <b>Email </b>

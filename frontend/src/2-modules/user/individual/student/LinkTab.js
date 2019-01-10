@@ -5,13 +5,12 @@ import { openModal } from '../../../../helper'
 export default function LinkTab ({linkedin_link, owner}) {
   return (
     <div id='user-links'>
-      <h1>Links</h1>
+      <h3>Links</h3>
       <div>
         <a
           target='_blank'
           href={linkedin_link}
-          style={{ textAlign: 'left', textDecoration: 'underline' }}
-        >
+          style={{ textAlign: 'left', textDecoration: 'underline' }}>
           LinkedIn
         </a>
       </div>

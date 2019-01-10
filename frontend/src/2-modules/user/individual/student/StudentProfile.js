@@ -9,7 +9,6 @@ import {
   getCurrentUserId
 } from '../../../../helper.js'
 
-
 /* In charge of all state requests and management for student profile */
 class StudentProfileContainer extends Component {
   constructor(props) {
@@ -152,11 +151,7 @@ class StudentProfileContainer extends Component {
     }
 
   render() {
-    return (
-      <div>
-        <Presentation {...this.state} modals={this.modals} />
-      </div>
-    )
+    return <Presentation {...this.state} modals={this.modals} />
   }
 }
 

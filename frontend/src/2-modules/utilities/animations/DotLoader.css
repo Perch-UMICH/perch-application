@@ -6,7 +6,7 @@
 
 .dot-loader-container {
   position: relative;
-  width: 90px;
+  width: 120px;
   transform: translateX(-50%);
   padding-bottom: 20px;
 }

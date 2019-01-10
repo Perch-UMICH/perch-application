@@ -1,7 +1,7 @@
 .editor {
 	position: absolute;
-	right: 5px;
-	top: 5px;
+	right: 0px;
+	top: 0px;
 	font-size: 12px;
 	transition: 0.2s ease;
 	cursor: pointer;
