@@ -14,7 +14,7 @@ import Apply from './2-modules/user/Apply';
 import CreatePosition from './2-modules/user/group/CreatePosition';
 import ScheduleInterview from './2-modules/user/ScheduleInterview';
 import PickInterview from './2-modules/user/PickInterview';
-import Settings from './2-modules/user/maintenance/Settings';
+import Settings from './2-modules/user/maintenance/settings/Settings';
 import Feedback from './2-modules/utilities/Feedback';
 import ForgotPassword from './2-modules/user/maintenance/ForgotPassword';
 import EnterContact from './2-modules/user/individual/EnterContact';

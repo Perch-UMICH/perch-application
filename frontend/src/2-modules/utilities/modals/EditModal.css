@@ -106,6 +106,7 @@
 }
 
 .modal-content {
+	padding: 5px 10px;
 	text-align: left;
 }
 
@@ -114,7 +115,7 @@
 }
 
 .modal-header {
-	padding-bottom: 5px;
+	padding: 5px 10px;
 	border-bottom: 1px dotted lightgrey;
 }
 

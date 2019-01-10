@@ -1,59 +1,20 @@
-.dashboard {
+.projectContainer {
   background-color: var(--e-grey);
   position: relative;
   top: 0;
   margin: 20px auto;
-  width: 800px;
-  border: 1px solid #ccc;
-  background-color: white;
-}
+  margin: 2em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 
-.item {
-  // itself
-  margin-bottom: -110px;
-  transition: 0.2s ease;
-  // the lab object
-  &:last-of-type {
-    margin-bottom: -10px;
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
   }
   .project {
-    border-top: 1px solid lightgrey;
-    margin-bottom: 10px;
-    min-height: 142px;
-    background-color: #f8f8f8;
-    .project_description {
-      font-size: 14px;
-      min-height: 140px;
-      top: 45px;
-    }
-    .project_title {
-      font-size: 24px;
-    }
-    .project_action_label {
-      opacity: 0 !important;
-    }
-    .group-project-application-submitted {
-      transform: translateY(-50%);
-      transition: 0.1s ease;
-    }
+    margin: 0.5em;
+    border: none;
+    box-shadow: 2px 2px 4px 2px lightgrey;
+    border-radius: 8px;
+    overflow: hidden;
   }
-  // on hover, we take action
-  &:hover {
-    margin-bottom: -10px;
-    transition: 0.2s;
-    .project {
-      background-color: white;
-      .project_action_label {
-        opacity: 1 !important;
-        transform: translateY(50%);
-        right: 0px;
-        transition: 0.1s ease;
-      }
-    }
-  }
-}
-
-.title {
-  border: none;
-  font-size: 30px;
 }

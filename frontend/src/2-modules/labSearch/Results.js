@@ -1,7 +1,7 @@
 import React from 'react'
 import DotLoader from '../utilities/animations/DotLoader'
-import LabSearchItem from './LabSearchItem'
-import {SubmitInput} from '../../3-utils/Inputs'
+import LabProjects from './labProjects/LabProjects'
+import { SubmitInput } from '../../3-utils/Inputs'
 
 export default function (props) {
   if (props.loading) {
@@ -10,16 +10,17 @@ export default function (props) {
   return (
     <div>
       {props.labData.map(lab => (
-        <LabSearchItem
-          key={lab.id}
-          id={lab.id}
-          saved_labs={props.savedProjects}
-          name={lab.name}
-          positions_applied={props.usersAppliedProjects}
-          positions={lab.projects}
+        <LabProjects
+          labId={lab.id}
+          projects={lab.projects}
+          labName={lab.name}
+          userSavedProjects={props.savedProjects}
+          userAppliedProjects={props.usersAppliedProjects}
         />
       ))}
-      <SubmitInput onClick={props.loadMoreLabs}>Mo' Labs Mo' Problems</SubmitInput>
+      <SubmitInput onClick={props.loadMoreLabs}>
+        Mo' Labs Mo' Problems
+      </SubmitInput>
     </div>
   )
 }

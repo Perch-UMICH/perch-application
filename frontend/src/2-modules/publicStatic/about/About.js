@@ -8,6 +8,12 @@ import './About.css';
 import {updateUrlQuery} from '../../../helper.js'
 
 class About extends Component {
+	constructor() {
+		super()
+		this.showTeam = this.showTeam.bind(this)
+		this.showTimeline = this.showTimeline.bind(this)
+		this.showStory = this.showStory.bind(this)
+	}
 	componentDidMount() {
 		let tab_type = this.props.location ? parse(this.props.location.search).tab : "story"
 		switch(tab_type) {
@@ -61,7 +67,7 @@ class About extends Component {
 	}
 
 	showTeam() {
-		this.highlightAboutNav('team')
+		this.highlightAboutNav('the perch team')
 		this.clearAboutBody();
 		updateUrlQuery('tab', 'team');
 		ReactDOM.render(<Team />, document.getElementById('about-body'))
@@ -69,11 +75,11 @@ class About extends Component {
 
 	render() {
 		return (
-			<div className="about center-align">
+			<div className="about">
 				<div className="about-nav">
-					<div className='about-button about-active' onClick={() => this.showStory()}>Perch Story</div>
-					<div className='about-button' onClick={() => this.showTeam()}>The Perch Team</div>
-					<div className='about-button' onClick={() => this.showTimeline()}>Timeline</div>
+					<h2 className='about-button' onClick={this.showStory}>Perch Story</h2>
+					<h2 className='about-button' onClick={this.showTeam}>The Perch Team</h2>
+					<h2 className='about-button' onClick={this.showTimeline}>Timeline</h2>
 				</div>
 				<div id='about-body' className='about-body'></div>
 			</div>
