@@ -1,0 +1,29 @@
+$program-admin-nav-width: 130px;
+$program-admin-nav-height: 30px;
+
+body {
+    margin: 0;
+}
+
+.program-admin-nav-item {
+    display: block;
+    color: white;
+    line-height: $program-admin-nav-height;
+    margin-top: 1em;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.program-admin-nav-bar {
+    background-color: var(--primary);
+    width: $program-admin-nav-width;
+    margin: 0;
+    padding: 1em;
+    position: fixed;
+    z-index: 1000;
+    // width: calc(100vw - 2em);
+
+    >div {
+        float: top;
+    }
+}
