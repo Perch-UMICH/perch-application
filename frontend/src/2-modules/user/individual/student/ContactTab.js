@@ -1,11 +1,11 @@
 import React from 'react'
 import Editor from '../../../utilities/Editor'
 import { openModal } from '../../../../helper'
+import styles from './Contact.module.scss'
 
-export default function ContactTab ({contact_email, contact_phone, owner}) {
+export default function ({contact_email, contact_phone, owner}) {
   return (
-    <div>
-      <h1>Contact</h1>
+    <div className={styles.contact}>
       <div>
         <div id='user-email'>
           <b>Email </b>

@@ -7,7 +7,7 @@
   // Mobile
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 100vh;
+    // grid-template-rows: 100vh;
     grid-template-areas: 
       "left"
       "right";

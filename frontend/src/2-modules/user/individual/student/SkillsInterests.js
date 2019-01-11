@@ -6,6 +6,7 @@ import Bubble from './Bubble'
 export default function SkillsInterests ({ owner, tags, skills }) {
   return (
     <div id='user-skills-interests'>
+    <h1>Interests & Skills</h1>
       <Editor
         permissions={owner}
         superClick={() => openModal('skills-interests-edit')}

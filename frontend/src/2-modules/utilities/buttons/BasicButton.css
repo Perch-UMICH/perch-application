@@ -4,6 +4,14 @@
 	margin-right: 4px;
 }
 
+.btn {
+	padding: 10px 20px;
+	color: white;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
 .basic-btn {
 	background-color: var(--primary);
 	box-shadow: none;

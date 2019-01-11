@@ -64,6 +64,7 @@ class LabDashboard extends Component {
                 userSavedProjects={this.state.savedProjects.map(r => r.id)}
                 userAppliedProjects={this.state.positions_applied}
                 updateProjects={this.updateProjects.bind(this)}
+                deleteOnRemove
               />
             ))}
           </div>

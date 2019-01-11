@@ -1,7 +1,13 @@
 import React from 'react'
 import ApplyModal from '../../../user/Apply'
 import EditModal from '../../../utilities/modals/EditModal'
-export default function Modal ({ project, submitApplication, updateApplication }) {
+export default function Modal ({
+  project,
+  submitApplication,
+  updateApplication,
+  showModal,
+  closeModal
+}) {
   let { id, title, lab_id } = project
   return (
     <EditModal
@@ -10,6 +16,8 @@ export default function Modal ({ project, submitApplication, updateApplication }
       actionName='submit'
       title={`Apply To ${title}`}
       modalAction={submitApplication}
+      showModal={showModal}
+      closeModal={closeModal}
     >
       <ApplyModal
         updateQuestions={updateApplication}
