@@ -4,12 +4,12 @@
 import React, { Component } from 'react'
 import './Nothing.scss'
 import Axios from 'axios'
-import {getUserProfile} from '../../../backend/UserProfile'
+import {getUser} from '../../../backend/UserProfile'
 
 class Nothing extends Component {
   constructor () {
     super()
-    getUserProfile({user_id: 1})
+    getUser({user_id: 1})
       .then(response => {
         console.log(response)
       })

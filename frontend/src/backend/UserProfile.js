@@ -10,6 +10,7 @@ import {
   simplePost,
   simplePut,
   hasManyDelete,
+  simpleDelete,
 } from './BackendHelpers'
 
 
@@ -106,13 +107,40 @@ export function getUserGroups({user_id}) {
 // Profile component functions require the profileId
 // to be supplied in the data object
 
-// Profile picture functions
+// File functions (images and documents)
 
+/* 
+fileType can be either "image" or "document"
+gets all file models of the indicated fileType from user
+returns array of models with url to AWS location of file, along with
+extra file releated metadata
+*/ 
+export function getUserFiles({user_id, fileType}) {
+  return simpleGet({ path: 'users/' + user_id + '/files/' + fileType })
+}
 
+export function uploadUserDocument({user_id, fileType, file}) {
+  return simplePost({ 
+    path: 'users/' + user_id + '/files/document', 
+    data: file 
+  })
+}
 
-// Resume functions
+export function uploadUserImage({user_id, fileType, file}) {
+  return simplePost({ 
+    path: 'users/' + user_id + '/files/image', 
+    data: file 
+  })
+}
 
-
+/*
+deletes the File model and the associated fileType model
+*/
+export function deleteUserFile({file_id}) {
+  return simpleDelete({ 
+    path: 'files/' + file_id
+  })
+}
 
 // Certification functions
 
