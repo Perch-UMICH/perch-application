@@ -76,3 +76,21 @@ export function removeMemberFromGroup({group_id, user_id}) {
     data: user_id,
   })
 }
+
+export function getGroupOwnedProjects({group_id}) {
+  let filter = {
+    where: {
+      relation: "owner"
+    }
+  }
+  return simpleGet({
+    path: 'groups/' + group_id + '/projects?filter=' + JSON.stringify(filter),
+  })
+}
+
+// Returns all projects associated with a group
+export function getGroupAllProjects({group_id}) {
+  return simpleGet({
+    path: 'groups/' + group_id + '/projects',
+  })
+}

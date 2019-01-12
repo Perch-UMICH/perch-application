@@ -21,10 +21,38 @@ if (sessionStorage.token) {
     'Bearer ' + sessionStorage.getItem('token')
 }
 
-// Wrapper for simple get requests to reduce code copying
-export function simpleGet({path}) {
+// Filters only work on backend routes which have been
+// coded to receive them. Mostly ManyToMany GET requests
+//
+// Example filters for a GET users request:
+// {
+//   where: {name: "joe"}
+// }
+//
+// {
+//   where: {
+//     and: [
+//       {name: "joe"},
+//       {hasApprovalPower: true}
+//     ]
+//   }
+// }
+//
+// See Loopback documentation for more filter examples
+// a large number of functions and logical operators
+// are supported. Even beyond "where" clauses
+function appendFilter(path, filter) {
+  if(filter !== null) {
+    return path + '?filter=' + JSON.stringify(filter)
+  } else {
+    return path
+  }
+}
+
+// Wrappers for simple http requests to reduce code copying, esp. for error handling
+export function simpleGet({path, filter}) {
   return axios
-    .get(path)
+    .get(appendFilter(path, filter))
     .then(response => {
       return respond({
         status: response.status,
@@ -36,9 +64,9 @@ export function simpleGet({path}) {
     })
 }
 
-export function simplePut({path, data}) {
+export function simplePut({path, data, filter}) {
   return axios
-    .put(path, data)
+    .put(appendFilter(path, filter), data)
     .then(response => {
       return respond({
         status: response.status,
@@ -50,9 +78,9 @@ export function simplePut({path, data}) {
     })
 }
 
-export function simplePost({path, data}) {
+export function simplePost({path, data, filter}) {
   return axios
-    .post(path, data)
+    .post(appendFilter(path, filter), data)
     .then(response => {
       return respond({
         status: response.status,
@@ -64,9 +92,9 @@ export function simplePost({path, data}) {
     })
 }
 
-export function hasManyDelete({path, id_array}) {
+export function hasManyDelete({path, id_array, filter}) {
   return axios
-    .delete(path, id_array)
+    .delete(appendFilter(path, filter), id_array)
     .then(response => {
       return respond({
         status: response.status,
@@ -115,6 +143,8 @@ export function error_handle ({error}) {
 }
 
 /* Gets a model WITH all hasMany arrays
+ * 
+ * Currently does not support filters due to complexity
  *
  * Inefficient - makes a request for every hasMany relationship
  * Should be moved to a backend function. Unfortunately Loopback
