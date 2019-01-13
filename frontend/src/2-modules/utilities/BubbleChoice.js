@@ -11,6 +11,13 @@ import {
 } from '../../backend/index.js'
 import '../user/individual/PickYourInterests.scss'
 
+let getAllTags,
+getAllSkills,
+getCurrentStudentId,
+createSkill,
+createTag,
+getStudentSkills,
+getStudentTags
 class BubbleChoice extends Component {
   constructor (props) {
     super(props)

@@ -8,7 +8,7 @@ import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n'
 import './StudentEditors.scss'
 import iziToast from 'izitoast'
 import { warn_toast } from '../../../data/toastData.js'
-
+let validDateChange, validPhoneChange
 export class EditLinks extends Component {
   constructor (props) {
     super(props)

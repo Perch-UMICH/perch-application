@@ -9,6 +9,7 @@ import {
   simpleGet,
   simplePatch,
   hasManyDelete,
+  simpleDelete,
   simplePost,
 } from './BackendHelpers'
 

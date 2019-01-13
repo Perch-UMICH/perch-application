@@ -9,7 +9,7 @@ import Axios from 'axios'
 let getStudentFromUser,
 updateStudent,
 uploadUserProfilePic,
-// getUserProfilePic,
+getUserProfilePic,
 getCurrentUserId
 /* In charge of all state requests and management for student profile */
 class StudentProfileContainer extends Component {

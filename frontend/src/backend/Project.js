@@ -32,7 +32,7 @@ export function createProject({group_id, user_id, project}) {
 
 // RESTRICTED: owner of project or admin of group that owns project
 export function updateProject({project}) {
-  let project_id = project.id,
+  let project_id = project.id
   delete project.id
   return simplePatch({
     path: "projects/" + project_id,

@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import FormData from 'form-data'
-import { getModelHasMany, respond, error_respond, error_handle } from 'BackendHelpers.js'
+import { getModelHasMany, respond, error_respond, error_handle } from './BackendHelpers.js'
 
 export function isLoggedIn() {
   if (sessionStorage.getItem('token') == null) {
