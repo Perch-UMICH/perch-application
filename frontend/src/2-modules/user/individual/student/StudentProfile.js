@@ -38,6 +38,9 @@ class StudentProfileContainer extends Component {
       student: true,
       img: ''
     }
+
+    this.updateUser = this.updateUser.bind(this)
+    this.sendHeaderInfo = this.sendHeaderInfo.bind(this)
   }
 
   // Beginning point for data handling
@@ -144,22 +147,15 @@ class StudentProfileContainer extends Component {
     console.log('deprecated')
   }
 
-  get modals () {
-    return (
-      <Modals
-        {...this.state}
-        sendBio={this.sendBio.bind(this)}
-        sendContactInfo={this.sendContactInfo.bind(this)}
-        sendLinks={this.sendLinks.bind(this)}
-        sendExperiences={this.sendExperiences.bind(this)}
-        sendHeaderInfo={this.sendHeaderInfo.bind(this)}
-        updateUser={this.updateUser.bind(this)}
-      />
-    )
+  get functions () {
+    return {
+      updateUser: this.updateUser,
+      sendHeaderInfo: this.sendHeaderInfo
+    }
   }
 
   render () {
-    return <Presentation {...this.state} modals={this.modals} />
+    return <Presentation {...this.state} {...this.functions} />
   }
 }
 

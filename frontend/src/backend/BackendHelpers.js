@@ -106,6 +106,35 @@ export function simplePost({path, data, filter}) {
     })
 }
 
+export function formDataPost({path, data}) {
+  let formData = new FormData();
+  formData.append('file', data);
+
+  return axios.post(
+    path,
+    formData)
+    .then(response => {
+        return respond(response.status, response.data);
+    })
+    .catch(error => {
+        return error_handle(error);
+    })
+}
+
+export function simpleDelete({path}) {
+  return axios
+  .delete(path)
+  .then(response => {
+    return respond({
+      status: response.status,
+      data: response.data,
+    })
+  })
+  .catch(error => {
+    return error_handle({error: error})
+  })
+} 
+
 export function hasManyDelete({path, id_array, filter}) {
   return axios
     .delete(appendFilter(path, filter), id_array)
@@ -121,8 +150,9 @@ export function hasManyDelete({path, id_array, filter}) {
 }
 
 // Response generator
+// Currently redundant, may change later
 export function respond ({status, data}) {
-  return { status: status, data: data.result, msg: data.message }
+  return { status: status, data: data }
 }
 
 // Error handling //

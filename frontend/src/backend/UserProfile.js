@@ -9,7 +9,9 @@ import {
   simpleGet,
   simplePost,
   simplePatch,
+  formDataPost,
   hasManyDelete,
+  simpleDelete,
 } from './BackendHelpers'
 
 
@@ -99,20 +101,61 @@ export function updateUserProfile({profile}) {
   })
 }
 
-export function getUserGroups({user_id}) {
+export function getUserGroups() {
+  let user_id = sessionStorage.getItem('user_id')
   return simpleGet({ path: 'users/' + user_id + '/groups' })
 }
 
 // Profile component functions require the profileId
 // to be supplied in the data object
 
-// Profile picture functions
+// File functions (images and documents)
 
+/* 
+Gets all file models of the document type from user
+Returns array of models with url to AWS location of file, along with
+extra file releated metadata
+*/ 
+export function getUserDocumentFiles() {
+  let user_id = sessionStorage.getItem('user_id')
+  return simpleGet({ path: 'users/' + user_id + '/files/document' })
+}
 
+/* 
+Gets all file models of the document type from user
+Returns array of models with url to AWS location of file, along with
+extra file releated metadata
+*/ 
+export function getUserImageFiles() {
+  let user_id = sessionStorage.getItem('user_id')
+  return simpleGet({ path: 'users/' + user_id + '/files/image' })
+}
 
-// Resume functions
+export function uploadUserDocumentFile({file}) {
+  let user_id = sessionStorage.getItem('user_id')
+  return formDataPost({ 
+    path: 'users/' + user_id + '/files/document', 
+    data: file 
+  })
+}
 
+export function uploadUserImageFile({file}) {
+  let user_id = sessionStorage.getItem('user_id')
+  return formDataPost({ 
+    path: 'users/' + user_id + '/files/image', 
+    data: file 
+  })
+}
 
+/*
+deletes the File model and the associated fileType model
+*/
+export function deleteUserFile({file_id}) {
+  let user_id = sessionStorage.getItem('user_id')
+  return simpleDelete({ 
+    path: 'users/' + user_id + '/files/' + file_id
+  })
+}
 
 // Certification functions
 
