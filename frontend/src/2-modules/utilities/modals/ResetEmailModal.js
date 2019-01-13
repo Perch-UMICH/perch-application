@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import BasicButton from '../buttons/BasicButton';
 import $ from 'jquery';
-import {getStudent, getStudentFromUser, getCurrentStudentId, getCurrentUserId} from '../../../helper.js';
+import {getStudent, getStudentFromUser, getCurrentStudentId, getCurrentUserId} from '../../../backend/index.js';
 
 class ResetEmailModal extends Component {
 	constructor(props) {

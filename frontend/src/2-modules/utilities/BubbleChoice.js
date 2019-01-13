@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import Bubble from './Bubble'
 import {
-  getAllTags,
-  getAllSkills,
-  getCurrentStudentId,
-  createSkill,
-  createTag,
-  getStudentSkills,
-  getStudentTags
-} from '../../helper.js'
+  // getAllTags,
+  // getAllSkills,
+  // getCurrentStudentId,
+  // createSkill,
+  // createTag,
+  // getStudentSkills,
+  // getStudentTags
+} from '../../backend/index.js'
 import '../user/individual/PickYourInterests.scss'
 
 class BubbleChoice extends Component {

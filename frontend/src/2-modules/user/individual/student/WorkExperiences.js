@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ExpanderIcons from '../../../utilities/ExpanderIcons'
 import Editor from '../../../utilities/Editor'
-import { openModal } from '../../../../helper'
 import styles from './WorkExperiences.module.scss'
 export default class WorkExperiences extends Component {
   constructor (props) {
@@ -43,7 +42,7 @@ export default class WorkExperiences extends Component {
         
         <Editor
           permissions={this.props.owner}
-          superClick={() => openModal('work-edit')}
+          superClick={() => alert('todo')}
         />
       </div>
     )

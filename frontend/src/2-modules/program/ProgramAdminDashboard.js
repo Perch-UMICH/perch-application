@@ -1,14 +1,5 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom';
-// import Project from './Project'
-// import {
-//   getCurrentUserId,
-//   getStudentFromUser,
-//   getFacultyFromUser,
-//   isStudent,
-//   isFaculty,
-//   getAllStudentApplicationResponses
-// } from '../../helper.js'
 import ProgramAdminNav from './ProgramAdminNav'
 import Project from './Project'
 import Student from './Student'

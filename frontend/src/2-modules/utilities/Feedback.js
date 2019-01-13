@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {submitUserFeedback, getCurrentUserId} from '../../helper'
+import {submitUserFeedback, getCurrentUserId} from '../../backend/index'
 import BasicButton from './buttons/BasicButton'
 import './Feedback.css';
 

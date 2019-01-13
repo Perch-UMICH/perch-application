@@ -13,7 +13,7 @@ import UploadImage from '../maintenance/UploadImage'
 import Experience from './Experience'
 import Education from './Education'
 import Links from './Links'
-import { getCurrentFacultyId, updateFaculty } from '../../../helper.js'
+import { getCurrentFacultyId, updateFaculty } from '../../../backend/index.js'
 
 class FacultyOnboarding extends Component {
   constructor (props) {

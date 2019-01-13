@@ -9,7 +9,7 @@ import Title from './Title'
 import {
   addToStudentPositionList,
   removeFromStudentPositionList
-} from '../../../../helper'
+} from '../../../../backend/index'
 
 class Project extends Component {
   // holds saved, applied, and application responses, and whether its been modified

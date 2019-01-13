@@ -6,7 +6,7 @@ import Applicants from '../../user/Applicants'
 import EditModal from '../../utilities/modals/ModalContainer'
 import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
-import {addToStudentPositionList, removeFromStudentPositionList, getLabPosition, getStudentApplicationResponse, createStudentApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, submitStudentApplicationResponse, getCurrentStudentId} from '../../../helper.js'
+import {addToStudentPositionList, removeFromStudentPositionList, getLabPosition, getStudentApplicationResponse, createStudentApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, submitStudentApplicationResponse, getCurrentStudentId} from '../../../backend/index.js'
 import './GroupProject.css'
 
 export class GroupProject extends Component {

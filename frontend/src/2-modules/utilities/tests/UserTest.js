@@ -2,7 +2,7 @@
  * Created by aksha on 7/22/2018.
  */
 import React from 'react'
-import * as H from '../../../helper.js'
+import * as H from '../../../backend/index.js'
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 // import './tests.css'

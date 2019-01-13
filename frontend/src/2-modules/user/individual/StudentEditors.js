@@ -4,7 +4,7 @@ import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import Cleave from 'cleave.js/react'
 import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n'
-import { deepCopy, validDateChange, validPhoneChange } from '../../../helper.js'
+// import { validDateChange, validPhoneChange } from '../../../backend/index.js'
 import './StudentEditors.scss'
 import iziToast from 'izitoast'
 import { warn_toast } from '../../../data/toastData.js'
@@ -335,6 +335,9 @@ export class EditClasses extends Component {
     )
   }
 }
+
+// FIX THIS
+let deepCopy= () => [] 
 
 // Experience Editor, for both Work Experience and Education editing.
 // Pass in 'work' or 'educ' to 'type' prop to set proper text.

@@ -7,7 +7,7 @@ import {
   getLabPreferences,
   getCurrentLabId,
   addPreferencesToLab
-} from '../../../helper'
+} from '../../../backend/index'
 import './LabSpecifications.css'
 
 class LabSpecifications extends Component {

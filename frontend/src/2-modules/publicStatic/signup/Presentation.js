@@ -7,6 +7,8 @@ import {
   InputRow
 } from '../../../3-utils/Inputs'
 
+import GoogleLogin from './GoogleLogin'
+
 export default function (props) {
   return (
     <div className='signup-container'>
@@ -52,13 +54,13 @@ export default function (props) {
         />
       </InputRow>
       <SubmitInput onClick={props.handleSubmit}>Make An Account</SubmitInput>
-      {/* <GoogleLogin
-          clientId='426880385373-gttrdhuk9b4g3cuhh95g0nhhnkbt38ek.apps.googleusercontent.com'
+      { <GoogleLogin
+          clientId='1020193337249-cn3j2veuabvf0eha7vgru2hlhtpkuunh.apps.googleusercontent.com'
           buttonText='Google Signup'
-          onSuccess={this.handleGoogleSuccessResponse}
-          onFailure={this.handleGoogleFailureResponse}
+          onSuccess={props.handleGoogleSuccessResponse}
+          onFailure={props.handleGoogleFailureResponse}
 					className='google-login btn waves-effect basic-btn'
-        /> */}
+        /> }
     </div>
   )
 }

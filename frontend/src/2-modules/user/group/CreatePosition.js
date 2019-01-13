@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getLabPosition, validPhoneChange} from '../../../helper.js'
+import {getLabPosition, validPhoneChange} from '../../../backend/index.js'
 import './CreatePosition.css';
 
 class CreatePosition extends Component {
