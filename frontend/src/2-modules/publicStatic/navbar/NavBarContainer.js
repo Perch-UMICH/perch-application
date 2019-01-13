@@ -21,6 +21,7 @@ function NavBarContainer () {
     navItems.push({ href: homeLink, text: 'Profile' })
     navItems.push({ href: '/lab-match', text: 'Projectbook' })
     if (isStudent()) { navItems.push({ href: '/dashboard', text: 'Your Projects' }) }
+    if (isFaculty()) { navItems.push({ href: '/program-admin', text: 'Program Admin' })}
     navItems.push({ href: '/help', text: 'Help' })
     navItems.push({ href: '/settings', text: 'Settings' })
     navItems.push({ href: '/logout', text: 'Logout' })
