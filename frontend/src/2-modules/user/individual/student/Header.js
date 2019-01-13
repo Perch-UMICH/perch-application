@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { openModal } from '../../../../helper'
+import { openModal } from '../../../../backend/index'
 import Editor from '../../../utilities/Editor'
 import styles from './Header.module.scss'
 import ModalContainer from '../../../utilities/modals/ModalContainer'

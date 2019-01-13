@@ -9,7 +9,7 @@ Faculty: (an idea)
 */
 
 import React, { Component } from 'react'
-import { getStudent, getLabPositionApplicationResponses } from '../../helper.js'
+import { getStudent, getLabPositionApplicationResponses } from '../../backend/index.js'
 import './Applicants.css'
 
 class Applicants extends Component {

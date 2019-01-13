@@ -1,4 +1,4 @@
-import { logoutCurrentUser } from '../../../helper';
+import { logoutCurrentUser } from '../../../backend/index';
 
 /* 
   logs out current user and redirects to home page 

@@ -1,11 +1,11 @@
 import React from 'react'
+
 import {
   isLoggedIn,
   getCurrentUserId,
   isStudent,
   isFaculty,
-  getCurrentFacultyId /* getFacultyLabs */
-} from '../../../helper.js'
+} from '../../../backend/index'
 import './NavBar.scss'
 import NavBar  from './NavBar'
 
@@ -13,7 +13,7 @@ function NavBarContainer () {
   // figure out homepage
   let homeLink = '/'
   if (isStudent()) homeLink = `/student-profile/${getCurrentUserId()}`
-  else if (isFaculty()) homeLink = `/prof/${getCurrentFacultyId()}`
+  else if (isFaculty()) homeLink = `/prof/${getCurrentUserId()}`
 
   // figure out nav items to show
   let navItems = []

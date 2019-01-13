@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from '../buttons/BasicButton';
-import { deleteUser, getCurrentUserId, logoutCurrentUser } from '../../../helper.js';
+import { deleteUser, getCurrentUserId, logoutCurrentUser } from '../../../backend/index.js';
 import $ from 'jquery';
 
 class DeleteUserModal extends Component {

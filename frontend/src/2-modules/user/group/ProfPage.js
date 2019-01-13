@@ -10,7 +10,7 @@ import {
   isFaculty,
   getUserProfilePic,
   uploadUserProfilePic
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
 import EditModal from '../../utilities/modals/ModalContainer'

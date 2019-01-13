@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Editor from '../../../utilities/Editor'
-import { openModal, updateStudent } from '../../../../helper'
+import { updateUserProfile, getUser } from '../../../../backend/index'
 import styles from './Bio.module.scss'
 import ModalContainer from '../../../utilities/modals/ModalContainer'
 import { EditBio } from '../StudentEditors'
@@ -18,7 +18,10 @@ export default class Bio extends Component {
   }
 
   handleSubmit() {
-    updateStudent({ bio: this.props.bio })
+    updateUserProfile({ 
+      bio: this.props.bio,
+      id: 1
+    })
   }
 
   render () {

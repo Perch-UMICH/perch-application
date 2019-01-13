@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from '../buttons/BasicButton'
-import {createApplication, updateApplication, getCurrentLabId, returnToProfile} from '../../../helper.js';
+import {createApplication, updateApplication, getCurrentLabId, returnToProfile} from '../../../backend/index.js';
 import $ from 'jquery';
 
 class AppCreationModal extends Component {

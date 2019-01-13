@@ -13,7 +13,7 @@ import {
   loginUserIdp,
   signupUserIdp,
   createFaculty
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import Presentation from './Presentation'
 import './SignUp.scss'
 

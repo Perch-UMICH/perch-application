@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Editor from '../../../utilities/Editor'
-import { openModal } from '../../../../helper'
+import { openModal } from '../../../../backend/index'
 import Bubble from './Bubble'
 import ModalContainer from '../../../utilities/modals/ModalContainer'
 import PickYourInterests from '../../individual/PickYourInterests'

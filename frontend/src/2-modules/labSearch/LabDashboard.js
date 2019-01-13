@@ -17,7 +17,7 @@ import {
   isStudent,
   isFaculty,
   getAllStudentApplicationResponses
-} from '../../helper.js'
+} from '../../backend/index'
 import './LabDashboard.scss'
 
 class LabDashboard extends Component {

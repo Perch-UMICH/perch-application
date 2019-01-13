@@ -5,7 +5,7 @@ import ResetEmailModal from '../../../utilities/modals/ResetEmailModal';
 import ResetPasswordModal from '../../../utilities/modals/ResetPasswordModal';
 import DeleteUserModal from '../../../utilities/modals/DeleteUserModal';
 import DotLoader from '../../../utilities/animations/DotLoader';
-import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateStudent, getStudentFromUser, updateUser, isStudent, isLab} from '../../../../helper.js'
+import {getStudent, isLoggedIn, getCurrentUserId, verifyLogin, getUser, updateStudent, getStudentFromUser, updateUser, isStudent, isLab} from '../../../../backend/index.js'
 import './Settings.css';
 import $ from 'jquery';
 import iziToast from 'izitoast';

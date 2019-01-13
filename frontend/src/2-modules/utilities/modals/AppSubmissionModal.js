@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from '../buttons/BasicButton';
-import { getCurrentUserId, returnToProfile } from '../../../helper.js';
+import { getCurrentUserId, returnToProfile } from '../../../backend/index.js';
 import $ from 'jquery';
 
 class AppSubmissionModal extends Component {

@@ -6,7 +6,7 @@ import {
   getCurrentUserId,
   isStudent,
   getCurrentFacultyId
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 
 import {
   TextInput,

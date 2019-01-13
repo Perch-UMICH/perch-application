@@ -23,7 +23,7 @@ import {
   getLabMembers,
   addMembersToLab,
   getFacultyFromUser
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import Editor from '../../utilities/Editor'
 
 import './GroupPage.css'
