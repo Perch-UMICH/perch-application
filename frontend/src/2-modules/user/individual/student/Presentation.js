@@ -7,8 +7,12 @@ import SkillsInterests from './SkillsInterests'
 import Bio from './Bio'
 import Header from './Header'
 import ProfilePhoto from './ProfilePhoto.js'
-import {LeftPanel, MainPanel, Canvas} from '../../../../1-layouts/Panels' 
-import {VerticalSplit, SplitLeft, SplitRight} from '../../../../1-layouts/VerticalSplit'
+import { LeftPanel, MainPanel, Canvas } from '../../../../1-layouts/Panels'
+import {
+  VerticalSplit,
+  SplitLeft,
+  SplitRight
+} from '../../../../1-layouts/VerticalSplit'
 import WorkExperiences from './WorkExperiences'
 import './StudentProfile.css'
 
@@ -18,34 +22,32 @@ function StudentProfile (props) {
     return (
       <Canvas panels={2}>
         <LeftPanel>
-          {props.modals}
           <ProfilePhoto {...props} />
-          <SkillsInterests {...props}/>
+          <SkillsInterests {...props} />
           <ContactTab {...props} />
           {/* <LinkTab {...props} /> */}
-          
         </LeftPanel>
         <MainPanel>
-          <Header {...props}/>
-          <Bio {...props}/>
+          <Header {...props} />
+          <Bio {...props} />
 
           <VerticalSplit>
             <SplitLeft>
-              <WorkExperiences {...props}/>
+              <WorkExperiences {...props} />
             </SplitLeft>
             <SplitRight>
-              <WorkExperiences {...props}/>
+              <WorkExperiences {...props} />
             </SplitRight>
           </VerticalSplit>
 
-          <WorkExperiences {...props}/>
+          <WorkExperiences {...props} />
 
           <VerticalSplit>
             <SplitLeft>
-              <WorkExperiences {...props}/>
+              <WorkExperiences {...props} />
             </SplitLeft>
             <SplitRight>
-              <WorkExperiences {...props}/>
+              <WorkExperiences {...props} />
             </SplitRight>
           </VerticalSplit>
         </MainPanel>

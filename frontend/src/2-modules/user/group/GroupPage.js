@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import EditModal from '../../utilities/modals/EditModal'
+import EditModal from '../../utilities/modals/ModalContainer'
 import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
 import {

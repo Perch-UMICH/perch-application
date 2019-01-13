@@ -1,7 +1,6 @@
 .lab-srch-item-container {
 	overflow: hidden;
 	z-index: 0;
-	min-height: 115px;
 	margin-bottom: 10px;
 	border-left: 4px solid var(--active);
 	border-radius: 0 16px 16px 0;

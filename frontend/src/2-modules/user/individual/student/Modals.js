@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import EditModal from '../../../utilities/modals/EditModal'
+import EditModal from '../../../utilities/modals/ModalContainer'
 import {
   EditContact,
   EditExperience,
@@ -14,7 +14,7 @@ export default class Modals extends Component {
   render() {
     return (
       <div>
-        <EditModal
+        {/* <EditModal
           id='skills-interests-edit'
           title='Edit Skills and Interests'
           noPadding
@@ -25,8 +25,8 @@ export default class Modals extends Component {
             user={this.props}
             updateUser={this.props.updateUser }
           />
-        </EditModal>
-        <EditModal
+        </EditModal> */}
+        {/* <EditModal
           id='contact-edit'
           title='Edit Contact Info'
           modalAction={this.props.sendContactInfo }
@@ -82,7 +82,7 @@ export default class Modals extends Component {
             user={this.props}
             updateUser={this.props.updateUser }
           />
-        </EditModal>
+        </EditModal> */}
       </div>
     )
   }

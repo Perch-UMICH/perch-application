@@ -209,33 +209,30 @@ export class EditBio extends Component {
     super(props)
     this.state = {
       placeholder: 'Short description of background, experience, and interests',
-      bio: props.user && props.user.bio ? props.user.bio : ''
+      bio: ''
     }
   }
 
   componentWillReceiveProps (props) {
-    if (props.user && props.user.bio) {
-      this.setState({ bio: props.user.bio })
-    }
+    this.setState({ bio: props.bio })
   }
 
   render () {
     return (
-      <form id='edit-bio'>
-        <div className='input-field'>
-          <textarea
-            id='textArea'
-            value={this.state.bio}
-            placeholder='Short description of background, experience, and interests'
-            onChange={e => {
-              if (this.props.updateUser) {
-                this.props.updateUser('bio', e.target.value)
-              }
-              this.setState({ bio: e.target.value })
-            }}
-          />
-        </div>
-      </form>
+      <div id='edit-bio'>
+        <textarea
+          id='textArea'
+          value={this.state.bio}
+          placeholder='Short description of background, experience, and interests'
+          onChange={e => {
+            if (this.props.updateUser) {
+              this.props.updateUser('bio', e.target.value)
+            }
+            this.setState({ bio: e.target.value })
+          }}
+        />
+        
+      </div>
     )
   }
 }
