@@ -8,6 +8,7 @@ import {
   error_handle, 
   simpleGet,
   simplePost,
+  formDataPost,
   simplePut,
   hasManyDelete,
   simpleDelete,
@@ -100,7 +101,8 @@ export function updateUserProfile({profile}) {
   })
 }
 
-export function getUserGroups({user_id}) {
+export function getUserGroups() {
+  let user_id = sessionStorage.getItem('user_id')
   return simpleGet({ path: 'users/' + user_id + '/groups' })
 }
 
@@ -110,24 +112,36 @@ export function getUserGroups({user_id}) {
 // File functions (images and documents)
 
 /* 
-fileType can be either "image" or "document"
-gets all file models of the indicated fileType from user
-returns array of models with url to AWS location of file, along with
+Gets all file models of the document type from user
+Returns array of models with url to AWS location of file, along with
 extra file releated metadata
 */ 
-export function getUserFiles({user_id, fileType}) {
-  return simpleGet({ path: 'users/' + user_id + '/files/' + fileType })
+export function getUserDocumentFiles() {
+  let user_id = sessionStorage.getItem('user_id')
+  return simpleGet({ path: 'users/' + user_id + '/files/document' })
 }
 
-export function uploadUserDocument({user_id, fileType, file}) {
-  return simplePost({ 
+/* 
+Gets all file models of the document type from user
+Returns array of models with url to AWS location of file, along with
+extra file releated metadata
+*/ 
+export function getUserImageFiles() {
+  let user_id = sessionStorage.getItem('user_id')
+  return simpleGet({ path: 'users/' + user_id + '/files/image' })
+}
+
+export function uploadUserDocumentFile({file}) {
+  let user_id = sessionStorage.getItem('user_id')
+  return formDataPost({ 
     path: 'users/' + user_id + '/files/document', 
     data: file 
   })
 }
 
-export function uploadUserImage({user_id, fileType, file}) {
-  return simplePost({ 
+export function uploadUserImageFile({file}) {
+  let user_id = sessionStorage.getItem('user_id')
+  return formDataPost({ 
     path: 'users/' + user_id + '/files/image', 
     data: file 
   })
@@ -137,8 +151,9 @@ export function uploadUserImage({user_id, fileType, file}) {
 deletes the File model and the associated fileType model
 */
 export function deleteUserFile({file_id}) {
+  let user_id = sessionStorage.getItem('user_id')
   return simpleDelete({ 
-    path: 'files/' + file_id
+    path: 'users/' + user_id + '/files/' + file_id
   })
 }
 

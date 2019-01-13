@@ -92,6 +92,21 @@ export function simplePost({path, data, filter}) {
     })
 }
 
+export function formDataPost({path, data}) {
+  let formData = new FormData();
+  formData.append('file', data);
+
+  return axios.post(
+    path,
+    formData)
+    .then(response => {
+        return respond(response.status, response.data);
+    })
+    .catch(error => {
+        return error_handle(error);
+    })
+}
+
 export function simpleDelete({path}) {
   return axios
   .delete(path)
