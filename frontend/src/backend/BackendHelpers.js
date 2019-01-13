@@ -121,20 +121,6 @@ export function formDataPost({path, data}) {
     })
 }
 
-export function simpleDelete({path}) {
-  return axios
-  .delete(path)
-  .then(response => {
-    return respond({
-      status: response.status,
-      data: response.data,
-    })
-  })
-  .catch(error => {
-    return error_handle({error: error})
-  })
-} 
-
 export function hasManyDelete({path, id_array, filter}) {
   return axios
     .delete(appendFilter(path, filter), id_array)

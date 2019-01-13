@@ -40,8 +40,13 @@ export function getUser({user_id}) {
   return simpleGet({ path: 'users/' + user_id })
 }
 
-// Gets a user with all their profiles
+// Gets the user profile without additional info
 export function getUserProfile({user_id}) {
+  return simpleGet({path: 'users/' + user_id + '/profile'})
+}
+
+// Gets a user with all profile information
+export function getUserProfileFull({user_id}) {
   return axios
   .get('users/' + user_id)
   .then(response => {
