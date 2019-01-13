@@ -8,7 +8,7 @@ import {
   error_handle, 
   simpleGet,
   simplePost,
-  simplePut,
+  simplePatch,
   hasManyDelete,
 } from './BackendHelpers'
 
@@ -84,18 +84,18 @@ export function deleteUser() {
 export function updateUser({user}) {
   let user_id = sessionStorage.getItem('user_id')
   // user._method = 'PUT'
-  return simplePut({ 
+  return simplePatch({ 
     path: 'users/' + user_id,
-    data: user
+    data: user,
   })
 }
 
 export function updateUserProfile({profile}) {
   let profile_id = profile.id
   delete profile.id
-  return simplePut({
+  return simplePatch({
     path: 'profiles/' + profile_id, 
-    data: profile
+    data: profile,
   })
 }
 
@@ -133,7 +133,7 @@ export function addExperienceToStudent({experience}) {
 export function updateExperienceOfStudent({experience}) {
   let experience_id = experience.id
   delete experience.id
-  return simplePut({
+  return simplePatch({
     path: 'experiences/' + experience_id,
     data: experience,
   })
