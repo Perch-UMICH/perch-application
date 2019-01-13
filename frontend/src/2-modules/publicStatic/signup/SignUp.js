@@ -12,12 +12,14 @@ import {
   loginUser,
   loginUserIdp,
   signupUserIdp,
+  loginOrSignup,
   createFaculty
 } from '../../../helper.js'
 import Presentation from './Presentation'
 import './SignUp.scss'
 
 class SignUp extends Component {
+  
   constructor (props) {
     super(props)
     this.state = {
@@ -54,12 +56,13 @@ class SignUp extends Component {
   }
 
   handleGoogleSuccessResponse = response => {
-    console.log(response)
-    signupUserIdp('blah', 'google', response.tokenId)
+    loginOrSignup(response.accessToken);
+    //signupUserIdp('blah', 'google', response.tokenId)
   }
 
   handleGoogleFailureResponse = response => {
     console.log('Google login failed')
+    console.log(response)
   }
 
   signOut = () => {
@@ -80,6 +83,8 @@ class SignUp extends Component {
         {...this.state}
         updateParent={this.updateState}
         handleSubmit={this.registerLoginCreate}
+        handleGoogleSuccessResponse={this.handleGoogleSuccessResponse}
+        handleGoogleFailureResponse={this.handleGoogleFailureResponse}
       />
     )
   }

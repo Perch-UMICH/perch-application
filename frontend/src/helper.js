@@ -77,6 +77,18 @@ export function verifyLogin () {
     })
 }
 
+export function loginOrSignup (token) {
+  return axios.post('auth', {
+    token
+  }).then(response=> {
+    console.log(response.data);
+    return respond(response.status, response.data)
+  })
+  .catch(error => {
+    return error_handle(error)
+  })
+}
+
 export function registerUser (name,
                               email,
                               password,
