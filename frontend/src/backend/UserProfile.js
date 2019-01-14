@@ -131,7 +131,15 @@ export function getUserImageFiles() {
   return simpleGet({ path: 'users/' + user_id + '/files/image' })
 }
 
-export function uploadUserDocumentFile({file}) {
+/*
+To upload a file:
+HTML: 
+  <input type="file" name="fileToUpload" id="fileToUpload"></input>
+Javascript:
+  let file = document.getElementById('fileToUpload').files[0];
+  uploadUserResumeDocument({user_id: 1, file: file});
+*/
+export function uploadUserResumeDocument({file}) {
   let user_id = sessionStorage.getItem('user_id')
   return formDataPost({ 
     path: 'users/' + user_id + '/files/document', 
@@ -139,7 +147,7 @@ export function uploadUserDocumentFile({file}) {
   })
 }
 
-export function uploadUserImageFile({file}) {
+export function uploadUserProfileImage({file}) {
   let user_id = sessionStorage.getItem('user_id')
   return formDataPost({ 
     path: 'users/' + user_id + '/files/image', 
