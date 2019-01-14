@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import EditModal from '../../utilities/modals/EditModal'
+import EditModal from '../../utilities/modals/ModalContainer'
 import GroupQuickview from './GroupQuickview'
 import CreatePosition from './CreatePosition'
 import {
@@ -23,7 +23,7 @@ import {
   getLabMembers,
   addMembersToLab,
   getFacultyFromUser
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import Editor from '../../utilities/Editor'
 
 import './GroupPage.css'

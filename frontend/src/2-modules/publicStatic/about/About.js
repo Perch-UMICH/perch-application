@@ -5,7 +5,7 @@ import Timeline from './timeline/Timeline'
 import Team from './team/Team'
 import PerchStory from './story/PerchStory'
 import './About.css';
-import {updateUrlQuery} from '../../../helper.js'
+import {updateUrlQuery} from '../../../backend/index.js'
 
 class About extends Component {
 	constructor() {

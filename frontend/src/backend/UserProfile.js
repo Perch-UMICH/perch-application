@@ -8,8 +8,8 @@ import {
   error_handle, 
   simpleGet,
   simplePost,
+  simplePatch,
   formDataPost,
-  simplePut,
   hasManyDelete,
   simpleDelete,
 } from './BackendHelpers'
@@ -40,8 +40,13 @@ export function getUser({user_id}) {
   return simpleGet({ path: 'users/' + user_id })
 }
 
-// Gets a user with all their profiles
+// Gets the user profile without additional info
 export function getUserProfile({user_id}) {
+  return simpleGet({path: 'users/' + user_id + '/profile'})
+}
+
+// Gets a user with all profile information
+export function getUserProfileFull({user_id}) {
   return axios
   .get('users/' + user_id)
   .then(response => {
@@ -86,18 +91,18 @@ export function deleteUser() {
 export function updateUser({user}) {
   let user_id = sessionStorage.getItem('user_id')
   // user._method = 'PUT'
-  return simplePut({ 
+  return simplePatch({ 
     path: 'users/' + user_id,
-    data: user
+    data: user,
   })
 }
 
 export function updateUserProfile({profile}) {
   let profile_id = profile.id
   delete profile.id
-  return simplePut({
+  return simplePatch({
     path: 'profiles/' + profile_id, 
-    data: profile
+    data: profile,
   })
 }
 
@@ -184,7 +189,7 @@ export function addExperienceToStudent({experience}) {
 export function updateExperienceOfStudent({experience}) {
   let experience_id = experience.id
   delete experience.id
-  return simplePut({
+  return simplePatch({
     path: 'experiences/' + experience_id,
     data: experience,
   })

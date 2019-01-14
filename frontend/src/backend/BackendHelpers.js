@@ -64,9 +64,23 @@ export function simpleGet({path, filter}) {
     })
 }
 
-export function simplePut({path, data, filter}) {
+export function simpleDelete({path, filter}) {
   return axios
-    .put(appendFilter(path, filter), data)
+    .delete(appendFilter(path, filter))
+    .then(response => {
+      return respond({
+        status: response.status,
+        data: response.data,
+      })
+    })
+    .catch(error => {
+      return error_handle({error: error})
+    })
+}
+
+export function simplePatch({path, data, filter}) {
+  return axios
+    .patch(appendFilter(path, filter), data)
     .then(response => {
       return respond({
         status: response.status,
@@ -106,20 +120,6 @@ export function formDataPost({path, data}) {
         return error_handle(error);
     })
 }
-
-export function simpleDelete({path}) {
-  return axios
-  .delete(path)
-  .then(response => {
-    return respond({
-      status: response.status,
-      data: response.data,
-    })
-  })
-  .catch(error => {
-    return error_handle({error: error})
-  })
-} 
 
 export function hasManyDelete({path, id_array, filter}) {
   return axios

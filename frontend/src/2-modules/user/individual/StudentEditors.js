@@ -4,11 +4,11 @@ import AvatarEditor from 'react-avatar-editor'
 import Dropzone from 'react-dropzone'
 import Cleave from 'cleave.js/react'
 import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n'
-import { deepCopy, validDateChange, validPhoneChange } from '../../../helper.js'
+// import { validDateChange, validPhoneChange } from '../../../backend/index.js'
 import './StudentEditors.scss'
 import iziToast from 'izitoast'
 import { warn_toast } from '../../../data/toastData.js'
-
+let validDateChange, validPhoneChange
 export class EditLinks extends Component {
   constructor (props) {
     super(props)
@@ -209,33 +209,30 @@ export class EditBio extends Component {
     super(props)
     this.state = {
       placeholder: 'Short description of background, experience, and interests',
-      bio: props.user && props.user.bio ? props.user.bio : ''
+      bio: ''
     }
   }
 
   componentWillReceiveProps (props) {
-    if (props.user && props.user.bio) {
-      this.setState({ bio: props.user.bio })
-    }
+    this.setState({ bio: props.bio })
   }
 
   render () {
     return (
-      <form id='edit-bio'>
-        <div className='input-field'>
-          <textarea
-            id='textArea'
-            value={this.state.bio}
-            placeholder='Short description of background, experience, and interests'
-            onChange={e => {
-              if (this.props.updateUser) {
-                this.props.updateUser('bio', e.target.value)
-              }
-              this.setState({ bio: e.target.value })
-            }}
-          />
-        </div>
-      </form>
+      <div id='edit-bio'>
+        <textarea
+          id='textArea'
+          value={this.state.bio}
+          placeholder='Short description of background, experience, and interests'
+          onChange={e => {
+            if (this.props.updateUser) {
+              this.props.updateUser('bio', e.target.value)
+            }
+            this.setState({ bio: e.target.value })
+          }}
+        />
+        
+      </div>
     )
   }
 }
@@ -338,6 +335,9 @@ export class EditClasses extends Component {
     )
   }
 }
+
+// FIX THIS
+let deepCopy= () => [] 
 
 // Experience Editor, for both Work Experience and Education editing.
 // Pass in 'work' or 'educ' to 'type' prop to set proper text.

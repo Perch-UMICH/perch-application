@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import FormData from 'form-data'
-import { getModelHasMany, respond, error_respond, error_handle } from 'BackendHelpers.js'
+import { getModelHasMany, respond, error_respond, error_handle } from './BackendHelpers.js'
 
 export function isLoggedIn() {
   if (sessionStorage.getItem('token') == null) {
@@ -17,8 +17,26 @@ export function isLoggedIn() {
  * - the user needs to choose a role
  * - the user needs to go through the initial profile building process
  */
-export function login({idp, accessToken}) {
+export function loginOrSignup (token) {
+  return axios.post('auth', {
+    token
+  }).then(response=> {
+    console.log(response.data);
+    sessionStorage.setItem('token', response.data.token)
+    axios.defaults.headers.common['Authorization'] = 
+      'Bearer ' + sessionStorage.getItem('token')
+    sessionStorage.setItem('user_id', response.data.userid)
+    // go through initial profile building process
+    if (response.data.newUser) {
 
+    } else { // login
+
+    }
+    return respond(response.status, response.data)
+  })
+  .catch(error => {
+    return error_handle(error)
+  })
 }
 
 export function logout() {

@@ -1,6 +1,6 @@
 import React from 'react'
 import Editor from '../../../utilities/Editor'
-import { openModal } from '../../../../helper'
+import { openModal } from '../../../../backend/index'
 
 export default function LinkTab ({linkedin_link, owner}) {
   return (
@@ -16,7 +16,7 @@ export default function LinkTab ({linkedin_link, owner}) {
       </div>
       <Editor
         permissions={owner}
-        superClick={() => openModal('link-edit')}
+        superClick={() => alert('todo')}
       />
     </div>
   )

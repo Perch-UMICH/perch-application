@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
 import './Apply.css';
-import { getLabPosition } from '../../helper';
+import { getLabPosition } from '../../backend/index';
 
 class Apply extends Component {
 	constructor(props) {

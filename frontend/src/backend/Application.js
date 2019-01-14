@@ -7,7 +7,7 @@ import {
   respond,  
   error_handle, 
   simpleGet,
-  simplePut,
+  simplePatch,
   hasManyDelete,
   simplePost,
 } from './BackendHelpers'

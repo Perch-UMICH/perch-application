@@ -8,7 +8,7 @@ import {
   getSearchData,
   labSearch,
   getAllStudentApplicationResponses
-} from '../../helper.js'
+} from '../../backend/index.js'
 
 class LabSearch extends Component {
   constructor (props) {

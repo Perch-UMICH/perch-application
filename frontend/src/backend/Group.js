@@ -7,8 +7,9 @@ import {
   respond,  
   error_handle, 
   simpleGet,
-  simplePut,
+  simplePatch,
   hasManyDelete,
+  simpleDelete,
   simplePost,
 } from './BackendHelpers'
 
@@ -30,7 +31,7 @@ export function createGroup({group}) {
 export function updateGroup({group}) {
   let group_id = group.id 
   delete group.id
-  simplePut({
+  simplePatch({
     path: 'groups/' + group_id,
     data: group,
   })
@@ -63,7 +64,7 @@ export function requestUserJoinGroup({group_id}) {
 
 // RESTRICTED user must be group admin or owner
 export function updateGroupMembers({group_id, users_and_roles}) {
-  return simplePut({
+  return simplePatch({
     path: 'groups/' + group_id + '/users',
     data: users_and_roles,
   })

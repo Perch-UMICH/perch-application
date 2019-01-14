@@ -1,6 +1,6 @@
 import React from 'react'
 import Editor from '../../../utilities/Editor'
-import { openModal } from '../../../../helper'
+import { openModal } from '../../../../backend/index'
 import styles from './Contact.module.scss'
 
 export default function ({contact_email, contact_phone, owner}) {
@@ -17,7 +17,7 @@ export default function ({contact_email, contact_phone, owner}) {
       </div>
       <Editor
         permissions={owner}
-        superClick={() => openModal('contact-edit')}
+        superClick={() => alert('todo')}
       />
     </div>
   )

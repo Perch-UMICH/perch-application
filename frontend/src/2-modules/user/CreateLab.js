@@ -8,7 +8,7 @@ import {
   getAllLabs,
   isFaculty,
   validPhoneChange
-} from '../../helper.js'
+} from '../../backend/index.js'
 import './CreateLab.css'
 
 export let modalCreateLab = (lab, callback) => {

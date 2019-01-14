@@ -4,9 +4,9 @@ import {
   getCurrentUserId,
   getUser,
 	getStudentFromUser,
-	getUserProfilePic,
+	// getUserProfilePic,
   getFacultyFromUser /* getFacultyLabs */
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import {
   EditQuickview,
   EditContainerOnboarding

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import BasicButton from '../buttons/BasicButton';
-import { resetPassword, updateUser, getCurrentUserId, isStudent, isLab} from '../../../helper.js';
+import { resetPassword, updateUser, getCurrentUserId, isStudent, isLab} from '../../../backend/index.js';
 import alertify from 'alertify.js';
 import iziToast from 'izitoast';
 import $ from 'jquery';

@@ -5,7 +5,7 @@ import {
   isStudent,
   isFaculty,
   getCurrentFacultyId /* getFacultyLabs */
-} from '../../helper.js'
+} from '../../backend/index.js'
 import './ProgramAdminNav.scss'
 import { Link } from 'react-router-dom'
 

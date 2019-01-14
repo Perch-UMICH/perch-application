@@ -9,7 +9,7 @@ import Title from './Title'
 import {
   addToStudentPositionList,
   removeFromStudentPositionList
-} from '../../../../helper'
+} from '../../../../backend/index'
 
 class Project extends Component {
   // holds saved, applied, and application responses, and whether its been modified
@@ -78,7 +78,6 @@ class Project extends Component {
   // initializes saved and applied state of project
   static getDerivedStateFromProps (nextProps, prevState) {
     if (!prevState.modified) {
-      console.log('getting new derived')
       let { userSavedProjects, userAppliedProjects } = nextProps
       let thisProjectId = nextProps.project.id
       let saved, applied

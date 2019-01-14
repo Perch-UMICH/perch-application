@@ -10,10 +10,10 @@ import {
   isFaculty,
   getUserProfilePic,
   uploadUserProfilePic
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import ExpanderIcons from '../../utilities/ExpanderIcons'
 import Editor from '../../utilities/Editor'
-import EditModal from '../../utilities/modals/EditModal'
+import EditModal from '../../utilities/modals/ModalContainer'
 import CreateLab, { modalCreateLab, modalDeleteLab } from '../CreateLab'
 import ErrorPage from '../../utilities/ErrorPage'
 import {

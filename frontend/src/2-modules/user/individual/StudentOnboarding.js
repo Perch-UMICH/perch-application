@@ -24,7 +24,7 @@ import {
   addEduExperienceToStudent,
   primeExternalLink,
   uploadUserProfilePic
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import './StudentOnboarding.scss'
 
 class StudentOnboarding extends Component {

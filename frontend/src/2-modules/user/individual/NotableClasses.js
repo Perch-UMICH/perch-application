@@ -6,7 +6,7 @@ import {
   getCurrentUserId,
   getCurrentStudentId,
   getStudentFromUser
-} from '../../../helper.js'
+} from '../../../backend/index.js'
 import './NotableClasses.css'
 
 class NotableClasses extends Component {

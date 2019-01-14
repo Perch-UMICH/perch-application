@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './GroupProjectRequirement.css'
-import {exists} from '../../../helper.js'
+import {exists} from '../../../backend/index.js'
 
 export default class GroupProjectRequirement extends Component {
 	render() {

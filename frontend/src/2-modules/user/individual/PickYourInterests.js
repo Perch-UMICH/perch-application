@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import BubbleChoice from '../../utilities/BubbleChoice'
 import { EditContainerOnboarding } from './StudentEditors'
-import { syncSkillsToStudent, syncTagsToStudent } from '../../../helper'
-
+// import { syncSkillsToStudent, syncTagsToStudent } from '../../../backend/index'
+let syncSkillsToStudent, syncTagsToStudent
 class PickYourInterests extends Component {
   constructor (props) {
     super(props)

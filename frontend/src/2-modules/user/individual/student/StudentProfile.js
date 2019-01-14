@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import Presentation from './Presentation'
 import Modals from './Modals'
 import {
-  getStudentFromUser,
-  updateStudent,
-  uploadUserProfilePic,
-  getUserProfilePic,
-  getCurrentUserId
-} from '../../../../helper.js'
+  getUserProfile,
+} from '../../../../backend/index'
 import Axios from 'axios'
 
+let getStudentFromUser,
+updateStudent,
+uploadUserProfilePic,
+getUserProfilePic,
+getCurrentUserId
 /* In charge of all state requests and management for student profile */
 class StudentProfileContainer extends Component {
   constructor (props) {
@@ -38,24 +39,28 @@ class StudentProfileContainer extends Component {
       student: true,
       img: ''
     }
+
+    this.updateUser = this.updateUser.bind(this)
+    this.sendHeaderInfo = this.sendHeaderInfo.bind(this)
   }
 
   // Beginning point for data handling
   componentDidMount () {
     let id = window.location.pathname.split('/')[2]
     this.retrieveStudent(id)
-    this.retrieveProfilePicture(id)
+    // this.retrieveProfilePicture(id)
   }
 
   // set intitial student data and ownership
   retrieveStudent (id) {
-    getStudentFromUser(id).then(({ data }) => {
-      data.student = true
-      data.name = data.first_name
-      data.email = data.contact_email
-      data.owner = data.user_id == getCurrentUserId()
-      this.setState(data)
-    })
+    getUserProfile({id}).then(r=>console.log('look',r))
+    // getStudentFromUser(id).then(({ data }) => {
+    //   data.student = true
+    //   data.name = data.first_name
+    //   data.email = data.contact_email
+    //   data.owner = data.user_id == getCurrentUserId()
+    //   this.setState(data)
+    // })
   }
 
   // this just updates the state object, not the backend
@@ -144,22 +149,15 @@ class StudentProfileContainer extends Component {
     console.log('deprecated')
   }
 
-  get modals () {
-    return (
-      <Modals
-        {...this.state}
-        sendBio={this.sendBio.bind(this)}
-        sendContactInfo={this.sendContactInfo.bind(this)}
-        sendLinks={this.sendLinks.bind(this)}
-        sendExperiences={this.sendExperiences.bind(this)}
-        sendHeaderInfo={this.sendHeaderInfo.bind(this)}
-        updateUser={this.updateUser.bind(this)}
-      />
-    )
+  get functions () {
+    return {
+      updateUser: this.updateUser,
+      sendHeaderInfo: this.sendHeaderInfo
+    }
   }
 
   render () {
-    return <Presentation {...this.state} modals={this.modals} />
+    return <Presentation {...this.state} {...this.functions} />
   }
 }
 
