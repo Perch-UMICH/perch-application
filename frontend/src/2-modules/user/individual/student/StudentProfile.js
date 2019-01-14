@@ -53,7 +53,7 @@ class StudentProfileContainer extends Component {
 
   // set intitial student data and ownership
   retrieveStudent (id) {
-    getUserProfile({id}).then(r=>console.log('look',r))
+    // getUserProfile({user_id: id}).then(r=>console.log('look',r))
     // getStudentFromUser(id).then(({ data }) => {
     //   data.student = true
     //   data.name = data.first_name

@@ -42,7 +42,7 @@ if (sessionStorage.token) {
 // a large number of functions and logical operators
 // are supported. Even beyond "where" clauses
 function appendFilter(path, filter) {
-  if(filter !== null) {
+  if(filter !== null && filter !== "") {
     return path + '?filter=' + JSON.stringify(filter)
   } else {
     return path
