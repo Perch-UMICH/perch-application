@@ -161,7 +161,8 @@ export function uploadUserProfileImage({file}) {
 }
 
 /*
-deletes the File model and the associated fileType model
+Deletes the File model and the associated fileType model
+And deletes the actual file on AWS
 */
 export function deleteUserFile({file_id}) {
   let user_id = sessionStorage.getItem('user_id')
