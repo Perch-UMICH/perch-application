@@ -23,7 +23,7 @@ import { access } from 'fs'
 class Login extends Component {
   constructor (props) {
     super(props)
-
+    console.log("hello Login")
     this.state = {
       email: '',
       password: ''
