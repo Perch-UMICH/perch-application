@@ -77,12 +77,20 @@ class Login extends Component {
   }
 
   handleGoogleSuccessResponse (e) {
-    console.log(e)
     let token = e.tokenId
-    loginOrSignup({ token }).then(r => console.log(r))
+    loginOrSignup({ token }).then(r => {
+      if(r.error) {
+        // Backend likely rejected the user for some reason
+        // Should be rare outside of a serious backend issue with network, overload, etc.
+
+      } else {
+        // Logged in!
+      }
+    })
   }
 
   handleGoogleFailureResponse () {
+    // User failed to login through Google button
     alert('failure')
   }
 

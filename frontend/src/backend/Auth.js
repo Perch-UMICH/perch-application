@@ -21,7 +21,6 @@ export function loginOrSignup ({token}) {
   return axios.post('auth', {
     token
   }).then(response=> {
-    console.log(response.data);
     sessionStorage.setItem('token', response.data.token)
     axios.defaults.headers.common['Authorization'] = 
       'Bearer ' + sessionStorage.getItem('token')
@@ -32,7 +31,7 @@ export function loginOrSignup ({token}) {
     } else { // login
 
     }
-    return respond(response.status, response.data)
+    return respond({status: response.status, data: response.data})
   })
   .catch(error => {
     return error_handle(error)
