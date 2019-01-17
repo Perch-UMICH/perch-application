@@ -51,3 +51,15 @@ export function deleteProject({project_id}) {
 export function transferProjectOwnership({}) {
 
 }
+
+/*
+Returns list of projects that contain similar words that
+are inside the keyword string. Words in string must be separated
+by spaces to be identified as individual words
+List is ordered in terms of relevancy (# matching words)
+*/
+export function projectSearch({keywordString}) {
+  return simpleGet({
+    path: "search/project/" + keywordString,
+  })
+}

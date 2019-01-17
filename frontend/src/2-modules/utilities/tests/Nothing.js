@@ -4,29 +4,32 @@
 import React, { Component } from 'react'
 import './Nothing.scss'
 import Axios from 'axios'
-import {getUser, uploadUserDocumentFile, deleteUserFile} from '../../../backend/UserProfile'
+import {getUser, uploadUserResumeDocument, deleteUserFile} from '../../../backend/UserProfile'
+import {projectSearch} from '../../../backend/Project'
 import FormData from 'form-data'
 
 class Nothing extends Component {
   constructor () {
     super()
     sessionStorage.setItem('user_id', 1);
-    getUser({user_id: 1})
+    projectSearch({keywordString: "cancer"})
       .then(response => {
         console.log(response)
       })
 
   }
 
+  // File Testing
   sendFile() {
     let file = document.getElementById('fileToUpload').files[0];
-    uploadUserDocumentFile({user_id: 1, file: file});
+    uploadUserResumeDocument({user_id: 1, file: file});
   }
 
   deleteFile() {
     let id = document.getElementById('fileId').value;
     deleteUserFile({file_id: parseInt(id)});
   }
+  //
 
   render () {
     return <div id='test'>
