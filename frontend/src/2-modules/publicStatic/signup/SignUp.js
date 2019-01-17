@@ -50,7 +50,7 @@ class SignUp extends Component {
   }
 
   handleGoogleSuccessResponse = response => {
-    loginOrSignup(response.accessToken);
+    loginOrSignup({token: response.tokenId});
     //signupUserIdp('blah', 'google', response.tokenId)
   }
 
