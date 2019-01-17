@@ -6,14 +6,8 @@ import React, { Component } from 'react'
 import GoogleLogin from './GoogleLogin.js'
 import GoogleLogout from './GoogleLogout.js'
 import {
-  registerUser,
-  createStudent,
-  getCurrentUserId,
-  loginUser,
-  loginUserIdp,
-  signupUserIdp,
   loginOrSignup,
-  createFaculty
+  isLoggedIn
 } from '../../../backend/index.js'
 import Presentation from './Presentation'
 import './SignUp.scss'
@@ -34,25 +28,25 @@ class SignUp extends Component {
   }
 
   registerLoginCreate (event) {
-    let { email, password, first_name, last_name } = this.state
-    registerUser(`${first_name} ${last_name}`, email, password, password)
-      .catch(e => console.log('Register Error'))
-      .then(r => loginUser(email, password))
-      .catch(e => console.log('Login Error'))
-      .then(r => this.createAccount(email, first_name, last_name))
+    // let { email, password, first_name, last_name } = this.state
+    // registerUser(`${first_name} ${last_name}`, email, password, password)
+    //   .catch(e => console.log('Register Error'))
+    //   .then(r => loginUser(email, password))
+    //   .catch(e => console.log('Login Error'))
+    //   .then(r => this.createAccount(email, first_name, last_name))
   }
 
   // relies on register and login to create a user and put id info in local storage to then create a student
   createAccount (email, first_name, last_name) {
-    let id = getCurrentUserId()
-    let individual = { first_name, last_name, email }
-    this.state.type === 'student'
-      ? createStudent(id, individual)
-        .then(r => (window.location.href = '/student-onboarding'))
-        .catch(e => alert('ERROR in student creation'))
-      : createFaculty(id, individual)
-        .then(r => (window.location.href = '/faculty-onboarding'))
-        .catch(e => alert('ERROR in faculty creation'))
+    // let id = getCurrentUserId()
+    // let individual = { first_name, last_name, email }
+    // this.state.type === 'student'
+    //   ? createStudent(id, individual)
+    //     .then(r => (window.location.href = '/student-onboarding'))
+    //     .catch(e => alert('ERROR in student creation'))
+    //   : createFaculty(id, individual)
+    //     .then(r => (window.location.href = '/faculty-onboarding'))
+    //     .catch(e => alert('ERROR in faculty creation'))
   }
 
   handleGoogleSuccessResponse = response => {

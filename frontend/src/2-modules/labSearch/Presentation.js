@@ -1,8 +1,6 @@
 import React from 'react'
-import ExpanderIcons from '../utilities/ExpanderIcons'
 import Results from './Results'
 import Filters from './Filters'
-import DotLoader from '../utilities/animations/DotLoader'
 import {
   Canvas,
   LeftPanel,

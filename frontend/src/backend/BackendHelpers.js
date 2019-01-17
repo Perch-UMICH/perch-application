@@ -143,7 +143,7 @@ export function respond ({status, data}) {
 
 // Error handling //
 
-export function error_respond ({error}) {
+export function error_respond (error) {
   return {
     status: error.response.status,
     error: error.response.data.error.message,
@@ -152,7 +152,7 @@ export function error_respond ({error}) {
 }
 
 // 0 is a made up error code for non-server-related issues
-export function error_handle ({error}) {
+export function error_handle (error) {
   if (error.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx

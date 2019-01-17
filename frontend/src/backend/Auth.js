@@ -17,7 +17,7 @@ export function isLoggedIn() {
  * - the user needs to choose a role
  * - the user needs to go through the initial profile building process
  */
-export function loginOrSignup (token) {
+export function loginOrSignup ({token}) {
   return axios.post('auth', {
     token
   }).then(response=> {
