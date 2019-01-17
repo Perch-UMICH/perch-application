@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class GoogleLogin extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.signIn = this.signIn.bind(this)
     this.enableButton = this.enableButton.bind(this)
@@ -11,7 +11,7 @@ class GoogleLogin extends Component {
       disabled: true
     }
   }
-  componentDidMount() {
+  componentDidMount () {
     const {
       clientId,
       cookiePolicy,
@@ -78,33 +78,43 @@ class GoogleLogin extends Component {
       })
     })
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.enableButton = () => {}
   }
-  enableButton() {
+  enableButton () {
     this.setState({
       disabled: false
     })
   }
-  signIn(e) {
+  signIn (e) {
     if (e) {
       e.preventDefault() // to prevent submit if used within form
     }
     if (!this.state.disabled) {
       const auth2 = window.gapi.auth2.getAuthInstance()
-      const { onSuccess, onRequest, onFailure, prompt, responseType } = this.props
+      const {
+        onSuccess,
+        onRequest,
+        onFailure,
+        prompt,
+        responseType
+      } = this.props
       const options = {
         prompt
       }
       onRequest()
       if (responseType === 'code') {
-        auth2.grantOfflineAccess(options).then(res => onSuccess(res), err => onFailure(err))
+        auth2
+          .grantOfflineAccess(options)
+          .then(res => onSuccess(res), err => onFailure(err))
       } else {
-        auth2.signIn(options).then(res => this.handleSigninSuccess(res), err => onFailure(err))
+        auth2
+          .signIn(options)
+          .then(res => this.handleSigninSuccess(res), err => onFailure(err))
       }
     }
   }
-  handleSigninSuccess(res) {
+  handleSigninSuccess (res) {
     /*
       offer renamed response keys to names that match use
     */
@@ -125,8 +135,17 @@ class GoogleLogin extends Component {
     this.props.onSuccess(res)
   }
 
-  render() {
-    const { tag, type, style, className, disabledStyle, buttonText, children, render } = this.props
+  render () {
+    const {
+      tag,
+      type,
+      style,
+      className,
+      disabledStyle,
+      buttonText,
+      children,
+      render
+    } = this.props
     const disabled = this.state.disabled || this.props.disabled
 
     if (render) {

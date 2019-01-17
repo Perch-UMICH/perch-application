@@ -1,19 +1,24 @@
+/* These are Google Login objects that need to be declared */
+/* global gapi */
+/* global initClient */
+/* global updateSigninStatus */
 import React, { Component } from 'react'
 import Floater from '../../../1-layouts/Floater'
 import './Login.css'
+import GoogleLogin from '../../publicStatic/signup/GoogleLogin'
 import {
-  loginUser,
-  getCurrentUserId,
-  isStudent,
-  getCurrentFacultyId
+  isLoggedIn,
+  loginOrSignup
+  // loginUser,
+  // getCurrentUserId,
+  // isStudent,
+  // getCurrentFacultyId
 } from '../../../backend/index.js'
 
-import {
-  TextInput,
-  SubmitInput,
-} from '../../../3-utils/Inputs'
+import { TextInput, SubmitInput } from '../../../3-utils/Inputs'
 
 import iziToast from 'izitoast'
+import { access } from 'fs'
 
 class Login extends Component {
   constructor (props) {
@@ -25,49 +30,66 @@ class Login extends Component {
     }
 
     this.updateState = this.updateState.bind(this)
+    this.handleGoogleFailureResponse = this.handleGoogleFailureResponse.bind(
+      this
+    )
+    this.handleGoogleSuccessResponse = this.handleGoogleSuccessResponse.bind(
+      this
+    )
   }
 
   // called when user tries to login
   handleLogin (event) {
-    event.preventDefault()
+    alert('todo')
+    // event.preventDefault()
 
-    let email = this.state.email
-    let password = this.state.password
+    // let email = this.state.email
+    // let password = this.state.password
 
-    // 1. Login user
-    loginUser(email, password)
-      .then(
-        resp =>
-          (window.location.href = isStudent()
-            ? `/student-profile/${getCurrentUserId()}`
-            : `/prof/${getCurrentFacultyId()}`)
-      )
+    // // 1. Login user
+    // loginUser(email, password)
+    //   .then(
+    //     resp =>
+    //       (window.location.href = isStudent()
+    //         ? `/student-profile/${getCurrentUserId()}`
+    //         : `/prof/${getCurrentFacultyId()}`)
+    //   )
 
-      // 2. or show Error message
-      .catch(e =>
-        iziToast.show({
-          title: 'Error',
-          titleColor: 'black',
-          messageColor: 'black',
-          message: 'Incorrect Username or Password',
-          color: 'red',
-          position: 'bottomLeft',
-          progressBarColor: 'white',
-          timeout: '5000',
-          class: 'toast-custom'
-        })
-      )
+    //   // 2. or show Error message
+    //   .catch(e =>
+    //     iziToast.show({
+    //       title: 'Error',
+    //       titleColor: 'black',
+    //       messageColor: 'black',
+    //       message: 'Incorrect Username or Password',
+    //       color: 'red',
+    //       position: 'bottomLeft',
+    //       progressBarColor: 'white',
+    //       timeout: '5000',
+    //       class: 'toast-custom'
+    //     })
+    //   )
   }
 
-  updateState(key, value) {
+  updateState (key, value) {
     this.state[key] = value
     this.setState(this.state)
+  }
+
+  handleGoogleSuccessResponse (e) {
+    console.log(e)
+    let token = e.tokenId
+    loginOrSignup({ token }).then(r => console.log(r))
+  }
+
+  handleGoogleFailureResponse () {
+    alert('failure')
   }
 
   render () {
     return (
       <Floater>
-        <div className='login shadow' >
+        <div className='login shadow'>
           <h1>LogIn</h1>
           <TextInput
             type='email'
@@ -81,7 +103,12 @@ class Login extends Component {
             label='Password'
             updateParent={this.updateState}
           />
-          <SubmitInput onClick={this.handleLogin.bind(this)}>Login</SubmitInput>
+          <GoogleLogin
+            clientId='1020193337249-cn3j2veuabvf0eha7vgru2hlhtpkuunh.apps.googleusercontent.com'
+            buttonText='Google Signup'
+            onSuccess={this.handleGoogleSuccessResponse}
+            onFailure={this.handleGoogleFailureResponse}
+          />
         </div>
       </Floater>
     )
