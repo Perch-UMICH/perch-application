@@ -32,7 +32,10 @@ export function loginOrSignup ({token}) {
     } else { // login
 
     }
-    return respond(response.status, response.data)
+    return respond({
+      status: response.status,
+      data: response.data,
+    })
   })
   .catch(error => {
     return error_handle(error)
