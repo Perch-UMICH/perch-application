@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NavBarContainer from './2-modules/publicStatic/navbar/NavBarContainer';
 import Home from './2-modules/publicStatic/home/Home';
-// import SignUp from './2-modules/publicStatic/signup/SignUp';
+import SignUp from './2-modules/publicStatic/signup/SignUp';
 // import ConfirmEmail from './2-modules/user/maintenance/ConfirmEmail';
 // import About from './2-modules/publicStatic/about/About';
 import Login from './2-modules/publicStatic/login/Login';
-// import Logout from './2-modules/publicStatic/login/Logout';
+import Logout from './2-modules/publicStatic/login/Logout';
 import StudentProfile from './2-modules/user/individual/student/StudentProfile';
 // import LabMaster from './2-modules/labSearch/LabMaster.js';
 // import ProfPage from './2-modules/user/group/ProfPage';
@@ -47,10 +47,9 @@ class Router extends Component {
 						<Switch>
 							{/* <Route path='/home' component={ Home } />
 							<Route path='/about' component={ About } />
-							<Route path='/about/:tab' component={ About } />
+							<Route path='/about/:tab' component={ About } />*/}
 							<Route path='/logout' component={ Logout } /> 
 							<Route path='/sign-up' component={ SignUp } />
-							<Route path='/confirm-email' component={ ConfirmEmail } /> */}
 							<Route path='/login' component={ Login } /> 
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/student-profile/:studentSlug' component={ StudentProfile } />

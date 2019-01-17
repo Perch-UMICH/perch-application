@@ -5,7 +5,7 @@ import FormData from 'form-data'
 import { getModelHasMany, respond, error_respond, error_handle } from './BackendHelpers.js'
 
 export function isLoggedIn() {
-  if (sessionStorage.getItem('token') == null) {
+  if (sessionStorage.getItem('token') === null) {
     return false
   }
   return true
@@ -46,17 +46,18 @@ export function logout() {
   
   // We need to retain the sessionStorage headers
   // when sending the logout request
-  let returnVal = axios
-    .post('api/logout')
-    .then(response => {
-      return respond(response.status, response.data)
-    })
-    .catch(error => {
-      return error_handle(error)
-    })
+  // But currently the backend doesn't care if you logout
+  // let returnVal = axios
+  //   .post('api/logout')
+  //   .then(response => {
+  //     return respond(response.status, response.data)
+  //   })
+  //   .catch(error => {
+  //     return error_handle(error)
+  //   })
 
   // Clear everything
   sessionStorage.clear()
 
-  return returnVal
+  // return returnVal
 }

@@ -1,9 +1,9 @@
-import { logoutCurrentUser } from '../../../backend/index';
+import { logout } from '../../../backend/index';
 
 /* 
   logs out current user and redirects to home page 
 */
 export default function() {
-  logoutCurrentUser();
+  logout();
   window.location.href='/'
 }
