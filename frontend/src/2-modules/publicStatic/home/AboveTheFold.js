@@ -25,7 +25,7 @@ function AboveTheFold () {
         </SplitLeft>
         <SplitRight>
           <Floater>
-            <SignUp />
+            {/* <SignUp /> */}
           </Floater>
         </SplitRight>
       </VerticalSplit>
