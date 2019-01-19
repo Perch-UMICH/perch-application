@@ -45,9 +45,9 @@ class Router extends Component {
 					<NavBarContainer />
 					<div style={{minHeight: '100vh', paddingTop: '70px'}}>
 						<Switch>
-							{/* <Route path='/home' component={ Home } />
+							<Route path='/home' component={ Home } />
 							<Route path='/about' component={ About } />
-							<Route path='/about/:tab' component={ About } />*/}
+							<Route path='/about/:tab' component={ About } />
 							<Route path='/logout' component={ Logout } /> 
 							<Route path='/sign-up' component={ SignUp } />
 							<Route path='/login' component={ Login } /> 
@@ -69,10 +69,10 @@ class Router extends Component {
 							<Route path='/terms-of-service' component={ TermsOfService } />
 							<Route path='/dashboard' component={ LabDashboard } />
 							<Route path='/student-onboarding' component={ StudentOnboarding } />
-							<Route path='/faculty-onboarding' component={ FacultyOnboarding } />
+		<Route path='/faculty-onboarding' component={ FacultyOnboarding } />*/}
 							<Route path='/help' component={ Help } />
 							<Route path='/join' component= { Join } />
-							<Route path='/test' component={ UserTest } />
+							{/*<Route path='/test' component={ UserTest } />
 							<Route path='/challenge' component={ Challenge } />
 							<Route path='/create-lab' component={ CreateLab } />
 							<Route path='/hypercontrol' component={ Dashboard } />

@@ -43,8 +43,9 @@ class Join extends Component {
             </div>
             <div className='join-position-list-item'>Web app experience</div>
           </div>
+          <div className='join-position-sub-title'>Email us directly if you're interested in working on the website.</div>
           <br />
-          <BasicButton msg='Take our challenge' dest='/challenge' />
+          
         </div>
         <div className='join-position'>
           <div className='join-position-title'>Undergraduate Instructors</div>
