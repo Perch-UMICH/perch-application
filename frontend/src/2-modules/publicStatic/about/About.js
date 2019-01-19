@@ -5,7 +5,7 @@ import Timeline from './timeline/Timeline'
 import Team from './team/Team'
 import PerchStory from './story/PerchStory'
 import './About.css';
-import {updateUrlQuery} from '../../../backend/index.js'
+//import {updateUrlQuery} from '../../../backend/index.js'
 
 class About extends Component {
 	constructor() {
@@ -48,6 +48,12 @@ class About extends Component {
 				navs[i].classList.add('about-active')
 	}
 
+	
+	updateUrlQuery (query, value) {
+	let new_query = '?' + query + '=' + value
+	window.history.pushState(null, null, new_query)
+	}
+
 	clearAboutBody() {
 		ReactDOM.unmountComponentAtNode(document.getElementById('about-body'))
 	}
@@ -55,21 +61,21 @@ class About extends Component {
 	showTimeline() {
 		this.highlightAboutNav('timeline');
 		this.clearAboutBody();
-		updateUrlQuery('tab', 'timeline');
+		this.updateUrlQuery('tab', 'timeline');
 		ReactDOM.render(<Timeline />, document.getElementById('about-body'))
 	}
 
 	showStory() {
 		this.highlightAboutNav('perch story')
 		this.clearAboutBody();
-		updateUrlQuery('tab', 'story');
+		this.updateUrlQuery('tab', 'story');
 		ReactDOM.render(<PerchStory />, document.getElementById('about-body'))
 	}
 
 	showTeam() {
 		this.highlightAboutNav('the perch team')
 		this.clearAboutBody();
-		updateUrlQuery('tab', 'team');
+		this.updateUrlQuery('tab', 'team');
 		ReactDOM.render(<Team />, document.getElementById('about-body'))
 	}
 
