@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import LabSearch from './LabSearch'
-import { getAllLabs, getLabTags, isLoggedIn } from '../../backend/index.js'
+import {isLoggedIn } from '../../backend/index.js'
 import ErrorPage from '../utilities/ErrorPage'
 
 class LabMaster extends Component {

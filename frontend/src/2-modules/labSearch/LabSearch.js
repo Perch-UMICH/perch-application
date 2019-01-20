@@ -2,14 +2,32 @@ import React, { Component } from 'react'
 import './LabSearch.scss'
 import Presentation from './Presentation'
 import {
-  getSearchResults,
-  getCurrentUserId,
-  getStudentFromUser,
-  getSearchData,
-  labSearch,
-  getAllStudentApplicationResponses
+  // getSearchResults,
+  getCurrentUserId, projectSearch,
+  // getStudentFromUser,
+  // labSearch,
+  // getAllStudentApplicationResponses
 } from '../../backend/index.js'
 
+function getAllStudentApplicationResponses() {
+  alert('todo')
+}
+
+function getSearchData() {
+  alert('todo')
+}
+
+function getSearchResults () {
+  alert('todo')
+}
+
+function getStudentFromUser() {
+  alert('todo')
+}
+
+function labSearch () {
+  alert('todo')
+}
 class LabSearch extends Component {
   constructor (props) {
     super(props)
@@ -54,9 +72,9 @@ class LabSearch extends Component {
   */
   componentDidMount () {
     this.executeSearch()
-    this.loadSubmittedApplications()
-    this.loadSavedProjects()
-    this.loadFilters()
+    // this.loadSubmittedApplications()
+    // this.loadSavedProjects()
+    // this.loadFilters()
   }
 
   /*
@@ -70,18 +88,25 @@ class LabSearch extends Component {
   */
   executeSearch () {
     let { activeFilters, query } = this.state
+    query = query.replace(/[^0-9a-zA-Z ]/, '')
     this.updateState('loading', true)
-    labSearch(...Object.values(activeFilters), query)
-      .then(({ data }) => {
-        let labIds = data.results
-        this.state.nextLabIds = labIds.splice(this.state.numLabsToShowOnMore)
-        return getSearchResults(labIds)
-      })
-      .then(({ data }) => {
-        this.state.labData = data.results
+    projectSearch({keywordString: query})
+      .then(({data})=> {
+        this.state.labData = data
         this.state.loading = false
         this.setState(this.state)
       })
+    // labSearch(...Object.values(activeFilters), query)
+    //   .then(({ data }) => {
+    //     let labIds = data.results
+    //     this.state.nextLabIds = labIds.splice(this.state.numLabsToShowOnMore)
+    //     return getSearchResults(labIds)
+    //   })
+    //   .then(({ data }) => {
+    //     this.state.labData = data.results
+    //     this.state.loading = false
+    //     this.setState(this.state)
+    //   })
   }
 
   // Get all projects that the student has submitted applications to

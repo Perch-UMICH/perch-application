@@ -1,10 +1,10 @@
 import React from 'react'
 import './Inputs.scss'
 
-/* 
+/*
   If wrapped around other inputs, converts them to evenly measured inputs on same line
   Without InputRow, each input is display block
-  Max two Items 
+  Max two Items
   Optional
 */
 export function InputRow (props) {
@@ -18,10 +18,16 @@ export function InputRow (props) {
 export function TextInput (props) {
   return (
     <div className='input'>
-      <input 
+      <input
         type={props.type}
         placeholder={props.label}
-        onChange={e => props.updateParent(props.name, e.target.value)}
+        onChange={e => {
+          props.updateParent(props.name, e.target.value)
+          if (props.onChange) props.onChange()
+        }}
+        onKeyPress={({ key }) => {
+          if (key === 'Enter') props.onEnter()
+        }}
       />
     </div>
   )
@@ -44,11 +50,7 @@ export function RadioInput (props) {
 export function SubmitInput (props) {
   return (
     <div className='input'>
-      <input
-        type='submit'
-        onClick={props.onClick}
-        value={props.children}
-      />
+      <input type='submit' onClick={props.onClick} value={props.children} />
     </div>
   )
 }
@@ -57,11 +59,8 @@ export function CheckboxInput (props) {
   return (
     <p className='checkbox'>
       <div className='checkbox-container'>
-        <input 
-          type='checkbox'
-          onClick={props.onClick}
-        />
-        <span class="checkmark"></span>
+        <input type='checkbox' onClick={props.onClick} />
+        <span class='checkmark' />
       </div>
       <div className='label'>{props.children}</div>
     </p>

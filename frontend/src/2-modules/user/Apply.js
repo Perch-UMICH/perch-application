@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import AppQuestionTab from './AppQuestionTab';
 import './Apply.css';
-import { getLabPosition } from '../../backend/index';
+// import { getLabPosition } from '../../backend/index';
+
+function getLabPosition() {
+	alert('todo')
+}
 
 class Apply extends Component {
 	constructor(props) {
@@ -33,17 +37,17 @@ class Apply extends Component {
 				answer: "",
 			},
 		];
-		getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
-			if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
-				questions = resp.data.application.questions;
-			}
-			this.setState({
-				pos_description: this.state.position.description || "No description provided.",
-				time_comm: this.state.position.min_time_commitment || "No minimum time provided.",
-				min_qual: this.state.position.min_qual,
-				questions
-			});
-		})
+		// getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
+		// 	if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
+		// 		questions = resp.data.application.questions;
+		// 	}
+		// 	this.setState({
+		// 		pos_description: this.state.position.description || "No description provided.",
+		// 		time_comm: this.state.position.min_time_commitment || "No minimum time provided.",
+		// 		min_qual: this.state.position.min_qual,
+		// 		questions
+		// 	});
+		// })
 	}
 
 	render() {

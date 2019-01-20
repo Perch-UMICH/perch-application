@@ -304,3 +304,20 @@
 /*#lab-srch-results b {
 	color: var(--primary);
 }*/
+
+#search-bar {
+  overflow: hidden;
+  padding: 1em 0;
+}
+
+#search-input {
+  width: 80%;
+  float: left;
+  max-width: calc(100% - 100px);
+}
+
+#search-submit {
+  float: right;
+  width: 20%;
+  min-width: 100px;
+}

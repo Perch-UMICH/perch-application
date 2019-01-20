@@ -7,9 +7,17 @@ import Submitted from './Submitted'
 import Description from './Description'
 import Title from './Title'
 import {
-  addToStudentPositionList,
-  removeFromStudentPositionList
+  // addToStudentPositionList,
+  // removeFromStudentPositionList
 } from '../../../../backend/index'
+
+function addToStudentPositionList() {
+  alert('todo')
+}
+
+function removeFromStudentPositionList() {
+  alert('todo')
+}
 
 class Project extends Component {
   // holds saved, applied, and application responses, and whether its been modified
@@ -76,20 +84,20 @@ class Project extends Component {
   }
 
   // initializes saved and applied state of project
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if (!prevState.modified) {
-      let { userSavedProjects, userAppliedProjects } = nextProps
-      let thisProjectId = nextProps.project.id
-      let saved, applied
-      userSavedProjects.forEach(aProjectId => {
-        if (aProjectId === thisProjectId) saved = true
-      })
-      userAppliedProjects.forEach(aProjectId => {
-        if (aProjectId === thisProjectId) applied = true
-      })
-      return { saved, applied }
-    }
-  }
+  // static getDerivedStateFromProps (nextProps, prevState) {
+  //   // if (!prevState.modified) {
+  //   //   let { userSavedProjects, userAppliedProjects } = nextProps
+  //   //   let thisProjectId = nextProps.project.id
+  //   //   let saved, applied
+  //   //   userSavedProjects.forEach(aProjectId => {
+  //   //     if (aProjectId === thisProjectId) saved = true
+  //   //   })
+  //   //   userAppliedProjects.forEach(aProjectId => {
+  //   //     if (aProjectId === thisProjectId) applied = true
+  //   //   })
+  //   //   return { saved, applied }
+  //   // }
+  // }
 
   // updates the application responses for a project
   updateApplication (applicateResponses) {
@@ -122,19 +130,19 @@ class Project extends Component {
 
     // normal render
     return (
-      <div key={id} className='project'>
+      <div key={id} className='project lab-srch-item-container'>
         <Title labId={lab_id} title={title} />
         <Description>{description}</Description>
         {!applied && <Apply id={id} openModal={this.toggleModal}/>}
         {!applied && <SaveRemove saved={saved} id={id} onClick={handleSave} />}
         {applied && <Submitted />}
-        <Modal
+        {/* <Modal
           project={project}
           submitApplication={submitApplication}
           updateApplication={updateApplication}
           showModal={this.state.showModal}
           closeModal={this.toggleModal}
-        />
+        /> */}
       </div>
     )
   }

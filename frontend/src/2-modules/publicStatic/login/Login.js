@@ -84,7 +84,7 @@ class Login extends Component {
         // Should be rare outside of a serious backend issue with network, overload, etc.
 
       } else {
-        // Logged in!
+        window.location.href='/'
       }
     })
   }

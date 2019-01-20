@@ -8,10 +8,9 @@ import {
   ResultsPanel,
   MainPanel
 } from '../../1-layouts/SearchPage'
-import SearchBar from '../user/individual/dashboard/SearchBar'
-
+import {TextInput} from '../../3-utils/Inputs'
 export default function (props) {
-  let { filters, handleFilterClick, ...search } = props
+  let { filters, handleFilterClick, updateParent, executeSearch, ...results } = props
   return (
     <Canvas>
       <LeftPanel>
@@ -19,10 +18,16 @@ export default function (props) {
       </LeftPanel>
       <MainPanel>
         <SearchPanel>
-          <SearchBar {...search} />
+          <TextInput 
+            type='text'
+            name='query'
+            label='press enter to search'
+            updateParent={updateParent}
+            onEnter={executeSearch}
+          />
         </SearchPanel>
         <ResultsPanel>
-          <Results {...search} />
+          <Results {...results} />
         </ResultsPanel>
       </MainPanel>
     </Canvas>

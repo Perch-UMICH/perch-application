@@ -6,10 +6,6 @@
   padding: 1em;
 }
 
-.project:not(:last-of-type) {
-  border-bottom: 3px dotted lightgray;
-}
-
 .project:hover {
   box-shadow: var(--grey-shadow);
   transition: .2s ease;
