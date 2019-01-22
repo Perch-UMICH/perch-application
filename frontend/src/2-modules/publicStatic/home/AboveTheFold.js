@@ -26,6 +26,10 @@ function AboveTheFold () {
         <SplitRight>
           <Floater>
             {/* <SignUp /> */}
+            <div className='signup-container'>
+              <h1>Launching in April 2019</h1>
+              <h2><a href="/join">Click here</a> if you are interested in joining Perch</h2>
+            </div>
           </Floater>
         </SplitRight>
       </VerticalSplit>
