@@ -20,10 +20,10 @@ import { TextInput, SubmitInput } from '../../../3-utils/Inputs'
 import iziToast from 'izitoast'
 import { access } from 'fs'
 
+
 class Login extends Component {
   constructor (props) {
     super(props)
-    console.log("hello Login")
     this.state = {
       email: '',
       password: ''
@@ -36,39 +36,6 @@ class Login extends Component {
     this.handleGoogleSuccessResponse = this.handleGoogleSuccessResponse.bind(
       this
     )
-  }
-
-  // called when user tries to login
-  handleLogin (event) {
-    alert('todo')
-    // event.preventDefault()
-
-    // let email = this.state.email
-    // let password = this.state.password
-
-    // // 1. Login user
-    // loginUser(email, password)
-    //   .then(
-    //     resp =>
-    //       (window.location.href = isStudent()
-    //         ? `/student-profile/${getCurrentUserId()}`
-    //         : `/prof/${getCurrentFacultyId()}`)
-    //   )
-
-    //   // 2. or show Error message
-    //   .catch(e =>
-    //     iziToast.show({
-    //       title: 'Error',
-    //       titleColor: 'black',
-    //       messageColor: 'black',
-    //       message: 'Incorrect Username or Password',
-    //       color: 'red',
-    //       position: 'bottomLeft',
-    //       progressBarColor: 'white',
-    //       timeout: '5000',
-    //       class: 'toast-custom'
-    //     })
-    //   )
   }
 
   updateState (key, value) {
@@ -84,7 +51,7 @@ class Login extends Component {
         // Should be rare outside of a serious backend issue with network, overload, etc.
 
       } else {
-        window.location.href='/'
+        window.location.href='/lab-match'
       }
     })
   }

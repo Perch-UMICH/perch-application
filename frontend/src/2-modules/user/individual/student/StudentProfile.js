@@ -12,7 +12,7 @@ uploadUserProfilePic,
 getUserProfilePic,
 getCurrentUserId
 /* In charge of all state requests and management for student profile */
-class StudentProfileContainer extends Component {
+class StudentProfile extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -161,4 +161,4 @@ class StudentProfileContainer extends Component {
   }
 }
 
-export default StudentProfileContainer
+export default StudentProfile
