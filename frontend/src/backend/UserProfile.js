@@ -98,10 +98,10 @@ export function updateUser({user}) {
 }
 
 export function updateUserProfile({profile}) {
-  let profile_id = profile.id
+  let user_id = sessionStorage.getItem('user_id')
   delete profile.id
   return simplePatch({
-    path: 'profiles/' + profile_id, 
+    path: 'users/' + user_id + '/profile', 
     data: profile,
   })
 }
@@ -116,24 +116,46 @@ export function getUserGroups() {
 
 // File functions (images and documents)
 
-/* 
-Gets all file models of the document type from user
-Returns array of models with url to AWS location of file, along with
-extra file releated metadata
-*/ 
-export function getUserDocumentFiles() {
+
+export function getProfileResume() {
   let user_id = sessionStorage.getItem('user_id')
-  return simpleGet({ path: 'users/' + user_id + '/files/document' })
+  return axios
+  .get('users/' + user_id)
+  .then(response => {
+    let user = response.data
+    return axios
+    .get('users/' + user_id + '/profiles')
+    .then(response2 => {
+      let profile = response2.data
+      return simpleGet({
+        path: '/profiles/' + profile.id + '/resume'
+      })
+      .then(response => {
+        return response
+      })
+    })
+  })
 }
 
-/* 
-Gets all file models of the document type from user
-Returns array of models with url to AWS location of file, along with
-extra file releated metadata
-*/ 
-export function getUserImageFiles() {
+
+export function getProfilePicture() {
   let user_id = sessionStorage.getItem('user_id')
-  return simpleGet({ path: 'users/' + user_id + '/files/image' })
+  return axios
+  .get('users/' + user_id)
+  .then(response => {
+    let user = response.data
+    return axios
+    .get('users/' + user_id + '/profiles')
+    .then(response2 => {
+      let profile = response2.data
+      return simpleGet({
+        path: '/profiles/' + profile.id + '/profile_picture'
+      })
+      .then(response => {
+        return response
+      })
+    })
+  })
 }
 
 /*
