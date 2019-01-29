@@ -63,25 +63,25 @@
 	margin-top: 0px;
 }
 
-textarea:focus {
-	border-bottom: 2px solid var(--active);
-	box-shadow: 0 2px 0 0 var(--active);
-	outline: none;
-	transition: 0.2s ease;
-}
+// textarea:focus {
+// 	border-bottom: 2px solid var(--active);
+// 	box-shadow: 0 2px 0 0 var(--active);
+// 	outline: none;
+// 	transition: 0.2s ease;
+// }
 
-textarea {
-	transition: 0.2s ease;
-	width: 100%;
-	padding: 10px 20px;
-	background-color: white;
-	color: grey;
-	margin-top: 0px;
-	display: block;
-	min-height: 220px;
-	resize: none;
-	border: 1px solid lightgrey;
-}
+// textarea {
+// 	transition: 0.2s ease;
+// 	width: 100%;
+// 	padding: 10px 20px;
+// 	background-color: white;
+// 	color: grey;
+// 	margin-top: 0px;
+// 	display: block;
+// 	min-height: 220px;
+// 	resize: none;
+// 	border: 1px solid lightgrey;
+// }
 
 #profile-pic-range {
 	width: 175px;

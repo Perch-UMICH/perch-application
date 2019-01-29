@@ -13,6 +13,10 @@ import {
 } from '../individual/StudentEditors'
 import './UploadImage.css'
 
+function getUserProfilePic() {
+
+}
+
 class UploadImage extends Component {
   constructor (props) {
     super(props)
@@ -29,12 +33,12 @@ class UploadImage extends Component {
   }
 
   componentDidMount () {
-		let user = this.props.user
-		getUserProfilePic(getCurrentUserId())
-			.then(r => {
-				if (r.data) user.img = r.data.url
-				this.setState({user})
-			})
+		// let user = this.props.user
+		// getUserProfilePic(getCurrentUserId())
+		// 	.then(r => {
+		// 		if (r.data) user.img = r.data.url
+		// 		this.setState({user})
+		// 	})
   }
 
   clickUpload (event) {

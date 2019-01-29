@@ -583,21 +583,21 @@ export class EditQuickview extends Component {
     }
   }
 
-  componentWillReceiveProps ({ user, img }) {
-    this.setState({
-      name: user.name,
-      image: user.img || img
-    })
-  }
+  // componentWillReceiveProps ({ user, img }) {
+  //   this.setState({
+  //     name: user.name,
+  //     image: user.img || img
+  //   })
+  // }
 
-  componentDidMount () {
-    // initializes user's crop
-    this.props.updateUser('crop', {
-      x: this.state.x,
-      y: this.state.y,
-      scale: this.state.scale
-    })
-  }
+  // componentDidMount () {
+  //   // initializes user's crop
+  //   this.props.updateUser('crop', {
+  //     x: this.state.x,
+  //     y: this.state.y,
+  //     scale: this.state.scale
+  //   })
+  // }
 
   handleDrop = dropped => {
     let new_image = dropped[0]

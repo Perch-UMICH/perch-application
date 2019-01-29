@@ -30,6 +30,7 @@ import LabMaster from './2-modules/labSearch/LabMaster.js';
 // import CreateLab from './2-modules/user/CreateLab';
 // import Challenge from './2-modules/publicStatic/join/Challenge';
 import Nothing from './2-modules/utilities/tests/Nothing';
+import Onboarding from './2-modules/onboarding/Onboarding'
 // import Dashboard from './2-modules/user/individual/dashboard/dashboard'
 // import ProgramAdminDashboard from './2-modules/program/ProgramAdminDashboard';
 import './0-base/general.scss';
@@ -78,8 +79,9 @@ class Router extends Component {
 							<Route path='/create-lab' component={ CreateLab } />
 							<Route path='/hypercontrol' component={ Dashboard } />
 							<Route path='/program-admin' component={ ProgramAdminDashboard } />*/}
-							<Route path='/' component={ Home } />
+							<Route path='/onboarding' component={ Onboarding } />
 							<Route path='/nothing' component={ Nothing } />
+							<Route path='/' component={ Home } />
 						</Switch>
 					</div>
 					{/* <Footer /> */}

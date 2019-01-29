@@ -1,5 +1,6 @@
 $background-color: rgb(245, 248, 250);
-$font-color: rgb(21, 38, 54);
+// $font-color: rgb(21, 38, 54);
+$font-color: #757575;
 
 // meant for two inputs
 .input-row {
@@ -15,21 +16,39 @@ $font-color: rgb(21, 38, 54);
   input {
     width: calc(100% - 2em);
   }
+  textarea {
+    width: calc(100% - 2em);
+  }
 }
 
-input {
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+{
+  -webkit-box-shadow: 0 0 0px 1000px none inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:focus + label {
+	color: var(--active) !important;
+	transition: 0.2s ease;
+}
+
+input, textarea {
   margin: 0.5em 0;
   font-size: 20px;
   outline: none;
   border: none;
+  color: $font-color;
+
   &:hover {
     cursor: pointer;
   }
 }
 
-// text, email ,password
-input[type='text'], input[type='email'], input[type='password'] {
-  color: $font-color;
+// text, email ,password, textarea
+input[type='text'], input[type='email'], input[type='password'], textarea {
   background-color: $background-color;
   padding: 1em;
   border-bottom: 3px solid $background-color;
@@ -38,6 +57,18 @@ input[type='text'], input[type='email'], input[type='password'] {
     border-color: var(--active) !important;
     transition: 0.2s ease;
   }
+}
+
+.big {
+  height: 400px;
+}
+
+.medium {
+  height: 250px;
+}
+
+.small {
+
 }
 
 // Radio
@@ -127,5 +158,4 @@ input[type='submit'] {
     background-color: #ccc;
   }
 }
-
 

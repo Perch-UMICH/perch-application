@@ -97,9 +97,9 @@ export function updateUser({user}) {
   })
 }
 
-export function updateUserProfile({profile}) {
+export function updateUserProfile(profile) {
   let user_id = sessionStorage.getItem('user_id')
-  delete profile.id
+  // delete profile.id
   return simplePatch({
     path: 'users/' + user_id + '/profile', 
     data: profile,

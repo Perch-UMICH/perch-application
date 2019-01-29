@@ -49,9 +49,11 @@ class Login extends Component {
       if(r.error) {
         // Backend likely rejected the user for some reason
         // Should be rare outside of a serious backend issue with network, overload, etc.
-
-      } else {
-        window.location.href='/lab-match'
+      } else if (r.data.newUser) {
+        window.location.href = '/onboarding'
+      }
+      else {
+        window.location.href = '/lab-match'
       }
     })
   }
@@ -69,13 +71,13 @@ class Login extends Component {
           <TextInput
             type='email'
             name='email'
-            label='Email'
+            placeholder='Email'
             updateParent={this.updateState}
           />
           <TextInput
             type='password'
             name='password'
-            label='Password'
+            placeholder='Password'
             updateParent={this.updateState}
           />
           <GoogleLogin

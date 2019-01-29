@@ -20,13 +20,13 @@ export function TextInput (props) {
     <div className='input'>
       <input
         type={props.type}
-        placeholder={props.label}
+        placeholder={props.placeholder}
         onChange={e => {
-          props.updateParent(props.name, e.target.value)
-          if (props.onChange) props.onChange()
+          if (props.updateParent) props.updateParent(props.name, e.target.value)
+          if (props.onChange) props.onChange(e)
         }}
         onKeyPress={({ key }) => {
-          if (key === 'Enter') props.onEnter()
+          if (key === 'Enter' && props.onEnter) props.onEnter()
         }}
       />
     </div>
@@ -64,5 +64,15 @@ export function CheckboxInput (props) {
       </div>
       <div className='label'>{props.children}</div>
     </p>
+  )
+}
+
+export function TextArea(props) {
+  return (
+    <div className='input'>
+      <textarea className={`input ${props.size || 'small'}`} {...props}>
+        
+      </textarea>
+    </div>
   )
 }
