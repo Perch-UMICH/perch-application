@@ -45,6 +45,8 @@ class Login extends Component {
 
   handleGoogleSuccessResponse (e) {
     let token = e.tokenId
+    console.log(token)
+    return
     loginOrSignup({ token }).then(r => {
       if(r.error) {
         // Backend likely rejected the user for some reason
