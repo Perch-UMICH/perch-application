@@ -99,6 +99,7 @@ export function updateUser({user}) {
 
 export function updateUserProfile(profile) {
   let user_id = sessionStorage.getItem('user_id')
+  if(profile.role) { sessionStorage.setItem('user_role', profile.role) }
   // delete profile.id
   return simplePatch({
     path: 'users/' + user_id + '/profile', 

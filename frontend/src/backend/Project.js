@@ -52,6 +52,20 @@ export function transferProjectOwnership({}) {
 
 }
 
+// Get array of projects from array of projectIds
+export function getProjects(projectIds) {
+  return simpleGet({
+    path: "projects",
+    filter: {
+      where: {
+        id: {
+          inq: projectIds
+        }
+      }
+    }
+  });
+}
+
 /*
 Returns list of projects that contain similar words that
 are inside the keyword string. Words in string must be separated

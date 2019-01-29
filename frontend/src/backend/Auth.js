@@ -24,13 +24,13 @@ export function loginOrSignup ({token}) {
     sessionStorage.setItem('token', response.data.token)
     axios.defaults.headers.common['Authorization'] = 
       'Bearer ' + sessionStorage.getItem('token')
-    sessionStorage.setItem('user_id', response.data.userid)
+    sessionStorage.setItem('user_id', response.data.userId)
     // go through initial profile building process
     if (response.data.newUser) {
-
     } else { // login
-
     }
+    let profile = await getUserProfile({user_id = response.data.userId});
+    sessionStorage.setItem('user_role', profile.role);
     return respond({
       status: response.status,
       data: response.data,
