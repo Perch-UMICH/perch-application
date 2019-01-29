@@ -28,14 +28,14 @@ class LabSearch extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      query: '',
+      query: 'health',
       loading: false,
       projectIds: [],
       labData: [], // actual data currently rendered on page
       nextLabIds: [], // a bunch of objects with ids to be turned into labData
       usersAppliedProjects: [], // projects a user has already applied for
       savedProjects: [], // list of user's saved projets,
-      numLabsToShowOnMore: 10,
+      numLabsToShowOnMore: 2,
       filters: {
         fields: [],
         depts: [],
