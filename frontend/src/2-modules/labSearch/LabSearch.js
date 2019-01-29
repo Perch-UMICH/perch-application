@@ -3,37 +3,34 @@ import './LabSearch.scss'
 import Presentation from './Presentation'
 import {
   // getSearchResults,
-  getCurrentUserId, projectSearch,
+  getCurrentUserId,
+  projectSearch,
+  getProjects
   // getStudentFromUser,
   // labSearch,
   // getAllStudentApplicationResponses
 } from '../../backend/index.js'
 
-function getAllStudentApplicationResponses() {
+function getAllStudentApplicationResponses () {
   alert('todo')
 }
 
-function getSearchData() {
+function getSearchData () {
   alert('todo')
 }
 
-function getSearchResults () {
+
+function getStudentFromUser () {
   alert('todo')
 }
 
-function getStudentFromUser() {
-  alert('todo')
-}
-
-function labSearch () {
-  alert('todo')
-}
 class LabSearch extends Component {
   constructor (props) {
     super(props)
     this.state = {
       query: '',
       loading: false,
+      projectIds: [],
       labData: [], // actual data currently rendered on page
       nextLabIds: [], // a bunch of objects with ids to be turned into labData
       usersAppliedProjects: [], // projects a user has already applied for
@@ -90,13 +87,12 @@ class LabSearch extends Component {
     let { activeFilters, query } = this.state
     query = query.replace(/[^0-9a-zA-Z ]/, '')
     this.updateState('loading', true)
-    projectSearch({keywordString: query})
-      .then(({data})=> {
-        console.log('data', data)
-        this.state.labData = data
-        this.state.loading = false
-        this.setState(this.state)
-      })
+    projectSearch({ keywordString: query }).then(({ data }) => {
+      this.state.labData = []
+      this.state.nextLabIds = data
+      this.state.loading = false
+      this.setState(this.state, this.loadMoreLabs)
+    })
     // labSearch(...Object.values(activeFilters), query)
     //   .then(({ data }) => {
     //     let labIds = data.results
@@ -133,15 +129,15 @@ class LabSearch extends Component {
       0,
       this.state.numLabsToShowOnMore
     )
-    getSearchResults(labIdsToLoad).then(r => {
-      this.state.labData.push(...r.data.results)
+    getProjects(labIdsToLoad).then(r => {
+      this.state.labData.push(...r.data)
       this.setState(this.state)
     })
   }
 
   /*
   FILTER FUNCTIONS
-*/
+  */
 
   // loads the four filter types into this.state.filters
   loadFilters () {

@@ -23,16 +23,16 @@ function StudentProfile (props) {
     return (
       <Canvas panels={2}>
         <LeftPanel>
+          <ContactTab {...props} />
           {/* <ProfilePhoto {...props} />
           <SkillsInterests {...props} />
-          <ContactTab {...props} />
           <LinkTab {...props} /> */}
         </LeftPanel>
         <MainPanel>
           <Header {...props} />
           <Bio {...props} />
 
-          {/* <VerticalSplit>
+          <VerticalSplit>
             <SplitLeft>
               <WorkExperiences {...props} />
             </SplitLeft>
@@ -50,7 +50,7 @@ function StudentProfile (props) {
             <SplitRight>
               <WorkExperiences {...props} />
             </SplitRight>
-          </VerticalSplit> */}
+          </VerticalSplit>
         </MainPanel>
       </Canvas>
     )

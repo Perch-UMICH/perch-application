@@ -18,13 +18,13 @@ class StudentProfile extends Component {
     this.state = {
       name: '',
       id: null,
-      email: '',
+      contactEmail: '',
       profile : {},
 
 
 
       bio: '',
-      contact_phone: '',
+      contactPhone: '',
       classes: [],
       experience: [],
       skills: [],
@@ -53,7 +53,10 @@ class StudentProfile extends Component {
 
   // set intitial student data and ownership
   retrieveStudent (id) {
-    // getUserProfile({user_id: id}).then(r=>console.log('look',r))
+    getUserProfile({user_id: id}).then(r=>{
+      console.log('look',r)
+      this.setState(r.data.profile)
+    })
     // getStudentFromUser(id).then(({ data }) => {
     //   data.student = true
     //   data.name = data.first_name
@@ -132,8 +135,11 @@ class StudentProfile extends Component {
 
   // sends email and phone to backend
   sendContactInfo () {
-    let { email, contact_phone } = this.state
-    updateStudent({ email, contact_phone })
+    let { contactEmail, contactPhone } = this.state
+    updateStudent({ 
+      contactEmail, 
+      contactPhone 
+    })
   }
 
   // sends bio to backend
