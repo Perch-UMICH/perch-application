@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 import FormData from 'form-data'
 import { getModelHasMany, respond, error_respond, error_handle } from './BackendHelpers.js'
+import { getUserProfile } from './'
 
 export function isLoggedIn() {
   if (sessionStorage.getItem('token') === null) {
@@ -17,19 +18,22 @@ export function isLoggedIn() {
  * - the user needs to choose a role
  * - the user needs to go through the initial profile building process
  */
-export function loginOrSignup ({token}) {
+export async function loginOrSignup ({token}) {
   return axios.post('auth', {
     token
-  }).then(response=> {
+  }).then(async function(response) {
     sessionStorage.setItem('token', response.data.token)
     axios.defaults.headers.common['Authorization'] = 
       'Bearer ' + sessionStorage.getItem('token')
     sessionStorage.setItem('user_id', response.data.userId)
     // go through initial profile building process
     if (response.data.newUser) {
+
     } else { // login
+
     }
-    let profile = await getUserProfile({user_id = response.data.userId});
+    let profile;
+    profile = await getUserProfile({user_id: response.data.userId});
     sessionStorage.setItem('user_role', profile.role);
     return respond({
       status: response.status,

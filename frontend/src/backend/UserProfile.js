@@ -36,17 +36,17 @@ export function hasApprovalPower() {
   return sessionStorage.getItem('user_has_approval_power')
 }
 
-export function getUser({user_id}) {
+export async function getUser({user_id}) {
   return simpleGet({ path: 'users/' + user_id })
 }
 
 // Gets the user profile without additional info
-export function getUserProfile({user_id}) {
+export async function getUserProfile({user_id}) {
   return simpleGet({path: 'users/' + user_id + '/profile'})
 }
 
 // Gets a user with all profile information
-export function getUserProfileFull({user_id}) {
+export async function getUserProfileFull({user_id}) {
   return axios
   .get('users/' + user_id)
   .then(response => {
@@ -74,7 +74,7 @@ export function getUserProfileFull({user_id}) {
 }
 
 // RESTRICTED: user_id
-export function deleteUser() {
+export async function deleteUser() {
   let user_id = sessionStorage.getItem('user_id')
   return axios
     .delete('users/' + user_id)
@@ -88,7 +88,7 @@ export function deleteUser() {
 }
 
 // RESTRICTED: user_id
-export function updateUser({user}) {
+export async function updateUser({user}) {
   let user_id = sessionStorage.getItem('user_id')
   // user._method = 'PUT'
   return simplePatch({ 
@@ -97,7 +97,7 @@ export function updateUser({user}) {
   })
 }
 
-export function updateUserProfile(profile) {
+export async function updateUserProfile(profile) {
   let user_id = sessionStorage.getItem('user_id')
   if(profile.role) { sessionStorage.setItem('user_role', profile.role) }
   // delete profile.id
@@ -107,7 +107,7 @@ export function updateUserProfile(profile) {
   })
 }
 
-export function getUserGroups() {
+export async function getUserGroups() {
   let user_id = sessionStorage.getItem('user_id')
   return simpleGet({ path: 'users/' + user_id + '/groups' })
 }
@@ -118,7 +118,7 @@ export function getUserGroups() {
 // File functions (images and documents)
 
 
-export function getProfileResume() {
+export async function getProfileResume() {
   let user_id = sessionStorage.getItem('user_id')
   return axios
   .get('users/' + user_id)
@@ -139,7 +139,7 @@ export function getProfileResume() {
 }
 
 
-export function getProfilePicture() {
+export async function getProfilePicture() {
   let user_id = sessionStorage.getItem('user_id')
   return axios
   .get('users/' + user_id)
@@ -167,7 +167,7 @@ Javascript:
   let file = document.getElementById('fileToUpload').files[0];
   uploadUserResumeDocument({user_id: 1, file: file});
 */
-export function uploadUserResumeDocument({file}) {
+export async function uploadUserResumeDocument({file}) {
   let user_id = sessionStorage.getItem('user_id')
   return formDataPost({ 
     path: 'users/' + user_id + '/files/document', 
@@ -175,7 +175,7 @@ export function uploadUserResumeDocument({file}) {
   })
 }
 
-export function uploadUserProfileImage({file}) {
+export async function uploadUserProfileImage({file}) {
   let user_id = sessionStorage.getItem('user_id')
   return formDataPost({ 
     path: 'users/' + user_id + '/files/image', 
@@ -187,7 +187,7 @@ export function uploadUserProfileImage({file}) {
 Deletes the File model and the associated fileType model
 And deletes the actual file on AWS
 */
-export function deleteUserFile({file_id}) {
+export async function deleteUserFile({file_id}) {
   let user_id = sessionStorage.getItem('user_id')
   return simpleDelete({ 
     path: 'users/' + user_id + '/files/' + file_id
@@ -200,7 +200,7 @@ export function deleteUserFile({file_id}) {
 
 // Experience functions
 
-export function addExperienceToStudent({experience}) {
+export async function addExperienceToStudent({experience}) {
   let profile_id = experience.profileId
   delete experience.profileId
   experience.type = 'education'
@@ -210,7 +210,7 @@ export function addExperienceToStudent({experience}) {
   })
 }
 
-export function updateExperienceOfStudent({experience}) {
+export async function updateExperienceOfStudent({experience}) {
   let experience_id = experience.id
   delete experience.id
   return simplePatch({
@@ -219,7 +219,7 @@ export function updateExperienceOfStudent({experience}) {
   })
 }
 
-export function removeExperiencesFromStudent({profile_id, experience_ids}) {
+export async function removeExperiencesFromStudent({profile_id, experience_ids}) {
   return hasManyDelete({
     path: 'profiles/' + profile_id + '/experiences', 
     id_array: experience_ids,

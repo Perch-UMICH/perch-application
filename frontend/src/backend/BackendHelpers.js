@@ -50,7 +50,7 @@ function appendFilter(path, filter) {
 }
 
 // Wrappers for simple http requests to reduce code copying, esp. for error handling
-export function simpleGet({path, filter}) {
+export async function simpleGet({path, filter}) {
   return axios
     .get(appendFilter(path, filter))
     .then(response => {
@@ -64,7 +64,7 @@ export function simpleGet({path, filter}) {
     })
 }
 
-export function simpleDelete({path, filter}) {
+export async function simpleDelete({path, filter}) {
   return axios
     .delete(appendFilter(path, filter))
     .then(response => {
@@ -78,7 +78,7 @@ export function simpleDelete({path, filter}) {
     })
 }
 
-export function simplePatch({path, data, filter}) {
+export async function simplePatch({path, data, filter}) {
   return axios
     .patch(appendFilter(path, filter), data)
     .then(response => {
@@ -92,7 +92,7 @@ export function simplePatch({path, data, filter}) {
     })
 }
 
-export function simplePost({path, data, filter}) {
+export async function simplePost({path, data, filter}) {
   return axios
     .post(appendFilter(path, filter), data)
     .then(response => {
@@ -106,7 +106,7 @@ export function simplePost({path, data, filter}) {
     })
 }
 
-export function formDataPost({path, data}) {
+export async function formDataPost({path, data}) {
   let formData = new FormData();
   formData.append('file', data);
 
@@ -121,7 +121,7 @@ export function formDataPost({path, data}) {
     })
 }
 
-export function hasManyDelete({path, id_array, filter}) {
+export async function hasManyDelete({path, id_array, filter}) {
   return axios
     .delete(appendFilter(path, filter), id_array)
     .then(response => {
