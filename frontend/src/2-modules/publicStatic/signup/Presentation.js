@@ -17,26 +17,26 @@ export default function (props) {
         <TextInput
           type='text'
           name='firstName'
-          label='First Name'
+          placeholder='First Name'
           updateParent={props.updateParent}
         />
         <TextInput
           type='text'
           name='lastName'
-          label='Last Name'
+          placeholder='Last Name'
           updateParent={props.updateParent}
         />
       </InputRow>
       <TextInput
         type='email'
         name='email'
-        label='Email'
+        placeholder='Email'
         updateParent={props.updateParent}
       />
       <TextInput
         type='password'
         name='password'
-        label='Password'
+        placeholder='Password'
         updateParent={props.updateParent}
       />
       <InputRow>

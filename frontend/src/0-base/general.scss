@@ -151,20 +151,20 @@ body {
    background-color: var(--active);
 }
 
-input[type="checkbox"] {
-	background-color: var(--active);
-}
+// input[type="checkbox"] {
+// 	background-color: var(--active);
+// }
 
-input[type='text'], input[type='email'], input[type='number'] {
-	color: var(--seventy-five-grey);
-}
+// // input[type='text'], input[type='email'], input[type='number'] {
+// // 	color: var(--seventy-five-grey);
+// // }
 
 
-.input-field input[type='text']:focus, .input-field input[type='email']:focus, .input-field input[type='number']:focus {
-	color: var(--active);
-	border-bottom: 1px solid var(--active) !important;
-	box-shadow: 0 1px 0 0 var(--active) !important;
-}
+// .input-field input[type='text']:focus, .input-field input[type='email']:focus, .input-field input[type='number']:focus {
+// 	color: var(--active);
+// 	border-bottom: 1px solid var(--active) !important;
+// 	box-shadow: 0 1px 0 0 var(--active) !important;
+// }
 
 select {
 	color: var(--active);
@@ -213,10 +213,10 @@ a:hover {
 	cursor: pointer;
 }
 
-input:focus + label {
-	color: var(--active) !important;
-	transition: 0.2s ease;
-}
+// input:focus + label {
+// 	color: var(--active) !important;
+// 	transition: 0.2s ease;
+// }
 
 .grabbable {
 	cursor: grab;
@@ -226,10 +226,10 @@ input:focus + label {
 	cursor: grabbing;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus
-{
-  -webkit-box-shadow: 0 0 0px 1000px none inset !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
+// input:-webkit-autofill,
+// input:-webkit-autofill:hover, 
+// input:-webkit-autofill:focus
+// {
+//   -webkit-box-shadow: 0 0 0px 1000px none inset !important;
+//   transition: background-color 5000s ease-in-out 0s;
+// }

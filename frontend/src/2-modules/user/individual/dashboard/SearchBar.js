@@ -6,7 +6,7 @@ export default function Dashboard({updateParent, executeSearch}) {
       <TextInput 
         type='text'
         name='query'
-        label='Search'
+        placeholder='Search'
         updateParent={updateParent}
         onEnter={executeSearch}
       />
