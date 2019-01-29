@@ -92,6 +92,7 @@ class LabSearch extends Component {
     this.updateState('loading', true)
     projectSearch({keywordString: query})
       .then(({data})=> {
+        console.log('data', data)
         this.state.labData = data
         this.state.loading = false
         this.setState(this.state)
