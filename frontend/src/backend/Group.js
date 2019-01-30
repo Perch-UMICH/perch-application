@@ -51,10 +51,25 @@ export function getGroupUsersAll({group_id}) {
 }
 
 // RESTRICTED user must be group admin or owner
-export function inviteMembersToGroup({group_id, users_and_roles}) {
+// Invite multiple members
+export function inviteMembersToGroup({group_id, user_ids}) {
   return simplePost({
     path: 'groups/' + group_id + '/users',
-    data: users_and_roles,
+    data: {
+      users: user_ids.map(userId => {
+        return {userId: userId, role: "invited"};
+      }),
+    },
+  })
+}
+
+// Invite one member
+export function inviteMemberToGroup({group_id, user_id}) {
+  return simplePost({
+    path: 'groups/' + group_id + '/users',
+    data: {
+      users: [{userId: user_id, role: "invited"}],
+    },
   })
 }
 
@@ -62,7 +77,7 @@ export function requestUserJoinGroup({group_id}) {
   let user_id = sessionStorage.getItem('user_id')
   return simplePost({
     path: 'users/' + user_id + '/groups',
-    data: group_id,
+    data: {groupId: group_id},
   })
 }
 
@@ -70,7 +85,14 @@ export function requestUserJoinGroup({group_id}) {
 export function updateGroupMembers({group_id, users_and_roles}) {
   return simplePatch({
     path: 'groups/' + group_id + '/users',
-    data: users_and_roles,
+    data: {users: users_and_roles},
+  })
+}
+
+export function updateGroupMember({group_id, user_id, role}) {
+  return simplePatch({
+    path: 'groups/' + group_id + '/users',
+    data: {users: [{userId: user_id, role: role}]},
   })
 }
 
@@ -78,7 +100,7 @@ export function updateGroupMembers({group_id, users_and_roles}) {
 export function removeMemberFromGroup({group_id, user_id}) {
   return simpleDelete({
     path: 'groups/' + group_id + '/users',
-    data: user_id,
+    data: {userId: user_id},
   })
 }
 
