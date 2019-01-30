@@ -14,7 +14,7 @@ import {
 } from './BackendHelpers'
 
 // Projects can be owned by groups OR users
-export function createProject({group_id, user_id, project}) {
+export async function createProject({group_id, user_id, project}) {
   if(group_id !== null) {
     return simplePost({
       path: "groups/" + group_id + "/projects/new",
@@ -31,7 +31,7 @@ export function createProject({group_id, user_id, project}) {
 }
 
 // RESTRICTED: owner of project or admin of group that owns project
-export function updateProject({project}) {
+export async function updateProject({project}) {
   let project_id = project.id
   delete project.id
   return simplePatch({
@@ -41,19 +41,19 @@ export function updateProject({project}) {
 }
 
 // RESTRICTED: owner of project or admin of group that owns project
-export function deleteProject({project_id}) {
+export async function deleteProject({project_id}) {
   return simpleDelete({
     path: "projects/" + project_id,
   })
 }
 
 // RESTRICTED: owner of project or admin of group that owns project
-export function transferProjectOwnership({}) {
+export async function transferProjectOwnership({}) {
 
 }
 
 // Get array of projects from array of projectIds
-export function getProjects(projectIds) {
+export async function getProjects(projectIds) {
   return simpleGet({
     path: "projects",
     filter: {
@@ -72,7 +72,7 @@ are inside the keyword string. Words in string must be separated
 by spaces to be identified as individual words
 List is ordered in terms of relevancy (# matching words)
 */
-export function projectSearch({keywordString}) {
+export async function projectSearch({keywordString}) {
   return simpleGet({
     path: "search/project/" + keywordString,
   })

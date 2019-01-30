@@ -2634,81 +2634,81 @@ export function removeTagsFromLab (lab_id, tag_ids, position_id) {
 //   else if (isLab()) window.location = `/prof-page/${getCurrentLabId()}`
 // }
 
-// // Create a deep copy of any array/object
-// export function deepCopy (object) {
-//   var output, value, key
-//   output = Array.isArray(object) ? [] : {}
-//   for (key in object) {
-//     value = object[key]
-//     output[key] = typeof value === 'object' ? deepCopy(value) : value
-//   }
-//   return output
-// }
+// Create a deep copy of any array/object
+export function deepCopy (object) {
+  var output, value, key
+  output = Array.isArray(object) ? [] : {}
+  for (key in object) {
+    value = object[key]
+    output[key] = typeof value === 'object' ? deepCopy(value) : value
+  }
+  return output
+}
 
-// export function updateUrlQuery (query, value) {
-//   let new_query = '?' + query + '=' + value
-//   window.history.pushState(null, null, new_query)
-// }
+export function updateUrlQuery (query, value) {
+  let new_query = '?' + query + '=' + value
+  window.history.pushState(null, null, new_query)
+}
 
-// // Check if external link contains 'http:' or 'https:'; if not, add.
-// export function primeExternalLink (url) {
-//   if (url && typeof url === 'string') {
-//     if (url.includes('http:') || url.includes('https:')) {
-//       return url
-//     }
-//     return 'http://' + url
-//   }
-// }
+// Check if external link contains 'http:' or 'https:'; if not, add.
+export function primeExternalLink (url) {
+  if (url && typeof url === 'string') {
+    if (url.includes('http:') || url.includes('https:')) {
+      return url
+    }
+    return 'http://' + url
+  }
+}
 
-// export function exists (input) {
-//   let type = typeof input
-//   if (!input) return false
-//   if (type == 'object' && !input.length) return false
-//   return true
-// }
+export function exists (input) {
+  let type = typeof input
+  if (!input) return false
+  if (type == 'object' && !input.length) return false
+  return true
+}
 
 // // Check if valid date
-// export function validDateChange (new_val) {
+export function validDateChange (new_val) {
 
-//   let ret_obj = {
-//     success: false,
-//     new_val: new_val
-//   }
-//   if (new_val.match(/[a-zA-Z!@#$&()\\-`.+,\"]/i)) {
-//     // if contains alpha/special characters, reject
-//     return ret_obj
-//   }
-//   let num_slash = (new_val.match(/[/]/g) || []).length
-//   if (
-//     num_slash > 1 // if contains more than one /, reject
-//   ) { return ret_obj }
-//   if (num_slash == 1) {
-//     let split_val = new_val.split('/')
-//     if (split_val[0].length > 2 || (split_val[1].length > 2)) return ret_obj // Too many digits
-//   }
-//   if (num_slash == 0) {
-//     if (new_val.length > 2) return ret_obj
-//     if (new_val > 12) return ret_obj // Invalid month
-//   }
-//   if (new_val.length == 2 && !new_val.match(/[/]/i)) new_val += '/'
-//   ret_obj['success'] = true
-//   ret_obj['new_val'] = new_val
-//   return ret_obj
-// }
+  let ret_obj = {
+    success: false,
+    new_val: new_val
+  }
+  if (new_val.match(/[a-zA-Z!@#$&()\\-`.+,\"]/i)) {
+    // if contains alpha/special characters, reject
+    return ret_obj
+  }
+  let num_slash = (new_val.match(/[/]/g) || []).length
+  if (
+    num_slash > 1 // if contains more than one /, reject
+  ) { return ret_obj }
+  if (num_slash == 1) {
+    let split_val = new_val.split('/')
+    if (split_val[0].length > 2 || (split_val[1].length > 2)) return ret_obj // Too many digits
+  }
+  if (num_slash == 0) {
+    if (new_val.length > 2) return ret_obj
+    if (new_val > 12) return ret_obj // Invalid month
+  }
+  if (new_val.length == 2 && !new_val.match(/[/]/i)) new_val += '/'
+  ret_obj['success'] = true
+  ret_obj['new_val'] = new_val
+  return ret_obj
+}
 
 // // Check if valid phone number
-// export function validPhoneChange (new_val) {
-//   if (new_val.match(/[a-zA-Z!@#$?|<>%^&()\\`.,\"]/i)) {
-//     // if contains alpha/special characters, reject
-//     return false
-//   }
-//   let num_hyph = (new_val.match(/[-]/g) || []).length
-//   if (
-//     num_hyph > 3 // if contains more than one /, reject
-//   ) { return false }
-//   if (new_val.length > 15) return false
-//   return true
-// }
+export function validPhoneChange (new_val) {
+  if (new_val.match(/[a-zA-Z!@#$?|<>%^&()\\`.,\"]/i)) {
+    // if contains alpha/special characters, reject
+    return false
+  }
+  let num_hyph = (new_val.match(/[-]/g) || []).length
+  if (
+    num_hyph > 3 // if contains more than one /, reject
+  ) { return false }
+  if (new_val.length > 15) return false
+  return true
+}
 
 // // NEW USER OBJECT:
 

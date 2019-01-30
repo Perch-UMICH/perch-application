@@ -43,7 +43,11 @@ export function deleteGroup({group_id}) {
 }
 
 export function getGroupMembers({group_id}) {
-  return simpleGet({ path: 'groups/' + group_id })
+  return simpleGet({ path: 'groups/' + group_id + '/users'})
+}
+
+export function getGroupUsersAll({group_id}) {
+  return simpleGet({ path: 'groups/' + group_id + '/users/all'})
 }
 
 // RESTRICTED user must be group admin or owner
