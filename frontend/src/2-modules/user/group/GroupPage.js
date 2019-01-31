@@ -10,19 +10,9 @@ import { modalUpdateLab } from '../CreateLab'
 import { GroupProject, GroupProjectContainer } from './GroupProject'
 import BasicButton from '../../utilities/buttons/BasicButton'
 import {
-  getStudentFromUser,
-  deleteLab,
-  getAllStudentApplicationResponses,
-  removeMembersFromLab,
-  getLab,
-  isLoggedIn,
-  getCurrentUserId,
-  getAllLabPositions,
-  createLabPosition,
-  isStudent,
-  getLabMembers,
-  addMembersToLab,
-  getFacultyFromUser
+  getGroup,
+  getGroupOwnedProjects,
+  getGroupMembers
 } from '../../../backend/index.js'
 import Editor from '../../utilities/Editor'
 
@@ -39,12 +29,20 @@ function openModal (id) {
 class GroupPage extends Component {
   constructor (props) {
     super(props)
-
-    var labID = window.location.pathname.split('/')[2]
     this.state = {
-      lab_id: labID,
+      group_id: window.location.pathname.split('/')[2],
       lab_positions: [],
-      lab_data: {},
+      lab_data: {
+        contactEmail: null,
+        contactPhone: null,
+        description: null,
+        groupLabelsetPivots: null,
+        groupProjectPivots: null,
+        groupUserPivots: null,
+        id: null,
+        name: null,
+        websiteLink: null
+      },
       lab_admins: [],
       lab_members: [],
       new_pos: {
@@ -69,19 +67,18 @@ class GroupPage extends Component {
     this.loadLabData()
     this.loadLabPositions()
     this.loadLabMembers()
-    this.loadPositionsApplied()
-    if (isStudent()) {
-      getStudentFromUser(getCurrentUserId()).then(r => {
-        this.setState({ user_saved_labs: r.data.position_list })
-      })
-    }
+    // this.loadPositionsApplied()
+    // if (isStudent()) {
+    //   getStudentFromUser(getCurrentUserId()).then(r => {
+    //     this.setState({ user_saved_labs: r.data.position_list })
+    //   })
+    // }
   }
 
   // initial grab of lab descriptors
   loadLabData () {
-    getLab(this.state.lab_id).then(resp => {
-      this.setState({ lab_data: resp.data.data })
-    })
+    let { group_id } = this.state
+    getGroup({ group_id }).then(r => this.setState({ lab_data: r.data }))
   }
 
   /*************************/
@@ -90,12 +87,14 @@ class GroupPage extends Component {
 
   // loads the members and admins for the group
   loadLabMembers () {
-    let { lab_id, admins_raw } = this.state
-    getLabMembers(lab_id).then(r => {
-      this.addMembers(r.data.faculty)
-      this.addMembers(r.data.students)
-      this.state.admin_access = this.currentUserHasPermissions(admins_raw)
-    })
+    let { group_id } = this.state
+    getGroupMembers({group_id}).then(r=>console.log('members', r))
+    // let { lab_id, admins_raw } = this.state
+    // getLabMembers(lab_id).then(r => {
+    //   this.addMembers(r.data.faculty)
+    //   this.addMembers(r.data.students)
+    //   this.state.admin_access = this.currentUserHasPermissions(admins_raw)
+    // })
   }
 
   // adds student members as either admins or members
@@ -149,19 +148,21 @@ class GroupPage extends Component {
   }
 
   loadLabPositions () {
-    getAllLabPositions(this.state.lab_id).then(resp => {
-      this.setState({ lab_positions: resp.data || [] })
+    let { group_id } = this.state
+    getGroupOwnedProjects({ group_id }).then(r => {
+      console.log(r.data)
+      this.setState({ lab_positions: r.data })
     })
   }
 
   // Get all positions that the student has submitted applications to:
   loadPositionsApplied () {
-    if (isStudent()) {
-      getAllStudentApplicationResponses(getCurrentUserId()).then(r => {
-        let positions_applied = r.data.map(app => app.position_id)
-        this.setState({ positions_applied })
-      })
-    }
+    // if (isStudent()) {
+    //   getAllStudentApplicationResponses(getCurrentUserId()).then(r => {
+    //     let positions_applied = r.data.map(app => app.position_id)
+    //     this.setState({ positions_applied })
+    //   })
+    // }
   }
 
   // Update the new position from modal, to be submitted by createPosition
@@ -184,10 +185,10 @@ class GroupPage extends Component {
       return { question: q.question }
     })
     new_pos.application = { questions }
-    createLabPosition(lab_id, new_pos).then(resp => {
-      this.loadLabPositions()
-      this.setState({ new_pos: { min_time_commitment: 10 } })
-    })
+    // createLabPosition(lab_id, new_pos).then(resp => {
+    //   this.loadLabPositions()
+    //   this.setState({ new_pos: { min_time_commitment: 10 } })
+    // })
   }
 
   openModal (id) {
@@ -200,13 +201,14 @@ class GroupPage extends Component {
   handleEditMembers () {
     let id = document.getElementById('new-member').value
     // check if user is not already the lab admin.
-    addMembersToLab(this.state.lab_id, [id], [3]).then(r => {
-      this.loadLabMembers()
-    })
+    // addMembersToLab(this.state.lab_id, [id], [3]).then(r => {
+    //   this.loadLabMembers()
+    // })
   }
 
   currentUserHasPermissions (admins) {
-    let user_id = getCurrentUserId()
+    // let user_id = getCurrentUserId()
+    let user_id = 'todo'
     for (let i = 0; i < admins.length; i++) {
       if (admins[i][1] == user_id) return true
     }
@@ -214,141 +216,137 @@ class GroupPage extends Component {
   }
 
   renderModals () {
-    return (
-      <div>
-        <EditModal
-          id={`${this.state.lab_id}-create-position`}
-          wide
-          actionName='create'
-          title={`Create New Project`}
-          modalAction={this.createPosition.bind(this)}
-        >
-          <CreatePosition
-            updateNewPosState={this.updateNewPosState.bind(this)}
-            new_pos={this.state.new_pos}
-            app_questions={this.state.app_questions}
-            updateAppQuestions={app_questions =>
-              this.setState({ app_questions })
-            }
-          />
-        </EditModal>
-
-        <EditModal
-          id={`edit-name`}
-          wide
-          actionName='update'
-          medium
-          title={`Update Name & Description`}
-          modalAction={() =>
-            modalUpdateLab(this.state.lab_data, () =>
-              getLab(this.state.lab_id)
-            )
-          }
-        >
-          <b>New Name</b>
-          <input
-            type='text'
-            name='name'
-            value={this.state.lab_data.name}
-            onChange={e => this.updateLabState(e)}
-          />
-          <b>New Description</b>
-          <input
-            type='text'
-            name='description'
-            value={this.state.lab_data.description}
-            onChange={e => this.updateLabState(e)}
-          />
-        </EditModal>
-
-        <EditModal
-          id={`edit-contact`}
-          wide
-          actionName='update'
-          medium
-          title={`Update Contact Info`}
-          modalAction={() =>
-            modalUpdateLab(this.state.lab_data, () =>
-              getLab(this.state.lab_id)
-            )
-          }
-        >
-          <b>New Email</b>
-          <input
-            type='text'
-            name='contact_email'
-            value={this.state.lab_data.contact_email}
-            onChange={e => this.updateLabState(e)}
-          />
-          <b>New Phone</b>
-          <input
-            type='text'
-            name='contact_phone'
-            value={this.state.lab_data.contact_phone}
-            onChange={e => this.updateLabState(e)}
-          />
-          <b>New Office Location</b>
-          <input
-            type='text'
-            name='location'
-            value={this.state.lab_data.location}
-            onChange={e => this.updateLabState(e)}
-          />
-        </EditModal>
-
-        <EditModal id='edit-admins' wide title='Edit Admins'>
-          <div className='row'>
-            <h5 className='col s12'>Modify Admins</h5>
-            {this.state.admins_raw.map(e => (
-              <AdminView
-                key={e[1]}
-                reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
-                lab_id={this.state.lab_id}
-                name={e[0]}
-                id={e[1]}
-              />
-            ))}
-          </div>
-          <div className='row'>
-            <h5 className='col s12'>Delete Page</h5>
-            <BasicButton
-              msg='delete page'
-              superClick={r => deleteLab(this.state.lab_id)}
-            />
-          </div>
-        </EditModal>
-
-        <EditModal id='edit-members' wide title='Edit Members'>
-          <div className='row'>
-            <h5>Add a new member</h5>
-            <div className='input-field col s10'>
-              <input id='new-member' type='number' placeholder='#' />
-              <label htmlFor='email' className='active'>
-                User ID
-              </label>
-            </div>
-            <div className='col s2'>
-              <BasicButton
-                msg='add member'
-                superClick={this.handleEditMembers.bind(this)}
-              />
-            </div>
-          </div>
-          <div className='row'>
-            <h5 className='col s12'>Modify Users</h5>
-            {this.state.members_raw.map(e => (
-              <MemberView
-                key={`${e[1]}-key`}
-                reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
-                lab_id={this.state.lab_id}
-                name={e[0]}
-                id={e[1]}
-              />
-            ))}
-          </div>
-        </EditModal>
-      </div>
-    )
+    // return (
+    //   <div>
+    //     <EditModal
+    //       id={`${this.state.lab_id}-create-position`}
+    //       wide
+    //       actionName='create'
+    //       title={`Create New Project`}
+    //       modalAction={this.createPosition.bind(this)}
+    //     >
+    //       <CreatePosition
+    //         updateNewPosState={this.updateNewPosState.bind(this)}
+    //         new_pos={this.state.new_pos}
+    //         app_questions={this.state.app_questions}
+    //         updateAppQuestions={app_questions =>
+    //           this.setState({ app_questions })
+    //         }
+    //       />
+    //     </EditModal>
+    //     <EditModal
+    //       id={`edit-name`}
+    //       wide
+    //       actionName='update'
+    //       medium
+    //       title={`Update Name & Description`}
+    //       modalAction={() =>
+    //         modalUpdateLab(this.state.lab_data, () =>
+    //           getLab(this.state.lab_id)
+    //         )
+    //       }
+    //     >
+    //       <b>New Name</b>
+    //       <input
+    //         type='text'
+    //         name='name'
+    //         value={this.state.lab_data.name}
+    //         onChange={e => this.updateLabState(e)}
+    //       />
+    //       <b>New Description</b>
+    //       <input
+    //         type='text'
+    //         name='description'
+    //         value={this.state.lab_data.description}
+    //         onChange={e => this.updateLabState(e)}
+    //       />
+    //     </EditModal>
+    //     <EditModal
+    //       id={`edit-contact`}
+    //       wide
+    //       actionName='update'
+    //       medium
+    //       title={`Update Contact Info`}
+    //       modalAction={() =>
+    //         modalUpdateLab(this.state.lab_data, () =>
+    //           getLab(this.state.lab_id)
+    //         )
+    //       }
+    //     >
+    //       <b>New Email</b>
+    //       <input
+    //         type='text'
+    //         name='contact_email'
+    //         value={this.state.lab_data.contact_email}
+    //         onChange={e => this.updateLabState(e)}
+    //       />
+    //       <b>New Phone</b>
+    //       <input
+    //         type='text'
+    //         name='contact_phone'
+    //         value={this.state.lab_data.contact_phone}
+    //         onChange={e => this.updateLabState(e)}
+    //       />
+    //       <b>New Office Location</b>
+    //       <input
+    //         type='text'
+    //         name='location'
+    //         value={this.state.lab_data.location}
+    //         onChange={e => this.updateLabState(e)}
+    //       />
+    //     </EditModal>
+    //     <EditModal id='edit-admins' wide title='Edit Admins'>
+    //       <div className='row'>
+    //         <h5 className='col s12'>Modify Admins</h5>
+    //         {this.state.admins_raw.map(e => (
+    //           <AdminView
+    //             key={e[1]}
+    //             reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
+    //             lab_id={this.state.lab_id}
+    //             name={e[0]}
+    //             id={e[1]}
+    //           />
+    //         ))}
+    //       </div>
+    //       <div className='row'>
+    //         <h5 className='col s12'>Delete Page</h5>
+    //         <BasicButton
+    //           msg='delete page'
+    //           superClick={r => deleteLab(this.state.lab_id)}
+    //         />
+    //       </div>
+    //     </EditModal>
+    //     <EditModal id='edit-members' wide title='Edit Members'>
+    //       <div className='row'>
+    //         <h5>Add a new member</h5>
+    //         <div className='input-field col s10'>
+    //           <input id='new-member' type='number' placeholder='#' />
+    //           <label htmlFor='email' className='active'>
+    //             User ID
+    //           </label>
+    //         </div>
+    //         <div className='col s2'>
+    //           <BasicButton
+    //             msg='add member'
+    //             superClick={this.handleEditMembers.bind(this)}
+    //           />
+    //         </div>
+    //       </div>
+    //       <div className='row'>
+    //         <h5 className='col s12'>Modify Users</h5>
+    //         {this.state.members_raw.map(e => (
+    //           <MemberView
+    //             key={`${e[1]}-key`}
+    //             reloadMembersAndAdmin={this.loadLabMembers.bind(this)}
+    //             lab_id={this.state.lab_id}
+    //             name={e[0]}
+    //             id={e[1]}
+    //           />
+    //         ))}
+    //       </div>
+    //     </EditModal>
+    //   </div>
+    // )
   }
 
   render () {
@@ -373,8 +371,8 @@ class GroupPage extends Component {
           <QuickInfo department='MISSING' />
 
           <ContactInfo
-            email={this.state.lab_data.contact_email}
-            phone={this.state.lab_data.contact_phone}
+            email={this.state.lab_data.contactEmail}
+            phone={this.state.lab_data.contactPhone}
             location={this.state.lab_data.location}
           />
         </div>
@@ -512,17 +510,17 @@ const ContactInfo = props => {
 class AdminView extends Component {
   removeMember () {
     alert(this.props.id)
-    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
-      this.props.reloadMembersAndAdmin()
-    )
+    // removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
+    //   this.props.reloadMembersAndAdmin()
+    // )
   }
 
   removeAdmin () {
-    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
-      addMembersToLab(this.props.lab_id, [this.props.id], [3]).then(r2 =>
-        this.props.reloadMembersAndAdmin()
-      )
-    )
+    // removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
+    //   addMembersToLab(this.props.lab_id, [this.props.id], [3]).then(r2 =>
+    //     this.props.reloadMembersAndAdmin()
+    //   )
+    // )
   }
 
   render (props) {
@@ -542,17 +540,17 @@ class AdminView extends Component {
 
 class MemberView extends Component {
   removeMember () {
-    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
-      this.props.reloadMembersAndAdmin()
-    )
+    // removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
+    //   this.props.reloadMembersAndAdmin()
+    // )
   }
 
   makeAdmin () {
-    removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
-      addMembersToLab(this.props.lab_id, [this.props.id], [2]).then(r2 =>
-        this.props.reloadMembersAndAdmin()
-      )
-    )
+    // removeMembersFromLab(this.props.lab_id, [this.props.id]).then(r =>
+    //   addMembersToLab(this.props.lab_id, [this.props.id], [2]).then(r2 =>
+    //     this.props.reloadMembersAndAdmin()
+    //   )
+    // )
   }
 
   render () {
