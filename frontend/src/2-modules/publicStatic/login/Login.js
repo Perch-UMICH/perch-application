@@ -55,7 +55,7 @@ class Login extends Component {
         window.location.href = '/onboarding'
       }
       else {
-        window.location.href = '/lab-match'
+        // window.location.href = '/lab-match'
       }
     })
   }
