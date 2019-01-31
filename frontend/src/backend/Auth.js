@@ -32,8 +32,8 @@ export async function loginOrSignup ({token}) {
     } else { // login
 
     }
-    let profile;
-    profile = await getUserProfile({user_id: response.data.userId});
+    let profileResponse = await getUserProfile({user_id: response.data.userId});
+    let profile = profileResponse.data.profile
     sessionStorage.setItem('user_role', profile.role);
     return respond({
       status: response.status,

@@ -9,6 +9,7 @@ import Login from './2-modules/publicStatic/login/Login';
 import Logout from './2-modules/publicStatic/login/Logout';
 import StudentProfile from './2-modules/user/individual/student/StudentProfile';
 import LabMaster from './2-modules/labSearch/LabMaster.js';
+import GroupPage from './2-modules/user/group/GroupPage';
 // import ProfPage from './2-modules/user/group/ProfPage';
 // import Apply from './2-modules/user/Apply';
 // import CreatePosition from './2-modules/user/group/CreatePosition';
@@ -55,8 +56,9 @@ class Router extends Component {
 							<Route path='/student-profile' component={ StudentProfile } />
 							<Route path='/student-profile/:studentSlug' component={ StudentProfile } />
 							<Route path='/lab-match' component={ LabMaster }/>
-							{/* 
 							<Route path='/prof-page' component={ GroupPage }/>
+							{/* 
+							
 							<Route path='/prof/:profSlug' component={ ProfPage }/>
 							<Route path='/apply/:labId' component={ Apply } />
 							<Route path='/create-position' component={ CreatePosition } />

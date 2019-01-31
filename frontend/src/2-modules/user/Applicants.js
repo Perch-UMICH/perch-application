@@ -9,7 +9,7 @@ Faculty: (an idea)
 */
 
 import React, { Component } from 'react'
-import { getStudent, getLabPositionApplicationResponses } from '../../backend/index.js'
+// import { getStudent, getLabPositionApplicationResponses } from '../../backend/index.js'
 import './Applicants.css'
 
 class Applicants extends Component {
@@ -22,23 +22,23 @@ class Applicants extends Component {
   }
 
   componentDidMount () {
-    getLabPositionApplicationResponses(
-      this.props.lab_id,
-      this.props.pos_id
-    ).then(resp => {
-      if (resp.data && resp.data.length) {
-        this.setState({ applicants: resp.data })
-        let namesMap = {}
-        resp.data.map(app => {
-          getStudent(app.student_id).then(r => {
-            if (r && r.data) {
-              namesMap[app.student_id] = r.data.first_name
-              this.setState({ namesMap })
-            }
-          })
-        })
-      }
-    })
+    // getLabPositionApplicationResponses(
+    //   this.props.lab_id,
+    //   this.props.pos_id
+    // ).then(resp => {
+    //   if (resp.data && resp.data.length) {
+    //     this.setState({ applicants: resp.data })
+    //     let namesMap = {}
+    //     resp.data.map(app => {
+    //       getStudent(app.student_id).then(r => {
+    //         if (r && r.data) {
+    //           namesMap[app.student_id] = r.data.first_name
+    //           this.setState({ namesMap })
+    //         }
+    //       })
+    //     })
+    //   }
+    // })
   }
 
   render () {

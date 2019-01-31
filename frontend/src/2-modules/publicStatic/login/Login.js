@@ -47,8 +47,6 @@ class Login extends Component {
     let token = e.tokenId
     console.log(token)
     loginOrSignup({ token }).then(r => {
-      console.log("hi")
-      console.log(r)
       if(r.error) {
         alert('error mofo')
         // Backend likely rejected the user for some reason

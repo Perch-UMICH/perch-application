@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getLabPosition, validPhoneChange} from '../../../backend/index.js'
+// import {getLabPosition, validPhoneChange} from '../../../backend/index.js'
 import './CreatePosition.css';
 
 class CreatePosition extends Component {
@@ -51,19 +51,19 @@ class CreatePosition extends Component {
 
 	componentDidMount() {
 		if (!this.props.edit) return
-		getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
-			if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
-				this.setState({questions: resp.data.application.questions, q_index: resp.data.application.questions.length});
-			}
-		})
+		// getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
+		// 	if (resp.data && resp.data.application && resp.data.application.questions && resp.data.application.questions.length) {
+		// 		this.setState({questions: resp.data.application.questions, q_index: resp.data.application.questions.length});
+		// 	}
+		// })
 	}
 	
 	// send position updates to parent
 	updateNewPosState(event) {
 		let new_pos = this.state.new_pos;
 		if (event.target.name == 'contact_phone') {
-			if (!validPhoneChange(event.target.value))
-				return
+			// if (!validPhoneChange(event.target.value))
+			// 	return
 		}
 		new_pos[event.target.name] = event.target.value;
 		if (this.props.updateNewPosState)

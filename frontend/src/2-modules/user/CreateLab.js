@@ -1,40 +1,40 @@
 import React, { Component } from 'react'
 import AppQuestionTab from './AppQuestionTab'
-import {
-  createLab,
-  updateLab,
-  deleteLab,
-  getCurrentFacultyId,
-  getAllLabs,
-  isFaculty,
-  validPhoneChange
-} from '../../backend/index.js'
+// import {
+//   createLab,
+//   updateLab,
+//   deleteLab,
+//   getCurrentFacultyId,
+//   getAllLabs,
+//   isFaculty,
+//   validPhoneChange
+// } from '../../backend/index.js'
 import './CreateLab.css'
 
 export let modalCreateLab = (lab, callback) => {
-  if (isFaculty()) {
-    createLab(getCurrentFacultyId(), lab).then(r => {
-      updateLab(r.data.id, lab).then(r2 => {
-        callback(r.data.id)
-      })
-    })
-  }
+  // if (isFaculty()) {
+  //   createLab(getCurrentFacultyId(), lab).then(r => {
+  //     updateLab(r.data.id, lab).then(r2 => {
+  //       callback(r.data.id)
+  //     })
+  //   })
+  // }
 }
 
 export let modalUpdateLab = (lab, callback) => {
-  if (isFaculty()) {
-    updateLab(lab.id, lab).then(r => {
-      callback()
-    })
-  }
+  // if (isFaculty()) {
+  //   updateLab(lab.id, lab).then(r => {
+  //     callback()
+  //   })
+  // }
 }
 
 export let modalDeleteLab = (lab, callback) => {
-  if (isFaculty()) {
-    deleteLab(lab.id).then(r => {
-      callback()
-    })
-  }
+  // if (isFaculty()) {
+  //   deleteLab(lab.id).then(r => {
+  //     callback()
+  //   })
+  // }
 }
 
 class CreateLab extends Component {
@@ -62,11 +62,10 @@ class CreateLab extends Component {
   }
 
   alterObj (e) {
-	let lab = this.state.lab
-	if (e.taget.name == 'contact_phone') {
-		if (!validPhoneChange(e.target.value))
-			return
-	}
+    let lab = this.state.lab
+    if (e.taget.name == 'contact_phone') {
+      // if (!validPhoneChange(e.target.value)) return
+    }
     lab[e.target.name] = e.target.value
     this.setState({ lab })
     if (this.props.updateLabState) {
@@ -75,14 +74,15 @@ class CreateLab extends Component {
   }
 
   componentDidMount () {
-    getAllLabs().then(r => {})
+    // getAllLabs().then(r => {})
   }
 
   render () {
     return (
       <div className='create-lab-wrapper'>
         <p>
-          So you want to create a new lab, eh? Let's get started! Upon clicking 'create', you'll be redirected to your new lab page.
+          So you want to create a new lab, eh? Let's get started! Upon clicking
+          'create', you'll be redirected to your new lab page.
         </p>
         <b>Name</b>
         <input
