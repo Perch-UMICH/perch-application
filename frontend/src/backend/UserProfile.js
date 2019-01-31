@@ -97,6 +97,67 @@ export async function updateUser({user}) {
   })
 }
 
+// Universal Profile Update
+// Input should be in format
+/*
+profile: {
+  role: "string",
+  contactEmail: "string",
+  contactPhone: "string,"
+  bio: "string", 
+
+  // The following are arrays of attached objects
+  // Include an id if you want to update existing object (check getUserProfile)
+  // Don't include id if you want to create a new object
+  // Leave an empty array to delete all objects
+  // Don't include the array at all (null) to leave things unchanged
+
+  // NOTE: to generate date string, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON
+
+  experiences : [
+    {
+      id: 0,
+      type: "string", (REQUIRED)
+      title: "string", (REQUIRED)
+      description: "string",
+      startDate: "dateString", ()
+      endDate:  "dateString"
+    }
+  ]
+
+  certifications: [
+    {
+      id: 0,
+      name: "string", (REQUIRED)
+    }
+  ]
+
+  degrees: [
+    {
+      id: 0,
+      name: "string", (REQUIRED)
+      startDate: "dateString", (REQUIRED)
+      endDate: "dateString", (REQUIRED)
+    }
+  ]
+
+  honors: [
+    {
+      id: 0,
+      name: "string", (REQUIRED)
+      date: "string",
+    }
+  ]
+
+  links: [
+    {
+      id: 0,
+      type: "string", (REQUIRED)
+      link: "string",
+    }
+  ]
+}
+*/
 export async function updateUserProfile(profile) {
   let user_id = sessionStorage.getItem('user_id')
   if(profile.role) { sessionStorage.setItem('user_role', profile.role) }
@@ -199,32 +260,6 @@ export async function deleteUserFile({file_id}) {
 
 
 // Experience functions
-
-export async function addExperienceToStudent({experience}) {
-  let profile_id = experience.profileId
-  delete experience.profileId
-  experience.type = 'education'
-  return simplePost({
-    path: 'profiles/' + profile_id + '/experiences', 
-    data: experience,
-  })
-}
-
-export async function updateExperienceOfStudent({experience}) {
-  let experience_id = experience.id
-  delete experience.id
-  return simplePatch({
-    path: 'experiences/' + experience_id,
-    data: experience,
-  })
-}
-
-export async function removeExperiencesFromStudent({profile_id, experience_ids}) {
-  return hasManyDelete({
-    path: 'profiles/' + profile_id + '/experiences', 
-    id_array: experience_ids,
-  })
-}
 
 // Degree functions
 
