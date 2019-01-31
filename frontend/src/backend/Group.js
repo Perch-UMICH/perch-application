@@ -13,14 +13,14 @@ import {
   simplePost,
 } from './BackendHelpers'
 
-export function getGroup({group_id}) {
+export async function getGroup({group_id}) {
   return simpleGet({
       path: 'groups/' + group_id,
   })
 }
 
 // Backend will take user_id from headers and make group owner
-export function createGroup({group}) {
+export async function createGroup({group}) {
   return simplePost({
     path: 'groups',
     data: group,
@@ -28,7 +28,7 @@ export function createGroup({group}) {
 }
 
 // RESTRICTED user_id is a group admin
-export function updateGroup({group}) {
+export async function updateGroup({group}) {
   let group_id = group.id 
   delete group.id
   simplePatch({
@@ -38,42 +38,40 @@ export function updateGroup({group}) {
 }
 
 // RESTRICTED user_id owns group
-export function deleteGroup({group_id}) {
+export async function deleteGroup({group_id}) {
   return simpleDelete({ path: 'groups/' + group_id })
 }
 
-export function getGroupMembers({group_id}) {
+export async function getGroupMembers({group_id}) {
   return simpleGet({ path: 'groups/' + group_id + '/users'})
 }
 
-export function getGroupUsersAll({group_id}) {
+export async function getGroupUsersAll({group_id}) {
   return simpleGet({ path: 'groups/' + group_id + '/users/all'})
 }
 
 // RESTRICTED user must be group admin or owner
 // Invite multiple members
-export function inviteMembersToGroup({group_id, user_ids}) {
+export async function inviteMembersToGroup({group_id, user_ids}) {
   return simplePost({
     path: 'groups/' + group_id + '/users',
     data: {
-      users: user_ids.map(userId => {
-        return {userId: userId, role: "invited"};
-      }),
+      userIds: user_ids,
     },
   })
 }
 
 // Invite one member
-export function inviteMemberToGroup({group_id, user_id}) {
+export async function inviteMemberToGroup({group_id, user_id}) {
   return simplePost({
     path: 'groups/' + group_id + '/users',
     data: {
-      users: [{userId: user_id, role: "invited"}],
+      userIds: [user_id],
     },
   })
 }
 
-export function requestUserJoinGroup({group_id}) {
+export async function requestUserJoinGroup({group_id}) {
   let user_id = sessionStorage.getItem('user_id')
   return simplePost({
     path: 'users/' + user_id + '/groups',
@@ -82,14 +80,14 @@ export function requestUserJoinGroup({group_id}) {
 }
 
 // RESTRICTED user must be group admin or owner
-export function updateGroupMembers({group_id, users_and_roles}) {
+export async function updateGroupMembers({group_id, users_and_roles}) {
   return simplePatch({
     path: 'groups/' + group_id + '/users',
     data: {users: users_and_roles},
   })
 }
 
-export function updateGroupMember({group_id, user_id, role}) {
+export async function updateGroupMember({group_id, user_id, role}) {
   return simplePatch({
     path: 'groups/' + group_id + '/users',
     data: {users: [{userId: user_id, role: role}]},
@@ -97,14 +95,28 @@ export function updateGroupMember({group_id, user_id, role}) {
 }
 
 // RESTRICTED user must be group admin or owner
-export function removeMemberFromGroup({group_id, user_id}) {
+export async function removeMemberFromGroup({group_id, user_id}) {
   return simpleDelete({
     path: 'groups/' + group_id + '/users',
     data: {userId: user_id},
   })
 }
 
-export function getGroupOwnedProjects({group_id}) {
+export async function demoteGroupOwnerToMember({group_id, user_id}) {
+  return simplePatch({
+    path: 'groups/' + group_id + '/users/owner',
+    data: {userId: user_id, role: "member"},
+  })
+}
+
+export async function promoteGroupMemberToOwner({group_id, user_id}) {
+  return simplePatch({
+    patch: 'groups/' + group_id + '/users/owner',
+    data: {userId: user_id, role: "owner"},
+  })
+}
+
+export async function getGroupOwnedProjects({group_id}) {
   let filter = {
     where: {
       relation: "owner"
@@ -116,7 +128,7 @@ export function getGroupOwnedProjects({group_id}) {
 }
 
 // Returns all projects associated with a group
-export function getGroupAllProjects({group_id}) {
+export async function getGroupAllProjects({group_id}) {
   return simpleGet({
     path: 'groups/' + group_id + '/projects',
   })

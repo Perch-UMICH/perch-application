@@ -14,19 +14,20 @@ import {
 } from './BackendHelpers'
 
 // Projects can be owned by groups OR users
-export async function createProject({group_id, user_id, project}) {
-  if(group_id !== null) {
+// TODO: remove user_id. If groupId isn't specified, use project POST
+// and make logged-in user the owner
+export async function createProject({group_id, project}) {
+  if(group_id != null) {
     return simplePost({
       path: "groups/" + group_id + "/projects/new",
       data: project,
     })
-  } else if(user_id != null) {
+  } else {
+    // If no group_id, project is attached directly to user
     return simplePost({
-      path: "users/" + user_id + "/projects/new",
+      path: "/projects",
       data: project,
     })
-  } else {
-    // Error: owning user or group id must be supplied
   }
 }
 
@@ -67,7 +68,13 @@ export async function getProjects(projectIds) {
 }
 
 /*
-Returns list of projects that contain similar words that
+NEW:
+Returns array of ids for projects using NATURAL LANGUAGE full
+text search. Does not complete partial words.
+List is ordered in terms of relevancy.
+
+OLD (Boolean full text search):
+Returns array of ids for projects that contain similar words that
 are inside the keyword string. Words in string must be separated
 by spaces to be identified as individual words
 List is ordered in terms of relevancy (# matching words)
