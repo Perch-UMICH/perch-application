@@ -14,7 +14,9 @@ import {
   getUserGroups,
   getUserProfile,
   inviteMembersToGroup, 
-  getGroupUsersAll} from '../../../backend';
+  getGroupUsersAll,
+  getSavedProjects,
+  addSavedProject} from '../../../backend';
 
 class Nothing extends Component {
   constructor () {
@@ -25,12 +27,11 @@ class Nothing extends Component {
     getUserProfile({user_id: 1}).then(r=>
       console.log(r)
     )
-    inviteMembersToGroup({group_id: 1, user_ids: [1, 2]}).then(r => {
-      console.log(r)
-      getGroupUsersAll({group_id: 1}).then(r =>
+    addSavedProject({project_id: 2}).then(r => {
+      getSavedProjects().then(r => {
         console.log(r)
-      );
-    });
+      })
+    })
     return <div id='test'>hi</div>
   }
 }
