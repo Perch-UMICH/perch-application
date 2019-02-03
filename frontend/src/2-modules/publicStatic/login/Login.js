@@ -69,7 +69,7 @@ class Login extends Component {
     return (
       <Floater>
         <div className='login shadow'>
-          <h1>LogIn</h1>
+          <h1>Log In</h1>
           <TextInput
             type='email'
             name='email'
