@@ -49,8 +49,8 @@ export function RadioInput (props) {
 
 export function SubmitInput (props) {
   return (
-    <div className='input'>
-      <input type='submit' onClick={props.onClick} value={props.children} />
+    <div className='input' {...props}>
+      <input type='submit' value={props.children} />
     </div>
   )
 }

@@ -21,7 +21,7 @@
   max-height: 400px;
   overflow: scroll;
   background-color: white;
-  padding: 2em;
+  padding: 1em 2em;
   border-radius: 16px;
 }
 
@@ -31,5 +31,6 @@
   left: 0;
   background-image: linear-gradient(rgba(0,0,0,0), white, white);
   width: calc(100% - 2em);
-  padding: 1em;
+  padding-left: 1em;
+  margin-bottom: 0.3em;
 }

@@ -8,6 +8,7 @@ import CleavePhone from 'cleave.js/dist/addons/cleave-phone.i18n'
 import './StudentEditors.scss'
 import iziToast from 'izitoast'
 import { warn_toast } from '../../../data/toastData.js'
+import { InputRow, TextInput } from '../../../3-utils/Inputs'
 let validDateChange, validPhoneChange
 export class EditLinks extends Component {
   constructor (props) {
@@ -231,7 +232,6 @@ export class EditBio extends Component {
             this.setState({ bio: e.target.value })
           }}
         />
-        
       </div>
     )
   }
@@ -337,7 +337,7 @@ export class EditClasses extends Component {
 }
 
 // FIX THIS
-let deepCopy= () => [] 
+let deepCopy = () => []
 
 // Experience Editor, for both Work Experience and Education editing.
 // Pass in 'work' or 'educ' to 'type' prop to set proper text.
@@ -581,6 +581,9 @@ export class EditQuickview extends Component {
       x: 0.5,
       y: 0.5
     }
+    this.handleDrop = this.handleDrop.bind(this)
+    this.handleMove = this.handleMove.bind(this)
+    this.handleSlider = this.handleSlider.bind(this)
   }
 
   // componentWillReceiveProps ({ user, img }) {
@@ -641,93 +644,86 @@ export class EditQuickview extends Component {
   }
 
   render () {
-    var schoolSection = (
-      <div className='input-field'>
-        <input
-          id='profile-school'
-          type='text'
-          placeholder='Hogwarts'
-          value={this.state.university}
-          onChange={e => {
-            this.props.updateUser('university', e.target.value)
-            this.setState({ university: e.target.value })
-          }}
-        />
-        <label htmlFor='profile-school' className='active'>
-          School
-        </label>
-      </div>
-    )
-
-    var nameSection = (
-      <div id='quickview-editor-R' className='input-field'>
-        <input
-          id='profile-name'
-          type='text'
-          placeholder='Rodriguez Happypants'
-          value={this.state.name}
-          onChange={e => {
-            this.setState({ name: e.target.value })
-            this.props.updateUser('name', e.target.value)
-          }}
-        />
-        <label htmlFor='profile-name' className='active'>
-          Name
-        </label>
-      </div>
-    )
-
-    if (this.props.showNoSchool) {
-      schoolSection = null
-      nameSection = (
-        <div style={{ display: 'none' }}>
-          <div className='onboarding-text'>
-            Add a profile photo and edit using the slider tool
-          </div>
-          <div className='onboarding-text'>
-            Or, stick with our friendly mascot, Rodriguez!
-          </div>
-        </div>
-      )
-    }
+    // if (this.props.showNoSchool) {
+    //   schoolSection = null
+    //   nameSection = (
+    //     <div style={{ display: 'none' }}>
+    //       <div className='onboarding-text'>
+    //         Add a profile photo and edit using the slider tool
+    //       </div>
+    // //       <div className='onboarding-text'>
+    // //         Or, stick with our friendly mascot, Rodriguez!
+    // //       </div>
+    // //     </div>
+    // //   )
+    // }
 
     return (
-      <div className='quickview-editor-container'>
-        <div id='quickview-editor-L'>
-          <Dropzone
-            onDrop={this.handleDrop}
-            disableClick
-            style={{ width: '250px', height: '250px' }}
-          >
-            <AvatarEditor
-              image={this.state.image}
-              width={200}
-              height={200}
-              border={20}
-              color={[0, 0, 0, 0.2]}
-              scale={this.state.scale}
-              borderRadius={100}
-              className='grabbable'
-              onPositionChange={this.handleMove}
-            />
-          </Dropzone>
-          <i>Drag and drop image</i>
-          <div id='prof-pic-editors'>
-            <div className='range-field'>
-              <input
-                type='range'
-                id='profile-pic-range'
-                min='1'
-                max='5'
-                step='0.1'
-                defaultValue='1'
-                onChange={this.handleSlider}
-              />
-            </div>
-          </div>
-        </div>
-        {nameSection}
+      <div style={{ width: '800px', paddingBottom: '80px'}}>
+        {/* <ImageInterface
+          handleDrop={this.handleDrop}
+          image={this.state.image}
+          handleMove={this.handleMove}
+          handleSlider={this.handleSlider}
+          scale={this.state.scale}
+        /> */}
+        <InputRow>
+          <TextInput
+            type='text'
+            placeholder='name'
+            onChange={e => {
+              this.props.updateUser('name', e.target.value)
+              this.setState({ name: e.target.value })
+            }}
+          />
+          <TextInput
+            type='text'
+            placeholder='university'
+            onChange={e => {
+              this.props.updateUser('university', e.target.value)
+              this.setState({ university: e.target.value })
+            }}
+          />
+        </InputRow>
       </div>
     )
   }
+}
+
+function ImageInterface (props) {
+  return (
+    <div>
+      <Dropzone
+        onDrop={props.handleDrop}
+        disableClick
+        style={{ width: '250px', height: '250px' }}
+      >
+        <AvatarEditor
+          image={props.image}
+          width={200}
+          height={200}
+          border={20}
+          color={[0, 0, 0, 0.2]}
+          scale={props.scale}
+          borderRadius={100}
+          className='grabbable'
+          onPositionChange={props.handleMove}
+        />
+      </Dropzone>
+      <i>Drag and drop image</i>
+      <div id='prof-pic-editors'>
+        <div className='range-field'>
+          <input
+            type='range'
+            id='profile-pic-range'
+            min='1'
+            max='5'
+            step='0.1'
+            defaultValue='1'
+            onChange={props.handleSlider}
+          />
+        </div>
+      </div>
+    </div>
+  )
 }

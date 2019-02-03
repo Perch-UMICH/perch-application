@@ -32,25 +32,25 @@ function StudentProfile (props) {
           <Header {...props} />
           <Bio {...props} />
 
-          <VerticalSplit>
+          {/* <VerticalSplit>
             <SplitLeft>
               <WorkExperiences {...props} />
             </SplitLeft>
             <SplitRight>
               <WorkExperiences {...props} />
             </SplitRight>
-          </VerticalSplit>
+          </VerticalSplit> */}
 
           <WorkExperiences {...props} />
 
-          <VerticalSplit>
+          {/* <VerticalSplit>
             <SplitLeft>
               <WorkExperiences {...props} />
             </SplitLeft>
             <SplitRight>
               <WorkExperiences {...props} />
             </SplitRight>
-          </VerticalSplit>
+          </VerticalSplit> */}
         </MainPanel>
       </Canvas>
     )

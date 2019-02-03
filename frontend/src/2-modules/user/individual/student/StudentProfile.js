@@ -3,14 +3,13 @@ import Presentation from './Presentation'
 import Modals from './Modals'
 import {
   getUserProfile,
+  getProfilePicture,
+  getCurrentUserId,
+  updateUserProfile
 } from '../../../../backend/index'
 import Axios from 'axios'
 
-let getStudentFromUser,
-updateStudent,
-uploadUserProfilePic,
-getUserProfilePic,
-getCurrentUserId
+let getStudentFromUser, updateStudent, uploadUserProfilePic, getUserProfilePic
 /* In charge of all state requests and management for student profile */
 class StudentProfile extends Component {
   constructor (props) {
@@ -19,14 +18,18 @@ class StudentProfile extends Component {
       name: '',
       id: null,
       contactEmail: '',
-      profile : {},
-
-
-
-      bio: '',
       contactPhone: '',
-      classes: [],
-      experience: [],
+      profile: {},
+      degrees: [],
+      experiences: [],
+      honors: [],
+      links: [],
+      role: '',
+      universityId: null,
+
+      profilePictureFiles: [],
+      resumeFiles: [],
+
       skills: [],
       tags: [],
       work_experiences: [],
@@ -48,22 +51,17 @@ class StudentProfile extends Component {
   componentDidMount () {
     let id = window.location.pathname.split('/')[2]
     this.retrieveStudent(id)
-    // this.retrieveProfilePicture(id)
+    this.retrieveProfilePicture(id)
   }
 
   // set intitial student data and ownership
   retrieveStudent (id) {
-    getUserProfile({user_id: id}).then(r=>{
-      console.log('look',r)
-      this.setState(r.data.profile)
+    getUserProfile({ user_id: id }).then(r => {
+      let data = r.data.profile
+      data.owner = data.userId === getCurrentUserId()
+      console.log(data)
+      this.setState(data)
     })
-    // getStudentFromUser(id).then(({ data }) => {
-    //   data.student = true
-    //   data.name = data.first_name
-    //   data.email = data.contact_email
-    //   data.owner = data.user_id == getCurrentUserId()
-    //   this.setState(data)
-    // })
   }
 
   // this just updates the state object, not the backend
@@ -80,12 +78,12 @@ class StudentProfile extends Component {
 
   // grab picture from backend
   retrieveProfilePicture (id) {
-    getUserProfilePic(id)
-      .catch(e => console.log('PIC ERROR', e))
-      .then(r => {
-        this.state.img = r.data.url || 'default image'
-        this.setState(this.state)
-      })
+    // getUserProfilePic(id)
+    //   .catch(e => console.log('PIC ERROR', e))
+    //   .then(r => {
+    //     this.state.img = r.data.url || 'default image'
+    //     this.setState(this.state)
+    //   })
   }
 
   // backend needs a specially formatted object to send to backend for images
@@ -118,13 +116,15 @@ class StudentProfile extends Component {
 
   // updates name and profile picture
   sendHeaderInfo () {
-    var user = this.state
-    updateStudent({ first_name: user.name })
-    if (user.img) {
-      uploadUserProfilePic(this.getImageData(user))
-        .catch(e => console.log('profile pic bug'))
-        .then(r => this.retrieveProfilePicture())
-    }
+    let { name } = this.state
+    updateUserProfile({ name })
+    // var user = this.state
+    // updateStudent({ first_name: user.name })
+    // if (user.img) {
+    //   uploadUserProfilePic(this.getImageData(user))
+    //     .catch(e => console.log('profile pic bug'))
+    //     .then(r => this.retrieveProfilePicture())
+    // }
   }
 
   // sends links to backend
@@ -136,9 +136,9 @@ class StudentProfile extends Component {
   // sends email and phone to backend
   sendContactInfo () {
     let { contactEmail, contactPhone } = this.state
-    updateStudent({ 
-      contactEmail, 
-      contactPhone 
+    updateStudent({
+      contactEmail,
+      contactPhone
     })
   }
 

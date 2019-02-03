@@ -12,7 +12,9 @@ import BasicButton from '../../utilities/buttons/BasicButton'
 import {
   getGroup,
   getGroupOwnedProjects,
-  getGroupMembers
+  getGroupMembers,
+  isStudent,
+  getSavedProjects
 } from '../../../backend/index.js'
 import Editor from '../../utilities/Editor'
 
@@ -67,7 +69,7 @@ class GroupPage extends Component {
     this.loadLabData()
     this.loadLabPositions()
     this.loadLabMembers()
-    // this.loadPositionsApplied()
+    this.loadPositionsApplied()
     // if (isStudent()) {
     //   getStudentFromUser(getCurrentUserId()).then(r => {
     //     this.setState({ user_saved_labs: r.data.position_list })
@@ -88,7 +90,7 @@ class GroupPage extends Component {
   // loads the members and admins for the group
   loadLabMembers () {
     let { group_id } = this.state
-    getGroupMembers({group_id}).then(r=>console.log('members', r))
+    getGroupMembers({ group_id }).then(r => console.log('members', r))
     // let { lab_id, admins_raw } = this.state
     // getLabMembers(lab_id).then(r => {
     //   this.addMembers(r.data.faculty)
@@ -150,13 +152,15 @@ class GroupPage extends Component {
   loadLabPositions () {
     let { group_id } = this.state
     getGroupOwnedProjects({ group_id }).then(r => {
-      console.log(r.data)
       this.setState({ lab_positions: r.data })
     })
   }
 
   // Get all positions that the student has submitted applications to:
   loadPositionsApplied () {
+    if (isStudent()) {
+      getSavedProjects().then(r => this.setState({ user_saved_labs: r.data }))
+    }
     // if (isStudent()) {
     //   getAllStudentApplicationResponses(getCurrentUserId()).then(r => {
     //     let positions_applied = r.data.map(app => app.position_id)
@@ -391,21 +395,15 @@ class GroupPage extends Component {
               this.openModal(`${this.state.lab_id}-create-position`)
             }
           >
+            {console.log('lab pos', lab_positions)}
             {lab_positions.map(pos => (
               <GroupProject
-                key={`${pos.id}-p`}
-                saved_labs={this.state.user_saved_labs}
-                lab_id={this.state.lab_id}
-                pos_id={pos.id}
-                cur_pos={pos}
-                title={pos.title}
-                spots={pos.open_slots}
-                description={pos.description}
-                time_commit={pos.min_time_commitment}
+                {...pos}
+                savedLabs={this.state.user_saved_labs}
+                group_id={this.state.group_id}
+                time_commit={'does not exist yet'}
                 admins={this.state.admins_raw}
-                year='MISSING'
-                positions_applied={this.state.positions_applied}
-                urop={pos.is_urop_project}
+                positionsApplied={this.state.positions_applied}
                 updatePositions={this.loadLabPositions.bind(this)}
               />
             ))}

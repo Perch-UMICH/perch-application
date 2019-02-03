@@ -24,16 +24,16 @@ export default class WorkExperiences extends Component {
   }
 
   render () {
-    let { work_experiences } = this.props
-
+    let { experiences } = this.props
+    console.log('exp', this.props)
     return (
       <div className={styles.workExperiences}>
         <div className={styles.title}>Experience</div>
         <div className={styles.body}>
-          {work_experiences.map(exp => (
+          {experiences.map(exp => (
             <Experience {...exp} />
           ))}
-          {!work_experiences.length && (
+          {!experiences.length && (
             <div style={{ padding: '10px 20px', color: 'lightgrey' }}>
               Freelance netflix reviewer
             </div>

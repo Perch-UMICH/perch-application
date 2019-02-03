@@ -14,7 +14,9 @@ import {
   getUserGroups,
   getUserProfile,
   inviteMembersToGroup, 
-  getGroupUsersAll} from '../../../backend';
+  getGroupUsersAll,
+  addSavedProject,
+  getSavedProjects} from '../../../backend';
 
 class Nothing extends Component {
   constructor () {
@@ -22,15 +24,22 @@ class Nothing extends Component {
   }
 
   render () {  
-    getUserProfile({user_id: 1}).then(r=>
-      console.log(r)
-    )
-    inviteMembersToGroup({group_id: 1, user_ids: [1, 2]}).then(r => {
-      console.log(r)
-      getGroupUsersAll({group_id: 1}).then(r =>
-        console.log(r)
-      );
-    });
+    // getSavedProjects().then(r=>console.log('projects back', r))
+    // addSavedProject({projectId: 32}).then(r=>console.log('added proj', r))
+    updateUserProfile({
+      experiences: [
+        {
+          type: "work",
+          title: "Ethanol Shot shenanigan",
+          description: "Mixing alochol with water off the clock",
+        }, 
+        {
+          type: "work",
+          title: "Ethanol Shot woah",
+          description: "Mixing alochol with water off the clock",
+        }
+    ]
+    }).then(r=>console.log('hi', r)).catch(e=>console.log(e))
     return <div id='test'>hi</div>
   }
 }

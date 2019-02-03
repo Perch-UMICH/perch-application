@@ -28,7 +28,7 @@ export default class Header extends Component {
         </div>
         <Editor permissions={owner} superClick={this.toggleModal} />
         <ModalContainer
-          title='Edit Quickview Info'
+          title='Name and University'
           closeModal={this.toggleModal}
           showModal={this.state.showModal}
           onSubmit={this.props.sendHeaderInfo}

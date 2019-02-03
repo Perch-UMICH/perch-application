@@ -21,7 +21,7 @@ export function getUserRole() {
 }
 
 export function getCurrentUserId () {
-  return sessionStorage.getItem('user_id')
+  return parseInt(sessionStorage.getItem('user_id'))
 }
 
 export function isStudent() {

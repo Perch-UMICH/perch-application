@@ -8,6 +8,7 @@ import CreatePosition from './CreatePosition'
 import GroupProjectRequirement from './GroupProjectRequirement'
 // import {addToStudentPositionList, removeFromStudentPositionList, getLabPosition, getStudentApplicationResponse, createStudentApplicationResponse, isFaculty, getCurrentUserId, updateLabPosition, deleteLabPosition, getLabPositionApplicationResponses, submitStudentApplicationResponse, getCurrentStudentId} from '../../../backend/index.js'
 import './GroupProject.css'
+import { addSavedProject, removeSavedProject } from '../../../backend';
 
 export class GroupProject extends Component {
   constructor (props) {
@@ -22,17 +23,9 @@ export class GroupProject extends Component {
     }
   }
 
-  componentWillReceiveProps (props) {
-    let saved = false
-    for (let item in props.saved_labs) {
-      if (props.saved_labs[item].id === this.props.pos_id) {
-        saved = true
-      }
-    }
-    this.setState({ added: saved })
-  }
-
   componentDidMount () {
+    console.log('props', this.props)
+    console.log('state', this.state)
     // getLabPosition(this.props.lab_id, this.props.pos_id).then(resp => {
     //   let orig_questions = null
     //   if (
@@ -64,12 +57,26 @@ export class GroupProject extends Component {
   }
 
   componentWillReceiveProps (props) {
-    let pos_ids = props.positions_applied
-    if (pos_ids && pos_ids.length) {
-      pos_ids.map(pos => {
-        if (pos == props.pos_id) this.setState({ submitted: true })
-      })
-    }
+    this.setAppliedStatus(props)
+    this.setSavedStatus(props)
+  }
+
+  setAppliedStatus(props) {
+    let positionsApplied = props.positionsApplied || []
+    positionsApplied.forEach(pos => {
+      if (pos == props.pos_id) 
+        this.setState({ submitted: true })
+    })
+  }
+
+  setSavedStatus(props) {
+    let saved = false
+    let {savedLabs} = props
+    console.log('SAVED LABS', savedLabs)
+    savedLabs.forEach(lab => {
+      console.log('saved lab to do!', lab)
+    })
+    this.setState({ added: saved })
   }
 
   // Grab the description and add expand
@@ -122,7 +129,6 @@ export class GroupProject extends Component {
   deletePosition () {
     // deleteLabPosition(this.props.lab_id, [this.props.pos_id]).then(resp => {
     //   // TODO: Delete application
-
     //   if (this.props.updatePositions) this.props.updatePositions()
     // })
   }
@@ -273,7 +279,11 @@ export class GroupProject extends Component {
     if (!this.state.applicants.length || this.state.applicants.length == 0) {
       view_app_css = 'group-project-no-applicants'
       openFunc = () => {}
-    } else if (this.state.applicants.length == 1) { view_app_text = 'View 1 Applicant' } else if (this.state.applicants.length > 1) { view_app_text = 'View ' + this.state.applicants.length + ' Applicants' }
+    } else if (this.state.applicants.length == 1) {
+      view_app_text = 'View 1 Applicant'
+    } else if (this.state.applicants.length > 1) {
+      view_app_text = 'View ' + this.state.applicants.length + ' Applicants'
+    }
     let project_action = (
       <div className={view_app_css} onClick={openFunc}>
         {view_app_text}
@@ -350,13 +360,13 @@ export class GroupProject extends Component {
   }
 
   saveProject = () => {
-    // addToStudentPositionList([this.props.pos_id])
-    // this.toggleAdder()
+    addSavedProject({projectId: this.props.id})
+    this.toggleAdder()
   }
 
   removeProject = () => {
-    // removeFromStudentPositionList([this.props.pos_id])
-    // this.toggleAdder()
+    removeSavedProject({projectId: this.props.id})
+    this.toggleAdder()
   }
 
   renderSave () {
@@ -421,7 +431,9 @@ export const GroupProjectContainer = props => {
     <Editor permissions superClick={props.addFunction} add />
   ) : null
   let content = <div>{props.children}</div>
-  if (props.children.length == 0) { content = <div className='group-default-text'>No Current Projects</div> }
+  if (props.children.length == 0) {
+    content = <div className='group-default-text'>No Current Projects</div>
+  }
   return (
     <div id='group-project-container'>
       <h1>
