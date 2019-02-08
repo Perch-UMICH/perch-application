@@ -179,44 +179,18 @@ export async function getUserGroups() {
 // File functions (images and documents)
 
 
-export async function getProfileResume() {
+export async function getProfileResumeFile() {
   let user_id = sessionStorage.getItem('user_id')
-  return axios
-  .get('users/' + user_id)
-  .then(response => {
-    let user = response.data
-    return axios
-    .get('users/' + user_id + '/profiles')
-    .then(response2 => {
-      let profile = response2.data
-      return simpleGet({
-        path: '/profiles/' + profile.id + '/resume'
-      })
-      .then(response => {
-        return response
-      })
-    })
+  return simpleGet({
+    path: '/users/' + user_id + '/profile/resume'
   })
 }
 
 
-export async function getProfilePicture() {
+export async function getProfilePictureFile() {
   let user_id = sessionStorage.getItem('user_id')
-  return axios
-  .get('users/' + user_id)
-  .then(response => {
-    let user = response.data
-    return axios
-    .get('users/' + user_id + '/profiles')
-    .then(response2 => {
-      let profile = response2.data
-      return simpleGet({
-        path: '/profiles/' + profile.id + '/profile_picture'
-      })
-      .then(response => {
-        return response
-      })
-    })
+  return simpleGet({
+    path: '/users/' + user_id + '/profile/profile_picture'
   })
 }
 
@@ -228,30 +202,33 @@ Javascript:
   let file = document.getElementById('fileToUpload').files[0];
   uploadUserResumeDocument({user_id: 1, file: file});
 */
-export async function uploadUserResumeDocument({file}) {
+export async function uploadResumeFile({file}) {
   let user_id = sessionStorage.getItem('user_id')
   return formDataPost({ 
-    path: 'users/' + user_id + '/files/document', 
+    path: 'users/' + user_id + '/profile/resume', 
     data: file 
   })
 }
 
-export async function uploadUserProfileImage({file}) {
+export async function uploadProfilePictureFile({file}) {
   let user_id = sessionStorage.getItem('user_id')
   return formDataPost({ 
-    path: 'users/' + user_id + '/files/image', 
+    path: 'users/' + user_id + '/profile/profile_picture', 
     data: file 
   })
 }
 
-/*
-Deletes the File model and the associated fileType model
-And deletes the actual file on AWS
-*/
-export async function deleteUserFile({file_id}) {
+export async function deleteResumeFile() {
   let user_id = sessionStorage.getItem('user_id')
   return simpleDelete({ 
-    path: 'users/' + user_id + '/files/' + file_id
+    path: 'users/' + user_id + '/profile/resume'
+  })
+}
+
+export async function deleteProfilePictureFile() {
+  let user_id = sessionStorage.getItem('user_id')
+  return simpleDelete({ 
+    path: 'users/' + user_id + '/profile/profile_picture'
   })
 }
 
